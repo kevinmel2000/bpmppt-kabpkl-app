@@ -19,6 +19,9 @@ class BAKA_Controller extends CI_Controller
 			show_error(array('Peramban yang anda gunakan tidak memenuhi syarat minimal penggunaan aplikasi ini.','Silahkan gunakan '.anchor('http://www.mozilla.org/id/', 'Mozilla Firefox', 'target="_blank"').' atau '.anchor('https://www.google.com/intl/id/chrome/browser/', 'Google Chrome', 'target="_blank"').' biar lebih GREGET!'), 500, 'error_browser_jadul');
 		}
 
+		$this->data['single_page']	= TRUE;
+		$this->data['form_page']	= FALSE;
+
 		log_message('debug', "BAKA Controller Class Initialized");
 	}
 }

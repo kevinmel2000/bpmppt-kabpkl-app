@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit ('No direct script access allowed');
 
-class Utama extends CI_Controller {
-
+class Utama extends BAKA_Controller
+{
 	public function __construct()
 	{
 		parent::__construct();
@@ -19,26 +19,22 @@ class Utama extends CI_Controller {
 
 	public function stat()
 	{
-		$this->data['panel_title'] = $this->baka_theme->set_title('Dashboard ');
-
-		$this->data['data_type'] = $this->app_data->get_type_list_assoc();
-
-		$this->data['data_count'] = $this->app_data->count_data();
-
-		$this->data['panel_body'] = 'anu';
+		$this->data['single_page']	= FALSE;
+		$this->data['panel_title']	= $this->baka_theme->set_title('Dashboard ');
+		$this->data['data_type']	= $this->app_data->get_type_list_assoc();
+		$this->data['data_count']	= $this->app_data->count_data();
+		$this->data['panel_body']	= 'anu';
 
 		$this->baka_theme->load('pages/dashboard', $this->data);
 	}
 
 	public function semua()
 	{
-		$this->data['panel_title'] = $this->baka_theme->set_title('Semua data perijinan');
-
-		$this->data['data_type'] = $this->app_data->get_type_list_assoc();
-
-		$this->data['counter'] = $this->app_data->count_data();
-
-		$this->data['panel_body'] = $this->app_data->get_grids();
+		$this->data['single_page']	= FALSE;
+		$this->data['panel_title']	= $this->baka_theme->set_title('Semua data perijinan');
+		$this->data['data_type']	= $this->app_data->get_type_list_assoc();
+		$this->data['counter']		= $this->app_data->count_data();
+		$this->data['panel_body']	= $this->app_data->get_grids();
 
 		$this->baka_theme->load('pages/panel_alldata', $this->data);
 	}

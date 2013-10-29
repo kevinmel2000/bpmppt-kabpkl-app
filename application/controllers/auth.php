@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Auth extends CI_Controller
+class Auth extends BAKA_Controller
 {
 	public function __construct()
 	{

@@ -1,6 +1,8 @@
 <div class="row">
 	<div class="col-md-9">
 
+<?php load_view('toolbar') ?>
+
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<h3 class="panel-title"><?php echo $panel_title ?></h3>

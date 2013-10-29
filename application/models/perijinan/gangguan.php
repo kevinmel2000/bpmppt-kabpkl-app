@@ -18,15 +18,24 @@ class Gangguan extends CI_Model
 		$fields = array(
 			array(
 				'name'	=> $this->slug.'_surat_no',
-				'label'	=> 'Nomor Surat',
-				'type'	=> 'text',
-				'std'	=> ($data_id !== '' ? $data->surat_no : set_value($this->slug.'_surat_no')),
-				),
-			array(
-				'name'	=> $this->slug.'_surat_tgl',
-				'label'	=> 'Tanggal Pengajuan',
-				'type'	=> 'text',
-				'std'	=> ($data_id !== '' ? $data->surat_tgl : set_value($this->slug.'_surat_tgl')),
+				'label'	=> 'Nomor &amp; Tanggal Surat',
+				'type'	=> 'subfield',
+				'fields'=> array(
+					array(
+						'col'	=> '6',
+						'name'	=> 'nomor',
+						'label'	=> 'Nomor',
+						'type'	=> 'text',
+						'std'	=> ($data_id != '' ? $query->surat_nomor : set_value($this->slug.'_surat_nomor')),
+						'validation'=> 'required' ),
+					array(
+						'col'	=> '6',
+						'name'	=> 'tanggal',
+						'label'	=> 'Tanggal',
+						'type'	=> 'text',
+						'std'	=> ($data_id != '' ? $query->surat_tanggal : set_value($this->slug.'_surat_tanggal')),
+						'validation'=> 'required' ),
+					)
 				),
 			array(
 				'name'	=> $this->slug.'_surat_jenis_pengajuan',

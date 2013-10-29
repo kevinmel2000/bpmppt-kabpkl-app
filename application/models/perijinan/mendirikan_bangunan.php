@@ -15,106 +15,131 @@ class Mendirikan_bangunan extends CI_Model
 
 	public function form( $data_id = '' )
 	{
-		$fields = array(
+		return array(
 			array(
 				'name'	=> $this->slug.'_surat_no',
-				'label'	=> 'Nomor Surat',
-				'type'	=> 'text',
-				'std'	=> ($data_id != '' ? $query->surat_no : set_value($this->slug.'_surat_no')),
+				'label'	=> 'Nomor &amp; Tanggal Surat',
+				'type'	=> 'subfield',
+				'fields'=> array(
+					array(
+						'col'	=> '6',
+						'name'	=> 'nomor',
+						'label'	=> 'Nomor',
+						'type'	=> 'text',
+						'std'	=> ($data_id != '' ? $query->surat_nomor : set_value($this->slug.'_surat_nomor')),
+						'validation'=> 'required' ),
+					array(
+						'col'	=> '6',
+						'name'	=> 'tanggal',
+						'label'	=> 'Tanggal',
+						'type'	=> 'text',
+						'std'	=> ($data_id != '' ? $query->surat_tanggal : set_value($this->slug.'_surat_tanggal')),
+						'validation'=> 'required' ),
+					)
 				),
 			array(
-				'name'	=> $this->slug.'_surat_tgl',
-				'label'	=> 'Tanggal',
-				'type'	=> 'text',
-				'std'	=> ($data_id != '' ? $query->surat_tgl : set_value($this->slug.'_surat_tgl')),
-				),
+				'name'	=> $this->slug.'_bangunan_maksud',
+				'label'	=> 'Maksud Permohonan',
+				'type'	=> 'dropdown',
+				'option'=> array(
+					'baru'	=> 'Mendirikan Bangunan Baru',
+					'rehap'	=> 'Perbaikan/Rehab Bangunan Lama' ),
+				'std'	=> ($data_id != '' ? $query->bangunan_maksud : set_value($this->slug.'_bangunan_maksud')),
+				'validation'=> 'required' ),
+			array(
+				'name'	=> $this->slug.'_bangunan_guna',
+				'label'	=> 'Penggunaan bangunan',
+				'type'	=> 'dropdown',
+				'option'=> array(
+					'rumah'	=> 'Rumah',
+					'kios'	=> 'Kios',
+					'toko'	=> 'Toko',
+					'gudang'=> 'Gudang',
+					'pabrik'=> 'Pabrik',
+					'kantor'=> 'Kantor' ),
+				'std'	=> ($data_id != '' ? $query->bangunan_guna : set_value($this->slug.'_bangunan_guna')),
+				'validation'=> 'required' ),
 			array(
 				'name'	=> $this->slug.'_fieldset_data_pemohon',
 				'label'	=> 'Data Pemohon',
-				'type'	=> 'fieldset',
-				),
+				'type'	=> 'fieldset' ),
 			array(
 				'name'	=> $this->slug.'_pemohon_nama',
 				'label'	=> 'Nama lengkap',
 				'type'	=> 'text',
 				'std'	=> ($data_id != '' ? $query->pemohon_nama : set_value($this->slug.'_pemohon_nama')),
-				),
+				'validation'=> 'required' ),
 			array(
-				'name'	=> $this->slug.'_pemohon_jabatan',
-				'label'	=> 'Jabatan',
+				'name'	=> $this->slug.'_pemohon_kerja',
+				'label'	=> 'Pekerjaan',
 				'type'	=> 'text',
-				'std'	=> ($data_id != '' ? $query->pemohon_jabatan : set_value($this->slug.'_pemohon_jabatan')),
-				),
-			array(
-				'name'	=> $this->slug.'_pemohon_usaha',
-				'label'	=> 'Perusahaan',
-				'type'	=> 'text',
-				'std'	=> ($data_id != '' ? $query->pemohon_usaha : set_value($this->slug.'_pemohon_usaha')),
-				),
+				'std'	=> ($data_id != '' ? $query->pemohon_kerja : set_value($this->slug.'_pemohon_kerja')),
+				'validation'=> 'required' ),
 			array(
 				'name'	=> $this->slug.'_pemohon_alamat',
 				'label'	=> 'Alamat',
 				'type'	=> 'textarea',
 				'std'	=> ($data_id != '' ? $query->pemohon_alamat : set_value($this->slug.'_pemohon_alamat')),
-				),
+				'validation'=> 'required' ),
 			array(
-				'name'	=> $this->slug.'_fieldset_data_lokasi',
-				'label'	=> 'Data Lokasi',
-				'type'	=> 'fieldset',
-				),
+				'name'	=> $this->slug.'_fieldset_data_bangunan',
+				'label'	=> 'Data Bangunan',
+				'type'	=> 'fieldset' ),
 			array(
-				'name'	=> $this->slug.'_lokasi_tujuan',
-				'label'	=> 'Tujuan Permohonan',
-				'type'	=> 'text',
-				'std'	=> ($data_id != '' ? $query->lokasi_tujuan : set_value($this->slug.'_lokasi_tujuan')),
-				),
-			array(
-				'name'	=> $this->slug.'_lokasi_alamat',
-				'label'	=> 'Alamat Lokasi',
+				'name'	=> $this->slug.'_bangunan_lokasi',
+				'label'	=> 'Lokasi bangunan',
 				'type'	=> 'textarea',
-				'std'	=> ($data_id != '' ? $query->lokasi_alamat : set_value($this->slug.'_lokasi_alamat')),
-				),
+				'std'	=> ($data_id != '' ? $query->bangunan_lokasi : set_value($this->slug.'_bangunan_lokasi')),
+				'validation'=> 'required' ),
 			array(
-				'name'	=> $this->slug.'_lokasi_nama',
-				'label'	=> 'Luas Area (M<sup>2</sup>)',
+				'name'	=> $this->slug.'_bangunan_tanah_luas',
+				'label'	=> 'Luas Tanah Bangunan (M<sup>2</sup>)',
 				'type'	=> 'number',
-				'std'	=> ($data_id != '' ? $query->lokasi_nama : set_value($this->slug.'_lokasi_nama')),
-				),
+				'std'	=> ($data_id != '' ? $query->bangunan_tanah_luas : set_value($this->slug.'_bangunan_tanah_luas')),
+				'validation'=> 'required' ),
 			array(
-				'name'	=> $this->slug.'_lokasi_area_hijau',
-				'label'	=> 'Area terbuka hijau',
+				'name'	=> $this->slug.'_bangunan_tanah_keadaan',
+				'label'	=> 'Keadaan Tanah',
+				'type'	=> 'dropdown',
+				'option'=> array(
+					'd1'	=> 'D I',
+					'd2'	=> 'D II',
+					'd3'	=> 'D III' ),
+				'std'	=> ($data_id != '' ? $query->bangunan_tanah_keadaan : set_value($this->slug.'_bangunan_tanah_keadaan')),
+				'validation'=> 'required' ),
+			array(
+				'name'	=> $this->slug.'_bangunan_tanah_status',
+				'label'	=> 'Status Tanah',
+				'type'	=> 'dropdown',
+				'option'=> array(
+					'hm'	=> 'Hak guna bangunan',
+					'hg'	=> 'Hak milik' ),
+				'std'	=> ($data_id != '' ? $query->bangunan_tanah_status : set_value($this->slug.'_bangunan_tanah_status')),
+				'validation'=> 'required' ),
+			array(
+				'name'	=> $this->slug.'_bangunan_milik_no',
+				'label'	=> 'Nomor kepemilikan',
 				'type'	=> 'text',
-				'std'	=> ($data_id != '' ? $query->lokasi_area_hijau : set_value($this->slug.'_lokasi_area_hijau')),
-				),
+				'std'	=> ($data_id != '' ? $query->bangunan_milik_no : set_value($this->slug.'_bangunan_milik_no')),
+				'validation'=> 'required' ),
+			array(
+				'name'	=> $this->slug.'_bangunan_milik_an',
+				'label'	=> 'Atas Nama kepemilikan',
+				'type'	=> 'text',
+				'std'	=> ($data_id != '' ? $query->bangunan_milik_an : set_value($this->slug.'_bangunan_milik_an')),
+				'validation'=> 'required' ),
+			array(
+				'name'	=> $this->slug.'_bangunan_luas',
+				'label'	=> 'Luas bangunan (M<sup>2</sup>)',
+				'type'	=> 'text',
+				'std'	=> ($data_id != '' ? $query->bangunan_luas : set_value($this->slug.'_bangunan_luas')),
+				'validation'=> 'required' ),
 			);
-
-		return $fields;
 	}
 
 	public function data()
 	{
-		// surat_no:640/     /IMB/BPM PPT/X/2013
-		// surat_tgl:28-10-2013
-		// bangunan_maksud:
-		// bangunan_penggunaan:
-		// pemohon_nama:
-		// pemohon_kerja:
-		// pemohon_alamat:
-		// pemohon_rt:
-		// pemohon_rw:
-		// pemohon_kota:
-		// pemohon_kecamatan:
-		// bangunan_alamat:
-		// bangunan_rt:
-		// bangunan_rw:
-		// bangunan_kota:
-		// bangunan_kecamatan:
-		// bangunan_luas_tanah:
-		// bangunan_keadaan_tanah:
-		// bangunan_status_milik:
-		// bangunan_status_nomor:
-		// bangunan_status_an:
-		// bangunan_luas_bangunan:
+		return;
 	}
 }
 

@@ -8,6 +8,8 @@ class Baka_form Extends Baka_lib
 
 	private $form_data = array();
 
+	private $has_fieldset = FALSE;
+
 	private $fields	= array();
 
 	private $buttons = array();
@@ -26,7 +28,7 @@ class Baka_form Extends Baka_lib
 	{
 		$this->form_action			= $action;
 		$this->form_attrs['name']	= $name;
-		$this->form_attrs['id']		= 'form-'.($id != '' ? $id : $name);
+		$this->form_attrs['id']		= str_replace('_', '-', 'form-'.($id != '' ? $id : $name));
 		$this->form_attrs['class']	= ($class != '' ? ' '.$class : 'form-horizontal');
 		$this->form_attrs['method']	= strtoupper($method);
 		$this->form_attrs['role']	= 'form';
@@ -58,85 +60,16 @@ class Baka_form Extends Baka_lib
 
 	public function render()
 	{
-		$counter	= 0;
-		$fieldset	= FALSE;
-
 		$output	= form_open( $this->form_action, $this->form_attrs );
 		
-		$input_classes = 'form-control input-sm';
-
 		// $output .= $this->show_alerts();
 
 		foreach( $this->fields as $field )
 		{
-			if (!array_key_exists('value', $field) AND !isset( $field['value'] ))
-				$field['value'] = '';
-
-			if (!array_key_exists('std', $field) AND !isset( $field['std'] ))
-				$field['std'] = '';
-
-			if (!array_key_exists('desc', $field) AND !isset( $field['desc'] ))
-				$field['desc'] = '';
-
-			if (!array_key_exists('attr', $field) AND !isset( $field['attr'] ))
-				$field['attr'] = '';
-
-			if (!array_key_exists('validation', $field) AND !isset( $field['validation'] ))
-				$field['validation'] = '';
-	
-			switch( $field['type'] )
-			{
-				case 'hidden':
-					$output .= form_hidden($field['name'], $field['value']);
-					break;
-
-				case 'fieldset':
-					$counter++;
-					if ( $counter >= 2 )
-						$output .= form_fieldset_close();
-
-					$fieldset = TRUE;
-
-					$output .= form_fieldset( $field['label'], array( 'id'=>'fieldset-'.$field['name'] ) );
-					break;
-
-				case 'number':
-				case 'email':
-				case 'url':
-				case 'search':
-				case 'tel':
-				case 'password':
-				case 'text':
-					$output .= $this->_form_common(	$field['name'], $field['label'],
-						form_input( array('name' => $field['name'],'type' => $field['type'],'value' => set_value($field['name'], $field['std']),'id' => $field['name'],'class' => $input_classes) ),
-						$field['desc'], $field['validation'] );
-					break;
-
-				case 'textarea':
-					$output .= $this->_form_common(	$field['name'], $field['label'],
-						form_textarea( array('name' => $field['name'],'rows' => 3,'cols' => '','value' => set_value($field['name'], $field['std']),'id' => $field['name'],'class' => $input_classes) ),
-						$field['desc'], $field['validation'] );
-					break;
-
-				case 'upload':
-					$output .= $this->_form_common(	$field['name'], $field['label'],
-						form_upload( array('name' => $field['name'], 'id' => $field['name'],'class' => $input_classes) ),
-						$field['desc'], $field['validation'] );
-					break;
-
-				case 'multiselect':
-				case 'dropdown':
-					$output .= $this->_form_selectbox($field['name'], $field['label'], $field['std'], $field['option'], $field['type'], $field['attr'], $field['desc'], $field['validation']);
-					break;
-
-				case 'radiobox':
-				case 'checkbox':
-					$output .= $this->_form_radiocheckbox($field['name'], $field['label'], $field['std'], $field['option'], $field['type'], $field['desc'], $field['validation']);
-					break;
-			}
+			$output .= $this->compile( $field );
 		}
 
-		if( $fieldset === TRUE )
+		if( $this->has_fieldset === TRUE )
 			$output .= form_fieldset_close();
 
 		$output .= $this->_form_actions();
@@ -145,7 +78,93 @@ class Baka_form Extends Baka_lib
 		return $output;
 	}
 
-	private function _form_radiocheckbox($name, $label, $std, $options, $type = '', $desc = '', $validation = '')
+	protected function compile( $field )
+	{
+		$output			= '';
+		$counter		= 0;
+		$input_classes	= 'form-control input-sm';
+
+		if (!array_key_exists('value', $field) AND !isset( $field['value'] ))
+			$field['value'] = '';
+
+		if (!array_key_exists('std', $field) AND !isset( $field['std'] ))
+			$field['std'] = '';
+
+		if (!array_key_exists('desc', $field) AND !isset( $field['desc'] ))
+			$field['desc'] = '';
+
+		if (!array_key_exists('attr', $field) AND !isset( $field['attr'] ))
+			$field['attr'] = '';
+
+		if (!array_key_exists('validation', $field) AND !isset( $field['validation'] ))
+			$field['validation'] = '';
+
+		$field['id'] = str_replace('_', '-', isset($field['id']) ? $field['id'] : $field['name']);
+
+		switch( $field['type'] )
+		{
+			case 'hidden':
+				$output .= form_hidden($field['name'], $field['value']);
+				break;
+
+			case 'fieldset':
+				$counter++;
+				if ( $counter >= 2 )
+					$output .= form_fieldset_close();
+
+				$this->has_fieldset = TRUE;
+
+				$output .= form_fieldset( $field['label'], array( 'id'=>'fieldset-'.$field['id'] ) );
+				break;
+
+			case 'number':
+			case 'email':
+			case 'url':
+			case 'search':
+			case 'tel':
+			case 'password':
+			case 'text':
+				$output .= $this->_form_common(	$field['name'], $field['label'],
+					form_input( array('name' => $field['name'],'type' => $field['type'],'value' => set_value($field['name'], $field['std']),'id' => $field['id'],'class' => $input_classes) ),
+					$field['id'], $field['desc'], $field['validation'] );
+				break;
+
+			case 'textarea':
+				$output .= $this->_form_common(	$field['name'], $field['label'],
+					form_textarea( array('name' => $field['name'],'rows' => 3,'cols' => '','value' => set_value($field['name'], $field['std']),'id' => $field['id'],'class' => $input_classes) ),
+					$field['id'], $field['desc'], $field['validation'] );
+				break;
+
+			case 'upload':
+				$output .= $this->_form_common(	$field['name'], $field['label'],
+					form_upload( array('name' => $field['name'], 'id' => $field['id'],'class' => $input_classes) ),
+					$field['id'], $field['desc'], $field['validation'] );
+				break;
+
+			case 'multiselect':
+			case 'dropdown':
+				$output .= $this->_form_selectbox( $field['name'], $field['label'], $field['std'], $field['option'], $field['id'], $field['type'], $field['attr'], $field['desc'], $field['validation']);
+				break;
+
+			case 'radiobox':
+			case 'checkbox':
+				$output .= $this->_form_radiocheckbox( $field['name'], $field['label'], $field['std'], $field['option'], $field['id'], $field['type'], $field['desc'], $field['validation']);
+				break;
+
+			case 'subfield':
+				$output .= $this->_form_subfield( $field['name'], $field['label'], $field['id'], $field['fields'], $field['desc'] );
+				// $output .= $this->_form_radiocheckbox($field['name'], $field['label'], $field['std'], $field['option'], $field['type'], $field['desc'], $field['validation']);
+				break;
+
+			default:
+				log_message('error', 'FORM ERROR: '.$field['type'].' Field type are not supported currently');
+				break;
+		}
+
+		return $output;
+	}
+
+	private function _form_radiocheckbox( $name, $label, $std, $options, $id = '', $type = '', $desc = '', $validation = '' )
 	{
 		$type	= ($type == 'checkbox' ? $type : 'radio');
 		$input	= '';
@@ -162,7 +181,7 @@ class Baka_form Extends Baka_lib
 	}
 
 
-	private function _form_selectbox($name, $label, $std, $option, $type = '', $attr = '', $desc = '', $validation = '')
+	private function _form_selectbox( $name, $label, $std, $option, $id = '', $type = '', $attr = '', $desc = '', $validation = '' )
 	{
 		$type	= ($type == 'dropdown' ? $type : 'multiselect');
 		$attr	= 'class="form-control input-sm" id="input_'.$name.'" '.$attr;
@@ -170,7 +189,7 @@ class Baka_form Extends Baka_lib
 		return $this->_form_common(	$name, $label, call_user_func_array('form_'.$type, array($name, $option, set_select($name, $std), $attr)), $desc, $validation );
 	}
 
-	private function _form_common( $name, $label, $input, $desc = '', $validation = '' )
+	private function _form_common( $name, $label, $input, $id = '', $desc = '', $validation = '' )
 	{
 		$group = 'form-group';
 		
@@ -189,7 +208,7 @@ class Baka_form Extends Baka_lib
 		$label_col = (strpos('form-horizontal', $this->form_attrs['class']) !== FALSE ? 'col-lg-3 col-md-3 ' : '' );
 		$input_col = (strpos('form-horizontal', $this->form_attrs['class']) !== FALSE ? 'col-lg-9 col-md-9 ' : '' );
 
-		$output  = '<div id="group-'.$name.'" class="'.$group.'">';
+		$output  = '<div id="group-'.str_replace('_', '-', $name).'" class="'.$group.'">';
 
 		if ($label != '' OR strpos('form-horizontal', $this->form_attrs['class']) !== FALSE )
 			$output .= '	'.form_label( $label, $name, array('class'=> $label_col.'control-label') );
@@ -199,13 +218,99 @@ class Baka_form Extends Baka_lib
 		if ($desc != '')
 		{
 			$output .= '<span class="help-block">';
-			$output .= (validation_errors() ? form_error($name, '', '') : $desc) ;
+			$output .= (validation_errors() ? form_error($name, '', '') . '<br>' : '') . $desc ;
 			$output .= '</span>';
 		}
 
 		$output .= '</div></div>';
 
-		log_message('debug', 'Field '.$label.' loaded');
+		log_message('debug', 'FORM DEBUG: Field '.$label.' loaded');
+
+		return $output;
+	}
+
+	private function _form_subfield( $name, $label, $id = '', $fields = array(), $desc = '' )
+	{
+		$id = $id != '' ? $id : $name;
+		$field_col	= '<div id="subfield-'.str_replace('_', '-', $id).'" class="row">';
+		$input_classes	= 'form-control input-sm';
+		
+		if ( count($fields) == 0)
+		{
+			log_message('error', 'FORM ERROR: Field '.$name.' has no subfield');
+			return FALSE;
+		}
+
+		foreach ( $fields as $field )
+		{
+			$field_col .= '<div class="col-md-'.$field['col'].'">';
+			$validation = '';
+
+			if (isset($field['validation']) AND $field['validation'] != '')
+			{
+				if (strpos('required', $field['validation']) !== false)
+					$field['label'] .= ' *';
+
+				$validation = $field['validation'];
+			}
+
+			$field['name']	= $name.'_'.$field['name'];
+			$field['id']	= str_replace('_', '-', 'input_'.$field['name']);
+
+			switch( $field['type'] )
+			{
+				case 'number':
+				case 'email':
+				case 'url':
+				case 'search':
+				case 'tel':
+				case 'password':
+				case 'text':
+					$field_col .= form_input( array(
+						'name'	=> $field['name'],
+						'type'	=> $field['type'],
+						'value'	=> set_value($field['name'], $field['std']),
+						'id'	=> $field['id'],
+						'class'	=> $input_classes, 'placeholder' => $field['label'] ));
+					break;
+
+				case 'multiselect':
+				case 'dropdown':
+					$type	= ($field['type'] == 'dropdown' ? $field['type'] : 'multiselect');
+					$attr	= 'class="form-control input-sm" id="'.$field['id'].'" placeholder="'.$field['label'].'"';
+					$func	= 'form_'.$type;
+
+					$field_col .= $func( $name.$field['name'], $field['option'], set_select($field['name'], $field['std']), $attr );
+					break;
+
+				// case 'radiobox':
+				// case 'checkbox':
+				// 	$field_col .= $this->_form_radiocheckbox($field['name'], $field['label'], $field['std'], $field['option'], $field['type'], $field['desc'], $field['validation']);
+				// 	break;
+
+				// case 'textarea':
+				// 	$field_col .= $this->_form_common(	$field['name'], $field['label'],
+				// 		form_textarea( array('name' => $field['name'],'rows' => 3,'cols' => '','value' => set_value($field['name'], $field['std']),'id' => $field['name'],'class' => $input_classes) ),
+				// 		$field['desc'], $field['validation'] );
+				// 	break;
+
+				// case 'upload':
+				// 	$field_col .= $this->_form_common(	$field['name'], $field['label'],
+				// 		form_upload( array('name' => $field['name'], 'id' => $field['name'],'class' => $input_classes) ),
+				// 		$field['desc'], $field['validation'] );
+				// 	break;
+
+				default:
+					log_message('error', 'FORM ERROR: '.$field['type'].' Subfield type are not supported currently');
+					break;
+			}
+
+			$field_col .= '</div>';
+		}
+
+		$field_col .= '</div>';
+
+		$output = $this->_form_common( $name, $label, $field_col, $id, $desc, $validation );
 
 		return $output;
 	}

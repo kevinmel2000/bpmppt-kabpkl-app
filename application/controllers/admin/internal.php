@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Internal extends CI_Controller
+class Internal extends BAKA_Controller
 {
 	public function __construct()
 	{

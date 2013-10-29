@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Layanan extends CI_Controller
+class Layanan extends BAKA_Controller
 {
 	public function __construct()
 	{
@@ -12,6 +12,8 @@ class Layanan extends CI_Controller
 
 		$this->baka_theme->add_navbar( 'data_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
 		$this->app_main->data_navbar( 'data_sidebar', 'side');
+
+		$this->data['page_link'] = 'data/layanan/';
 	}
 
 	public function index()
@@ -23,6 +25,8 @@ class Layanan extends CI_Controller
 	{
 		if ( ! class_exists( $service ) )
 			show_404();
+
+		$this->data['page_link'] .= 'ijin/'.$service;
 
 		if ($service !== '')
 		{
@@ -36,19 +40,23 @@ class Layanan extends CI_Controller
 
 	public function data( $service )
 	{
-		$this->data['panel_title'] = $this->baka_theme->set_title( 'Semua data ' . $this->app_data->get_name( $service ) );
+		$this->data['page_link']	.= '/form';
+		$this->data['btn_text']		 = 'Baru';
 
-		$this->data['counter'] = $this->app_data->count_data( $service );
-
-		$this->data['panel_body'] = $this->app_data->get_grid( $service );
+		$this->data['panel_title']	 = $this->baka_theme->set_title( 'Semua data ' . $this->app_data->get_name( $service ) );
+		$this->data['counter']		 = $this->app_data->count_data( $service );
+		$this->data['panel_body']	 = $this->app_data->get_grid( $service );
 
 		$this->baka_theme->load('pages/panel_data', $this->data);
 	}
 
 	public function form( $service )
 	{
-		$this->data['panel_title'] = $this->baka_theme->set_title( 'Input data ' . $this->app_data->get_name( $service ) );
+		$this->data['page_link']	.= '/data';
+		$this->data['form_page']	 = TRUE;
+		$this->data['btn_text']		 = 'Kembali';
 
+		$this->data['panel_title'] = $this->baka_theme->set_title( 'Input data ' . $this->app_data->get_name( $service ) );
 		$this->data['panel_body'] = $this->app_data->get_form( $service );
 
 		$this->baka_theme->load('pages/panel_form', $this->data);
