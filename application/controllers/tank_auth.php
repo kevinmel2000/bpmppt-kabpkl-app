@@ -1,6 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Auth extends BAKA_Controller
+class Auth extends CI_Controller
 {
 	function __construct()
 	{
@@ -566,9 +566,7 @@ class Auth extends BAKA_Controller
 	 */
 	function _create_captcha()
 	{
-		// I change to 'base_url()' to avoid 'index.php' url suffix.
-		// info: http://ellislab.com/codeigniter/user-guide/helpers/url_helper.html
-		return base_url().$this->config->item('cool_captcha_folder', 'tank_auth').'/captcha.php';
+		return site_url().$this->config->item('cool_captcha_folder', 'tank_auth').'/captcha.php';
 	}
 
 	/**
