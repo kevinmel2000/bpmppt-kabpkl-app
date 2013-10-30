@@ -125,19 +125,33 @@ class Baka_form Extends Baka_lib
 			case 'password':
 			case 'text':
 				$output .= $this->_form_common(	$field['name'], $field['label'],
-					form_input( array('name' => $field['name'],'type' => $field['type'],'value' => set_value($field['name'], $field['std']),'id' => $field['id'],'class' => $input_classes) ),
+					form_input( array(
+						'name'	=> $field['name'],
+						'type'	=> $field['type'],
+						'value'	=> set_value( $field['name'], $field['std'] ),
+						'id'	=> $field['id'],
+						'class'	=> $input_classes )),
 					$field['id'], $field['desc'], $field['validation'] );
 				break;
 
 			case 'textarea':
 				$output .= $this->_form_common(	$field['name'], $field['label'],
-					form_textarea( array('name' => $field['name'],'rows' => 3,'cols' => '','value' => set_value($field['name'], $field['std']),'id' => $field['id'],'class' => $input_classes) ),
+					form_textarea( array(
+						'name'	=> $field['name'],
+						'rows'	=> 3,
+						'cols'	=> '',
+						'value'	=> set_value( $field['name'], $field['std'] ),
+						'id'	=> $field['id'],
+						'class'	=> $input_classes )),
 					$field['id'], $field['desc'], $field['validation'] );
 				break;
 
 			case 'upload':
 				$output .= $this->_form_common(	$field['name'], $field['label'],
-					form_upload( array('name' => $field['name'], 'id' => $field['id'],'class' => $input_classes) ),
+					form_upload( array(
+						'name'	=> $field['name'],
+						'id'	=> $field['id'],
+						'class'	=> $input_classes )),
 					$field['id'], $field['desc'], $field['validation'] );
 				break;
 
@@ -186,12 +200,13 @@ class Baka_form Extends Baka_lib
 		$type	= ($type == 'dropdown' ? $type : 'multiselect');
 		$attr	= 'class="form-control input-sm" id="input_'.$name.'" '.$attr;
 
-		return $this->_form_common(	$name, $label, call_user_func_array('form_'.$type, array($name, $option, set_select($name, $std), $attr)), $desc, $validation );
+		return $this->_form_common(	$name, $label, call_user_func_array('form_'.$type, array($name, $option, set_select($name, $std), $attr)), $id, $desc, $validation );
 	}
 
 	private function _form_common( $name, $label, $input, $id = '', $desc = '', $validation = '' )
 	{
-		$group = 'form-group';
+		$group		= 'form-group';
+		$is_error	= (!is_array($desc) ? form_error($name, '<span class="help-block">', '</span>') : FALSE);
 		
 		if ($validation != '')
 		{
@@ -201,7 +216,7 @@ class Baka_form Extends Baka_lib
 				$group .= ' form-required';
 			}
 
-			if (validation_errors())
+			if ( $is_error OR is_array($desc) )
 				$group .= ' has-error';
 		}
 
@@ -213,14 +228,14 @@ class Baka_form Extends Baka_lib
 		if ($label != '' OR strpos('form-horizontal', $this->form_attrs['class']) !== FALSE )
 			$output .= '	'.form_label( $label, $name, array('class'=> $label_col.'control-label') );
 	
-		$output .= '	<div class="'.$input_col.'">'.$input;
+		$output .= '	<div class="'.$input_col.'">'.$input.$is_error;
 		
-		if ($desc != '')
-		{
-			$output .= '<span class="help-block">';
-			$output .= (validation_errors() ? form_error($name, '', '') . '<br>' : '') . $desc ;
-			$output .= '</span>';
-		}
+		if ( !is_array($desc) AND $desc != '' )
+			$output .= '<span class="help-block">'.$desc.'</span>';
+
+		if ( is_array($desc) AND count($desc) > 0 )
+			foreach ($desc as $keterangan)
+				$output .= '<span class="help-block">'.$keterangan.'</span>';
 
 		$output .= '</div></div>';
 
@@ -233,6 +248,7 @@ class Baka_form Extends Baka_lib
 	{
 		$id = $id != '' ? $id : $name;
 		$field_col	= '<div id="subfield-'.str_replace('_', '-', $id).'" class="row">';
+		$errors		= array();
 		$input_classes	= 'form-control input-sm';
 		
 		if ( count($fields) == 0)
@@ -255,7 +271,7 @@ class Baka_form Extends Baka_lib
 			}
 
 			$field['name']	= $name.'_'.$field['name'];
-			$field['id']	= str_replace('_', '-', 'input_'.$field['name']);
+			$field['id']	= str_replace('_', '-', 'input-'.$field['name']);
 
 			switch( $field['type'] )
 			{
@@ -269,9 +285,10 @@ class Baka_form Extends Baka_lib
 					$field_col .= form_input( array(
 						'name'	=> $field['name'],
 						'type'	=> $field['type'],
-						'value'	=> set_value($field['name'], $field['std']),
+						'value'	=> set_value( $field['name'], $field['std'] ),
 						'id'	=> $field['id'],
-						'class'	=> $input_classes, 'placeholder' => $field['label'] ));
+						'class'	=> $input_classes,
+						'placeholder' => $field['label'] ));
 					break;
 
 				case 'multiselect':
@@ -305,10 +322,15 @@ class Baka_form Extends Baka_lib
 					break;
 			}
 
+			if ($is_error = form_error( $field['name'] ))
+				$errors[] = $is_error;
+
 			$field_col .= '</div>';
 		}
 
 		$field_col .= '</div>';
+
+		$desc = ( count($errors) > 0 ? $errors : $desc );
 
 		$output = $this->_form_common( $name, $label, $field_col, $id, $desc, $validation );
 
@@ -374,21 +396,36 @@ class Baka_form Extends Baka_lib
 
 		foreach ($this->fields as $field)
 		{
-			$validation = 'trim|xss_clean';
-
-			if ( array_key_exists('validation', $field) AND strlen($field['validation']) > 0 )
-				$validation = 'trim|'.$field['validation'].'|xss_clean';
-
-			$this->form_validation->set_rules($field['name'], $field['label'], $validation);
-
-			$field_name = $field['name'];
-
-			$this->form_data[$field_name] = (isset($field['callback']) ?
-				call_user_func($field['callback'], $this->input->post($field_name)) :
-				$this->input->post($field_name));
+			if ( $field['type'] == 'subfield' )
+			{
+				foreach ( $field['fields'] as $subfield )
+				{
+					if (isset($subfield['validation']))
+						$this->set_field_rules($field['name'].'_'.$subfield['name'], $subfield['label'], $subfield['validation']);
+				}
+			}
+			else
+			{
+				if (isset($field['validation']))
+					$this->set_field_rules($field['name'], $field['label'], $field['validation']);
+			}
 		}
 			
 		return $this->form_validation->run();
+	}
+
+	protected function set_field_rules( $field_name, $field_label, $validation_rules = '' )
+	{
+		$validation = 'trim|xss_clean';
+
+		if ( strlen($validation_rules) > 0 )
+			$validation = 'trim|'.$validation_rules.'|xss_clean';
+
+		$this->form_validation->set_rules($field_name, $field_label, $validation);
+
+		$this->form_data[$field_name] = (isset($field['callback']) ?
+			call_user_func($field['callback'], $this->input->post($field_name)) :
+			$this->input->post($field_name));
 	}
 
 	public function submited_data()

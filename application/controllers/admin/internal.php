@@ -116,6 +116,12 @@ class Internal extends BAKA_Controller
 										'label'	=> 'Format Tanggal',
 										'std'	=> get_app_setting('app_date_format'),
 										),
+									array(
+										'name'	=> 'app_datetime_format',
+										'type'	=> 'text',
+										'label'	=> 'Format Waktu &amp; Tanggal',
+										'std'	=> get_app_setting('app_datetime_format'),
+										),
 									));
 
 		if (!$form->validate_submition())

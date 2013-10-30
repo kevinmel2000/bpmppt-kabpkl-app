@@ -14,26 +14,29 @@ class Pengobatan_tradisional extends CI_Model
 
 	public function form( $data_id = '' )
 	{
-		$fields = array(
+		$data = ( $data_id != '' ? $this->app_data->get_fulldata_by_id( $data_id ) : '' );
+
+		return array(
 			array(
-				'name'	=> $this->slug.'_surat_no',
+				'name'	=> $this->slug.'_surat',
 				'label'	=> 'Nomor &amp; Tanggal Surat',
 				'type'	=> 'subfield',
 				'fields'=> array(
 					array(
 						'col'	=> '6',
-						'name'	=> 'proses',
+						'name'	=> 'nomor',
 						'label'	=> 'Nomor',
 						'type'	=> 'text',
-						'std'	=> ($data_id != '' ? $query->surat_no : set_value($this->slug.'_surat_no')),
+						'std'	=> ($data_id != '' ? $data->{$this->slug.'_surat_nomor'} : ''),
 						'validation'=> 'required' ),
 					array(
 						'col'	=> '6',
-						'name'	=> 'kond',
+						'name'	=> 'tanggal',
 						'label'	=> 'Tanggal',
 						'type'	=> 'text',
-						'std'	=> ($data_id != '' ? $query->surat_tgl : set_value($this->slug.'_surat_tgl')),
-						'validation'=> 'required' ),
+						'std'	=> ($data_id != '' ? $data->{$this->slug.'_surat_tanggal'} : ''),
+						'validation'=> 'required',
+						'callback'=> 'string_to_date' ),
 					)
 				),
 			array(
@@ -44,25 +47,25 @@ class Pengobatan_tradisional extends CI_Model
 				'name'	=> $this->slug.'_pemohon_nama',
 				'label'	=> 'Nama lengkap',
 				'type'	=> 'text',
-				'std'	=> ($data_id != '' ? $query->pemohon_nama : set_value($this->slug.'_pemohon_nama')),
+				'std'	=> ($data_id != '' ? $data->{$this->slug.'_pemohon_nama'} : ''),
 				'validation'=> 'required' ),
 			array(
 				'name'	=> $this->slug.'_pemohon_jabatan',
 				'label'	=> 'Jabatan',
 				'type'	=> 'text',
-				'std'	=> ($data_id != '' ? $query->pemohon_jabatan : set_value($this->slug.'_pemohon_jabatan')),
+				'std'	=> ($data_id != '' ? $data->{$this->slug.'_pemohon_jabatan'} : ''),
 				'validation'=> 'required' ),
 			array(
 				'name'	=> $this->slug.'_pemohon_usaha',
 				'label'	=> 'Perusahaan',
 				'type'	=> 'text',
-				'std'	=> ($data_id != '' ? $query->pemohon_usaha : set_value($this->slug.'_pemohon_usaha')),
+				'std'	=> ($data_id != '' ? $data->{$this->slug.'_pemohon_usaha'} : ''),
 				'validation'=> 'required' ),
 			array(
 				'name'	=> $this->slug.'_pemohon_alamat',
 				'label'	=> 'Alamat',
 				'type'	=> 'textarea',
-				'std'	=> ($data_id != '' ? $query->pemohon_alamat : set_value($this->slug.'_pemohon_alamat')),
+				'std'	=> ($data_id != '' ? $data->{$this->slug.'_pemohon_alamat'} : ''),
 				'validation'=> 'required' ),
 			array(
 				'name'	=> $this->slug.'_fieldset_data_lokasi',
@@ -72,29 +75,27 @@ class Pengobatan_tradisional extends CI_Model
 				'name'	=> $this->slug.'_lokasi_tujuan',
 				'label'	=> 'Tujuan Permohonan',
 				'type'	=> 'text',
-				'std'	=> ($data_id != '' ? $query->lokasi_tujuan : set_value($this->slug.'_lokasi_tujuan')),
+				'std'	=> ($data_id != '' ? $data->{$this->slug.'_lokasi_tujuan'} : ''),
 				'validation'=> 'required' ),
 			array(
 				'name'	=> $this->slug.'_lokasi_alamat',
 				'label'	=> 'Alamat Lokasi',
 				'type'	=> 'textarea',
-				'std'	=> ($data_id != '' ? $query->lokasi_alamat : set_value($this->slug.'_lokasi_alamat')),
+				'std'	=> ($data_id != '' ? $data->{$this->slug.'_lokasi_alamat'} : ''),
 				'validation'=> 'required' ),
 			array(
 				'name'	=> $this->slug.'_lokasi_nama',
 				'label'	=> 'Luas Area (M<sup>2</sup>)',
 				'type'	=> 'number',
-				'std'	=> ($data_id != '' ? $query->lokasi_nama : set_value($this->slug.'_lokasi_nama')),
+				'std'	=> ($data_id != '' ? $data->{$this->slug.'_lokasi_nama'} : ''),
 				'validation'=> 'required' ),
 			array(
 				'name'	=> $this->slug.'_lokasi_area_hijau',
 				'label'	=> 'Area terbuka hijau',
 				'type'	=> 'text',
-				'std'	=> ($data_id != '' ? $query->lokasi_area_hijau : set_value($this->slug.'_lokasi_area_hijau')),
+				'std'	=> ($data_id != '' ? $data->{$this->slug.'_lokasi_area_hijau'} : ''),
 				'validation'=> 'required' ),
 			);
-
-		return $fields;
 	}
 
 	public function data()

@@ -56,21 +56,28 @@ function format_size( $size )
 
 function format_date( $string = '' )
 {
-	$string = $string != '' ? strtotime( $string ) : now();
+	$string = $string != '' ? strtotime( $string ) : time();
 
-	return date( app_setting('app_date_format'), $string);
+	return date( get_app_setting('app_date_format'), $string);
+}
+
+function format_datetime( $string = '' )
+{
+	$string = $string != '' ? strtotime( $string ) : time();
+
+	return date( get_app_setting('app_datetime_format'), $string);
 }
 
 function string_to_date( $string = '' )
 {
-	$string = $string != '' ? strtotime( $string ) : now();
+	$string = $string != '' ? strtotime( $string ) : time();
 
 	return date( 'Y-m-d', $string);
 }
 
 function string_to_datetime( $string = '' )
 {
-	$string = $string != '' ? strtotime( $string ) : now();
+	$string = $string != '' ? strtotime( $string ) : time();
 
 	return date( 'Y-m-d H:i:s', $string);
 }

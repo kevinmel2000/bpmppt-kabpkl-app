@@ -21,16 +21,16 @@ class Layanan extends BAKA_Controller
 		$this->semua();
 	}
 
-	public function ijin( $service = '', $page = 'data' )
+	public function ijin( $data_type = '', $page = 'data' )
 	{
-		if ( ! class_exists( $service ) )
+		if ( ! class_exists( $data_type ) )
 			show_404();
 
-		$this->data['page_link'] .= 'ijin/'.$service;
+		$this->data['page_link'] .= 'ijin/'.$data_type;
 
-		if ($service !== '')
+		if ($data_type !== '')
 		{
-			$this->$page( $service );
+			$this->$page( $data_type );
 		}
 		else
 		{
@@ -38,28 +38,45 @@ class Layanan extends BAKA_Controller
 		}
 	}
 
-	public function data( $service )
+	public function data( $data_type )
 	{
+		$delete_link = $this->data['page_link'].'/delete';
+
 		$this->data['page_link']	.= '/form';
 		$this->data['btn_text']		 = 'Baru';
 
-		$this->data['panel_title']	 = $this->baka_theme->set_title( 'Semua data ' . $this->app_data->get_name( $service ) );
-		$this->data['counter']		 = $this->app_data->count_data( $service );
-		$this->data['panel_body']	 = $this->app_data->get_grid( $service );
+		$this->data['panel_title']	 = $this->baka_theme->set_title( 'Semua data ' . $this->app_data->get_name( $data_type ) );
+		$this->data['counter']		 = $this->app_data->count_data( $data_type );
+		$this->data['panel_body']	 = $this->app_data->get_grid( $data_type, $this->data['page_link'], $delete_link );
 
 		$this->baka_theme->load('pages/panel_data', $this->data);
 	}
 
-	public function form( $service )
+	public function form( $data_type )
 	{
 		$this->data['page_link']	.= '/data';
 		$this->data['form_page']	 = TRUE;
 		$this->data['btn_text']		 = 'Kembali';
 
-		$this->data['panel_title'] = $this->baka_theme->set_title( 'Input data ' . $this->app_data->get_name( $service ) );
-		$this->data['panel_body'] = $this->app_data->get_form( $service );
+		$this->data['panel_title']	= $this->baka_theme->set_title( 'Input data ' . $this->app_data->get_name( $data_type ) );
+		$this->data['panel_body']	= $this->app_data->get_form( $data_type, $this->uri->segment(6), $this->data['page_link'] );
 
 		$this->baka_theme->load('pages/panel_form', $this->data);
+	}
+
+	public function delete( $data_type )
+	{
+		if ( $delete = $this->app_data->delete_data( $this->uri->segment(6), $data_type ) )
+		{
+			$this->session->set_flashdata('message', $delete->message);
+		}
+
+		redirect( 'data/layanan/ijin/'.$data_type );
+	}
+
+	public function prints( $data_type, $data_id )
+	{
+		return true;
 	}
 
 	function _test()

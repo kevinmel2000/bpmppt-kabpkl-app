@@ -15,9 +15,11 @@ class Mendirikan_bangunan extends CI_Model
 
 	public function form( $data_id = '' )
 	{
+		$data = ( $data_id != '' ? $this->app_data->get_fulldata_by_id( $data_id ) : '' );
+
 		return array(
 			array(
-				'name'	=> $this->slug.'_surat_no',
+				'name'	=> $this->slug.'_surat',
 				'label'	=> 'Nomor &amp; Tanggal Surat',
 				'type'	=> 'subfield',
 				'fields'=> array(
@@ -26,15 +28,16 @@ class Mendirikan_bangunan extends CI_Model
 						'name'	=> 'nomor',
 						'label'	=> 'Nomor',
 						'type'	=> 'text',
-						'std'	=> ($data_id != '' ? $query->surat_nomor : set_value($this->slug.'_surat_nomor')),
+						'std'	=> ($data_id != '' ? $data->{$this->slug.'_surat_nomor'} : ''),
 						'validation'=> 'required' ),
 					array(
 						'col'	=> '6',
 						'name'	=> 'tanggal',
 						'label'	=> 'Tanggal',
 						'type'	=> 'text',
-						'std'	=> ($data_id != '' ? $query->surat_tanggal : set_value($this->slug.'_surat_tanggal')),
-						'validation'=> 'required' ),
+						'std'	=> ($data_id != '' ? $data->{$this->slug.'_surat_tanggal'} : ''),
+						'validation'=> 'required',
+						'callback'=> 'string_to_date' ),
 					)
 				),
 			array(
@@ -44,7 +47,7 @@ class Mendirikan_bangunan extends CI_Model
 				'option'=> array(
 					'baru'	=> 'Mendirikan Bangunan Baru',
 					'rehap'	=> 'Perbaikan/Rehab Bangunan Lama' ),
-				'std'	=> ($data_id != '' ? $query->bangunan_maksud : set_value($this->slug.'_bangunan_maksud')),
+				'std'	=> ($data_id != '' ? $data->{$this->slug.'_bangunan_maksud'} : ''),
 				'validation'=> 'required' ),
 			array(
 				'name'	=> $this->slug.'_bangunan_guna',
@@ -57,7 +60,7 @@ class Mendirikan_bangunan extends CI_Model
 					'gudang'=> 'Gudang',
 					'pabrik'=> 'Pabrik',
 					'kantor'=> 'Kantor' ),
-				'std'	=> ($data_id != '' ? $query->bangunan_guna : set_value($this->slug.'_bangunan_guna')),
+				'std'	=> ($data_id != '' ? $data->{$this->slug.'_bangunan_guna'} : ''),
 				'validation'=> 'required' ),
 			array(
 				'name'	=> $this->slug.'_fieldset_data_pemohon',
@@ -67,19 +70,19 @@ class Mendirikan_bangunan extends CI_Model
 				'name'	=> $this->slug.'_pemohon_nama',
 				'label'	=> 'Nama lengkap',
 				'type'	=> 'text',
-				'std'	=> ($data_id != '' ? $query->pemohon_nama : set_value($this->slug.'_pemohon_nama')),
+				'std'	=> ($data_id != '' ? $data->{$this->slug.'_pemohon_nama'} : ''),
 				'validation'=> 'required' ),
 			array(
 				'name'	=> $this->slug.'_pemohon_kerja',
 				'label'	=> 'Pekerjaan',
 				'type'	=> 'text',
-				'std'	=> ($data_id != '' ? $query->pemohon_kerja : set_value($this->slug.'_pemohon_kerja')),
+				'std'	=> ($data_id != '' ? $data->{$this->slug.'_pemohon_kerja'} : ''),
 				'validation'=> 'required' ),
 			array(
 				'name'	=> $this->slug.'_pemohon_alamat',
 				'label'	=> 'Alamat',
 				'type'	=> 'textarea',
-				'std'	=> ($data_id != '' ? $query->pemohon_alamat : set_value($this->slug.'_pemohon_alamat')),
+				'std'	=> ($data_id != '' ? $data->{$this->slug.'_pemohon_alamat'} : ''),
 				'validation'=> 'required' ),
 			array(
 				'name'	=> $this->slug.'_fieldset_data_bangunan',
@@ -89,14 +92,14 @@ class Mendirikan_bangunan extends CI_Model
 				'name'	=> $this->slug.'_bangunan_lokasi',
 				'label'	=> 'Lokasi bangunan',
 				'type'	=> 'textarea',
-				'std'	=> ($data_id != '' ? $query->bangunan_lokasi : set_value($this->slug.'_bangunan_lokasi')),
+				'std'	=> ($data_id != '' ? $data->{$this->slug.'_bangunan_lokasi'} : ''),
 				'validation'=> 'required' ),
 			array(
 				'name'	=> $this->slug.'_bangunan_tanah_luas',
 				'label'	=> 'Luas Tanah Bangunan (M<sup>2</sup>)',
 				'type'	=> 'number',
-				'std'	=> ($data_id != '' ? $query->bangunan_tanah_luas : set_value($this->slug.'_bangunan_tanah_luas')),
-				'validation'=> 'required' ),
+				'std'	=> ($data_id != '' ? $data->{$this->slug.'_bangunan_tanah_luas'} : ''),
+				'validation'=> 'required|numeric' ),
 			array(
 				'name'	=> $this->slug.'_bangunan_tanah_keadaan',
 				'label'	=> 'Keadaan Tanah',
@@ -105,7 +108,7 @@ class Mendirikan_bangunan extends CI_Model
 					'd1'	=> 'D I',
 					'd2'	=> 'D II',
 					'd3'	=> 'D III' ),
-				'std'	=> ($data_id != '' ? $query->bangunan_tanah_keadaan : set_value($this->slug.'_bangunan_tanah_keadaan')),
+				'std'	=> ($data_id != '' ? $data->{$this->slug.'_bangunan_tanah_keadaan'} : ''),
 				'validation'=> 'required' ),
 			array(
 				'name'	=> $this->slug.'_bangunan_tanah_status',
@@ -114,26 +117,26 @@ class Mendirikan_bangunan extends CI_Model
 				'option'=> array(
 					'hm'	=> 'Hak guna bangunan',
 					'hg'	=> 'Hak milik' ),
-				'std'	=> ($data_id != '' ? $query->bangunan_tanah_status : set_value($this->slug.'_bangunan_tanah_status')),
+				'std'	=> ($data_id != '' ? $data->{$this->slug.'_bangunan_tanah_status'} : ''),
 				'validation'=> 'required' ),
 			array(
 				'name'	=> $this->slug.'_bangunan_milik_no',
 				'label'	=> 'Nomor kepemilikan',
 				'type'	=> 'text',
-				'std'	=> ($data_id != '' ? $query->bangunan_milik_no : set_value($this->slug.'_bangunan_milik_no')),
+				'std'	=> ($data_id != '' ? $data->{$this->slug.'_bangunan_milik_no'} : ''),
 				'validation'=> 'required' ),
 			array(
 				'name'	=> $this->slug.'_bangunan_milik_an',
 				'label'	=> 'Atas Nama kepemilikan',
 				'type'	=> 'text',
-				'std'	=> ($data_id != '' ? $query->bangunan_milik_an : set_value($this->slug.'_bangunan_milik_an')),
+				'std'	=> ($data_id != '' ? $data->{$this->slug.'_bangunan_milik_an'} : ''),
 				'validation'=> 'required' ),
 			array(
 				'name'	=> $this->slug.'_bangunan_luas',
 				'label'	=> 'Luas bangunan (M<sup>2</sup>)',
 				'type'	=> 'text',
-				'std'	=> ($data_id != '' ? $query->bangunan_luas : set_value($this->slug.'_bangunan_luas')),
-				'validation'=> 'required' ),
+				'std'	=> ($data_id != '' ? $data->{$this->slug.'_bangunan_luas'} : ''),
+				'validation'=> 'required|numeric' ),
 			);
 	}
 

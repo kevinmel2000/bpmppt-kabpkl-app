@@ -36,9 +36,7 @@ class App_data extends CI_Model
 				$this->load->model( $this->_data_dir.$data );
 
 			$this->_type[$data]['slug'] = ( property_exists($this->$data, 'slug') ? $this->$data->slug : NULL );
-
 			$this->_type[$data]['code'] = ( property_exists($this->$data, 'kode') ? $this->$data->kode : NULL );
-
 			$this->_type[$data]['name'] = ( property_exists($this->$data, 'nama') ? $this->$data->nama : NULL );
 		}
 	}
@@ -69,7 +67,8 @@ class App_data extends CI_Model
 
 		foreach (directory_map( APPPATH.'models/'.$this->_data_dir) as $data_model)
 		{
-			$ret[] = strtolower(str_replace(EXT, '', $data_model));
+			if (substr($data_model, 0, 1) !== '_')
+				$ret[] = strtolower(str_replace(EXT, '', $data_model));
 		}
 
 		return $ret;
@@ -105,14 +104,17 @@ class App_data extends CI_Model
 	}
 
 	// get single modul form
-	public function get_form( $data_model )
+	public function get_form( $data_model, $data_id = '', $link )
 	{
 		$form = $this->baka_form->add_form( current_url(), $data_model )
-								->add_fields( $this->$data_model->form() );
+								->add_fields( $this->$data_model->form( $data_id ) );
 
 		if ( $form->validate_submition() )
 		{
-			$form->submited_data();
+			if ( $this->create_data( $this->get_slug($data_model), $form->submited_data() ) )
+			{
+				redirect( $link );
+			}
 		}
 
 		return $form->render();
@@ -130,9 +132,9 @@ class App_data extends CI_Model
 	}
 
 	// get single modul grid
-	public function get_grid( $data_model = '' )
+	public function get_grid( $data_model = '', $form_link = '', $delete_link = '' )
 	{
-		$query = $this->get_data_by_type( $data_model );
+		$query = $this->get_data_by_type( $this->get_slug( $data_model ) );
 
 		if ( ! $this->load->is_loaded('table'))
 			$this->load->library('table');
@@ -163,15 +165,15 @@ class App_data extends CI_Model
 
 			foreach ( $query->result() as $row )
 			{
-				$col_1 = array( 'data'	=> anchor('s#'.$row->id, '#'.$row->id),
+				$col_1 = array( 'data'	=> anchor($form_link.'/'.$row->id, '#'.$row->id),
 								'class'	=> 'data-id',
 								'width'	=> '5%' );
 
-				$col_2 = array( 'data'	=> '<strong>No. '.$row->no_agenda.'</strong><br><small class="text-muted">'.$row->created_on.'</small>',
+				$col_2 = array( 'data'	=> '<strong>'.anchor($form_link.'/'.$row->id, 'No. '.$row->no_agenda).'</strong><br><small class="text-muted">'.format_datetime($row->created_on).'</small>',
 								'class'	=> 'data-value',
 								'width'	=> '30%' );
 
-				$col_3 = array( 'data'	=> '<strong>'.$row->petitioner.'</strong><br><small class="text-muted">'.$row->created_on.'</small>',
+				$col_3 = array( 'data'	=> '<strong>'.$row->petitioner.'</strong><br><small class="text-muted">'.format_datetime($row->adopted_on).'</small>',
 								'class'	=> 'data-value',
 								'width'	=> '30%' );
 
@@ -181,7 +183,7 @@ class App_data extends CI_Model
 
 				$class = 'class="btn btn-default btn-sm"';
 
-				$col_5 = array( 'data'	=> '<div class="btn-group btn-group-justified">'.anchor('somelink', 'Lihat', $class ).anchor('somelink', 'Hapus', $class).'</div>',
+				$col_5 = array( 'data'	=> '<div class="btn-group btn-group-justified">'.anchor($form_link.'/'.$row->id, 'Edit', $class ).anchor($delete_link.'/'.$row->id, 'Hapus', $class).'</div>',
 								'class'	=> 'data-action',
 								'width'	=> '20%' );
 
@@ -294,7 +296,7 @@ class App_data extends CI_Model
 		}
 		else
 		{
-			$out = $this->db->where('type', $data_type)
+			$out = $this->db->where('type', $this->get_slug( $data_type ))
 							  ->count_all_results($this->_data_table);
 		}
 
@@ -304,15 +306,76 @@ class App_data extends CI_Model
 	// get datameta
 	public function get_datameta( $data_id, $data_type )
 	{
-		$query	= $this->db->get_where( $this->_datameta_table, array( 'data_id' => $data_id, 'data_type' => $data_type ) );
-		$obj	= new stdClass;
-
-		foreach ( $query->result() as $row )
+		if ($query = $this->db->get_where( $this->_datameta_table, array( 'data_id' => $data_id, 'data_type' => $data_type ) ))
 		{
-			$obj->{$row->meta_key} = $row->meta_value;
+			$obj	= new stdClass;
+
+			foreach ( $query->result() as $row )
+			{
+				$obj->{$row->meta_key} = $row->meta_value;
+			}
+
+			return $obj;
 		}
 
-		return $obj;
+		return FALSE;
+	}
+
+	public function create_data( $data_type, $submited_data )
+	{
+		$petitioner	= $data_type.'_pemohon_nama';
+		$no_agenda	= $data_type.'_surat_nomor';
+
+		$data['no_agenda']	= $submited_data[$no_agenda];
+		$data['created_on']	= string_to_datetime();
+		$data['created_by']	= 1;
+		$data['type']		= $data_type;
+		$data['label']		= '-';
+		$data['petitioner']	= $submited_data[$petitioner];
+		$data['adopted_on']	= string_to_datetime();
+		$data['status']		= 'pending';
+		$data['desc']		= '';
+
+		if ( $this->db->insert( $this->_data_table, $data ) )
+		{
+			$data_id = $this->db->insert_id();
+
+			if ( $this->_create_datameta( $data_id, $data_type, $submited_data ) )
+			{
+				$this->message[] = 'Permohonan dari saudara/i '.$submited_data[$petitioner].' berhasil disimpan.';
+
+				log_message('debug', 'Berhasil membuat data meta untuk permohonan #'.$data_id);
+
+				return $data_id;
+			}
+		}
+		else
+		{
+			$this->errors[] = 'Terjadi kegagalan penginputan data.';
+
+			return FALSE;
+		}
+	}
+
+	public function delete_data( $data_id, $data_type )
+	{
+		if ( $data = $this->db->delete( $this->_data_table, array( 'id' => $data_id, 'type' => $this->get_slug( $data_type ) ) ) )
+		{
+			if ( $this->_delete_datameta( $data_id, $data_type ) )
+			{
+				$this->message[] = 'Permohonan dari saudara/i '.$submited_data[$petitioner].' berhasil disimpan.';
+
+				log_message('debug', 'Berhasil membuat data meta untuk permohonan #'.$data_id);
+
+				return $this;
+			}
+		}
+		else
+		{
+			$this->errors[] = 'Terjadi kegagalan penghapusan data.';
+
+			return FALSE;
+		}
 	}
 
 	/**
@@ -349,7 +412,16 @@ class App_data extends CI_Model
 			$i++;
 		}
 
-		return $this->db->insert_batch( $this->_datameta_table, $meta_data );
+		if ( $this->db->insert_batch( $this->_datameta_table, $meta_data ) )
+		{
+			log_message('debug', 'Berhasil membuat data meta untuk permohonan #'.$data_id);
+		}
+		else
+		{
+			$this->errors[] = 'Terjadi kegagalan penginputan data.';
+			return ;
+		}
+
 	}
 
 	/**
