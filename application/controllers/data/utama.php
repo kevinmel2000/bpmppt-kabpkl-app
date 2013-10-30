@@ -6,6 +6,7 @@ class Utama extends BAKA_Controller
 	{
 		parent::__construct();
 
+		$this->data['load_toolbar'] = TRUE;
 		$this->baka_theme->set_title('Dashboard');
 
 		$this->baka_theme->add_navbar( 'data_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
@@ -20,6 +21,7 @@ class Utama extends BAKA_Controller
 	public function stat()
 	{
 		$this->data['single_page']	= FALSE;
+
 		$this->data['panel_title']	= $this->baka_theme->set_title('Dashboard ');
 		$this->data['data_type']	= $this->app_data->get_type_list_assoc();
 		$this->data['data_count']	= $this->app_data->count_data();

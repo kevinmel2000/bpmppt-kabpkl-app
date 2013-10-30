@@ -138,7 +138,7 @@ class Internal extends BAKA_Controller
 
 		// $query = $this->db->get('system_opt');
 
-		// $this->data['panel_body'] = $query->list_fields();
+		$this->data['panel_body'] = '';
 		
 		$this->baka_theme->load('pages/test_panel', $this->data);
 	}

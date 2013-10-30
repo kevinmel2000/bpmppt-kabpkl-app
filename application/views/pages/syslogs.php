@@ -7,10 +7,10 @@
 	</div>
 	<div class="panel-body">
 		<div class="row">
-			<div class="col-md-3"><?php echo Baka_theme::get_nav('panel') ?></div>
+			<div class="col-md-3"><?php echo get_nav('panel') ?></div>
 			<div class="col-md-9">
 				<?php echo uri_string() ?>
-				<?php print_pre($panel_log) ?>
+				<?php if ( isset( $panel_body ) ) print_pre( $panel_body ) ?>
 			</div>
 		</div>
 	</div>

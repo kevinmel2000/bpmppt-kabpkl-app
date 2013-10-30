@@ -18,7 +18,7 @@ class Persetujuan_prinsip extends CI_Model
 
 		return array(
 			array(
-				'name'	=> $this->slug.'_surat_no',
+				'name'	=> $this->slug.'_surat',
 				'label'	=> 'Nomor &amp; Tanggal Surat',
 				'type'	=> 'subfield',
 				'fields'=> array(
@@ -27,15 +27,16 @@ class Persetujuan_prinsip extends CI_Model
 						'name'	=> 'nomor',
 						'label'	=> 'Nomor',
 						'type'	=> 'text',
-						'std'	=> ($data_id != '' ? $query->{$this->slug.'_surat_nomor'} : ''),
+						'std'	=> ($data_id != '' ? $data->{$this->slug.'_surat_nomor'} : ''),
 						'validation'=> 'required' ),
 					array(
 						'col'	=> '6',
 						'name'	=> 'tanggal',
 						'label'	=> 'Tanggal',
 						'type'	=> 'text',
-						'std'	=> ($data_id != '' ? $query->{$this->slug.'_surat_tanggal'} : ''),
-						'validation'=> 'required' ),
+						'std'	=> ($data_id != '' ? $data->{$this->slug.'_surat_tanggal'} : ''),
+						'validation'=> 'required',
+						'callback'=> 'string_to_date' ),
 					)
 				),
 			array(

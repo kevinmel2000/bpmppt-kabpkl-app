@@ -130,7 +130,7 @@ class Baka_theme Extends Baka_lib
 
 	public function get_nav( $position )
 	{
-		if (array_key_exists($position, $this->_theme_data['navbar']))
+		if ( isset($this->_theme_data['navbar'][$position]) )
 			return $this->make_menu( $this->_theme_data['navbar'][$position] );
 		else
 			log_message('error', $position." navbar doesn't exists.");

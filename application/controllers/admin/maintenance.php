@@ -100,26 +100,25 @@ class Maintenance extends BAKA_Controller
 	{
 		$this->data['panel_title'] = $this->baka_theme->set_title('Aktifitas sistem');
 
-		$this->baka_theme->add_navbar( 'logpanel_sidebar', 'nav-tabs nav-stacked nav-tabs-left', 'panel' );
+		$this->baka_theme->add_navbar( 'log_sidebar', 'nav-tabs nav-stacked nav-tabs-left', 'panel' );
 
-		foreach (directory_map( APPPATH.'logs/') as $log)
+		foreach (directory_map( APPPATH.'storage/logs/') as $log)
 		{
 			if ( $log != 'index.html')
 			{
 				$log	= strtolower(str_replace(EXT, '', $log));
-				$label	= 'Ttanggal '.format_date(str_replace('log-', '', $log));
+				$label	= 'Tanggal '.format_date(str_replace('log-', '', $log));
 
-				$this->baka_theme->add_navmenu( 'logpanel_sidebar', $log, 'link', current_url().'?read='.$log, $label, array(), 'panel' );
+				$this->baka_theme->add_navmenu( 'log_sidebar', $log, 'link', current_url().'?read='.$log, $label, array(), 'panel' );
 			}
 		}
 
 		if ( $read_log = $this->input->get('read') )
 		{
 			$this->load->helper('file');
-			$this->data['panel_log'] = read_file( APPPATH.'logs/'.$read_log.EXT );
+			$this->data['panel_title'] .= 'Tanggal '.format_date(str_replace('log-', '', $read_log));
+			$this->data['panel_body'] = read_file( APPPATH.'storage/logs/'.$read_log.EXT );
 		}
-
-		// $this->data['panel_body'] = $logfile;
 
 		$this->baka_theme->load('pages/syslogs', $this->data);
 	}

@@ -34,7 +34,7 @@ class Users extends BAKA_Controller
 		else
 			$this->data['panel_body'] = $form->submited_data();
 
-		$this->baka_theme->load('pages/panel_form', $this->data);
+		$this->baka_theme->load('pages/panel_data', $this->data);
 	}
 
 	public function groups()
@@ -53,26 +53,26 @@ class Users extends BAKA_Controller
 
 		if (!$form->validate_submition())
 		{
-			$all_users	= $this->baka_users->get_all();
-			$users		= null;
+			// $all_users	= $this->baka_users->get_all();
+			// $users		= null;
 
 			// $this->baka_users->delete(3);
 
-			if ( $all_users->num_rows() > 0 )
-			{
-				// $users = $this->baka_users->get_profile_by_id(3);
-			}
-			else
-			{
-				$this->baka_users->create(array(
-					'group_id' => 0,
-					'username' => 'me',
-					'email' => 'me@mail.com',
-					'password' => 'pass',
-					));
-			}
+			// if ( $all_users->num_rows() > 0 )
+			// {
+			// 	$users = $this->baka_users->get_profile_by_id(3);
+			// }
+			// else
+			// {
+			// 	$this->baka_users->create(array(
+			// 		'group_id' => 0,
+			// 		'username' => 'me',
+			// 		'email' => 'me@mail.com',
+			// 		'password' => 'pass',
+			// 		));
+			// }
 
-			$this->data['panel_body'] = $users;
+			$this->data['panel_body'] = $form->render();
 		}
 		else
 			$this->data['panel_body'] = $form->submited_data();

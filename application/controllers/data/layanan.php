@@ -8,6 +8,7 @@ class Layanan extends BAKA_Controller
 
 		// $this->data['user_id'] = Aplikasi::user_auth();
 
+		$this->data['load_toolbar'] = TRUE;
 		$this->baka_theme->set_title('Administrasi data');
 
 		$this->baka_theme->add_navbar( 'data_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
