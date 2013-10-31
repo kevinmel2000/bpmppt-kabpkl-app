@@ -20,10 +20,9 @@ class Users extends CI_Model
 	{
 		parent::__construct();
 
-		$ci =& get_instance();
-		$this->table_name			= $ci->config->item('db_table_prefix', 'tank_auth').$this->table_name;
-		$this->profile_table_name	= $ci->config->item('db_table_prefix', 'tank_auth').$this->profile_table_name;
-		$this->dbprefix = $ci->config->item('db_table_prefix', 'tank_auth');
+		$this->dbprefix				= $this->config->item('db_table_prefix', 'tank_auth');
+		$this->table_name			= $this->dbprefix.$this->table_name;
+		$this->profile_table_name	= $this->dbprefix.$this->profile_table_name;
 	}
 
 	/**
@@ -356,7 +355,7 @@ class Users extends CI_Model
 		$this->db->update($this->table_name, array(
 			'banned'		=> 1,
 			'ban_reason'	=> $reason,
-		));
+			));
 	}
 
 	/**

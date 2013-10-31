@@ -96,6 +96,11 @@ function baka_get_umur( $lahir, $sampai = '' )
 	return floor($tahunlahir);
 }
 
+function second_to_day( $second )
+{
+	return $second / 60 / 60 / 24;
+}
+
 function baka_echo( $anu )
 {
 	if ( is_array( $anu ) OR is_object( $anu ) )

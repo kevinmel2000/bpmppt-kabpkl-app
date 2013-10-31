@@ -1,6 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Auth extends CI_Controller
+class Tank_auth extends CI_Controller
 {
 	function __construct()
 	{

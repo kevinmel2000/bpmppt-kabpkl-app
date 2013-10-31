@@ -3,10 +3,10 @@
 class Baka_lib
 {
 	/** @var array message wrapper */
-	private $_messages	= array();
+	private $messages	= array();
 
 	/** @var array error wrapper */
-	private $_errors	= array();
+	private $errors	= array();
 
 	public function __construct()
 	{
@@ -55,9 +55,9 @@ class Baka_lib
 			}
 		}
 
-		if (!empty( $this->_messages ))
+		if (!empty( $this->messages ))
 		{
-			foreach( $this->_messages as $message)
+			foreach( $this->messages as $message)
 			{
 				log_message( 'debug', $message );
 			}
@@ -75,6 +75,22 @@ class Baka_lib
 		$curent_version	= explode('.', $this->agent->version());
 
 		return ($curent_version[0] <= $min_browser[$this->agent->browser()] ? TRUE : FALSE  );
+	}
+
+	public function set_message( $message, $flash = FALSE )
+	{
+		$this->messages[] = $message;
+
+		if ( $flash == true )
+			$this->session->set_flashdata('message', $message);
+	}
+
+	public function set_error( $error, $flash = FALSE )
+	{
+		$this->errors[] = $error;
+
+		if ( $flash == true )
+			$this->session->set_flashdata('message', $error);
 	}
 }
 

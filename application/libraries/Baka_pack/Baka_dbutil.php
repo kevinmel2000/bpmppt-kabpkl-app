@@ -10,8 +10,6 @@ class Baka_dbutil Extends Baka_lib
 	
 	private $_ext = array('gzip', 'zip', 'txt');
 
-	public $errors = array();
-
 	public function __construct()
 	{
 		parent::__construct();
@@ -27,13 +25,13 @@ class Baka_dbutil Extends Baka_lib
 	{
 		if ( !is_dir( $this->_tmp_dir ) )
 		{
-			$this->errors[] = 'Direktori '.$this->_tmp_dir.' belum ada pada server anda.';
+			$this->set_error('Direktori '.$this->_tmp_dir.' belum ada pada server anda.');
 			return FALSE;
 		}
 
 		if ( !is_writable( $this->_tmp_dir ) )
 		{
-			$this->errors[] = 'Anda tidak memiliki ijin untuk menulis pada direktori '.$this->_tmp_dir.'.';
+			$this->set_error('Anda tidak memiliki ijin untuk menulis pada direktori '.$this->_tmp_dir.'.');
 			return FALSE;
 		}
 
@@ -44,7 +42,7 @@ class Baka_dbutil Extends Baka_lib
 
 		if ( ! $this->_backup_command( $this->_file_path ) )
 		{
-			$this->errors[] = 'Proses backup gagal, ';
+			$this->set_error('Proses backup gagal, ');
 			return FALSE;
 		}
 		
@@ -77,10 +75,7 @@ class Baka_dbutil Extends Baka_lib
 			$this->load->library('baka_pack/baka_unzip');
 
 		if ( ! $this->baka_unzip->extract_all( $this->_tmp_dir ) )
-		{
-			$this->errors = $this->baka_unzip->errors;
 			return FALSE;
-		}
 
 		// Restore to database
 		if ( file_exists( $this->_tmp_dir.'db.sql' ) )

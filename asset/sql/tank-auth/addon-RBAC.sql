@@ -6,9 +6,9 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 -- Table `permissions`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `permissions` ;
+DROP TABLE IF EXISTS `baka_auth_permissions` ;
 
-CREATE  TABLE IF NOT EXISTS `permissions` (
+CREATE  TABLE IF NOT EXISTS `baka_auth_permissions` (
   `permission_id` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `permission` VARCHAR(100) NOT NULL ,
   `description` VARCHAR(160) NULL ,
@@ -24,9 +24,9 @@ COLLATE = utf8_unicode_ci;
 -- -----------------------------------------------------
 -- Table `roles`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `roles` ;
+DROP TABLE IF EXISTS `baka_auth_roles` ;
 
-CREATE  TABLE IF NOT EXISTS `roles` (
+CREATE  TABLE IF NOT EXISTS `baka_auth_roles` (
   `role_id` TINYINT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `role` VARCHAR(50) NOT NULL ,
   `full` VARCHAR(50) NOT NULL ,
@@ -41,9 +41,9 @@ COLLATE = utf8_unicode_ci;
 -- -----------------------------------------------------
 -- Table `role_permissions`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `role_permissions` ;
+DROP TABLE IF EXISTS `baka_auth_role_permissions` ;
 
-CREATE  TABLE IF NOT EXISTS `role_permissions` (
+CREATE  TABLE IF NOT EXISTS `baka_auth_role_permissions` (
   `role_id` TINYINT UNSIGNED NOT NULL ,
   `permission_id` SMALLINT UNSIGNED NOT NULL ,
   PRIMARY KEY (`role_id`, `permission_id`) ,
@@ -67,9 +67,9 @@ COLLATE = utf8_unicode_ci;
 -- -----------------------------------------------------
 -- Table `user_roles`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `user_roles` ;
+DROP TABLE IF EXISTS `baka_auth_user_roles` ;
 
-CREATE  TABLE IF NOT EXISTS `user_roles` (
+CREATE  TABLE IF NOT EXISTS `baka_auth_user_roles` (
   `user_id` INT UNSIGNED NOT NULL ,
   `role_id` TINYINT UNSIGNED NOT NULL ,
   PRIMARY KEY (`user_id`, `role_id`) ,
@@ -93,9 +93,9 @@ COLLATE = utf8_unicode_ci;
 -- -----------------------------------------------------
 -- Table `overrides`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `overrides` ;
+DROP TABLE IF EXISTS `baka_auth_overrides` ;
 
-CREATE  TABLE IF NOT EXISTS `overrides` (
+CREATE  TABLE IF NOT EXISTS `baka_auth_overrides` (
   `user_id` INT UNSIGNED NOT NULL ,
   `permission_id` SMALLINT UNSIGNED NOT NULL ,
   `allow` TINYINT(1) UNSIGNED NOT NULL ,

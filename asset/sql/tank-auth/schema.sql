@@ -6,9 +6,9 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 -- Table `ci_sessions`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `ci_sessions` ;
+DROP TABLE IF EXISTS `baka_ci_sessions` ;
 
-CREATE  TABLE IF NOT EXISTS `ci_sessions` (
+CREATE  TABLE IF NOT EXISTS `baka_ci_sessions` (
   `session_id` VARCHAR(40) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL DEFAULT 0 ,
   `ip_address` VARCHAR(16) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL DEFAULT 0 ,
   `user_agent` VARCHAR(150) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL ,
@@ -23,9 +23,9 @@ COLLATE = utf8_unicode_ci;
 -- -----------------------------------------------------
 -- Table `login_attempts`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `login_attempts` ;
+DROP TABLE IF EXISTS `baka_auth_login_attempts` ;
 
-CREATE  TABLE IF NOT EXISTS `login_attempts` (
+CREATE  TABLE IF NOT EXISTS `baka_auth_login_attempts` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `ip_address` VARCHAR(40) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL ,
   `login` VARCHAR(50) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL ,
@@ -39,9 +39,9 @@ COLLATE = utf8_unicode_ci;
 -- -----------------------------------------------------
 -- Table `user_autologin`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `user_autologin` ;
+DROP TABLE IF EXISTS `baka_auth_user_autologin` ;
 
-CREATE  TABLE IF NOT EXISTS `user_autologin` (
+CREATE  TABLE IF NOT EXISTS `baka_auth_user_autologin` (
   `key_id` CHAR(32) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL ,
   `user_id` INT UNSIGNED NOT NULL DEFAULT 0 ,
   `user_agent` VARCHAR(150) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL ,
@@ -56,9 +56,9 @@ COLLATE = utf8_unicode_ci;
 -- -----------------------------------------------------
 -- Table `user_profiles`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `user_profiles` ;
+DROP TABLE IF EXISTS `baka_auth_user_profiles` ;
 
-CREATE  TABLE IF NOT EXISTS `user_profiles` (
+CREATE  TABLE IF NOT EXISTS `baka_auth_user_profiles` (
   `id` INT UNSIGNED NOT NULL ,
   `name` VARCHAR(255) NULL DEFAULT '' ,
   `gender` CHAR(1) NULL DEFAULT '' ,
@@ -76,9 +76,9 @@ COLLATE = utf8_unicode_ci;
 -- -----------------------------------------------------
 -- Table `users`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `users` ;
+DROP TABLE IF EXISTS `baka_auth_users` ;
 
-CREATE  TABLE IF NOT EXISTS `users` (
+CREATE  TABLE IF NOT EXISTS `baka_auth_users` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `username` VARCHAR(50) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL ,
   `password` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL ,

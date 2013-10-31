@@ -41,7 +41,7 @@ class Baka_theme Extends Baka_lib
 				// Let CI do the caching instead of the browser
 				$this->output->cache( $this->config_item('cache_lifetime') );
 
-				log_message('debug', "Theme cache activated");
+				log_message('debug', "#Baka_theme: cache activated");
 			break;
 		}
 	}
@@ -69,8 +69,7 @@ class Baka_theme Extends Baka_lib
 		$class .= ' nav';
 
 		$this->_theme_data['navbar'][$position][$id] = array(
-			'class'	=> $class,
-			);
+			'class'	=> $class );
 	}
 
 	public function add_navmenu( $parent_id, $menu_id, $type = 'link', $url = '', $label = '', $attr = array(), $position = 'top' )
@@ -133,7 +132,7 @@ class Baka_theme Extends Baka_lib
 		if ( isset($this->_theme_data['navbar'][$position]) )
 			return $this->make_menu( $this->_theme_data['navbar'][$position] );
 		else
-			log_message('error', $position." navbar doesn't exists.");
+			log_message('error', '#Baka_theme: '.$position." navbar doesn't exists.");
 	}
 
 	public function get_navbar()
@@ -145,7 +144,7 @@ class Baka_theme Extends Baka_lib
 				 . '			'.anchor(base_url(), $this->config_item('app_name'), 'class="navbar-brand"')
 				 . '		</div>';
 
-		if (!is_browser_jadul())
+		if (!is_browser_jadul() AND $this->tank_auth->is_logged_in())
 			$output .= '<div class="navbar-collapse collapse">'.$this->get_nav('top').'</div> <!--/.nav-collapse -->';
 
 		$output .=  '</div></header>';
@@ -223,7 +222,7 @@ class Baka_theme Extends Baka_lib
 		if ( array_key_exists($name, $this->_theme_data) )
 			return $this->_theme_data[$name];
 		else
-			log_message('error', " Theme data ".$name." doesn't exists.");
+			log_message('error', "#Baka_theme: Theme data ".$name." doesn't exists.");
 	}
 
 	public function set($name, $value)
@@ -237,7 +236,7 @@ class Baka_theme Extends Baka_lib
 
 		$this->set('contents', $this->load->view( $view, $view_data, TRUE));
 
-		// $this->_contents['contents'] = $this->load->view( $view, $view_data, TRUE);
+		log_message('debug', "#Baka_theme: File ".$file." loaded as view.");
 
 		return $this->load->view( $file, $this->_contents, $return );
 	}

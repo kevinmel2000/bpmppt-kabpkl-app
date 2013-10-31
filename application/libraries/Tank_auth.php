@@ -1,6 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-require_once('phpass-0.3/PasswordHash.php');
+require_once(APPPATH.'third_party/phpass-0.3/PasswordHash.php');
 
 define('STATUS_ACTIVATED', '1');
 define('STATUS_NOT_ACTIVATED', '0');
@@ -26,13 +26,17 @@ class Tank_auth
 		$this->ci =& get_instance();
 
 		$this->ci->load->config('tank_auth', TRUE);
-		$this->ci->load->library('session');
 		$this->ci->load->model('tank_auth/users');
-		$this->ci->load->helper('url');
-		$this->ci->load->database();
 
 		// Try to autologin
 		$this->autologin();
+	}
+
+	private function _do_hasher()
+	{
+		return new PasswordHash(
+			$this->ci->config->item('phpass_hash_strength', 'tank_auth'),
+			$this->ci->config->item('phpass_hash_portable', 'tank_auth'));
 	}
 	
 	/**
@@ -60,9 +64,8 @@ class Tank_auth
 			if (!is_null($user = $this->ci->users->$get_user_func($login))) {	// login ok
 
 				// Does password match hash in database?
-				$hasher = new PasswordHash(
-						$this->ci->config->item('phpass_hash_strength', 'tank_auth'),
-						$this->ci->config->item('phpass_hash_portable', 'tank_auth'));
+				$hasher = $this->_do_hasher();
+
 				if ($hasher->CheckPassword($password, $user->password)) {		// password ok
 
 					if ($user->banned == 1) {									// fail - banned
@@ -74,12 +77,11 @@ class Tank_auth
 								'user_id'	=> $user->id,
 								'username'	=> $user->username,
 								'status'	=> ($user->activated == 1) ? STATUS_ACTIVATED : STATUS_NOT_ACTIVATED,
-								'roles'=>$this->ci->users->get_roles($user->id)
+								'roles'		=> $this->ci->users->get_roles($user->id)
 						));
 						
 						if ($user->activated == 0) {							// fail - not activated
 							$this->error = array('not_activated' => '');
-
 						} else {												// success
 							$user_profile = $this->ci->users->get_user_profile($user->id);
 							$this->ci->session->set_userdata('user_profile', $user_profile);
@@ -91,9 +93,10 @@ class Tank_auth
 							$this->clear_login_attempts($login);
 
 							$this->ci->users->update_login_info(
-									$user->id,
-									$this->ci->config->item('login_record_ip', 'tank_auth'),
-									$this->ci->config->item('login_record_time', 'tank_auth'));
+								$user->id,
+								$this->ci->config->item('login_record_ip', 'tank_auth'),
+								$this->ci->config->item('login_record_time', 'tank_auth'));
+
 							return TRUE;
 						}
 					}
@@ -176,9 +179,7 @@ class Tank_auth
 
 		} else {
 			// Hash password using phpass
-			$hasher = new PasswordHash(
-					$this->ci->config->item('phpass_hash_strength', 'tank_auth'),
-					$this->ci->config->item('phpass_hash_portable', 'tank_auth'));
+			$hasher = $this->_do_hasher();
 			$hashed_password = $hasher->HashPassword($password);
 
 			$data = array(
@@ -239,28 +240,33 @@ class Tank_auth
 	 */
 	function change_email($email)
 	{
-		$user_id = $this->ci->session->userdata('user_id');
+		$user_id = $this->get_user_id();
 
-		if (!is_null($user = $this->ci->users->get_user_by_id($user_id, FALSE))) {
-
+		if (!is_null($user = $this->ci->users->get_user_by_id($user_id, FALSE)))
+		{
 			$data = array(
 				'user_id'	=> $user_id,
 				'username'	=> $user->username,
 				'email'		=> $email,
-			);
-			if (strtolower($user->email) == strtolower($email)) {		// leave activation key as is
+				);
+
+			if (strtolower($user->email) == strtolower($email))
+			{	// leave activation key as is
 				$data['new_email_key'] = $user->new_email_key;
 				return $data;
-
-			} elseif ($this->ci->users->is_email_available($email)) {
+			}
+			elseif ($this->ci->users->is_email_available($email))
+			{
 				$data['new_email_key'] = $this->generate_random_key();
 				$this->ci->users->set_new_email($user_id, $email, $data['new_email_key'], FALSE);
 				return $data;
-
-			} else {
+			}
+			else
+			{
 				$this->error = array('email' => 'auth_email_in_use');
 			}
 		}
+
 		return NULL;
 	}
 
@@ -276,9 +282,9 @@ class Tank_auth
 	{
 		$this->ci->users->purge_na($this->ci->config->item('email_activation_expire', 'tank_auth'));
 
-		if ((strlen($user_id) > 0) AND (strlen($activation_key) > 0)) {
+		if ((strlen($user_id) > 0) AND (strlen($activation_key) > 0))
 			return $this->ci->users->activate_user($user_id, $activation_key, $activate_by_email);
-		}
+
 		return FALSE;
 	}
 
@@ -292,23 +298,26 @@ class Tank_auth
 	 */
 	function forgot_password($login)
 	{
-		if (strlen($login) > 0) {
-			if (!is_null($user = $this->ci->users->get_user_by_login($login))) {
-
+		if (strlen($login) > 0)
+		{
+			if (!is_null($user = $this->ci->users->get_user_by_login($login)))
+			{
 				$data = array(
 					'user_id'		=> $user->id,
 					'username'		=> $user->username,
 					'email'			=> $user->email,
 					'new_pass_key'	=> $this->generate_random_key(),
-				);
+					);
 
 				$this->ci->users->set_password_key($user->id, $data['new_pass_key']);
 				return $data;
-
-			} else {
+			}
+			else
+			{
 				$this->error = array('login' => 'auth_incorrect_email_or_username');
 			}
 		}
+
 		return NULL;
 	}
 
@@ -321,7 +330,8 @@ class Tank_auth
 	 */
 	function can_reset_password($user_id, $new_pass_key)
 	{
-		if ((strlen($user_id) > 0) AND (strlen($new_pass_key) > 0)) {
+		if ((strlen($user_id) > 0) AND (strlen($new_pass_key) > 0))
+		{
 			return $this->ci->users->can_reset_password(
 				$user_id,
 				$new_pass_key,
@@ -345,9 +355,7 @@ class Tank_auth
 			if (!is_null($user = $this->ci->users->get_user_by_id($user_id, TRUE))) {
 
 				// Hash password using phpass
-				$hasher = new PasswordHash(
-						$this->ci->config->item('phpass_hash_strength', 'tank_auth'),
-						$this->ci->config->item('phpass_hash_portable', 'tank_auth'));
+				$hasher = $this->_do_hasher();
 				$hashed_password = $hasher->HashPassword($new_password);
 
 				if ($this->ci->users->reset_password(
@@ -381,16 +389,14 @@ class Tank_auth
 	 */
 	function change_password($old_pass, $new_pass)
 	{
-		$user_id = $this->ci->session->userdata('user_id');
+		$user_id = $this->get_user_id();
 
-		if (!is_null($user = $this->ci->users->get_user_by_id($user_id, TRUE))) {
+		if (!is_null($user = $this->ci->users->get_user_by_id($user_id, TRUE)))
+		{	// Check if old password correct
+			$hasher = $this->_do_hasher();
 
-			// Check if old password correct
-			$hasher = new PasswordHash(
-					$this->ci->config->item('phpass_hash_strength', 'tank_auth'),
-					$this->ci->config->item('phpass_hash_portable', 'tank_auth'));
-			if ($hasher->CheckPassword($old_pass, $user->password)) {			// success
-
+			if ($hasher->CheckPassword($old_pass, $user->password))
+			{	// success
 				// Hash new password using phpass
 				$hashed_password = $hasher->HashPassword($new_pass);
 
@@ -415,16 +421,14 @@ class Tank_auth
 	 */
 	function set_new_email($new_email, $password)
 	{
-		$user_id = $this->ci->session->userdata('user_id');
+		$user_id = $this->get_user_id();
 
-		if (!is_null($user = $this->ci->users->get_user_by_id($user_id, TRUE))) {
-
-			// Check if password correct
-			$hasher = new PasswordHash(
-					$this->ci->config->item('phpass_hash_strength', 'tank_auth'),
-					$this->ci->config->item('phpass_hash_portable', 'tank_auth'));
-			if ($hasher->CheckPassword($password, $user->password)) {			// success
-
+		if (!is_null($user = $this->ci->users->get_user_by_id($user_id, TRUE)))
+		{	// Check if password correct
+			$hasher = $this->_do_hasher();
+			
+			if ($hasher->CheckPassword($password, $user->password))
+			{	// success
 				$data = array(
 					'user_id'	=> $user_id,
 					'username'	=> $user->username,
@@ -462,7 +466,8 @@ class Tank_auth
 	 */
 	function activate_new_email($user_id, $new_email_key)
 	{
-		if ((strlen($user_id) > 0) AND (strlen($new_email_key) > 0)) {
+		if ((strlen($user_id) > 0) AND (strlen($new_email_key) > 0))
+		{
 			return $this->ci->users->activate_new_email(
 					$user_id,
 					$new_email_key);
@@ -478,16 +483,13 @@ class Tank_auth
 	 */
 	function delete_user($password)
 	{
-		$user_id = $this->ci->session->userdata('user_id');
+		$user_id = $this->get_user_id();
 
-		if (!is_null($user = $this->ci->users->get_user_by_id($user_id, TRUE))) {
-
-			// Check if password correct
-			$hasher = new PasswordHash(
-					$this->ci->config->item('phpass_hash_strength', 'tank_auth'),
-					$this->ci->config->item('phpass_hash_portable', 'tank_auth'));
-			if ($hasher->CheckPassword($password, $user->password)) {			// success
-
+		if (!is_null($user = $this->ci->users->get_user_by_id($user_id, TRUE)))
+		{	// Check if password correct
+			$hasher = $this->_do_hasher();
+			if ($hasher->CheckPassword($password, $user->password))
+			{	// success
 				$this->ci->users->delete_user($user_id);
 				$this->logout();
 				return TRUE;
@@ -524,7 +526,8 @@ class Tank_auth
 		$this->ci->load->model('tank_auth/user_autologin');
 		$this->ci->user_autologin->purge($user_id);
 
-		if ($this->ci->user_autologin->set($user_id, md5($key))) {
+		if ($this->ci->user_autologin->set($user_id, md5($key)))
+		{
 			set_cookie(array(
 					'name' 		=> $this->ci->config->item('autologin_cookie_name', 'tank_auth'),
 					'value'		=> serialize(array('user_id' => $user_id, 'key' => $key)),
@@ -543,8 +546,8 @@ class Tank_auth
 	private function delete_autologin()
 	{
 		$this->ci->load->helper('cookie');
-		if ($cookie = get_cookie($this->ci->config->item('autologin_cookie_name', 'tank_auth'), TRUE)) {
-
+		if ($cookie = get_cookie($this->ci->config->item('autologin_cookie_name', 'tank_auth'), TRUE))
+		{
 			$data = unserialize($cookie);
 
 			$this->ci->load->model('tank_auth/user_autologin');
@@ -561,36 +564,39 @@ class Tank_auth
 	 */
 	private function autologin()
 	{
-		if (!$this->is_logged_in() AND !$this->is_logged_in(FALSE)) {			// not logged in (as any user)
-
+		if (!$this->is_logged_in() AND !$this->is_logged_in(FALSE))
+		{
+			// not logged in (as any user)
 			$this->ci->load->helper('cookie');
-			if ($cookie = get_cookie($this->ci->config->item('autologin_cookie_name', 'tank_auth'), TRUE)) {
-
+			if ($cookie = get_cookie($this->ci->config->item('autologin_cookie_name', 'tank_auth'), TRUE))
+			{
 				$data = unserialize($cookie);
 
-				if (isset($data['key']) AND isset($data['user_id'])) {
-
+				if (isset($data['key']) AND isset($data['user_id']))
+				{
 					$this->ci->load->model('tank_auth/user_autologin');
-					if (!is_null($user = $this->ci->user_autologin->get($data['user_id'], md5($data['key'])))) {
-
+					
+					if (!is_null($user = $this->ci->user_autologin->get($data['user_id'], md5($data['key']))))
+					{
 						// Login user
 						$this->ci->session->set_userdata(array(
-								'user_id'	=> $user->id,
-								'username'	=> $user->username,
-								'status'	=> STATUS_ACTIVATED,
-						));
+							'user_id'	=> $user->id,
+							'username'	=> $user->username,
+							'status'	=> STATUS_ACTIVATED,
+							));
 
 						// Renew users cookie to prevent it from expiring
 						set_cookie(array(
-								'name' 		=> $this->ci->config->item('autologin_cookie_name', 'tank_auth'),
-								'value'		=> $cookie,
-								'expire'	=> $this->ci->config->item('autologin_cookie_life', 'tank_auth'),
-						));
+							'name' 		=> $this->ci->config->item('autologin_cookie_name', 'tank_auth'),
+							'value'		=> $cookie,
+							'expire'	=> $this->ci->config->item('autologin_cookie_life', 'tank_auth'),
+							));
 
 						$this->ci->users->update_login_info(
-								$user->id,
-								$this->ci->config->item('login_record_ip', 'tank_auth'),
-								$this->ci->config->item('login_record_time', 'tank_auth'));
+							$user->id,
+							$this->ci->config->item('login_record_ip', 'tank_auth'),
+							$this->ci->config->item('login_record_time', 'tank_auth'));
+
 						return TRUE;
 					}
 				}
@@ -607,11 +613,13 @@ class Tank_auth
 	 */
 	function is_max_login_attempts_exceeded($login)
 	{
-		if ($this->ci->config->item('login_count_attempts', 'tank_auth')) {
+		if ($this->ci->config->item('login_count_attempts', 'tank_auth'))
+		{
 			$this->ci->load->model('tank_auth/login_attempts');
 			return $this->ci->login_attempts->get_attempts_num($this->ci->input->ip_address(), $login)
 					>= $this->ci->config->item('login_max_attempts', 'tank_auth');
 		}
+
 		return FALSE;
 	}
 
@@ -624,8 +632,10 @@ class Tank_auth
 	 */
 	private function increase_login_attempt($login)
 	{
-		if ($this->ci->config->item('login_count_attempts', 'tank_auth')) {
-			if (!$this->is_max_login_attempts_exceeded($login)) {
+		if ($this->ci->config->item('login_count_attempts', 'tank_auth'))
+		{
+			if (!$this->is_max_login_attempts_exceeded($login))
+			{
 				$this->ci->load->model('tank_auth/login_attempts');
 				$this->ci->login_attempts->increase_attempt($this->ci->input->ip_address(), $login);
 			}
@@ -641,7 +651,8 @@ class Tank_auth
 	 */
 	private function clear_login_attempts($login)
 	{
-		if ($this->ci->config->item('login_count_attempts', 'tank_auth')) {
+		if ($this->ci->config->item('login_count_attempts', 'tank_auth'))
+		{
 			$this->ci->load->model('tank_auth/login_attempts');
 			$this->ci->login_attempts->clear_attempts(
 					$this->ci->input->ip_address(),
@@ -653,7 +664,8 @@ class Tank_auth
 	/**
 	 * Gets the datatype of a table and converts it to the format $arr['column_name'] = 'datatype'
 	 */
-	public function get_profile_datatypes(){
+	public function get_profile_datatypes()
+	{
 		$result_array = $this->ci->users->get_profile_datatypes();
 		return $this->multi_to_assoc($result_array);
 	}
@@ -667,20 +679,26 @@ class Tank_auth
 	 * @param string $return Return value: 'array|option|li'
 	 * @param string $default Checked value (used if 'option' is selected in $return)
 	 */
-	function multi_to_assoc($result_array, $first = array(), $return = 'array', $default = FALSE){
-		foreach($result_array as $val){
+	function multi_to_assoc($result_array, $first = array(), $return = 'array', $default = FALSE)
+	{
+		foreach($result_array as $val)
+		{
 			$val = array_values($val);
 			$arr[$val[0]] = $val[1];
 		}
 
 		if($first) $arr = array_merge($first, $arr);
 		
-		if($return == 'array'){
+		if($return == 'array')
+		{
 			return $arr;
 		}
-		elseif($return == 'option'){
+		elseif($return == 'option')
+		{
 			$option_arr = '';
-			foreach($arr as $key=>$val){
+
+			foreach($arr as $key=>$val)
+			{
 				$selected = $default;
 				$selected = $default == $key ? 'selected' : '';
 				$option_arr .= "<option value='{$key}' {$selected}>{$val}</option>";
@@ -688,9 +706,12 @@ class Tank_auth
 
 			return $option_arr;
 		}
-		elseif($return == 'li'){
+		elseif($return == 'li')
+		{
 			$li_arr = '';
-			foreach($arr as $key=>$val){
+
+			foreach($arr as $key=>$val)
+			{
 				$li_arr .= "<li>{$val}</li>";
 			}
 
@@ -705,9 +726,11 @@ class Tank_auth
 	 *
 	 * @param array $result_array: The result of $query->result_array()
 	 */
-	function multi_to_single($result_array){
+	function multi_to_single($result_array)
+	{
 		$keys = array_keys($result_array[0]);
-		foreach($result_array as $val){
+		foreach($result_array as $val)
+		{
 			$arr[] = $val[$keys[0]];
 		}
 		
@@ -720,24 +743,30 @@ class Tank_auth
 	 * @param string $permission: The permission you want to check for from the `permissions.permission` table.
 	 * @return bool
 	 */
-	public function permit($permission){
-		$user_id = $this->ci->session->userdata('user_id');
-		$user_permissions = $this->ci->users->get_permissions($user_id);
-		$overrides = $this->ci->users->get_permission_overrides($user_id);
-		$allow = FALSE;
+	public function permit($permission)
+	{
+		$user_id			= $this->get_user_id();
+		$user_permissions	= $this->ci->users->get_permissions($user_id);
+		$overrides			= $this->ci->users->get_permission_overrides($user_id);
+		$allow				= FALSE;
 		
 		// Check role permissions
-		foreach($user_permissions as $val){
-			if($val == $permission){
+		foreach($user_permissions as $val)
+		{
+			if($val == $permission)
+			{
 				$allow = TRUE;
 				break;
 			}
 		}
 		
 		// Check if there are overrides and overturn the result as needed
-		if($overrides){
-			foreach($overrides as $val){
-				if($val['permission'] == $permission){
+		if($overrides)
+		{
+			foreach($overrides as $val)
+			{
+				if($val['permission'] == $permission)
+				{
 					$allow = (bool)$val['allow'];
 					break;
 				}
@@ -753,60 +782,80 @@ class Tank_auth
 	 * @param int $user_id
 	 * @return array
 	 */
-	public function get_roles($user_id = NULL){
-		$user_id = is_null($user_id) ? $this->ci->session->userdata('user_id') : $user_id;
+	public function get_roles($user_id = NULL)
+	{
+		$user_id = is_null($user_id) ? $this->get_user_id() : $user_id;
 		return $this->ci->users->get_roles($user_id);
 	}
 	
 	/**
 	 * Overriding permissions method
 	 */
-	public function add_override($user_id, $permission, $allow = 1){
+	public function add_override($user_id, $permission, $allow = 1)
+	{
 		return $this->ci->users->add_override($user_id, $permission, $allow);
 	}
-	public function remove_override($user_id, $permission){
+
+	public function remove_override($user_id, $permission)
+	{
 		return $this->ci->users->remove_override($user_id, $permission);
 	}
-	public function flip_override($user_id, $permission){
+
+	public function flip_override($user_id, $permission)
+	{
 		return $this->ci->users->flip_override($user_id, $permission);
 	}
 	
 	/**
 	 * Role management methods
 	 */
-	public function add_role($user_id, $role){
+	public function add_role($user_id, $role)
+	{
 		return $this->ci->users->add_role($user_id, $role);
 	}
-	public function remove_role($user_id, $role){
+
+	public function remove_role($user_id, $role)
+	{
 		return $this->ci->users->remove_role($user_id, $role);
 	}
-	public function change_role($user_id, $old, $new){
+
+	public function change_role($user_id, $old, $new)
+	{
 		return $this->ci->users->change_role($user_id, $old, $new);
 	}
 	
 	/**
 	 * Permission management methods
 	 */
-	public function add_permission($permission, $role){
+	public function add_permission($permission, $role)
+	{
 		return $this->ci->users->add_permission($permission, $role);
 	}
-	public function remove_permission($permission, $role){
+
+	public function remove_permission($permission, $role)
+	{
 		return $this->ci->users->remove_permission($permission, $role);
 	}
-	public function new_permission($permission, $description){
+
+	public function new_permission($permission, $description)
+	{
 		return $this->ci->users->new_permission($permission, $description);
 	}
-	public function clear_permission($permission){
+
+	public function clear_permission($permission)
+	{
 		return $this->ci->users->clear_permission($permission);
 	}
-	public function save_permission($permission_ident, $permission = FALSE, $description = FALSE, $parent = FALSE, $sort = FALSE){
+
+	public function save_permission($permission_ident, $permission = FALSE, $description = FALSE, $parent = FALSE, $sort = FALSE)
+	{
 		$data = array(
 			'permission_ident'=>$permission_ident,
 			'permission'=>$permission,
 			'description'=>$description,
 			'parent'=>$parent,
 			'sort'=>$sort
-		);
+			);
 		
 		return $this->ci->users->save_permission($data);
 	}
@@ -814,31 +863,39 @@ class Tank_auth
 	/**
 	 * Get user profile contents
 	 */
-	public function get_user_profile($user_id = NULL){
-		$user_id = is_null($user_id) ? $this->session->userdata('user_id') : $user_id;
+	public function get_user_profile($user_id = NULL)
+	{
+		$user_id = is_null($user_id) ? $this->get_user_id() : $user_id;
 		return $this->ci->users->get_user_profile($user_id);
 	}
 	
 	/**
 	 * Account approval methods
 	 */
-	public function is_approved($user_id = NULL){
-		$user_id = is_null($user_id) ? $this->ci->session->userdata('user_id') : $user_id;
+	public function is_approved($user_id = NULL)
+	{
+		$user_id = is_null($user_id) ? $this->get_user_id() : $user_id;
 		return $this->ci->users->is_approved($user_id);
 	}
-	public function approve_user($user_id){
+
+	public function approve_user($user_id)
+	{
 		return $this->ci->users->approve_user($user_id);
 	}
-	public function unapprove_user($user_id){
+
+	public function unapprove_user($user_id)
+	{
 		return $this->ci->users->unapprove_user($user_id);
 	}
 	
 	/**
 	 * Open a notice page
 	 */
-	public function notice($page, $data = FALSE){
+	public function notice($page, $data = FALSE)
+	{
 		// Create a new session if the old one gets deleted (from logout)
-		if(!$this->ci->session->userdata('user_id')){
+		if(!$this->get_user_id())
+		{
 			$this->ci->session->sess_create();
 			$this->ci->session->set_flashdata('is_logged_out', TRUE);
 		}
@@ -854,7 +911,8 @@ class Tank_auth
 	 * @param string $where Create a more detailed query for example: "WHERE a=b LIMIT 10" It's up to you.
 	 * @return multi array|option|li (default: array)
 	 */
-	public function create_regdb_dropdown($dbname, $fields){
+	public function create_regdb_dropdown($dbname, $fields)
+	{
 		return $this->ci->users->create_regdb_dropdown($dbname, $fields);
 	}
 
@@ -863,16 +921,19 @@ class Tank_auth
 	 * Generate a random string based on kernel's random number generator
 	 * @return string
 	 */
-	public function generate_random_key(){
-    if ( function_exists('openssl_random_pseudo_bytes') ){
-      $key = md5(openssl_random_pseudo_bytes(1024, $cstrong) . microtime() . mt_rand() );
-    }
-    else {
-    	$randomizer = file_exists('/dev/urandom') ? '/dev/urandom' : '/dev/random';
-	    $key = md5(file_get_contents($randomizer, NULL, NULL, 0, 1024) . microtime() . mt_rand());
-    }
+	public function generate_random_key()
+	{
+		if ( function_exists('openssl_random_pseudo_bytes') )
+		{
+			$key = md5(openssl_random_pseudo_bytes(1024, $cstrong) . microtime() . mt_rand() );
+		}
+		else 
+		{
+			$randomizer = file_exists('/dev/urandom') ? '/dev/urandom' : '/dev/random';
+			$key = md5(file_get_contents($randomizer, NULL, NULL, 0, 1024) . microtime() . mt_rand());
+		}
 
-    return $key;
+		return $key;
 	}
 }
 

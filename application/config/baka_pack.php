@@ -66,5 +66,7 @@ $config['baka_default_meta_fields']	= array(
 	'address'	=> ''
 	);
 
+$config['baka_cool_captcha_folder'] = 'application/third_party/captcha/';
+
 /* End of file aplikasi.php */
 /* Location: ./application/config/aplikasi.php */

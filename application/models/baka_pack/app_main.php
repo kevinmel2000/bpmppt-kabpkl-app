@@ -2,11 +2,15 @@
 
 class App_main extends CI_Model
 {
+	private $username;
+
 	public $data_layanan = array();
 
 	public function __construct()
 	{
 		parent::__construct();
+
+		$this->username = $this->tank_auth->get_username();
 
 		$this->initialize();
 
@@ -49,7 +53,7 @@ class App_main extends CI_Model
 		// Adding admin menu to main navbar
 		$this->baka_theme->add_navmenu( 'main_navbar', 'admin', 'link', 'admin', 'Administrasi' );
 		// Adding account menu to user navbar
-		$this->baka_theme->add_navmenu( 'user_navbar', 'account', 'link', 'users/profile', 'User name' );
+		$this->baka_theme->add_navmenu( 'user_navbar', 'account', 'link', 'profile', $this->username );
 
 		// Adding submenu to main_navbar-data
 		$this->data_navbar( 'main_navbar-master', 'top' );
@@ -91,14 +95,15 @@ class App_main extends CI_Model
 		// ===========================
 		$this->baka_theme->add_navmenu( $parent_id, 'ai_skpd', 'link', 'admin/internal/skpd', 'SKPD', array(), $position );
 		$this->baka_theme->add_navmenu( $parent_id, 'ai_application', 'link', 'admin/internal/app', 'Aplikasi', array(), $position );
+		$this->baka_theme->add_navmenu( $parent_id, 'ai_security', 'link', 'admin/internal/keamanan', 'Keamanan', array(), $position );
 		$this->baka_theme->add_navmenu( $parent_id, 'ai_property', 'link', 'admin/internal/prop', 'Properti', array(), $position );
 		// ===========================
 		$this->baka_theme->add_navmenu( $parent_id, 'au_def', 'devider', '', '', array(), $position);
 		$this->baka_theme->add_navmenu( $parent_id, 'au_head', 'header', '', 'Pengguna', array(), $position);
-		$this->baka_theme->add_navmenu( $parent_id, 'au_users', 'link', 'admin/users/all', 'Semua Pengguna', array(), $position );
-		$this->baka_theme->add_navmenu( $parent_id, 'au_me', 'link', 'admin/users/profile', 'Profil Saya', array(), $position );
-		$this->baka_theme->add_navmenu( $parent_id, 'au_groups', 'link', 'admin/users/groups', 'Kelompok', array(), $position );
-		$this->baka_theme->add_navmenu( $parent_id, 'a_permission', 'link', 'admin/users/permission', 'Hak akses', array(), $position );
+		$this->baka_theme->add_navmenu( $parent_id, 'au_me', 'link', 'profile', 'Profil Saya', array(), $position );
+		$this->baka_theme->add_navmenu( $parent_id, 'au_users', 'link', 'admin/pengguna/data', 'Semua Pengguna', array(), $position );
+		$this->baka_theme->add_navmenu( $parent_id, 'au_groups', 'link', 'admin/pengguna/groups', 'Kelompok', array(), $position );
+		$this->baka_theme->add_navmenu( $parent_id, 'a_permission', 'link', 'admin/pengguna/permission', 'Hak akses', array(), $position );
 		// ===========================
 		$this->baka_theme->add_navmenu( $parent_id, 'ad_def', 'devider', '', '', array(), $position);
 		$this->baka_theme->add_navmenu( $parent_id, 'ad_head', 'header', '', 'Perbaikan', array(), $position);
@@ -109,7 +114,7 @@ class App_main extends CI_Model
 	public function account_navbar( $parent_id, $position )
 	{
 		// Adding submenu to user navbar profile
-		$this->baka_theme->add_navmenu( $parent_id, 'profilse', 'link', 'profile', 'User name', array(), $position );
+		$this->baka_theme->add_navmenu( $parent_id, 'profilse', 'link', 'profile', $this->username, array(), $position );
 		$this->baka_theme->add_navmenu( $parent_id, 'user_s', 'devider', '', '', array(), $position);
 		$this->baka_theme->add_navmenu( $parent_id, 'user_logout', 'link', 'auth/logout', 'Logout', array(), $position );
 	}

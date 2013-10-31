@@ -55,9 +55,11 @@ $autoload['packages'] = array();
 $autoload['libraries'] = array(
 	'database',
 	'user_agent',
+	'session',
 	'baka_pack/baka_lib',
 	'baka_pack/baka_theme',
 	'baka_pack/baka_form',
+	'tank_auth',
 	// 'baka_pack/baka_grid',
 	);
 

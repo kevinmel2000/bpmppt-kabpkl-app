@@ -16,9 +16,6 @@ class Baka_zip Extends Baka_lib
 	/** @var object ZipArchive alias */
 	private $archive ;
 
-	/** @var array error wrapper */
-	public $errors = array();
-
 	public function __construct()
 	{
 		parent::__construct();
@@ -41,15 +38,8 @@ class Baka_zip Extends Baka_lib
 
 			return TRUE;
 		}
-		else
-		{
-			foreach ($this->errors as $error)
-			{
-				log_message('error', $error);
-			}
 
-			return FALSE;
-		}
+		return FALSE;
 	}
 
 	/**
@@ -61,13 +51,13 @@ class Baka_zip Extends Baka_lib
 	{
 		if ( !is_file( $file_path ) AND !file_exists( $file_path ) )
 		{
-			$this->errors[] = 'File '.$file_path.' tidak ada pada server anda';
+			$this->errors('#Baka_zip: File '.$file_path.' tidak ada pada server anda');
 			return FALSE;
 		}
 
 		if ( !is_readable( $file_path ) )
 		{
-			$this->errors[] = 'File '.$file_path.' tidak dapat dibaca';
+			$this->errors('#Baka_zip: File '.$file_path.' tidak dapat dibaca');
 			return FALSE;
 		}
 
@@ -103,13 +93,13 @@ class Baka_zip Extends Baka_lib
 	{
 		if ( !is_dir( $dir_path ) )
 		{
-			$this->errors[] = $dir_path.' bukanlah sebuah direktori';
+			$this->errors($#Baka_zip: dir_path.' bukanlah sebuah direktori');
 			return FALSE;
 		}
 
 		if ( !is_writable( $dir_path ) )
 		{
-			$this->errors[] = 'Anda tidak memiliki ijin untuk menulis pada direktori '.$dir_path;
+			$this->errors('#Baka_zip: Anda tidak memiliki ijin untuk menulis pada direktori '.$dir_path);
 			return FALSE;
 		}
 

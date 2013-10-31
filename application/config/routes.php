@@ -47,7 +47,7 @@ $route['dashboard'] = "data/utama/stat";
 // Auth route
 $route['auth'] = "admin/auth";
 // Profile route
-$route['profile'] = "admin/users/profile";
+$route['profile'] = "admin/pengguna/profile";
 
 
 /* End of file routes.php */

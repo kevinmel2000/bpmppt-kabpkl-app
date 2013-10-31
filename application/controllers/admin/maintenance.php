@@ -23,7 +23,7 @@ class Maintenance extends BAKA_Controller
 
 		$this->data['panel_backup_title'] = 'Backup Database';
 
-		$form = $this->baka_form->add_form( current_url(), 'backup' )
+		$form_backup = $this->baka_form->add_form( current_url(), 'backup' )
 								->add_fields(array(
 									array(
 										'name'	=> 'backup-all',
@@ -49,9 +49,9 @@ class Maintenance extends BAKA_Controller
 
 		$this->load->library('baka_pack/baka_dbutil');
 
-		if ($form->validate_submition())
+		if ( $form_backup->validate_submition() )
 		{
-			$data = $form->submited_data();
+			$data = $form_backup->submited_data();
 			
 			if ($data['backup-all'] == 'semua')
 			{
@@ -60,17 +60,15 @@ class Maintenance extends BAKA_Controller
 				else
 					$this->baka_app->set_message( $this->baka_dbutil->errors, 'danger' );
 
-				redirect( current_url(), 'refresh' );
+				redirect( current_url() );
 			}
 		}
-		else
-		{
-			$this->data['panel_backup_body'] = $form->render();
-		}
+
+		$this->data['panel_backup_body'] = $form_backup->render();
 
 		$this->data['panel_restore_title'] = 'Restore Database';
 
-		$form = $this->baka_form->add_form( current_url(), 'restore' )
+		$form_restore = $this->baka_form->add_form( current_url(), 'restore' )
 								->add_fields(array(
 									array(
 										'name'	=> 'restore-from-file',
@@ -88,15 +86,15 @@ class Maintenance extends BAKA_Controller
 										)
 									));
 
-		if (!$form->validate_submition())
-			$this->data['panel_restore_body'] = $form->render();
+		if (!$form_restore->validate_submition())
+			$this->data['panel_restore_body'] = $form_restore->render();
 		else
-			$this->data['panel_restore_body'] = $form->submited_data();
+			$this->data['panel_restore_body'] = $form_restore->submited_data();
 
 		$this->baka_theme->load('pages/panel_backstore', $this->data);
 	}
 
-	public function syslogs()
+	public function syslogs( $file = '' )
 	{
 		$this->data['panel_title'] = $this->baka_theme->set_title('Aktifitas sistem');
 
@@ -109,15 +107,15 @@ class Maintenance extends BAKA_Controller
 				$log	= strtolower(str_replace(EXT, '', $log));
 				$label	= 'Tanggal '.format_date(str_replace('log-', '', $log));
 
-				$this->baka_theme->add_navmenu( 'log_sidebar', $log, 'link', current_url().'?read='.$log, $label, array(), 'panel' );
+				$this->baka_theme->add_navmenu( 'log_sidebar', $log, 'link', 'admin/maintenance/syslogs/'.$log, $label, array(), 'panel' );
 			}
 		}
 
-		if ( $read_log = $this->input->get('read') )
+		if ( $file != '' )
 		{
 			$this->load->helper('file');
-			$this->data['panel_title'] .= 'Tanggal '.format_date(str_replace('log-', '', $read_log));
-			$this->data['panel_body'] = read_file( APPPATH.'storage/logs/'.$read_log.EXT );
+			$this->data['panel_title'] .= ' Tanggal '.format_date(str_replace('log-', '', $file));
+			$this->data['panel_body'] = read_file( APPPATH.'storage/logs/'.$file.EXT );
 		}
 
 		$this->baka_theme->load('pages/syslogs', $this->data);

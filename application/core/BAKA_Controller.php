@@ -26,6 +26,9 @@ class BAKA_Controller extends CI_Controller
 		$this->data['panel_title']	= '';
 		$this->data['panel_body']	= '';
 
+		if (!$this->tank_auth->is_logged_in() AND strpos( 'auth/login', current_url() ) !== FALSE)							// not logged in or activated
+			redirect('auth/login');
+
 		log_message('debug', "BAKA Controller Class Initialized");
 	}
 }

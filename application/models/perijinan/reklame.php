@@ -50,16 +50,12 @@ class Reklame extends CI_Model
 				'std'	=> ($data_id != '' ? $data->{$this->slug.'_pemohon_nama'} : ''),
 				'validation'=> 'required' ),
 			array(
-				'name'	=> $this->slug.'_pemohon_jabatan',
-				'label'	=> 'Jabatan',
-				'type'	=> 'text',
-				'std'	=> ($data_id != '' ? $data->{$this->slug.'_pemohon_jabatan'} : ''),
-				'validation'=> 'required' ),
-			array(
-				'name'	=> $this->slug.'_pemohon_usaha',
-				'label'	=> 'Perusahaan',
-				'type'	=> 'text',
-				'std'	=> ($data_id != '' ? $data->{$this->slug.'_pemohon_usaha'} : ''),
+				'name'	=> $this->slug.'_pemohon_kerja',
+				'label'	=> 'Pekerjaan',
+				'type'	=> 'dropdown',
+				'std'	=> ($data_id != '' ? $data->{$this->slug.'_pemohon_kerja'} : ''),
+				'option'=> array(
+					'kerja'=> 'Pekerjaan' ),
 				'validation'=> 'required' ),
 			array(
 				'name'	=> $this->slug.'_pemohon_alamat',
@@ -68,32 +64,86 @@ class Reklame extends CI_Model
 				'std'	=> ($data_id != '' ? $data->{$this->slug.'_pemohon_alamat'} : ''),
 				'validation'=> 'required' ),
 			array(
-				'name'	=> $this->slug.'_fieldset_data_lokasi',
-				'label'	=> 'Data Lokasi',
+				'name'	=> $this->slug.'_pemohon_telp',
+				'label'	=> 'No. Telp',
+				'type'	=> 'tel',
+				'std'	=> ($data_id != '' ? $data->{$this->slug.'_pemohon_telp'} : ''),
+				'validation'=> 'numeric' ),
+			array(
+				'name'	=> $this->slug.'_fieldset_data_reklame',
+				'label'	=> 'Data Reklame',
 				'type'	=> 'fieldset' ),
 			array(
-				'name'	=> $this->slug.'_lokasi_tujuan',
-				'label'	=> 'Tujuan Permohonan',
+				'name'	=> $this->slug.'_lokasi_jenis',
+				'label'	=> 'Jenis Reklame',
 				'type'	=> 'text',
-				'std'	=> ($data_id != '' ? $data->{$this->slug.'_lokasi_tujuan'} : ''),
+				'std'	=> ($data_id != '' ? $data->{$this->slug.'_reklame_jenis'} : ''),
 				'validation'=> 'required' ),
 			array(
-				'name'	=> $this->slug.'_lokasi_alamat',
-				'label'	=> 'Alamat Lokasi',
-				'type'	=> 'textarea',
-				'std'	=> ($data_id != '' ? $data->{$this->slug.'_lokasi_alamat'} : ''),
-				'validation'=> 'required' ),
-			array(
-				'name'	=> $this->slug.'_lokasi_nama',
-				'label'	=> 'Luas Area (M<sup>2</sup>)',
+				'name'	=> $this->slug.'_reklame_juml',
+				'label'	=> 'Jumlah',
 				'type'	=> 'number',
-				'std'	=> ($data_id != '' ? $data->{$this->slug.'_lokasi_nama'} : ''),
+				'std'	=> ($data_id != '' ? $data->{$this->slug.'_reklame_juml'} : ''),
+				'validation'=> 'required|numeric' ),
+			array(
+				'name'	=> $this->slug.'_reklame_lokasi',
+				'label'	=> 'Lokasi pemasangan',
+				'type'	=> 'textarea',
+				'std'	=> ($data_id != '' ? $data->{$this->slug.'_reklame_lokasi'} : ''),
 				'validation'=> 'required' ),
 			array(
-				'name'	=> $this->slug.'_lokasi_area_hijau',
-				'label'	=> 'Area terbuka hijau',
+				'name'	=> $this->slug.'_reklame_ukuran',
+				'label'	=> 'Ukuran (P x L)',
+				'type'	=> 'subfield',
+				'fields'=> array(
+					array(
+						'col'	=> '6',
+						'name'	=> 'panjang',
+						'label'	=> 'Panjang',
+						'type'	=> 'number',
+						'std'	=> ($data_id != '' ? $data->{$this->slug.'_reklame_ukuran_panjang'} : ''),
+						'validation'=> 'required|numerik' ),
+					array(
+						'col'	=> '6',
+						'name'	=> 'lebar',
+						'label'	=> 'Lebar',
+						'type'	=> 'number',
+						'std'	=> ($data_id != '' ? $data->{$this->slug.'_reklame_ukuran_lebar'} : ''),
+						'validation'=> 'required|numerik' ),
+					)
+				),
+			array(
+				'name'	=> $this->slug.'_reklame_range',
+				'label'	=> 'Jangka waktu',
+				'type'	=> 'subfield',
+				'fields'=> array(
+					array(
+						'col'	=> '6',
+						'name'	=> 'tgl_mulai',
+						'label'	=> 'Mulai Tanggal',
+						'type'	=> 'text',
+						'std'	=> ($data_id != '' ? $data->{$this->slug.'_reklame_range_tgl_mulai'} : ''),
+						'validation'=> 'required|numerik' ),
+					array(
+						'col'	=> '6',
+						'name'	=> 'tgl_selesai',
+						'label'	=> 'Sampai Tanggal',
+						'type'	=> 'text',
+						'std'	=> ($data_id != '' ? $data->{$this->slug.'_reklame_range_tgl_selesai'} : ''),
+						'validation'=> 'required|numerik' ),
+					)
+				),
+			array(
+				'name'	=> $this->slug.'_reklame_tema',
+				'label'	=> 'Tema/Isi',
 				'type'	=> 'text',
-				'std'	=> ($data_id != '' ? $data->{$this->slug.'_lokasi_area_hijau'} : ''),
+				'std'	=> ($data_id != '' ? $data->{$this->slug.'_reklame_tema'} : ''),
+				'validation'=> 'required' ),
+			array(
+				'name'	=> $this->slug.'_reklame_ket',
+				'label'	=> 'Keterangan',
+				'type'	=> 'textarea',
+				'std'	=> ($data_id != '' ? $data->{$this->slug.'_reklame_ket'} : ''),
 				'validation'=> 'required' ),
 			);
 	}

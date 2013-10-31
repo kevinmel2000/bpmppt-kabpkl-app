@@ -6,9 +6,9 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 -- Table `ci_sessions`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `ci_sessions` ;
+DROP TABLE IF EXISTS `baka_ci_sessions` ;
 
-CREATE  TABLE IF NOT EXISTS `ci_sessions` (
+CREATE  TABLE IF NOT EXISTS `baka_ci_sessions` (
   `session_id` VARCHAR(40) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL DEFAULT 0 ,
   `ip_address` VARCHAR(16) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL DEFAULT 0 ,
   `user_agent` VARCHAR(150) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL ,
@@ -23,9 +23,9 @@ COLLATE = utf8_unicode_ci;
 -- -----------------------------------------------------
 -- Table `login_attempts`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `login_attempts` ;
+DROP TABLE IF EXISTS `baka_auth_login_attempts` ;
 
-CREATE  TABLE IF NOT EXISTS `login_attempts` (
+CREATE  TABLE IF NOT EXISTS `baka_auth_login_attempts` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `ip_address` VARCHAR(40) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL ,
   `login` VARCHAR(50) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL ,
@@ -39,9 +39,9 @@ COLLATE = utf8_unicode_ci;
 -- -----------------------------------------------------
 -- Table `user_autologin`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `user_autologin` ;
+DROP TABLE IF EXISTS `baka_auth_user_autologin` ;
 
-CREATE  TABLE IF NOT EXISTS `user_autologin` (
+CREATE  TABLE IF NOT EXISTS `baka_auth_user_autologin` (
   `key_id` CHAR(32) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL ,
   `user_id` INT UNSIGNED NOT NULL DEFAULT 0 ,
   `user_agent` VARCHAR(150) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL ,
@@ -56,13 +56,13 @@ COLLATE = utf8_unicode_ci;
 -- -----------------------------------------------------
 -- Table `user_profiles`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `user_profiles` ;
+DROP TABLE IF EXISTS `baka_auth_user_profiles` ;
 
-CREATE  TABLE IF NOT EXISTS `user_profiles` (
+CREATE  TABLE IF NOT EXISTS `baka_auth_user_profiles` (
   `id` INT UNSIGNED NOT NULL ,
   `name` VARCHAR(255) NULL DEFAULT '' ,
   `gender` CHAR(1) NULL DEFAULT '' ,
-  `dob` DATE NOT NULL ,
+  `dob` DATE NULL DEFAULT '' ,
   `country` CHAR(2) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NULL DEFAULT '' ,
   `timezone` VARCHAR(50) NULL DEFAULT '' ,
   `website` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NULL DEFAULT '' ,
@@ -76,9 +76,9 @@ COLLATE = utf8_unicode_ci;
 -- -----------------------------------------------------
 -- Table `users`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `users` ;
+DROP TABLE IF EXISTS `baka_auth_users` ;
 
-CREATE  TABLE IF NOT EXISTS `users` (
+CREATE  TABLE IF NOT EXISTS `baka_auth_users` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `username` VARCHAR(50) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL ,
   `password` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL ,
@@ -107,9 +107,9 @@ COLLATE = utf8_unicode_ci;
 -- -----------------------------------------------------
 -- Table `permissions`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `permissions` ;
+DROP TABLE IF EXISTS `baka_auth_permissions` ;
 
-CREATE  TABLE IF NOT EXISTS `permissions` (
+CREATE  TABLE IF NOT EXISTS `baka_auth_permissions` (
   `permission_id` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `permission` VARCHAR(100) NOT NULL ,
   `description` VARCHAR(160) NULL ,
@@ -125,9 +125,9 @@ COLLATE = utf8_unicode_ci;
 -- -----------------------------------------------------
 -- Table `roles`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `roles` ;
+DROP TABLE IF EXISTS `baka_auth_roles` ;
 
-CREATE  TABLE IF NOT EXISTS `roles` (
+CREATE  TABLE IF NOT EXISTS `baka_auth_roles` (
   `role_id` TINYINT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `role` VARCHAR(50) NOT NULL ,
   `full` VARCHAR(50) NOT NULL ,
@@ -142,9 +142,9 @@ COLLATE = utf8_unicode_ci;
 -- -----------------------------------------------------
 -- Table `role_permissions`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `role_permissions` ;
+DROP TABLE IF EXISTS `baka_auth_role_permissions` ;
 
-CREATE  TABLE IF NOT EXISTS `role_permissions` (
+CREATE  TABLE IF NOT EXISTS `baka_auth_role_permissions` (
   `role_id` TINYINT UNSIGNED NOT NULL ,
   `permission_id` SMALLINT UNSIGNED NOT NULL ,
   PRIMARY KEY (`role_id`, `permission_id`) ,
@@ -152,12 +152,12 @@ CREATE  TABLE IF NOT EXISTS `role_permissions` (
   INDEX `permission_id2_idx` (`permission_id` ASC) ,
   CONSTRAINT `role_id2`
     FOREIGN KEY (`role_id` )
-    REFERENCES `roles` (`role_id` )
+    REFERENCES `baka_auth_roles` (`role_id` )
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `permission_id2`
     FOREIGN KEY (`permission_id` )
-    REFERENCES `permissions` (`permission_id` )
+    REFERENCES `baka_auth_permissions` (`permission_id` )
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -168,9 +168,9 @@ COLLATE = utf8_unicode_ci;
 -- -----------------------------------------------------
 -- Table `user_roles`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `user_roles` ;
+DROP TABLE IF EXISTS `baka_auth_user_roles` ;
 
-CREATE  TABLE IF NOT EXISTS `user_roles` (
+CREATE  TABLE IF NOT EXISTS `baka_auth_user_roles` (
   `user_id` INT UNSIGNED NOT NULL ,
   `role_id` TINYINT UNSIGNED NOT NULL ,
   PRIMARY KEY (`user_id`, `role_id`) ,
@@ -178,12 +178,12 @@ CREATE  TABLE IF NOT EXISTS `user_roles` (
   INDEX `role_id1_idx` (`role_id` ASC) ,
   CONSTRAINT `user_id2`
     FOREIGN KEY (`user_id` )
-    REFERENCES `users` (`id` )
+    REFERENCES `baka_auth_users` (`id` )
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `role_id1`
     FOREIGN KEY (`role_id` )
-    REFERENCES `roles` (`role_id` )
+    REFERENCES `baka_auth_roles` (`role_id` )
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -194,9 +194,9 @@ COLLATE = utf8_unicode_ci;
 -- -----------------------------------------------------
 -- Table `overrides`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `overrides` ;
+DROP TABLE IF EXISTS `baka_auth_overrides` ;
 
-CREATE  TABLE IF NOT EXISTS `overrides` (
+CREATE  TABLE IF NOT EXISTS `baka_auth_overrides` (
   `user_id` INT UNSIGNED NOT NULL ,
   `permission_id` SMALLINT UNSIGNED NOT NULL ,
   `allow` TINYINT(1) UNSIGNED NOT NULL ,
@@ -205,12 +205,12 @@ CREATE  TABLE IF NOT EXISTS `overrides` (
   INDEX `permissions_id1_idx` (`permission_id` ASC) ,
   CONSTRAINT `user_id1`
     FOREIGN KEY (`user_id` )
-    REFERENCES `users` (`id` )
+    REFERENCES `baka_auth_users` (`id` )
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `permission_id1`
     FOREIGN KEY (`permission_id` )
-    REFERENCES `permissions` (`permission_id` )
+    REFERENCES `baka_auth_permissions` (`permission_id` )
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -227,7 +227,26 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- Data for table `roles`
 -- -----------------------------------------------------
 START TRANSACTION;
-INSERT INTO `roles` (`role_id`, `role`, `full`, `default`) VALUES (1, 'admin', 'Administrator', 0);
-INSERT INTO `roles` (`role_id`, `role`, `full`, `default`) VALUES (2, 'user', 'User', 1);
+INSERT INTO `baka_auth_roles` (`role_id`, `role`, `full`, `default`) VALUES (1, 'admin', 'Administrator', 0);
+INSERT INTO `baka_auth_roles` (`role_id`, `role`, `full`, `default`) VALUES (2, 'user', 'User', 1);
 
 COMMIT;
+
+-- -----------------------------------------------------
+-- Data for table `permissions`
+-- -----------------------------------------------------
+START TRANSACTION;
+INSERT INTO `baka_auth_permissions` (`permission_id`, `permission`, `description`, `parent`, `sort`) VALUES (1, 'open page', 'Open this page', 'Pages you can open', NULL);
+INSERT INTO `baka_auth_permissions` (`permission_id`, `permission`, `description`, `parent`, `sort`) VALUES (2, 'open user page', 'Only users can open this', 'User domain', NULL);
+
+COMMIT;
+
+-- -----------------------------------------------------
+-- Data for table `role_permissions`
+-- -----------------------------------------------------
+START TRANSACTION;
+INSERT INTO `baka_auth_role_permissions` (`role_id`, `permission_id`) VALUES (1, 1);
+INSERT INTO `baka_auth_role_permissions` (`role_id`, `permission_id`) VALUES (2, 2);
+
+COMMIT;
+
