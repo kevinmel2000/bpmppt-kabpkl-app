@@ -60,7 +60,7 @@ function baka_array_search ( $needle, $haystack )
 	return FALSE;
 }
 
-function insert_array_node( $array, $after_key, $index, $value)
+function array_insert_after_node( $array, $after_key, $index, $value)
 {
 	$result	= array();
 	$keys	= array_keys($array);
@@ -73,7 +73,7 @@ function insert_array_node( $array, $after_key, $index, $value)
 		$result[$id] = $item;
 
 		if ($id === $after_key)
-			$result[$id] = $value;
+			$result[$index] = $value;
 	}
 
 	return $result;

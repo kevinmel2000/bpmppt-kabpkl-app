@@ -63,52 +63,18 @@ function get_nav( $position )
 	return $baka_theme->get_nav( $position );
 }
 
-/**
- * Baka Head
- * 
- * Load All contents for head section, like CSS & JS files
- * @return	String	Meybe ;P
- */
-function baka_head()
+function add_script( $id, $source, $depend, $version)
 {
-	$stylesheets = Baka_theme::get('styles');
-
-	if( !empty( $stylesheets ) )
-	{
-		echo "<!-- Start CSS -->\n";
-		foreach ( $stylesheets as $style )
-		{
-			echo $style;
-		}
-		echo "<!-- End CSS -->\n";
-	}
+	$CI_theme =& get_instance()->baka_theme;
 	
-	$javascripts = Baka_theme::get('scripts');
-
-	if( !empty( $javascripts['head'] ) )
-	{
-		echo "<!-- JS Head Start -->\n";
-		foreach ( $javascripts['head'] as $script )
-		{
-			echo $script;
-		}
-		echo "<!-- JS Head End -->\n";
-	}
+	return $CI_theme->add_script( $id, $source, $depend = '', $version = NULL);
 }
 
-function baka_foot()
+function get_foot()
 {
-	$javascripts = Baka_theme::get('scripts');
+	$CI_theme =& get_instance()->baka_theme;
 	
-	if( !empty( $javascripts['foot'] ) )
-	{
-		echo "<!-- JS Foot Start -->\n";
-		foreach ( $javascripts['foot'] as $script )
-		{
-			echo $script;
-		}
-		echo "<!-- JS Foot End -->\n";
-	}
+	return $CI_theme->load_scripts();
 }
 
 

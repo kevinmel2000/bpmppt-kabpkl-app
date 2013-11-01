@@ -16,5 +16,7 @@
 </div>
 
 	</div>
-	<?php load_view('sidebar') ?>
+	<div class="col-md-3">
+		<?php echo get_nav('side') ?>
+	</div>
 </div>

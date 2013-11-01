@@ -75,36 +75,28 @@ class Layanan extends BAKA_Controller
 		redirect( 'data/layanan/ijin/'.$data_type );
 	}
 
-	public function prints( $data_type, $data_id )
+	public function cetak( $data_type )
 	{
-		return true;
+		$this->data['skpd_name']	= get_app_setting('skpd_name');
+		$this->data['skpd_address']	= get_app_setting('skpd_address');
+		$this->data['skpd_city']	= get_app_setting('skpd_city');
+		$this->data['skpd_prov']	= get_app_setting('skpd_prov');
+		$this->data['skpd_telp']	= get_app_setting('skpd_telp');
+		$this->data['skpd_fax']		= get_app_setting('skpd_fax');
+		$this->data['skpd_pos']		= get_app_setting('skpd_pos');
+		$this->data['skpd_web']		= get_app_setting('skpd_web');
+		$this->data['skpd_email']	= get_app_setting('skpd_email');
+		$this->data['skpd_logo']	= get_app_setting('skpd_logo');
+
+		$this->baka_theme->load('prints/'.$data_type, $this->data, 'print');
 	}
 
-	function _test()
+	public function test( $data_type, $data_id )
 	{
-		switch ($segment = $this->uri->segment(5)) {
-			case 'form':
-				$this->_formulir($slug, $this->uri->segment(6));
-				break;
+		$this->data['panel_title']	= $this->baka_theme->set_title( 'Input data ' . $this->app_data->get_name( $data_type ) );
+		$this->data['panel_body'] = $this->app_data->get_print( $data_type, $data_id );
 
-			case 'print':
-				$this->_print( $this->uri->segment(6) );
-				break;
-
-			case 'page':
-			default:
-				$configs['page_segment'] = 6;
-				$configs['url'] = $this->data['link'];
-
-				if ($segment == 'status') {
-					$configs['find']['status'] = $this->uri->segment(6);
-				}
-
-				$this->data['perizinan'] = $this->perizinan->get_grid( $this->_label->slug, $configs );
-
-				Template::load('datas/layanan', $this->data);
-				break;
-		}
+		$this->baka_theme->load('pages/panel_form', $this->data);
 	}
 }
 

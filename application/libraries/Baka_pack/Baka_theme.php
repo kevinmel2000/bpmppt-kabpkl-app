@@ -8,6 +8,8 @@ class Baka_theme Extends Baka_lib
 
 	protected $_contents = array();
 
+	public $_scripts = array();
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -17,6 +19,9 @@ class Baka_theme Extends Baka_lib
 		$this->_theme_data['page_title'] = $this->_app_name;
 		$this->_theme_data['site_title'] = $this->_app_name;
 		$this->_theme_data['body_class'] = 'page';
+
+		$this->add_script('jquery', 'asset/vendor/jquery/jquery.min.js', '', '1.9');
+		$this->add_script('bootstrap', 'asset/vendor/bootstrap/js/bootstrap.min.js', 'jquery', '3.0.0');
 
 		log_message('debug', "Baka_theme Class Initialized");
 	}
@@ -212,6 +217,47 @@ class Baka_theme Extends Baka_lib
 			}
 
 			$output .= '</ul>';
+		}
+
+		return $output;
+	}
+
+	public function add_script( $id, $source, $depend = '', $version = NULL )
+	{
+		$source = $source.'?ver='.($version != '' ? $version : get_app_option('app_version'));
+
+		if ( array_key_exists($depend, $this->_scripts) )
+		{
+			$this->_scripts = array_insert_after_node( $this->_scripts, $depend, $id, $source );
+		}
+		else
+		{
+			$this->_scripts[$id] = $source;
+		}
+	}
+
+	public function load_scripts()
+	{
+		$output = '';
+		$attr	= 'type="text/javascript" charset="'.get_charset().'"';
+
+		foreach ( $this->_scripts as $id => $src )
+		{
+			$output .= "<script $attr id=\"$id\"";
+
+			if (strpos($src, '://') !== FALSE)
+			{
+				$output .= " src=\"$src\">";
+			}
+			else
+			{
+				$script = base_url().$src;
+				$output .= filter_var( $script, FILTER_VALIDATE_URL) ?
+					" src=\"$script\">" :
+					">\n$src";
+			}
+
+			$output .= "</script>\n\t";
 		}
 
 		return $output;

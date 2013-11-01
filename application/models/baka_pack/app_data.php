@@ -207,6 +207,27 @@ class App_data extends CI_Model
 		return $generate;
 	}
 
+	public function get_print( $data_type, $data_id )
+	{
+		$data['skpd_name']		= get_app_setting('skpd_name');
+		$data['skpd_address']	= get_app_setting('skpd_address');
+		$data['skpd_city']		= get_app_setting('skpd_city');
+		$data['skpd_prov']		= get_app_setting('skpd_prov');
+		$data['skpd_telp']		= get_app_setting('skpd_telp');
+		$data['skpd_fax']		= get_app_setting('skpd_fax');
+		$data['skpd_pos']		= get_app_setting('skpd_pos');
+		$data['skpd_web']		= get_app_setting('skpd_web');
+		$data['skpd_email']		= get_app_setting('skpd_email');
+		$data['skpd_logo']		= get_app_setting('skpd_logo');
+
+		foreach ( $this->get_fulldata_by_id( $data_id ) as $field => $value )
+		{
+			$data[$field] = $value;
+		}
+		
+		return $data;
+	}
+
 	// get full data by id
 	public function get_fulldata_by_id( $data_id )
 	{
@@ -312,7 +333,8 @@ class App_data extends CI_Model
 
 			foreach ( $query->result() as $row )
 			{
-				$obj->{$row->meta_key} = $row->meta_value;
+				$meta_key = str_replace($data_type.'_', '', $row->meta_key);
+				$obj->{$meta_key} = $row->meta_value;
 			}
 
 			return $obj;
