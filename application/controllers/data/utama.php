@@ -6,7 +6,6 @@ class Utama extends BAKA_Controller
 	{
 		parent::__construct();
 
-		$this->data['load_toolbar'] = TRUE;
 		$this->baka_theme->set_title('Dashboard');
 
 		$this->baka_theme->add_navbar( 'data_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
@@ -20,8 +19,6 @@ class Utama extends BAKA_Controller
 
 	public function stat()
 	{
-		$this->data['single_page']	= FALSE;
-
 		$this->data['panel_title']	= $this->baka_theme->set_title('Dashboard ');
 		$this->data['data_type']	= $this->app_data->get_type_list_assoc();
 		$this->data['data_count']	= $this->app_data->count_data();
@@ -32,11 +29,20 @@ class Utama extends BAKA_Controller
 
 	public function semua()
 	{
-		$this->data['single_page']	= FALSE;
+		$this->data['load_toolbar'] = TRUE;
+		$this->data['search_form']	= TRUE;
+
+		$data_list = $this->app_data->get_type_list_assoc();
+
+		foreach ($data_list as $key => $value)
+		{
+			$this->data['tool_buttons']['Baru:dd|primary'][$key] = $value;
+		}
+		
+		$this->data['data_type']	= $data_list;
 		$this->data['panel_title']	= $this->baka_theme->set_title('Semua data perijinan');
-		$this->data['data_type']	= $this->app_data->get_type_list_assoc();
-		$this->data['counter']		= $this->app_data->count_data();
 		$this->data['panel_body']	= $this->app_data->get_grids();
+		$this->data['counter']		= $this->app_data->count_data();
 
 		$this->baka_theme->load('pages/panel_alldata', $this->data);
 	}

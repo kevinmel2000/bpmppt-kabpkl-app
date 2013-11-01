@@ -1,5 +1,63 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+
+function set_toolbar( $tool_buttons )
+{
+	if ( count($tool_buttons) == 0 )
+		return FALSE;
+
+	$btn_class	= 'btn btn-sm '; 
+	$output		= '<div class="btn-toolbar">';
+
+	foreach ( $tool_buttons as $url => $label )
+	{
+		$output	.= '<div class="btn-group">';
+		
+		if ( is_array($label) )
+		{
+			$s_btn		= explode('|', $url);
+			$dropdown	= ( strpos($s_btn[0], ':dd') !== FALSE ? TRUE : FALSE );
+
+			if ( $dropdown )
+			{
+				$output .= '<button type="button" class="'.$btn_class.( isset($s_btn[1]) ? 'btn-'.$s_btn[1] : '' ).' dropdown-toggle" data-toggle="dropdown">'.str_replace(':dd', '', $s_btn[0]).' <span class="caret"></span></button>';
+				$output .= '<ul class="dropdown-menu" role="menu">';
+			}
+
+			foreach ( $label as $l_url => $l_label )
+			{
+				$output	.= ( $dropdown ? '<li>' : '' ).anchor( $l_url, $l_label, 'class="'.( $dropdown ? '' : $btn_class.( isset($s_btn[1]) ? 'btn-'.$s_btn[1] : '' ) ).'"' ).( $dropdown ? '</li>' : '' );
+			}
+
+			if ( $dropdown )
+				$output .= '</ul>';
+		}
+		else
+		{
+			$button	 = explode('|', $label);
+			$output	.= anchor( $url, $button[0], 'class="'.$btn_class.( isset($button[1]) ? 'btn-'.$button[1] : '' ).'"' );
+		}
+
+		$output	.= '</div>';
+	}
+	
+	$output	.= '</div>';
+
+	return $output;
+}
+
+function form_search( $target )
+{
+	$output  = form_open( $target, array('name'=>'search-bar', 'method'=>'get'));
+	$output .= '<div class="input-group input-group-sm">';
+	$output .= form_input(array('name'=>'search', 'id'=>'search', 'value'=>set_value('search'), 'class'=>'form-control', 'type'=>'search'));
+	$output .= '<span class="input-group-btn">'.form_submit(array('id'=>'s','class'=>'btn btn-default', 'value'=>'Cari')).'</span>';
+	$output .= '</div><!-- /input-group -->';
+	$output .= form_close();
+
+	return $output;
+}
+
 function form_alert( $message = '' )
 {
 	$return = '<div class="alert"><button type="button" class="close" data-dismiss="alert">&times;</button><ul>'.$message.'</ul></div>';

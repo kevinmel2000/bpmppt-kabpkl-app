@@ -8,7 +8,6 @@ class Layanan extends BAKA_Controller
 
 		// $this->data['user_id'] = Aplikasi::user_auth();
 
-		$this->data['load_toolbar'] = TRUE;
 		$this->baka_theme->set_title('Administrasi data');
 
 		$this->baka_theme->add_navbar( 'data_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
@@ -27,7 +26,8 @@ class Layanan extends BAKA_Controller
 		if ( ! class_exists( $data_type ) )
 			show_404();
 
-		$this->data['page_link'] .= 'ijin/'.$data_type;
+		$this->data['load_toolbar']	= TRUE;
+		$this->data['page_link']   .= 'ijin/'.$data_type.'/';
 
 		if ($data_type !== '')
 		{
@@ -41,20 +41,28 @@ class Layanan extends BAKA_Controller
 
 	public function data( $data_type )
 	{
+		$this->data['search_form']	= TRUE;
+		$this->data['tool_buttons'][$this->data['page_link'].'form'] = 'Baru|primary';
+		$this->data['tool_buttons'][$this->data['page_link'].'status|default'] = array('aktif'=>'Aktif','nonaktif'=>'non-Aktif');
+
 		$delete_link = $this->data['page_link'].'/delete';
 
 		$this->data['page_link']	.= '/form';
 		$this->data['btn_text']		 = 'Baru';
 
 		$this->data['panel_title']	 = $this->baka_theme->set_title( 'Semua data ' . $this->app_data->get_name( $data_type ) );
+		$this->data['panel_body']	 = $this->app_data->get_grid( $data_type, $this->data['page_link'] );
 		$this->data['counter']		 = $this->app_data->count_data( $data_type );
-		$this->data['panel_body']	 = $this->app_data->get_grid( $data_type, $this->data['page_link'], $delete_link );
 
 		$this->baka_theme->load('pages/panel_data', $this->data);
 	}
 
 	public function form( $data_type )
 	{
+		$this->data['tool_buttons'][$this->data['page_link'].'data'] = 'Kembali|default';
+		$this->data['tool_buttons'][$this->data['page_link'].'cetak'] = 'Cetak|default';
+		$this->data['tool_buttons']['Ubah status:dd|default'] = array($this->data['page_link'].'aktif'=>'Aktif',$this->data['page_link'].'nonaktif'=>'non-Aktif');
+
 		$this->data['page_link']	.= '/data';
 		$this->data['form_page']	 = TRUE;
 		$this->data['btn_text']		 = 'Kembali';

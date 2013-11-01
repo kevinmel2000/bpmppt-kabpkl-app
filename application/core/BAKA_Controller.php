@@ -19,15 +19,18 @@ class BAKA_Controller extends CI_Controller
 			show_error(array('Peramban yang anda gunakan tidak memenuhi syarat minimal penggunaan aplikasi ini.','Silahkan gunakan '.anchor('http://www.mozilla.org/id/', 'Mozilla Firefox', 'target="_blank"').' atau '.anchor('https://www.google.com/intl/id/chrome/browser/', 'Google Chrome', 'target="_blank"').' biar lebih GREGET!'), 500, 'error_browser_jadul');
 		}
 
+		if (!$this->tank_auth->is_logged_in() AND strpos( 'auth/login', current_url() ) !== FALSE)
+			redirect('auth/login');	// not logged in or activated
+
 		$this->data['load_toolbar']	= FALSE;
+		$this->data['search_form']	= FALSE;
 		$this->data['single_page']	= TRUE;
 		$this->data['form_page']	= FALSE;
 
-		$this->data['panel_title']	= '';
-		$this->data['panel_body']	= '';
+		$this->data['tool_buttons'] = array();
 
-		if (!$this->tank_auth->is_logged_in() AND strpos( 'auth/login', current_url() ) !== FALSE)							// not logged in or activated
-			redirect('auth/login');
+		$this->data['panel_title']	= $this->baka_theme->set_title('');
+		$this->data['panel_body']	= '';
 
 		log_message('debug', "BAKA Controller Class Initialized");
 	}
