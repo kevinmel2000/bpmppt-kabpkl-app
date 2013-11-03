@@ -8,7 +8,7 @@ class Tanda_daftar_perusahaan extends CI_Model
 
 	public function __construct()
 	{
-		log_message('debug', "Tanda_daftar_perusahaan_model Class Initialized");
+		log_message('debug', "#BAKA_modul: Tanda_daftar_perusahaan_model Class Initialized");
 	}
 
 	public function form( $data_id = '' )

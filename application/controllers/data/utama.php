@@ -19,16 +19,6 @@ class Utama extends BAKA_Controller
 
 	public function stat()
 	{
-		$this->data['panel_title']	= $this->baka_theme->set_title('Dashboard ');
-		$this->data['data_type']	= $this->app_data->get_type_list_assoc();
-		$this->data['data_count']	= $this->app_data->count_data();
-		$this->data['panel_body']	= 'anu';
-
-		$this->baka_theme->load('pages/dashboard', $this->data);
-	}
-
-	public function semua()
-	{
 		$this->data['load_toolbar'] = TRUE;
 		$this->data['search_form']	= TRUE;
 
@@ -36,7 +26,7 @@ class Utama extends BAKA_Controller
 
 		foreach ($data_list as $key => $value)
 		{
-			$this->data['tool_buttons']['Baru:dd|primary'][$key] = $value;
+			$this->data['tool_buttons']['Baru:dd|primary']['data/layanan/ijin/'.$key.'/form'] = $value;
 		}
 		
 		$this->data['data_type']	= $data_list;
@@ -51,21 +41,22 @@ class Utama extends BAKA_Controller
 	{
 		$this->data['panel_title'] = $this->baka_theme->set_title('Laporan data');
 
+		$fields[]	= array(
+			'name'	=> 'app_data_show_limit',
+			'type'	=> 'number',
+			'label'	=> 'Tampilan Data Tiap halaman',
+			'std'	=> get_app_setting('app_data_show_limit'),
+			);
+
+		$fields[]	= array(
+			'name'	=> 'app_date_format',
+			'type'	=> 'text',
+			'label'	=> 'Format Tanggal',
+			'std'	=> get_app_setting('app_date_format'),
+			);
+
 		$form = $this->baka_form->add_form( current_url(), 'internal-skpd' )
-								->add_fields(array(
-									array(
-										'name'	=> 'app_data_show_limit',
-										'type'	=> 'number',
-										'label'	=> 'Tampilan Data Tiap halaman',
-										'std'	=> get_app_setting('app_data_show_limit'),
-										),
-									array(
-										'name'	=> 'app_date_format',
-										'type'	=> 'text',
-										'label'	=> 'Format Tanggal',
-										'std'	=> get_app_setting('app_date_format'),
-										),
-									));
+								->add_fields( $fields );
 
 		if (!$form->validate_submition())
 			$this->data['panel_body'] = $form->render();

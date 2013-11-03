@@ -10,7 +10,7 @@
 	<div class="panel-heading">
 		<h3 class="panel-title"><?php echo $name ?></h3>
 		<div class="btn-group panel-button">
-			<button type="button" class="btn btn-default">Detail</button>
+			<?php echo anchor('data/layanan/ijin/'.$slug, 'Detail', 'class="btn btn-default"') ?>
 		</div>
 	</div>
 	

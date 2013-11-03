@@ -17,81 +17,107 @@ class Maintenance extends BAKA_Controller
 		$this->backstore();
 	}
 
-	public function backstore()
+	public function dbbackup()
 	{
-		$this->baka_theme->set_title('Backup dan Restore Database');
+		$this->data['panel_title'] = $this->baka_theme->set_title('Backup Database');;
 
-		$this->data['panel_backup_title'] = 'Backup Database';
+		$fields[]	= array(
+			'name'	=> 'backup-all',
+			'type'	=> 'static',
+			'label'	=> 'Database driver',
+			'std'	=> $this->db->dbdriver );
 
-		$form_backup = $this->baka_form->add_form( current_url(), 'backup' )
-								->add_fields(array(
-									array(
-										'name'	=> 'backup-all',
-										'type'	=> 'checkbox',
-										'label'	=> 'Backup semua tabel',
-										'option'=> array('semua' => 'Semua'),
-										),
-									// array(
-									// 	'name'	=> 'backup-tables',
-									// 	'type'	=> 'multiselect',
-									// 	'label'	=> 'Pilih tabel tertentu',
-									// 	'option'=> $this->db->list_tables(),
-									// 	),
-								))
-								->add_buttons(array(
-									array(
-										'name'	=> 'do-backup',
-										'type'	=> 'submit',
-										'value'	=> 'Backup sekarang',
-										'class'	=> 'btn-primary pull-right'
-										)
-								));
+		$fields[]	= array(
+			'name'	=> 'backup-all',
+			'type'	=> 'static',
+			'label'	=> 'Host info',
+			'std'	=> $this->db->conn_id->host_info );
 
-		$this->load->library('baka_pack/baka_dbutil');
+		$fields[]	= array(
+			'name'	=> 'backup-all',
+			'type'	=> 'static',
+			'label'	=> 'Server info',
+			'std'	=> $this->db->conn_id->server_info.' Version. '.$this->db->conn_id->server_version );
 
-		if ( $form_backup->validate_submition() )
+		$fields[]	= array(
+			'name'	=> 'backup-all',
+			'type'	=> 'checkbox',
+			'label'	=> 'Backup semua tabel',
+			'option'=> array('semua' => 'Semua'),
+			'validation'=>'required' );
+
+		$buttons[]= array(
+			'name'	=> 'do-backup',
+			'type'	=> 'submit',
+			'label'	=> 'backup_btn',
+			'class'	=> 'btn-primary pull-right' );
+
+		$backup		= $this->baka_form->add_form( current_url(), 'backup' )
+									   ->add_fields( $fields )
+									   ->add_buttons( $buttons );
+
+		if ( $backup->validate_submition() )
 		{
-			$data = $form_backup->submited_data();
-			
-			if ($data['backup-all'] == 'semua')
-			{
-				if ($this->baka_dbutil->backup())
-					$this->baka_app->set_message( 'Berhasil', 'success' );
-				else
-					$this->baka_app->set_message( $this->baka_dbutil->errors, 'danger' );
+			$this->load->library('baka_pack/baka_dbutil');
 
-				redirect( current_url() );
+			$data = $backup->submited_data();
+
+			if ( $this->baka_dbutil->backup() )
+			{
+				$this->session->set_flashdata('success', $this->baka_lib->messages());
 			}
+			else
+			{
+				$this->session->set_flashdata('error', $this->baka_lib->errors());
+			}
+			
+			redirect( current_url() );
 		}
 
-		$this->data['panel_backup_body'] = $form_backup->render();
+		$this->data['panel_body'] = $backup->render();
 
-		$this->data['panel_restore_title'] = 'Restore Database';
+		$this->baka_theme->load('pages/panel_form', $this->data);
+	}
 
-		$form_restore = $this->baka_form->add_form( current_url(), 'restore' )
-								->add_fields(array(
-									array(
-										'name'	=> 'restore-from-file',
-										'type'	=> 'upload',
-										'label'	=> 'Restore dari berkas',
-										'desc'	=> 'Pilih berkas yang akan digunakan untuk me-restore database, berkas yg diperbolehkan antara lain: <i>.zip</i> dan <i>.sql</i>'
-										),
-									))
-								->add_buttons(array(
-									array(
-										'name'	=> 'do-restore',
-										'type'	=> 'submit',
-										'value'	=> 'Restore sekarang',
-										'class'	=> 'btn-primary pull-right'
-										)
-									));
+	public function dbrestore()
+	{
+		$this->data['panel_title']	= $this->baka_theme->set_title('Restore Database');;
 
-		if (!$form_restore->validate_submition())
-			$this->data['panel_restore_body'] = $form_restore->render();
-		else
-			$this->data['panel_restore_body'] = $form_restore->submited_data();
+		$fields[]	= array(
+			'name'	=> 'restore-from-file',
+			'type'	=> 'upload',
+			'label'	=> 'Restore dari berkas',
+			'desc'	=> 'Pilih berkas yang akan digunakan untuk me-restore database, berkas yg diperbolehkan antara lain: <i>.zip</i> dan <i>.sql</i>' );
 
-		$this->baka_theme->load('pages/panel_backstore', $this->data);
+		$buttons[]= array(
+			'name'	=> 'do-restore',
+			'type'	=> 'submit',
+			'label'	=> 'restore_btn',
+			'class'	=> 'btn-primary pull-right' );
+
+		$restore	= $this->baka_form->add_form_multipart( current_url(), 'restore' )
+									  ->add_fields( $fields )
+									  ->add_buttons( $buttons );
+
+		if ( $restore->validate_submition() )
+		{
+			$this->load->library('baka_pack/baka_dbutil');
+
+			if ( $this->baka_dbutil->restore_upload('restore-from-file') )
+			{
+				$this->session->set_flashdata('success', $this->baka_lib->messages());
+			}
+			else
+			{
+				$this->session->set_flashdata('error', $this->baka_lib->errors());
+			}
+
+			redirect( current_url() );
+		}
+
+		$this->data['panel_body'] = $restore->render();
+
+		$this->baka_theme->load('pages/panel_form', $this->data);
 	}
 
 	public function syslogs( $file = '' )

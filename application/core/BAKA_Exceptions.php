@@ -2,11 +2,10 @@
 /**
  * BAKA Exceptions Class
  *
- * @package		CodeIgniter
+ * @package		Baka_pack
  * @subpackage	Libraries
  * @category	Exceptions
  * @author		Fery Wardiyanto
- * @link		http://codeigniter.com/user_guide/libraries/exceptions.html
  */
 class BAKA_Exceptions extends CI_Exceptions
 {
@@ -20,7 +19,7 @@ class BAKA_Exceptions extends CI_Exceptions
 
 		// $this->load =& load_class('Loader', 'core');
 
-		log_message('debug', "BAKA Exceptions Class Initialized");
+		log_message('debug', "#Baka_pack: Core Exceptions Class Initialized");
 	}
 
 	/**
@@ -35,9 +34,16 @@ class BAKA_Exceptions extends CI_Exceptions
 	 */
 	function show_error($heading, $message, $template = 'error_general', $status_code = 500)
 	{
-		set_status_header($status_code);
-
+		// print_pre(get_config());
+		$heading = $heading;
 		$message = '<p>'.implode('</p><p>', ( ! is_array($message)) ? array($message) : $message).'</p>';
+
+		$alt = (php_sapi_name() === 'cli' OR defined('STDIN')) ? '-cli' : '' ;
+
+		if (defined('PHPUNIT_TEST'))
+			throw new PHPUnit_Framework_Exception($message, $status_code);
+
+		set_status_header($status_code);
 
 		if (ob_get_level() > $this->ob_level + 1)
 		{
@@ -45,7 +51,7 @@ class BAKA_Exceptions extends CI_Exceptions
 		}
 		
 		ob_start();
-		include( $this->_template_path.$template.EXT );
+		include( $this->_template_path.$template.$alt.EXT );
 		$buffer = ob_get_contents();
 		ob_end_clean();
 		
@@ -68,6 +74,8 @@ class BAKA_Exceptions extends CI_Exceptions
 
 		$filepath = str_replace("\\", "/", $filepath);
 
+		$this->input =& load_class('input', 'core');
+
 		// For safety reasons we do not show the full file path
 		if (FALSE !== strpos($filepath, '/'))
 		{
@@ -75,13 +83,13 @@ class BAKA_Exceptions extends CI_Exceptions
 			$filepath = $x[count($x)-2].'/'.end($x);
 		}
 
+		$alt = ( $this->input->is_cli_request() ? '_cli' : '_php' );
+
 		if (ob_get_level() > $this->ob_level + 1)
-		{
 			ob_end_flush();
-		}
 
 		ob_start();
-		include($this->_template_path.'error_php'.EXT);
+		include($this->_template_path.'error'.$alt.EXT);
 		$buffer = ob_get_contents();
 		ob_end_clean();
 		echo $buffer;

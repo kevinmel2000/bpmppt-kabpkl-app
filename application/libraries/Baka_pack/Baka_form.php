@@ -1,5 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/**
+ * BAKA Form Class
+ *
+ * @package		Baka_pack
+ * @subpackage	Libraries
+ * @category	Form
+ * @author		Fery Wardiyanto (http://github.com/feryardiant/)
+ */
 class Baka_form Extends Baka_lib
 {
 	private $form_action;
@@ -16,12 +24,11 @@ class Baka_form Extends Baka_lib
 
 	public function __construct()
 	{
-		parent::__construct();
+		$this->load->library('form_validation');
 
-		$this->load->helper('form');
 		$this->load->helper('baka_pack/baka_form');
 
-		log_message('debug', "Baka_form Class Initialized");
+		log_message('debug', "#Baka_pack: Form Class Initialized");
 	}
 
 	public function add_form( $action, $name, $id = '', $class = '', $method = 'post', $extra = array() )
@@ -44,6 +51,13 @@ class Baka_form Extends Baka_lib
 		return $this;
 	}
 
+	public function add_form_multipart( $action, $name, $id = '', $class = '', $method = 'post', $extra = array() )
+	{
+		$extra['enctype'] = 'multipart/form-data';
+
+		return $this->add_form( $action, $name, $id, $class, $method, $extra );
+	}
+
 	public function add_fields( $fields = array() )
 	{
 		$this->fields = $fields;
@@ -62,7 +76,7 @@ class Baka_form Extends Baka_lib
 	{
 		$output	= form_open( $this->form_action, $this->form_attrs );
 		
-		// $output .= $this->show_alerts();
+		$output .= $this->show_alerts();
 
 		foreach( $this->fields as $field )
 		{
@@ -181,6 +195,12 @@ class Baka_form Extends Baka_lib
 				$output .= $this->_form_captcha( $field['name'], $field['label'], $field['id'], $input_classes, $field['desc'], $field['validation'] );
 				break;
 
+			case 'static':
+				$output .= $this->_form_common(	$field['name'], $field['label'],
+					'<p id="'.$field['id'].'" class="form-control-static input-sm">'.$field['std'].'</p>',
+					$field['id'], $field['desc'] );
+				break;
+
 			default:
 				log_message('debug', '#Baka_form: '.$field['type'].' Field type are not supported currently');
 				break;
@@ -220,7 +240,7 @@ class Baka_form Extends Baka_lib
 	private function _form_captcha( $name, $label, $id = '', $class = '', $desc = '', $validation = '' )
 	{
 		$id = ( $id !== '' ? $id : $name );
-		$captcha_url = site_url().get_app_config('cool_captcha_folder').'captcha'.EXT;
+		$captcha_url = base_url().get_app_config('cool_captcha_folder').'captcha'.EXT;
 
 		$captcha = img( array(
 			'src'	=> $captcha_url,
@@ -449,8 +469,6 @@ class Baka_form Extends Baka_lib
 
 	public function validate_submition()
 	{
-		$this->load->library('form_validation');
-
 		foreach ($this->fields as $field)
 		{
 			if ( $field['type'] == 'subfield' )
@@ -461,12 +479,12 @@ class Baka_form Extends Baka_lib
 					$this->set_field_rules($field['name'].'_'.$subfield['name'], $subfield['label'], (isset($subfield['validation']) ? $subfield['validation'] : ''));
 				}
 			}
-			else
+			else if ( $field['type'] != 'static' )
 			{
 				$this->set_field_rules($field['name'], $field['label'], (isset($field['validation']) ? $field['validation'] : ''));
 			}
 		}
-			
+
 		return $this->form_validation->run();
 	}
 
@@ -488,6 +506,47 @@ class Baka_form Extends Baka_lib
 	public function submited_data()
 	{
 		return $this->form_data;
+	}
+
+	private function show_alerts()
+	{
+		$messages	= array();
+		$class		= 'warning';
+
+		if ( $this->session->flashdata('message') )
+		{
+			$messages	= $this->session->flashdata('message');
+			$class		= 'warning';
+		}
+		else if ( $this->session->flashdata('success') )
+		{
+			$messages	= $this->session->flashdata('success');
+			$class		= 'success';
+		}
+		else if ( $this->session->flashdata('info') )
+		{
+			$messages	= $this->session->flashdata('info');
+			$class		= 'info';
+		}
+		else if ( $this->session->flashdata('error') )
+		{
+			$messages	= $this->session->flashdata('error');
+			$class		= 'danger';
+		}
+
+		if ( count( $messages ) > 0 )
+		{
+			$output = '<div class="alert alert-'.$class.'"><ul>';
+			
+			foreach ( $messages as $message )
+			{
+				$output .= '<li>'.$message.'</li>';
+			}
+
+			$output .= '</ul></div>';
+
+			return $output;
+		}
 	}
 }
 

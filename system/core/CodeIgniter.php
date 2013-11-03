@@ -319,6 +319,8 @@
  *  Call the requested method
  * ------------------------------------------------------
  */
+if (!defined('PHPUNIT_TEST'))
+{
 	// Is there a "remap" function? If so, we call it instead
 	if (method_exists($CI, '_remap'))
 	{
@@ -358,6 +360,7 @@
 		// Any URI segments present (besides the class/function) will be passed to the method for convenience
 		call_user_func_array(array(&$CI, $method), array_slice($URI->rsegments, 2));
 	}
+}
 
 
 	// Mark a benchmark end point
@@ -375,7 +378,7 @@
  *  Send the final rendered output to the browser
  * ------------------------------------------------------
  */
-	if ($EXT->_call_hook('display_override') === FALSE)
+	if ($EXT->_call_hook('display_override') === FALSE && !defined('PHPUNIT_TEST'))
 	{
 		$OUT->_display();
 	}

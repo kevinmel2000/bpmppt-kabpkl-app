@@ -3,44 +3,35 @@
 * Application translation
 */
 
-$lang['submit_btn']	= 'Simpan';
-$lang['reset_btn']	= 'Batal';
+$lang['submit_btn']		= 'Simpan';
+$lang['reset_btn']		= 'Batal';
 
-$lang['error_browser_jadul'] = 'Error: Web browser anda jadul!';
+$lang['backup_btn']		= 'Backup sekarang';
+$lang['restore_btn']	= 'Restore sekarang';
 
-// Account Creation
-$lang['account_creation_successful']			= 'Akun Berhasil Dibuat';
-$lang['account_creation_unsuccessful']			= 'Tidak Dapat Membuat Akun';
-$lang['account_creation_duplicate_email']		= 'Email Sudah Digunakan atau Tidak Valid';
-$lang['account_creation_duplicate_username']	= 'Username Sudah Digunakan atau Tidak Valid';
+$lang['error_browser_jadul']		= 'Web browser anda jadul!';
 
+$lang['auth_incorrect_captcha']		= 'Kode validasi anda salah!.';
+$lang['auth_username_blacklisted']	= 'Anda tidak dapat menggunakan username tersebut!.';
+$lang['auth_incorrect_login']		= 'Login yang anda masukan salah.';
+$lang['auth_incorrect_username']	= 'Username yang anda masukan salah.';
+$lang['auth_incorrect_password']	= 'Password yang anda masukan salah.';
+$lang['auth_banned_account']		= 'Akun anda sedang dicekal dengan alasan %s.';
+$lang['auth_inactivated_account']	= 'Akun anda belum aktif.';
+$lang['auth_login_success']			= 'Login berhasil.';
+$lang['auth_username_in_use']		= 'Username tersebut sudah digunakan.';
+$lang['auth_email_in_use']			= 'Email tersebut sudah digunakan.';
+$lang['auth_current_email']			= 'Anda menggunakan email tersebut saat ini.';
+$lang['auth_inapproved_account']	= 'Akun anda belum disetujui.';
 
-// Password
-$lang['password_change_successful']				= 'Kata Sandi Berhasil Diubah';
-$lang['password_change_unsuccessful']			= 'Tidak Dapat Mengganti Kata Sandi';
-$lang['forgot_password_successful']				= 'Email untuk Set Ulang Kata Sandi Telah Dikirim';
-$lang['forgot_password_unsuccessful']			= 'Tidak Dapat Set Ulang Kata Sandi';
+$lang['dbutil_backup_folder_not_exists']	= 'Direktori %s belum ada pada server anda.';
+$lang['dbutil_backup_folder_not_writable']	= 'Anda tidak memiliki ijin untuk menulis pada direktori %s.';
+$lang['dbutil_backup_process_failed']		= 'Proses backup database gagal.';
+$lang['dbutil_backup_process_success']		= 'Proses backup database berhasil.';
+$lang['dbutil_restore_success']				= 'Proses restorasi database berhasil.';
+$lang['dbutil_upload_failed']				= 'Proses upload gagal.';
 
-// Activation
-$lang['activate_successful']					= 'Akun Telah Diaktifkan';
-$lang['activate_unsuccessful']					= 'Tidak Dapat Mengaktifkan Akun';
-$lang['deactivate_successful']					= 'Akun Telah Dinonaktifkan';
-$lang['deactivate_unsuccessful']				= 'Tidak Dapat Menonaktifkan Akun';
-$lang['activation_email_successful']			= 'Email untuk Aktivasi Telah Dikirim';
-$lang['activation_email_unsuccessful']			= 'Tidak Dapat Mengirimkan Email Aktivasi';
+$lang['file_not_found']		= 'Berkas %s tidak ada.';
 
-// Login / Logout
-$lang['login_successful']						= 'Log In Berhasil';
-$lang['login_unsuccessful']						= 'Log In Gagal';
-$lang['logout_successful']						= 'Log Out Berhasil';
-  
-// Account Changes
-$lang['update_successful']						= 'Informasi Akun Berhasil Diperbaharui';
-$lang['update_unsuccessful']					= 'Tidak Dapat Memperbaharui Informasi Akun';
-$lang['delete_successful']						= 'Pengguna Telah Dihapus';
-$lang['delete_unsuccessful']					= 'Tidak Dapat Menghapus Pengguna';
-
-// Email Subjects - TODO Please Translate
-$lang['email_forgotten_password_subject']		= 'Forgotten Password Verification';
-$lang['email_new_password_subject']				= 'New Password';
-$lang['email_activation_subject']				= 'Account Activation';
+$lang['email_subject_forgot_password']		= '%s email: Lupa password.';
+$lang['email_subject_activate']				= '%s email: Aktivasi.';

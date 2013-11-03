@@ -171,7 +171,7 @@ class Tank_auth
 	 */
 	function create_user($username, $email, $password, $email_activation, $custom)
 	{
-		if ((strlen($username) > 0) AND !$this->ci->users->is_username_available($username)) {
+		if ((strlen($username) > 0) AND !$this->is_username_available($username)) {
 			$this->error = array('username' => 'auth_username_in_use');
 
 		} elseif (!$this->ci->users->is_email_available($email)) {

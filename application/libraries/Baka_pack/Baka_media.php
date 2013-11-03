@@ -1,5 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
 
+/**
+ * BAKA Media Class
+ *
+ * @package		Baka_pack
+ * @subpackage	Libraries
+ * @category	Media file
+ * @author		Fery Wardiyanto (http://github.com/feryardiant/)
+ */
 class Baka_media extends Baka_lib
 {
 	protected $upload_dir;
@@ -24,8 +32,6 @@ class Baka_media extends Baka_lib
 
 	public function __construct()
 	{
-		parent::__construct();
-		
 		$this->allowed_types	= explode('|', $this->config_item('allowed_types'));
 		
 		$this->upload_max_size	= return_bytes( ini_get('upload_max_filesize') );
@@ -34,7 +40,7 @@ class Baka_media extends Baka_lib
 
 		$this->thumb_dir	= $this->upload_dir.'thumbs/';
 
-		log_message('debug', "Baka_media Class Initialized");
+		log_message('debug', "#Baka_pack: Media Class Initialized");
 	}
 	
 	public function uploaded_data()

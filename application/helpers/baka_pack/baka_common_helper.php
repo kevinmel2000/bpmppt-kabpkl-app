@@ -21,9 +21,8 @@ function get_charset( $uppercase = FALSE )
 function is_browser_jadul()
 {
 	$CI =& get_instance();
-	return $CI->baka_lib->is_browser_jadul();
+	return $CI->baka_theme->is_browser_jadul();
 }
-
 
 function return_bytes($val)
 {

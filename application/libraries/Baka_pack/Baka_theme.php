@@ -1,5 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/**
+ * BAKA Theme Class
+ *
+ * @package		Baka_pack
+ * @subpackage	Libraries
+ * @category	Theme
+ * @author		Fery Wardiyanto (http://github.com/feryardiant/)
+ */
 class Baka_theme Extends Baka_lib
 {
 	private $_app_name;
@@ -12,8 +20,6 @@ class Baka_theme Extends Baka_lib
 
 	public function __construct()
 	{
-		parent::__construct();
-
 		$this->_app_name = $this->config_item('app_name');
 
 		$this->_theme_data['page_title'] = $this->_app_name;
@@ -23,7 +29,7 @@ class Baka_theme Extends Baka_lib
 		$this->add_script('jquery', 'asset/vendor/jquery/jquery.min.js', '', '1.9');
 		$this->add_script('bootstrap', 'asset/vendor/bootstrap/js/bootstrap.min.js', 'jquery', '3.0.0');
 
-		log_message('debug', "Baka_theme Class Initialized");
+		log_message('debug', "#Baka_pack: Theme Class Initialized");
 	}
 
 	private function _caching()
@@ -49,6 +55,17 @@ class Baka_theme Extends Baka_lib
 				log_message('debug', "#Baka_theme: cache activated");
 			break;
 		}
+	}
+	
+	public function is_browser_jadul()
+	{
+		if ( ! $this->load->is_loaded('user_agent'))
+			$this->load->library('user_agent');
+
+		$min_browser	= $this->config_item('app_min_browser');
+		$curent_version	= explode('.', $this->agent->version());
+
+		return ($curent_version[0] <= $min_browser[$this->agent->browser()] ? TRUE : FALSE  );
 	}
 	
 	/**
@@ -149,7 +166,7 @@ class Baka_theme Extends Baka_lib
 				 . '			'.anchor(base_url(), $this->config_item('app_name'), 'class="navbar-brand"')
 				 . '		</div>';
 
-		if (!is_browser_jadul() AND $this->tank_auth->is_logged_in())
+		if (!is_browser_jadul() AND $this->baka_auth->is_logged_in())
 			$output .= '<div class="navbar-collapse collapse">'.$this->get_nav('top').'</div> <!--/.nav-collapse -->';
 
 		$output .=  '</div></header>';

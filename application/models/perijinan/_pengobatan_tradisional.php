@@ -7,7 +7,7 @@ class Pengobatan_tradisional extends CI_Model
 
 	public function __construct()
 	{
-		log_message('debug', "Pengobatan_tradisional_model Class Initialized");
+		log_message('debug', "#BAKA_modul: Pengobatan_tradisional_model Class Initialized");
 	}
 
 	public function form( $data_id = '' )

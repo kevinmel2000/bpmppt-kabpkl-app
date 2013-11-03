@@ -6,8 +6,6 @@ class Auth extends BAKA_Controller
 	{
 		parent::__construct();
 
-		$this->lang->load('tank_auth');
-
 		$this->baka_theme->set_title('User Authentication');
 	}
 
@@ -19,11 +17,6 @@ class Auth extends BAKA_Controller
 	public function login()
 	{
 		$this->data['panel_title'] = $this->baka_theme->set_title('Login Pengguna');
-
-		if ($this->tank_auth->is_logged_in())								// logged in
-			redirect($this->config->item('login-success', 'tank_auth'));
-		elseif ($this->tank_auth->is_logged_in(FALSE))						// logged in, not activated
-			redirect('auth/resend');
 
 		$login_by_username	= ( (bool) get_app_setting('auth_login_by_username') AND (bool) get_app_setting('auth_use_username') );
 		$login_by_email		= (bool) get_app_setting('auth_login_by_email');
@@ -55,7 +48,7 @@ class Auth extends BAKA_Controller
 								1 => 'Ingat saya dikomputer ini.' ),
 							'validation'=> 'integer' );
 
-		if ($this->tank_auth->is_max_login_attempts_exceeded($login))
+		if ($this->baka_auth->is_max_login_attempts_exceeded($login))
 		{
 			if ( (bool) get_app_setting('auth_use_recaptcha') )
 			{
@@ -81,7 +74,7 @@ class Auth extends BAKA_Controller
 		$buttons[]	= array('name'	=> 'forgot',
 							'type'	=> 'anchor',
 							'label'	=> 'Lupa Login',
-							'url'	=> 'auth/forgot',
+							'url'	=> 'forgot',
 							'class'	=> 'btn-default pull-right' );
 
 		if ( (bool) get_app_setting('auth_allow_registration') )
@@ -89,7 +82,7 @@ class Auth extends BAKA_Controller
 			$buttons[]	= array('name'	=> 'register',
 								'type'	=> 'anchor',
 								'label'	=> 'Register',
-								'url'	=> 'auth/register',
+								'url'	=> 'register',
 								'class'	=> 'btn-default pull-right' );
 		}
 
@@ -101,35 +94,15 @@ class Auth extends BAKA_Controller
 		{
 			$user_data = $form->submited_data();
 
-			if ( $this->tank_auth->login( $user_data['login-username'], $user_data['login-password'], $user_data['login-remember'], $login_by_username, $login_by_email) )
+			if ( $this->baka_auth->login( $user_data['login-username'], $user_data['login-password'], (bool) $user_data['login-remember'], $login_by_username, $login_by_email) )
 			{
-				if($this->tank_auth->is_approved())
-				{
-					redirect($this->config->item('login-success', 'tank_auth'));
-				}
-				else
-				{
-					$this->tank_auth->logout();
-					$this->tank_auth->notice('acct-unapproved');
-				}
+				redirect('dashboard');
 			}
 			else
 			{
-				$errors = $this->tank_auth->get_error_message();
-				
-				if (isset($errors['banned']))
-				{								// banned user
-					$this->tank_auth->notice('user-banned');
-				}
-				elseif (isset($errors['not_activated']))
-				{				// not activated user
-					redirect('auth/resend');
-				}
-				else
-				{													// fail
-					foreach ($errors as $k => $v)
-						$data['errors'][$k] = $this->lang->line($v);
-				}
+				$this->session->set_flashdata('error', $this->baka_lib->errors());
+
+				redirect( current_url() );
 			}
 		}
 
@@ -138,25 +111,14 @@ class Auth extends BAKA_Controller
 		$this->baka_theme->load('pages/auth', $this->data);
 	}
 
-	public function logout()
-	{
-		$this->tank_auth->logout();
-		
-		redirect('auth/login');
-	}
-
 	public function register()
 	{
 		$this->data['panel_title'] = $this->baka_theme->set_title('Register Pengguna');
 
-		if ( $this->tank_auth->is_logged_in() )									// logged in
-			redirect($this->config->item('register_redirect', 'tank_auth'));
-		elseif ( $this->tank_auth->is_logged_in(FALSE) )						// logged in, not activated
-			redirect('auth/resend');
-		elseif (!$this->config->item('allow_registration', 'tank_auth'))		// registration is off
-			$this->tank_auth->notice('registration-disabled');
+		if ( ! get_app_config('allow_registration') )
+			$this->_notice('registration-disabled');
 
-		$use_username = (bool) $this->config->item('use_username', 'tank_auth');
+		$use_username = (bool)  get_app_config('use_username');
 		
 		if ( $use_username )
 		{
@@ -181,8 +143,8 @@ class Auth extends BAKA_Controller
 							'label'	=> 'Ulangi Password',
 							'validation'=> 'required|matches[register-password]' );
 
-		$captcha_registration	= $this->config->item('captcha_registration', 'tank_auth');
-		$use_recaptcha			= $this->config->item('use_recaptcha', 'tank_auth');
+		$captcha_registration	=  get_app_config('captcha_registration');
+		$use_recaptcha			=  get_app_config('use_recaptcha');
 
 		if ($captcha_registration)
 		{
@@ -204,7 +166,7 @@ class Auth extends BAKA_Controller
 
 		$data['errors'] = array();
 
-		$email_activation = $this->config->item('email_activation', 'tank_auth');
+		$email_activation =  get_app_config('email_activation');
 
 		$buttons[]	= array('name'	=> 'register',
 							'type'	=> 'submit',
@@ -214,7 +176,7 @@ class Auth extends BAKA_Controller
 		$buttons[]	= array('name'	=> 'forgot',
 							'type'	=> 'anchor',
 							'label'	=> 'Lupa Login',
-							'url'	=> 'auth/forgot',
+							'url'	=> 'forgot',
 							'class'	=> 'btn-default pull-right' );
 
 		$form = $this->baka_form->add_form( current_url(), 'register', '', 'form')
@@ -225,36 +187,39 @@ class Auth extends BAKA_Controller
 		{
 			$user_data = $form->submited_data();
 
-			if (!is_null($data = $this->tank_auth->create_user(
+			$this->load->library('baka_pack/baka_email');
+
+			if ( $data = $this->baka_auth->create_user(
 				$use_username ? $user_data['register-username'] : '',
 				$user_data['register-email'],
 				$user_data['register-password'],
-				$email_activation )))
+				$email_activation ) )
 			{
-				$this->data['site_name'] = get_app_config('app_name');
-
-				if ($email_activation)													// send "activate" email
+				if ( $email_activation ) // send "activate" email
 				{
-					$this->data['activation_period'] = get_app_setting('auth_email_activation_expire') / 3600;
-					$this->_send_email('activate', $user_data['register_email'], $data);
-					unset($user_data['register_password']); // Clear password (just for any case)
-				}
-				else
-				{
-					if ($this->config->item('email_account_details', 'tank_auth'))		// send "welcome" email
-						$this->_send_email('welcome', $user_data['email'], $data);
+					// success
+					$data['activation_period'] = get_app_setting('auth_email_activation_expire') / 3600;
 
-					unset($user_data['register_password']); // Clear password (just for any case)
+					$this->baka_email->send('activate', $user_data['register_email'], $data);
+					
+					$this->_notice('activation-sent');
 				}
-				
-				$this->tank_auth->notice('registration-success');
+				else if ( get_app_config('email_account_details'))
+				{
+					// send "welcome" email
+					$this->baka_email->send('welcome', $user_data['register_email'], $data);
+				}
+
+				// Clear password (just for any case)
+				unset($user_data['register_password']); 
+
+				$this->_notice('registration-success');
 			}
 			else
 			{
-				$errors = $this->tank_auth->get_error_message();
-				
-				foreach ($errors as $k => $v)
-					$this->data['errors'][$k] = $this->lang->line($v);
+				$this->session->set_flashdata('error', $this->baka_lib->errors());
+
+				redirect( current_url() );
 			}
 		}
 		
@@ -267,13 +232,14 @@ class Auth extends BAKA_Controller
 	{
 		$this->data['panel_title'] = $this->baka_theme->set_title('Kirim ulang aktivasi');
 
-		if (!$this->tank_auth->is_logged_in(FALSE))							// not logged in or activated
-			redirect('auth/login');
+		if (!$this->baka_auth->is_logged_in(FALSE))							// not logged in or activated
+			redirect('login');
 
 		$fields[]	= array('name'	=> 'resend',
 							'type'	=> 'email',
 							'label'	=> 'Email',
-							'validation'=> 'required|valid_email' );
+							'validation'=> 'required|valid_email',
+							'desc'	=> 'Masukan alamat email yang anda gunakan untuk aplikasi ini.' );
 
 		$buttons[]	= array('name'	=> 'submit',
 							'type'	=> 'submit',
@@ -294,27 +260,23 @@ class Auth extends BAKA_Controller
 		{
 			$user_data = $form->submited_data();
 
-			if (!is_null($data = $this->tank_auth->change_email( $user_data('email') ))) {			// success
+			if ( $data = $this->baka_auth->change_email( $user_data['email'] ) )
+			{
+				// success
+				$this->load->library('baka_pack/baka_email');
 
-				$this->data['site_name'] = get_app_config('app_name');
-				$this->data['activation_period'] = get_app_setting('auth_email_activation_expire') / 3600;
+				$data['activation_period'] = get_app_setting('auth_email_activation_expire') / 3600;
 
-				$this->_send_email('activate', $this->data['email'], $data);
-				$this->tank_auth->notice('activation-sent', $data);
-
+				$this->baka_email->send('activate', $user_data['email'], $data);
+				$this->_notice('activation-sent');
 			}
 			else
 			{
-				$errors = $this->tank_auth->get_error_message();
+				$this->session->set_flashdata('error', $this->baka_lib->errors());
 
-				foreach ($errors as $k => $v)
-					$this->data['errors'][$k] = $this->lang->line($v);
+				redirect( current_url() );
 			}
 		}
-
-		$this->data['errors'] = array();
-		
-		$data['logout_link'] = site_url().'auth/logout';
 		
 		$this->data['panel_body'] = $form->render();
 
@@ -325,10 +287,11 @@ class Auth extends BAKA_Controller
 	{
 		$this->data['panel_title'] = $this->baka_theme->set_title('Lupa login');
 		
-		$fields[]	= array('name'	=> 'login-email',
+		$fields[]	= array('name'	=> 'forgot_login',
 							'type'	=> 'text',
-							'label'	=> 'Email',
-							'validation'=> 'required' );
+							'label'	=> 'Email atau Username',
+							'validation'=> 'required|valid_email',
+							'desc'	=> 'Masukan alamat email atau username yang anda gunakan untuk aplikasi ini.' );
 
 		$buttons[]	= array('name'	=> 'submit',
 							'type'	=> 'submit',
@@ -348,6 +311,23 @@ class Auth extends BAKA_Controller
 		if ( $form->validate_submition() )
 		{
 			$user_data = $form->submited_data();
+
+			$this->load->library('baka_pack/baka_email');
+
+			if ( $data = $this->baka_auth->forgot_password( $user_data['forgot_login']) )
+			{
+				// Send email with password activation link
+				$this->baka_email->send( $user_data['forgot_login'], 'forgot_password', $data );
+					
+				$this->_notice('password-sent');
+
+			}
+			else
+			{
+				$this->session->set_flashdata('error', $this->baka_lib->errors());
+
+				redirect( current_url() );
+			}
 		}
 		
 		$this->data['panel_body'] = $form->render();
@@ -358,25 +338,35 @@ class Auth extends BAKA_Controller
 	public function activate( $user_id, $new_email_key )
 	{
 		if(!$this->uri->segment(4))
-			redirect('/auth/login');
+			redirect('login');
 
 		// Activate user
-		if ($this->tank_auth->activate_user($user_id, $new_email_key))
-		{		// success
-			$this->tank_auth->logout();
-			$this->tank_auth->notice('activation-complete');
-
+		if ($this->baka_auth->activate_user($user_id, $new_email_key))
+		{
+			// success
+			$this->baka_auth->logout();
+			$this->_notice('activation-complete');
 		}
 		else
-		{																// fail
-			$this->tank_auth->notice('activation-failed');
+		{
+			// fail
+			$this->_notice('activation-failed');
 		}
+	}
+
+	public function logout()
+	{
+		$this->baka_auth->logout();
+		
+		redirect('login');
 	}
 
 	function _check_captcha( $code )
 	{
 		session_start();
-		if($_SESSION['captcha'] != $code){
+
+		if ($_SESSION['captcha'] != $code)
+		{
 			$this->form_validation->set_message('_check_captcha', 'The Confirmation Code is wrong.');
 			return FALSE;
 		}

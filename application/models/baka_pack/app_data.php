@@ -18,13 +18,11 @@ class App_data extends CI_Model
 	// Default constructor class
 	public function __construct()
 	{
-		parent::__construct();
-
 		$this->_list = $this->get_type_list();
 
 		$this->initialize();
 
-		log_message('debug', "App_data model Class Initialized");
+		log_message('debug', "#Baka_pack: Application data model Class Initialized");
 	}
 
 	// Loading moduls

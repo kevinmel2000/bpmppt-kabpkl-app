@@ -8,32 +8,15 @@ class App_main extends CI_Model
 
 	public function __construct()
 	{
-		parent::__construct();
-
-		$this->username = $this->tank_auth->get_username();
+		$this->username = $this->baka_auth->get_username();
 
 		$this->initialize();
 
-		log_message('debug', "Main Application model Class Initialized");
+		log_message('debug', "#Baka_pack: Main Application model Class Initialized");
 	}
 
 	protected function initialize()
 	{
-		// $this->load->helper('baka_array');
-		// $this->load->helper('baka_common');
-		// $this->load->helper('baka_data');
-		// $this->load->helper('baka_form');
-		// $this->load->helper('baka_html');
-		// $this->load->helper('baka_setting');
-		// $this->load->helper('baka_language');
-
-		// $this->load->library('baka_pack/baka_app');
-		// $this->load->library('baka_pack/baka_theme');
-		// $this->load->library('baka_pack/Baka_grid');
-		// $this->load->library('baka_pack/baka_users');
-		// $this->load->library('baka_pack/baka_user_auth');
-		// $this->load->library('baka_pack/baka_form');
-
 		$this->load->model('baka_pack/app_data');
 
 		$this->navbar();
@@ -70,7 +53,6 @@ class App_main extends CI_Model
 		$nama	= str_replace('/', '_', $link);
 
 		$this->baka_theme->add_navmenu( $parent, 'dashboard', 'link', 'dashboard', 'Statistik', array(), $position );
-		$this->baka_theme->add_navmenu( $parent, $nama.'semua', 'link', 'data/utama/semua', 'Semua data', array(), $position );
 		$this->baka_theme->add_navmenu( $parent, $nama.'laporan', 'link', 'data/utama/laporan', 'Laporan', array(), $position );
 
 		$this->baka_theme->add_navmenu( $parent, $nama.'d', 'devider', '', '', array(), $position );
@@ -107,7 +89,8 @@ class App_main extends CI_Model
 		// ===========================
 		$this->baka_theme->add_navmenu( $parent_id, 'ad_def', 'devider', '', '', array(), $position);
 		$this->baka_theme->add_navmenu( $parent_id, 'ad_head', 'header', '', 'Perbaikan', array(), $position);
-		$this->baka_theme->add_navmenu( $parent_id, 'ad_backstore', 'link', 'admin/maintenance/backstore', 'Backup &amp; Restore', array(), $position );
+		$this->baka_theme->add_navmenu( $parent_id, 'ad_backup', 'link', 'admin/maintenance/dbbackup', 'Backup Database', array(), $position );
+		$this->baka_theme->add_navmenu( $parent_id, 'ad_restore', 'link', 'admin/maintenance/dbrestore', 'Restore Restore', array(), $position );
 		$this->baka_theme->add_navmenu( $parent_id, 'ad_syslogs', 'link', 'admin/maintenance/syslogs', 'Aktifitas sistem', array(), $position );
 	}
 
@@ -116,7 +99,7 @@ class App_main extends CI_Model
 		// Adding submenu to user navbar profile
 		$this->baka_theme->add_navmenu( $parent_id, 'profilse', 'link', 'profile', $this->username, array(), $position );
 		$this->baka_theme->add_navmenu( $parent_id, 'user_s', 'devider', '', '', array(), $position);
-		$this->baka_theme->add_navmenu( $parent_id, 'user_logout', 'link', 'auth/logout', 'Logout', array(), $position );
+		$this->baka_theme->add_navmenu( $parent_id, 'user_logout', 'link', 'logout', 'Logout', array(), $position );
 	}
 
 	public function daftar_perijinan()

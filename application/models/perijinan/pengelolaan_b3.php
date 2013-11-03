@@ -8,7 +8,7 @@ class Pengelolaan_b3 extends CI_Model
 
 	public function __construct()
 	{
-		log_message('debug', "Pengelolaan_b3_model Class Initialized");
+		log_message('debug', "#BAKA_modul: Pengelolaan_b3_model Class Initialized");
 	}
 
 	public function form( $data_id = '' )

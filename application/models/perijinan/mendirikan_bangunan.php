@@ -8,7 +8,7 @@ class Mendirikan_bangunan extends CI_Model
 
 	public function __construct()
 	{
-		log_message('debug', "Mendirikan_bangunan_model Class Initialized");
+		log_message('debug', "#BAKA_modul: Mendirikan_bangunan_model Class Initialized");
 	}
 
 	public function form( $data_id = '' )

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpunit bootstrap="index.php">
+	<testsuites>
+		<testsuite name="BakaTestSuite">
+			<directory suffix=".php" phpVersion="5.3.0" phpVersionOperator=">=">application/tests</directory>
+		</testsuite>
+	</testsuites>
+	<php>
+		<const name="PHPUNIT_TEST" value="1" />
+		<const name="PHPUNIT_CHARSET" value="UTF-8" />
+		<server name="REMOTE_ADDR" value="127.0.0.1" />
+	</php>
+	<filter>
+		<blacklist>
+			<directory suffix=".php">system</directory>
+		</blacklist>
+	</filter>
+	<logging>
+		<log type="json" target="application/tests/phpUnitTest_log.json"/>
+	</logging>
+</phpunit>

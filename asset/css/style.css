@@ -306,6 +306,13 @@ header#contents-header > .container > .page-header {
 	margin-top: 0;
 	margin-bottom: 5px;
 	line-height: 1.2em;
+}
+
+.jumbotron p {
+	font-size: 14px;
+	font-weight: normal;
+	line-height: 1.8em;
+	margin-bottom: 1.8em;
 	text-shadow: 0 1px 0 #fff;
 }
 
@@ -406,8 +413,20 @@ section#contents-main {
 	margin-left: 60px;
 }
 
+.alert {
+	padding: 10px;
+}
+
+.alert ul {
+	padding-left: 20px;
+}
+
 .form-group {
 	margin-bottom: 10px;
+}
+
+.form-control-static {
+	padding-top: 4px;
 }
 
 .form-action {
@@ -415,6 +434,14 @@ section#contents-main {
 	padding-top: 15px;
 	border-top: 1px solid #EEE;
 	margin-top: 20px;
+}
+
+.form-action .btn.pull-left {
+	margin-right: 10px;
+}
+
+.form-action .btn.pull-right {
+	margin-left: 10px;
 }
 
 .form-group.form-required > label > abbr {

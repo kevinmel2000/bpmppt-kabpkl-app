@@ -1,0 +1,24 @@
+{
+    "event": "suiteStart",
+    "suite": "BakaTestSuite",
+    "tests": 1
+}{
+    "event": "suiteStart",
+    "suite": "BakaDbUtilTestCase",
+    "tests": 1
+}{
+    "event": "testStart",
+    "suite": "BakaDbUtilTestCase",
+    "test": "BakaDbUtilTestCase::testBackup"
+}{
+    "event": "test",
+    "suite": "BakaDbUtilTestCase",
+    "test": "BakaDbUtilTestCase::testBackup",
+    "status": "pass",
+    "time": 0.18619990348816,
+    "trace": [
+
+    ],
+    "message": "",
+    "output": ""
+}

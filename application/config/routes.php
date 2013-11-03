@@ -38,16 +38,29 @@
 |
 */
 
-$route['default_controller'] = "data/utama/stat";
-// $route['default_controller'] = "welcome";
+$route['default_controller']	= "data/utama/stat";
+
 // Overiding 404 page not found
-$route['404_override'] = 'error/e404';
+$route['404_override']	= 'error/notice/404';
+
 // Dashboard route
-$route['dashboard'] = "data/utama/stat";
-// Auth route
-$route['auth'] = "admin/auth";
+$route['dashboard']		= "data/utama/stat";
+// login route
+$route['login']			= "auth/login";
+// logout route
+$route['logout']		= "auth/logout";
+// register route
+$route['register']		= "auth/register";
+// resend route
+$route['resend']		= "auth/resend";
+// activate route
+$route['activate']		= "auth/activate";
+// forgot route
+$route['forgot']		= "auth/forgot";
+// notice route
+$route['notice/(:any)']	= "error/notice/$1";
 // Profile route
-$route['profile'] = "admin/pengguna/profile";
+$route['profile']		= "admin/pengguna/profile";
 
 
 /* End of file routes.php */

@@ -1,53 +1,58 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/**
+ * BAKA Database Utility Class
+ *
+ * @package		Baka_pack
+ * @subpackage	Libraries
+ * @category	Database
+ * @author		Fery Wardiyanto (http://github.com/feryardiant/)
+ */
 class Baka_dbutil Extends Baka_lib
 {
-	private $_file_name = 'tmp_backup';
-	
-	private $_tmp_dir;
-	
-	private $_file_path;
-	
-	private $_ext = array('gzip', 'zip', 'txt');
+	protected $_file_name;
+
+	protected $_temp_path;
+
+	protected $_file_path;
 
 	public function __construct()
 	{
-		parent::__construct();
+		$this->_file_name	= 'backup_'.str_replace(' ', '_', strtolower(get_app_config('app_name')));
 
-		$this->_file_name;
+		$this->_temp_path	= get_app_config('temp_path');
 
-		$this->_tmp_dir	= FCPATH . config_item('cache_path') . 'tmp/';
-
-		log_message('debug', "Baka_dbutil Class Initialized");
+		log_message('debug', "#Baka_pack: Database Utility Class Initialized");
 	}
 
 	public function backup( $tables = array(), $ignores = array(), $file_name = '', $download = TRUE )
 	{
-		if ( !is_dir( $this->_tmp_dir ) )
+		if ( !is_dir( $this->_temp_path ) )
 		{
-			$this->set_error('Direktori '.$this->_tmp_dir.' belum ada pada server anda.');
+			$this->set_error('dbutil_backup_folder_not_exists', 'Direktori '.$this->_temp_path.' belum ada pada server anda.', $this->_temp_path);
 			return FALSE;
 		}
 
-		if ( !is_writable( $this->_tmp_dir ) )
+		if ( !is_writable( $this->_temp_path ) )
 		{
-			$this->set_error('Anda tidak memiliki ijin untuk menulis pada direktori '.$this->_tmp_dir.'.');
+			$this->set_error('dbutil_backup_folder_not_writable', 'Anda tidak memiliki ijin untuk menulis pada direktori '.$this->_temp_path.'.', $this->_temp_path);
 			return FALSE;
 		}
 
 		// Setup file name
 		$file_name || $file_name = $this->_file_name;
 		// Setup file fullpath
-		$this->_file_path = $this->_tmp_dir . $file_name . '.sql';
+		$this->_file_path = $this->_temp_path . $file_name . '.sql';
 
 		if ( ! $this->_backup_command( $this->_file_path ) )
 		{
-			$this->set_error('Proses backup gagal, ');
+			$this->set_error('dbutil_backup_process_failed', 'Proses backup database gagal.');
 			return FALSE;
 		}
 		
 		// Load the zip helper
 		$this->load->library('zip');
+
 		// Reading backed up database
 		$this->zip->read_file( $this->_file_path );
 
@@ -58,44 +63,59 @@ class Baka_dbutil Extends Baka_lib
 			
 		$this->zip->clear_data();
 
-		$this->clear( $this->_tmp_dir . $file_name );
+		$this->clear( $this->_file_path );
 
+		$this->set_message('dbutil_backup_process_success', 'Proses backup database berhasil.');
 		return TRUE;
 	}
 
-	public function restore_upload( $file_attr )
+	public function restore_upload( $field_name )
 	{
-		if ( ! isset($file_attr['tmp_name']) )
-			return FALSE;
-		
-		if ( ! move_uploaded_file( $file_attr['tmp_name'], $this->_tmp_dir ) )
-			return FALSE;
+		$config['upload_path']	= $this->_temp_path;
+		$config['allowed_types']= 'zip';
+		$config['file_name']	= $this->_file_name;
 
-		if ( ! $this->load->is_loaded('baka_pack/baka_unzip'))
-			$this->load->library('baka_pack/baka_unzip');
+		$this->load->library('upload', $config);
 
-		if ( ! $this->baka_unzip->extract_all( $this->_tmp_dir ) )
+		if ( $this->upload->do_upload( $field_name ) )
+		{
+			$upload_data = $this->upload->data();
+
+			// Restore to database
+			return $this->_restore_files( $this->_temp_path . $this->_file_name . '.zip' );
+		}
+		else
+		{
+			$this->set_error('dbutil_upload_failed', 'Proses upload database gagal. '.$this->upload->display_errors());
 			return FALSE;
-
-		// Restore to database
-		if ( file_exists( $this->_tmp_dir.'db.sql' ) )
-			$this->_restore_command( $this->_tmp_dir.'db.sql' );
-		
-		// Restore to database
-		if ( file_exists( $this->_tmp_dir.'file.zip' ) )
-			$this->_restore_files();
-		
-		// Hapus sampah :P
-		@unlink($this->_tmp_dir);
+		}
 	}
 
-	private function _restore_files( $file_name )
+	protected function _restore_files( $file_path )
 	{
-		if ( $this->baka_unzip->extract_all( $file_name ) )
-			@unlink( $file_name );
+		$this->load->library('baka_pack/Baka_archive');
+
+		if ( ! file_exists( $file_path ) )
+		{
+			$this->set_error('file_not_found', 'Berkas %s tidak ada. ', $file_path);
+			return FALSE;
+		}
+
+		// Extract uploaded file
+		if ( ! $this->baka_archive->extract_all( $file_path, $this->_temp_path ) )
+			return FALSE;
+
+		$this->clear( $file_path );
+
+		// Restore to database
+		if ( file_exists( $this->_temp_path . $this->_file_name ) )
+			$this->_restore_command( $this->_temp_path . $this->_file_name );
+
+		$this->set_message('dbutil_restore_success', 'Restorasi database berhasil');
+		return TRUE;
 	}
 
-	private function _backup_command( $file_name )
+	protected function _backup_command( $file_name )
 	{
 		if ( strlen( $this->db->password ) > 0 )
 			$password = " -p" . $this->db->password;
@@ -105,45 +125,20 @@ class Baka_dbutil Extends Baka_lib
 		return ( file_exists( $file_name ) ? TRUE : FALSE );
 	}
 
-	private function _restore_command( $file_name )
+	protected function _restore_command( $file_name )
 	{
 		if ( strlen( $this->db->password ) > 0 )
 			$password = " -p" . $this->db->password;
 		
 		shell_exec( "mysql -u" . $this->db->username . $password . " <" . $file_name );
 
-		// @unlink( $file_name );
+		$this->clear( $file_name );
 	}
 
 	public function clear( $file_path )
 	{
 		// Hapus sampah!
-		@unlink( $file_path.'.sql' );
-		@unlink( $file_path.'.zip' );
-	}
-	
-	private function _clear_curr_state()
-	{
-		$dir_list = scandir($this->file_store_folder);
-		if ( is_array($dir_list) ){
-			foreach ( $dir_list as $file ){
-				$full_path = $this->file_store_folder . DIRECTORY_SEPARATOR . $file;
-				if ( is_file($full_path) ){
-					@unlink($full_path);
-				}
-			}
-		}
-		
-		/* cache folder */
-		$dir_list = scandir($this->file_store_folder . DIRECTORY_SEPARATOR . "thumb");
-		if ( is_array($dir_list) ){
-			foreach ( $dir_list as $file ){
-				$full_path = $this->file_store_folder . DIRECTORY_SEPARATOR . "thumb" . DIRECTORY_SEPARATOR . $file;
-				if ( is_file($full_path) ){
-					@unlink($full_path);
-				}
-			}
-		}
+		@unlink( $file_path );
 	}
 }
 

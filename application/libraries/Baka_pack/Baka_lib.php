@@ -1,20 +1,24 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
 
+/**
+ * BAKA Library Class
+ *
+ * @package		Baka_pack
+ * @subpackage	Libraries
+ * @category	Libraries
+ * @author		Fery Wardiyanto (http://github.com/feryardiant/)
+ */
 class Baka_lib
 {
 	/** @var array message wrapper */
 	private $messages	= array();
 
 	/** @var array error wrapper */
-	private $errors	= array();
+	private $errors		= array();
 
 	public function __construct()
 	{
-		// $this->load->library('user_agent');
-		// 
-		$this->_app_init();
-
-		log_message('debug', "Baka_lib Class Initialized");
+		log_message('debug', "#Baka_pack: Main Library Class Initialized");
 	}
 
 	/**
@@ -33,7 +37,6 @@ class Baka_lib
 	 * __get
 	 *
 	 * Enables the use of CI super-global without having to define an extra variable.
-	 *
 	 * I can't remember where I first saw this, so thank you if you are the original author. -Militis
 	 *
 	 * @access	public
@@ -45,52 +48,37 @@ class Baka_lib
 		return get_instance()->$var;
 	}
 
-	protected function _app_init()
-	{
-		if (!empty( $this->errors ))
-		{
-			foreach( $this->errors as $error)
-			{
-				log_message( 'error', $error );
-			}
-		}
-
-		if (!empty( $this->messages ))
-		{
-			foreach( $this->messages as $message)
-			{
-				log_message( 'debug', $message );
-			}
-		}
-	}
-
 	public function config_item( $item )
 	{
 		return $this->config->item( 'baka_'.$item );
 	}
-	
-	public function is_browser_jadul()
-	{
-		$min_browser	= $this->config_item('app_min_browser');
-		$curent_version	= explode('.', $this->agent->version());
 
-		return ($curent_version[0] <= $min_browser[$this->agent->browser()] ? TRUE : FALSE  );
+	private function set_message( $message = '', $rep = '' )
+	{
+		$messages = _x( $message, $rep );
+
+		$this->messages[] = $messages;
+
+		log_message( 'debug', '#Baka_pack debug: '.$messages );
 	}
 
-	public function set_message( $message, $flash = FALSE )
+	private function set_error( $error = '', $rep = '' )
 	{
-		$this->messages[] = $message;
+		$errors = _x( $error, $rep );
 
-		if ( $flash == true )
-			$this->session->set_flashdata('message', $message);
+		$this->errors[] = $errors;
+
+		log_message( 'error', '#Baka_pack error: '.$errors );
 	}
 
-	public function set_error( $error, $flash = FALSE )
+	public function messages()
 	{
-		$this->errors[] = $error;
+		return $this->messages;
+	}
 
-		if ( $flash == true )
-			$this->session->set_flashdata('message', $error);
+	public function errors()
+	{
+		return $this->errors;
 	}
 }
 

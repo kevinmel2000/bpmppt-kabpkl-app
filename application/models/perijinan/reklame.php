@@ -7,7 +7,7 @@ class Reklame extends CI_Model
 
 	public function __construct()
 	{
-		log_message('debug', "Reklame_model Class Initialized");
+		log_message('debug', "#BAKA_modul: Reklame_model Class Initialized");
 	}
 
 	public function form( $data_id = '' )

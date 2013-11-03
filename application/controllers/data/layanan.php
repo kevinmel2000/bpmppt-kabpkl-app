@@ -18,7 +18,7 @@ class Layanan extends BAKA_Controller
 
 	public function index()
 	{
-		$this->semua();
+		$this->ijin();
 	}
 
 	public function ijin( $data_type = '', $page = 'data' )
@@ -30,13 +30,9 @@ class Layanan extends BAKA_Controller
 		$this->data['page_link']   .= 'ijin/'.$data_type.'/';
 
 		if ($data_type !== '')
-		{
 			$this->$page( $data_type );
-		}
 		else
-		{
-			redirect('data/utama/semua');
-		}
+			redirect('dashboard');
 	}
 
 	public function data( $data_type )
@@ -47,7 +43,7 @@ class Layanan extends BAKA_Controller
 
 		$delete_link = $this->data['page_link'].'/delete';
 
-		$this->data['page_link']	.= '/form';
+		$this->data['page_link']	.= 'form';
 		$this->data['btn_text']		 = 'Baru';
 
 		$this->data['panel_title']	 = $this->baka_theme->set_title( 'Semua data ' . $this->app_data->get_name( $data_type ) );
@@ -59,16 +55,22 @@ class Layanan extends BAKA_Controller
 
 	public function form( $data_type )
 	{
-		$this->data['tool_buttons'][$this->data['page_link'].'data'] = 'Kembali|default';
-		$this->data['tool_buttons'][$this->data['page_link'].'cetak'] = 'Cetak|default';
-		$this->data['tool_buttons']['Ubah status:dd|default'] = array($this->data['page_link'].'aktif'=>'Aktif',$this->data['page_link'].'nonaktif'=>'non-Aktif');
+		$data_id = $this->uri->segment(6);
 
-		$this->data['page_link']	.= '/data';
+		$this->data['tool_buttons'][$this->data['page_link'].'data']	= 'Kembali|default';
+
+		if ( $data_id )
+		{
+			$this->data['tool_buttons'][$this->data['page_link'].'cetak']	= 'Cetak|default';
+			$this->data['tool_buttons']['Ubah status:dd|default']	= array($this->data['page_link'].'aktif'=>'Aktif',$this->data['page_link'].'nonaktif'=>'non-Aktif');
+		}
+
+		$this->data['page_link']	.= 'data';
 		$this->data['form_page']	 = TRUE;
 		$this->data['btn_text']		 = 'Kembali';
 
 		$this->data['panel_title']	= $this->baka_theme->set_title( 'Input data ' . $this->app_data->get_name( $data_type ) );
-		$this->data['panel_body']	= $this->app_data->get_form( $data_type, $this->uri->segment(6), $this->data['page_link'] );
+		$this->data['panel_body']	= $this->app_data->get_form( $data_type, $data_id, $this->data['page_link'] );
 
 		$this->baka_theme->load('pages/panel_form', $this->data);
 	}

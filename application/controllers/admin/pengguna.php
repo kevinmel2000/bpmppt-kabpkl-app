@@ -6,10 +6,15 @@ class Pengguna extends BAKA_Controller
 	{
 		parent::__construct();
 
-		$this->load->library('baka_pack/baka_users');
-
 		$this->baka_theme->add_navbar( 'admin_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
 		$this->app_main->admin_navbar( 'admin_sidebar', 'side' );
+
+		if ( ! $this->load->is_loaded('table'))
+			$this->load->library('table');
+
+		$this->table->set_template( array('table_open' => '<table class="table table-striped table-hover table-condensed">' ) );
+
+		$this->load->model('baka_pack/app_users');
 	}
 
 	public function index()
@@ -25,19 +30,103 @@ class Pengguna extends BAKA_Controller
 				break;
 			
 			default:
-				$this->data['panel_title'] = $this->baka_theme->set_title('Semua data pengguna');
-					
-				$this->data['panel_body']	= $this->baka_users->get_users_grid('admin/pengguna/data/');
-				$this->data['counter']		= $this->baka_users->user_count;
-
-				$this->baka_theme->load('pages/panel_data', $this->data);
+				$this->_user_table();
 				break;
 		}
 	}
 
+	private function _user_table()
+	{
+		$page_link = 'admin/pengguna/data/';
+		$query = $this->baka_users->get_users_query();
+
+		$this->data['panel_title']	= $this->baka_theme->set_title('Semua data pengguna');
+		$this->data['counter']		= $query->num_rows();
+
+		if ( $this->data['counter'] > 0 )
+		{
+			$heading[]	= array(
+				'data'	=> 'ID',
+				'class'	=> 'head-id',
+				'width'	=> '10%' );
+
+			$heading[]	= array(
+				'data'	=> 'Pengguna',
+				'class'	=> 'head-value',
+				'width'	=> '35%' );
+
+			$heading[]	= array(
+				'data'	=> 'Email',
+				'class'	=> 'head-value',
+				'width'	=> '35%' );
+
+			$heading[]	= array(
+				'data'	=> 'Aksi',
+				'class'	=> 'head-action',
+				'width'	=> '25%' );
+
+			$this->table->set_heading( $heading );
+
+			foreach ( $query->result() as $user )
+			{
+				$profile = $this->baka_users->get_user_profiles( $user->id );
+
+				$cell[]	= array(
+					'data'	=> anchor($page_link.'form/'.$profile->id, '#'.$profile->id),
+					'class'	=> 'user-id',
+					'width'	=> '5%' );
+
+				$cell[]	= array(
+					'data'	=> '<strong>'.anchor($page_link.'form/'.$profile->id, $profile->name).'</strong><br><small class="text-muted">'.mailto($profile->email, $profile->email).'</small>',
+					'class'	=> 'data-value',
+					'width'	=> '35%' );
+
+				$roles	= $this->baka_users->get_user_roles( $profile->id )->result_array();
+
+				$r		= '<span class="badge">';
+
+				for ($i=0; $i<count($roles); $i++)
+				{
+					$r .= $roles[$i]['full'].( $i >= 1 ? ', ': '' );
+				}
+
+				$status = ( $profile->activated == 1 ? 'Aktif mulai '.format_datetime($profile->created) : 'Tidak aktif mulai '.format_datetime($profile->modified) );
+
+				$status = ( $profile->banned == 1 ? 'Banned dengan alasan '.$profile->ban_reason : $status );
+
+				$cell[]	= array(
+					'data'	=> $r.'</span><br><small class="text-muted">'.$status.'</small>',
+					'class'	=> 'data-value',
+					'width'	=> '35%' );
+
+				$class = 'class="btn btn-default btn-sm"';
+
+				$cell[]	= array(
+					'data'	=> '<div class="btn-group btn-group-justified">'.anchor($page_link.'form/'.$profile->id, 'Edit', $class ).anchor($page_link.'delete/'.$profile->id, 'Hapus', $class).'</div>',
+					'class'	=> 'data-action',
+					'width'	=> '25%' );
+
+				$this->table->add_row( $cell );
+			}
+		}
+		else
+		{
+			$cell[]	= array(
+				'data'		=> '<span class="text-muted text-center">Belum ada 1 pun pengguna</span>',
+				'class'		=> 'active',
+				'colspan'	=> 4 );
+
+			$this->table->add_row( $cell );
+		}
+
+		$this->data['panel_body'] = $this->table->generate();
+
+		$this->baka_theme->load('pages/panel_data', $this->data);
+	}
+
 	public function profile()
 	{
-		$this->_user_form( $this->baka_users->get_user_id() );
+		$this->_user_form( $this->baka_auth->get_user_id() );
 	}
 
 	private function _user_form( $user_id = '' )
@@ -133,16 +222,16 @@ class Pengguna extends BAKA_Controller
 
 		$roles_option = array();
 
-		foreach ( $this->baka_users->get_roles() as $role )
+		foreach ( $this->baka_users->get_roles()->result() as $role )
 		{
 			$roles_option[$role->role_id] = $role->full;
 		}
 
 		$user_roles = array();
 
-		foreach ( $this->baka_users->get_user_roles( $user->id ) as $user_role )
+		foreach ( $this->baka_users->get_user_roles( $user->id )->result() as $user_role )
 		{
-			$user_roles[] = $user_role['role_id'];
+			$user_roles[] = $user_role->role_id;
 		}
 
 		$fields[]	= array('name'	=> 'user-roles',
@@ -172,14 +261,74 @@ class Pengguna extends BAKA_Controller
 				break;
 			
 			default:
-				$this->data['panel_title'] = $this->baka_theme->set_title('Semua data kelompok pengguna');
-					
-				$this->data['panel_body']	= $this->baka_users->get_roles_grid('admin/pengguna/groups/');
-				$this->data['counter']		= $this->baka_users->role_count;
-
-				$this->baka_theme->load('pages/panel_data', $this->data);
+				$this->_group_table();
 				break;
 		}
+	}
+
+	private function _group_table()
+	{
+		$page_link = 'admin/pengguna/groups/';
+		$query = $this->baka_users->get_roles_query();
+
+		$this->data['panel_title'] = $this->baka_theme->set_title('Semua data kelompok pengguna');
+
+		$this->data['counter']		= $query->num_rows();
+
+		if ( $this->data['counter'] > 0 )
+		{
+			$head1 = array( 'data'	=> 'ID',
+							'class'	=> 'head-id',
+							'width'	=> '10%' );
+
+			$head2 = array( 'data'	=> 'Kelompok',
+							'class'	=> 'head-value',
+							'width'	=> '60%' );
+
+			$head3 = array( 'data'	=> 'Default',
+							'class'	=> 'head-value',
+							'width'	=> '10%' );
+
+			$head4 = array( 'data'	=> 'Aksi',
+							'class'	=> 'head-action',
+							'width'	=> '25%' );
+
+			$this->table->set_heading( $head1, $head2, $head3, $head4 );
+
+			foreach ( $query->result() as $role )
+			{
+				$col_1 = array( 'data'	=> anchor($page_link.'form/'.$role->role_id, '#'.$role->role_id),
+								'class'	=> 'user-id',
+								'width'	=> '5%' );
+
+				$col_2 = array( 'data'	=> $role->full.' ('.$role->role.')',
+								'class'	=> 'data-value',
+								'width'	=> '60%' );
+
+				$col_3 = array( 'data'	=> ($role->default == 1 ? '<span class="badge">Default</span>' : ''),
+								'class'	=> 'data-value',
+								'width'	=> '10%' );
+
+				$class = 'class="btn btn-default btn-sm"';
+
+				$col_4 = array( 'data'	=> '<div class="btn-group btn-group-justified">'.anchor($page_link.'form/'.$role->role_id, 'Edit', $class ).anchor($page_link.'delete/'.$role->role_id, 'Hapus', $class).'</div>',
+								'class'	=> 'data-action',
+								'width'	=> '25%' );
+
+				$this->table->add_row( $col_1, $col_2, $col_3, $col_4 );
+			}
+		}
+		else
+		{
+			$this->table->add_row( array( 
+				'data'		=> '<span class="text-muted text-center">Belum ada 1 pun data kelompok</span>',
+				'class'		=> 'active',
+				'colspan'	=> 4 ));
+		}
+
+		$this->data['panel_body']	= $this->table->generate();
+
+		$this->baka_theme->load('pages/panel_data', $this->data);
 	}
 
 	public function permission( $page = '', $role_id = '' )
@@ -190,22 +339,73 @@ class Pengguna extends BAKA_Controller
 				break;
 			
 			default:
-				$this->data['panel_title'] = $this->baka_theme->set_title('Semua data hak akses pengguna');
-					
-				$this->data['panel_body']	= $this->baka_users->get_perms_grid('admin/pengguna/groups/');
-				$this->data['counter']		= $this->baka_users->perm_count;
-
-				$this->baka_theme->load('pages/panel_data', $this->data);
+				$this->_perm_table();
 				break;
 		}
 	}
 
-	function _test()
+	private function _perm_table()
 	{
-		$grid = $this->baka_grid->set_query( $query )
-								->set_column_label( 'Label 1', 'Label 2', 'Label 3' )
-								->set_column_width( 10, 60, 30 )
-								->set_cell_display( '<b>%0</b><br>%1', 'callback__anchor(%1, %3)', '%1' );
+		$page_link = 'admin/pengguna/permission/';
+		$query = $this->baka_users->get_perms_query();
+
+		$this->data['panel_title']	= $this->baka_theme->set_title('Semua data hak akses pengguna');
+		$this->data['counter']		= $query->num_rows();
+
+		if ( $this->data['counter'] > 0 )
+		{
+			$head1 = array( 'data'	=> 'ID',
+							'class'	=> 'head-id',
+							'width'	=> '10%' );
+
+			$head2 = array( 'data'	=> 'Hak akses',
+							'class'	=> 'head-value',
+							'width'	=> '35%' );
+
+			$head3 = array( 'data'	=> 'Keterangan',
+							'class'	=> 'head-value',
+							'width'	=> '35%' );
+
+			$head4 = array( 'data'	=> 'Aksi',
+							'class'	=> 'head-action',
+							'width'	=> '25%' );
+
+			$this->table->set_heading( $head1, $head2, $head3, $head4 );
+
+			foreach ( $query->result() as $perm )
+			{
+				$col_1 = array( 'data'	=> anchor($page_link.'form/'.$perm->permission_id, '#'.$perm->permission_id),
+								'class'	=> 'user-id',
+								'width'	=> '5%' );
+
+				$col_2 = array( 'data'	=> $perm->permission.'<br><small class="text-muted">'.$perm->description.'</small>',
+								'class'	=> 'data-value',
+								'width'	=> '35%' );
+
+				$col_3 = array( 'data'	=> $perm->parent,
+								'class'	=> 'data-value',
+								'width'	=> '35%' );
+
+				$class = 'class="btn btn-default btn-sm"';
+
+				$col_4 = array( 'data'	=> '<div class="btn-group btn-group-justified">'.anchor($page_link.'form/'.$perm->permission_id, 'Edit', $class ).anchor($page_link.'delete/'.$perm->permission_id, 'Hapus', $class).'</div>',
+								'class'	=> 'data-action',
+								'width'	=> '25%' );
+
+				$this->table->add_row( $col_1, $col_2, $col_3, $col_4 );
+			}
+		}
+		else
+		{
+			$this->table->add_row( array( 
+				'data'		=> '<span class="text-muted text-center">Belum ada 1 pun data hak akses</span>',
+				'class'		=> 'active',
+				'colspan'	=> 4 ));
+		}
+
+		$this->data['panel_body'] = $this->table->generate();
+
+		$this->baka_theme->load('pages/panel_data', $this->data);
 	}
 }
 

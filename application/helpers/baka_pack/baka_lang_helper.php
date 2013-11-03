@@ -1,11 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-function _x( $lang_line, $default = '' )
+function _x( $lang_line, $replacement = '' )
 {
 	$CI_lang =& get_instance()->lang;
 
-	if ($default == '')
-		$default = $lang_line;
+	$lang_line = ( $CI_lang->line( $lang_line ) ? $CI_lang->line( $lang_line ) : $lang_line );
 
-	return $CI_lang->line( $lang_line ) ? $CI_lang->line( $lang_line ) : $default ;
+	return ( $replacement != '' ? sprintf( $lang_line, $replacement) : $lang_line );
 }

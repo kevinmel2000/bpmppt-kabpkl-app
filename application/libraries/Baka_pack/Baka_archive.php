@@ -1,45 +1,38 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * Class Baka_zip
- * Digunakan untuk mengelola file .ZIP
+ * BAKA Zip Class
  *
- * @author		Fery Wardiyanto
- * @access		public
- * @package		Baka_app
- * @since		1.0
- * @version		1.0
+ * @package		Baka_pack
+ * @subpackage	Libraries
+ * @category	Archives
+ * @author		Fery Wardiyanto (http://github.com/feryardiant/)
  */
-
-class Baka_zip Extends Baka_lib
+class Baka_archive Extends Baka_lib
 {
 	/** @var object ZipArchive alias */
 	private $archive ;
 
 	public function __construct()
 	{
-		parent::__construct();
-
 		/** @var ZipArchive load native PHP class */
 		$this->archive = new ZipArchive();
 
-		log_message('debug', "Baka_zip Class Initialized");
+		log_message('debug', "#Baka_pack: Archive Class Initialized");
 	}
 
 	public function extract_all( $file_path, $dir_name = FALSE, $file_names = array() )
 	{
-		if ( $this->read_file( $file_path ) )
-		{
-			$dir_path = ( $dir_name !== FALSE ? $dir_name : dirname( $file_path ));
+		if ( ! $this->read_file( $file_path ) )
+			return FALSE;
 
-			$this->extract_file( $dir_path, $file_names );
+		$dir_path = ( $dir_name !== FALSE ? $dir_name : dirname( $file_path ));
 
-			$this->close_file();
+		$this->extract_file( $dir_path, $file_names );
 
-			return TRUE;
-		}
+		$this->close_file();
 
-		return FALSE;
+		return TRUE;
 	}
 
 	/**
@@ -51,13 +44,13 @@ class Baka_zip Extends Baka_lib
 	{
 		if ( !is_file( $file_path ) AND !file_exists( $file_path ) )
 		{
-			$this->errors('#Baka_zip: File '.$file_path.' tidak ada pada server anda');
+			$this->set_error('file_not_exists', 'File '.$file_path.' tidak ada pada server anda');
 			return FALSE;
 		}
 
 		if ( !is_readable( $file_path ) )
 		{
-			$this->errors('#Baka_zip: File '.$file_path.' tidak dapat dibaca');
+			$this->set_error('file_unreadable', 'File '.$file_path.' tidak dapat dibaca');
 			return FALSE;
 		}
 
@@ -72,9 +65,9 @@ class Baka_zip Extends Baka_lib
 	{
 		$list_file = array();
 
-		for ( $i = 0; $i < $this->zip->numFiles ; $i++ )
+		for ( $i = 0; $i < $this->archive->numFiles ; $i++ )
 		{
-			$stat_data = $this->zip->statIndex($i);
+			$stat_data = $this->archive->statIndex($i);
 
 			if ( $stat_data['size'] > 0 )
 				array_push($list_file, $stat_data['name']);
@@ -93,13 +86,13 @@ class Baka_zip Extends Baka_lib
 	{
 		if ( !is_dir( $dir_path ) )
 		{
-			$this->errors($#Baka_zip: dir_path.' bukanlah sebuah direktori');
+			$this->set_error('directory_not_exists', $dir_path.' bukanlah sebuah direktori');
 			return FALSE;
 		}
 
 		if ( !is_writable( $dir_path ) )
 		{
-			$this->errors('#Baka_zip: Anda tidak memiliki ijin untuk menulis pada direktori '.$dir_path);
+			$this->set_error('directory_unwritable', 'Anda tidak memiliki ijin untuk menulis pada direktori '.$dir_path);
 			return FALSE;
 		}
 
@@ -119,9 +112,9 @@ class Baka_zip Extends Baka_lib
 	 */
 	public function close_file()
 	{
-		$this->zip->close();
+		$this->archive->close();
 	}
 }
 
-/* End of file Baka_zip.php */
-/* Location: ./system/application/libraries/Baka_pack/Baka_zip.php */
+/* End of file Baka_archive.php */
+/* Location: ./system/application/libraries/Baka_pack/Baka_archive.php */

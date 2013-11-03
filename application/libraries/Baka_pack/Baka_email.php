@@ -1,16 +1,22 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/**
+ * BAKA Email Class
+ *
+ * @package		Baka_pack
+ * @subpackage	Libraries
+ * @category	Email
+ * @author		Fery Wardiyanto (http://github.com/feryardiant/)
+ */
 class Baka_email Extends Baka_lib
 {
 	public function __construct()
 	{
-		parent::__construct();
-
 		$this->load->library('email');
 
 		$this->initialize();
 
-		log_message('debug', "Baka_email Class Initialized");
+		log_message('debug', "#Baka_pack: Email Class Initialized");
 	}
 
 	public function initialize()
@@ -42,7 +48,7 @@ class Baka_email Extends Baka_lib
 		$this->email->to( $email_reciever );
 		$this->email->cc( get_app_config('app_author_email') );
 		
-		$this->email->subject(sprintf($this->lang->line('auth_subject_'.$subject), $this->config->item('website_name', 'tank_auth')));
+		$this->email->subject( _x('email_subject_'.$subject) );
 		$this->email->message($this->load->view('email/'.$subject.'-html', $data, TRUE));
 		$this->email->set_alt_message($this->load->view('email/'.$subject.'-txt', $data, TRUE));
 		
