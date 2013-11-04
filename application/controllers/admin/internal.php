@@ -111,42 +111,45 @@ class Internal extends BAKA_Controller
 								'smtp'		=> 'SMPT'),
 							'std'	=> $email_protocol );
 
-		$fields[]	= array('name'	=> 'email_mailpath',
-							'type'	=> 'text',
-							'label'	=> 'Email_mailpath',
-							'std'	=> get_app_setting('email_mailpath') );
+		if ( $email_protocol == 'sendmail' )
+		{
+			$fields[]	= array('name'	=> 'email_mailpath',
+								'type'	=> 'text',
+								'label'	=> 'Email path',
+								'std'	=> get_app_setting('email_mailpath') );
+		}
+		else if ( $email_protocol == 'smtp' )
+		{
+			$fields[]	= array('name'	=> 'email_smtp_host',
+								'type'	=> 'text',
+								'label'	=> 'Host SMTP',
+								'std'	=> get_app_setting('email_smtp_host'),
+								'validation'=> 'required' );
 
-		$smtp_enabled = ( $email_protocol != 'smtp' ? 'disabled' : '');
+			$fields[]	= array('name'	=> 'email_smtp_user',
+								'type'	=> 'text',
+								'label'	=> 'Pengguna SMTP',
+								'std'	=> get_app_setting('email_smtp_user'),
+								'validation'=> 'required|valid_email' );
 
-		$fields[]	= array('name'	=> 'email_smtp_host',
-							'type'	=> 'text',
-							'label'	=> 'Host SMTP',
-							'attr'	=> $smtp_enabled,
-							'std'	=> get_app_setting('email_smtp_host') );
+			$fields[]	= array('name'	=> 'email_smtp_pass',
+								'type'	=> 'password',
+								'label'	=> 'Password SMTP',
+								'std'	=> get_app_setting('email_smtp_pass'),
+								'validation'=> 'required' );
 
-		$fields[]	= array('name'	=> 'email_smtp_user',
-							'type'	=> 'text',
-							'label'	=> 'Pengguna SMTP',
-							'attr'	=> $smtp_enabled,
-							'std'	=> get_app_setting('email_smtp_user') );
+			$fields[]	= array('name'	=> 'email_smtp_port',
+								'type'	=> 'number',
+								'label'	=> 'Port SMTP',
+								'std'	=> get_app_setting('email_smtp_port'),
+								'validation'=> 'required|numeric' );
 
-		$fields[]	= array('name'	=> 'email_smtp_pass',
-							'type'	=> 'text',
-							'label'	=> 'Password SMTP',
-							'attr'	=> $smtp_enabled,
-							'std'	=> get_app_setting('email_smtp_pass') );
-
-		$fields[]	= array('name'	=> 'email_smtp_port',
-							'type'	=> 'text',
-							'label'	=> 'Port SMTP',
-							'attr'	=> $smtp_enabled,
-							'std'	=> get_app_setting('email_smtp_port') );
-
-		$fields[]	= array('name'	=> 'email_smtp_timeout',
-							'type'	=> 'text',
-							'label'	=> 'Batas waktu SMTP',
-							'attr'	=> $smtp_enabled,
-							'std'	=> get_app_setting('email_smtp_timeout') );
+			$fields[]	= array('name'	=> 'email_smtp_timeout',
+								'type'	=> 'number',
+								'label'	=> 'Batas waktu SMTP',
+								'std'	=> get_app_setting('email_smtp_timeout'),
+								'validation'=> 'numeric' );
+		}
 
 		$fields[]	= array('name'	=> 'email_wordwrap',
 							'type'	=> 'radiobox',
@@ -407,20 +410,30 @@ class Internal extends BAKA_Controller
 
 		if ( $form->validate_submition() )
 		{
+			$return = FALSE;
+
+			$this->db->trans_start();
+
 			foreach ( $form->submited_data() as $opt_key => $opt_val )
 			{
-				$return = FALSE;
+				if ( get_app_setting( $opt_key) != $opt_val )
+				{
+					set_app_setting( $opt_key, $opt_val );
 
-				if ( get_app_setting( $opt_key ) != $opt_val )
-					$return = set_app_setting( $opt_key, $opt_val );
+					$return = TRUE;
+				}
 			}
+
+			$this->db->trans_complete();
+
+			if ( $return === FALSE )
+				$this->session->set_flashdata('error', array('Terjadi masalah penyimpanan konfigurasi.'));
+			else
+				$this->session->set_flashdata('success', array('Konfigurasi berhasil disimpan.'));
 
 			redirect( current_url() );
 
-			// if ( $return )
-			// 	$this->baka_lib->set_message('Berhasil' );
-			// else
-			// 	$this->baka_lib->set_message('Gagal' );
+			// return $form->submited_data();
 		}
 
 		return $form->render();

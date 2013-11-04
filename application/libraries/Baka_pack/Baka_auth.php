@@ -199,15 +199,15 @@ class Baka_auth Extends Baka_lib
 	 * @param	bool
 	 * @return	array
 	 */
-	public function create_user($username, $email, $password, $email_activation, $custom)
+	public function create_user( $username, $email, $password, $email_activation )
 	{
-		if (!$this->baka_users->is_username_available($username))
+		if ( ! $this->baka_users->is_username_available( $username ) )
 		{
 			$this->set_error('auth_username_in_use');
 			return FALSE;
 		}
 		
-		if (!$this->baka_users->is_email_available($email))
+		if ( ! $this->baka_users->is_email_available( $email ) )
 		{
 			$this->set_error('auth_email_in_use');
 			return FALSE;
@@ -220,8 +220,6 @@ class Baka_auth Extends Baka_lib
 			'last_ip'	=> $this->input->ip_address(),
 			'approved'	=> (int) $this->config_item('acct_approval') );
 		
-		$data['meta'] = $custom ? $custom : '';
-
 		if ($email_activation)
 			$data['new_email_key'] = $this->generate_random_key();
 

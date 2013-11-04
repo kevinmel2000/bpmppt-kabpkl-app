@@ -14,4 +14,4 @@ Your email address: <?php echo $email; ?>
 */ ?>
 
 Thank you,
-The <?php echo $site_name; ?> Team
+The <?php echo get_app_config('skpd_name') ?> Team

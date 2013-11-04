@@ -55,7 +55,7 @@ class BAKA_Controller extends CI_Controller
 			}
 
 		}
-		else if ( uri_string() != 'login' AND uri_string() != 'resend' AND uri_string() != 'forgot' AND strpos('notice', uri_string()) !== FALSE )
+		else if ( uri_string() != 'login' AND uri_string() != 'resend' AND uri_string() != 'forgot' AND strpos(current_url(), 'notice') === FALSE )
 		{
 			if ( ! $this->baka_auth->is_logged_in() AND ! $this->baka_auth->is_logged_in(FALSE) )
 				redirect( 'login' );

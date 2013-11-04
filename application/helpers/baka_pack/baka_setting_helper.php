@@ -29,16 +29,29 @@ function get_app_setting($name)
  * @param	string
  * @return	void
  */
-function set_app_setting($name, $value = '')
+function set_app_setting( $name, $value = '' )
 {
-	$CI_db =& get_instance()->db;
-	$opt_object = _app_setting_object($name);
+	$CI =& get_instance();
+
 	$opt_table	= get_app_config( 'system_opt_table' );
 
-	if ( is_app_setting_exists($name) )
-		return $CI_db->update( $opt_table, array('opt_key' => $name, 'opt_value' => $value), array('id' => $opt_object->id) );
+	if ($opt_object = _app_setting_object( $name ))
+	{
+		$CI->db->update( $opt_table, array('opt_value' => $value), array('id' => $opt_object->id, 'opt_key' => $name) );
 
-	return $CI_db->insert( $opt_table, array('opt_key' => $name, 'opt_value' => $value));
+		log_message('debug', '#BAKA_pack: setting '.$name.' updated to '.$value.'.');
+
+		return TRUE;
+	}
+	// else
+	// {
+	// 	$CI->db->insert( $opt_table, array('opt_key' => $name, 'opt_value' => $value));
+	// 	return TRUE;
+	// }
+
+	log_message('error', '#BAKA_pack: Setting object '.$name.' not found.');
+
+	return FALSE;
 }
 
 /**
@@ -46,11 +59,11 @@ function set_app_setting($name, $value = '')
  * @param	string
  * @return	bool
  */
-function is_app_setting_exists($name)
+function is_app_setting_exists( $name )
 {
-	$opt_object = _app_setting_object($name);
+	$opt_object = _app_setting_object( $name );
 	
-	if ( $opt_object !== FALSE AND strlen( $opt_object->opt_value ) > 0 )
+	if ( $opt_object !== FALSE )
 		return TRUE;
 
 	return FALSE;
@@ -61,12 +74,13 @@ function is_app_setting_exists($name)
  * @param	string
  * @return	mixed
  */
-function _app_setting_object($name)
+function _app_setting_object( $name )
 {
 	$CI_db =& get_instance()->db;
-	$query = $CI_db->get_where( get_app_config( 'system_opt_table' ), array( 'opt_key' => $name ) );
+
+	$query = $CI_db->limit(1)->get_where( get_app_config( 'system_opt_table' ), array( 'opt_key' => $name ) );
 	
-	if ( $query->num_rows() === 1 )
+	if ( $query->num_rows() > 0 )
 		return $query->row();
 
 	return FALSE;

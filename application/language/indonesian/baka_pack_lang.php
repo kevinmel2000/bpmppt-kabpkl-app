@@ -23,6 +23,8 @@ $lang['auth_username_in_use']		= 'Username tersebut sudah digunakan.';
 $lang['auth_email_in_use']			= 'Email tersebut sudah digunakan.';
 $lang['auth_current_email']			= 'Anda menggunakan email tersebut saat ini.';
 $lang['auth_inapproved_account']	= 'Akun anda belum disetujui.';
+$lang['auth_registration_success']	= 'Proses registrasi pengguna berhasil, mendaftarkan akun baru.';
+$lang['auth_registration_failed']	= 'Proses registrasi pengguna gagal.';
 
 $lang['dbutil_backup_folder_not_exists']	= 'Direktori %s belum ada pada server anda.';
 $lang['dbutil_backup_folder_not_writable']	= 'Anda tidak memiliki ijin untuk menulis pada direktori %s.';
@@ -33,5 +35,8 @@ $lang['dbutil_upload_failed']				= 'Proses upload gagal.';
 
 $lang['file_not_found']		= 'Berkas %s tidak ada.';
 
-$lang['email_subject_forgot_password']		= '%s email: Lupa password.';
-$lang['email_subject_activate']				= '%s email: Aktivasi.';
+$lang['email_subject_forgot_password']		= 'Email Konfirmasi: Lupa password.';
+$lang['email_subject_welcome']				= 'Email Konfirmasi: Selamat bergabung!';
+$lang['email_subject_activate']				= 'Email Aktifasi: Selamat bergabung!';
+$lang['email_subject_reset_password']		= 'Email Konfirmasi: Password baru anda telah siap';
+$lang['email_subject_change_email']			= 'Email Aktifasi: Email baru anda telah siap diaktifkan';

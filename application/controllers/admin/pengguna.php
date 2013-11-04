@@ -24,11 +24,14 @@ class Pengguna extends BAKA_Controller
 
 	public function data( $page = '', $user_id = '' )
 	{
+		$this->data['load_toolbar']	= TRUE;
+
 		switch ( $page ) {
 			case 'form':
 				$this->_user_form( $user_id );
 				break;
-			
+
+			case 'data':
 			default:
 				$this->_user_table();
 				break;
@@ -38,7 +41,9 @@ class Pengguna extends BAKA_Controller
 	private function _user_table()
 	{
 		$page_link = 'admin/pengguna/data/';
-		$query = $this->baka_users->get_users_query();
+		$query = $this->baka_users->get_users();
+
+		$this->data['tool_buttons'][$page_link.'form'] = 'Baru|primary';
 
 		$this->data['panel_title']	= $this->baka_theme->set_title('Semua data pengguna');
 		$this->data['counter']		= $query->num_rows();
@@ -69,57 +74,46 @@ class Pengguna extends BAKA_Controller
 
 			foreach ( $query->result() as $user )
 			{
-				$profile = $this->baka_users->get_user_profiles( $user->id );
-
-				$cell[]	= array(
-					'data'	=> anchor($page_link.'form/'.$profile->id, '#'.$profile->id),
+				$cell[$user->id][]	= array(
+					'data'	=> anchor($page_link.'form/'.$user->id, '#'.$user->id),
 					'class'	=> 'user-id',
 					'width'	=> '5%' );
 
-				$cell[]	= array(
-					'data'	=> '<strong>'.anchor($page_link.'form/'.$profile->id, $profile->name).'</strong><br><small class="text-muted">'.mailto($profile->email, $profile->email).'</small>',
+				$username = ( $user->fullname != '' ? $user->fullname : $user->username );
+
+				$cell[$user->id][]	= array(
+					'data'	=> '<strong>'.anchor($page_link.'form/'.$user->id, $username).'</strong><br><small class="text-muted">'.mailto($user->email, $user->email).'</small>',
 					'class'	=> 'data-value',
 					'width'	=> '35%' );
 
-				$roles	= $this->baka_users->get_user_roles( $profile->id )->result_array();
+				$status = ( $user->activated == 1 ? 'Aktif mulai '.format_datetime($user->created) : 'Tidak aktif mulai '.format_datetime($user->modified) );
 
-				$r		= '<span class="badge">';
-
-				for ($i=0; $i<count($roles); $i++)
-				{
-					$r .= $roles[$i]['full'].( $i >= 1 ? ', ': '' );
-				}
-
-				$status = ( $profile->activated == 1 ? 'Aktif mulai '.format_datetime($profile->created) : 'Tidak aktif mulai '.format_datetime($profile->modified) );
-
-				$status = ( $profile->banned == 1 ? 'Banned dengan alasan '.$profile->ban_reason : $status );
-
-				$cell[]	= array(
-					'data'	=> $r.'</span><br><small class="text-muted">'.$status.'</small>',
+				$cell[$user->id][]	= array(
+					'data'	=> '<span class="badge">'.$user->role_fullname.'</span><br><small class="text-muted">'.$status.'</small>',
 					'class'	=> 'data-value',
 					'width'	=> '35%' );
 
 				$class = 'class="btn btn-default btn-sm"';
 
-				$cell[]	= array(
-					'data'	=> '<div class="btn-group btn-group-justified">'.anchor($page_link.'form/'.$profile->id, 'Edit', $class ).anchor($page_link.'delete/'.$profile->id, 'Hapus', $class).'</div>',
+				$cell[$user->id][]	= array(
+					'data'	=> '<div class="btn-group btn-group-justified">'.anchor($page_link.'form/'.$user->id, 'Edit', $class ).anchor($page_link.'delete/'.$user->id, 'Hapus', $class).'</div>',
 					'class'	=> 'data-action',
 					'width'	=> '25%' );
 
-				$this->table->add_row( $cell );
+				// $this->table->add_row( $cell );
 			}
 		}
 		else
 		{
-			$cell[]	= array(
+			$cell[0][]	= array(
 				'data'		=> '<span class="text-muted text-center">Belum ada 1 pun pengguna</span>',
 				'class'		=> 'active',
 				'colspan'	=> 4 );
 
-			$this->table->add_row( $cell );
+			// $this->table->add_row( $cell );
 		}
 
-		$this->data['panel_body'] = $this->table->generate();
+		$this->data['panel_body'] = $this->table->generate( $cell );
 
 		$this->baka_theme->load('pages/panel_data', $this->data);
 	}
@@ -131,121 +125,167 @@ class Pengguna extends BAKA_Controller
 
 	private function _user_form( $user_id = '' )
 	{
-		$this->data['panel_title'] = $this->baka_theme->set_title('Profil anda');
+		$page_link = 'admin/pengguna/data/';
+		$user = ( $user_id != '' ? $this->baka_users->get_users( $user_id )->row() : '' );
 
-		$user = ( $user_id != '' ? $this->baka_users->get_user_profiles( $user_id ) : '' );
+		$this->data['panel_title'] = $this->baka_theme->set_title('Data pengguna '.( $user_id != '' ? ' '.$user->fullname : '' ));
+		$this->data['tool_buttons'][$page_link.'data'] = 'Kembali|default';
 
-		$fields[]	= array('name'	=> 'user-fullname',
-							'type'	=> 'text',
-							'label'	=> 'Nama lengkap',
-							'std'	=> ( $user_id != '' ? $user->name : '' ) );
+		$use_username = (bool) get_app_config('use_username');
 
-		$fields[]	= array('name'	=> 'user-username',
-							'type'	=> 'text',
-							'label'	=> 'Username',
-							'std'	=> ( $user_id != '' ? $user->username : '' ) );
+		if ( $user_id != '' )
+		{
+			$fields[]	= array('name'	=> 'user-fullname',
+								'type'	=> 'text',
+								'label'	=> 'Nama lengkap',
+								'std'	=> ( $user_id != '' ? $user->fullname : '' ) );
+		}
+
+		if ( $use_username )
+		{
+			$fields[]	= array('name'	=> 'user-username',
+								'type'	=> 'text',
+								'label'	=> 'Username',
+								'std'	=> ( $user_id != '' ? $user->username : '' ),
+								'validation'=> ( $user_id == '' ? 'required|is_username_blacklist|is_username_available|min_length['.get_app_setting('auth_username_min_length').']|max_length['.get_app_setting('auth_username_max_length').']' : '' ) );
+		}
 
 		$fields[]	= array('name'	=> 'user-email',
 							'type'	=> 'email',
 							'label'	=> 'Email',
 							'std'	=> ( $user_id != '' ? $user->email : '' ),
-							'validation'=> 'valid_email' );
+							'validation'=> 'valid_email'.( $user_id == '' ? '|required|is_email_available' : '' ) );
 
-		$fields[]	= array('name'	=> 'app_fieldset_data',
-							'type'	=> 'fieldset',
-							'label'	=> 'Data pengguna' );
+		if ( $user_id != '' )
+		{
+			$fields[]	= array('name'	=> 'app-fieldset-data',
+								'type'	=> 'fieldset',
+								'label'	=> 'Data pengguna' );
 
-		$fields[]	= array('name'	=> 'user-last-login',
-							'type'	=> 'email',
-							'label'	=> 'Login terakhir',
-							'attr'	=> 'readonly',
-							'std'	=> ( $user_id != '' ? $user->last_login : '' ) );
+			$fields[]	= array('name'	=> 'user-last-login',
+								'type'	=> 'static',
+								'label'	=> 'Login terakhir',
+								'std'	=> $user->last_login );
 
-		$fields[]	= array('name'	=> 'user-last-login',
-							'type'	=> 'email',
-							'label'	=> 'Dibuat pada',
-							'attr'	=> 'readonly',
-							'std'	=> ( $user_id != '' ? $user->created : '' ) );
+			$fields[]	= array('name'	=> 'user-last-login',
+								'type'	=> 'static',
+								'label'	=> 'Dibuat pada',
+								'std'	=> $user->created );
 
-		$fields[]	= array('name'	=> 'user-last-login',
-							'type'	=> 'email',
-							'label'	=> 'Diedit pada',
-							'attr'	=> 'readonly',
-							'std'	=> ( $user_id != '' ? $user->modified : '' ) );
+			$fields[]	= array('name'	=> 'user-last-login',
+								'type'	=> 'static',
+								'label'	=> 'Diedit pada',
+								'std'	=> $user->modified );
 
-		$fields[]	= array('name'	=> 'app_fieldset_password',
-							'type'	=> 'fieldset',
-							'label'	=> 'Ganti password' );
+			$fields[]	= array('name'	=> 'app-fieldset-password',
+								'type'	=> 'fieldset',
+								'label'	=> 'Ganti password' );
 
-		$fields[]	= array('name'	=> 'user-last-password',
-							'type'	=> 'password',
-							'label'	=> 'Password lama' );
+			$fields[]	= array('name'	=> 'user-last-password',
+								'type'	=> 'password',
+								'label'	=> 'Password lama' );
+		}
 
 		$fields[]	= array('name'	=> 'user-new-password',
 							'type'	=> 'password',
-							'label'	=> 'Password baru',
-							'validation'=> 'min_length['.get_app_setting('auth_password_min_length').']|max_length['.get_app_setting('auth_password_max_length').']');
+							'label'	=> ( $user_id == '' ? 'Password' : 'Password baru' ),
+							'validation'=> ( $user_id == '' ? 'required|' : '' ).'min_length['.get_app_setting('auth_password_min_length').']|max_length['.get_app_setting('auth_password_max_length').']');
 
 		$fields[]	= array('name'	=> 'user-confirm-password',
 							'type'	=> 'password',
 							'label'	=> 'Konfirmasi Password',
-							'validation'=> 'matches[user-new-password]');
+							'validation'=> ( $user_id == '' ? 'required|' : '' ).'matches[user-new-password]');
 
-		$fields[]	= array('name'	=> 'app_fieldset_status',
-							'type'	=> 'fieldset',
-							'label'	=> 'Status' );
-
-		$fields[]	= array('name'	=> 'user-activated',
-							'type'	=> 'radiobox',
-							'label'	=> 'Aktif',
-							'option'=> array(
-								0	=> 'Non-aktif',
-								1	=> 'Aktif' ),
-							'std'	=> ( $user_id != '' ? $user->activated : '' ) );
-
-		$fields[]	= array('name'	=> 'user-banned',
-							'type'	=> 'radiobox',
-							'label'	=> 'Dicekal',
-							'option'=> array(
-								0	=> 'Tidak dicekal',
-								1	=> 'Dicekal' ),
-							'std'	=> ( $user_id != '' ? $user->banned : '' ) );
-
-		$fields[]	= array('name'	=> 'user-ban-reason',
-							'type'	=> 'textarea',
-							'label'	=> 'Alasan pencekalan',
-							'std'	=> ( $user_id != '' ? $user->ban_reason : '' ) );
-
-		$fields[]	= array('name'	=> 'app_fieldset_roles',
-							'type'	=> 'fieldset',
-							'label'	=> 'Hak Akses' );
-
-		$roles_option = array();
-
-		foreach ( $this->baka_users->get_roles()->result() as $role )
+		if ( $user_id != '' )
 		{
-			$roles_option[$role->role_id] = $role->full;
+			$fields[]	= array('name'	=> 'app-fieldset-status',
+								'type'	=> 'fieldset',
+								'label'	=> 'Status' );
+
+			$fields[]	= array('name'	=> 'user-activated',
+								'type'	=> 'radiobox',
+								'label'	=> 'Aktif',
+								'option'=> array(
+									0	=> 'Non-aktif',
+									1	=> 'Aktif' ),
+								'std'	=> $user->activated );
+
+			$fields[]	= array('name'	=> 'user-banned',
+								'type'	=> 'radiobox',
+								'label'	=> 'Dicekal',
+								'option'=> array(
+									0	=> 'Tidak dicekal',
+									1	=> 'Dicekal' ),
+								'std'	=> $user->banned );
+
+			$fields[]	= array('name'	=> 'user-ban-reason',
+								'type'	=> 'textarea',
+								'label'	=> 'Alasan pencekalan',
+								'std'	=> $user->ban_reason );
 		}
 
-		$user_roles = array();
-
-		foreach ( $this->baka_users->get_user_roles( $user->id )->result() as $user_role )
+		if ( $user_id != '' )
 		{
-			$user_roles[] = $user_role->role_id;
-		}
+			$fields[]	= array('name'	=> 'app-fieldset-roles',
+								'type'	=> 'fieldset',
+								'label'	=> 'Hak Akses' );
 
-		$fields[]	= array('name'	=> 'user-roles',
-							'type'	=> 'checkbox',
-							'label'	=> 'Kelompok pengguna',
-							'option'=> $roles_option,
-							'std'	=> ( $user_id != '' ? $user_roles : '' ) );
+			$roles_option = array();
+
+			foreach ( $this->baka_users->get_roles_query()->result() as $role )
+			{
+				$roles_option[$role->role_id] = $role->full;
+			}
+
+			$user_roles = array();
+
+			foreach ( $this->baka_users->get_user_roles( $user->id )->result() as $user_role )
+			{
+				$user_roles[] = $user_role->role_id;
+			}
+
+			$fields[]	= array('name'	=> 'user-roles',
+								'type'	=> 'checkbox',
+								'label'	=> 'Kelompok pengguna',
+								'option'=> $roles_option,
+								'std'	=> ( $user_id != '' ? $user_roles : '' ),
+								'validation'=> ( $user_id == '' ? 'required' : '' ) );
+		}
 
 		$form = $this->baka_form->add_form( current_url(), 'user' )
 								->add_fields( $fields );
 
 		if ( $form->validate_submition() )
 		{
-			$this->data['panel_body'] = $form->submited_data();
+			if ( $user_id == '' )
+			{
+				$form_data	=  $form->submited_data();
+
+				$user_data['username']	= $form_data['user-username'];
+				$user_data['email'] 	= $form_data['user-email'];
+				$user_data['password']	= $form_data['user-new-password'];
+
+				$result		= $this->app_users->create_user( $user_data, $use_username );
+				$redirect	= $page_link;
+			}
+			else
+			{
+				$result		= $this->app_users->update_user( $user_id, $form->submited_data(), $use_username );
+				$redirect	= current_url();
+			}
+
+			if ( $result )
+			{
+				$this->session->set_flashdata('success', $this->baka_lib->message());
+
+				redirect( $page_link );
+			}
+			else
+			{
+				$this->session->set_flashdata('error', $this->baka_lib->errors());
+
+				redirect( current_url() );
+			}
 		}
 
 		$this->data['panel_body'] = $form->render();

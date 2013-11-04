@@ -185,34 +185,14 @@ class Auth extends BAKA_Controller
 
 		if ( $form->validate_submition() )
 		{
-			$user_data = $form->submited_data();
+			$form_data	=  $form->submited_data();
 
-			$this->load->library('baka_pack/baka_email');
+			$user_data['username']	= $form_data['register-username'];
+			$user_data['email'] 	= $form_data['register-email'];
+			$user_data['password']	= $form_data['register-password'];
 
-			if ( $data = $this->baka_auth->create_user(
-				$use_username ? $user_data['register-username'] : '',
-				$user_data['register-email'],
-				$user_data['register-password'],
-				$email_activation ) )
+			if ( $this->app_users->create_user( $user_data, $use_username ) )
 			{
-				if ( $email_activation ) // send "activate" email
-				{
-					// success
-					$data['activation_period'] = get_app_setting('auth_email_activation_expire') / 3600;
-
-					$this->baka_email->send('activate', $user_data['register_email'], $data);
-					
-					$this->_notice('activation-sent');
-				}
-				else if ( get_app_config('email_account_details'))
-				{
-					// send "welcome" email
-					$this->baka_email->send('welcome', $user_data['register_email'], $data);
-				}
-
-				// Clear password (just for any case)
-				unset($user_data['register_password']); 
-
 				$this->_notice('registration-success');
 			}
 			else
@@ -335,13 +315,13 @@ class Auth extends BAKA_Controller
 		$this->baka_theme->load('pages/auth', $this->data);
 	}
 
-	public function activate( $user_id, $new_email_key )
+	public function activate( $user_id = NULL, $email_key = NULL )
 	{
-		if(!$this->uri->segment(4))
+		if ( is_null($user_id) AND is_null($email_key) )
 			redirect('login');
 
 		// Activate user
-		if ($this->baka_auth->activate_user($user_id, $new_email_key))
+		if ($this->baka_auth->activate_user($user_id, $email_key))
 		{
 			// success
 			$this->baka_auth->logout();
@@ -354,24 +334,69 @@ class Auth extends BAKA_Controller
 		}
 	}
 
+	public function reset( $user_id = NULL, $email_key = NULL )
+	{
+		$this->data['panel_title'] = $this->baka_theme->set_title('Kirim ulang aktivasi');
+
+		// not logged in or activated
+		if (!$this->baka_auth->is_logged_in(FALSE))
+			redirect('login');
+
+		$fields[]	= array('name'	=> 'reset_password',
+							'type'	=> 'password',
+							'label'	=> 'Password baru',
+							'validation'=> 'required|min_length['.get_app_setting('auth_password_min_length').']|max_length['.get_app_setting('auth_password_max_length').']' );
+
+		$fields[]	= array('name'	=> 'confirm_reset_password',
+							'type'	=> 'password',
+							'label'	=> 'Password Konfirmasi',
+							'validation'=> 'required|matches[register-password]' );
+
+		$buttons[]	= array('name'	=> 'submit',
+							'type'	=> 'submit',
+							'label'	=> 'Atur ulang',
+							'class'	=> 'btn-primary pull-left' );
+
+		$buttons[]	= array('name'	=> 'login',
+							'type'	=> 'anchor',
+							'label'	=> 'Login',
+							'url'	=> 'login',
+							'class'	=> 'btn-default pull-right' );
+
+		$form = $this->baka_form->add_form( current_url(), 'reset', '', 'form')
+								->add_fields( $fields )
+								->add_buttons( $buttons );
+
+		if ( $form->validate_submition() )
+		{
+			$user_data = $form->submited_data();
+
+			if ( $data = $this->baka_auth->reset_password(  $user_id, $email_key, $user_data['reset_password'] ) )
+			{
+				// success
+				$this->load->library('baka_pack/baka_email');
+
+				$this->baka_email->send('activate', $user_data['email'], $data);
+				$this->_notice('password-reset');
+			}
+			else
+			{
+				$this->session->set_flashdata('error', $this->baka_lib->errors());
+
+				redirect( current_url() );
+			}
+		}
+		
+		$this->data['panel_body'] = $form->render();
+
+		$this->baka_theme->load('pages/auth', $this->data);
+	}
+
 	public function logout()
 	{
 		$this->baka_auth->logout();
 		
 		redirect('login');
-	}
-
-	function _check_captcha( $code )
-	{
-		session_start();
-
-		if ($_SESSION['captcha'] != $code)
-		{
-			$this->form_validation->set_message('_check_captcha', 'The Confirmation Code is wrong.');
-			return FALSE;
-		}
-		
-		return TRUE;
 	}
 }
 

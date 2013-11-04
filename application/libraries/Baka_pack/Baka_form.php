@@ -171,12 +171,29 @@ class Baka_form Extends Baka_lib
 
 			case 'multiselect':
 			case 'dropdown':
-				$output .= $this->_form_selectbox( $field['name'], $field['label'], $field['std'], $field['option'], $field['id'], $field['type'], $field['attr'], $field['desc'], $field['validation']);
+				$output .= $this->_form_selectbox(
+					$field['name'],
+					$field['label'],
+					$field['std'],
+					$field['option'],
+					$field['id'],
+					$field['type'],
+					$field['attr'],
+					$field['desc'],
+					$field['validation']);
 				break;
 
 			case 'radiobox':
 			case 'checkbox':
-				$output .= $this->_form_radiocheckbox( $field['name'], $field['label'], $field['std'], $field['option'], $field['id'], $field['type'], $field['desc'], $field['validation']);
+				$output .= $this->_form_radiocheckbox(
+					$field['name'],
+					$field['label'],
+					$field['option'],
+					$field['std'],
+					$field['id'],
+					$field['type'],
+					$field['desc'],
+					$field['validation']);
 				break;
 
 			case 'subfield':
@@ -209,20 +226,29 @@ class Baka_form Extends Baka_lib
 		return $output;
 	}
 
-	private function _form_radiocheckbox( $name, $label, $std, $options, $id = '', $type = '', $desc = '', $validation = '' )
+	private function _form_radiocheckbox( $name, $label, $options, $std = '', $id = '', $type = '', $desc = '', $validation = '' )
 	{
 		$type	= ($type == 'checkbox' ? $type : 'radio');
 		$input	= '';
 
+		$field = ( $type == 'checkbox' ? $name.'[]' : $name );
+
 		foreach( $options as $value => $option )
 		{
 			if ( is_array($std) )
+			{
 				$actived = (in_array($value, $std) ? TRUE : FALSE);
-			else
+			}
+			else if ( is_string($std) )
+			{
 				$actived = ($std == $value ? TRUE : FALSE);
+			}
+
+			$set_func	= 'set_'.$type;
+			$form_func	= 'form_'.$type;
 
 			$input .= '<div class="'.$type.'"><label>';
-			$input .= call_user_func_array('form_'.$type, array($name, $value, $actived)).' '.$option;
+			$input .= $form_func( $field, $value, $set_func( $name, $value, $actived ) ).' '.$option;
 			$input .= '</label></div>';
 		}
 
@@ -265,56 +291,6 @@ class Baka_form Extends Baka_lib
 			'value'	=> set_value( $name, '' ) ));
 
 		return $this->_form_common(	$name, $label, $captcha, $id, $desc, $validation );
-	}
-
-	function _check_captcha( $code )
-	{
-		session_start();
-		if($_SESSION['captcha'] != $code){
-			$this->form_validation->set_message('_check_captcha', 'The Confirmation Code is wrong.');
-			return FALSE;
-		}
-		
-		return TRUE;
-	}
-
-	private function _form_common( $name, $label, $input, $id = '', $desc = '', $validation = '' )
-	{
-		$group		= 'form-group';
-		$is_error	= (!is_array($desc) ? form_error($name, '<span class="help-block">', '</span>') : FALSE);
-		
-		if ($validation != '')
-		{
-			if (FALSE !== strpos($validation, 'required'))
-			{
-				$label .= ' <abbr title="Field ini arus diisi">*</abbr>';
-				$group .= ' form-required';
-			}
-
-			if ( $is_error OR is_array($desc) )
-				$group .= ' has-error';
-		}
-
-		$label_col = (strpos('form-horizontal', $this->form_attrs['class']) !== FALSE ? 'col-lg-3 col-md-3 ' : '' );
-		$input_col = (strpos('form-horizontal', $this->form_attrs['class']) !== FALSE ? 'col-lg-9 col-md-9 ' : '' );
-
-		$output  = '<div id="group-'.str_replace('_', '-', $name).'" class="'.$group.'">';
-
-		if ($label != '' OR strpos('form-horizontal', $this->form_attrs['class']) !== FALSE )
-			$output .= '	'.form_label( $label, $name, array('class'=> $label_col.'control-label') );
-	
-		$output .= '	<div class="'.$input_col.'">'.$input.$is_error;
-		
-		if ( !is_array($desc) AND $desc != '' )
-			$output .= '<span class="help-block">'.$desc.'</span>';
-
-		if ( is_array($desc) AND count($desc) > 0 )
-			foreach ($desc as $keterangan)
-				$output .= '<span class="help-block">'.$keterangan.'</span>';
-
-		$output .= '</div></div>';
-
-		return $output;
 	}
 
 	private function _form_subfield( $name, $label, $id = '', $fields = array(), $desc = '' )
@@ -411,6 +387,45 @@ class Baka_form Extends Baka_lib
 		return $output;
 	}
 
+	private function _form_common( $name, $label, $input, $id = '', $desc = '', $validation = '' )
+	{
+		$group		= 'form-group';
+		$is_error	= (!is_array($desc) ? form_error($name, '<span class="help-block">', '</span>') : FALSE);
+		
+		if ($validation != '')
+		{
+			if (FALSE !== strpos($validation, 'required'))
+			{
+				$label .= ' <abbr title="Field ini arus diisi">*</abbr>';
+				$group .= ' form-required';
+			}
+
+			if ( $is_error OR is_array($desc) )
+				$group .= ' has-error';
+		}
+
+		$label_col = (strpos('form-horizontal', $this->form_attrs['class']) !== FALSE ? 'col-lg-3 col-md-3 ' : '' );
+		$input_col = (strpos('form-horizontal', $this->form_attrs['class']) !== FALSE ? 'col-lg-9 col-md-9 ' : '' );
+
+		$output  = '<div id="group-'.str_replace('_', '-', $name).'" class="'.$group.'">';
+
+		if ($label != '' OR strpos('form-horizontal', $this->form_attrs['class']) !== FALSE )
+			$output .= '	'.form_label( $label, $name, array('class'=> $label_col.'control-label') );
+	
+		$output .= '	<div class="'.$input_col.'">'.$input.$is_error;
+		
+		if ( !is_array($desc) AND $desc != '' )
+			$output .= '<span class="help-block">'.$desc.'</span>';
+
+		if ( is_array($desc) AND count($desc) > 0 )
+			foreach ($desc as $keterangan)
+				$output .= '<span class="help-block">'.$keterangan.'</span>';
+
+		$output .= '</div></div>';
+
+		return $output;
+	}
+
 	private function _form_actions()
 	{
 		if (count($this->buttons) == 0 )
@@ -475,27 +490,38 @@ class Baka_form Extends Baka_lib
 			{
 				foreach ( $field['fields'] as $subfield )
 				{
-					if (isset($subfield['validation']))
-					$this->set_field_rules($field['name'].'_'.$subfield['name'], $subfield['label'], (isset($subfield['validation']) ? $subfield['validation'] : ''));
+					$this->set_field_rules(
+						$field['name'].'_'.$subfield['name'],									// Subfield Name
+						$subfield['label'],														// Subfield Label
+						$subfield['type'],
+						(isset($subfield['validation'])	? $subfield['validation']	: ''),		// Subfield Validation	(jika ada)
+						(isset($subfield['callback'])	? $subfield['callback']		: '') );	// Subfield Callback	(jika ada)
 				}
 			}
-			else if ( $field['type'] != 'static' )
+			else if ( $field['type'] != 'static' AND $field['type'] != 'fieldset' )
 			{
-				$this->set_field_rules($field['name'], $field['label'], (isset($field['validation']) ? $field['validation'] : ''));
+				$this->set_field_rules(
+					$field['name'],														// Field Name
+					$field['label'],													// Field Label
+					$field['type'],
+					(isset($field['validation'])	? $field['validation']	: ''),		// Field Validation	(jika ada)
+					(isset($field['callback'])		? $field['callback']	: '') );	// Field Callback	(jika ada)
 			}
 		}
 
 		return $this->form_validation->run();
 	}
 
-	protected function set_field_rules( $field_name, $field_label, $validation_rules = '', $callback = '' )
+	protected function set_field_rules( $field_name, $field_label, $field_type, $validation_rules = '', $callback = '' )
 	{
-		$validation = 'trim|xss_clean';
+		$array_field	= ( $field_type == 'checkbox' OR $field_type == 'multiselect' ? TRUE : FALSE );
+
+		$validation		= ( $array_field ? 'xss_clean|' : 'trim|xss_clean|' );
 
 		if ( strlen($validation_rules) > 0 )
-			$validation = 'trim|'.$validation_rules.'|xss_clean';
+			$validation .= $validation_rules;
 
-		$this->form_validation->set_rules($field_name, $field_label, $validation);
+		$this->form_validation->set_rules( $field_name, $field_label, $validation);
 
 		if ( strlen($callback) > 0 AND is_callable($callback))
 			$this->form_data[$field_name] = call_user_func( $callback, $this->input->post($field_name) );

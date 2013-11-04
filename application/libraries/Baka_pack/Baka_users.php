@@ -10,16 +10,20 @@
  */
 class Baka_users extends Baka_lib
 {
-	protected $users_table          = 'auth_users';             // user accounts
-	protected $user_profile_table   = 'auth_user_profiles';     // user profiles
-	protected $user_role_table      = 'auth_user_roles';        // user roles
-	protected $roles_table          = 'auth_roles';             // roles
-	protected $permissions_table    = 'auth_permissions';       // permissions
-	protected $role_perms_table     = 'auth_role_permissions';  // role permissions
-	protected $overrides_table      = 'auth_overrides';         // overrides
+	private $users_table          = 'auth_users';             // user accounts
+	private $user_profile_table   = 'auth_user_profiles';     // user profiles
+	private $user_role_table      = 'auth_user_roles';        // user roles
+	private $roles_table          = 'auth_roles';             // roles
+	private $permissions_table    = 'auth_permissions';       // permissions
+	private $role_perms_table     = 'auth_role_permissions';  // role permissions
+	private $overrides_table      = 'auth_overrides';         // overrides
+
+	private $table_prefix;
 
 	public function __construct()
 	{
+		$this->table_prefix = $this->db->dbprefix;
+
 		log_message('debug', "#Baka_pack: Users Class Initialized");
 	}
 
@@ -28,11 +32,24 @@ class Baka_users extends Baka_lib
 		return $this->users_table;
 	}
 
-	public function get_users_query()
+	public function get_users( $user_id = NULL )
 	{
-		return $this->db->get( $this->users_table );
-	}
+		$query = $this->db->select("a.id, b.name fullname, a.username, b.gender, a.email")
+						  ->select("a.activated, a.banned, a.ban_reason, a.approved, a.last_ip, a.last_login, a.created, a.modified")
+						  ->select("GROUP_CONCAT(DISTINCT d.role) role_name")
+						  ->select("GROUP_CONCAT(DISTINCT d.full) role_fullname")
+						  ->from($this->users_table.' a')
+						  ->join($this->user_profile_table.' b','b.id = a.id', 'inner')
+						  ->join($this->user_role_table.' c','c.user_id = b.id', 'inner')
+						  ->join($this->roles_table.' d','d.role_id = c.role_id', 'inner');
 
+		if ( ! is_null( $user_id ) )
+			$query->where('a.id', $user_id);
+		else
+			$query->group_by('a.id');
+
+		return $query->get();
+	}
 	public function get_roles_query()
 	{
 		return $this->db->get( $this->roles_table );
@@ -130,8 +147,7 @@ class Baka_users extends Baka_lib
 	 */
 	public function is_username_available($username)
 	{
-		$query = $this->db->get_where($this->users_table, array('LOWER(username)=' => strtolower($username)))
-						  ->limit(1);
+		$query = $this->db->limit(1)->get_where($this->users_table, array('LOWER(username)=' => strtolower($username)));
 
 		return $query->num_rows() == 0;
 	}
@@ -146,8 +162,8 @@ class Baka_users extends Baka_lib
 	{
 		$query = $this->db->where('LOWER(email)=', strtolower($email))
 						  ->or_where('LOWER(new_email)=', strtolower($email))
-						  ->get($this->users_table)
-						  ->limit(1);
+						  ->limit(1)
+						  ->get($this->users_table);
 
 		return $query->num_rows() == 0;
 	}
@@ -159,22 +175,23 @@ class Baka_users extends Baka_lib
 	 * @param   bool
 	 * @return  array
 	 */
-	public function create_user($user_data, $activated)
+	public function create_user($user_data, $activated = FALSE, $roles = array())
 	{
-		$user_data['created']   = date('Y-m-d H:i:s');
-		$user_data['activated'] = $activated ? 1 : 0;
+		$user_data['created']		= date('Y-m-d H:i:s');
+		$user_data['last_login']	= date('Y-m-d H:i:s');
+		$user_data['activated']		= $activated ? 1 : 0;
 
 		if ($this->db->insert($this->users_table, $user_data))
 		{
 			$user_id = $this->db->insert_id();
 			
-			if ($activated)
+			if ( $activated )
 				$this->create_profile($user_id, $user_data['meta']);
 			
 			return array('user_id' => $user_id);
 		}
 		
-		return NULL;
+		return FALSE;
 	}
 
 	/**
@@ -197,9 +214,9 @@ class Baka_users extends Baka_lib
 
 		$wheres['activated'] = 0;
 
-		$query = $this->db->get_where($this->users_table, $wheres)->limit(1);
+		$query = $this->db->limit(1)->get_where($this->users_table, $wheres);
 
-		if ($query->num_rows() == 1)
+		if ($query->num_rows() > 0)
 		{
 			$this->db->update( $this->users_table,
 				array('activated' => 1, 'new_email_key' => NULL),
@@ -421,7 +438,7 @@ class Baka_users extends Baka_lib
 	 * @param   int
 	 * @return  bool
 	 */
-	private function create_profile($user_id, $meta)
+	private function create_profile($user_id, $meta, $roles_id = array())
 	{
 		$user_data['id'] = $user_id;
 
@@ -438,22 +455,50 @@ class Baka_users extends Baka_lib
 			$user_data = array_merge($user_data, $meta);            
 		}
 
-		$q_admin = $this->db->get_where( $this->user_role_table, array('role_id' => 1))->limit(1);
-		
-		if ( $q_admin->num_rows() > 0 )
+		if ( count($roles_id) > 0 )
+			$this->set_user_roles( $user_id, $roles_id );
+
+		return $this->db->insert($this->user_profile_table, $user_data);
+	}
+
+	/**
+	 * Setup roles to user
+	 * 
+	 * @param	int
+	 * @param	array
+	 * @return  bool
+	 */
+	public function set_user_roles( $user_id, $roles_id = array() )
+	{
+		$count_roles = count($roles_id);
+
+		if ( $count_roles > 0 )
 		{
-			// If admin exists, use the default role
-			$q_role = $this->db->get_where( $this->roles_table, array('default' => 1))->limit(1)->row();
-			
-			$this->db->insert($this->user_role_table, array('user_id' => $user_id, 'role_id' => $q_role->role_id));
+			for ( $i=0; $i<$count_roles; $i++ )
+			{
+				$role_data[$i]['user_id']	= $user_id;
+				$role_data[$i]['role_id']	= $roles_id[$i];
+			}
+
+			return $this->db->insert_batch($this->user_role_table, $role_data);
 		}
 		else
 		{
-			// If there's no admin then make this person the admin
-			$this->db->insert($this->user_role_table, array('user_id' => $user_id, 'role_id' => 1));
+			$q_admin = $this->db->get_where( $this->user_role_table, array('role_id' => 1))->limit(1);
+
+			if ( $q_admin->num_rows() > 0 )
+			{
+				// If admin exists, use the default role
+				$q_role = $this->db->get_where( $this->roles_table, array('default' => 1))->limit(1)->row();
+				
+				return $this->db->insert($this->user_role_table, array('user_id' => $user_id, 'role_id' => $q_role->role_id));
+			}
+			else
+			{
+				// If there's no admin then make this person the admin
+				return $this->db->insert($this->user_role_table, array('user_id' => $user_id, 'role_id' => 1));
+			}
 		}
-		
-		return $this->db->insert($this->user_profile_table, $user_data);
 	}
 	
 	/**
@@ -498,7 +543,7 @@ class Baka_users extends Baka_lib
 	 */
 	public function get_role_permissions($role_id)
 	{
-		$query	= $this->db->query("SELECT permission FROM ".$this->db->dbprefix.$this->permissions_table." INNER JOIN ".$this->db->dbprefix.$this->role_perms_table." USING(permission_id) WHERE role_id={$role_id}");
+		$query	= $this->db->query("SELECT permission FROM ".$this->table_prefix.$this->permissions_table." INNER JOIN ".$this->table_prefix.$this->role_perms_table." USING(permission_id) WHERE role_id={$role_id}");
 		
 		return $query->result();
 	}
@@ -508,7 +553,7 @@ class Baka_users extends Baka_lib
 	 */
 	public function get_permission_overrides($user_id)
 	{
-		$query	= $this->db->query("SELECT permission, allow FROM ".$this->db->dbprefix.$this->permissions_table." INNER JOIN ".$this->db->dbprefix.$this->overrides_table." USING(permission_id) WHERE user_id={$user_id}");
+		$query	= $this->db->query("SELECT permission, allow FROM ".$this->table_prefix.$this->permissions_table." INNER JOIN ".$this->table_prefix.$this->overrides_table." USING(permission_id) WHERE user_id={$user_id}");
 		
 		return $query->result();
 	}
@@ -519,7 +564,7 @@ class Baka_users extends Baka_lib
 	public function get_permissions($user_id)
 	{
 		// Does not include overrites yet
-		$query	= $this->db->query("SELECT GROUP_CONCAT(DISTINCT permission) permission FROM ".$this->db->dbprefix.$this->user_role_table." JOIN ".$this->db->dbprefix.$this->roles_table." USING(role_id) JOIN ".$this->db->dbprefix.$this->role_perms_table." USING(role_id) JOIN ".$this->db->dbprefix.$this->permissions_table." USING(permission_id) WHERE user_id=?", array($user_id));
+		$query	= $this->db->query("SELECT GROUP_CONCAT(DISTINCT permission) permission FROM ".$this->table_prefix.$this->user_role_table." JOIN ".$this->table_prefix.$this->roles_table." USING(role_id) JOIN ".$this->table_prefix.$this->role_perms_table." USING(role_id) JOIN ".$this->table_prefix.$this->permissions_table." USING(permission_id) WHERE user_id=?", array($user_id));
 		$row	= $query->row();
 		
 		return explode(',', $row->permission);
@@ -532,7 +577,7 @@ class Baka_users extends Baka_lib
 	 */
 	public function get_user_roles($user_id)
 	{
-		return $this->db->query("SELECT b.role_id, b.role, b.full, b.default FROM ".$this->db->dbprefix.$this->user_role_table." a INNER JOIN ".$this->db->dbprefix.$this->roles_table." b USING(role_id) WHERE a.user_id=?", array($user_id));
+		return $this->db->query("SELECT b.role_id, b.role, b.full, b.default FROM ".$this->table_prefix.$this->user_role_table." a INNER JOIN ".$this->table_prefix.$this->roles_table." b USING(role_id) WHERE a.user_id=?", array($user_id));
 	}
 		
 	/**
@@ -542,7 +587,7 @@ class Baka_users extends Baka_lib
 	 */
 	public function get_roles()
 	{
-		return $this->db->query("SELECT b.role_id, b.role, b.full, b.default FROM ".$this->db->dbprefix.$this->user_role_table." a INNER JOIN ".$this->db->dbprefix.$this->roles_table." b USING(role_id)");
+		return $this->db->query("SELECT b.role_id, b.role, b.full, b.default FROM ".$this->table_prefix.$this->user_role_table." a INNER JOIN ".$this->table_prefix.$this->roles_table." b USING(role_id)");
 	}
 	
 	/**

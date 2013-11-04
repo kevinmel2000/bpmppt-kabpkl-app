@@ -1,27 +1,27 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * BAKA Input Class
+ * BAKA Form Validation Class
  *
  * Pre-processes global input data for security
  *
  * @package		Baka_pack
  * @subpackage	Libraries
- * @category	Input
+ * @category	Validation
  * @author		Fery Wardiyanto
  */
-class BAKA_Input extends CI_Input
+class BAKA_Form_validation extends CI_Form_validation
 {
-	function __construct()
+	function __construct($rules = array())
 	{
-		parent::__construct();
+		parent::__construct($rules);
 
-		log_message('debug', "#Baka_pack: Core Input Class Initialized");
+		$this->CI->load->library('Baka_pack/baka_users');
+
+		log_message('debug', "#Baka_pack: Core Form Validation Class Initialized");
 	}
 
 	function valid_recaptcha( $code )
 	{
-		$this->load->helper('recaptcha');
-
 		$resp = recaptcha_check_answer(
 			get_app_setting('auth_recaptcha_public_key'),
 			$this->ip_address(),
@@ -30,7 +30,7 @@ class BAKA_Input extends CI_Input
 
 		if (!$resp->is_valid)
 		{
-			$this->form_validation->set_message('valid_recaptcha', $this->lang->line('auth_incorrect_captcha'));
+			$this->set_message('valid_recaptcha', _x('auth_incorrect_captcha'));
 			return FALSE;
 		}
 		
@@ -43,7 +43,7 @@ class BAKA_Input extends CI_Input
 
 		if ($_SESSION['captcha'] != $code)
 		{
-			$this->form_validation->set_message('valid_captcha', $this->lang->line('auth_incorrect_captcha'));
+			$this->set_message('valid_captcha', _x('auth_incorrect_captcha'));
 			return FALSE;
 		}
 		
@@ -86,7 +86,7 @@ class BAKA_Input extends CI_Input
 		{
 			if($username == $val)
 			{
-				$this->form_validation->set_message('is_username_blacklist', $this->lang->line('auth_username_blacklisted'));
+				$this->set_message('is_username_blacklist', _x('auth_username_blacklisted'));
 				$valid = FALSE;
 				break; 
 			}
@@ -95,14 +95,26 @@ class BAKA_Input extends CI_Input
 		 return $valid;
 	 }
 
-	function is_username_exists( $username )
+	function is_username_available( $username )
 	{
-		return $this->baka_users->is_username_exists( $username );
+		if ( ! $this->CI->baka_users->is_username_available( $username ) )
+		{
+			$this->set_message( 'is_username_available', _x('auth_username_in_use') );
+			return FALSE;
+		}
+
+		return TRUE;
 	}
 
-	function is_email_exists( $username )
+	function is_email_available( $email )
 	{
-		return $this->baka_users->is_email_exists( $username );
+		if ( ! $this->CI->baka_users->is_email_available( $email ) )
+		{
+			$this->set_message( 'is_email_available', _x('auth_email_in_use') );
+			return FALSE;
+		}
+
+		return TRUE;
 	}
 }
 

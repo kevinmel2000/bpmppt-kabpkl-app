@@ -95,33 +95,6 @@ $config['baka_cool_captcha_folder'] = APPPATH.'third_party/captcha/';
 
 /*
 |--------------------------------------------------------------------------
-| reCAPTCHA
-|
-| 'use_recaptcha' = Use reCAPTCHA instead of common captcha
-| You can get reCAPTCHA keys by registering at http://recaptcha.net
-|--------------------------------------------------------------------------
-*/
-$config['baka_use_recaptcha']			= FALSE;
-$config['baka_recaptcha_public_key']	= '';
-$config['baka_recaptcha_private_key']	= '';
-
-/*
-|--------------------------------------------------------------------------
-| Blacklisted usernames
-|
-| 'username_blacklist' = Usernames which will be blocked upon registration
-| 'username_blacklist_prepend' = Each item will be appended to each element of 'username_blacklist' (increasing the # of blacklisted usernames)
-| 'username_exceptions' = Allow these names even if they're in the total list of blacklisted usernames
-|
-|--------------------------------------------------------------------------
-*/
-// Blacklisted usernames
-$config['baka_username_blacklist']			= array('admin', 'administrator', 'mod', 'moderator', 'root');
-$config['baka_username_blacklist_prepend']	= array('the', 'sys', 'system', 'site', 'super');
-$config['baka_username_exceptions']			= array();
-
-/*
-|--------------------------------------------------------------------------
 | Security settings
 |
 | The library uses PasswordHash library for operating with hashed passwords.
@@ -159,11 +132,6 @@ $config['baka_use_username']			= TRUE;
 // To manually approve accounts, set this to FALSE
 $config['baka_acct_approval']			= TRUE;
 
-$config['baka_username_min_length'] 	= 4;
-$config['baka_username_max_length'] 	= 20;
-$config['baka_password_min_length'] 	= 4;
-$config['baka_password_max_length'] 	= 20;
-
 /*
 |--------------------------------------------------------------------------
 | Login settings
@@ -181,13 +149,13 @@ $config['baka_password_max_length'] 	= 20;
 | 'login_attempt_expire' = Time to live for every attempt to login. Default is 24 hours (60*60*24).
 |--------------------------------------------------------------------------
 */
-$config['baka_login_by_username'] = TRUE;
-$config['baka_login_by_email'] = TRUE;
-$config['baka_login_record_ip'] = TRUE;
-$config['baka_login_record_time'] = TRUE;
-$config['baka_login_count_attempts'] = TRUE;
-$config['baka_login_max_attempts'] = 5;
-$config['baka_login_attempt_expire'] = 60*60*24;
+$config['baka_login_by_username']		= TRUE;
+$config['baka_login_by_email']			= TRUE;
+$config['baka_login_record_ip']			= TRUE;
+$config['baka_login_record_time']		= TRUE;
+$config['baka_login_count_attempts']	= TRUE;
+$config['baka_login_max_attempts']		= 5;
+$config['baka_login_attempt_expire']	= 60*60*24;
 
 /*
 |--------------------------------------------------------------------------
@@ -197,8 +165,8 @@ $config['baka_login_attempt_expire'] = 60*60*24;
 | 'autologin_cookie_life' = Auto login cookie life before expired. Default is 2 months (60*60*24*31*2).
 |--------------------------------------------------------------------------
 */
-$config['baka_autologin_cookie_name'] = 'autologin';
-$config['baka_autologin_cookie_life'] = 60*60*24*31*2;
+$config['baka_autologin_cookie_name']	= 'autologin';
+$config['baka_autologin_cookie_life']	= 60*60*24*31*2;
 
 /*
 |--------------------------------------------------------------------------
@@ -207,17 +175,7 @@ $config['baka_autologin_cookie_life'] = 60*60*24*31*2;
 | 'forgot_password_expire' = Time before forgot password key become invalid. Default is 15 minutes (60*15).
 |--------------------------------------------------------------------------
 */
-$config['baka_forgot_password_expire'] = 60*15;
-
-/*
-|--------------------------------------------------------------------------
-| Database settings
-|
-| 'db_table_prefix' = Table prefix that will be prepended to every table name used by the library
-| (except 'ci_sessions' table).
-|--------------------------------------------------------------------------
-*/
-$config['baka_db_table_prefix'] = 'baka_auth_';
+$config['baka_forgot_password_expire']	= 60*15;
 
 
 /* End of file tank_auth.php */
