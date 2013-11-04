@@ -20,16 +20,6 @@ body { font-family: sans-serif; font-size: 0.8em; padding: 20px; }
 
 
 
-
-
-
-
-
-
-
-
-
-
 /** Validate captcha */
 if (!empty($_REQUEST['captcha'])) {
     if (empty($_SESSION['captcha']) || trim(strtolower($_REQUEST['captcha'])) != $_SESSION['captcha']) {

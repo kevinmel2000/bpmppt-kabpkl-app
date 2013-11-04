@@ -39,7 +39,11 @@ class App_data extends CI_Model
 		}
 	}
 
-	// get modul name
+	/**
+	 * Mendapatkan nama model
+	 * 
+	 * @param string $data_model
+	 */
 	public function get_name( $data_model )
 	{
 		return $this->_type[$data_model]['name'];
