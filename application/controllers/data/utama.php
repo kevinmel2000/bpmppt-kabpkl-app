@@ -10,11 +10,13 @@ class Utama extends BAKA_Controller
 
 		$this->baka_theme->add_navbar( 'data_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
 		$this->app_main->data_navbar( 'data_sidebar', 'side');
+
+		$this->data['page_link'] = 'data/layanan/';
 	}
 
 	public function index()
 	{
-		$this->stat();
+		redirect('dashboard');
 	}
 
 	public function stat()
@@ -26,12 +28,12 @@ class Utama extends BAKA_Controller
 
 		foreach ($data_list as $key => $value)
 		{
-			$this->data['tool_buttons']['Baru:dd|primary']['data/layanan/ijin/'.$key.'/form'] = $value;
+			$this->data['tool_buttons']['Baru:dd|primary']['ijin/'.$key.'/form'] = $value;
 		}
 		
 		$this->data['data_type']	= $data_list;
 		$this->data['panel_title']	= $this->baka_theme->set_title('Semua data perijinan');
-		$this->data['panel_body']	= $this->app_data->get_grids();
+		$this->data['panel_body']	= $this->app_data->get_tables( $this->data['page_link'] );
 		$this->data['counter']		= $this->app_data->count_data();
 
 		$this->baka_theme->load('pages/panel_alldata', $this->data);

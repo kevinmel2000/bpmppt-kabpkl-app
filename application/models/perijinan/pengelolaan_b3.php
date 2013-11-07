@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Pengelolaan_b3 extends CI_Model
+class Pengelolaan_b3 extends App_main
 {
 	public $kode = 'B3';
 	public $slug = 'izin_pengelolaan_b3';
@@ -11,89 +11,67 @@ class Pengelolaan_b3 extends CI_Model
 		log_message('debug', "#BAKA_modul: Pengelolaan_b3_model Class Initialized");
 	}
 
-	public function form( $data_id = '' )
+	public function form( $data_obj = NULL )
 	{
-		$data = ( $data_id != '' ? $this->app_data->get_fulldata_by_id( $data_id ) : '' );
-
-		$fields[]	= array(
-			'name'	=> $this->slug.'_surat',
-			'label'	=> 'Nomor &amp; Tanggal Surat',
-			'type'	=> 'subfield',
-			'fields'=> array(
-				array(
-					'col'	=> '6',
-					'name'	=> 'nomor',
-					'label'	=> 'Nomor',
-					'type'	=> 'text',
-					'std'	=> ($data_id != '' ? $data->surat_nomor : ''),
-					'validation'=> 'required' ),
-				array(
-					'col'	=> '6',
-					'name'	=> 'tanggal',
-					'label'	=> 'Tanggal',
-					'type'	=> 'text',
-					'std'	=> ($data_id != '' ? $data->surat_tanggal : ''),
-					'validation'=> 'required',
-					'callback'=> 'string_to_date' ),
-				));
-
 		$fields[]	= array(
 			'name'	=> $this->slug.'_fieldset_data_pemohon',
 			'label'	=> 'Data Pemohon',
+			'attr'	=> (! is_null($data_obj) ? 'disabled' : '' ),
 			'type'	=> 'fieldset' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_pemohon_nama',
 			'label'	=> 'Nama lengkap',
 			'type'	=> 'text',
-			'std'	=> ($data_id != '' ? $data->pemohon_nama : ''),
+			'std'	=> (! is_null($data_obj) ? $data_obj->pemohon_nama : ''),
 			'validation'=> 'required' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_pemohon_alamat',
 			'label'	=> 'Alamat',
 			'type'	=> 'textarea',
-			'std'	=> ($data_id != '' ? $data->pemohon_alamat : ''),
+			'std'	=> (! is_null($data_obj) ? $data_obj->pemohon_alamat : ''),
 			'validation'=> 'required' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_pemohon_jabatan',
 			'label'	=> 'Jabatan',
 			'type'	=> 'text',
-			'std'	=> ($data_id != '' ? $data->pemohon_jabatan : ''),
+			'std'	=> (! is_null($data_obj) ? $data_obj->pemohon_jabatan : ''),
 			'validation'=> 'required' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_fieldset_data_usaha',
 			'label'	=> 'Data Perusahaan',
+			'attr'	=> (! is_null($data_obj) ? 'disabled' : '' ),
 			'type'	=> 'fieldset' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_usaha_nama',
 			'label'	=> 'Nama Perusahaan',
 			'type'	=> 'text',
-			'std'	=> ($data_id != '' ? $data->usaha_nama : ''),
+			'std'	=> (! is_null($data_obj) ? $data_obj->usaha_nama : ''),
 			'validation'=> 'required' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_usaha_bidang',
 			'label'	=> 'Bidang usaha',
 			'type'	=> 'text',
-			'std'	=> ($data_id != '' ? $data->usaha_bidang : ''),
+			'std'	=> (! is_null($data_obj) ? $data_obj->usaha_bidang : ''),
 			'validation'=> 'required' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_usaha_alamat',
 			'label'	=> 'Alamat Kantor',
 			'type'	=> 'textarea',
-			'std'	=> ($data_id != '' ? $data->usaha_alamat : ''),
+			'std'	=> (! is_null($data_obj) ? $data_obj->usaha_alamat : ''),
 			'validation'=> 'required' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_usaha_lokasi',
 			'label'	=> 'Lokasi Usaha',
 			'type'	=> 'textarea',
-			'std'	=> ($data_id != '' ? $data->usaha_lokasi : ''),
+			'std'	=> (! is_null($data_obj) ? $data_obj->usaha_lokasi : ''),
 			'validation'=> 'required' );
 
 		$fields[]	= array(
@@ -106,13 +84,13 @@ class Pengelolaan_b3 extends CI_Model
 					'name'	=> 'telp',
 					'label'	=> 'No. Telpon',
 					'type'	=> 'tel',
-					'std'	=> ($data_id != '' ? $data->usaha_kontak_telp : '') ),
+					'std'	=> (! is_null($data_obj) ? $data_obj->usaha_kontak_telp : '') ),
 				array(
 					'col'	=> '6',
 					'name'	=> 'fax',
 					'label'	=> 'No. Fax',
 					'type'	=> 'tel',
-					'std'	=> ($data_id != '' ? $data->usaha_kontak_fax : '') ),
+					'std'	=> (! is_null($data_obj) ? $data_obj->usaha_kontak_fax : '') ),
 				)
 			);
 
@@ -126,28 +104,28 @@ class Pengelolaan_b3 extends CI_Model
 					'name'	=> 'fungsi',
 					'label'	=> 'Keterangan fungsi',
 					'type'	=> 'text',
-					'std'	=> ($data_id != '' ? $data->usaha_tps_fungsi : ''),
+					'std'	=> (! is_null($data_obj) ? $data_obj->usaha_tps_fungsi : ''),
 					'validation'=> 'required'),
 				array(
 					'col'	=> '3',
 					'name'	=> 'ukuran',
 					'label'	=> 'Ukuran',
 					'type'	=> 'text',
-					'std'	=> ($data_id != '' ? $data->usaha_tps_ukuran : ''),
+					'std'	=> (! is_null($data_obj) ? $data_obj->usaha_tps_ukuran : ''),
 					'validation'=> 'required'),
 				array(
 					'col'	=> '3',
 					'name'	=> 'koor_s',
 					'label'	=> 'Koor. S',
 					'type'	=> 'text',
-					'std'	=> ($data_id != '' ? $data->usaha_tps_koor_s : ''),
+					'std'	=> (! is_null($data_obj) ? $data_obj->usaha_tps_koor_s : ''),
 					'validation'=> 'required'),
 				array(
 					'col'	=> '3',
 					'name'	=> 'koor_e',
 					'label'	=> 'Koor. E',
 					'type'	=> 'text',
-					'std'	=> ($data_id != '' ? $data->usaha_tps_koor_e : ''),
+					'std'	=> (! is_null($data_obj) ? $data_obj->usaha_tps_koor_e : ''),
 					'validation'=> 'required'),
 				)
 			);

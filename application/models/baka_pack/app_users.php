@@ -4,6 +4,8 @@ class App_users extends CI_Model
 {
 	public function __construct()
 	{
+		parent::__construct();
+
 		if ( ! $this->load->is_loaded('table'))
 			$this->load->library('table');
 

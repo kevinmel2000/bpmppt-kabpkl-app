@@ -1,7 +1,7 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 
-function set_toolbar( $tool_buttons )
+function set_toolbar( $tool_buttons, $page_link )
 {
 	if ( count($tool_buttons) == 0 )
 		return FALSE;
@@ -26,7 +26,7 @@ function set_toolbar( $tool_buttons )
 
 			foreach ( $label as $l_url => $l_label )
 			{
-				$output	.= ( $dropdown ? '<li>' : '' ).anchor( $l_url, $l_label, 'class="'.( $dropdown ? '' : $btn_class.( isset($s_btn[1]) ? 'btn-'.$s_btn[1] : '' ) ).'"' ).( $dropdown ? '</li>' : '' );
+				$output	.= ( $dropdown ? '<li>' : '' ).anchor( $page_link.$l_url, $l_label, 'id="toolbar-btn-'.str_replace(' ', '-', strtolower($l_label)).'" class="'.( $dropdown ? '' : $btn_class.( isset($s_btn[1]) ? 'btn-'.$s_btn[1] : '' ) ).'"' ).( $dropdown ? '</li>' : '' );
 			}
 
 			if ( $dropdown )
@@ -35,7 +35,7 @@ function set_toolbar( $tool_buttons )
 		else
 		{
 			$button	 = explode('|', $label);
-			$output	.= anchor( $url, $button[0], 'class="'.$btn_class.( isset($button[1]) ? 'btn-'.$button[1] : '' ).'"' );
+			$output	.= anchor( $page_link.$url, $button[0], 'id="toolbar-btn-'.str_replace(' ', '-', strtolower($button[0])).'" class="'.$btn_class.( isset($button[1]) ? 'btn-'.$button[1] : '' ).'"' );
 		}
 
 		$output	.= '</div>';
@@ -58,11 +58,49 @@ function form_search( $target )
 	return $output;
 }
 
-function form_alert( $message = '' )
+function form_alert()
 {
-	$return = '<div class="alert"><button type="button" class="close" data-dismiss="alert">&times;</button><ul>'.$message.'</ul></div>';
+	$ci =& get_instance();
 
-	return !empty( $message ) ? $return : '' ;
+	$messages	= array();
+	$class		= 'warning';
+
+	if ( $messages	= $ci->session->flashdata('message') )
+	{
+		$class		= 'warning';
+	}
+	else if ( $messages	= $ci->session->flashdata('success') )
+	{
+		$class		= 'success';
+	}
+	else if ( $messages	= $ci->session->flashdata('info') )
+	{
+		$class		= 'info';
+	}
+	else if ( $messages	= $ci->session->flashdata('error') )
+	{
+		$class		= 'danger';
+	}
+
+	$output = '';
+
+	if ( is_array( $messages ) AND count( $messages ) > 0 )
+	{
+		$output .= '<div class="alert alert-'.$class.'"><ul>';
+		
+		foreach ( $messages as $message )
+		{
+			$output .= '<li>'.$message.'</li>';
+		}
+
+		$output .= '</ul></div>';
+	}
+	else if ( is_string( $messages ) AND strlen( $messages ) > 0 )
+	{
+		$output = '<div class="alert alert-'.$class.'"><p>'.$messages.'</p></div>';
+	}
+
+	return $output;
 }
 
 function form_persyaratan( $caption, $persyaratan = array(), $syarats = '' )

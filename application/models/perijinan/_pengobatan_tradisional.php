@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Pengobatan_tradisional extends CI_Model
+class Pengobatan_tradisional extends App_main
 {
 	public $slug = 'izin_pengobatan_tradisional';
 	public $nama = 'Izin Pengobatan Tradisional';
@@ -10,96 +10,74 @@ class Pengobatan_tradisional extends CI_Model
 		log_message('debug', "#BAKA_modul: Pengobatan_tradisional_model Class Initialized");
 	}
 
-	public function form( $data_id = '' )
+	public function form( $data_obj = NULL )
 	{
-		$data = ( $data_id != '' ? $this->app_data->get_fulldata_by_id( $data_id ) : '' );
-
-		$fields[]	= array(
-			'name'	=> $this->slug.'_surat',
-			'label'	=> 'Nomor &amp; Tanggal Surat',
-			'type'	=> 'subfield',
-			'fields'=> array(
-				array(
-					'col'	=> '6',
-					'name'	=> 'nomor',
-					'label'	=> 'Nomor',
-					'type'	=> 'text',
-					'std'	=> ($data_id != '' ? $data->surat_nomor : ''),
-					'validation'=> 'required' ),
-				array(
-					'col'	=> '6',
-					'name'	=> 'tanggal',
-					'label'	=> 'Tanggal',
-					'type'	=> 'text',
-					'std'	=> ($data_id != '' ? $data->surat_tanggal : ''),
-					'validation'=> 'required',
-					'callback'=> 'string_to_date' ),
-				));
-
 		$fields[]	= array(
 			'name'	=> $this->slug.'_fieldset_data_pemohon',
 			'label'	=> 'Data Pemohon',
+			'attr'	=> (! is_null($data_obj) ? 'disabled' : '' ),
 			'type'	=> 'fieldset' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_pemohon_nama',
 			'label'	=> 'Nama lengkap',
 			'type'	=> 'text',
-			'std'	=> ($data_id != '' ? $data->pemohon_nama : ''),
+			'std'	=> (! is_null($data_obj) ? $data_obj->pemohon_nama : ''),
 			'validation'=> 'required' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_pemohon_jabatan',
 			'label'	=> 'Jabatan',
 			'type'	=> 'text',
-			'std'	=> ($data_id != '' ? $data->pemohon_jabatan : ''),
+			'std'	=> (! is_null($data_obj) ? $data_obj->pemohon_jabatan : ''),
 			'validation'=> 'required' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_pemohon_usaha',
 			'label'	=> 'Perusahaan',
 			'type'	=> 'text',
-			'std'	=> ($data_id != '' ? $data->pemohon_usaha : ''),
+			'std'	=> (! is_null($data_obj) ? $data_obj->pemohon_usaha : ''),
 			'validation'=> 'required' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_pemohon_alamat',
 			'label'	=> 'Alamat',
 			'type'	=> 'textarea',
-			'std'	=> ($data_id != '' ? $data->pemohon_alamat : ''),
+			'std'	=> (! is_null($data_obj) ? $data_obj->pemohon_alamat : ''),
 			'validation'=> 'required' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_fieldset_data_lokasi',
 			'label'	=> 'Data Lokasi',
+			'attr'	=> (! is_null($data_obj) ? 'disabled' : '' ),
 			'type'	=> 'fieldset' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_lokasi_tujuan',
 			'label'	=> 'Tujuan Permohonan',
 			'type'	=> 'text',
-			'std'	=> ($data_id != '' ? $data->lokasi_tujuan : ''),
+			'std'	=> (! is_null($data_obj) ? $data_obj->lokasi_tujuan : ''),
 			'validation'=> 'required' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_lokasi_alamat',
 			'label'	=> 'Alamat Lokasi',
 			'type'	=> 'textarea',
-			'std'	=> ($data_id != '' ? $data->lokasi_alamat : ''),
+			'std'	=> (! is_null($data_obj) ? $data_obj->lokasi_alamat : ''),
 			'validation'=> 'required' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_lokasi_nama',
 			'label'	=> 'Luas Area (M<sup>2</sup>)',
 			'type'	=> 'number',
-			'std'	=> ($data_id != '' ? $data->lokasi_nama : ''),
+			'std'	=> (! is_null($data_obj) ? $data_obj->lokasi_nama : ''),
 			'validation'=> 'required' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_lokasi_area_hijau',
 			'label'	=> 'Area terbuka hijau',
 			'type'	=> 'text',
-			'std'	=> ($data_id != '' ? $data->lokasi_area_hijau : ''),
+			'std'	=> (! is_null($data_obj) ? $data_obj->lokasi_area_hijau : ''),
 			'validation'=> 'required' );
 
 		return $fields;

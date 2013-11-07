@@ -2,8 +2,9 @@
 	<div class="col-md-9">
 
 <?php load_view('toolbar') ?>
+<?php echo form_alert() ?>
 
-<?php foreach ( $data_type as $slug => $name ) : ?>
+<?php foreach ( $data_type as $slug => $name ) : if ( $counter[$slug] > 0 ) : ?>
 
 <div id="panel-<?php echo $slug ?>" class="panel panel-default">
 	
@@ -21,7 +22,7 @@
 	</div>
 </div>
 
-<?php endforeach ?>
+<?php endif; endforeach; ?>
 
 	</div>
 	<div class="col-md-3">

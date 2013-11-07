@@ -800,17 +800,6 @@ class Baka_auth Extends Baka_lib
 	}
 	
 	/**
-	 * Get a user's roles
-	 *
-	 * @param int $user_id
-	 * @return array
-	 */
-	public function get_roles($user_id)
-	{
-		return $this->baka_users->get_roles($user_id);
-	}
-	
-	/**
 	 * Overriding permissions method
 	 */
 	public function add_override($user_id, $permission, $allow = 1)
@@ -826,6 +815,17 @@ class Baka_auth Extends Baka_lib
 	public function flip_override($user_id, $permission)
 	{
 		return $this->baka_users->flip_override($user_id, $permission);
+	}
+	
+	/**
+	 * Get a user's roles
+	 *
+	 * @param int $user_id
+	 * @return array
+	 */
+	public function get_roles($user_id)
+	{
+		return $this->baka_users->get_roles($user_id);
 	}
 	
 	/**

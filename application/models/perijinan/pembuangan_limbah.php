@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Pembuangan_limbah extends CI_Model
+class Pembuangan_limbah extends App_main
 {
 	public $kode = 'IPLC';
 	public $slug = 'izin_pembuangan_air_limbah';
@@ -11,75 +11,53 @@ class Pembuangan_limbah extends CI_Model
 		log_message('debug', "#BAKA_modul: Pembuangan_limbah_model Class Initialized");
 	}
 
-	public function form( $data_id = '' )
+	public function form( $data_obj = NULL )
 	{
-		$data = ( $data_id != '' ? $this->app_data->get_fulldata_by_id( $data_id ) : '' );
-
-		$fields[]	= array(
-			'name'	=> $this->slug.'_surat',
-				'label'	=> 'Nomor &amp; Tanggal Surat',
-				'type'	=> 'subfield',
-				'fields'=> array(
-					array(
-						'col'	=> '6',
-						'name'	=> 'nomor',
-						'label'	=> 'Nomor',
-						'type'	=> 'text',
-						'std'	=> ($data_id != '' ? $data->surat_nomor : ''),
-						'validation'=> 'required' ),
-					array(
-						'col'	=> '6',
-						'name'	=> 'tanggal',
-						'label'	=> 'Tanggal',
-						'type'	=> 'text',
-						'std'	=> ($data_id != '' ? $data->surat_tanggal : ''),
-						'validation'=> 'required',
-						'callback'=> 'string_to_date' ),
-					) );
-
 		$fields[]	= array(
 			'name'	=> $this->slug.'_fieldset_data_pemohon',
 			'label'	=> 'Data Pemohon',
+			'attr'	=> (! is_null($data_obj) ? 'disabled' : '' ),
 			'type'	=> 'fieldset' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_pemohon_nama',
 			'label'	=> 'Nama lengkap',
 			'type'	=> 'text',
-			'std'	=> ($data_id != '' ? $data->pemohon_nama : ''),
+			'std'	=> (! is_null($data_obj) ? $data_obj->pemohon_nama : ''),
 			'validation'=> 'required' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_pemohon_jabatan',
 			'label'	=> 'Jabatan',
 			'type'	=> 'text',
-			'std'	=> ($data_id != '' ? $data->pemohon_jabatan : ''),
+			'std'	=> (! is_null($data_obj) ? $data_obj->pemohon_jabatan : ''),
 			'validation'=> 'required' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_pemohon_usaha',
 			'label'	=> 'Nama Perusahaan',
 			'type'	=> 'text',
-			'std'	=> ($data_id != '' ? $data->pemohon_usaha : ''),
+			'std'	=> (! is_null($data_obj) ? $data_obj->pemohon_usaha : ''),
 			'validation'=> 'required' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_pemohon_alamat',
 			'label'	=> 'Alamat',
 			'type'	=> 'textarea',
-			'std'	=> ($data_id != '' ? $data->pemohon_alamat : ''),
+			'std'	=> (! is_null($data_obj) ? $data_obj->pemohon_alamat : ''),
 			'validation'=> 'required' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_fieldset_data_lokasi',
 			'label'	=> 'Data Lokasi',
+			'attr'	=> (! is_null($data_obj) ? 'disabled' : '' ),
 			'type'	=> 'fieldset' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_limbah_kapasitas_produksi',
 			'label'	=> 'Kapasitas Produksi',
 			'type'	=> 'text',
-			'std'	=> ($data_id != '' ? $data->limbah_kapasitas_produksi : ''),
+			'std'	=> (! is_null($data_obj) ? $data_obj->limbah_kapasitas_produksi : ''),
 			'validation'=> 'required' );
 
 		$fields[]	= array(
@@ -92,14 +70,14 @@ class Pembuangan_limbah extends CI_Model
 					'name'	=> 'proses',
 					'label'	=> 'proses',
 					'type'	=> 'text',
-					'std'	=> ($data_id != '' ? $data->limbah_debit_max_proses : ''),
+					'std'	=> (! is_null($data_obj) ? $data_obj->limbah_debit_max_proses : ''),
 					'validation'=> 'required' ),
 				array(
 					'col'	=> '6',
 					'name'	=> 'kond',
 					'label'	=> 'kondensor',
 					'type'	=> 'text',
-					'std'	=> ($data_id != '' ? $data->limbah_debit_max_kond : ''),
+					'std'	=> (! is_null($data_obj) ? $data_obj->limbah_debit_max_kond : ''),
 					'validation'=> 'required' ),
 				)
 			);
@@ -132,7 +110,7 @@ class Pembuangan_limbah extends CI_Model
 			'name'	=> $this->slug.'_limbah_target_buang',
 			'label'	=> 'Target pembuangan',
 			'type'	=> 'text',
-			'std'	=> ($data_id != '' ? $data->target_buang : ''),
+			'std'	=> (! is_null($data_obj) ? $data_obj->target_buang : ''),
 			'validation'=> 'required' );
 
 		return $fields;
@@ -145,7 +123,7 @@ class Pembuangan_limbah extends CI_Model
 			'name'	=> 'bod',
 			'label'	=> 'BOD',
 			'type'	=> 'text',
-			'std'	=> ($data_id != '' ? $data->{$parent.'kond'} : ''),
+			'std'	=> (! is_null($data_obj) ? $data_obj->{$parent.'kond'} : ''),
 			'validation'=> 'required' );
 		
 		$fields[]	= array(
@@ -153,7 +131,7 @@ class Pembuangan_limbah extends CI_Model
 			'name'	=> 'cod',
 			'label'	=> 'COD',
 			'type'	=> 'text',
-			'std'	=> ($data_id != '' ? $data->{$parent.'cod'} : ''),
+			'std'	=> (! is_null($data_obj) ? $data_obj->{$parent.'cod'} : ''),
 			'validation'=> 'required' );
 		
 		$fields[]	= array(
@@ -161,7 +139,7 @@ class Pembuangan_limbah extends CI_Model
 			'name'	=> 'tts',
 			'label'	=> 'TTS',
 			'type'	=> 'text',
-			'std'	=> ($data_id != '' ? $data->{$parent.'tts'} : ''),
+			'std'	=> (! is_null($data_obj) ? $data_obj->{$parent.'tts'} : ''),
 			'validation'=> 'required' );
 		
 		$fields[]	= array(
@@ -169,7 +147,7 @@ class Pembuangan_limbah extends CI_Model
 			'name'	=> 'minyak',
 			'label'	=> 'Minyak',
 			'type'	=> 'text',
-			'std'	=> ($data_id != '' ? $data->{$parent.'minyak'} : ''),
+			'std'	=> (! is_null($data_obj) ? $data_obj->{$parent.'minyak'} : ''),
 			'validation'=> 'required' );
 		
 		$fields[]	= array(
@@ -177,7 +155,7 @@ class Pembuangan_limbah extends CI_Model
 			'name'	=> 'sulfida',
 			'label'	=> 'Silfida',
 			'type'	=> 'text',
-			'std'	=> ($data_id != '' ? $data->{$parent.'sulfida'} : ''),
+			'std'	=> (! is_null($data_obj) ? $data_obj->{$parent.'sulfida'} : ''),
 			'validation'=> 'required' );
 		
 		$fields[]	= array(
@@ -185,7 +163,7 @@ class Pembuangan_limbah extends CI_Model
 			'name'	=> 'ph',
 			'label'	=> 'pH',
 			'type'	=> 'text',
-			'std'	=> ($data_id != '' ? $data->{$parent.'ph'} : ''),
+			'std'	=> (! is_null($data_obj) ? $data_obj->{$parent.'ph'} : ''),
 			'validation'=> 'required' );
 
 		return $fields;

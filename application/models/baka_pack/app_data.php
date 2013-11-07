@@ -15,9 +15,13 @@ class App_data extends CI_Model
 	// Daftar tipe modul
 	private $_type = array();
 
+	private $_messages = array();
+
 	// Default constructor class
 	public function __construct()
 	{
+		parent::__construct();
+
 		$this->_list = $this->get_type_list();
 
 		$this->initialize();
@@ -106,54 +110,122 @@ class App_data extends CI_Model
 	}
 
 	// get single modul form
-	public function get_form( $data_model, $data_id = '', $link )
+	public function get_form( $data_model, $data_id = NULL, $link )
 	{
+		$data_type	= $this->get_slug( $data_model );
+		$data_obj	= ( $data_id != '' ? $this->app_data->get_fulldata_by_id( $data_id ) : NULL );
+
+		if ( ! is_null($data_id) )
+		{
+			$status	= $data_obj->status;
+			$date	= ( $status != 'pending' ? ' pada: '.format_datetime( $data_obj->{$status.'_on'} ) : '' );
+
+			$fields[]	= array(
+				'name'	=> $data_type.'_pemohon_jabatan',
+				'label'	=> 'Status Pengajuan',
+				'type'	=> 'static',
+				'std'	=> '<span class="label label-'.$status.'">'._x('status_'.$status).'</span>'.$date );
+		}
+
+		$fields[]	= array(
+			'name'	=> $data_type.'_surat',
+			'label'	=> 'Nomor &amp; Tanggal Permohonan',
+			'type'	=> 'subfield',
+			'attr'	=> ( ! is_null($data_id) ? 'disabled' : ''),
+			'fields'=> array(
+				array(
+					'col'	=> '6',
+					'name'	=> 'nomor',
+					'label'	=> 'Nomor',
+					'type'	=> 'text',
+					'std'	=> ( ! is_null($data_id) ? $data_obj->surat_nomor : ''),
+					'validation'=> 'required' ),
+				array(
+					'col'	=> '6',
+					'name'	=> 'tanggal',
+					'label'	=> 'Tanggal',
+					'type'	=> 'datepicker',
+					'std'	=> ( ! is_null($data_id) ? format_date( $data_obj->surat_tanggal ) : ''),
+					'validation'=> 'required',
+					'callback'=> 'string_to_date' ),
+				)
+			);
+
 		$form = $this->baka_form->add_form( current_url(), $data_model )
-								->add_fields( $this->$data_model->form( $data_id ) );
+								->add_fields( array_merge( $fields, $this->$data_model->form( $data_obj )) );
+
+		if ( $data_id != '' )
+			$form->disable_buttons();
 
 		if ( $form->validate_submition() )
 		{
-			if ( $this->create_data( $this->get_slug($data_model), $form->submited_data() ) )
-			{
-				redirect( $link );
-			}
-		}
+			$form_data	= $form->submited_data();
 
-		return $form->render();
+			if ( $data = $this->create_data( $data_type, $form_data ) )
+			{
+				$this->session->set_flashdata( 'success', $this->_messages['success'] );
+			}
+			else
+			{
+				$this->session->set_flashdata( 'error', $this->_messages['error'] );
+			}
+
+			return redirect( $link.'/'.$data );
+		}
+		else
+		{
+			$this->session->set_flashdata( 'error', $form->validation_errors() );
+
+			return $form->render();
+		}
 	}
 
 	// get all moduls grid
-	public function get_grids()
+	public function get_tables( $page_link = '' )
 	{
 		foreach ( $this->_list as $data )
 		{
-			$output[$data] = $this->get_grid( $data );
+			$output[$data] = $this->get_table( $data, $page_link.'ijin/'.$data.'/' );
 		}
 
 		return $output;
 	}
 
 	// get single modul grid
-	public function get_grid( $data_model = '', $form_link = '', $delete_link = '' )
+	public function get_table( $data_model = '', $page_link = '' )
 	{
-		$query = $this->get_data_by_type( $this->get_slug( $data_model ) );
+		$data_type = $this->get_slug( $data_model );
+
+		switch ( $this->uri->segment(6) ) {
+			case 'status':
+				$query = $this->get_data_by_status( $this->uri->segment(7), $data_type );
+				break;
+			
+			case 'page':
+				$query = $this->get_data_by_type( $data_type );
+				break;
+			
+			default:
+				$query = $this->get_data_by_type( $data_type );
+				break;
+		}
 
 		if ( ! $this->load->is_loaded('table'))
 			$this->load->library('table');
 
 		if ( $query->num_rows() > 0 )
 		{
-			$head1 = array( 'data'	=> anchor('somelink', 'ID'),
+			$head1 = array( 'data'	=> 'ID',
 							'class'	=> 'head-id',
-							'width'	=> '10%' );
+							'width'	=> '5%' );
 
-			$head2 = array( 'data'	=> anchor('somelink', 'Pengajuan'),
+			$head2 = array( 'data'	=> 'Pengajuan',
 							'class'	=> 'head-value',
 							'width'	=> '30%' );
 
-			$head3 = array( 'data'	=> anchor('somelink', 'Pemohon'),
+			$head3 = array( 'data'	=> 'Pemohon',
 							'class'	=> 'head-value',
-							'width'	=> '30%' );
+							'width'	=> '40%' );
 
 			$head4 = array( 'data'	=> 'Status',
 							'class'	=> 'head-status',
@@ -161,33 +233,38 @@ class App_data extends CI_Model
 
 			$head5 = array( 'data'	=> 'Aksi',
 							'class'	=> 'head-action',
-							'width'	=> '20%' );
+							'width'	=> '15%' );
 
 			$this->table->set_heading( $head1, $head2, $head3, $head4, $head5);
 
 			foreach ( $query->result() as $row )
 			{
-				$col_1 = array( 'data'	=> anchor($form_link.'/'.$row->id, '#'.$row->id),
+				$col_1 = array( 'data'	=> anchor($page_link.'form/'.$row->id, '#'.$row->id),
 								'class'	=> 'data-id',
 								'width'	=> '5%' );
 
-				$col_2 = array( 'data'	=> '<strong>'.anchor($form_link.'/'.$row->id, 'No. '.$row->no_agenda).'</strong><br><small class="text-muted">'.format_datetime($row->created_on).'</small>',
+				$col_2 = array( 'data'	=> '<strong>'.anchor($page_link.'form/'.$row->id, 'No. '.$row->no_agenda).'</strong><br><small class="text-muted">Diajukan pada: '.format_datetime($row->created_on).'</small>',
 								'class'	=> 'data-value',
 								'width'	=> '30%' );
 
-				$col_3 = array( 'data'	=> '<strong>'.$row->petitioner.'</strong><br><small class="text-muted">'.format_datetime($row->adopted_on).'</small>',
-								'class'	=> 'data-value',
-								'width'	=> '30%' );
+				$status = $row->status;
 
-				$col_4 = array( 'data'	=> $row->status,
+				$col_3 = array( 'data'	=> '<strong>'.$row->petitioner.'</strong>'.( $status != 'pending' ? '<br><small class="text-muted">'._x('status_'.$status).' pada: '.format_datetime( $row->{$status.'_on'} ).'</small>' : '' ),
+								'class'	=> 'data-value',
+								'width'	=> '40%' );
+
+				$col_4 = array( 'data'	=> '<span class="label label-'.$status.'">'._x('status_'.$status).'</span>',
 								'class'	=> '',
-								'width'	=> '15%' );
+								'width'	=> '10%' );
 
-				$class = 'class="btn btn-default btn-sm"';
+				$class = 'btn btn-sm';
 
-				$col_5 = array( 'data'	=> '<div class="btn-group btn-group-justified">'.anchor($form_link.'/'.$row->id, 'Edit', $class ).anchor($delete_link.'/'.$row->id, 'Hapus', $class).'</div>',
+				$col_5 = array( 'data'	=> '<div class="btn-group btn-group-justified">'
+											.anchor($page_link.'form/'.$row->id, '<span class="glyphicon glyphicon-eye-open">', 'title="Lihat data" class="bs-tooltip btn-primary '.$class.'"' )
+											.anchor($page_link.'delete/'.$row->id, '<span class="glyphicon glyphicon-trash">', 'title="Hapus data" class="bs-tooltip btn-danger '.$class.'"')
+											.'</div>',
 								'class'	=> 'data-action',
-								'width'	=> '20%' );
+								'width'	=> '15%' );
 
 				$this->table->add_row( $col_1, $col_2, $col_3, $col_4, $col_5 );
 			}
@@ -207,6 +284,7 @@ class App_data extends CI_Model
 		$this->table->clear();
 
 		return $generate;
+		// return $query;
 	}
 
 	public function get_print( $data_type, $data_id )
@@ -251,6 +329,18 @@ class App_data extends CI_Model
 	public function get_data_by_type( $data_type )
 	{
 		return $this->db->get_where($this->_data_table, array('type' => $data_type));
+	}
+
+	// get data by label
+	public function get_data_by_status( $data_status, $data_type = '' )
+	{
+		if ( $data_status != 'semua' )
+			$where['status'] = $data_status;
+
+		if ($data_type != '')
+			$where['type'] = $data_type;
+
+		return $this->db->get_where( $this->_data_table, $where );
 	}
 
 	// get data by author
@@ -345,18 +435,14 @@ class App_data extends CI_Model
 		return FALSE;
 	}
 
-	public function create_data( $data_type, $submited_data )
+	public function create_data( $data_type, $form_data )
 	{
-		$petitioner	= $data_type.'_pemohon_nama';
-		$no_agenda	= $data_type.'_surat_nomor';
-
-		$data['no_agenda']	= $submited_data[$no_agenda];
+		$data['no_agenda']	= $form_data[$data_type.'_surat_nomor'];
 		$data['created_on']	= string_to_datetime();
-		$data['created_by']	= 1;
+		$data['created_by']	= $this->baka_auth->get_user_id();
 		$data['type']		= $data_type;
 		$data['label']		= '-';
-		$data['petitioner']	= $submited_data[$petitioner];
-		$data['adopted_on']	= string_to_datetime();
+		$data['petitioner']	= $form_data[$data_type.'_pemohon_nama'];
 		$data['status']		= 'pending';
 		$data['desc']		= '';
 
@@ -364,18 +450,16 @@ class App_data extends CI_Model
 		{
 			$data_id = $this->db->insert_id();
 
-			if ( $this->_create_datameta( $data_id, $data_type, $submited_data ) )
+			if ( $this->_create_datameta( $data_id, $data_type, $form_data ) )
 			{
-				$this->message[] = 'Permohonan dari saudara/i '.$submited_data[$petitioner].' berhasil disimpan.';
-
-				log_message('debug', 'Berhasil membuat data meta untuk permohonan #'.$data_id);
+				$this->_messages['success'] = 'Permohonan dari saudara/i '.$form_data[$petitioner].' berhasil disimpan.';
 
 				return $data_id;
 			}
 		}
 		else
 		{
-			$this->errors[] = 'Terjadi kegagalan penginputan data.';
+			$this->_messages['error'] =  'Terjadi kegagalan penginputan data.' ;
 
 			return FALSE;
 		}
@@ -385,21 +469,30 @@ class App_data extends CI_Model
 	{
 		if ( $data = $this->db->delete( $this->_data_table, array( 'id' => $data_id, 'type' => $this->get_slug( $data_type ) ) ) )
 		{
-			if ( $this->_delete_datameta( $data_id, $data_type ) )
+			if ( $this->db->delete( $this->_datameta_table, array( 'data_id' => $data_id, 'data_type' => $data_type ) ) )
 			{
-				$this->message[] = 'Permohonan dari saudara/i '.$submited_data[$petitioner].' berhasil disimpan.';
+				$this->_messages['success'] = 'Data dengan id #'.$data_id.' berhasil dihapus.';
 
-				log_message('debug', 'Berhasil membuat data meta untuk permohonan #'.$data_id);
-
-				return $this;
+				return TRUE;
 			}
 		}
 		else
 		{
-			$this->errors[] = 'Terjadi kegagalan penghapusan data.';
+			$this->_messages['error'] = 'Terjadi kegagalan penghapusan data.';
 
 			return FALSE;
 		}
+	}
+
+	public function change_status( $data_id, $new_status )
+	{
+		$this->db->update( $this->_data_table,
+			array('status' => $new_status, $new_status.'_on' => string_to_datetime()),
+			array('id' => $data_id) );
+
+		$this->_write_datalog( $data_id, 'Mengubah status dokumen menjadi '._x('status_'.$new_status) );
+
+		return $this->db->affected_rows() > 0;
 	}
 
 	/**
@@ -436,27 +529,7 @@ class App_data extends CI_Model
 			$i++;
 		}
 
-		if ( $this->db->insert_batch( $this->_datameta_table, $meta_data ) )
-		{
-			log_message('debug', 'Berhasil membuat data meta untuk permohonan #'.$data_id);
-		}
-		else
-		{
-			$this->errors[] = 'Terjadi kegagalan penginputan data.';
-			return ;
-		}
-
-	}
-
-	/**
-	 * Delete user datameta
-	 *
-	 * @param	int
-	 * @return	void
-	 */
-	private function _delete_datameta( $data_id, $data_type )
-	{
-		$this->db->delete( $this->_datameta_table, array( 'data_id' => $data_id, 'data_type' => $data_type ) );
+		return $this->db->insert_batch( $this->_datameta_table, $meta_data );
 	}
 
 	private function _get_where( $table_name, $wheres )
@@ -467,6 +540,26 @@ class App_data extends CI_Model
 			return $query->row();
 
 		return NULL;
+	}
+
+	private function _write_datalog( $data_id, $log_message )
+	{
+		$data = $this->db->get_where( $this->_data_table, array('id' => $data_id) )->row();
+
+		$log[] = array(
+			'user_id'	=> $this->baka_auth->get_user_id(),
+			'date'		=> string_to_datetime(),
+			'message'	=> $log_message,
+			);
+
+		if ( !is_null( $data->logs ) )
+		{
+			$log = array_merge( unserialize( $data->logs ), $log );
+		}
+
+		$this->db->update( $this->_data_table,
+			array( 'logs' => serialize( $log ) ),
+			array( 'id' => $data_id ) );
 	}
 }
 

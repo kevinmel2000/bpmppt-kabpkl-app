@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Mendirikan_bangunan extends CI_Model
+class Mendirikan_bangunan extends App_main
 {
 	public $kode = 'IMB';
 	public $slug = 'izin_mendirikan_bangunan';
@@ -11,46 +11,24 @@ class Mendirikan_bangunan extends CI_Model
 		log_message('debug', "#BAKA_modul: Mendirikan_bangunan_model Class Initialized");
 	}
 
-	public function form( $data_id = '' )
+	public function form( $data_obj = NULL )
 	{
-		$data = ( $data_id != '' ? $this->app_data->get_fulldata_by_id( $data_id ) : '' );
-
-		$fields[]	= array(
-			'name'	=> $this->slug.'_surat',
-			'label'	=> 'Nomor &amp; Tanggal Surat',
-			'type'	=> 'subfield',
-			'fields'=> array(
-				array(
-					'col'	=> '6',
-					'name'	=> 'nomor',
-					'label'	=> 'Nomor',
-					'type'	=> 'text',
-					'std'	=> ($data_id != '' ? $data->surat_nomor : ''),
-					'validation'=> 'required' ),
-				array(
-					'col'	=> '6',
-					'name'	=> 'tanggal',
-					'label'	=> 'Tanggal',
-					'type'	=> 'text',
-					'std'	=> ($data_id != '' ? $data->surat_tanggal : ''),
-					'validation'=> 'required',
-					'callback'=> 'string_to_date' ),
-				));
-
 		$fields[]	= array(
 			'name'	=> $this->slug.'_bangunan_maksud',
 			'label'	=> 'Maksud Permohonan',
-			'type'	=> 'dropdown',
+			'type'	=> ($data_id != '' ? 'static' : 'dropdown'),
+			'attr'	=> (! is_null($data_obj) ? 'disabled' : '' ),
 			'option'=> array(
 				'baru'	=> 'Mendirikan Bangunan Baru',
 				'rehap'	=> 'Perbaikan/Rehab Bangunan Lama' ),
-			'std'	=> ($data_id != '' ? $data->bangunan_maksud : ''),
+			'std'	=> (! is_null($data_obj) ? $data_obj->bangunan_maksud : ''),
 			'validation'=> 'required' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_bangunan_guna',
 			'label'	=> 'Penggunaan bangunan',
-			'type'	=> 'dropdown',
+			'type'	=> ($data_id != '' ? 'static' : 'dropdown'),
+			'attr'	=> (! is_null($data_obj) ? 'disabled' : '' ),
 			'option'=> array(
 				'rumah'	=> 'Rumah',
 				'kios'	=> 'Kios',
@@ -58,94 +36,96 @@ class Mendirikan_bangunan extends CI_Model
 				'gudang'=> 'Gudang',
 				'pabrik'=> 'Pabrik',
 				'kantor'=> 'Kantor' ),
-			'std'	=> ($data_id != '' ? $data->bangunan_guna : ''),
+			'std'	=> (! is_null($data_obj) ? $data_obj->bangunan_guna : ''),
 			'validation'=> 'required' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_fieldset_data_pemohon',
 			'label'	=> 'Data Pemohon',
+			'attr'	=> (! is_null($data_obj) ? 'disabled' : '' ),
 			'type'	=> 'fieldset' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_pemohon_nama',
 			'label'	=> 'Nama lengkap',
-			'type'	=> 'text',
-			'std'	=> ($data_id != '' ? $data->pemohon_nama : ''),
+			'type'	=> ($data_id != '' ? 'static' : 'text'),
+			'std'	=> (! is_null($data_obj) ? $data_obj->pemohon_nama : ''),
 			'validation'=> 'required' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_pemohon_kerja',
 			'label'	=> 'Pekerjaan',
-			'type'	=> 'text',
-			'std'	=> ($data_id != '' ? $data->pemohon_kerja : ''),
+			'type'	=> ($data_id != '' ? 'static' : 'text'),
+			'std'	=> (! is_null($data_obj) ? $data_obj->pemohon_kerja : ''),
 			'validation'=> 'required' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_pemohon_alamat',
 			'label'	=> 'Alamat',
-			'type'	=> 'textarea',
-			'std'	=> ($data_id != '' ? $data->pemohon_alamat : ''),
+			'type'	=> ($data_id != '' ? 'static' : 'textarea'),
+			'std'	=> (! is_null($data_obj) ? $data_obj->pemohon_alamat : ''),
 			'validation'=> 'required' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_fieldset_data_bangunan',
 			'label'	=> 'Data Bangunan',
+			'attr'	=> (! is_null($data_obj) ? 'disabled' : '' ),
 			'type'	=> 'fieldset' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_bangunan_lokasi',
 			'label'	=> 'Lokasi bangunan',
-			'type'	=> 'textarea',
-			'std'	=> ($data_id != '' ? $data->bangunan_lokasi : ''),
+			'type'	=> ($data_id != '' ? 'static' : 'textarea'),
+			'std'	=> (! is_null($data_obj) ? $data_obj->bangunan_lokasi : ''),
 			'validation'=> 'required' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_bangunan_tanah_luas',
 			'label'	=> 'Luas Tanah Bangunan (M<sup>2</sup>)',
-			'type'	=> 'number',
-			'std'	=> ($data_id != '' ? $data->bangunan_tanah_luas : ''),
+			'type'	=> ($data_id != '' ? 'static' : 'number'),
+			'std'	=> (! is_null($data_obj) ? $data_obj->bangunan_tanah_luas : ''),
 			'validation'=> 'required|numeric' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_bangunan_tanah_keadaan',
 			'label'	=> 'Keadaan Tanah',
-			'type'	=> 'dropdown',
+			'type'	=> ($data_id != '' ? 'static' : 'dropdown'),
 			'option'=> array(
 				'd1'	=> 'D I',
 				'd2'	=> 'D II',
 				'd3'	=> 'D III' ),
-			'std'	=> ($data_id != '' ? $data->bangunan_tanah_keadaan : ''),
+			'std'	=> (! is_null($data_obj) ? $data_obj->bangunan_tanah_keadaan : ''),
 			'validation'=> 'required' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_bangunan_tanah_status',
 			'label'	=> 'Status Tanah',
-			'type'	=> 'dropdown',
+			'type'	=> ($data_id != '' ? 'static' : 'dropdown'),
 			'option'=> array(
 				'hm'	=> 'Hak guna bangunan',
 				'hg'	=> 'Hak milik' ),
-			'std'	=> ($data_id != '' ? $data->bangunan_tanah_status : ''),
+			'std'	=> (! is_null($data_obj) ? $data_obj->bangunan_tanah_status : ''),
 			'validation'=> 'required' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_bangunan_milik_no',
 			'label'	=> 'Nomor kepemilikan',
-			'type'	=> 'text',
-			'std'	=> ($data_id != '' ? $data->bangunan_milik_no : ''),
+			'type'	=> ($data_id != '' ? 'static' : 'text'),
+			'std'	=> (! is_null($data_obj) ? $data_obj->bangunan_milik_no : ''),
 			'validation'=> 'required' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_bangunan_milik_an',
 			'label'	=> 'Atas Nama kepemilikan',
-			'type'	=> 'text',
-			'std'	=> ($data_id != '' ? $data->bangunan_milik_an : ''),
+			'type'	=> ($data_id != '' ? 'static' : 'text'),
+			'std'	=> (! is_null($data_obj) ? $data_obj->bangunan_milik_an : ''),
 			'validation'=> 'required' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_bangunan_luas',
 			'label'	=> 'Luas bangunan (M<sup>2</sup>)',
-			'type'	=> 'text',
-			'std'	=> ($data_id != '' ? $data->bangunan_luas : ''),
+			'type'	=> ($data_id != '' ? 'static' : 'number'),
+			'std'	=> (! is_null($data_obj) ? $data_obj->bangunan_luas : ''),
 			'validation'=> 'required|numeric' );
 		
 		return $fields;

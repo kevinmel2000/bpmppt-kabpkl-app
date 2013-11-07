@@ -8,6 +8,8 @@ class App_main extends CI_Model
 
 	public function __construct()
 	{
+		parent::__construct();
+
 		$this->username = $this->baka_auth->get_username();
 
 		$this->initialize();

@@ -18,10 +18,10 @@ class Layanan extends BAKA_Controller
 
 	public function index()
 	{
-		$this->ijin();
+		redirect( 'dashboard' );
 	}
 
-	public function ijin( $data_type = '', $page = 'data' )
+	public function ijin( $data_type = '', $page = 'data', $data_id = NULL )
 	{
 		if ( ! class_exists( $data_type ) )
 			show_404();
@@ -29,55 +29,75 @@ class Layanan extends BAKA_Controller
 		$this->data['load_toolbar']	= TRUE;
 		$this->data['page_link']   .= 'ijin/'.$data_type.'/';
 
-		if ($data_type !== '')
-			$this->$page( $data_type );
-		else
-			redirect('dashboard');
+		switch ( $page )
+		{
+			case 'form':
+				$this->form( $data_type, $data_id );
+				break;
+
+			case 'cetak':
+				$this->cetak( $data_type, $data_id );
+				break;
+
+			case 'hapus':
+				$this->ubah_status( 'deleted', $data_id, $this->data['page_link'] );
+				break;
+
+			case 'ubah-status':
+				$this->ubah_status( $this->uri->segment(7) , $data_id, $this->data['page_link'] );
+				break;
+
+			case 'data':
+			default:
+				$this->data( $data_type );
+				break;
+		}
 	}
 
 	public function data( $data_type )
 	{
 		$this->data['search_form']	= TRUE;
-		$this->data['tool_buttons'][$this->data['page_link'].'form'] = 'Baru|primary';
-		$this->data['tool_buttons'][$this->data['page_link'].'status|default'] = array('aktif'=>'Aktif','nonaktif'=>'non-Aktif');
 
-		$delete_link = $this->data['page_link'].'/delete';
-
-		$this->data['page_link']	.= 'form';
-		$this->data['btn_text']		 = 'Baru';
+		$this->data['tool_buttons']['form'] = 'Baru|primary';
+		$this->data['tool_buttons']['status:dd|default'] = array(
+			'data/status/semua'		=> 'Semua',
+			'data/status/pending'	=> 'Pending',
+			'data/status/approved'	=> 'Disetujui',
+			'data/status/done'		=> 'Selesai',
+			'data/status/deleted'	=> 'Dihapus' );
 
 		$this->data['panel_title']	 = $this->baka_theme->set_title( 'Semua data ' . $this->app_data->get_name( $data_type ) );
-		$this->data['panel_body']	 = $this->app_data->get_grid( $data_type, $this->data['page_link'] );
+		$this->data['panel_body']	 = $this->app_data->get_table( $data_type, $this->data['page_link'] );
 		$this->data['counter']		 = $this->app_data->count_data( $data_type );
 
 		$this->baka_theme->load('pages/panel_data', $this->data);
 	}
 
-	public function form( $data_type )
+	public function form( $data_type, $data_id = NULL )
 	{
-		$data_id = $this->uri->segment(6);
+		$this->data['tool_buttons']['data']	= 'Kembali|default';
+		$this->data['tool_buttons']['form'] = 'Baru|primary';
 
-		$this->data['tool_buttons'][$this->data['page_link'].'data']	= 'Kembali|default';
-
-		if ( $data_id )
+		if ( $data_id != '' )
 		{
-			$this->data['tool_buttons'][$this->data['page_link'].'cetak']	= 'Cetak|default';
-			$this->data['tool_buttons']['Ubah status:dd|default']	= array($this->data['page_link'].'aktif'=>'Aktif',$this->data['page_link'].'nonaktif'=>'non-Aktif');
+			$this->data['tool_buttons']['aksi|default']	= array(
+				'cetak/'.$data_id => 'Cetak',
+				'hapus/'.$data_id => 'Hapus' );
+			$this->data['tool_buttons']['Ubah status:dd|default']	= array(
+				'ubah-status/'.$data_id.'/pending/'		=> 'Pending',
+				'ubah-status/'.$data_id.'/approved/'	=> 'Disetujui',
+				'ubah-status/'.$data_id.'/done/'		=> 'Selesai' );
 		}
 
-		$this->data['page_link']	.= 'data';
-		$this->data['form_page']	 = TRUE;
-		$this->data['btn_text']		 = 'Kembali';
-
 		$this->data['panel_title']	= $this->baka_theme->set_title( 'Input data ' . $this->app_data->get_name( $data_type ) );
-		$this->data['panel_body']	= $this->app_data->get_form( $data_type, $data_id, $this->data['page_link'] );
+		$this->data['panel_body']	= $this->app_data->get_form( $data_type, $data_id, $this->data['page_link'].'form' );
 
 		$this->baka_theme->load('pages/panel_form', $this->data);
 	}
 
-	public function delete( $data_type )
+	public function delete( $data_type, $data_id )
 	{
-		if ( $delete = $this->app_data->delete_data( $this->uri->segment(6), $data_type ) )
+		if ( $delete = $this->app_data->delete_data( $data_id, $data_type ) )
 		{
 			$this->session->set_flashdata('message', $delete->message);
 		}
@@ -85,7 +105,7 @@ class Layanan extends BAKA_Controller
 		redirect( 'data/layanan/ijin/'.$data_type );
 	}
 
-	public function cetak( $data_type )
+	public function cetak( $data_type, $data_id )
 	{
 		$this->data['skpd_name']	= get_app_setting('skpd_name');
 		$this->data['skpd_address']	= get_app_setting('skpd_address');
@@ -101,12 +121,18 @@ class Layanan extends BAKA_Controller
 		$this->baka_theme->load('prints/'.$data_type, $this->data, 'print');
 	}
 
-	public function test( $data_type, $data_id )
+	public function ubah_status( $new_status, $data_id, $redirect )
 	{
-		$this->data['panel_title']	= $this->baka_theme->set_title( 'Input data ' . $this->app_data->get_name( $data_type ) );
-		$this->data['panel_body'] = $this->app_data->get_print( $data_type, $data_id );
+		if ( $this->app_data->change_status( $data_id, $new_status ) )
+		{
+			$this->session->set_flashdata('success', array('Status dokumen dengan id #'.$data_id.' berhasil diganti menjadi '._x('status_'.$new_status)) );
+		}
+		else
+		{
+			$this->session->set_flashdata('error', array('Terjadi kesalahan penggantian status dokumen dengan id #'.$data_id) );
+		}
 
-		$this->baka_theme->load('pages/panel_form', $this->data);
+		redirect( $redirect );
 	}
 }
 

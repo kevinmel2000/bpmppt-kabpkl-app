@@ -11,26 +11,14 @@
 class Baka_lib
 {
 	/** @var array message wrapper */
-	private $messages	= array();
+	protected $messages	= array();
 
 	/** @var array error wrapper */
-	private $errors		= array();
+	protected $errors	= array();
 
 	public function __construct()
 	{
 		log_message('debug', "#Baka_pack: Main Library Class Initialized");
-	}
-
-	/**
-	 * __call
-	 * Acts as a simple way to call model methods without loads of stupid alias'
-	 */
-	public function __call($method, $arguments)
-	{
-		if ( !method_exists( $this->baka_lib, $method) )
-			throw new Exception('Undefined method Baka_lib::' . $method . '() called');
-		else
-			return call_user_func_array( array($this->baka_lib, $method), $arguments);
 	}
 
 	/**
@@ -53,7 +41,7 @@ class Baka_lib
 		return $this->config->item( 'baka_'.$item );
 	}
 
-	private function set_message( $message = '', $rep = '' )
+	public function set_message( $message = '', $rep = '' )
 	{
 		$messages = _x( $message, $rep );
 
@@ -62,7 +50,7 @@ class Baka_lib
 		log_message( 'debug', '#Baka_pack debug: '.$messages );
 	}
 
-	private function set_error( $error = '', $rep = '' )
+	public function set_error( $error = '', $rep = '' )
 	{
 		$errors = _x( $error, $rep );
 

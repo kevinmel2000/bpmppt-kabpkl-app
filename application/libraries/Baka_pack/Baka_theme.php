@@ -16,7 +16,8 @@ class Baka_theme Extends Baka_lib
 
 	protected $_contents = array();
 
-	public $_scripts = array();
+	public $_scripts	= array();
+	public $_styles		= array();
 
 	public function __construct()
 	{
@@ -27,6 +28,7 @@ class Baka_theme Extends Baka_lib
 		$this->_theme_data['body_class'] = 'page';
 
 		$this->add_script('jquery', 'asset/vendor/jquery/jquery.min.js', '', '1.9');
+		$this->add_script('baka_pack', 'asset/js/script.js', 'jquery' );
 		$this->add_script('bootstrap', 'asset/vendor/bootstrap/js/bootstrap.min.js', 'jquery', '3.0.0');
 
 		log_message('debug', "#Baka_pack: Theme Class Initialized");
@@ -241,7 +243,7 @@ class Baka_theme Extends Baka_lib
 
 	public function add_script( $id, $source, $depend = '', $version = NULL )
 	{
-		$source = $source.'?ver='.($version != '' ? $version : get_app_option('app_version'));
+		$source = $source.'?ver='.($version != '' ? $version : get_app_config('app_version'));
 
 		if ( array_key_exists($depend, $this->_scripts) )
 		{
@@ -275,6 +277,53 @@ class Baka_theme Extends Baka_lib
 			}
 
 			$output .= "</script>\n\t";
+		}
+
+		return $output;
+	}
+
+	public function add_style( $id, $source, $depend = '', $version = NULL )
+	{
+		$source = $source.'?ver='.($version != '' ? $version : get_app_config('app_version'));
+
+		if ( array_key_exists($depend, $this->_styles) )
+		{
+			$this->_styles = array_insert_after_node( $this->_styles, $depend, $id, $source );
+		}
+		else
+		{
+			$this->_styles[$id] = $source;
+		}
+	}
+
+	public function load_styles()
+	{
+		$output = '';
+
+		foreach ( $this->_styles as $id => $style )
+		{
+			$link = array(
+				'id'	=> $id,
+				'rel'	=> 'stylesheet',
+				'type'	=> 'text/css',
+				'charset'=> get_charset() );
+
+			if (strpos($style, '://') !== FALSE)
+			{
+				$link['href'] = $style;
+
+				$output .= link_tag( $link )."\n\t";
+			}
+			else if( filter_var( base_url( $style ), FILTER_VALIDATE_URL) )
+			{
+				$link['href'] = base_url( $style );
+
+				$output .= link_tag( $link )."\n\t";
+			}
+			else
+			{
+				$output = "<style id=\"$id\" rel=\"stylesheet\" ".get_charset()." type=\"text/css\">\n$style\n</style>\n\t";
+			}
 		}
 
 		return $output;

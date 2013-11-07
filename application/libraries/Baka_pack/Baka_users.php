@@ -50,6 +50,7 @@ class Baka_users extends Baka_lib
 
 		return $query->get();
 	}
+
 	public function get_roles_query()
 	{
 		return $this->db->get( $this->roles_table );

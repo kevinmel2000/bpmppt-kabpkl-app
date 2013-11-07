@@ -295,6 +295,7 @@ class Pengguna extends BAKA_Controller
 
 	public function groups( $page = '', $role_id = '' )
 	{
+		$this->data['load_toolbar'] = TRUE;
 		switch ( $page ) {
 			case 'form':
 				$this->_role_form( $role_id );
@@ -310,6 +311,8 @@ class Pengguna extends BAKA_Controller
 	{
 		$page_link = 'admin/pengguna/groups/';
 		$query = $this->baka_users->get_roles_query();
+
+		$this->data['tool_buttons'][$page_link.'form'] = 'Baru|primary';
 
 		$this->data['panel_title'] = $this->baka_theme->set_title('Semua data kelompok pengguna');
 

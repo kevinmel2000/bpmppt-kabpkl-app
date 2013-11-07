@@ -20,6 +20,32 @@ a:active {
 	outline: 0;
 }
 
+.btn-default {
+	background-color: rgba(0,0,0,0.04);
+	border-color: #CCC;
+}
+
+.label {
+	background-color: #999;
+}
+
+.label-pending {
+	background-color: #D9534F;
+}
+
+.label-approved {
+	background-color: #5CB85C;
+}
+
+.label-printed,
+.label-done {
+	background-color: #428BCA;
+}
+
+.label-deleted {
+	background-color: #D9534F;
+}
+
 .row {
 	margin-right: -10px;
 	margin-left: -10px;
@@ -76,6 +102,11 @@ a:active {
 .table-condensed tfoot > tr > td {
 	padding: 5px;
 	padding-left: 10px;
+}
+
+#table-koordinat th,
+#table-koordinat td {
+	padding: 5px;
 }
 
 .dropdown-menu {
@@ -230,7 +261,6 @@ a:active {
 	border-radius: 4px 0 0 4px;
 	border-right: 3px solid transparent;
 	padding: 8px 12px 8px 15px;
-}
 }
 
 .nav-tabs.nav-tabs-left > li > a:hover,
@@ -427,6 +457,24 @@ section#contents-main {
 
 .form-control-static {
 	padding-top: 4px;
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.form-control-static .label {
+	font-size: 100%;
+	padding-left: 1em;
+	padding-right: 1em;
+}
+
+.form-control[disabled],
+.form-control[readonly],
+fieldset[disabled] .form-control {
+	background-color: rgba(0, 0, 0, 0.03);
+}
+
+textarea.form-control {
+	max-width: 100%;
 }
 
 .form-action {
@@ -523,4 +571,21 @@ footer .text-muted {
 		border-top: 1px solid #fff;
 		border-left: 0;
 	}
+}
+
+/* Datepicker */
+
+.datepicker .table-condensed > thead > tr > th,
+.datepicker .table-condensed > tbody > tr > td {
+	text-align: center;
+	width: 1.8em;
+	height: 1.8em;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	padding: 3px 5px; 
+}
+
+.datepicker-dropdown {
+	border: 1px solid rgba(0, 0, 0, 0.15);
 }

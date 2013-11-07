@@ -22,6 +22,8 @@ class Baka_form Extends Baka_lib
 
 	private $buttons = array();
 
+	private $show_action_btns = TRUE;
+
 	public function __construct()
 	{
 		$this->load->library('form_validation');
@@ -72,11 +74,16 @@ class Baka_form Extends Baka_lib
 		return $this;
 	}
 
+	public function disable_buttons()
+	{
+		$this->show_action_btns = FALSE;
+	}
+
 	public function render()
 	{
 		$output	= form_open( $this->form_action, $this->form_attrs );
 		
-		$output .= $this->show_alerts();
+		$output .= form_alert();
 
 		foreach( $this->fields as $field )
 		{
@@ -86,7 +93,9 @@ class Baka_form Extends Baka_lib
 		if( $this->has_fieldset === TRUE )
 			$output .= form_fieldset_close();
 
-		$output .= $this->_form_actions();
+		if ( $this->show_action_btns )
+			$output .= $this->_form_actions();
+	
 		$output .= form_close();
 
 		return $output;
@@ -126,9 +135,14 @@ class Baka_form Extends Baka_lib
 				if ( $counter >= 2 )
 					$output .= form_fieldset_close();
 
-				$this->has_fieldset = TRUE;
+				if ( is_string( $field['attr'] ) )
+				{
+					$field['attr'] = array( $field['attr'] => '' );
+				}
 
-				$output .= form_fieldset( $field['label'], array( 'id'=>'fieldset-'.$field['id'] ) );
+				$output .= form_fieldset( $field['label'], array_merge( $field['attr'], array( 'id'=>'fieldset-'.$field['id'] ) ) );
+
+				$this->has_fieldset = TRUE;
 				break;
 
 			case 'date':
@@ -148,15 +162,27 @@ class Baka_form Extends Baka_lib
 					$field['id'], $field['desc'], $field['validation'] );
 				break;
 
+			case 'datepicker':
+				$output .= $this->_form_datepicker(
+					$field['name'],
+					$field['label'],
+					$field['std'],
+					$field['id'],
+					$field['class'],
+					$field['desc'],
+					$field['validation'],
+					$field['attr'],
+					FALSE );
+				break;
+
 			case 'textarea':
 				$output .= $this->_form_common(	$field['name'], $field['label'],
 					form_textarea( array(
 						'name'	=> $field['name'],
 						'rows'	=> 3,
 						'cols'	=> '',
-						'value'	=> set_value( $field['name'], $field['std'] ),
 						'id'	=> $field['id'],
-						'class'	=> $input_classes )),
+						'class'	=> $input_classes ), set_value( $field['name'], $field['std'] ), $field['attr']),
 					$field['id'], $field['desc'], $field['validation'] );
 				break;
 
@@ -197,7 +223,7 @@ class Baka_form Extends Baka_lib
 				break;
 
 			case 'subfield':
-				$output .= $this->_form_subfield( $field['name'], $field['label'], $field['id'], $field['fields'], $field['desc'] );
+				$output .= $this->_form_subfield( $field['name'], $field['label'], $field['id'], $field['fields'], $field['desc'], $field['attr'] );
 				break;
 
 			case 'recaptcha':
@@ -218,12 +244,37 @@ class Baka_form Extends Baka_lib
 					$field['id'], $field['desc'] );
 				break;
 
+			case 'custom':
+				$output .= $this->_form_common(	$field['name'], $field['label'], $field['value'], $field['id'], $field['desc'], $field['validation'] );
+				break;
+
 			default:
 				log_message('debug', '#Baka_form: '.$field['type'].' Field type are not supported currently');
 				break;
 		}
 
 		return $output;
+	}
+
+	private function _form_datepicker( $name, $label, $std = '', $id = '', $class = '', $desc = '', $validation = '', $attr = '', $is_subfield = FALSE )
+	{
+		add_script( 'bt-tultip', 'asset/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js', 'bootstrap' );
+		add_style( 'bt-tultip', 'asset/vendor/bootstrap-datepicker/css/datepicker.css' );
+
+		$input = form_input( array(
+					'name'	=> $name,
+					'type'	=> 'text',
+					'id'	=> $id,
+					'class'	=> $class.' bs-datepicker' ), set_value( $name, $std ), $attr);
+
+		if ( $is_subfield == FALSE )
+		{
+			return $this->_form_common(	$name, $label, $input, $id, $desc, $validation );
+		}
+		else
+		{
+			return $input;
+		}
 	}
 
 	private function _form_radiocheckbox( $name, $label, $options, $std = '', $id = '', $type = '', $desc = '', $validation = '' )
@@ -293,7 +344,7 @@ class Baka_form Extends Baka_lib
 		return $this->_form_common(	$name, $label, $captcha, $id, $desc, $validation );
 	}
 
-	private function _form_subfield( $name, $label, $id = '', $fields = array(), $desc = '' )
+	private function _form_subfield( $name, $label, $id = '', $fields = array(), $desc = '', $attr = '' )
 	{
 		$id = $id != '' ? $id : $name;
 		$field_col	= '<div id="subfield-'.str_replace('_', '-', $id).'" class="row">';
@@ -322,6 +373,8 @@ class Baka_form Extends Baka_lib
 			$field['name']	= $name.'_'.$field['name'];
 			$field['id']	= str_replace('_', '-', 'input-'.$field['name']);
 
+			$field['attr'] = ( isset($field['attr']) ? $field['attr'] : $attr );
+
 			switch( $field['type'] )
 			{
 				case 'date':
@@ -335,16 +388,24 @@ class Baka_form Extends Baka_lib
 					$field_col .= form_input( array(
 						'name'	=> $field['name'],
 						'type'	=> $field['type'],
-						'value'	=> set_value( $field['name'], $field['std'] ),
 						'id'	=> $field['id'],
-						'class'	=> $input_classes,
-						'placeholder' => $field['label'] ));
+						'placeholder' => $field['label'],
+						'class'	=> $input_classes ) , set_value( $field['name'], $field['std'] ), $field['attr']);
+					break;
+
+				case 'datepicker':
+					$field_col .= $this->_form_datepicker(
+						$field['name'], $field['label'], $field['std'], $field['id'], $input_classes, '', $field['validation'], $field['attr'], TRUE );
+					break;
+
+				case 'static':
+					$field_col .= '<p id="'.$field['id'].'" class="form-control-static input-sm">'.$field['std'].'</p>';
 					break;
 
 				case 'multiselect':
 				case 'dropdown':
 					$type	= ($field['type'] == 'dropdown' ? $field['type'] : 'multiselect');
-					$attr	= 'class="form-control input-sm" id="'.$field['id'].'" placeholder="'.$field['label'].'"';
+					$attr	= 'class="form-control input-sm" id="'.$field['id'].'" placeholder="'.$field['label'].'" '.$field['attr'];
 					$func	= 'form_'.$type;
 
 					$field_col .= $func( $name.$field['name'], $field['option'], set_select($field['name'], $field['std']), $attr );
@@ -410,7 +471,7 @@ class Baka_form Extends Baka_lib
 		$output  = '<div id="group-'.str_replace('_', '-', $name).'" class="'.$group.'">';
 
 		if ($label != '' OR strpos('form-horizontal', $this->form_attrs['class']) !== FALSE )
-			$output .= '	'.form_label( $label, $name, array('class'=> $label_col.'control-label') );
+			$output .= '	'.form_label( $label, $id, array('class'=> $label_col.'control-label') );
 	
 		$output .= '	<div class="'.$input_col.'">'.$input.$is_error;
 		
@@ -428,7 +489,7 @@ class Baka_form Extends Baka_lib
 
 	private function _form_actions()
 	{
-		if (count($this->buttons) == 0 )
+		if ( count($this->buttons) == 0 )
 		{
 			$this->buttons = array(
 				array(
@@ -472,6 +533,7 @@ class Baka_form Extends Baka_lib
 					break;
 
 				case 'anchor':
+					$attr['url'] = ( isset( $attr['url'] ) AND $attr['url'] != '' ) ? $attr['url'] : current_url();
 					$output .= anchor( $attr['url'], $attr['label'], $button_attr );
 					break;
 			}
@@ -512,6 +574,11 @@ class Baka_form Extends Baka_lib
 		return $this->form_validation->run();
 	}
 
+	public function validation_errors()
+	{
+		return validation_errors();
+	}
+
 	protected function set_field_rules( $field_name, $field_label, $field_type, $validation_rules = '', $callback = '' )
 	{
 		$array_field	= ( $field_type == 'checkbox' OR $field_type == 'multiselect' ? TRUE : FALSE );
@@ -532,47 +599,6 @@ class Baka_form Extends Baka_lib
 	public function submited_data()
 	{
 		return $this->form_data;
-	}
-
-	private function show_alerts()
-	{
-		$messages	= array();
-		$class		= 'warning';
-
-		if ( $this->session->flashdata('message') )
-		{
-			$messages	= $this->session->flashdata('message');
-			$class		= 'warning';
-		}
-		else if ( $this->session->flashdata('success') )
-		{
-			$messages	= $this->session->flashdata('success');
-			$class		= 'success';
-		}
-		else if ( $this->session->flashdata('info') )
-		{
-			$messages	= $this->session->flashdata('info');
-			$class		= 'info';
-		}
-		else if ( $this->session->flashdata('error') )
-		{
-			$messages	= $this->session->flashdata('error');
-			$class		= 'danger';
-		}
-
-		if ( count( $messages ) > 0 )
-		{
-			$output = '<div class="alert alert-'.$class.'"><ul>';
-			
-			foreach ( $messages as $message )
-			{
-				$output .= '<li>'.$message.'</li>';
-			}
-
-			$output .= '</ul></div>';
-
-			return $output;
-		}
 	}
 }
 

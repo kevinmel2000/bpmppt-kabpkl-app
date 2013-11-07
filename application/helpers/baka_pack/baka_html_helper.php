@@ -63,11 +63,18 @@ function get_nav( $position )
 	return $baka_theme->get_nav( $position );
 }
 
-function add_script( $id, $source, $depend, $version)
+function add_script( $id, $source, $depend = '' , $version = NULL )
 {
 	$CI_theme =& get_instance()->baka_theme;
 	
 	return $CI_theme->add_script( $id, $source, $depend = '', $version = NULL);
+}
+
+function add_style( $id, $source, $depend = '' , $version = NULL )
+{
+	$CI_theme =& get_instance()->baka_theme;
+	
+	return $CI_theme->add_style( $id, $source, $depend = '', $version = NULL);
 }
 
 function get_foot()
@@ -75,6 +82,13 @@ function get_foot()
 	$CI_theme =& get_instance()->baka_theme;
 	
 	return $CI_theme->load_scripts();
+}
+
+function load_styles()
+{
+	$CI_theme =& get_instance()->baka_theme;
+	
+	return "<!-- Additional Stylesheets -->\n".$CI_theme->load_styles();
 }
 
 

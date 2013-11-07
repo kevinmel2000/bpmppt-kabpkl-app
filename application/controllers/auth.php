@@ -45,8 +45,7 @@ class Auth extends BAKA_Controller
 							'type'	=> 'checkbox',
 							'label'	=> '',
 							'option'=> array(
-								1 => 'Ingat saya dikomputer ini.' ),
-							'validation'=> 'integer' );
+								1 => 'Ingat saya dikomputer ini.' ) );
 
 		if ($this->baka_auth->is_max_login_attempts_exceeded($login))
 		{

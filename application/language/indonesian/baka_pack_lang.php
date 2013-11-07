@@ -5,9 +5,15 @@
 
 $lang['submit_btn']		= 'Simpan';
 $lang['reset_btn']		= 'Batal';
-
+$lang['print_btn']		= 'Cetak';
 $lang['backup_btn']		= 'Backup sekarang';
 $lang['restore_btn']	= 'Restore sekarang';
+
+$lang['status_pending']	= 'Tertunda';
+$lang['status_approved']= 'Disetujui';
+$lang['status_printed']	= 'Dicetak';
+$lang['status_done']	= 'Selesai';
+$lang['status_deleted']	= 'Dihapus';
 
 $lang['error_browser_jadul']		= 'Web browser anda jadul!';
 

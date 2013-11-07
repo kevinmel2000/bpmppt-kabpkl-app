@@ -1,0 +1,649 @@
+/* 
+html5doctor.com Reset Stylesheet
+v1.6.1
+Last Updated: 2010-09-17
+Author: Richard Clark - http://richclarkdesign.com 
+Twitter: @rich_clark
+*/
+
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+  margin:0;
+  padding:0;
+  border:0;
+  outline:0;
+  font-size:100%;
+  vertical-align:baseline;
+  background:transparent;
+  position: relative;
+}
+
+body {
+  line-height:1;
+}
+
+article,aside,details,figcaption,figure,
+footer,header,hgroup,menu,nav,section { 
+  display:block;
+}
+
+nav ul {
+  list-style:none;
+}
+
+blockquote, q {
+  quotes:none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content:'';
+  content:none;
+}
+
+a {
+  margin:0;
+  padding:0;
+  font-size:100%;
+  vertical-align:baseline;
+  background:transparent;
+}
+
+/* change colours to suit your needs */
+ins {
+  background-color:#ff9;
+  color:#000;
+  text-decoration:none;
+}
+
+/* change colours to suit your needs */
+mark {
+  background-color:#ff9;
+  color:#000; 
+  font-style:italic;
+  font-weight:bold;
+}
+
+del {
+  text-decoration: line-through;
+}
+
+abbr[title], dfn[title] {
+  border-bottom:1px dotted;
+  cursor:help;
+}
+
+table {
+  border-collapse:collapse;
+  border-spacing:0;
+}
+
+/* change border colour to suit your needs */
+hr {
+  display:block;
+  height:1px;
+  border:0;   
+  border-top:1px solid #cccccc;
+  margin:1em 0;
+  padding:0;
+}
+
+input, select {
+  vertical-align:middle;
+}
+
+sub, sup {
+  position: relative;
+  font-size: 75%;
+  line-height: 0;
+  vertical-align: baseline;
+}
+
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+
+small       { font-size: 70%; }
+b, strong   { font-weight: bold; }
+i, em       { font-style: italic; }
+
+img {
+  /* Responsive images (ensure images don't scale beyond their parents) */
+
+  max-width: 100%;
+  /* Part 1: Set a maxium relative to the parent */
+
+  width: auto\9;
+  /* IE7-8 need help adjusting responsive images */
+
+  height: auto;
+  /* Part 2: Scale the height according to the width, otherwise you get stretching */
+
+  vertical-align: middle;
+  border: 0;
+  -ms-interpolation-mode: bicubic;
+}
+
+
+* {
+  -webkit-font-smoothing: antialiased;
+}
+
+*:focus {
+  outline: 0;
+}
+
+body,
+html {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background: WhiteSmoke;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  line-height: 1.4em;
+  color: #555;
+}
+
+html {
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+a {
+  color: #06F;
+  display: inline-block;
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  text-decoration: underline;
+}
+
+a:active {
+  text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+  display: block;
+  line-height: 1.2em;
+}
+
+h5, h6 {
+  text-transform: uppercase;
+}
+
+h1 { font-size: 36px; }
+h2 { font-size: 28px; }
+h3 { font-size: 22px; }
+h4 { font-size: 16px; }
+h5 { font-size: 14px; }
+h6 { font-size: 10px; }
+
+h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
+  font-weight: normal;
+  line-height: 1;
+  color: #999999;
+}
+
+p {
+  line-height: 1.4em;
+  margin-bottom: 1em;
+}
+
+pre {
+  display: block;
+  padding: 10px;
+}
+
+dl {
+  line-height: 1.8em;
+  margin-bottom: 15px;
+}
+
+dt {
+  display: inline-block;
+  float: left;
+  width: 100px;
+  font-weight: bold;
+  text-align: right;
+  padding: 0 10px;
+}
+
+dd {
+  margin-left: 120px;
+}
+
+.wrapper {
+  width: 980px;
+  margin: 0 auto;
+}
+
+.clearfix {
+  *zoom: 1;
+}
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+.fleft  { float: left; }
+.fright { float: right; }
+
+
+.hmenu {
+  *zoom: 1;
+}
+
+.hmenu:before,
+.hmenu:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+
+.hmenu:after {
+  clear: both;
+}
+
+.hmenu > li {
+  float: left;
+}
+
+.hmenu > li a {
+  display: block;
+  padding: 7px 16px;
+  margin: 0 4px 0 0;
+}
+
+.hmenu > li:hover > a {
+  text-decoration: none;
+  margin-bottom: -4px;
+  padding-bottom: 11px;
+}
+
+.hmenu li > ul {
+  display: none;
+  z-index: 1000;
+  margin-top: 4px;
+  -webkit-box-shadow: 1px 2px 4px rgba(0,0,0,0.1);
+     -moz-box-shadow: 1px 2px 4px rgba(0,0,0,0.1);
+       -o-box-shadow: 1px 2px 4px rgba(0,0,0,0.1);
+          box-shadow: 1px 2px 4px rgba(0,0,0,0.1);
+  -webkit-border-radius: 0 0 4px 4px;
+     -moz-border-radius: 0 0 4px 4px;
+       -o-border-radius: 0 0 4px 4px;
+          border-radius: 0 0 4px 4px;
+}
+
+.hmenu li:hover > ul {
+  display: block;
+}
+
+.hmenu > li ul {
+  padding: 0 0 4px;
+  width: 180px;
+  background: #fff;
+  position: absolute;
+  border: 1px solid #ddd;
+}
+
+.hmenu > li ul ul {
+  left: 180px;
+  top: -6px;
+}
+
+.hmenu > li ul li {
+  border-top: 1px dotted #ddd;
+}
+
+.hmenu > li ul li:first-child {
+  border-top: 0;
+}
+
+.hmenu > li ul a {
+  background: transparent;
+  margin: 0;
+}
+
+.hmenu > li ul li:hover > a {
+  background-color: #e6e6e6;
+  background-image: -moz-linear-gradient(top, #f5f5f5, #e6e6e6);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f5f5f5), to(#e6e6e6));
+  background-image: -webkit-linear-gradient(top, #f5f5f5, #e6e6e6);
+  background-image: -o-linear-gradient(top, #f5f5f5, #e6e6e6);
+  background-image: linear-gradient(to bottom, #f5f5f5, #e6e6e6);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff5f5f5', endColorstr='#ffe6e6e6', GradientType=0);
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  *background-color: #e6e6e6;
+  text-decoration: none;
+}
+
+#head-nav {
+  background: rgba(0,0,0,0.2);
+  padding-top: 5px;
+  border-bottom: 4px solid #fff;
+}
+
+#app-menu > li > a {
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.5);
+}
+
+#app-menu > li:hover > a,
+#app-menu > li.active > a {
+  background: #fff;
+  color: #555;
+  text-shadow: none;
+}
+
+#admin-menu > li > a {
+  color: #fff;
+  padding: 5px 10px;
+  margin: 0;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.5);
+}
+
+#admin-menu > li:hover > a {
+  text-decoration: underline;
+}
+
+body > header   { background: #ccc url(../img/patterns/7.png) repeat top left; border-bottom: 1px solid #ddd; }
+body > section  { background: #fff url(../img/patterns/4.png) repeat top left; }
+body > footer   { background: WhiteSmoke; border-top: 1px solid #ddd; }
+
+#logo {
+  margin: 20px 0;
+  text-decoration: none;
+  text-shadow: 0 2px 3px rgba(0,0,0,0.5);
+}
+
+#logo h1,
+#logo span {
+  display: block;
+  color: #fff;
+}
+
+.box {
+  padding: 15px;
+}
+
+.title {
+  background: WhiteSmoke;
+  border-bottom: 1px solid #ddd;
+  padding: 10px 15px;
+  font-weight: normal;
+  background-color: #f5f5f5;
+  background-image: -moz-linear-gradient(top, #ffffff, #f5f5f5);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#f5f5f5));
+  background-image: -webkit-linear-gradient(top, #ffffff, #f5f5f5);
+  background-image: -o-linear-gradient(top, #ffffff, #f5f5f5);
+  background-image: linear-gradient(to bottom, #ffffff, #f5f5f5);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#fff5f5f5', GradientType=0);
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  *background-color: #f5f5f5;
+}
+
+#content {
+  display: inline-block;
+  margin: 15px 0;
+  border: 1px solid #ddd;
+  width: 100%;
+  background: #fff;
+}
+
+#content article,
+#content aside {
+  float: left;
+  padding: 15px 15px 0;
+}
+
+#content .sided article { width: 717px; }
+#content .sided aside { width: 200px; border-left: 1px solid #ddd; }
+
+#content .no-side article { width: 950px; }
+
+/**
+ * Formulir
+ */
+label,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: 1.2em;
+}
+
+input,
+select,
+textarea {
+  margin: 0;
+  padding: 3px;
+  outline: 0;
+  border: 1px solid #ccc;
+}
+
+textarea,
+input[type="text"],
+input[type="password"] {
+  width: 200px;
+}
+
+select {
+  width: 208px;
+}
+
+textarea {
+  height: 56px;
+}
+
+.btn,
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  padding: 4px 10px;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  background-color: #f5f5f5;
+  background-image: -moz-linear-gradient(top, #ffffff, #f5f5f5);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#f5f5f5));
+  background-image: -webkit-linear-gradient(top, #ffffff, #f5f5f5);
+  background-image: -o-linear-gradient(top, #ffffff, #f5f5f5);
+  background-image: linear-gradient(to bottom, #ffffff, #f5f5f5);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#fff5f5f5', GradientType=0);
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  *background-color: #f5f5f5;
+}
+
+fieldset {
+  border: 0;
+  border-top: 1px solid #DDD;
+  padding-top: 10px;
+  margin-top: 10px;
+  display: table-row;
+}
+
+legend {
+  background: #FFF;
+  padding: 0 5px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.btn:hover,
+.btn:focus {
+  background-color: #aadbe6;
+  background-image: -moz-linear-gradient(top, #d9edf7, #aadbe6);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#d9edf7), to(#aadbe6));
+  background-image: -webkit-linear-gradient(top, #d9edf7, #aadbe6);
+  background-image: -o-linear-gradient(top, #d9edf7, #aadbe6);
+  background-image: linear-gradient(to bottom, #d9edf7, #aadbe6);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffd9edf7', endColorstr='#ffaadbe6', GradientType=0);
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  *background-color: #aadbe6;
+  -webkit-box-shadow: 0 0 1px 1px rgba(255, 255, 255, 0.4) inset;
+     -moz-box-shadow: 0 0 1px 1px rgba(255, 255, 255, 0.4) inset;
+          box-shadow: 0 0 1px 1px rgba(255, 255, 255, 0.4) inset;
+}
+
+.btn:active,
+.btn:visited {
+  padding: 5px 10px 3px;
+  -webkit-box-shadow: 0 0 1px 1px rgba(255, 255, 255, 0.6) inset;
+     -moz-box-shadow: 0 0 1px 1px rgba(255, 255, 255, 0.6) inset;
+          box-shadow: 0 0 1px 1px rgba(255, 255, 255, 0.6) inset;
+}
+
+a.btn {
+  color: inherit;
+}
+
+a.btn:hover,
+a.btn:focus {
+  text-decoration: none;
+}
+
+.btn-group {
+  display: inline-block;
+  border: 1px solid #ddd;
+}
+
+.btn-group .btn {
+  float: left;
+  border: 0;
+  border-left: 1px solid #ddd;
+}
+
+.btn-group .btn:first-child {
+  border-left: 0;
+}
+
+.btn-toolbar {
+  margin-bottom: 10px;
+}
+
+.current,
+.disabled {
+  cursor: default;
+}
+
+.btn.disabled:hover,
+.btn.disabled:focus,
+.btn.disabled {
+  background: #f5f5f5;
+}
+
+label {
+  cursor: pointer;
+  padding-top: 4px;
+  padding-bottom: 3px;
+}
+
+label.input {
+  padding-right: 10px;
+}
+
+div.group-input {
+  margin-bottom: 10px;
+  display: block;
+  float: none;
+}
+
+div.group-input.error {
+  color: #f00;
+}
+
+div.group-input.error input[type="text"],
+div.group-input.error textarea,
+div.group-input.error select {
+  border-color: #f00;
+  color: inherit;
+}
+
+div.group-action {
+  padding: 10px;
+  padding-left: 160px;
+  margin-bottom: 15px;
+  border-top: 1px solid #ccc;
+  background-color: #eee;
+}
+
+div.group-input label.label {
+  float: left;
+  padding-right: 10px;
+  display: inline-block;
+  width: 150px;
+  text-align: right;
+}
+
+div.group-input textarea,
+div.group-input select,
+div.group-input label.input,
+div.group-input input[type="text"] {
+  display: inline-block;
+}
+
+.alert {
+  background-color: #fcf8e3;
+  color: #c09853;
+  padding: 10px;
+  padding-left: 30px;
+  border: 1px solid #fbeed5;
+  display: block;
+  float: none;
+}
+
+.alert.info {
+  background-color: #d9edf7;
+  color: #3a87ad;
+  border-color: #aadbe6;
+}
+
+.alert.error {
+  background-color: #f2dede;
+  color: #b94a48;
+  border-color: #eed3d7;
+}
+
+.alert.warning {
+  background-color: #fcf8e3;
+  color: #c09853;
+  border-color: #fbeed5;
+}
+
+.alert.sucses {
+  background-color: #dff0d8;
+  color: #468847;
+  border-color: #d6e9c6;
+}
