@@ -11,54 +11,54 @@ class Pembuangan_limbah extends App_main
 		log_message('debug', "#BAKA_modul: Pembuangan_limbah_model Class Initialized");
 	}
 
-	public function form( $data_obj = NULL )
+	public function form( $data_obj = FALSE )
 	{
 		$fields[]	= array(
 			'name'	=> $this->slug.'_fieldset_data_pemohon',
 			'label'	=> 'Data Pemohon',
-			'attr'	=> (! is_null($data_obj) ? 'disabled' : '' ),
+			'attr'	=> ( $data_obj ? 'disabled' : '' ),
 			'type'	=> 'fieldset' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_pemohon_nama',
 			'label'	=> 'Nama lengkap',
 			'type'	=> 'text',
-			'std'	=> (! is_null($data_obj) ? $data_obj->pemohon_nama : ''),
-			'validation'=> 'required' );
+			'std'	=> ( $data_obj ? $data_obj->pemohon_nama : ''),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_pemohon_jabatan',
 			'label'	=> 'Jabatan',
 			'type'	=> 'text',
-			'std'	=> (! is_null($data_obj) ? $data_obj->pemohon_jabatan : ''),
-			'validation'=> 'required' );
+			'std'	=> ( $data_obj ? $data_obj->pemohon_jabatan : ''),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_pemohon_usaha',
 			'label'	=> 'Nama Perusahaan',
 			'type'	=> 'text',
-			'std'	=> (! is_null($data_obj) ? $data_obj->pemohon_usaha : ''),
-			'validation'=> 'required' );
+			'std'	=> ( $data_obj ? $data_obj->pemohon_usaha : ''),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_pemohon_alamat',
 			'label'	=> 'Alamat',
 			'type'	=> 'textarea',
-			'std'	=> (! is_null($data_obj) ? $data_obj->pemohon_alamat : ''),
-			'validation'=> 'required' );
+			'std'	=> ( $data_obj ? $data_obj->pemohon_alamat : ''),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_fieldset_data_lokasi',
 			'label'	=> 'Data Lokasi',
-			'attr'	=> (! is_null($data_obj) ? 'disabled' : '' ),
+			'attr'	=> ( $data_obj ? 'disabled' : '' ),
 			'type'	=> 'fieldset' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_limbah_kapasitas_produksi',
 			'label'	=> 'Kapasitas Produksi',
 			'type'	=> 'text',
-			'std'	=> (! is_null($data_obj) ? $data_obj->limbah_kapasitas_produksi : ''),
-			'validation'=> 'required' );
+			'std'	=> ( $data_obj ? $data_obj->limbah_kapasitas_produksi : ''),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_limbah_debit_max',
@@ -70,15 +70,15 @@ class Pembuangan_limbah extends App_main
 					'name'	=> 'proses',
 					'label'	=> 'proses',
 					'type'	=> 'text',
-					'std'	=> (! is_null($data_obj) ? $data_obj->limbah_debit_max_proses : ''),
-					'validation'=> 'required' ),
+					'std'	=> ( $data_obj ? $data_obj->limbah_debit_max_proses : ''),
+					'validation'=> ( !$data_obj ? 'required' : '' ) ),
 				array(
 					'col'	=> '6',
 					'name'	=> 'kond',
 					'label'	=> 'kondensor',
 					'type'	=> 'text',
-					'std'	=> (! is_null($data_obj) ? $data_obj->limbah_debit_max_kond : ''),
-					'validation'=> 'required' ),
+					'std'	=> ( $data_obj ? $data_obj->limbah_debit_max_kond : ''),
+					'validation'=> ( !$data_obj ? 'required' : '' ) ),
 				)
 			);
 
@@ -110,8 +110,8 @@ class Pembuangan_limbah extends App_main
 			'name'	=> $this->slug.'_limbah_target_buang',
 			'label'	=> 'Target pembuangan',
 			'type'	=> 'text',
-			'std'	=> (! is_null($data_obj) ? $data_obj->target_buang : ''),
-			'validation'=> 'required' );
+			'std'	=> ( $data_obj ? $data_obj->target_buang : ''),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		return $fields;
 	}
@@ -123,48 +123,48 @@ class Pembuangan_limbah extends App_main
 			'name'	=> 'bod',
 			'label'	=> 'BOD',
 			'type'	=> 'text',
-			'std'	=> (! is_null($data_obj) ? $data_obj->{$parent.'kond'} : ''),
-			'validation'=> 'required' );
+			'std'	=> ( $data_obj ? $data_obj->{$parent.'kond'} : ''),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
 		
 		$fields[]	= array(
 			'col'	=> '2',
 			'name'	=> 'cod',
 			'label'	=> 'COD',
 			'type'	=> 'text',
-			'std'	=> (! is_null($data_obj) ? $data_obj->{$parent.'cod'} : ''),
-			'validation'=> 'required' );
+			'std'	=> ( $data_obj ? $data_obj->{$parent.'cod'} : ''),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
 		
 		$fields[]	= array(
 			'col'	=> '2',
 			'name'	=> 'tts',
 			'label'	=> 'TTS',
 			'type'	=> 'text',
-			'std'	=> (! is_null($data_obj) ? $data_obj->{$parent.'tts'} : ''),
-			'validation'=> 'required' );
+			'std'	=> ( $data_obj ? $data_obj->{$parent.'tts'} : ''),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
 		
 		$fields[]	= array(
 			'col'	=> '2',
 			'name'	=> 'minyak',
 			'label'	=> 'Minyak',
 			'type'	=> 'text',
-			'std'	=> (! is_null($data_obj) ? $data_obj->{$parent.'minyak'} : ''),
-			'validation'=> 'required' );
+			'std'	=> ( $data_obj ? $data_obj->{$parent.'minyak'} : ''),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
 		
 		$fields[]	= array(
 			'col'	=> '2',
 			'name'	=> 'sulfida',
 			'label'	=> 'Silfida',
 			'type'	=> 'text',
-			'std'	=> (! is_null($data_obj) ? $data_obj->{$parent.'sulfida'} : ''),
-			'validation'=> 'required' );
+			'std'	=> ( $data_obj ? $data_obj->{$parent.'sulfida'} : ''),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
 		
 		$fields[]	= array(
 			'col'	=> '2',
 			'name'	=> 'ph',
 			'label'	=> 'pH',
 			'type'	=> 'text',
-			'std'	=> (! is_null($data_obj) ? $data_obj->{$parent.'ph'} : ''),
-			'validation'=> 'required' );
+			'std'	=> ( $data_obj ? $data_obj->{$parent.'ph'} : ''),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		return $fields;
 	}

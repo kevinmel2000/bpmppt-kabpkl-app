@@ -12,12 +12,13 @@ class Baka_theme Extends Baka_lib
 {
 	private $_app_name;
 
-	protected $_theme_data = array();
+	private $_theme_data	= array();
 
-	protected $_contents = array();
+	private $_contents		= array();
 
-	public $_scripts	= array();
-	public $_styles		= array();
+	public $_scripts		= array();
+	
+	public $_styles			= array();
 
 	public function __construct()
 	{
@@ -27,9 +28,11 @@ class Baka_theme Extends Baka_lib
 		$this->_theme_data['site_title'] = $this->_app_name;
 		$this->_theme_data['body_class'] = 'page';
 
-		$this->add_script('jquery', 'asset/vendor/jquery/jquery.min.js', '', '1.9');
+		$this->add_script('jquery', 'asset/js/lib/jquery.min.js', '', '2.0.3');
 		$this->add_script('baka_pack', 'asset/js/script.js', 'jquery' );
-		$this->add_script('bootstrap', 'asset/vendor/bootstrap/js/bootstrap.min.js', 'jquery', '3.0.0');
+		$this->add_script('bootstrap', 'asset/vendor/bootstrap/js/bootstrap.min.js', 'jquery', '3.0.0' );
+		$this->add_style( 'bootstrap', 'asset/vendor/bootstrap/css/bootstrap.min.css', '', '3.0.0' );
+		$this->add_style( 'baka_pack', 'asset/css/style.css' );
 
 		log_message('debug', "#Baka_pack: Theme Class Initialized");
 	}
@@ -243,7 +246,8 @@ class Baka_theme Extends Baka_lib
 
 	public function add_script( $id, $source, $depend = '', $version = NULL )
 	{
-		$source = $source.'?ver='.($version != '' ? $version : get_app_config('app_version'));
+		if ( filter_var( base_url($source), FILTER_VALIDATE_URL) )
+			$source .= '?ver='.($version != '' ? $version : get_app_config('app_version'));
 
 		if ( array_key_exists($depend, $this->_scripts) )
 		{
@@ -273,7 +277,7 @@ class Baka_theme Extends Baka_lib
 				$script = base_url().$src;
 				$output .= filter_var( $script, FILTER_VALIDATE_URL) ?
 					" src=\"$script\">" :
-					">\n$src";
+					">\n$(function(){\n$src\n});\n";
 			}
 
 			$output .= "</script>\n\t";
@@ -348,9 +352,18 @@ class Baka_theme Extends Baka_lib
 
 		$this->set('contents', $this->load->view( $view, $view_data, TRUE));
 
-		log_message('debug', "#Baka_theme: File ".$file." loaded as view.");
+		if ( IS_AJAX )
+		{
+			log_message('debug', "#Baka_theme: File ".$file." loaded as view via ajax.");
 
-		return $this->load->view( $file, $this->_contents, $return );
+			return $this->load->view( $view, $view_data, FALSE);
+		}
+		else
+		{
+			log_message('debug', "#Baka_theme: File ".$file." loaded as view.");
+
+			return $this->load->view( $file, $this->_contents, $return );
+		}
 	}
 }
 

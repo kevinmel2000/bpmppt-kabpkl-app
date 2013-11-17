@@ -50,27 +50,27 @@ class App_main extends CI_Model
 
 	public function data_navbar( $parent, $position = 'top' )
 	{
-		$dir	= 'perijinan/';
 		$link	= 'data/layanan/';
 		$nama	= str_replace('/', '_', $link);
 
 		$this->baka_theme->add_navmenu( $parent, 'dashboard', 'link', 'dashboard', 'Statistik', array(), $position );
 		$this->baka_theme->add_navmenu( $parent, $nama.'laporan', 'link', 'data/utama/laporan', 'Laporan', array(), $position );
-
 		$this->baka_theme->add_navmenu( $parent, $nama.'d', 'devider', '', '', array(), $position );
 
-		foreach ($this->app_data->get_type_list() as $layanan)
+		foreach ($this->app_data->get_type_list() as $modul)
 		{
-			$label = $this->app_data->get_name( $layanan );
+			$layanan = $this->app_data->get_modul( $modul );
 
-			if ( $this->app_data->get_code( $layanan ) !== NULL )
-				$label .= ' ('.$this->app_data->get_code( $layanan ).')';
-			
-			$slug = $this->app_data->get_slug( $layanan );
+			$this->baka_theme->add_navmenu(
+				$parent,
+				$nama.$layanan['slug'],
+				'link',
+				$link.'ijin/'.$modul,
+				$this->app_data->get_label( $modul ),
+				array(),
+				$position );
 
-			$this->baka_theme->add_navmenu( $parent, $nama.$slug, 'link', $link.'ijin/'.$layanan, $label, array(), $position );
-
-			$this->data_layanan[$layanan] = $this->$layanan->nama;
+			$this->data_layanan[$layanan['slug']] = $layanan['nama'];
 		}
 	}
 

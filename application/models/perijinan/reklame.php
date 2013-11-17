@@ -10,70 +10,70 @@ class Reklame extends App_main
 		log_message('debug', "#BAKA_modul: Reklame_model Class Initialized");
 	}
 
-	public function form( $data_obj = NULL )
+	public function form( $data_obj = FALSE )
 	{
 		$fields[]	= array(
 			'name'	=> $this->slug.'_fieldset_data_pemohon',
 			'label'	=> 'Data Pemohon',
-			'attr'	=> (! is_null($data_obj) ? 'disabled' : '' ),
+			'attr'	=> ( $data_obj ? 'disabled' : '' ),
 			'type'	=> 'fieldset' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_pemohon_nama',
 			'label'	=> 'Nama lengkap',
 			'type'	=> 'text',
-			'std'	=> (! is_null($data_obj) ? $data_obj->pemohon_nama : ''),
-			'validation'=> 'required' );
+			'std'	=> ( $data_obj ? $data_obj->pemohon_nama : ''),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_pemohon_kerja',
 			'label'	=> 'Pekerjaan',
 			'type'	=> 'dropdown',
-			'std'	=> (! is_null($data_obj) ? $data_obj->pemohon_kerja : ''),
+			'std'	=> ( $data_obj ? $data_obj->pemohon_kerja : ''),
 			'option'=> array(
 				'kerja'=> 'Pekerjaan' ),
-			'validation'=> 'required' );
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_pemohon_alamat',
 			'label'	=> 'Alamat',
 			'type'	=> 'textarea',
-			'std'	=> (! is_null($data_obj) ? $data_obj->pemohon_alamat : ''),
-			'validation'=> 'required' );
+			'std'	=> ( $data_obj ? $data_obj->pemohon_alamat : ''),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_pemohon_telp',
 			'label'	=> 'No. Telp',
 			'type'	=> 'tel',
-			'std'	=> (! is_null($data_obj) ? $data_obj->pemohon_telp : ''),
+			'std'	=> ( $data_obj ? $data_obj->pemohon_telp : ''),
 			'validation'=> 'numeric' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_fieldset_data_reklame',
 			'label'	=> 'Data Reklame',
-			'attr'	=> (! is_null($data_obj) ? 'disabled' : '' ),
+			'attr'	=> ( $data_obj ? 'disabled' : '' ),
 			'type'	=> 'fieldset' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_lokasi_jenis',
 			'label'	=> 'Jenis Reklame',
 			'type'	=> 'text',
-			'std'	=> (! is_null($data_obj) ? $data_obj->reklame_jenis : ''),
-			'validation'=> 'required' );
+			'std'	=> ( $data_obj ? $data_obj->reklame_jenis : ''),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_reklame_juml',
 			'label'	=> 'Jumlah',
 			'type'	=> 'number',
-			'std'	=> (! is_null($data_obj) ? $data_obj->reklame_juml : ''),
+			'std'	=> ( $data_obj ? $data_obj->reklame_juml : ''),
 			'validation'=> 'required|numeric' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_reklame_lokasi',
 			'label'	=> 'Lokasi pemasangan',
 			'type'	=> 'textarea',
-			'std'	=> (! is_null($data_obj) ? $data_obj->reklame_lokasi : ''),
-			'validation'=> 'required' );
+			'std'	=> ( $data_obj ? $data_obj->reklame_lokasi : ''),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_reklame_ukuran',
@@ -85,14 +85,14 @@ class Reklame extends App_main
 					'name'	=> 'panjang',
 					'label'	=> 'Panjang',
 					'type'	=> 'number',
-					'std'	=> (! is_null($data_obj) ? $data_obj->reklame_ukuran_panjang : ''),
+					'std'	=> ( $data_obj ? $data_obj->reklame_ukuran_panjang : ''),
 					'validation'=> 'required|numerik' ),
 				array(
 					'col'	=> '6',
 					'name'	=> 'lebar',
 					'label'	=> 'Lebar',
 					'type'	=> 'number',
-					'std'	=> (! is_null($data_obj) ? $data_obj->reklame_ukuran_lebar : ''),
+					'std'	=> ( $data_obj ? $data_obj->reklame_ukuran_lebar : ''),
 					'validation'=> 'required|numerik' ),
 				)
 			);
@@ -107,14 +107,14 @@ class Reklame extends App_main
 					'name'	=> 'tgl_mulai',
 					'label'	=> 'Mulai Tanggal',
 					'type'	=> 'text',
-					'std'	=> (! is_null($data_obj) ? $data_obj->reklame_range_tgl_mulai : ''),
+					'std'	=> ( $data_obj ? $data_obj->reklame_range_tgl_mulai : ''),
 					'validation'=> 'required|numerik' ),
 				array(
 					'col'	=> '6',
 					'name'	=> 'tgl_selesai',
 					'label'	=> 'Sampai Tanggal',
 					'type'	=> 'text',
-					'std'	=> (! is_null($data_obj) ? $data_obj->reklame_range_tgl_selesai : ''),
+					'std'	=> ( $data_obj ? $data_obj->reklame_range_tgl_selesai : ''),
 					'validation'=> 'required|numerik' ),
 				)
 			);
@@ -123,15 +123,15 @@ class Reklame extends App_main
 			'name'	=> $this->slug.'_reklame_tema',
 			'label'	=> 'Tema/Isi',
 			'type'	=> 'text',
-			'std'	=> (! is_null($data_obj) ? $data_obj->reklame_tema : ''),
-			'validation'=> 'required' );
+			'std'	=> ( $data_obj ? $data_obj->reklame_tema : ''),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_reklame_ket',
 			'label'	=> 'Keterangan',
 			'type'	=> 'textarea',
-			'std'	=> (! is_null($data_obj) ? $data_obj->reklame_ket : ''),
-			'validation'=> 'required' );
+			'std'	=> ( $data_obj ? $data_obj->reklame_ket : ''),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
 		
 		return $fields;
 	}

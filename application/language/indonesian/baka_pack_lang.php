@@ -15,6 +15,12 @@ $lang['status_printed']	= 'Dicetak';
 $lang['status_done']	= 'Selesai';
 $lang['status_deleted']	= 'Dihapus';
 
+$lang['pending']	= 'Tertunda';
+$lang['approved']	= 'Disetujui';
+$lang['printed']	= 'Dicetak';
+$lang['done']		= 'Selesai';
+$lang['deleted']	= 'Dihapus';
+
 $lang['error_browser_jadul']		= 'Web browser anda jadul!';
 
 $lang['auth_incorrect_captcha']		= 'Kode validasi anda salah!.';
@@ -26,7 +32,9 @@ $lang['auth_banned_account']		= 'Akun anda sedang dicekal dengan alasan %s.';
 $lang['auth_inactivated_account']	= 'Akun anda belum aktif.';
 $lang['auth_login_success']			= 'Login berhasil.';
 $lang['auth_username_in_use']		= 'Username tersebut sudah digunakan.';
+$lang['auth_username_not_exists']	= 'Username tersebut tidak terdaftar.';
 $lang['auth_email_in_use']			= 'Email tersebut sudah digunakan.';
+$lang['auth_email_not_exists']		= 'Email tersebut tidak terdaftar.';
 $lang['auth_current_email']			= 'Anda menggunakan email tersebut saat ini.';
 $lang['auth_inapproved_account']	= 'Akun anda belum disetujui.';
 $lang['auth_registration_success']	= 'Proses registrasi pengguna berhasil, mendaftarkan akun baru.';

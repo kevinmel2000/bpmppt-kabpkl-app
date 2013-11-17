@@ -29,19 +29,23 @@ a:active {
 	background-color: #999;
 }
 
+.label-warning,
 .label-pending {
 	background-color: #D9534F;
 }
 
+.label-success,
 .label-approved {
 	background-color: #5CB85C;
 }
 
+.label-primary,
 .label-printed,
 .label-done {
 	background-color: #428BCA;
 }
 
+.label-danger,
 .label-deleted {
 	background-color: #D9534F;
 }
@@ -424,6 +428,22 @@ section#contents-main {
 .panel .panel-footer {
 	padding: 8px 10px;
 	text-shadow: 0 1px 0 #fff;
+	vertical-align: middle;
+}
+
+.panel .panel-footer .info {
+	float: left;
+}
+
+.panel .panel-footer .pagination {
+	float: right;
+}
+
+.panel pre {
+	border-radius: 0;
+	border: 1px solid #fff;
+	line-height: 1.6em;
+	margin-bottom: 0;
 }
 
 #panel-sumary .dl-horizontal {
@@ -451,8 +471,16 @@ section#contents-main {
 	padding-left: 20px;
 }
 
+.alert .alert-title {
+	margin-top: 0;
+	color: inherit;
+	line-height: 1.2em;
+	margin-bottom: 5px;
+}
+
 .form-group {
 	margin-bottom: 10px;
+	vertical-align: middle;
 }
 
 .form-control-static {
@@ -501,6 +529,20 @@ textarea.form-control {
 .form-horizontal .checkbox,
 .form-horizontal .radio-inline,
 .form-horizontal .checkbox-inline {
+	padding-top: 6px;
+	display: block;
+}
+
+.form-horizontal .control-label {
+	line-height: 1.4em;
+}
+
+.form-horizontal .radio,
+.form-horizontal .checkbox,
+.form-horizontal .radio-inline,
+.form-horizontal .checkbox-inline {
+	line-height: 1.6em;
+	vertical-align: middle;
 	padding-top: 4px;
 }
 
@@ -571,21 +613,41 @@ footer .text-muted {
 		border-top: 1px solid #fff;
 		border-left: 0;
 	}
+
+	.form-horizontal .form-group .row [class^="col-"],
+	.form-horizontal .form-group .row [class*=" col-"] {
+		margin-top: 10px;
+	}
+
+	.form-horizontal .form-group .row [class^="col-"]:first-child,
+	.form-horizontal .form-group .row [class*=" col-"]:first-child {
+		margin-top: 0px;
+	}
+
 }
 
 /* Datepicker */
 
-.datepicker .table-condensed > thead > tr > th,
-.datepicker .table-condensed > tbody > tr > td {
-	text-align: center;
-	width: 1.8em;
-	height: 1.8em;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-	padding: 3px 5px; 
+.datepicker {
+	border: 1px solid rgba(0, 0, 0, 0.15);
+	min-width: 150px;
+	font-size: 12px;
 }
 
-.datepicker-dropdown {
-	border: 1px solid rgba(0, 0, 0, 0.15);
+.datepicker table {
+	width: 200px;
+}
+
+
+.datepicker table > thead > tr > th,
+.datepicker table > tbody > tr > td,
+.datepicker table > tfoot > tr > th {
+	font-size: 13px;
+	padding-left: 5px;
+	line-height: 1.2em;
+}
+
+.datepicker table tr td span {
+	height: auto;
+	line-height: 45px;
 }

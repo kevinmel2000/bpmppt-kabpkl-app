@@ -19,52 +19,103 @@ class Internal extends BAKA_Controller
 	{
 		$this->data['panel_title'] = $this->baka_theme->set_title('Properti data SKPD');
 
-		$fields[]	= array('name'	=> 'skpd_name',
-							'type'	=> 'text',
-							'label'	=> 'Nama SKPD',
-							'std'	=> get_app_setting('skpd_name'),
-							'validation'=>'required' );
+		$fields[]	= array(
+			'name'	=> 'skpd_name',
+			'type'	=> 'text',
+			'label'	=> 'Nama SKPD',
+			'std'	=> get_app_setting('skpd_name'),
+			'validation'=>'required' );
 
-		$fields[]	= array('name'	=> 'skpd_address',
-							'type'	=> 'textarea',
-							'label'	=> 'Alamat',
-							'std'	=> get_app_setting('skpd_address'),
-							'validation'=>'required' );
+		$fields[]	= array(
+			'name'	=> 'skpd_addrresses',
+			'type'	=> 'fieldset',
+			'label'	=> 'Data Alamat SKPD' );
 
-		$fields[]	= array('name'	=> 'skpd_city',
-							'type'	=> 'text',
-							'label'	=> 'Kota',
-							'std'	=> get_app_setting('skpd_city'),
-							'validation'=>'required' );
+		$fields[]	= array(
+			'name'	=> 'skpd_address',
+			'type'	=> 'textarea',
+			'label'	=> 'Alamat',
+			'std'	=> get_app_setting('skpd_address'),
+			'validation'=>'required' );
 
-		$fields[]	= array('name'	=> 'skpd_prov',
-							'type'	=> 'text',
-							'label'	=> 'Propinsi',
-							'std'	=> get_app_setting('skpd_prov'),
-							'validation'=>'required' );
+		$fields[]	= array(
+			'name'	=> 'skpd_city',
+			'type'	=> 'text',
+			'label'	=> 'Kota',
+			'std'	=> get_app_setting('skpd_city'),
+			'validation'=>'required' );
 
-		$fields[]	= array('name'	=> 'skpd_telp',
-							'type'	=> 'tel',
-							'label'	=> 'No. Telp.',
-							'std'	=> get_app_setting('skpd_telp'),
-							'validation'=>'required|min_length[6]|max_length[15]' );
+		$fields[]	= array(
+			'name'	=> 'skpd_kab',
+			'type'	=> 'text',
+			'label'	=> 'Lokasi',
+			'std'	=> get_app_setting('skpd_kab'),
+			'validation'=>'required' );
 
-		$fields[]	= array('name'	=> 'skpd_pos',
-							'type'	=> 'text',
-							'label'	=> 'Kode Pos',
-							'std'	=> get_app_setting('skpd_pos'),
-							'validation'=>'numeric|exact_length[5]' );
+		$fields[]	= array(
+			'name'	=> 'skpd_prov',
+			'type'	=> 'text',
+			'label'	=> 'Propinsi',
+			'std'	=> get_app_setting('skpd_prov'),
+			'validation'=>'required' );
 
-		$fields[]	= array('name'	=> 'skpd_web',
-							'type'	=> 'url',
-							'label'	=> 'Alamat Web',
-							'std'	=> get_app_setting('skpd_web')  );
+		$fields[]	= array(
+			'name'	=> 'skpd_contact',
+			'type'	=> 'fieldset',
+			'label'	=> 'Data Kontak SKPD' );
 
-		$fields[]	= array('name'	=> 'skpd_email',
-							'type'	=> 'email',
-							'label'	=> 'Alamat Email',
-							'std'	=> get_app_setting('skpd_email'),
-							'validation'=>'valid_email' );
+		$fields[]	= array(
+			'name'	=> 'skpd_telp',
+			'type'	=> 'tel',
+			'label'	=> 'No. Telp.',
+			'std'	=> get_app_setting('skpd_telp'),
+			'validation'=>'required|min_length[6]|max_length[15]' );
+
+		$fields[]	= array(
+			'name'	=> 'skpd_fax',
+			'type'	=> 'tel',
+			'label'	=> 'No. Telp.',
+			'std'	=> get_app_setting('skpd_fax'),
+			'validation'=>'required|min_length[6]|max_length[15]' );
+
+		$fields[]	= array(
+			'name'	=> 'skpd_pos',
+			'type'	=> 'text',
+			'label'	=> 'Kode Pos',
+			'std'	=> get_app_setting('skpd_pos'),
+			'validation'=>'numeric|exact_length[5]' );
+
+		$fields[]	= array(
+			'name'	=> 'skpd_web',
+			'type'	=> 'url',
+			'label'	=> 'Alamat Web',
+			'std'	=> get_app_setting('skpd_web')  );
+
+		$fields[]	= array(
+			'name'	=> 'skpd_email',
+			'type'	=> 'email',
+			'label'	=> 'Alamat Email',
+			'std'	=> get_app_setting('skpd_email'),
+			'validation'=>'valid_email' );
+
+		$fields[]	= array(
+			'name'	=> 'skpd_leader',
+			'type'	=> 'fieldset',
+			'label'	=> 'Data Pimpinan SKPD' );
+
+		$fields[]	= array(
+			'name'	=> 'skpd_lead_name',
+			'type'	=> 'text',
+			'label'	=> 'Nama Pimpinan',
+			'std'	=> get_app_setting('skpd_lead_name'),
+			'validation'=>'required' );
+
+		$fields[]	= array(
+			'name'	=> 'skpd_lead_nip',
+			'type'	=> 'text',
+			'label'	=> 'Nama Pimpinan',
+			'std'	=> get_app_setting('skpd_lead_nip'),
+			'validation'=>'required' );
 
 		$this->data['panel_body'] = $this->_option_form( $fields );
 
@@ -392,15 +443,126 @@ class Internal extends BAKA_Controller
 		$this->baka_theme->load('pages/panel_form', $this->data);
 	}
 
-	public function prop()
+	private $env_table = 'system_env';
+
+	public function prop( $page = '', $prop_id = NULL )
+	{
+		$this->data['page_link'] = 'admin/internal/prop/';
+
+		$this->data['load_toolbar']	= TRUE;
+
+		switch ( $page ) {
+			case 'form':
+				$this->_prop_form( $prop_id );
+				break;
+
+			case 'hapus':
+				$this->_prop_del( $prop_id );
+				break;
+
+			case 'data':
+			default:
+				$this->_prop_data();
+				break;
+		}
+	}
+
+	private function _prop_data()
+	{
+		$this->data['panel_title']	= $this->baka_theme->set_title('Pengaturan Properti Data');
+
+		$this->data['tool_buttons']['form'] = 'Baru|primary';
+
+		$this->load->library('Baka_pack/baka_grid');
+
+		$query = $this->db->select()
+						  ->from($this->env_table)
+						  ->where('user_id', $this->baka_auth->get_user_id())
+						  ->or_where('user_id', 0);
+
+		$grid = $this->baka_grid->identifier('id')
+								->set_baseurl($this->data['page_link'])
+								->set_column('Key', 'env_key', '45%', FALSE, '<strong>%s</strong>')
+								->set_column('Value', 'env_value', '40%', FALSE, '%s')
+								->set_buttons('form/', 'eye-open', 'primary', 'Lihat data')
+								->set_buttons('hapus/', 'trash', 'danger', 'Hapus data');
+						  
+		$this->data['panel_body'] = $grid->make_table( $query );
+
+		$this->baka_theme->load('pages/panel_data', $this->data);
+	}
+
+	private function _prop_form( $prop_id = NULL )
 	{
 		$this->data['panel_title'] = $this->baka_theme->set_title('Pengaturan Properti Data');
 
-		// $query = $this->db->get('system_opt');
+		$this->data['tool_buttons']['data'] = 'Kembali|default';
 
-		$this->data['panel_body'] = '';
-		
-		$this->baka_theme->load('pages/test_panel', $this->data);
+		$prop = (! is_null($prop_id) ? $this->db->get_where($this->env_table, array('id' => $prop_id) ) : FALSE );
+
+		$fields[]	= array('name'	=> 'app_env_key',
+							'type'	=> 'text',
+							'label'	=> 'Nama Properti',
+							'std'	=> ( $prop ? $prop->env_key : '' ),
+							'validation'=> ( !$prop ? 'required' : '' ) );
+
+		$fields[]	= array('name'	=> 'app_env_value',
+							'type'	=> 'text',
+							'label'	=> 'Nilai Properti',
+							'std'	=> ( $prop ? $prop->env_value : '' ),
+							'validation'=> ( !$prop ? 'required' : '' ) );
+
+		$form = $this->baka_form->add_form( current_url(), 'internal-prop' )
+								->add_fields( $fields );
+
+		if ( $form->validate_submition() )
+		{
+			$return = FALSE;
+
+			$form_data = $form->submited_data();
+
+			if ( $prop )
+			{
+				$return = $this->db->update($this->env_table, array('env_key'	=> $form_data['app_env_value'],
+																	'env_value'	=> $form_data['app_env_value'] ),
+															  array('id'		=> $prop_id ));
+			}
+			else
+			{
+				$return = $this->db->insert($this->env_table, array('user_id'	=> $this->baka_auth->get_user_id(),
+																	'env_key'	=> $form_data['app_env_value'],
+																	'env_value'	=> $form_data['app_env_value'] ));
+			}
+
+			if ( $return === FALSE )
+			{
+				$this->session->set_flashdata('error', array('Terjadi masalah penyimpanan konfigurasi.'));
+				redirect( current_url() );
+			}
+			else
+			{
+				$this->session->set_flashdata('success', array('Properti berhasil disimpan.'));
+				redirect( $this->data['page_link'].'data/' );
+			}
+		}
+
+		$this->data['panel_body'] = $form->render();
+
+		$this->baka_theme->load('pages/panel_form', $this->data);
+	}
+
+	private function _prop_del( $prop_id )
+	{
+		if ( $this->db->delete( $this->env_table, array('id' => $prop_id) ) )
+		{
+			$this->session->set_flashdata('success', array('Properti berhasil dihapus.'));
+			redirect( current_url() );
+		}
+		else
+		{
+			$this->session->set_flashdata('error', array('Terjadi masalah penghapusan konfigurasi.'));
+			redirect( current_url() );
+		}
 	}
 
 	private function _option_form( $fields )
@@ -432,8 +594,6 @@ class Internal extends BAKA_Controller
 				$this->session->set_flashdata('success', array('Konfigurasi berhasil disimpan.'));
 
 			redirect( current_url() );
-
-			// return $form->submited_data();
 		}
 
 		return $form->render();

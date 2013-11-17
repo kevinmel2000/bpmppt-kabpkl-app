@@ -9,7 +9,7 @@ class Maintenance extends BAKA_Controller
 		$this->baka_theme->add_navbar( 'admin_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
 		$this->app_main->admin_navbar( 'admin_sidebar', 'side' );
 
-		$this->baka_theme->set_title('Backup dan Restore Database');
+		$this->baka_theme->set_title('System Maintenance');
 	}
 
 	public function index()
@@ -126,12 +126,18 @@ class Maintenance extends BAKA_Controller
 
 		$this->baka_theme->add_navbar( 'log_sidebar', 'nav-tabs nav-stacked nav-tabs-left', 'panel' );
 
-		foreach (directory_map( APPPATH.'storage/logs/') as $log)
+		$latest = '';
+
+		$log_path = config_item('log_path');
+
+		foreach (directory_map($log_path) as $log)
 		{
 			if ( $log != 'index.html')
 			{
 				$log	= strtolower(str_replace(EXT, '', $log));
 				$label	= 'Tanggal '.format_date(str_replace('log-', '', $log));
+
+				$latest = 'admin/maintenance/syslogs/'.$log;
 
 				$this->baka_theme->add_navmenu( 'log_sidebar', $log, 'link', 'admin/maintenance/syslogs/'.$log, $label, array(), 'panel' );
 			}
@@ -139,9 +145,35 @@ class Maintenance extends BAKA_Controller
 
 		if ( $file != '' )
 		{
-			$this->load->helper('file');
+			if ( !$this->load->is_loaded('file') )
+				$this->load->helper('file');
+			
 			$this->data['panel_title'] .= ' Tanggal '.format_date(str_replace('log-', '', $file));
-			$this->data['panel_body'] = read_file( APPPATH.'storage/logs/'.$file.EXT );
+
+			foreach ( file( $log_path.$file.EXT, FILE_IGNORE_NEW_LINES ) as $log_line )
+			{
+				if ( strlen($log_line) > 0 AND !is_null($log_line) AND $log_line != '' )
+				{
+					$state = explode(' - ', $log_line);
+
+					if ( isset($state[1]) )
+					{
+						$date = explode(' --> ', $state[1]);
+
+						$line[format_datetime($date[0])][] = array(
+							'state'	=> $state[0],
+							'msg'	=> $date[1] );
+					}
+				}
+			}
+
+			$this->data['panel_body'] = $line;
+			// $this->data['panel_body'] = read_file( $log_path.$file.EXT );
+		}
+		else
+		{
+			if ( $latest != '' )
+				redirect( $latest );
 		}
 
 		$this->baka_theme->load('pages/syslogs', $this->data);

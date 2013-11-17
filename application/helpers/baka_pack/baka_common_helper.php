@@ -1,27 +1,12 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-function get_lang_code( $uppercase = FALSE )
+function _x( $lang_line, $replacement = '' )
 {
-	$CI_config =& get_instance()->config;
+	$CI_lang =& get_instance()->lang;
 
-	$output = array_search($CI_config->item('language'), $CI_config->item('language_codes'));
+	$lang_line = ( $CI_lang->line( $lang_line ) ? $CI_lang->line( $lang_line ) : $lang_line );
 
-	return ($uppercase == TRUE) ? strtoupper($output) : $output ;
-}
-
-function get_charset( $uppercase = FALSE )
-{
-	$CI_config =& get_instance()->config;
-
-	$output = $CI_config->item('charset');
-
-	return ($uppercase == TRUE) ? strtoupper($output) : strtolower($output) ;
-}
-
-function is_browser_jadul()
-{
-	$CI =& get_instance();
-	return $CI->baka_theme->is_browser_jadul();
+	return ( $replacement != '' ? sprintf( $lang_line, $replacement) : $lang_line );
 }
 
 function return_bytes($val)
@@ -103,9 +88,51 @@ function second_to_day( $second )
 function baka_echo( $anu )
 {
 	if ( is_array( $anu ) OR is_object( $anu ) )
-		print_pre( $anu );
+		var_dump( $anu );
+		// print_pre( $anu );
 	else
 		echo $anu;
+}
+
+/** --------------------------------------------------------------------
+ * Twitter Bootstrap helper
+ *
+ * Just another simplify to use twbs
+ * --------------------------------------------------------------------- */
+
+/**
+ * TWBS Label
+ * @param  string
+ * @param  string
+ * @param  string
+ * @return string
+ */
+function twb_label( $text, $class = '', $tag = 'span' )
+{
+	return '<'.$tag.' class="label label-'.$class.'">'.$text.'</'.$tag.'>';
+}
+
+/**
+ * TWBS Badge
+ * @param  string
+ * @param  string
+ * @return string
+ */
+function twb_badge( $text, $tag = 'span' )
+{
+	return '<'.$tag.' class="badge">'.$text.'</'.$tag.'>';
+}
+
+/**
+ * TWBS Text
+ * @param  string
+ * @param  string
+ * @param  string
+ * @return string
+ */
+function twb_text( $text, $class = '', $tag = 'span' )
+{
+	return '<'.$tag.' class="text-'.$class.'">'.$text.'</'.$tag.'>';
 }
 
 /* End of file baka_common_helper.php */

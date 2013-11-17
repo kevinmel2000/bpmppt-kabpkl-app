@@ -8,12 +8,10 @@
 	<meta name="author" content="<?php echo get_app_config('app_author') ?>">
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!--[if lt IE 9]>
-		<script charset="utf-8" src="<?php echo base_url('asset/vendor/html5shiv-dist/html5shiv.js') ?>"></script>
-		<script charset="utf-8" src="<?php echo base_url('asset/vendor/respond/respond.min.js') ?>"></script>
+		<script charset="utf-8" src="<?php echo base_url('asset/js/lib/html5shiv.js') ?>"></script>
+		<script charset="utf-8" src="<?php echo base_url('asset/js/lib/respond.min.js') ?>"></script>
 	<![endif]-->
 	<!-- Bootstrap -->
-	<link href="<?php echo base_url('asset/vendor/bootstrap/css/bootstrap.min.css') ?>" type="text/css" rel="stylesheet" media="screen">
-	<link href="<?php echo base_url('asset/css/style.css') ?>" type="text/css" rel="stylesheet" media="screen">
 	<?php echo load_styles() ?>
 	<!-- Rresponsive Icons -->
 	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="<?php echo base_url('asset/img/favicon/icon-144.png') ?>">
@@ -47,7 +45,13 @@
 	</div>
 </footer>
 
-<?php echo get_foot() ?>
+<?php if ( $need_print ) : ?>
+	<applet id="qz" name="QZ Print Plugin" code="qz.PrintApplet.class" width="55" height="55">
+		<param name="jnlp_href" value="qz-print_jnlp.jnlp">
+		<param name="cache_option" value="plugin">
+	</applet>
+<?php endif ?>
 
+<?php echo get_foot() ?>
 </body>
 </html>

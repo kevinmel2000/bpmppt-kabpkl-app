@@ -15,6 +15,8 @@ class Baka_form Extends Baka_lib
 	private $form_attrs = array();
 
 	private $form_data = array();
+	
+	private $form_info = array();
 
 	private $has_fieldset = FALSE;
 
@@ -60,6 +62,14 @@ class Baka_form Extends Baka_lib
 		return $this->add_form( $action, $name, $id, $class, $method, $extra );
 	}
 
+	public function add_info( $title, $messages )
+	{
+		$this->form_info['title']	= $title;
+		$this->form_info['messages']= $messages;
+
+		return $this;
+	}
+
 	public function add_fields( $fields = array() )
 	{
 		$this->fields = $fields;
@@ -84,6 +94,25 @@ class Baka_form Extends Baka_lib
 		$output	= form_open( $this->form_action, $this->form_attrs );
 		
 		$output .= form_alert();
+
+		if ( !empty( $this->form_info ) )
+		{
+			$output .= '<div class="alert alert-info"><h4 class="alert-title">'.$this->form_info['title'].'</h4>';
+
+			if (is_array($this->form_info['messages']))
+			{
+				foreach ( $this->form_info['messages'] as $info_message )
+				{
+					$output .= '<p>'.$info_message.'</p>';
+				}
+			}
+			else
+			{
+				$output .= '<p>'.$this->form_info['messages'].'</p>';
+			}
+
+			$output .= '</div>';
+		}
 
 		foreach( $this->fields as $field )
 		{
@@ -258,8 +287,18 @@ class Baka_form Extends Baka_lib
 
 	private function _form_datepicker( $name, $label, $std = '', $id = '', $class = '', $desc = '', $validation = '', $attr = '', $is_subfield = FALSE )
 	{
-		add_script( 'bt-tultip', 'asset/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js', 'bootstrap' );
-		add_style( 'bt-tultip', 'asset/vendor/bootstrap-datepicker/css/datepicker.css' );
+		$this->baka_theme->add_script( 'bt-datepicker', 'asset/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js', 'bootstrap', '1.1.1' );
+		$this->baka_theme->add_script( 'bt-datepicker-id', 'asset/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.id.js', 'bt-datepicker', '1.1.1' );
+		$this->baka_theme->add_style( 'bt-datepicker', 'asset/vendor/bootstrap-datepicker/css/datepicker.css', 'bootstrap', '1.1.1' );
+		
+		$script   = "$('.bs-datepicker').datepicker({\n"
+				  . "	format: 'dd/mm/yyyy',\n"
+				  . "	language: 'id',\n"
+				  . "	autoclose: true,\n"
+				  . "	todayBtn: true\n"
+				  . "});\n";
+
+		$this->baka_theme->add_script( 'dp-trigger', $script, 'bt-datepicker' );
 
 		$input = form_input( array(
 					'name'	=> $name,
@@ -373,7 +412,9 @@ class Baka_form Extends Baka_lib
 			$field['name']	= $name.'_'.$field['name'];
 			$field['id']	= str_replace('_', '-', 'input-'.$field['name']);
 
-			$field['attr'] = ( isset($field['attr']) ? $field['attr'] : $attr );
+			$field['attr']	= ( isset($field['attr']) ? $field['attr'] : $attr );
+
+			$field['std']	= ( isset($field['std']) ? $field['std'] : '' );
 
 			switch( $field['type'] )
 			{

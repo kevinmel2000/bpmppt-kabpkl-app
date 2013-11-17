@@ -6,8 +6,8 @@
 
 	</div>
 	<div class=" col-md-3">
-		
-	<?php if( $search_form ) :?>
+	
+	<?php if( $search_form ) : ?>
 		<?php echo form_search( current_url() ) ?>
 	<?php endif ?>
 

@@ -11,55 +11,55 @@ class Usaha_pertambangan extends App_main
 		log_message('debug', "#BAKA_modul: Usaha_pertambangan_model Class Initialized");
 	}
 
-	public function form( $data_obj = NULL )
+	public function form( $data_obj = FALSE )
 	{
 		$fields[]	= array(
 			'name'	=> $this->slug.'_rekomendasi',
 			'label'	=> 'Surat Rekomendasi',
 			'type'	=> 'subfield',
-			'attr'	=> (! is_null($data_obj) ? 'disabled' : '' ),
+			'attr'	=> ( $data_obj ? 'disabled' : '' ),
 			'fields'=> array(
 				array(
 					'col'	=> '6',
 					'name'	=> 'nomor',
 					'label'	=> 'Nomor',
 					'type'	=> 'text',
-					'std'	=> (! is_null($data_obj) ? $data_obj->rekomendasi_nomor : ''),
-					'validation'=> 'required' ),
+					'std'	=> ( $data_obj ? $data_obj->rekomendasi_nomor : ''),
+					'validation'=> ( !$data_obj ? 'required' : '' ) ),
 				array(
 					'col'	=> '6',
 					'name'	=> 'tanggal',
 					'label'	=> 'Tanggal',
 					'type'	=> 'datepicker',
-					'std'	=> (! is_null($data_obj) ? $data_obj->rekomendasi_tanggal : ''),
-					'validation'=> 'required',
+					'std'	=> ( $data_obj ? $data_obj->rekomendasi_tanggal : ''),
+					'validation'=> ( !$data_obj ? 'required' : '' ),
 					'callback'=> 'string_to_date' ),
 				));
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_fieldset_data_pemohon',
 			'label'	=> 'Data Pemohon',
-			'attr'	=> (! is_null($data_obj) ? array( 'disabled' => TRUE ) : '' ),
+			'attr'	=> ( $data_obj ? array( 'disabled' => TRUE ) : '' ),
 			'type'	=> 'fieldset' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_pemohon_nama',
 			'label'	=> 'Nama lengkap',
 			'type'	=> 'text',
-			'std'	=> (! is_null($data_obj) ? $data_obj->pemohon_nama : ''),
-			'validation'=> 'required' );
+			'std'	=> ( $data_obj ? $data_obj->pemohon_nama : ''),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_pemohon_alamat',
 			'label'	=> 'Alamat',
 			'type'	=> 'textarea',
-			'std'	=> (! is_null($data_obj) ? $data_obj->pemohon_alamat : ''),
-			'validation'=> 'required' );
+			'std'	=> ( $data_obj ? $data_obj->pemohon_alamat : ''),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_fieldset_tambang',
 			'label'	=> 'Ketentuan Perijinan',
-			'attr'	=> (! is_null($data_obj) ? array( 'disabled' => TRUE ) : '' ),
+			'attr'	=> ( $data_obj ? array( 'disabled' => TRUE ) : '' ),
 			'type'	=> 'fieldset' );
 
 		$fields[]	= array(
@@ -72,15 +72,15 @@ class Usaha_pertambangan extends App_main
 					'name'	=> 'nomor',
 					'label'	=> 'Mulai',
 					'type'	=> 'text',
-					'std'	=> (! is_null($data_obj) ? $data_obj->tambang_waktu_mulai : ''),
-					'validation'=> 'required' ),
+					'std'	=> ( $data_obj ? $data_obj->tambang_waktu_mulai : ''),
+					'validation'=> ( !$data_obj ? 'required' : '' ) ),
 				array(
 					'col'	=> '6',
 					'name'	=> 'tanggal',
 					'label'	=> 'Selesai',
 					'type'	=> 'datepicker',
-					'std'	=> (! is_null($data_obj) ? $data_obj->tambang_waktu_selesai : ''),
-					'validation'=> 'required',
+					'std'	=> ( $data_obj ? $data_obj->tambang_waktu_selesai : ''),
+					'validation'=> ( !$data_obj ? 'required' : '' ),
 					'callback'=> 'string_to_date' ),
 				));
 
@@ -88,27 +88,27 @@ class Usaha_pertambangan extends App_main
 			'name'	=> $this->slug.'_tambang_jns_galian',
 			'label'	=> 'Jenis Galian',
 			'type'	=> 'text',
-			'std'	=> (! is_null($data_obj) ? $data_obj->tambang_jns_galian : ''),
-			'validation'=> 'required' );
+			'std'	=> ( $data_obj ? $data_obj->tambang_jns_galian : ''),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_tambang_luas',
 			'label'	=> 'Luas Area (M<sup>2</sup>)',
 			'type'	=> 'number',
-			'std'	=> (! is_null($data_obj) ? $data_obj->tambang_luas : ''),
-			'validation'=> 'required' );
+			'std'	=> ( $data_obj ? $data_obj->tambang_luas : ''),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_tambang_alamat',
 			'label'	=> 'Alamat Lokasi',
 			'type'	=> 'textarea',
-			'std'	=> (! is_null($data_obj) ? $data_obj->tambang_alamat : ''),
-			'validation'=> 'required' );
+			'std'	=> ( $data_obj ? $data_obj->tambang_alamat : ''),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_fieldset_tambang',
 			'label'	=> 'Ketentuan Perijinan',
-			'attr'	=> (! is_null($data_obj) ? 'disabled' : '' ),
+			'attr'	=> ( $data_obj ? 'disabled' : '' ),
 			'type'	=> 'fieldset' );
 
 		$fields[]	= array(
@@ -116,7 +116,7 @@ class Usaha_pertambangan extends App_main
 			'label'	=> 'Kode Koordinat',
 			'type'	=> 'custom',
 			'value'	=> $this->custom_field(),
-			'validation'=> 'required' );
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		return $fields;
 	}

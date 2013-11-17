@@ -13,7 +13,7 @@ class BAKA_Controller extends CI_Controller
 	{
 		parent::__construct();
 
-		if ( is_browser_jadul() AND !$this->input->is_cli_request() )
+		if ( is_browser_jadul() AND !(php_sapi_name() === 'cli' OR defined('STDIN')) )
 		{
 			log_message('error', "error_browser_jadul");
 			show_error(array('Peramban yang anda gunakan tidak memenuhi syarat minimal penggunaan aplikasi ini.','Silahkan gunakan '.anchor('http://www.mozilla.org/id/', 'Mozilla Firefox', 'target="_blank"').' atau '.anchor('https://www.google.com/intl/id/chrome/browser/', 'Google Chrome', 'target="_blank"').' biar lebih GREGET!'), 500, 'error_browser_jadul');
@@ -25,6 +25,8 @@ class BAKA_Controller extends CI_Controller
 		$this->data['search_form']	= FALSE;
 		$this->data['single_page']	= TRUE;
 		$this->data['form_page']	= FALSE;
+		
+		$this->data['need_print']	= FALSE;
 
 		$this->data['tool_buttons'] = array();
 
@@ -55,7 +57,7 @@ class BAKA_Controller extends CI_Controller
 			}
 
 		}
-		else if ( uri_string() != 'login' AND uri_string() != 'resend' AND uri_string() != 'forgot' AND strpos(current_url(), 'notice') === FALSE )
+		else if ( uri_string() != 'login' AND uri_string() != 'resend' AND uri_string() != 'forgot' AND strpos(current_url(), 'auth') === FALSE AND strpos(current_url(), 'notice') === FALSE )
 		{
 			if ( ! $this->baka_auth->is_logged_in() AND ! $this->baka_auth->is_logged_in(FALSE) )
 				redirect( 'login' );

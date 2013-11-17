@@ -3,7 +3,7 @@
 class App_data extends CI_Model
 {
 	// Direktori penyimpanan modul
-	private $_data_dir = 'perijinan/';
+	public $modul_dir 			= 'perijinan/';
 
 	// Nama table
 	private $_data_table		= 'data';
@@ -15,6 +15,8 @@ class App_data extends CI_Model
 	// Daftar tipe modul
 	private $_type = array();
 
+	private $modul;
+
 	private $_messages = array();
 
 	// Default constructor class
@@ -24,57 +26,79 @@ class App_data extends CI_Model
 
 		$this->_list = $this->get_type_list();
 
-		$this->initialize();
+		$this->modul = new stdClass();
 
+		foreach ( $this->_list as $data )
+		{
+			if (!$this->load->is_loaded( $this->modul_dir.$data ) )
+				$this->load->model( $this->modul_dir.$data );
+
+			$this->modul->$data = array(
+				'nama'	=> $this->$data->nama,
+				'slug'	=> $this->$data->slug,
+				'kode'	=> (property_exists($this->$data, 'kode') ? $this->$data->kode : NULL),
+				);
+		}
+
+		// print_pre( $this->modul );
 		log_message('debug', "#Baka_pack: Application data model Class Initialized");
 	}
 
-	// Loading moduls
-	public function initialize()
+	/**
+	 * Get modul data
+	 * @param  string
+	 * @return mixed
+	 */
+	public function get_modul( $modul_name )
 	{
-		foreach ( $this->_list as $data )
-		{
-			if (!$this->load->is_loaded( $this->_data_dir.$data ) )
-				$this->load->model( $this->_data_dir.$data );
-
-			$this->_type[$data]['slug'] = ( property_exists($this->$data, 'slug') ? $this->$data->slug : NULL );
-			$this->_type[$data]['code'] = ( property_exists($this->$data, 'kode') ? $this->$data->kode : NULL );
-			$this->_type[$data]['name'] = ( property_exists($this->$data, 'nama') ? $this->$data->nama : NULL );
-		}
+		return $this->modul->$modul_name;
 	}
 
 	/**
 	 * Mendapatkan nama model
 	 * 
-	 * @param string $data_model
+	 * @param string $modul_name
 	 */
-	public function get_name( $data_model )
+	public function get_name( $modul_name )
 	{
-		return $this->_type[$data_model]['name'];
+		return $this->get_modul( $modul_name )['nama'];
 	}
 
 	// get modul code
-	public function get_code( $data_model )
+	public function get_code( $modul_name )
 	{
-		return $this->_type[$data_model]['code'];
+		return $this->get_modul( $modul_name )['kode'];
 	}
 
 	// get modul slug
-	public function get_slug( $data_model )
+	public function get_slug( $modul_name )
 	{
-		return $this->_type[$data_model]['slug'];
+		return $this->get_modul( $modul_name )['slug'];
+	}
+
+	public function get_label( $modul )
+	{
+		$modul	= $this->get_modul( $modul );
+		$output	= $modul['nama'];
+
+		if ( ! is_null($modul['kode']))
+			$output .= ' ('.$modul['kode'].')';
+
+		return $output;
 	}
 
 	// get moduls list from dir
 	public function get_type_list()
 	{
-		$this->load->helper('directory');
+		if ( ! $this->load->is_loaded('directory') )
+			$this->load->helper('directory');
+
 		$ret = array();
 
-		foreach (directory_map( APPPATH.'models/'.$this->_data_dir) as $data_model)
+		foreach (directory_map( APPPATH.'models/'.$this->modul_dir) as $modul_name)
 		{
-			if (substr($data_model, 0, 1) !== '_')
-				$ret[] = strtolower(str_replace(EXT, '', $data_model));
+			if (substr($modul_name, 0, 1) !== '_')
+				$ret[] = strtolower(str_replace(EXT, '', $modul_name));
 		}
 
 		return $ret;
@@ -85,99 +109,12 @@ class App_data extends CI_Model
 	{
 		$ret = array();
 
-		foreach ( $this->_list as $data_model )
+		foreach ( $this->_list as $modul_name )
 		{
-			$name = $this->get_name( $data_model );
-
-			if ( $this->get_code( $data_model ) !== NULL)
-				$name .= ' ('.$this->get_code( $data_model ).')';
-
-			$ret[$data_model] = $name;
+			$ret[$modul_name] = $this->get_label($modul_name);
 		}
 
 		return $ret;
-	}
-
-	// get all moduls form
-	public function get_forms()
-	{
-		foreach ( $this->_list as $data )
-		{
-			$output[$data] = $this->get_single_form( $data );
-		}
-
-		return $output;
-	}
-
-	// get single modul form
-	public function get_form( $data_model, $data_id = NULL, $link )
-	{
-		$data_type	= $this->get_slug( $data_model );
-		$data_obj	= ( $data_id != '' ? $this->app_data->get_fulldata_by_id( $data_id ) : NULL );
-
-		if ( ! is_null($data_id) )
-		{
-			$status	= $data_obj->status;
-			$date	= ( $status != 'pending' ? ' pada: '.format_datetime( $data_obj->{$status.'_on'} ) : '' );
-
-			$fields[]	= array(
-				'name'	=> $data_type.'_pemohon_jabatan',
-				'label'	=> 'Status Pengajuan',
-				'type'	=> 'static',
-				'std'	=> '<span class="label label-'.$status.'">'._x('status_'.$status).'</span>'.$date );
-		}
-
-		$fields[]	= array(
-			'name'	=> $data_type.'_surat',
-			'label'	=> 'Nomor &amp; Tanggal Permohonan',
-			'type'	=> 'subfield',
-			'attr'	=> ( ! is_null($data_id) ? 'disabled' : ''),
-			'fields'=> array(
-				array(
-					'col'	=> '6',
-					'name'	=> 'nomor',
-					'label'	=> 'Nomor',
-					'type'	=> 'text',
-					'std'	=> ( ! is_null($data_id) ? $data_obj->surat_nomor : ''),
-					'validation'=> 'required' ),
-				array(
-					'col'	=> '6',
-					'name'	=> 'tanggal',
-					'label'	=> 'Tanggal',
-					'type'	=> 'datepicker',
-					'std'	=> ( ! is_null($data_id) ? format_date( $data_obj->surat_tanggal ) : ''),
-					'validation'=> 'required',
-					'callback'=> 'string_to_date' ),
-				)
-			);
-
-		$form = $this->baka_form->add_form( current_url(), $data_model )
-								->add_fields( array_merge( $fields, $this->$data_model->form( $data_obj )) );
-
-		if ( $data_id != '' )
-			$form->disable_buttons();
-
-		if ( $form->validate_submition() )
-		{
-			$form_data	= $form->submited_data();
-
-			if ( $data = $this->create_data( $data_type, $form_data ) )
-			{
-				$this->session->set_flashdata( 'success', $this->_messages['success'] );
-			}
-			else
-			{
-				$this->session->set_flashdata( 'error', $this->_messages['error'] );
-			}
-
-			return redirect( $link.'/'.$data );
-		}
-		else
-		{
-			$this->session->set_flashdata( 'error', $form->validation_errors() );
-
-			return $form->render();
-		}
 	}
 
 	// get all moduls grid
@@ -192,102 +129,39 @@ class App_data extends CI_Model
 	}
 
 	// get single modul grid
-	public function get_table( $data_model = '', $page_link = '' )
+	public function get_table( $modul_name = '', $page_link = '' )
 	{
-		$data_type = $this->get_slug( $data_model );
+		$modul_slug = $this->get_slug($modul_name);
 
 		switch ( $this->uri->segment(6) ) {
 			case 'status':
-				$query = $this->get_data_by_status( $this->uri->segment(7), $data_type );
+				$query = $this->get_data_by_status( $this->uri->segment(7), $modul_slug );
 				break;
 			
 			case 'page':
-				$query = $this->get_data_by_type( $data_type );
+				$query = $this->get_data_by_type( $modul_slug );
 				break;
 			
 			default:
-				$query = $this->get_data_by_type( $data_type );
+				$query = $this->get_data_by_type( $modul_slug );
 				break;
 		}
 
-		if ( ! $this->load->is_loaded('table'))
-			$this->load->library('table');
+		$this->load->library('Baka_pack/baka_grid');
 
-		if ( $query->num_rows() > 0 )
-		{
-			$head1 = array( 'data'	=> 'ID',
-							'class'	=> 'head-id',
-							'width'	=> '5%' );
+		$grid = $this->baka_grid->identifier('id')
+								->set_baseurl($page_link)
+								->set_column('Pengajuan', 'no_agenda, callback_format_datetime:created_on', '30%', FALSE, '<strong>%s</strong><br><small class="text-muted">Diajukan pada: %s</small>')
+								->set_column('Pemohon', 'petitioner', '40%', FALSE, '<strong>%s</strong>')
+								->set_column('Status', 'status, callback__x:status', '10%', FALSE, '<span class="label label-%s">%s</span>')
+								->set_buttons('form/', 'eye-open', 'primary', 'Lihat data')
+								->set_buttons('hapus/', 'trash', 'danger', 'Hapus data');
 
-			$head2 = array( 'data'	=> 'Pengajuan',
-							'class'	=> 'head-value',
-							'width'	=> '30%' );
-
-			$head3 = array( 'data'	=> 'Pemohon',
-							'class'	=> 'head-value',
-							'width'	=> '40%' );
-
-			$head4 = array( 'data'	=> 'Status',
-							'class'	=> 'head-status',
-							'width'	=> '10%' );
-
-			$head5 = array( 'data'	=> 'Aksi',
-							'class'	=> 'head-action',
-							'width'	=> '15%' );
-
-			$this->table->set_heading( $head1, $head2, $head3, $head4, $head5);
-
-			foreach ( $query->result() as $row )
-			{
-				$col_1 = array( 'data'	=> anchor($page_link.'form/'.$row->id, '#'.$row->id),
-								'class'	=> 'data-id',
-								'width'	=> '5%' );
-
-				$col_2 = array( 'data'	=> '<strong>'.anchor($page_link.'form/'.$row->id, 'No. '.$row->no_agenda).'</strong><br><small class="text-muted">Diajukan pada: '.format_datetime($row->created_on).'</small>',
-								'class'	=> 'data-value',
-								'width'	=> '30%' );
-
-				$status = $row->status;
-
-				$col_3 = array( 'data'	=> '<strong>'.$row->petitioner.'</strong>'.( $status != 'pending' ? '<br><small class="text-muted">'._x('status_'.$status).' pada: '.format_datetime( $row->{$status.'_on'} ).'</small>' : '' ),
-								'class'	=> 'data-value',
-								'width'	=> '40%' );
-
-				$col_4 = array( 'data'	=> '<span class="label label-'.$status.'">'._x('status_'.$status).'</span>',
-								'class'	=> '',
-								'width'	=> '10%' );
-
-				$class = 'btn btn-sm';
-
-				$col_5 = array( 'data'	=> '<div class="btn-group btn-group-justified">'
-											.anchor($page_link.'form/'.$row->id, '<span class="glyphicon glyphicon-eye-open">', 'title="Lihat data" class="bs-tooltip btn-primary '.$class.'"' )
-											.anchor($page_link.'delete/'.$row->id, '<span class="glyphicon glyphicon-trash">', 'title="Hapus data" class="bs-tooltip btn-danger '.$class.'"')
-											.'</div>',
-								'class'	=> 'data-action',
-								'width'	=> '15%' );
-
-				$this->table->add_row( $col_1, $col_2, $col_3, $col_4, $col_5 );
-			}
-		}
-		else
-		{
-			$this->table->add_row( array( 
-				'data'		=> '<span class="text-muted text-center">'.$this->get_name( $data_model ).' belum memiliki data apapun</span>',
-				'class'		=> 'active',
-				'colspan'	=> 5 ));
-		}
-
-		$this->table->set_template( array('table_open' => '<table class="table table-striped table-hover table-condensed">' ) );
-
-		$generate = $this->table->generate();
-
-		$this->table->clear();
-
-		return $generate;
+		return $grid->make_table( $query );
 		// return $query;
 	}
 
-	public function get_print( $data_type, $data_id )
+	public function get_print( $modul_name, $data_id )
 	{
 		$data['skpd_name']		= get_app_setting('skpd_name');
 		$data['skpd_address']	= get_app_setting('skpd_address');
@@ -326,61 +200,61 @@ class App_data extends CI_Model
 	}
 
 	// get data by type
-	public function get_data_by_type( $data_type )
+	public function get_data_by_type( $modul_name )
 	{
-		return $this->db->get_where($this->_data_table, array('type' => $data_type));
+		return $this->db->get_where($this->_data_table, array('type' => $modul_name));
 	}
 
 	// get data by label
-	public function get_data_by_status( $data_status, $data_type = '' )
+	public function get_data_by_status( $data_status, $modul_name = '' )
 	{
 		if ( $data_status != 'semua' )
 			$where['status'] = $data_status;
 
-		if ($data_type != '')
-			$where['type'] = $data_type;
+		if ($modul_name != '')
+			$where['type'] = $modul_name;
 
 		return $this->db->get_where( $this->_data_table, $where );
 	}
 
 	// get data by author
-	public function get_data_by_author( $data_created_by, $data_type = '' )
+	public function get_data_by_author( $data_created_by, $modul_name = '' )
 	{
 		$where['created_by'] = $data_created_by;
 
-		if ($data_type != '')
-			$where['type'] = $data_type;
+		if ($modul_name != '')
+			$where['type'] = $modul_name;
 
 		return $this->_get_where( $this->_data_table, $where );
 	}
 
 	// get data by label
-	public function get_data_by_label( $data_label, $data_type = '' )
+	public function get_data_by_label( $data_label, $modul_name = '' )
 	{
 		$where['label'] = $data_label;
 
-		if ($data_type != '')
-			$where['type'] = $data_type;
+		if ($modul_name != '')
+			$where['type'] = $modul_name;
 
 		return $this->_get_where( $this->_data_table, $where );
 	}
 
 	// get data by petitioner
-	public function get_data_by_petitioner( $data_petitioner, $data_type = '' )
+	public function get_data_by_petitioner( $data_petitioner, $modul_name = '' )
 	{
 		$where['petitioner'] = $data_petitioner;
 
-		if ($data_type != '')
-			$where['type'] = $data_type;
+		if ($modul_name != '')
+			$where['type'] = $modul_name;
 
 		return $this->_get_where( $this->_data_table, $where );
 	}
 
 	// find data by petitioner
-	public function find_data_by_petitioner( $data_petitioner, $data_type = '' )
+	public function find_data_by_petitioner( $data_petitioner, $modul_name = '' )
 	{
-		if ($data_type != '')
-			$this->db->where('type', $data_type);
+		if ($modul_name != '')
+			$this->db->where('type', $modul_name);
 
 		$this->db->like('petitioner', $data_petitioner);
 
@@ -388,9 +262,9 @@ class App_data extends CI_Model
 	}
 
 	// find datameta by key
-	public function find_data_by_meta_value( $data_type, $datameta_key, $datameta_value )
+	public function find_data_by_meta_value( $modul_name, $datameta_key, $datameta_value )
 	{
-		return $this->db->where('data_type', $data_type)
+		return $this->db->where('data_type', $modul_name)
 						->where('meta_key', $datameta_key)
 						->like('meta_value', $datameta_value)
 						->group_by('data_id')
@@ -398,9 +272,9 @@ class App_data extends CI_Model
 	}
 
 	// count data
-	public function count_data( $data_type = '' )
+	public function count_data( $modul_name = '' )
 	{
-		if ( $data_type == '' )
+		if ( $modul_name == '' )
 		{
 			foreach ( $this->_list as $data )
 			{
@@ -409,7 +283,7 @@ class App_data extends CI_Model
 		}
 		else
 		{
-			$out = $this->db->where('type', $this->get_slug( $data_type ))
+			$out = $this->db->where('type', $this->get_slug($modul_name))
 							  ->count_all_results($this->_data_table);
 		}
 
@@ -417,15 +291,15 @@ class App_data extends CI_Model
 	}
 
 	// get datameta
-	public function get_datameta( $data_id, $data_type )
+	public function get_datameta( $data_id, $modul_name )
 	{
-		if ($query = $this->db->get_where( $this->_datameta_table, array( 'data_id' => $data_id, 'data_type' => $data_type ) ))
+		if ($query = $this->db->get_where( $this->_datameta_table, array( 'data_id' => $data_id, 'data_type' => $modul_name ) ))
 		{
 			$obj	= new stdClass;
 
 			foreach ( $query->result() as $row )
 			{
-				$meta_key = str_replace($data_type.'_', '', $row->meta_key);
+				$meta_key = str_replace($modul_name.'_', '', $row->meta_key);
 				$obj->{$meta_key} = $row->meta_value;
 			}
 
@@ -435,14 +309,14 @@ class App_data extends CI_Model
 		return FALSE;
 	}
 
-	public function create_data( $data_type, $form_data )
+	public function create_data( $modul_name, $form_data )
 	{
-		$data['no_agenda']	= $form_data[$data_type.'_surat_nomor'];
+		$data['no_agenda']	= $form_data[$modul_name.'_surat_nomor'];
 		$data['created_on']	= string_to_datetime();
 		$data['created_by']	= $this->baka_auth->get_user_id();
-		$data['type']		= $data_type;
+		$data['type']		= $modul_name;
 		$data['label']		= '-';
-		$data['petitioner']	= $form_data[$data_type.'_pemohon_nama'];
+		$data['petitioner']	= $form_data[$modul_name.'_pemohon_nama'];
 		$data['status']		= 'pending';
 		$data['desc']		= '';
 
@@ -450,7 +324,7 @@ class App_data extends CI_Model
 		{
 			$data_id = $this->db->insert_id();
 
-			if ( $this->_create_datameta( $data_id, $data_type, $form_data ) )
+			if ( $this->_create_datameta( $data_id, $modul_name, $form_data ) )
 			{
 				$this->_messages['success'] = 'Permohonan dari saudara/i '.$form_data[$petitioner].' berhasil disimpan.';
 
@@ -465,11 +339,11 @@ class App_data extends CI_Model
 		}
 	}
 
-	public function delete_data( $data_id, $data_type )
+	public function delete_data( $data_id, $modul_name )
 	{
-		if ( $data = $this->db->delete( $this->_data_table, array( 'id' => $data_id, 'type' => $this->get_slug( $data_type ) ) ) )
+		if ( $data = $this->db->delete( $this->_data_table, array( 'id' => $data_id, 'type' => $this->get_slug($modul_name) ) ) )
 		{
-			if ( $this->db->delete( $this->_datameta_table, array( 'data_id' => $data_id, 'data_type' => $data_type ) ) )
+			if ( $this->db->delete( $this->_datameta_table, array( 'data_id' => $data_id, 'data_type' => $modul_name ) ) )
 			{
 				$this->_messages['success'] = 'Data dengan id #'.$data_id.' berhasil dihapus.';
 
@@ -501,11 +375,11 @@ class App_data extends CI_Model
 	 * @param	int
 	 * @return	bool
 	 */
-	public function update_datameta( $data_id, $data_type, $meta_key, $meta_value )
+	public function update_datameta( $data_id, $modul_name, $meta_key, $meta_value )
 	{
 		$this->db->update(  $this->_datameta_table,
 							array( 'meta_value' => $meta_value ),
-							array( 'data_id' => $data_id, 'data_type' => $data_type, 'meta_key' => $meta_key ) );
+							array( 'data_id' => $data_id, 'data_type' => $modul_name, 'meta_key' => $meta_key ) );
 	}
 
 	/**
@@ -514,7 +388,7 @@ class App_data extends CI_Model
 	 * @param	int
 	 * @return	bool
 	 */
-	private function _create_datameta( $data_id, $data_type, $meta_fields )
+	private function _create_datameta( $data_id, $modul_name, $meta_fields )
 	{
 		$i = 0;
 		$meta_data = array();
@@ -522,7 +396,7 @@ class App_data extends CI_Model
 		foreach ($meta_fields as $meta_key => $meta_value)
 		{
 			$meta_data[$i]['data_id']	= $data_id;
-			$meta_data[$i]['data_type']	= $data_type;
+			$meta_data[$i]['data_type']	= $modul_name;
 			$meta_data[$i]['meta_key']	= $meta_key;
 			$meta_data[$i]['meta_value']= $meta_value;
 

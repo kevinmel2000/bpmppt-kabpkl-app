@@ -91,6 +91,30 @@ function load_styles()
 	return "<!-- Additional Stylesheets -->\n".$CI_theme->load_styles();
 }
 
+function get_lang_code( $uppercase = FALSE )
+{
+	$CI_config =& get_instance()->config;
+
+	$output = array_search($CI_config->item('language'), $CI_config->item('language_codes'));
+
+	return ($uppercase == TRUE) ? strtoupper($output) : $output ;
+}
+
+function get_charset( $uppercase = FALSE )
+{
+	$CI_config =& get_instance()->config;
+
+	$output = $CI_config->item('charset');
+
+	return ($uppercase == TRUE) ? strtoupper($output) : strtolower($output) ;
+}
+
+function is_browser_jadul()
+{
+	$CI =& get_instance();
+	return $CI->baka_theme->is_browser_jadul();
+}
+
 
 /* End of file assets_helper.php */
 /* Location: ./application/helpers/aplikasi/assets_helper.php */

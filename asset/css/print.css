@@ -1,0 +1,28 @@
+#tinymce {line-height: 1.2em; font-size: 15px;}
+
+body {
+	line-height: 1.2em;
+	margin: 0;
+	padding: 0;
+}
+
+ol, ul {padding-left:30px}
+
+table { border-collapse:collapse;  border:0; width: 100%; }
+
+tr.t-header td { border-bottom:2px solid #000; }
+
+tr.t-header p {
+	margin-bottom: 1em;
+}
+
+td {border: 0; padding:0 5px; line-height: inherit; font-size:inherit; vertical-align:top;}
+
+span {font-size: inherit;}
+
+p, ol, ul {
+	line-height: 1.4em;
+	margin: 0 0 0.4em;
+	font-family: "Times New Roman";
+	font-size: 10pt;
+}

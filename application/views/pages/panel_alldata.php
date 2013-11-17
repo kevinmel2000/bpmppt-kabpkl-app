@@ -16,10 +16,6 @@
 	</div>
 	
 	<?php echo $panel_body[$slug] ?>
-
-	<div class="panel-footer">
-		<span class="text-muted"><?php echo get_counter_text( $counter[$slug] ) ?></span>
-	</div>
 </div>
 
 <?php endif; endforeach; ?>

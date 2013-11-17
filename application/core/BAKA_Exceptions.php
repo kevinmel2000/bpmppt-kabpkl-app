@@ -9,13 +9,17 @@
  */
 class BAKA_Exceptions extends CI_Exceptions
 {
-	protected $_template_path;
+	private $_template_path;
+
+	private $_is_cli;
 
 	function __construct()
 	{
 		parent::__construct();
 
 		$this->_template_path = APPPATH.'views/errors/';
+
+		$this->_is_cli = (php_sapi_name() === 'cli' OR defined('STDIN'));
 
 		// $this->load =& load_class('Loader', 'core');
 
@@ -38,7 +42,7 @@ class BAKA_Exceptions extends CI_Exceptions
 		$heading = $heading;
 		$message = '<p>'.implode('</p><p>', ( ! is_array($message)) ? array($message) : $message).'</p>';
 
-		$alt = (php_sapi_name() === 'cli' OR defined('STDIN')) ? '-cli' : '' ;
+		$alt = ( $this->_is_cli ) ? '-cli' : '' ;
 
 		if (defined('PHPUNIT_TEST'))
 			throw new PHPUnit_Framework_Exception($message, $status_code);
@@ -74,8 +78,6 @@ class BAKA_Exceptions extends CI_Exceptions
 
 		$filepath = str_replace("\\", "/", $filepath);
 
-		$this->input =& load_class('input', 'core');
-
 		// For safety reasons we do not show the full file path
 		if (FALSE !== strpos($filepath, '/'))
 		{
@@ -83,7 +85,7 @@ class BAKA_Exceptions extends CI_Exceptions
 			$filepath = $x[count($x)-2].'/'.end($x);
 		}
 
-		$alt = ( $this->input->is_cli_request() ? '_cli' : '_php' );
+		$alt = ( $this->_is_cli ? '_cli' : '_php' );
 
 		if (ob_get_level() > $this->ob_level + 1)
 			ob_end_flush();

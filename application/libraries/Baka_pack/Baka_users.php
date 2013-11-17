@@ -32,10 +32,17 @@ class Baka_users extends Baka_lib
 		return $this->users_table;
 	}
 
+	/**
+	 * Get all users/user data and everything that related with it, like roles and permission
+	 * @param	int		$user_id	leave it null and you'll got all users that you have,
+	 *                      		or give it your user id and you got all related table with that id.
+	 * @return	object				userobject
+	 */
 	public function get_users( $user_id = NULL )
 	{
 		$query = $this->db->select("a.id, b.name fullname, a.username, b.gender, a.email")
 						  ->select("a.activated, a.banned, a.ban_reason, a.approved, a.last_ip, a.last_login, a.created, a.modified")
+						  ->select("GROUP_CONCAT(DISTINCT d.role_id) role_id")
 						  ->select("GROUP_CONCAT(DISTINCT d.role) role_name")
 						  ->select("GROUP_CONCAT(DISTINCT d.full) role_fullname")
 						  ->from($this->users_table.' a')
@@ -51,6 +58,34 @@ class Baka_users extends Baka_lib
 		return $query->get();
 	}
 
+	public function get_groups( $group_id = NULL )
+	{
+		$query = $this->db->select("a.role_id id, a.role name, a.full fullname, a.default")
+						  ->select("group_concat(distinct c.permission_id) perm_id")
+						  ->from($this->roles_table.' a')
+						  ->join($this->role_perms_table.' b','b.role_id = a.role_id', 'inner')
+						  ->join($this->permissions_table.' c','c.permission_id = b.permission_id', 'inner');
+		
+		if ( ! is_null( $group_id ) )
+			$query->where('a.role_id', $group_id);
+		else
+			$query->group_by('a.role_id');
+
+		return $query->get();
+	}
+
+	public function get_perms()
+	{
+		$query = $this->db->select("parent")
+						  ->select("group_concat(distinct permission_id) perm_id")
+						  ->select("group_concat(distinct permission) perm_name")
+						  ->select("group_concat(distinct description) perm_desc")
+						  ->from($this->permissions_table)
+						  ->group_by('parent');
+
+		return $query->get();
+	}
+
 	public function get_roles_query()
 	{
 		return $this->db->get( $this->roles_table );
@@ -58,11 +93,13 @@ class Baka_users extends Baka_lib
 
 	public function get_perms_query()
 	{
-		return $this->db->get( $this->permissions_table );
+		// return $this->db->query( "SELECT * FROM {$this->permissions_table}" );
+		return $this->db->select('*')->from( $this->permissions_table );
 	}
 	
 	/**
 	 * Get user profiles data
+	 * @deprecated use get_users($user_id) instead
 	 */
 	public function get_user_profiles($user_id)
 	{

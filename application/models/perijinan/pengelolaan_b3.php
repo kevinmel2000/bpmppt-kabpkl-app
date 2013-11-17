@@ -11,68 +11,68 @@ class Pengelolaan_b3 extends App_main
 		log_message('debug', "#BAKA_modul: Pengelolaan_b3_model Class Initialized");
 	}
 
-	public function form( $data_obj = NULL )
+	public function form( $data_obj = FALSE )
 	{
 		$fields[]	= array(
 			'name'	=> $this->slug.'_fieldset_data_pemohon',
 			'label'	=> 'Data Pemohon',
-			'attr'	=> (! is_null($data_obj) ? 'disabled' : '' ),
+			'attr'	=> ( $data_obj ? 'disabled' : '' ),
 			'type'	=> 'fieldset' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_pemohon_nama',
 			'label'	=> 'Nama lengkap',
 			'type'	=> 'text',
-			'std'	=> (! is_null($data_obj) ? $data_obj->pemohon_nama : ''),
-			'validation'=> 'required' );
+			'std'	=> ( $data_obj ? $data_obj->pemohon_nama : ''),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_pemohon_alamat',
 			'label'	=> 'Alamat',
 			'type'	=> 'textarea',
-			'std'	=> (! is_null($data_obj) ? $data_obj->pemohon_alamat : ''),
-			'validation'=> 'required' );
+			'std'	=> ( $data_obj ? $data_obj->pemohon_alamat : ''),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_pemohon_jabatan',
 			'label'	=> 'Jabatan',
 			'type'	=> 'text',
-			'std'	=> (! is_null($data_obj) ? $data_obj->pemohon_jabatan : ''),
-			'validation'=> 'required' );
+			'std'	=> ( $data_obj ? $data_obj->pemohon_jabatan : ''),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_fieldset_data_usaha',
 			'label'	=> 'Data Perusahaan',
-			'attr'	=> (! is_null($data_obj) ? 'disabled' : '' ),
+			'attr'	=> ( $data_obj ? 'disabled' : '' ),
 			'type'	=> 'fieldset' );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_usaha_nama',
 			'label'	=> 'Nama Perusahaan',
 			'type'	=> 'text',
-			'std'	=> (! is_null($data_obj) ? $data_obj->usaha_nama : ''),
-			'validation'=> 'required' );
+			'std'	=> ( $data_obj ? $data_obj->usaha_nama : ''),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_usaha_bidang',
 			'label'	=> 'Bidang usaha',
 			'type'	=> 'text',
-			'std'	=> (! is_null($data_obj) ? $data_obj->usaha_bidang : ''),
-			'validation'=> 'required' );
+			'std'	=> ( $data_obj ? $data_obj->usaha_bidang : ''),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_usaha_alamat',
 			'label'	=> 'Alamat Kantor',
 			'type'	=> 'textarea',
-			'std'	=> (! is_null($data_obj) ? $data_obj->usaha_alamat : ''),
-			'validation'=> 'required' );
+			'std'	=> ( $data_obj ? $data_obj->usaha_alamat : ''),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_usaha_lokasi',
 			'label'	=> 'Lokasi Usaha',
 			'type'	=> 'textarea',
-			'std'	=> (! is_null($data_obj) ? $data_obj->usaha_lokasi : ''),
-			'validation'=> 'required' );
+			'std'	=> ( $data_obj ? $data_obj->usaha_lokasi : ''),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_usaha_kontak',
@@ -84,13 +84,13 @@ class Pengelolaan_b3 extends App_main
 					'name'	=> 'telp',
 					'label'	=> 'No. Telpon',
 					'type'	=> 'tel',
-					'std'	=> (! is_null($data_obj) ? $data_obj->usaha_kontak_telp : '') ),
+					'std'	=> ( $data_obj ? $data_obj->usaha_kontak_telp : '') ),
 				array(
 					'col'	=> '6',
 					'name'	=> 'fax',
 					'label'	=> 'No. Fax',
 					'type'	=> 'tel',
-					'std'	=> (! is_null($data_obj) ? $data_obj->usaha_kontak_fax : '') ),
+					'std'	=> ( $data_obj ? $data_obj->usaha_kontak_fax : '') ),
 				)
 			);
 
@@ -104,29 +104,29 @@ class Pengelolaan_b3 extends App_main
 					'name'	=> 'fungsi',
 					'label'	=> 'Keterangan fungsi',
 					'type'	=> 'text',
-					'std'	=> (! is_null($data_obj) ? $data_obj->usaha_tps_fungsi : ''),
-					'validation'=> 'required'),
+					'std'	=> ( $data_obj ? $data_obj->usaha_tps_fungsi : ''),
+					'validation'=> ( !$data_obj ? 'required' : '' ) ),
 				array(
 					'col'	=> '3',
 					'name'	=> 'ukuran',
 					'label'	=> 'Ukuran',
 					'type'	=> 'text',
-					'std'	=> (! is_null($data_obj) ? $data_obj->usaha_tps_ukuran : ''),
-					'validation'=> 'required'),
+					'std'	=> ( $data_obj ? $data_obj->usaha_tps_ukuran : ''),
+					'validation'=> ( !$data_obj ? 'required' : '' ) ),
 				array(
 					'col'	=> '3',
 					'name'	=> 'koor_s',
 					'label'	=> 'Koor. S',
 					'type'	=> 'text',
-					'std'	=> (! is_null($data_obj) ? $data_obj->usaha_tps_koor_s : ''),
-					'validation'=> 'required'),
+					'std'	=> ( $data_obj ? $data_obj->usaha_tps_koor_s : ''),
+					'validation'=> ( !$data_obj ? 'required' : '' ) ),
 				array(
 					'col'	=> '3',
 					'name'	=> 'koor_e',
 					'label'	=> 'Koor. E',
 					'type'	=> 'text',
-					'std'	=> (! is_null($data_obj) ? $data_obj->usaha_tps_koor_e : ''),
-					'validation'=> 'required'),
+					'std'	=> ( $data_obj ? $data_obj->usaha_tps_koor_e : ''),
+					'validation'=> ( !$data_obj ? 'required' : '' ) ),
 				)
 			);
 

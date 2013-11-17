@@ -95,11 +95,13 @@ class Auth extends BAKA_Controller
 
 			if ( $this->baka_auth->login( $user_data['login-username'], $user_data['login-password'], (bool) $user_data['login-remember'], $login_by_username, $login_by_email) )
 			{
+				$this->session->set_flashdata('success', $this->baka_auth->messages());
+
 				redirect('dashboard');
 			}
 			else
 			{
-				$this->session->set_flashdata('error', $this->baka_lib->errors());
+				$this->session->set_flashdata('error', $this->baka_auth->errors());
 
 				redirect( current_url() );
 			}
@@ -269,7 +271,7 @@ class Auth extends BAKA_Controller
 		$fields[]	= array('name'	=> 'forgot_login',
 							'type'	=> 'text',
 							'label'	=> 'Email atau Username',
-							'validation'=> 'required|valid_email',
+							'validation'=> 'required',
 							'desc'	=> 'Masukan alamat email atau username yang anda gunakan untuk aplikasi ini.' );
 
 		$buttons[]	= array('name'	=> 'submit',
@@ -296,7 +298,7 @@ class Auth extends BAKA_Controller
 			if ( $data = $this->baka_auth->forgot_password( $user_data['forgot_login']) )
 			{
 				// Send email with password activation link
-				$this->baka_email->send( $user_data['forgot_login'], 'forgot_password', $data );
+				$this->baka_email->send( $data['email'], 'forgot_password', $data );
 					
 				$this->_notice('password-sent');
 
@@ -333,12 +335,12 @@ class Auth extends BAKA_Controller
 		}
 	}
 
-	public function reset( $user_id = NULL, $email_key = NULL )
+	public function reset_password( $user_id = NULL, $email_key = NULL )
 	{
 		$this->data['panel_title'] = $this->baka_theme->set_title('Kirim ulang aktivasi');
 
 		// not logged in or activated
-		if (!$this->baka_auth->is_logged_in(FALSE))
+		if ( is_null($user_id) AND is_null($email_key) )
 			redirect('login');
 
 		$fields[]	= array('name'	=> 'reset_password',
@@ -349,7 +351,7 @@ class Auth extends BAKA_Controller
 		$fields[]	= array('name'	=> 'confirm_reset_password',
 							'type'	=> 'password',
 							'label'	=> 'Password Konfirmasi',
-							'validation'=> 'required|matches[register-password]' );
+							'validation'=> 'required|matches[reset_password]' );
 
 		$buttons[]	= array('name'	=> 'submit',
 							'type'	=> 'submit',
@@ -375,7 +377,7 @@ class Auth extends BAKA_Controller
 				// success
 				$this->load->library('baka_pack/baka_email');
 
-				$this->baka_email->send('activate', $user_data['email'], $data);
+				$this->baka_email->send($data['email'], 'activate', $data);
 				$this->_notice('password-reset');
 			}
 			else
@@ -390,6 +392,14 @@ class Auth extends BAKA_Controller
 
 		$this->baka_theme->load('pages/auth', $this->data);
 	}
+
+	private function _change_email(){}
+
+	private function _change_password(){}
+
+	private function _reset_password(){}
+
+	private function _unregister(){}
 
 	public function logout()
 	{

@@ -15,7 +15,7 @@ Link doesn't work? Copy the following link to your browser address bar:<br />
 You received this email, because it was requested by a <a href="<?php echo site_url(''); ?>" style="color: #3366cc;"><?php echo get_app_config('skpd_name') ?></a> user. This is part of the procedure to create a new password on the system. If you DID NOT request a new password then please ignore this email and your password will remain the same.<br />
 <br />
 Thank you,<br />
-The <?php echo gget_app_config('skpd_name') ?> Team
+The <?php echo get_app_config('skpd_name') ?> Team
 </div>
 </body>
 </html>

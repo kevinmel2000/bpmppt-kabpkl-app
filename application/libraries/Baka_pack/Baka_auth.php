@@ -343,7 +343,7 @@ class Baka_auth Extends Baka_lib
 	 */
 	public function reset_password($user_id, $new_pass_key, $new_password)
 	{
-		if (is_null($user = $this->baka_users->get_user_by_id($user_id, TRUE)))
+		if (!($user = $this->baka_users->get_user_by_id($user_id, TRUE)))
 			return FALSE;
 
 		if ($this->baka_users->reset_password(
@@ -360,8 +360,7 @@ class Baka_auth Extends Baka_lib
 				'user_id'		=> $user_id,
 				'username'		=> $user->username,
 				'email'			=> $user->email,
-				'new_password'	=> $new_password,
-				);
+				'new_password'	=> $new_password );
 		}
 
 		return FALSE;

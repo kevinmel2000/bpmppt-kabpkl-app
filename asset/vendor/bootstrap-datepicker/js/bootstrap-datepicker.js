@@ -93,7 +93,7 @@
 	Datepicker.prototype = {
 		constructor: Datepicker,
 
-		_process_options: function(opts){
+		_process_options: function(opts) {
 			// Store raw options for reference
 			this._o = $.extend({}, this._o, opts);
 			// Processed options
@@ -165,7 +165,7 @@
 			o.daysOfWeekDisabled = o.daysOfWeekDisabled||[];
 			if (!$.isArray(o.daysOfWeekDisabled))
 				o.daysOfWeekDisabled = o.daysOfWeekDisabled.split(/[,\s]*/);
-			o.daysOfWeekDisabled = $.map(o.daysOfWeekDisabled, function (d) {
+				o.daysOfWeekDisabled = $.map(o.daysOfWeekDisabled, function (d) {
 				return parseInt(d, 10);
 			});
 
@@ -409,8 +409,8 @@
 			this.updateNavArrows();
 		},
 
-		place: function(){
-						if(this.isInline) return;
+		place: function() {
+			if(this.isInline) return;
 			var calendarWidth = this.picker.outerWidth(),
 				calendarHeight = this.picker.outerHeight(),
 				visualPadding = 10,
@@ -1340,7 +1340,7 @@
 	};
 	DPGlobal.template = '<div class="datepicker">'+
 							'<div class="datepicker-days">'+
-								'<table class=" table-condensed">'+
+								'<table class="table-condensed">'+
 									DPGlobal.headTemplate+
 									'<tbody></tbody>'+
 									DPGlobal.footTemplate+

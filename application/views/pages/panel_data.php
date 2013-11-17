@@ -12,10 +12,6 @@
 
 	<?php baka_echo( $panel_body ) ?>
 
-	<div class="panel-footer">
-		<span class="text-muted"><?php echo get_counter_text( $counter ) ?></span>
-	</div>
-
 </div>
 
 	</div>
