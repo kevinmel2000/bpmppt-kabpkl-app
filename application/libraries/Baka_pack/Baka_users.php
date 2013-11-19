@@ -51,39 +51,35 @@ class Baka_users extends Baka_lib
 						  ->join($this->roles_table.' d','d.role_id = c.role_id', 'inner');
 
 		if ( ! is_null( $user_id ) )
-			$query->where('a.id', $user_id);
+			return $query->where('a.id', $user_id)->get();
 		else
-			$query->group_by('a.id');
-
-		return $query->get();
+			return $query->group_by('a.id');
 	}
 
 	public function get_groups( $group_id = NULL )
 	{
 		$query = $this->db->select("a.role_id id, a.role name, a.full fullname, a.default")
+						  ->select("count(c.permission_id) perm_count")
 						  ->select("group_concat(distinct c.permission_id) perm_id")
+						  ->select("group_concat(distinct c.description) perm_desc")
 						  ->from($this->roles_table.' a')
 						  ->join($this->role_perms_table.' b','b.role_id = a.role_id', 'inner')
 						  ->join($this->permissions_table.' c','c.permission_id = b.permission_id', 'inner');
 		
 		if ( ! is_null( $group_id ) )
-			$query->where('a.role_id', $group_id);
+			return $query->where('a.role_id', $group_id)->get();
 		else
-			$query->group_by('a.role_id');
-
-		return $query->get();
+			return $query->group_by('a.role_id');
 	}
 
 	public function get_perms()
 	{
-		$query = $this->db->select("parent")
-						  ->select("group_concat(distinct permission_id) perm_id")
-						  ->select("group_concat(distinct permission) perm_name")
-						  ->select("group_concat(distinct description) perm_desc")
-						  ->from($this->permissions_table)
-						  ->group_by('parent');
-
-		return $query->get();
+		return $this->db->select("parent")
+						->select("group_concat(distinct permission_id) perm_id")
+						->select("group_concat(distinct permission) perm_name")
+						->select("group_concat(distinct description) perm_desc")
+						->from($this->permissions_table)
+						->group_by('parent');
 	}
 
 	public function get_roles_query()
@@ -224,7 +220,7 @@ class Baka_users extends Baka_lib
 			$user_id = $this->db->insert_id();
 			
 			if ( $activated )
-				$this->create_profile($user_id, $user_data['meta']);
+				$this->create_profile($user_id, $roles);
 			
 			return array('user_id' => $user_id);
 		}
@@ -260,7 +256,7 @@ class Baka_users extends Baka_lib
 				array('activated' => 1, 'new_email_key' => NULL),
 				array('id' => $user_id) );
 
-			$this->create_profile($user_id, $this->get_user_meta($user_id));
+			$this->create_profile($user_id);
 
 			return TRUE;
 		}
@@ -476,22 +472,22 @@ class Baka_users extends Baka_lib
 	 * @param   int
 	 * @return  bool
 	 */
-	private function create_profile($user_id, $meta, $roles_id = array())
+	private function create_profile($user_id, $roles_id = array())
 	{
 		$user_data['id'] = $user_id;
 
-		if ($meta)
-		{
-			$meta = unserialize($meta);
+		// if ($meta)
+		// {
+		// 	$meta = unserialize($meta);
 
-			foreach ($meta as $key=>$val)
-			{
-				if ($val === '1' || $val === '0')
-					$meta[$key] = (int)$val;
-			}
+		// 	foreach ($meta as $key=>$val)
+		// 	{
+		// 		if ($val === '1' || $val === '0')
+		// 			$meta[$key] = (int)$val;
+		// 	}
 			
-			$user_data = array_merge($user_data, $meta);            
-		}
+		// 	$user_data = array_merge($user_data, $meta);            
+		// }
 
 		if ( count($roles_id) > 0 )
 			$this->set_user_roles( $user_id, $roles_id );
@@ -567,10 +563,17 @@ class Baka_users extends Baka_lib
 	private function role_exists($role)
 	{
 		if (is_int($role))
-			$query = $this->db->get_where( $this->roles_table, array('role_id'=>$role));
+			$query = $this->db->get_where( $this->roles_table, array('role_id'=>$role), 1);
 		elseif (is_string($role))
-			$query = $this->db->get_where( $this->roles_table, array('role'=>$role));
+			$query = $this->db->get_where( $this->roles_table, array('role'=>$role), 1);
 		
+		return (bool) $query->num_rows();
+	}
+
+	public function permission_exists($permission)
+	{
+		$query = $this->db->get_where( $this->permissions_table, array('permission' => $permission), 1);
+
 		return (bool) $query->num_rows();
 	}
 	
@@ -811,31 +814,112 @@ class Baka_users extends Baka_lib
 		
 		return (bool) $row->approved;
 	}
+
+	/**
+	 * Updating role fields
+	 * @param	int		$role_id		Role id that wanna be updated
+	 * @param	array	$role_data		Array of new role data
+	 * @param	array	$permissions	Array of new permission data
+	 * @return	bool					query execution
+	 */
+	public function update_role( $role_data, $role_id = NULL, $permissions = array() )
+	{
+		$this->db->trans_start();
+
+		if ( !is_null($role_id) )
+		{
+			$this->db->update( $this->roles_table, $role_data, array('role_id' => $role_id ));
+		}
+		else
+		{
+			$this->db->insert( $this->roles_table, $role_data );
+			$role_id = $this->db->insert_id();
+		}
+
+		if ( $return )
+			$this->set_message('Berhasil '.(!is_null($role_id) ? 'memperbarui' : 'menambahkan').' kelompok pengguna '.$role_data['full']);
+		else
+			$this->set_error('Terjadi kesalahan');
+
+		if ( count($permissions) > 0 )
+			$return = $this->update_role_related_perm( $permissions, $role_id );
+
+		$this->db->trans_complete();
+
+		$return = $this->db->trans_status();
+
+		if ( $return == FALSE )
+		{
+			$this->set_error('Terjadi kesalahan');
+		}
+
+		return $return;
+	}
 	
 	/**
-	 * Add permission to role
+	 * Update relation of roles and permissions table
+	 * 
+	 * @param	array	$permission	array of new permissions
+	 * @param	int		$role_id	id of role
+	 * @return	mixed
 	 */
-	public function add_permission($permission, $role)
+	public function update_role_related_perm( $permissions = array(), $role_id)
 	{
-		$role_id = $this->get_role_id($role);
-		
-		if (is_array($permission))
+		if ( count($permissions) > 0 )
 		{
-			$this->db->trans_start();
+			$related_permission = $this->get_role_related_perms( $role_id );
 
-			foreach ($permission as $val)
+			foreach ($permissions as $perm_id)
 			{
-				$this->db->insert($this->role_perms_table, array( $role_id, $this->get_permission_id($val) ));
+				if ( !in_array( $perm_id, $related_permission ) )
+				{
+					$return = $this->db->insert($this->role_perms_table, array(
+						'role_id'		=> $role_id,
+						'permission_id'	=> $perm_id ));
+
+					log_message('error', 'Menambahkan perm_id: '.$perm_id.' ke role_id: '.$role_id);
+				}
 			}
 
-			$this->db->trans_complete();
-			
-			return $this->db->trans_status();
+			if ( $related_permission )
+			{
+				foreach ( $related_permission as $rel_id )
+				{
+					if ( !in_array( $rel_id, $permissions ) )
+					{
+						$return = $this->db->delete( $this->role_perms_table, array(
+							'permission_id' => $rel_id ));
+
+						log_message('error', 'Menghapus perm_id: '.$rel_id);
+					}
+				}
+			}
+
+			return $return;
 		}
-		elseif (is_string($permission))
+	}
+
+	/**
+	 * Get related permissions of role_id
+	 * 
+	 * @param	int		$role_id	ID of role
+	 * @return	array				list of related permissions
+	 */
+	public function get_role_related_perms( $role_id )
+	{
+		$query = $this->db->get_where( $this->role_perms_table, array('role_id' => $role_id ));
+
+		if ( $query->num_rows() > 0 )
 		{
-			return $this->db->insert($this->role_perms_table, array( $role_id, $this->get_permission_id($permission) ));
+			foreach ( $query->result() as $row )
+			{
+				$result[] = $row->permission_id;
+			}
+
+			return $result;
 		}
+
+		return FALSE;
 	}
 	
 	/**
@@ -874,7 +958,11 @@ class Baka_users extends Baka_lib
 		$query = $this->db->get_where($this->permissions_table, array('permission' => $permission));
 		
 		if (!$query->num_rows())
-			return $this->db->insert($this->permissions_table, array(NULL, $permission, $description, $parent, $sort));
+			return $this->db->insert($this->permissions_table, array(
+				'permission' => $permission,
+				'description' => $description,
+				'parent' => $parent,
+				'sort' => $sort ) );
 		
 		return TRUE;
 	}
@@ -916,8 +1004,9 @@ class Baka_users extends Baka_lib
 	
 	/**
 	 * Save permission
+	 * @deprecated
 	 */
-	public function save_permission($data)
+	public function save__permission($data)
 	{
 		extract($data);
 

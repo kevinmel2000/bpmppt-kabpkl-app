@@ -17,7 +17,7 @@ class App_data extends CI_Model
 
 	private $modul;
 
-	private $_messages = array();
+	public $messages = array();
 
 	// Default constructor class
 	public function __construct()
@@ -36,8 +36,7 @@ class App_data extends CI_Model
 			$this->modul->$data = array(
 				'nama'	=> $this->$data->nama,
 				'slug'	=> $this->$data->slug,
-				'kode'	=> (property_exists($this->$data, 'kode') ? $this->$data->kode : NULL),
-				);
+				'kode'	=> (property_exists($this->$data, 'kode') ? $this->$data->kode : NULL) );
 		}
 
 		// print_pre( $this->modul );
@@ -98,7 +97,10 @@ class App_data extends CI_Model
 		foreach (directory_map( APPPATH.'models/'.$this->modul_dir) as $modul_name)
 		{
 			if (substr($modul_name, 0, 1) !== '_')
-				$ret[] = strtolower(str_replace(EXT, '', $modul_name));
+				$modul = strtolower(str_replace(EXT, '', $modul_name));
+
+			if ( $this->baka_auth->permit('doc_'.$modul.'_manage') )
+				$ret[] = $modul;
 		}
 
 		return $ret;
@@ -120,6 +122,8 @@ class App_data extends CI_Model
 	// get all moduls grid
 	public function get_tables( $page_link = '' )
 	{
+		$output = array();
+
 		foreach ( $this->_list as $data )
 		{
 			$output[$data] = $this->get_table( $data, $page_link.'ijin/'.$data.'/' );
@@ -274,6 +278,8 @@ class App_data extends CI_Model
 	// count data
 	public function count_data( $modul_name = '' )
 	{
+		$out = NULL;
+
 		if ( $modul_name == '' )
 		{
 			foreach ( $this->_list as $data )
@@ -284,7 +290,7 @@ class App_data extends CI_Model
 		else
 		{
 			$out = $this->db->where('type', $this->get_slug($modul_name))
-							  ->count_all_results($this->_data_table);
+							->count_all_results($this->_data_table);
 		}
 
 		return $out;
@@ -326,14 +332,14 @@ class App_data extends CI_Model
 
 			if ( $this->_create_datameta( $data_id, $modul_name, $form_data ) )
 			{
-				$this->_messages['success'] = 'Permohonan dari saudara/i '.$form_data[$petitioner].' berhasil disimpan.';
+				$this->messages['success'] = array('Permohonan dari saudara/i '.$data[$petitioner].' berhasil disimpan.', 'Klik cetak jika anda ingin langsung mencetaknya.');
 
 				return $data_id;
 			}
 		}
 		else
 		{
-			$this->_messages['error'] =  'Terjadi kegagalan penginputan data.' ;
+			$this->messages['error'] =  'Terjadi kegagalan penginputan data.' ;
 
 			return FALSE;
 		}
@@ -343,16 +349,16 @@ class App_data extends CI_Model
 	{
 		if ( $data = $this->db->delete( $this->_data_table, array( 'id' => $data_id, 'type' => $this->get_slug($modul_name) ) ) )
 		{
-			if ( $this->db->delete( $this->_datameta_table, array( 'data_id' => $data_id, 'data_type' => $modul_name ) ) )
+			if ( $this->db->delete( $this->_datameta_table, array( 'data_id' => $data->id, 'data_type' => $data->type ) ) )
 			{
-				$this->_messages['success'] = 'Data dengan id #'.$data_id.' berhasil dihapus.';
+				$this->messages['success'] = 'Data dengan id #'.$data_id.' berhasil dihapus.';
 
 				return TRUE;
 			}
 		}
 		else
 		{
-			$this->_messages['error'] = 'Terjadi kegagalan penghapusan data.';
+			$this->messages['error'] = 'Terjadi kegagalan penghapusan data.';
 
 			return FALSE;
 		}
@@ -390,20 +396,20 @@ class App_data extends CI_Model
 	 */
 	private function _create_datameta( $data_id, $modul_name, $meta_fields )
 	{
-		$i = 0;
-		$meta_data = array();
+		$this->db->trans_start();
 
 		foreach ($meta_fields as $meta_key => $meta_value)
 		{
-			$meta_data[$i]['data_id']	= $data_id;
-			$meta_data[$i]['data_type']	= $modul_name;
-			$meta_data[$i]['meta_key']	= $meta_key;
-			$meta_data[$i]['meta_value']= $meta_value;
-
-			$i++;
+			$this->db->insert( $this->_datameta_table, array(
+				'data_id'	=> $data_id,
+				'data_type'	=> $modul_name,
+				'meta_key'	=> $meta_key,
+				'meta_value'=> $meta_value ) );
 		}
 
-		return $this->db->insert_batch( $this->_datameta_table, $meta_data );
+		$this->db->trans_complete();
+
+		return $this->db->trans_status();
 	}
 
 	private function _get_where( $table_name, $wheres )

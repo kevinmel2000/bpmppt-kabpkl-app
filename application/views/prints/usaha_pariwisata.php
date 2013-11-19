@@ -1,110 +1,162 @@
-<p style="text-align:center"><b>{field_variable}<br>NOMOR : 510.8/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/BPM PPT/P. Kayu/VI/2013</b></p>
-
-<table style="width:100.0%;">
-	<tr>
-		<td colspan="3" style="width:36%"><p>JENIS USAHA / KEGIATAN</p></td>
-		<td style="width:2%"><p>:</p></td>
-		<td colspan="3" style="width:62%"><p><b>{field_variable} * {field_variable} *</b></p></td>
-	</tr>
-	<tr>
-		<td colspan="3" style="width:36%"><p>An. SAUDARA</p></td>
-		<td style="width:2%"><p>:</p></td>
-		<td colspan="3" style="width:62%"><p><b>{field_variable}</b></p></td>
-	</tr>
-	<tr>
-		<td colspan="7" style="width:100.0%">
-			<p>&nbsp;</p>
-			<p style="text-align:center"><b>BUPATI PEKALONGAN</b></p>
-			<p>&nbsp;</p>
-		</td>
-	</tr>
-	<tr>
-		<td style="width:16.2%"><p>Membaca</p></td>
-		<td style="width:2.74%"><p>:</p></td>
-		<td colspan="5" style="width:81.06%;"><p>Surat Permohonan Saudara <b>{field_variable}</b> selaku Direktur <b>{field_variable},</b> Alamat Kantor di {field_variable}, tanggal {field_variable} untuk Izin tempat usaha <b>{field_variable} ,</b> yang terletak di {field_variable}.</p></td>
-	</tr>
-	<tr>
-		<td style="width:16.2%;"><p>Menimbang</p></td>
-		<td style="width:2.74%;"><p>:</p></td>
-		<td colspan="5" style="width:81.06%;">
-			<ol>
-				<li>Bahwa . . .</li>
-			</ol>
-		</td>
-	</tr>
-	<tr>
-		<td style="width:16.2%;"><p>Mengingat</p></td>
-		<td style="width:2.74%;">:</td>
-		<td colspan="5" style="width:81.06%;">
-			<ol>
-				<li>Undang-undang . . .</li>
-			</ol>
-		</td>
-	</tr>
-	<tr>
-		<td colspan="7" style="width:100.0%;"><p style="text-align:center"><b>MEMUTUSKAN</b></p></td>
-	</tr>
-	<tr>
-		<td style="width:16.2%;"><p>Menetapkan</p></td>
-		<td style="width:2.74%;"><p>:</p></td>
-		<td colspan="5" style="width:81.06%;">&nbsp;</td>
-	</tr>
-	<tr>
-		<td style="width:16.2%;"><p>KESATU</p></td>
-		<td style="width:2.74%;"><p>:</p></td>
-		<td colspan="5" style="width:81.06%;">
-		<p>{field_variable} kepada Saudara <b>{field_variable}</b> selaku Direktur <b>{field_variable}</b>, Alamat Kantor di {field_variable}, untuk Izin tempat usaha <b>Pengolahan Kayu</b> yang terletak di {field_variable} di atas tanah milik {field_variable} di {field_variable} dengan luas tempat usaha <b>± {field_variable} M2</b> .</p>
-		<p>Adapun persil tersebut berbatasan :</p>
-		</td>
-	</tr>
-	<tr>
-		<td style="width:16.2%;"><p>KEDUA</p></td>
-		<td style="width:2.74%;"><p>:</p></td>
-		<td colspan="5" style="width:81.06%;"><p>Surat Keputusan ini berlaku sejak ditetapkan dengan ketentuan :</p></td>
-	</tr>
-	<tr>
-		<td style="width:16.2%;">&nbsp;</td>
-		<td style="width:2.74%;">&nbsp;</td>
-		<td colspan="5" style="width:81.06%;">
-			<ol>
-				<li>Izin ....</li>
-			</ol>
-		</td>
-	</tr>
-	<tr>
-		<td style="width:16.2%;"><p>KETIGA</p></td>
-		<td style="width:2.74%;">&nbsp;</td>
-		<td colspan="5" style="width:81.06%;"><p>Keputusan ini mulai berlaku pada tanggal ditetapkan.</p></td>
-	</tr>
-	<tr>
-		<td colspan="4" style="width:38.22%;">&nbsp;</td>
-		<td style="width:19.26%;"><p>Ditetapkan di</p></td>
-		<td style="width:2.76%;"><p>:</p></td>
-		<td style="width:39.76%;"><p>{field_variable}</p></td>
-	</tr>
-	<tr>
-		<td colspan="4" style="width:38.22%;">&nbsp;</td>
-		<td style="width:19.26%;"><p>Pada tanggal</p></td>
-		<td style="width:2.76%;"><p>:</p></td>
-		<td style="width:39.76%;"><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{field_variable}</p></td>
-	</tr>
-	<tr>
-		<td colspan="4" style="width:38.22%;">&nbsp;</td>
-		<td colspan="3" style="width:61.78%;">
-			<p style="text-align:center"><b>MENGETAHUI</b></p>
-			<p style="text-align:center"><b>&nbsp;</b></p>
-			<p style="text-align:center"><b>An. BUPATI PEKALONGAN<br>KEPALA BADAN PENANAMAN MODAL DAN<br>PELAYANAN PERIZINAN TERPADU</b></p>
-			<p style="text-align:center"><b>&nbsp;</b></p>
-			<p style="text-align:center"><b>&nbsp;</b></p>
-			<p style="text-align:center"><b>{field_variable}<br>{field_variable}<br>NIP. {field_variable}</b></p>
-		</td>
-	</tr>
-	<tr>
-		<td colspan="7" style="width:100.0%;">
-		<p><b>Tembusan :</b></p>
+<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr>
+	<td colspan="7" style="width:100%"><p style="text-align:center"><strong>IZIN USAHA KARAOKE</strong></p></td>
+</tr>
+<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr>
+	<td colspan="7" style="width:100%"><p style="text-align:center"><strong>NOMOR : 556.142/12/PAR/KAR/BPMPPT/V/2013</strong></p></td>
+</tr>
+<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr>
+	<td colspan="7" style="width:100%"><p style="text-align:center"><strong>BUPATI PEKALONGAN</strong></p></td>
+</tr>
+<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr>
+	<td colspan="3" style="width:30%">&nbsp;</td>
+	<td style="width:10%"><p>Membaca</p></td>
+	<td style="width:2%"><p>:</p></td>
+	<td colspan="2" style="width:47%"><p>dst ;</p></td>
+</tr>
+<tr>
+	<td colspan="3" style="width:30%">&nbsp;</td>
+	<td style="width:10%"><p>Menimbang</p></td>
+	<td style="width:2%"><p>:</p></td>
+	<td colspan="2" style="width:47%"><p>dst ;</p></td>
+</tr>
+<tr>
+	<td colspan="3" style="width:30%">&nbsp;</td>
+	<td style="width:10%"><p>Mengingat</p></td>
+	<td style="width:2%"><p>:</p></td>
+	<td colspan="2" style="width:47%"><p>dst ;</p></td>
+</tr>
+<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr>
+	<td colspan="7" style="width:100%"><p style="text-align:center"><strong>M E M U T U S K A N :</strong></p></td>
+</tr>
+<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr>
+	<td style="width:20%"><p>Menetapkan</p></td>
+	<td style="width:2%"><p>:</p></td>
+	<td colspan="5" style="width:78%">&nbsp;</td>
+</tr>
+<tr>
+	<td style="width:20%"><p>KESATU</p></td>
+	<td style="width:2%"><p>:</p></td>
+	<td colspan="5" style="width:78%">Memberikan Izin Kepada :</td>
+</tr>
+<tr>
+	<td colspan="2">&nbsp;</td>
+	<td colspan="2" style="width:30%"><p>Nama Pemohon</p></td>
+	<td style="width:2%"><p>:</p></td>
+	<td colspan="2" style="width:47%"><p><strong><?php echo $pemohon_nama ?></strong></p></td>
+</tr>
+<tr>
+	<td colspan="2">&nbsp;</td>
+	<td colspan="2" style="width:30%"><p>Alamat Pemohon</p></td>
+	<td style="width:2%"><p>:</p></td>
+	<td colspan="2" style="width:47%"><p><?php echo $pemohon_alamat ?></p></td>
+</tr>
+<tr>
+	<td colspan="2">&nbsp;</td>
+	<td colspan="2" style="width:30%"><p>Jabatan</p></td>
+	<td style="width:2%"><p>:</p></td>
+	<td colspan="2" style="width:47%"><p><?php echo $pemohon_jabatan ?></p></td>
+</tr>
+<tr>
+	<td colspan="2">&nbsp;</td>
+	<td colspan="2" style="width:30%"><p>Untuk Mengusahakan</p></td>
+	<td style="width:2%"><p>:</p></td>
+	<td colspan="2" style="width:47%"><p><?php echo $usaha_nama ?></p></td>
+</tr>
+<tr>
+	<td colspan="2">&nbsp;</td>
+	<td colspan="2" style="width:30%"><p>Alamat Usaha</p></td>
+	<td style="width:2%"><p>:</p></td>
+	<td colspan="2" style="width:47%"><p><?php echo $usaha_alamat ?></p></td>
+</tr>
+<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr>
+	<td style="width:20%"><p>KEDUA</p></td>
+	<td style="width:2%"><p>:</p></td>
+	<td colspan="5" style="width:78%">Pemegang Izin Usaha Pariwisata sebagaimana dimaksud pada diktum PERTAMA berkewajiban :</td>
+</tr>
+<tr>
+	<td colspan="2">&nbsp;</td>
+	<td colspan="5" style="width:78%">
 		<ol>
-			<li>Bupati ...</li>
+			<li>Memasang surat izin ditempat usahanya yang mudah dibaca dan dilihat umum;</li>
+			<li>Mencegah penggunaan kegiatan penyelenggaraan jasa impresariat dari hal – hal yang dapat mengganggu keamanan, ketertiban umum dan melanggar kesusilaan;</li>
+			<li>Memiliki sistem administrasi dan manajemen pengelolaan sesuai ketentuan perundangan yang berlaku;</li>
+			<li>Melaksanakan kegiatan pokok penyelenggaraan hiburan baik mendatangkan, mengirimkan maupun mengembalikannya serta menentukan tempat, waktu dan jenis hiburan yang meliputi bidang seni dan olah raga; </li>
+			<li>Melaksanakan koordinasi dan konsultasi dengan dinas/instansi terkait untuk pemeriksaan kelaikan keamanan/keselamatan operasional peralatan  pertunjukkan/hiburan;</li>
+			<li>Membuat dan menyampaikan Laporan perkembangan Kegiatan Usaha (LKU) Pariwisata secara berkala dan tepat waktu lewat Kepala Dinas Pemuda Olah Raga dan Pariwisata Kabupaten Pekalongan setiap 1 (satu) tahun sejak tanggal ditetapkannya Surat Izin Usaha Pariwisata ini.</li>
 		</ol>
-		</td>
-	</tr>
-</table>
+	</td>
+</tr>
+<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr>
+	<td style="width:20%"><p>KETIGA</p></td>
+	<td style="width:2%"><p>:</p></td>
+	<td colspan="5" style="width:78%">Pemegang Izin sebagaimana dimaksud pada Diktum PERTAMA dilarang :</td>
+</tr>
+<tr>
+	<td colspan="2">&nbsp;</td>
+	<td colspan="5" style="width:78%">
+		<ol>
+			<li>Memperluas dan memindahkan serta mengalihkan tempat usaha dan atau kepemilikan tanpa Izin Bupati;</li>
+			<li>Menjalankan usaha lain selain yang ditetapkan dalam izin;</li>
+			<li>Menerima tamu/pengunjung dalam kondisi mabuk ditempat usahanya;</li>
+			<li>Menjual Minuman Keras serta Narkotika, Psikotropika dan Zat Addiktif lainnya</li>
+		</ol>
+	</td>
+</tr>
+<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr>
+	<td style="width:20%"><p>KEEMPAT</p></td>
+	<td style="width:2%"><p>:</p></td>
+	<td colspan="5" style="width:78%"><p>Pelanggaran terhadap ketentuan – ketentuan sebagaimana dimaksud dalam diktum KEDUA dan KETIGA dikenakan sanksi sesuai peraturan perundang-undangan yang berlaku dan atau dapat dicabutnya Izin Usaha Pariwisata sebagaimana dalam diktum PERTAMA.</p></td>
+</tr>
+<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr>
+	<td style="width:20%"><p>KELIMA</p></td>
+	<td style="width:2%"><p>:</p></td>
+	<td colspan="5" style="width:78%"><p>Keputusan  ini mulai berlaku pada tanggal ditetapkan.</p></td>
+</tr>
+<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr>
+	<td colspan="6">&nbsp;</td>
+	<td style="width:30%"><p>Ditetapkan di : Kajen</p></td>
+</tr>
+<tr>
+	<td colspan="6">&nbsp;</td>
+	<td style="width:30%"><p>Pada Tanggal : Juni 2013</p></td>
+</tr>
+<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr>
+	<td colspan="5">&nbsp;</td>
+	<td colspan="2" style="width:20%"><p style="text-align:center"><strong>An. BUPATI PEKALONGAN</strong></p></td>
+</tr>
+<tr>
+	<td colspan="5">&nbsp;</td>
+	<td colspan="2" style="width:20%"><p style="text-align:center"><strong>KEPALA <?php echo strtoupper($skpd_name) ?></strong></p></td>
+</tr>
+<tr>
+	<td colspan="5">&nbsp;</td>
+	<td colspan="2" style="width:20%"><p style="text-align:center"><strong><?php echo strtoupper($skpd_city) ?></strong></p></td>
+</tr>
+<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr>
+	<td colspan="5">&nbsp;</td>
+	<td colspan="2" style="width:20%"><p style="text-align:center"><strong><?php echo strtoupper($skpd_lead_name) ?></strong></p></td>
+</tr>
+<tr>
+	<td colspan="5">&nbsp;</td>
+	<td colspan="2" style="width:20%"><p style="text-align:center"><strong>Pembina Tingkat I</strong></p></td>
+</tr>
+<tr>
+	<td colspan="5">&nbsp;</td>
+	<td colspan="2" style="width:20%"><p style="text-align:center"><strong>NIP. <?php echo strtoupper($skpd_lead_nip) ?></strong></p></td>
+</tr>
+

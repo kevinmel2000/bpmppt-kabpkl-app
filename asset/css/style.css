@@ -22,32 +22,38 @@ a:active {
 
 .btn-default {
 	background-color: rgba(0,0,0,0.04);
-	border-color: #CCC;
+	border-color: #ccc;
 }
 
 .label {
 	background-color: #999;
+	display: inline-block;
+	line-height: 1.2em;
 }
 
 .label-warning,
 .label-pending {
-	background-color: #D9534F;
+	background-color: #d9534f;
 }
 
 .label-success,
 .label-approved {
-	background-color: #5CB85C;
+	background-color: #5cb85c;
 }
 
 .label-primary,
 .label-printed,
 .label-done {
-	background-color: #428BCA;
+	background-color: #428bca;
 }
 
 .label-danger,
 .label-deleted {
-	background-color: #D9534F;
+	background-color: #d9534f;
+}
+
+.label-info {
+	background-color: #5bc0de;
 }
 
 .row {
@@ -476,6 +482,35 @@ section#contents-main {
 	color: inherit;
 	line-height: 1.2em;
 	margin-bottom: 5px;
+}
+
+.checkbox {
+	position: relative;
+	z-index: 1;
+}
+
+.checkbox label {
+	display: block;
+}
+
+.checkbox:before {
+	position: absolute;
+	height: 1.7em;
+	width: 100%;
+	top: 4px;
+	z-index: -1;
+	left: -4px;
+	content: "";
+	border-radius: 3px;
+	right: 0;
+}
+
+.checkbox:hover:before {
+	background: rgba(0, 0, 0, 0.04);
+}
+
+.checkbox:hover label {
+	text-shadow: 0 1px 0 #FFF;
 }
 
 .form-group {

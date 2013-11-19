@@ -26,17 +26,19 @@ class Usaha_pariwisata extends App_main
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
+			'name'	=> $this->slug.'_pemohon_kerja',
+			'label'	=> 'Pekerjaan',
+			'type'	=> 'dropdown',
+			'std'	=> ( $data_obj ? $data_obj->pemohon_nama : ''),
+			'option'=> array(
+				'p' => 'Pekerjaan' ),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
+
+		$fields[]	= array(
 			'name'	=> $this->slug.'_pemohon_jabatan',
 			'label'	=> 'Jabatan',
 			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->pemohon_jabatan : ''),
-			'validation'=> ( !$data_obj ? 'required' : '' ) );
-
-		$fields[]	= array(
-			'name'	=> $this->slug.'_pemohon_usaha',
-			'label'	=> 'Perusahaan',
-			'type'	=> 'text',
-			'std'	=> ( $data_obj ? $data_obj->pemohon_usaha : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
@@ -47,68 +49,60 @@ class Usaha_pariwisata extends App_main
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_fieldset_data_lokasi',
-			'label'	=> 'Data Lokasi',
+			'name'	=> $this->slug.'_pemohon_telp',
+			'label'	=> 'Nomor Telpon/HP',
+			'type'	=> 'text',
+			'std'	=> ( $data_obj ? $data_obj->pemohon_telp : ''),
+			'validation'=> 'numeric|max_length[12]' );
+
+		$fields[]	= array(
+			'name'	=> $this->slug.'_fieldset_data_perusahaan',
+			'label'	=> 'Data Perusahaan',
 			'attr'	=> ( $data_obj ? 'disabled' : '' ),
 			'type'	=> 'fieldset' );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_lokasi_tujuan',
-			'label'	=> 'Tujuan Permohonan',
+			'name'	=> $this->slug.'_usaha_nama',
+			'label'	=> 'Nama Perusahaan',
 			'type'	=> 'text',
-			'std'	=> ( $data_obj ? $data_obj->lokasi_tujuan : ''),
+			'std'	=> ( $data_obj ? $data_obj->usaha_nama : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_lokasi_alamat',
-			'label'	=> 'Alamat Lokasi',
+			'name'	=> $this->slug.'_usaha_jenis',
+			'label'	=> 'Jenis Usaha',
+			'type'	=> 'text',
+			'std'	=> ( $data_obj ? $data_obj->usaha_jenis : ''),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
+
+		$fields[]	= array(
+			'name'	=> $this->slug.'_usaha_alamat',
+			'label'	=> 'Alamat Kantor',
 			'type'	=> 'textarea',
-			'std'	=> ( $data_obj ? $data_obj->lokasi_alamat : ''),
+			'std'	=> ( $data_obj ? $data_obj->usaha_alamat : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_lokasi_nama',
-			'label'	=> 'Luas Area (M<sup>2</sup>)',
+			'name'	=> $this->slug.'_usaha_luas',
+			'label'	=> 'Luas perusahaan (M<sup>2</sup>)',
 			'type'	=> 'number',
-			'std'	=> ( $data_obj ? $data_obj->lokasi_nama : ''),
+			'std'	=> ( $data_obj ? $data_obj->usaha_luas : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_lokasi_area_hijau',
-			'label'	=> 'Area terbuka hijau',
+			'name'	=> $this->slug.'_usaha_an',
+			'label'	=> 'Atas Nama Pendirian',
 			'type'	=> 'text',
-			'std'	=> ( $data_obj ? $data_obj->lokasi_area_hijau : ''),
+			'std'	=> ( $data_obj ? $data_obj->usaha_an : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
+
+		$fields[]	= array(
+			'name'	=> $this->slug.'_usaha_ket',
+			'label'	=> 'Keterangan Lain',
+			'type'	=> 'textarea',
+			'std'	=> ( $data_obj ? $data_obj->usaha_ket : '') );
 
 		return $fields;
-	}
-
-	public function data()
-	{
-		$post_data['pemohon_nama'] = $this->input->post('pemohon_nama');
-		$post_data['pemohon_kerja'] = $this->input->post('pemohon_kerja');
-		$post_data['pemohon_jabatan'] = $this->input->post('pemohon_jabatan');
-		$post_data['pemohon_alamat'] = $this->input->post('pemohon_alamat');
-		$post_data['pemohon_rt'] = $this->input->post('pemohon_rt');
-		$post_data['pemohon_rw'] = $this->input->post('pemohon_rw');
-		$post_data['pemohon_propinsi'] = $this->input->post('pemohon_propinsi');
-		$post_data['pemohon_kota'] = $this->input->post('pemohon_kota');
-		$post_data['pemohon_kecamatan'] = $this->input->post('pemohon_kecamatan');
-		$post_data['pemohon_kelurahan'] = $this->input->post('pemohon_kelurahan');
-		$post_data['pemohon_telp'] = $this->input->post('pemohon_telp');
-		$post_data['usaha_nama'] = $this->input->post('usaha_nama');
-		$post_data['usaha_jenis'] = $this->input->post('usaha_jenis');
-		$post_data['usaha_alamat'] = $this->input->post('usaha_alamat');
-		$post_data['usaha_rt'] = $this->input->post('usaha_rt');
-		$post_data['usaha_rw'] = $this->input->post('usaha_rw');
-		$post_data['usaha_propinsi'] = $this->input->post('usaha_propinsi');
-		$post_data['usaha_kota'] = $this->input->post('usaha_kota');
-		$post_data['usaha_kecamatan'] = $this->input->post('usaha_kecamatan');
-		$post_data['usaha_kelurahan'] = $this->input->post('usaha_kelurahan');
-		$post_data['usaha_luas'] = $this->input->post('usaha_luas');
-		$post_data['usaha_tanah'] = $this->input->post('usaha_tanah');
-		$post_data['usaha_pendirian_an'] = $this->input->post('usaha_pendirian_an');
-		$post_data['usaha_keterangan'] = $this->input->post('usaha_keterangan');
 	}
 }
 

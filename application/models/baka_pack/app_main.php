@@ -31,17 +31,21 @@ class App_main extends CI_Model
 		// Adding user navbar
 		$this->baka_theme->add_navbar( 'user_navbar', 'navbar-nav navbar-right' );
 
-		// Adding dashboard menu to main navbar
-		$this->baka_theme->add_navmenu( 'main_navbar', 'dashboard', 'link', 'dashboard', 'Dashboard' );
-		// Adding data menu to main navbar
-		$this->baka_theme->add_navmenu( 'main_navbar', 'master', 'link', 'data', 'Data Perijinan' );
+		if ( $this->baka_auth->permit('doc_manage') )
+		{
+			// Adding dashboard menu to main navbar
+			$this->baka_theme->add_navmenu( 'main_navbar', 'dashboard', 'link', 'dashboard', 'Dashboard' );
+			// Adding data menu to main navbar
+			$this->baka_theme->add_navmenu( 'main_navbar', 'master', 'link', 'data', 'Data Perijinan' );
+
+			// Adding submenu to main_navbar-data
+			$this->data_navbar( 'main_navbar-master', 'top' );
+		}
+
 		// Adding admin menu to main navbar
 		$this->baka_theme->add_navmenu( 'main_navbar', 'admin', 'link', 'admin', 'Administrasi' );
 		// Adding account menu to user navbar
 		$this->baka_theme->add_navmenu( 'user_navbar', 'account', 'link', 'profile', $this->username );
-
-		// Adding submenu to main_navbar-data
-		$this->data_navbar( 'main_navbar-master', 'top' );
 		// Adding submenu to main_navbar-admin
 		$this->admin_navbar( 'main_navbar-admin', 'top' );
 		// Adding submenu to user_navbar-account
@@ -53,24 +57,29 @@ class App_main extends CI_Model
 		$link	= 'data/layanan/';
 		$nama	= str_replace('/', '_', $link);
 
-		$this->baka_theme->add_navmenu( $parent, 'dashboard', 'link', 'dashboard', 'Statistik', array(), $position );
-		$this->baka_theme->add_navmenu( $parent, $nama.'laporan', 'link', 'data/utama/laporan', 'Laporan', array(), $position );
-		$this->baka_theme->add_navmenu( $parent, $nama.'d', 'devider', '', '', array(), $position );
-
-		foreach ($this->app_data->get_type_list() as $modul)
+		$list_data = $this->app_data->get_type_list();
+		
+		if ( count($list_data) > 0 )
 		{
-			$layanan = $this->app_data->get_modul( $modul );
+			$this->baka_theme->add_navmenu( $parent, 'dashboard', 'link', 'dashboard', 'Statistik', array(), $position );
+			$this->baka_theme->add_navmenu( $parent, $nama.'laporan', 'link', 'data/utama/laporan', 'Laporan', array(), $position );
+			$this->baka_theme->add_navmenu( $parent, $nama.'d', 'devider', '', '', array(), $position );
 
-			$this->baka_theme->add_navmenu(
-				$parent,
-				$nama.$layanan['slug'],
-				'link',
-				$link.'ijin/'.$modul,
-				$this->app_data->get_label( $modul ),
-				array(),
-				$position );
+			foreach ($list_data as $modul)
+			{
+				$layanan = $this->app_data->get_modul( $modul );
 
-			$this->data_layanan[$layanan['slug']] = $layanan['nama'];
+				$this->baka_theme->add_navmenu(
+					$parent,
+					$nama.$layanan['slug'],
+					'link',
+					$link.'ijin/'.$modul,
+					$this->app_data->get_label( $modul ),
+					array(),
+					$position );
+
+				$this->data_layanan[$layanan['slug']] = $layanan['nama'];
+			}
 		}
 	}
 

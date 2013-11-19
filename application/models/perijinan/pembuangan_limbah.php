@@ -86,44 +86,44 @@ class Pembuangan_limbah extends App_main
 			'name'	=> $this->slug.'_limbah_kadar_max_proses',
 			'label'	=> 'Kadar max proses',
 			'type'	=> 'subfield',
-			'fields'=> $this->subfield_limbah( 'limbah_kadar_max_proses_', $data_id, $data ) );
+			'fields'=> $this->subfield_limbah( 'limbah_kadar_max_proses_', $data_obj ) );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_limbah_beban_max_proses',
 			'label'	=> 'Beban pencemaran proses',
 			'type'	=> 'subfield',
-			'fields'=> $this->subfield_limbah( 'limbah_beban_max_proses_', $data_id, $data ) );
+			'fields'=> $this->subfield_limbah( 'limbah_beban_max_proses_', $data_obj ) );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_limbah_kadar_max_kond',
 			'label'	=> 'Kadar max kondensor',
 			'type'	=> 'subfield',
-			'fields'=> $this->subfield_limbah( 'limbah_kadar_max_kond_', $data_id, $data ) );
+			'fields'=> $this->subfield_limbah( 'limbah_kadar_max_kond_', $data_obj ) );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_limbah_beban_max_kond',
 			'label'	=> 'Beban pencemaran kondensor',
 			'type'	=> 'subfield',
-			'fields'=> $this->subfield_limbah( 'limbah_beban_max_kond_', $data_id, $data ) );
+			'fields'=> $this->subfield_limbah( 'limbah_beban_max_kond_', $data_obj ) );
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_limbah_target_buang',
 			'label'	=> 'Target pembuangan',
 			'type'	=> 'text',
-			'std'	=> ( $data_obj ? $data_obj->target_buang : ''),
+			'std'	=> ( $data_obj ? $data_obj->limbah_target_buang : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		return $fields;
 	}
 
-	protected function subfield_limbah( $parent, $data_id = '', $data = NULL )
+	protected function subfield_limbah( $parent, $data_obj = FALSE )
 	{
 		$fields[]	= array(
 			'col'	=> '2',
 			'name'	=> 'bod',
 			'label'	=> 'BOD',
 			'type'	=> 'text',
-			'std'	=> ( $data_obj ? $data_obj->{$parent.'kond'} : ''),
+			'std'	=> ( $data_obj ? $data_obj->{$parent.'bod'} : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 		
 		$fields[]	= array(

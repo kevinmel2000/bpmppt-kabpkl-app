@@ -25,24 +25,32 @@ class Utama extends BAKA_Controller
 
 	public function stat()
 	{
-		$this->data['load_toolbar'] = TRUE;
-		$this->data['search_form']	= TRUE;
-		$this->data['page_link'] .= 'layanan/';
+		$this->data['panel_title']	= $this->baka_theme->set_title('Semua data perijinan');
+		$this->data['data_type']	= $this->_type_list;
 
-		foreach ($this->_type_list as $key => $value)
+		if ( count($this->_type_list) > 0 )
 		{
-			$key = 'layanan/ijin/'.$key.'/form';
-			$this->data['tool_buttons']['Baru:dd|primary'][$key] = $value;
+			$this->data['load_toolbar'] = TRUE;
+			$this->data['search_form']	= TRUE;
+			$this->data['page_link'] .= 'layanan/';
+
+			foreach ($this->_type_list as $key => $value)
+			{
+				$key = 'layanan/ijin/'.$key.'/form';
+				$this->data['tool_buttons']['Baru:dd|primary'][$key] = $value;
+			}
+
+			$this->data['tool_buttons']['utama/laporan'] = 'Laporan|default';
+			$this->data['panel_body']	= $this->app_data->get_tables( $this->data['page_link'] );
+			$this->data['counter']		= $this->app_data->count_data();
+
+			$this->baka_theme->load('pages/panel_alldata', $this->data);
+		}
+		else
+		{
+			$this->_notice( 'no-data-accessible' );
 		}
 
-		$this->data['tool_buttons']['utama/laporan'] = 'Laporan|default';
-		
-		$this->data['data_type']	= $this->_type_list;
-		$this->data['panel_title']	= $this->baka_theme->set_title('Semua data perijinan');
-		$this->data['panel_body']	= $this->app_data->get_tables( $this->data['page_link'] );
-		$this->data['counter']		= $this->app_data->count_data();
-
-		$this->baka_theme->load('pages/panel_alldata', $this->data);
 	}
 
 	public function laporan()
@@ -121,7 +129,9 @@ class Utama extends BAKA_Controller
 		{
 			$submited_data = $form->submited_data();
 
-			// $return = $this->app_data-
+			$this->session->set_flashdata('error', 'Tidak dapat menemukan data yang anda cari.');
+
+			redirect( current_url() );
 		}
 			
 		$this->data['panel_body'] = $form->render();

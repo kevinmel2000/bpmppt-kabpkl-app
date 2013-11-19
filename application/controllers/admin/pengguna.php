@@ -14,12 +14,7 @@ class Pengguna extends BAKA_Controller
 		$this->data['load_toolbar']	= TRUE;
 		$this->data['page_link']	= 'admin/pengguna/';
 
-		// if ( ! $this->load->is_loaded('table'))
-		// 	$this->load->library('table');
-
 		$this->current_user = $this->baka_auth->get_user_id();
-
-		// $this->table->set_template( array('table_open' => '<table class="table table-striped table-hover table-condensed">' ) );
 
 		$this->load->model('Baka_pack/app_users');
 	}
@@ -95,12 +90,11 @@ class Pengguna extends BAKA_Controller
 		if ( $form->validate_submition() )
 		{
 			$form_data	=  $form->submited_data();
-
 			$result		= $this->app_users->ban_user( $user_id, $form_data['ban-reason'] );
 
 			if ( $result )
 			{
-				$this->session->set_flashdata('success', $this->baka_lib->message());
+				$this->session->set_flashdata('success', $this->baka_lib->messages());
 				redirect( $this->data['page_link'] );
 			}
 			else
@@ -117,12 +111,7 @@ class Pengguna extends BAKA_Controller
 
 	private function _user_table()
 	{
-		$query = $this->baka_users->get_users();
-
 		$this->data['tool_buttons']['form'] = 'Baru|primary';
-
-		$this->data['panel_title']	= $this->baka_theme->set_title('Semua data pengguna');
-		$this->data['counter']		= $query->num_rows();
 
 		$this->load->library('Baka_pack/baka_grid');
 
@@ -132,7 +121,8 @@ class Pengguna extends BAKA_Controller
 								->set_column('Email', 'email', '40%', FALSE, '%s')
 								->set_buttons('form/', 'eye-open', 'primary', 'Lihat data')
 								->set_buttons('delete/', 'trash', 'danger', 'Hapus data');
-						  
+
+		$this->data['panel_title'] = $this->baka_theme->set_title('Semua data pengguna');
 		$this->data['panel_body'] = $grid->make_table( $this->baka_users->get_users() );
 
 		$this->baka_theme->load('pages/panel_data', $this->data);
@@ -175,8 +165,8 @@ class Pengguna extends BAKA_Controller
 
 		if ( $use_username )
 		{
-			$username_min_length	= get_app_setting('auth_username_min_length');
-			$username_max_length	= get_app_setting('auth_username_max_length');
+			$username_min_length = get_app_setting('auth_username_min_length');
+			$username_max_length = get_app_setting('auth_username_max_length');
 
 			$fields[]	= array(
 				'name'	=> 'user-username',
@@ -208,8 +198,8 @@ class Pengguna extends BAKA_Controller
 				'label'	=> 'Password lama' );
 		}
 
-		$password_min_length	= get_app_setting('auth_password_min_length');
-		$password_max_length	= get_app_setting('auth_password_max_length');
+		$password_min_length = get_app_setting('auth_password_min_length');
+		$password_max_length = get_app_setting('auth_password_max_length');
 
 		$fields[]	= array(
 			'name'	=> 'user-new-password',
@@ -225,28 +215,28 @@ class Pengguna extends BAKA_Controller
 			'desc'	=> ( ! $user ? 'Ulangi penulisan password diatas.' : '' ),
 			'validation'=> ( ! $user ? 'required|' : '' ).'matches[user-new-password]');
 
+		$fields[]	= array(
+			'name'	=> 'app-fieldset-roles',
+			'type'	=> 'fieldset',
+			'label'	=> 'Hak Akses' );
+
+		$roles_option = array();
+
+		foreach ( $this->baka_users->get_groups()->get()->result() as $role )
+		{
+			$roles_option[$role->id] = $role->fullname;
+		}
+
+		$fields[]	= array(
+			'name'	=> 'user-roles',
+			'type'	=> 'checkbox',
+			'label'	=> 'Kelompok pengguna',
+			'option'=> $roles_option,
+			'std'	=> ( $user ? explode(',', $user->role_id) : '' ),
+			'validation'=> ( ! $user ? 'required' : '' ) );
+
 		if ( $user )
 		{
-			$fields[]	= array(
-				'name'	=> 'app-fieldset-roles',
-				'type'	=> 'fieldset',
-				'label'	=> 'Hak Akses' );
-
-			$roles_option = array();
-
-			foreach ( $this->baka_users->get_groups()->result() as $role )
-			{
-				$roles_option[$role->id] = $role->fullname;
-			}
-
-			$fields[]	= array(
-				'name'	=> 'user-roles',
-				'type'	=> 'checkbox',
-				'label'	=> 'Kelompok pengguna',
-				'option'=> $roles_option,
-				'std'	=> ( $user ? explode(',', $user->role_id) : '' ),
-				'validation'=> ( ! $user ? 'required' : '' ) );
-
 			$fields[]	= array(
 				'name'	=> 'app-fieldset-status',
 				'type'	=> 'fieldset',
@@ -299,16 +289,16 @@ class Pengguna extends BAKA_Controller
 				$user_data['email'] 	= $form_data['user-email'];
 				$user_data['password']	= $form_data['user-new-password'];
 
-				$result		= $this->app_users->create_user( $user_data, $use_username );
+				$result = $this->app_users->create_user( $user_data, $use_username, $form_data['user-roles'] );
 			}
 			else
 			{
-				$result		= $this->app_users->update_user( $user_id, $form->submited_data(), $use_username );
+				$result = $this->app_users->update_user( $user_id, $form->submited_data(), $use_username );
 			}
 
 			if ( $result )
 			{
-				$this->session->set_flashdata('success', $this->baka_lib->message());
+				$this->session->set_flashdata('success', $this->baka_lib->messages());
 				redirect( $this->data['page_link'] );
 			}
 			else
@@ -323,7 +313,7 @@ class Pengguna extends BAKA_Controller
 		$this->baka_theme->load('pages/panel_form', $this->data);
 	}
 
-	public function groups( $page = '', $group_id = '' )
+	public function groups( $page = '', $group_id = NULL )
 	{
 		$this->data['page_link']	.= 'groups/';
 
@@ -343,14 +333,14 @@ class Pengguna extends BAKA_Controller
 		}
 	}
 
-	private function _group_del( $perm_id )
+	private function _group_del( $group_id )
 	{
 		// 
 	}
 
 	private function _group_form( $group_id = NULL )
 	{
-		$group	= (! is_null( $group_id ) ? $this->baka_users->get_groups( $group_id )->row() : FALSE );
+		$group	= ( !is_null( $group_id ) ? $this->baka_users->get_groups( $group_id )->row() : FALSE );
 
 		$this->data['panel_title'] = $this->baka_theme->set_title( $group ? 'Ubah data Kelompok pengguna '.$group->fullname : 'Buat kelompok pengguna baru' );
 		
@@ -361,44 +351,53 @@ class Pengguna extends BAKA_Controller
 			'type'	=> 'text',
 			'label'	=> 'Nama lengkap',
 			'std'	=> ( $group ? $group->fullname : '' ),
-			'desc'	=> 'Nama lengkap untuk kelompok pengguna, diperbolehkan menggunakan spasi.',
-			'validation'=> ( !$group ? 'required' : '' ) );
+			'validation'=> 'required',
+			'desc'	=> 'Nama lengkap untuk kelompok pengguna, diperbolehkan menggunakan spasi.' );
 
 		$fields[]	= array(
 			'name'	=> 'group-role',
 			'type'	=> 'text',
 			'label'	=> 'Nama singkat',
 			'std'	=> ( $group ? $group->name : '' ),
-			'desc'	=> 'Nama singkan untuk kelompok pengguna, tidak diperbolehkan menggunakan spasi.',
-			'validation'=> ( !$group ? 'required' : '' ) );
+			'validation'=> 'required',
+			'desc'	=> 'Nama singkan untuk kelompok pengguna, tidak diperbolehkan menggunakan spasi.' );
 
 		$fields[]	= array(
 			'name'	=> 'group-default',
 			'type'	=> 'radiobox',
 			'label'	=> 'Jadikan default',
 			'option'=> array(
-				0 => 'Tidak',
-				1 => 'Ya'),
+				1 => 'Ya',
+				0 => 'Tidak' ),
 			'std'	=> ( $group ? $group->default : 0 ),
-			'desc'	=> 'Pilih <em>Ya</em> untuk menjadikna group ini sebagai group bawaan setiap mendambahkan pengguna baru, atau pilih <em>Tidak</em> untuk sebaliknya.',
-			'validation'=> ( !$group ? 'required' : '' ) );
+			'validation'=> 'required',
+			'desc'	=> 'Pilih <em>Ya</em> untuk menjadikna group ini sebagai group bawaan setiap mendambahkan pengguna baru, atau pilih <em>Tidak</em> untuk sebaliknya.' );
 
 		$fields[]	= array(
 			'name'	=> 'group-fieldset-perms',
 			'type'	=> 'fieldset',
 			'label'	=> 'Wewenang Kelompok' );
 
-		foreach ( $this->baka_users->get_perms()->result() as $perms )
+		$permissions = $this->baka_users->get_perms()->get()->result();
+
+		foreach ( $permissions as $perms )
 		{
-			$child_id	= strpos($perms->perm_id, ',') !== FALSE	? explode(',', $perms->perm_id) : array($perms->perm_id) ;
-			$child_name	= strpos($perms->perm_name, ',') !== FALSE ? explode(',', $perms->perm_name) : array($perms->perm_name) ;
-			$child_desc	= strpos($perms->perm_desc, ',') !== FALSE ? explode(',', $perms->perm_desc) : array($perms->perm_desc) ;
+			$child_id	= strpos($perms->perm_id, ',') !== FALSE	? explode(',', $perms->perm_id)		: array($perms->perm_id) ;
+			$child_name	= strpos($perms->perm_name, ',') !== FALSE	? explode(',', $perms->perm_name)	: array($perms->perm_name) ;
+			$child_desc	= strpos($perms->perm_desc, ',') !== FALSE	? explode(',', $perms->perm_desc)	: array($perms->perm_desc) ;
+
+			$permission = array();
+
+			foreach ($child_id as $i => $id)
+			{
+				$permission[$id] = (isset( $child_desc[$i] ) AND $child_desc[$i] != '-') ? $child_desc[$i] : $child_name[$i];
+			}
 
 			$fields[]	= array(
 				'name'	=> 'group-perms-'.str_replace(' ', '-', strtolower($perms->parent)),
 				'type'	=> 'checkbox',
 				'label'	=> $perms->parent,
-				'option'=> array_combine($child_id, $child_desc),
+				'option'=> $permission,
 				'std'	=> ( $group ? explode(',', $group->perm_id) : 0 ),
 				'desc'	=> '' );
 		}
@@ -408,34 +407,46 @@ class Pengguna extends BAKA_Controller
 
 		if ( $form->validate_submition() )
 		{
-			if ( $user_id == '' )
+			$form_data	=  $form->submited_data();
+
+			$role_data['role']		= $form_data['group-role'];
+			$role_data['full'] 		= $form_data['group-full'];
+			$role_data['default']	= $form_data['group-default'];
+			$perm_data				= array();
+
+			foreach ( $permissions as $permission )
 			{
-				$form_data	=  $form->submited_data();
+				$perm_parent = 'group-perms-'.str_replace(' ', '-', strtolower($permission->parent));
 
-				$user_data['role']		= $form_data['group-role'];
-				$user_data['full'] 		= $form_data['group-full'];
-				$user_data['default']	= $form_data['group-default'];
+				if ( $form_data[$perm_parent] )
+				{
+					foreach ( $form_data[$perm_parent] as $parent )
+					{
+						$perm_data[] = $parent;
+					}
+				}
+			}
 
-				$result = $this->app_users->create_user( $user_data, $use_username );
+			if ( $this->baka_users->update_role( $role_data, $group_id, $perm_data ) )
+			{
+				$this->session->set_flashdata('success', $this->baka_lib->messages() );
 			}
 			else
 			{
-				$result = $this->app_users->update_user( $user_id, $form->submited_data(), $use_username );
+				$this->session->set_flashdata('error', $this->baka_lib->errors() );
 			}
 
-			if ( $result )
-			{
-				$this->session->set_flashdata('success', $this->baka_lib->message());
-				redirect( $this->data['page_link'] );
-			}
-			else
-			{
-				$this->session->set_flashdata('error', $this->baka_lib->errors());
-				redirect( current_url() );
-			}
+			$this->data['page_link'] .= ( $group ? 'form/'.$group_id : '' );
+
+			redirect( $this->data['page_link'] );
+			// $this->data['panel_body'] = $perm_data;
+		}
+		else
+		{
+			$this->data['panel_body'] = $form->render();
 		}
 
-		$this->data['panel_body'] = $form->render();
+		// $this->data['panel_body'] = $form->render();
 
 		$this->baka_theme->load('pages/panel_form', $this->data);
 	}
@@ -449,7 +460,7 @@ class Pengguna extends BAKA_Controller
 
 		$grid = $this->baka_grid->identifier('id')
 								->set_baseurl($this->data['page_link'])
-								->set_column('Kelompok', 'fullname', '65%', TRUE)
+								->set_column('Kelompok', 'fullname, perm_count, callback_make_tag:perm_desc', '65%', FALSE, '<strong>%s</strong> <small class="text-muted">Dengan %s wewenang, antara lain:</small><br>%s')
 								->set_column('Default', 'callback_bool_to_str:default|Default', '20%', FALSE, '<span class="badge">%s</span>')
 								->set_buttons('form/', 'eye-open', 'primary', 'Lihat data')
 								->set_buttons('delete/', 'trash', 'danger', 'Hapus data');
@@ -540,7 +551,7 @@ class Pengguna extends BAKA_Controller
 
 			if ( $result )
 			{
-				$this->session->set_flashdata('success', $this->baka_lib->message());
+				$this->session->set_flashdata('success', $this->baka_lib->messages());
 				redirect( $this->data['page_link'] );
 			}
 			else
@@ -565,8 +576,8 @@ class Pengguna extends BAKA_Controller
 
 		$grid = $this->baka_grid->identifier('permission_id')
 								->set_baseurl($this->data['page_link'])
-								->set_column('Hak akses', 'permission, description', '45%', TRUE, '<strong>%s</strong><br>%s')
-								->set_column('Keterangan', 'parent', '40%')
+								->set_column('Hak akses', 'description, permission', '45%', TRUE, '<strong>%s</strong><br><small>%s</small>')
+								->set_column('Difisi', 'parent', '40%')
 								->set_buttons('form/', 'eye-open', 'primary', 'Lihat data')
 								->set_buttons('delete/', 'trash', 'danger', 'Hapus data');
 

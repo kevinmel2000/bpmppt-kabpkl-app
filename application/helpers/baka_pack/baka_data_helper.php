@@ -1,56 +1,5 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-
-function get_counter_text( $count = NULL )
-{
-	if ( (int) $count > 0 )
-	{
-		$limit = get_app_setting('app_data_show_limit');
-
-		if ( $count >= $limit )
-			return 'Menampilkan '.$limit.' data dari total '.$count.' data keseluruhan';
-		else
-			return 'Menampilkan '.$count.' dari keseluruhan data';
-	}
-	else
-		return 'Belum ada data';
-}
-
-function pagination( $page_link, $data_count )
-{
-	$ci =& get_instance();
-	$ci->load->library('pagination');
-
-	$ci->pagination->initialize( array(
-		'base_url'			=> $page_link,
-		'total_rows'		=> $data_count,
-		'per_page'			=> get_app_setting('app_data_show_limit'),
-		'uri_segment'		=> 4,
-		'num_links'			=> 3,
-		'full_tag_open'		=> '<ul class="pagination pagination-sm pull-right">',
-		'full_tag_close'	=> '</ul>',
-		'first_link'		=> 'First',
-		'first_tag_open'	=> '<li>',
-		'first_tag_close'	=> '<li>',
-		'last_link'			=> 'Last',
-		'last_tag_open'		=> '<li>',
-		'last_tag_close'	=> '<li>',
-		'next_link'			=> 'Next',
-		'next_tag_open'		=> '<li>',
-		'next_tag_close'	=> '<li>',
-		'prev_link'			=> 'Prev',
-		'prev_tag_open'		=> '<li>',
-		'prev_tag_close'	=> '<li>',
-		'cur_tag_open'		=> '<li class="active"><span>',
-		'cur_tag_close'		=> '</span><li>',
-		'num_tag_open'		=> '<li>',
-		'num_tag_close'		=> '<li>',
-		) ); 
-
-	return $ci->pagination->create_links();
-}
-
-
 function add_placeholder( $array, $placeholder = '---', $langify = FALSE )
 {
 	$output[''] = $placeholder;

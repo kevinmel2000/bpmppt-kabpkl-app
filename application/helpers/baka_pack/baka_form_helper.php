@@ -26,7 +26,22 @@ function set_toolbar( $tool_buttons, $page_link )
 
 			foreach ( $label as $l_url => $l_label )
 			{
-				$output	.= ( $dropdown ? '<li>' : '' ).anchor( $page_link.$l_url, $l_label, 'id="toolbar-btn-'.str_replace(' ', '-', strtolower($l_label)).'" class="'.( $dropdown ? '' : $btn_class.( isset($s_btn[1]) ? 'btn-'.$s_btn[1] : '' ) ).'"' ).( $dropdown ? '</li>' : '' );
+				$l_attr = '';
+
+				if ( strpos($l_label, '&') !== FALSE )
+				{
+					$l_tmp = explode('&', $l_label);
+
+					$l_label = $l_tmp[0];
+
+					$l_attr = _parse_data_attr( $l_tmp[1] );
+				}
+
+				$item_id = 'toolbar-btn-'.str_replace(' ', '-', strtolower($l_label));
+				$item = anchor( $page_link.$l_url, $l_label,
+					'id="'.$item_id.'" class="'.( $dropdown ? '' : $btn_class.( isset($s_btn[1]) ? 'btn-'.$s_btn[1] : '' ) ).'" '.$l_attr );
+				
+				$output	.= ( $dropdown ? '<li>'.$item.'</li>' : $item );
 			}
 
 			if ( $dropdown )
@@ -42,6 +57,25 @@ function set_toolbar( $tool_buttons, $page_link )
 	}
 	
 	$output	.= '</div>';
+
+	return $output;
+}
+
+function _parse_data_attr( $string )
+{
+	$output = '';
+
+	if ( strpos($string, ',') !== FALSE )
+	{
+		foreach ( explode(',', $string) as $data )
+		{
+			$output .= _parse_data_attr( $data );
+		}
+	}
+	else
+	{
+		$output .= ' data-'.$string;
+	}
 
 	return $output;
 }
@@ -67,26 +101,28 @@ function form_alert()
 
 	if ( $messages	= $ci->session->flashdata('message') )
 	{
-		$class		= 'warning';
+		$class = 'warning';
 	}
 	else if ( $messages	= $ci->session->flashdata('success') )
 	{
-		$class		= 'success';
+		$class = 'success';
 	}
 	else if ( $messages	= $ci->session->flashdata('info') )
 	{
-		$class		= 'info';
+		$class = 'info';
 	}
 	else if ( $messages	= $ci->session->flashdata('error') )
 	{
-		$class		= 'danger';
+		$class = 'danger';
 	}
 
 	$output = '';
 
+	$dismiss = '<a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>';
+
 	if ( is_array( $messages ) AND count( $messages ) > 0 )
 	{
-		$output .= '<div class="alert alert-'.$class.'"><ul>';
+		$output .= '<div class="alert alert-'.$class.'">'.$dismiss.'<ul>';
 		
 		foreach ( $messages as $message )
 		{
@@ -97,7 +133,7 @@ function form_alert()
 	}
 	else if ( is_string( $messages ) AND strlen( $messages ) > 0 )
 	{
-		$output = '<div class="alert alert-'.$class.'"><p>'.$messages.'</p></div>';
+		$output = '<div class="alert alert-'.$class.'">'.$dismiss.'<p>'.$messages.'</p></div>';
 	}
 
 	return $output;

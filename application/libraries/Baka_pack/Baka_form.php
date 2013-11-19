@@ -26,10 +26,11 @@ class Baka_form Extends Baka_lib
 
 	private $show_action_btns = TRUE;
 
+	private $is_horizontal_form = FALSE;
+
 	public function __construct()
 	{
 		$this->load->library('form_validation');
-
 		$this->load->helper('baka_pack/baka_form');
 
 		log_message('debug', "#Baka_pack: Form Class Initialized");
@@ -43,6 +44,8 @@ class Baka_form Extends Baka_lib
 		$this->form_attrs['class']	= ($class != '' ? ' '.$class : 'form-horizontal');
 		$this->form_attrs['method']	= strtoupper($method);
 		$this->form_attrs['role']	= 'form';
+
+		$this->is_horizontal_form = (strpos('form-horizontal', $this->form_attrs['class']) !== FALSE) ? TRUE : FALSE;
 
 		if (count($extra) > 0)
 		{
@@ -87,6 +90,8 @@ class Baka_form Extends Baka_lib
 	public function disable_buttons()
 	{
 		$this->show_action_btns = FALSE;
+
+		return $this;
 	}
 
 	public function render()
@@ -130,26 +135,17 @@ class Baka_form Extends Baka_lib
 		return $output;
 	}
 
-	protected function compile( $field )
+	private function compile( $field )
 	{
 		$output			= '';
 		$counter		= 0;
 		$input_classes	= 'form-control input-sm';
 
-		if (!array_key_exists('value', $field) AND !isset( $field['value'] ))
-			$field['value'] = '';
-
-		if (!array_key_exists('std', $field) AND !isset( $field['std'] ))
-			$field['std'] = '';
-
-		if (!array_key_exists('desc', $field) AND !isset( $field['desc'] ))
-			$field['desc'] = '';
-
-		if (!array_key_exists('attr', $field) AND !isset( $field['attr'] ))
-			$field['attr'] = '';
-
-		if (!array_key_exists('validation', $field) AND !isset( $field['validation'] ))
-			$field['validation'] = '';
+		foreach ( array('value', 'std', 'desc', 'attr', 'validation') as $field_key )
+		{
+			if (!array_key_exists($field_key, $field) AND !isset( $field[$field_key] ))
+				$field[$field_key] = '';
+		}
 
 		$field['id'] = str_replace('_', '-', isset($field['id']) ? $field['id'] : $field['name']);
 
@@ -165,9 +161,7 @@ class Baka_form Extends Baka_lib
 					$output .= form_fieldset_close();
 
 				if ( is_string( $field['attr'] ) )
-				{
 					$field['attr'] = array( $field['attr'] => '' );
-				}
 
 				$output .= form_fieldset( $field['label'], array_merge( $field['attr'], array( 'id'=>'fieldset-'.$field['id'] ) ) );
 
@@ -205,6 +199,10 @@ class Baka_form Extends Baka_lib
 				break;
 
 			case 'textarea':
+				$path = 'asset/vendor/jquery-autosize/';
+				$this->baka_theme->add_script( 'jquery-autosize', $path.'jquery.autosize.js', 'jquery', '1.18.0' );
+				$this->baka_theme->add_script( 'autosize-trigger', "$('textarea').autosize();\n", 'jquery-autosize' );
+
 				$output .= $this->_form_common(	$field['name'], $field['label'],
 					form_textarea( array(
 						'name'	=> $field['name'],
@@ -252,7 +250,13 @@ class Baka_form Extends Baka_lib
 				break;
 
 			case 'subfield':
-				$output .= $this->_form_subfield( $field['name'], $field['label'], $field['id'], $field['fields'], $field['desc'], $field['attr'] );
+				$output .= $this->_form_subfield(
+					$field['name'],
+					$field['label'],
+					$field['id'],
+					$field['fields'],
+					$field['desc'],
+					$field['attr'] );
 				break;
 
 			case 'recaptcha':
@@ -264,64 +268,44 @@ class Baka_form Extends Baka_lib
 				break;
 
 			case 'captcha':
-				$output .= $this->_form_captcha( $field['name'], $field['label'], $field['id'], $input_classes, $field['desc'], $field['validation'] );
+				$output .= $this->_form_captcha(
+					$field['name'], $field['label'], $field['id'], $input_classes, $field['desc'], $field['validation'] );
 				break;
 
 			case 'static':
-				$output .= $this->_form_common(	$field['name'], $field['label'],
+				$output .= $this->_form_common(
+					$field['name'], $field['label'],
 					'<p id="'.$field['id'].'" class="form-control-static input-sm">'.$field['std'].'</p>',
 					$field['id'], $field['desc'] );
 				break;
 
 			case 'custom':
-				$output .= $this->_form_common(	$field['name'], $field['label'], $field['value'], $field['id'], $field['desc'], $field['validation'] );
+				$output .= $this->_form_common(
+					$field['name'],
+					$field['label'],
+					$field['value'],
+					$field['id'],
+					$field['desc'],
+					$field['validation'] );
 				break;
 
 			default:
-				log_message('debug', '#Baka_form: '.$field['type'].' Field type are not supported currently');
+				log_message('error', '#Baka_form: '.$field['type'].' Field type are not supported currently');
 				break;
 		}
 
 		return $output;
 	}
 
-	private function _form_datepicker( $name, $label, $std = '', $id = '', $class = '', $desc = '', $validation = '', $attr = '', $is_subfield = FALSE )
-	{
-		$this->baka_theme->add_script( 'bt-datepicker', 'asset/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js', 'bootstrap', '1.1.1' );
-		$this->baka_theme->add_script( 'bt-datepicker-id', 'asset/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.id.js', 'bt-datepicker', '1.1.1' );
-		$this->baka_theme->add_style( 'bt-datepicker', 'asset/vendor/bootstrap-datepicker/css/datepicker.css', 'bootstrap', '1.1.1' );
-		
-		$script   = "$('.bs-datepicker').datepicker({\n"
-				  . "	format: 'dd/mm/yyyy',\n"
-				  . "	language: 'id',\n"
-				  . "	autoclose: true,\n"
-				  . "	todayBtn: true\n"
-				  . "});\n";
-
-		$this->baka_theme->add_script( 'dp-trigger', $script, 'bt-datepicker' );
-
-		$input = form_input( array(
-					'name'	=> $name,
-					'type'	=> 'text',
-					'id'	=> $id,
-					'class'	=> $class.' bs-datepicker' ), set_value( $name, $std ), $attr);
-
-		if ( $is_subfield == FALSE )
-		{
-			return $this->_form_common(	$name, $label, $input, $id, $desc, $validation );
-		}
-		else
-		{
-			return $input;
-		}
-	}
-
-	private function _form_radiocheckbox( $name, $label, $options, $std = '', $id = '', $type = '', $desc = '', $validation = '' )
+	private function _form_radiocheckbox( $name, $label, $options, $std = '', $id = '', $type = '', $desc = '', $validation = '', $attr = '' )
 	{
 		$type	= ($type == 'checkbox' ? $type : 'radio');
-		$input	= '';
+		$field	= ($type == 'checkbox' ? $name.'[]' : $name );
+		$devide	= (count($options) > 8 ? TRUE : FALSE);
+		$count	= 1;
 
-		$field = ( $type == 'checkbox' ? $name.'[]' : $name );
+		$input	= $devide ? '<div class="row">' : '';
+		$actived= FALSE;
 
 		foreach( $options as $value => $option )
 		{
@@ -337,10 +321,17 @@ class Baka_form Extends Baka_lib
 			$set_func	= 'set_'.$type;
 			$form_func	= 'form_'.$type;
 
-			$input .= '<div class="'.$type.'"><label>';
-			$input .= $form_func( $field, $value, $set_func( $name, $value, $actived ) ).' '.$option;
-			$input .= '</label></div>';
+			$check	= '<div class="'.$type.'"><label>';
+			$check .= $form_func( $field, $value, $set_func( $name, $value, $actived ) ).' '.$option;
+			$check .= '</label></div>';
+
+			$input .= ($devide ? '<div class="col-md-6">'.$check.'</div>' : $check);
+			$input .= ($devide AND $count % 2 == 0) ? '</div><div class="row">' : '';
+
+			$count++;
 		}
+
+		$input .= $devide ? '</div>' : '';
 
 		return $this->_form_common(	$name, $label, $input, $id, $desc, $validation );
 	}
@@ -350,7 +341,8 @@ class Baka_form Extends Baka_lib
 		$type	= ($type == 'dropdown' ? $type : 'multiselect');
 		$attr	= 'class="form-control input-sm" id="input_'.$name.'" '.$attr;
 
-		return $this->_form_common(	$name, $label, call_user_func_array('form_'.$type, array($name, $option, set_select($name, $std), $attr)), $id, $desc, $validation );
+		return $this->_form_common(	$name, $label, call_user_func_array('form_'.$type,
+			array($name, $option, set_select($name, $std), $attr)), $id, $desc, $validation );
 	}
 
 	private function _form_captcha( $name, $label, $id = '', $class = '', $desc = '', $validation = '' )
@@ -365,13 +357,15 @@ class Baka_form Extends Baka_lib
 			'class'	=> 'img',
 			'width'	=> '200',
 			'height'=> '70',
-			'rel'	=> 'cool-captcha',
-			));
+			'rel'	=> 'cool-captcha' ));
 
 		$captcha .= anchor( current_url().'#', 'Ganti teks', array(
 			'class'	=> 'small',
 			'class'	=> 'change-image',
-			'onclick'=> "$(function() { $('#cool-captcha-".$name."-img').attr('src', '".$captcha_url."?'+Math.random());\n$('#cool-captcha-".$name."-input').focus();\nreturn false;})"));
+			'onclick'=> "$(function() {
+							$('#cool-captcha-".$name."-img').attr('src', '".$captcha_url."?'+Math.random());
+							$('#cool-captcha-".$name."-input').focus();
+						return false; });" ) );
 
 		$captcha .= form_input( array(
 			'name'	=> $name,
@@ -411,10 +405,8 @@ class Baka_form Extends Baka_lib
 
 			$field['name']	= $name.'_'.$field['name'];
 			$field['id']	= str_replace('_', '-', 'input-'.$field['name']);
-
-			$field['attr']	= ( isset($field['attr']) ? $field['attr'] : $attr );
-
-			$field['std']	= ( isset($field['std']) ? $field['std'] : '' );
+			$field['attr']	= (isset($field['attr']) ? $field['attr'] : $attr );
+			$field['std']	= (isset($field['std']) ? $field['std'] : '' );
 
 			switch( $field['type'] )
 			{
@@ -436,7 +428,14 @@ class Baka_form Extends Baka_lib
 
 				case 'datepicker':
 					$field_col .= $this->_form_datepicker(
-						$field['name'], $field['label'], $field['std'], $field['id'], $input_classes, '', $field['validation'], $field['attr'], TRUE );
+						$field['name'],
+						$field['label'],
+						$field['std'],
+						$field['id'],
+						$input_classes,
+						'',
+						$field['validation'],
+						$field['attr'], TRUE );
 					break;
 
 				case 'static':
@@ -454,12 +453,25 @@ class Baka_form Extends Baka_lib
 
 				// case 'radiobox':
 				// case 'checkbox':
-				// 	$field_col .= $this->_form_radiocheckbox($field['name'], $field['label'], $field['std'], $field['option'], $field['type'], $field['desc'], $field['validation']);
+				// 	$field_col .= $this->_form_radiocheckbox(
+				// 		$field['name'],
+				// 		$field['label'],
+				// 		$field['std'],
+				// 		$field['option'],
+				// 		$field['type'],
+				// 		$field['desc'],
+				// 		$field['validation']);
 				// 	break;
 
 				// case 'textarea':
 				// 	$field_col .= $this->_form_common(	$field['name'], $field['label'],
-				// 		form_textarea( array('name' => $field['name'],'rows' => 3,'cols' => '','value' => set_value($field['name'], $field['std']),'id' => $field['name'],'class' => $input_classes) ),
+				// 		form_textarea( array(
+				// 			'name' => $field['name'],
+				// 			'rows' => 3,
+				// 			'cols' => '',
+				// 			'value' => set_value($field['name'], $field['std']),
+				// 			'id' => $field['name'],
+				// 			'class' => $input_classes) ),
 				// 		$field['desc'], $field['validation'] );
 				// 	break;
 
@@ -470,7 +482,7 @@ class Baka_form Extends Baka_lib
 				// 	break;
 
 				default:
-					log_message('debug', '#Baka_form: '.$field['type'].' Subfield type are not supported currently');
+					log_message('error', '#Baka_form: '.$field['type'].' Subfield type are not supported currently');
 					break;
 			}
 
@@ -484,9 +496,34 @@ class Baka_form Extends Baka_lib
 
 		$desc = ( count($errors) > 0 ? $errors : $desc );
 
-		$output = $this->_form_common( $name, $label, $field_col, $id, $desc, $validation );
+		return $this->_form_common( $name, $label, $field_col, $id, $desc, $validation );
+	}
 
-		return $output;
+	private function _form_datepicker( $name, $label, $std = '', $id = '', $class = '', $desc = '', $validation = '', $attr = '', $is_sub = FALSE )
+	{
+		$path = 'asset/vendor/bootstrap-datepicker/';
+		$this->baka_theme->add_script( 'bt-datepicker', $path.'js/bootstrap-datepicker.js', 'bootstrap', '1.1.1' );
+		$this->baka_theme->add_script( 'bt-datepicker-id', $path.'js/locales/bootstrap-datepicker.id.js', 'bt-datepicker', '1.1.1' );
+		$this->baka_theme->add_style( 'bt-datepicker', $path.'css/datepicker.css', 'bootstrap', '1.1.1' );
+		
+		$script = "$('.bs-datepicker').datepicker({\n"
+				. "format: 'dd-mm-yyyy',\n"
+				. "language: 'id',\n"
+				. "autoclose: true,\n"
+				. "todayBtn: true\n"
+				. "});\n";
+
+		$this->baka_theme->add_script( 'dp-trigger', $script, 'bt-datepicker' );
+
+		$input = form_input( array(
+			'name'	=> $name,
+			'type'	=> 'text',
+			'id'	=> $id,
+			'class'	=> $class.' bs-datepicker' ), set_value( $name, $std ), $attr);
+
+		return ($is_sub == FALSE)
+			? $this->_form_common( $name, $label, $input, $id, $desc, $validation )
+			: $input ;
 	}
 
 	private function _form_common( $name, $label, $input, $id = '', $desc = '', $validation = '' )
@@ -506,12 +543,12 @@ class Baka_form Extends Baka_lib
 				$group .= ' has-error';
 		}
 
-		$label_col = (strpos('form-horizontal', $this->form_attrs['class']) !== FALSE ? 'col-lg-3 col-md-3 ' : '' );
-		$input_col = (strpos('form-horizontal', $this->form_attrs['class']) !== FALSE ? 'col-lg-9 col-md-9 ' : '' );
+		$label_col = ($this->is_horizontal_form ? 'col-lg-3 col-md-3 ' : '' );
+		$input_col = ($this->is_horizontal_form ? 'col-lg-9 col-md-9 ' : '' );
 
 		$output  = '<div id="group-'.str_replace('_', '-', $name).'" class="'.$group.'">';
 
-		if ($label != '' OR strpos('form-horizontal', $this->form_attrs['class']) !== FALSE )
+		if ($label != '' OR $this->is_horizontal_form )
 			$output .= '	'.form_label( $label, $id, array('class'=> $label_col.'control-label') );
 	
 		$output .= '	<div class="'.$input_col.'">'.$input.$is_error;
@@ -528,48 +565,64 @@ class Baka_form Extends Baka_lib
 		return $output;
 	}
 
+	/**
+	 * Default form action buttons
+	 * @return string
+	 */
 	private function _form_actions()
 	{
+		// If you have no buttons i'll give you two as default ;)
+		// 1. Submit button as Bootstrap btn-primary on the left side
+		// 2. Reset button as Bootstrap btn-default on the right side
 		if ( count($this->buttons) == 0 )
 		{
 			$this->buttons = array(
 				array(
 					'name'	=> 'submit',
 					'type'	=> 'submit',
-					'label'	=> 'submit_btn',
-					'class'	=> 'pull-left btn-primary'
-					),
+					'label'	=> 'lang:submit_btn',
+					'class'	=> 'pull-left btn-primary' ),
 				array(
 					'name'	=> 'reset',
 					'type'	=> 'reset',
-					'label'	=> 'reset_btn',
-					'class'	=> 'pull-right btn-default'
-					)
-				);
+					'label'	=> 'lang:reset_btn',
+					'class'	=> 'pull-right btn-default' ) );
 		}
 
-		$group_col = (strpos('form-horizontal', $this->form_attrs['class']) !== FALSE ? 'col-lg-12 col-md-12 ' : '' );
+		// If you were use Bootstrap form-horizontal class in your form,
+		// You'll need to specify Bootstrap grids class.
+		$group_col = ($this->is_horizontal_form ? 'col-lg-12 col-md-12 ' : '' );
 		$output = '<div class="form-group form-action"><div class="'.$group_col.'clearfix">';
 
+		// Let's reset your button attributes.
 		$button_attr = array();
 
 		foreach ($this->buttons as $attr)
 		{
+			// Button name is inheritance with form ID.
 			$button_attr['name']	= $this->form_attrs['id'].'-'.$attr['name'];
+			// If you not specify your Button ID, you'll get it from Button name with '-btn' as surfix.
 			$button_attr['id']		= (isset($attr['id']) ? $attr['id'] : $button_attr['name']).'-btn';
+			// I prefer to use Bootstrap btn-sm as default.
 			$button_attr['class']	= 'btn btn-sm'.( isset($attr['class']) ? ' '.$attr['class'] : '');
+
+			if ( substr($attr['label'], 0, 5) == 'lang:' )
+				$attr['label'] = _x( str_replace('lang:', '', $attr['label']) );
 
 			switch ($attr['type']) {
 				case 'submit':
 				case 'reset':
 					$func = 'form_'.$attr['type'];
-					$button_attr['value'] = _x( $attr['label'] );
+					$button_attr['value'] = $attr['label'];
+
+					$button_attr['data-loading-text'] = 'Loading...';
+					$button_attr['data-complete-text'] = 'Finished!';
 
 					$output .= $func( $button_attr );
 					break;
 
 				case 'button':
-					$button_attr['content'] = _x( $attr['label'] );
+					$button_attr['content'] = $attr['label'];
 					$output .= form_button( $button_attr );
 					break;
 

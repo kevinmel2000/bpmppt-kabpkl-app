@@ -107,7 +107,7 @@ function baka_echo( $anu )
  * @param  string
  * @return string
  */
-function twb_label( $text, $class = '', $tag = 'span' )
+function twb_label( $text, $class = 'default', $tag = 'span' )
 {
 	return '<'.$tag.' class="label label-'.$class.'">'.$text.'</'.$tag.'>';
 }
@@ -133,6 +133,18 @@ function twb_badge( $text, $tag = 'span' )
 function twb_text( $text, $class = '', $tag = 'span' )
 {
 	return '<'.$tag.' class="text-'.$class.'">'.$text.'</'.$tag.'>';
+}
+
+function make_tag( $texts )
+{
+	$out = '';
+
+	foreach ( explode(',', $texts) as $text )
+	{
+		$out .= twb_label( $text, 'info' ).' ';
+	}
+
+	return $out;
 }
 
 /* End of file baka_common_helper.php */

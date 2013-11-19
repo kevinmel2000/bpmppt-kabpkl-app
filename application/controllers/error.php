@@ -106,6 +106,15 @@ class Error extends BAKA_Controller
 				$page_message	= 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere commodi amet odit velit obcaecati ullam accusantium quia minima! Voluptatibus mollitia tempora veniam nihil quos quis explicabo quia deserunt asperiores cupiditate. ';
 				break;
 
+			case 'access-denied':
+				$page_title		= 'Oops! Anda tidak diperbolehkan mengakses halaman ini.';
+				$page_message	= 'Maaf, sepertinya administrator tidak memperbolehkan anda mengakses halaman ini. Jika ini merupakan suatu kesalahan, silahkan hubungi administrator terkait.';
+				break;
+			case 'no-data-accessible':
+				$page_title		= 'Oops! Tidak ada data untuk anda.';
+				$page_message	= 'Maaf, sepertinya administrator tidak memperbolehkan anda melihat satu data-pun dihalaman ini. Jika ini merupakan suatu kesalahan, silahkan hubungi administrator terkait.';
+				break;
+
 			default:
 				redirect('dashboard');
 				break;

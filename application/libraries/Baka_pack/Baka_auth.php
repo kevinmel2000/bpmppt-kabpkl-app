@@ -767,6 +767,9 @@ class Baka_auth Extends Baka_lib
 	 */
 	public function permit($permission)
 	{
+		if ( !$this->baka_users->permission_exists($permission) )
+			$this->baka_users->new_permission($permission, '-');
+
 		$user_id			= $this->get_user_id();
 		$user_permissions	= $this->baka_users->get_permissions($user_id);
 		$overrides			= $this->baka_users->get_permission_overrides($user_id);

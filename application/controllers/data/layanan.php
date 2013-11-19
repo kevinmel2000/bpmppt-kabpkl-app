@@ -6,8 +6,6 @@ class Layanan extends BAKA_Controller
 	{
 		parent::__construct();
 
-		// $this->data['user_id'] = Aplikasi::user_auth();
-
 		$this->baka_theme->set_title('Administrasi data');
 
 		$this->baka_theme->add_navbar( 'data_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
@@ -21,7 +19,7 @@ class Layanan extends BAKA_Controller
 		redirect( 'dashboard' );
 	}
 
-	public function ijin( $data_type = '', $page = 'data', $data_id = NULL )
+	public function ijin( $data_type = '', $page = 'data', $data_id = FALSE )
 	{
 		if ( ! class_exists( $data_type ) )
 			show_404();
@@ -43,12 +41,12 @@ class Layanan extends BAKA_Controller
 				$this->ubah_status( 'deleted', $data_id, $this->data['page_link'] );
 				break;
 
-			case 'ubah-status':
-				$this->ubah_status( $this->uri->segment(7) , $data_id, $this->data['page_link'] );
+			case 'delete':
+				$this->delete( $data_type, $data_id );
 				break;
 
-			case 'laporan':
-				$this->cetak( $data_type );
+			case 'ubah-status':
+				$this->ubah_status( $this->uri->segment(7) , $data_id, $this->data['page_link'] );
 				break;
 
 			case 'data':
@@ -72,39 +70,35 @@ class Layanan extends BAKA_Controller
 			'data/status/deleted'	=> 'Dihapus' );
 
 		$this->data['panel_title']	 = $this->baka_theme->set_title( 'Semua data ' . $this->app_data->get_label( $data_type ) );
-		
 		$this->data['panel_body']	 = $this->app_data->get_table( $data_type, $this->data['page_link'] );
-		// $this->data['counter']		 = $this->app_data->count_data( $data_type );
 
 		$this->baka_theme->load('pages/panel_data', $this->data);
 	}
 
-	public function form( $data_type, $data_id = NULL )
+	public function form( $data_type, $data_id = FALSE )
 	{
+		$modul_slug	= $this->app_data->get_modul($data_type)['slug'];
+		$data_obj	= ( $data_id ? $this->app_data->get_fulldata_by_id( $data_id ) : FALSE );
+
+		$this->data['panel_title']	= $this->baka_theme->set_title( 'Input data ' . $this->app_data->get_label( $data_type ) );
+
 		$this->data['tool_buttons']['data']	= 'Kembali|default';
 
-		if ( ! is_null($data_id) )
-			$this->data['tool_buttons']['form'] = 'Baru|primary';
-
-		if ( $data_id != '' )
+		if ( $data_obj )
 		{
-			$this->data['tool_buttons']['aksi|default']	= array(
-				'cetak/'.$data_id => 'Cetak',
-				'hapus/'.$data_id => 'Hapus' );
-			
+			$this->data['tool_buttons']['form'] = 'Baru|primary';
+			$this->data['tool_buttons']['aksi|default']['cetak/'.$data_id] = 'Cetak';
+
+			if ( $data_obj->status !== 'deleted' )
+				$this->data['tool_buttons']['aksi|default']['hapus/'.$data_id] = 'Hapus&message="Anda yakin ingin menghapus data nomor '.$data_obj->surat_nomor.'"';
+			else
+				$this->data['tool_buttons']['aksi|default']['delete/'.$data_id] = 'Hapus Permanen&message="Anda yakin ingin menghapus data nomor '.$data_obj->surat_nomor.'"';
+
 			$this->data['tool_buttons']['Ubah status:dd|default']	= array(
 				'ubah-status/'.$data_id.'/pending/'		=> 'Pending',
 				'ubah-status/'.$data_id.'/approved/'	=> 'Disetujui',
 				'ubah-status/'.$data_id.'/done/'		=> 'Selesai' );
-		}
 
-		$this->data['panel_title']	= $this->baka_theme->set_title( 'Input data ' . $this->app_data->get_label( $data_type ) );
-
-		$modul_slug	= $this->app_data->get_modul($data_type)['slug'];
-		$data_obj	= ( ! is_null( $data_id ) ? $this->app_data->get_fulldata_by_id( $data_id ) : FALSE );
-
-		if ( $data_obj )
-		{
 			$status	= $data_obj->status;
 			$date	= ( $status != 'pending' ? ' pada: '.format_datetime( $data_obj->{$status.'_on'} ) : '' );
 
@@ -149,31 +143,47 @@ class Layanan extends BAKA_Controller
 		{
 			$form_data	= $form->submited_data();
 
-			if ( $data = $this->create_data( $modul_name, $form_data ) )
+			$data = $this->app_data->create_data( $modul_slug, $form_data );
+			
+			foreach ( $this->app_data->messages as $level => $message )
 			{
-				$this->session->set_flashdata( 'success', $this->_messages['success'] );
-			}
-			else
-			{
-				$this->session->set_flashdata( 'error', $this->_messages['error'] );
+				$this->session->set_flashdata( $level, $message );
 			}
 
-			return redirect( $link.'/'.$data );
+			redirect( $this->data['page_link'].'form/'.$data );
 		}
 		else
 		{
 			$this->session->set_flashdata( 'error', $form->validation_errors() );
 		}
 
-		$this->data['panel_body']	= $form->render();
-		// $this->data['panel_body']	= $this->app_data->get_form( $data_type, $data_id, $this->data['page_link'].'form' );
+		$this->data['panel_body'] = $form->render();
 
 		$this->baka_theme->load('pages/panel_form', $this->data);
 	}
 
-	public function cetak( $data_type, $data_id = NULL )
+	public function cetak( $data_type, $data_id = FALSE )
 	{
-		if ( is_null($data_id) )
+		if ( $data_id )
+		{
+			$data['skpd_name']		= get_app_setting('skpd_name');
+			$data['skpd_address']	= get_app_setting('skpd_address');
+			$data['skpd_city']		= get_app_setting('skpd_city');
+			$data['skpd_prov']		= get_app_setting('skpd_prov');
+			$data['skpd_telp']		= get_app_setting('skpd_telp');
+			$data['skpd_fax']		= get_app_setting('skpd_fax');
+			$data['skpd_pos']		= get_app_setting('skpd_pos');
+			$data['skpd_web']		= get_app_setting('skpd_web');
+			$data['skpd_email']		= get_app_setting('skpd_email');
+			$data['skpd_logo']		= get_app_setting('skpd_logo');
+			$data['skpd_lead_name']	= get_app_setting('skpd_lead_name');
+			$data['skpd_lead_nip']	= get_app_setting('skpd_lead_nip');
+
+			$data = array_merge( (array) $data, (array) $this->app_data->get_fulldata_by_id( $data_id ) );
+
+			$this->baka_theme->load('prints/'.$data_type, $data, 'print');
+		}
+		else
 		{
 			$this->data['tool_buttons']['data']	= 'Kembali|default';
 
@@ -243,60 +253,45 @@ class Layanan extends BAKA_Controller
 			{
 				$submited_data = $form->submited_data();
 
-				// $return = $this->app_data-
+				$this->session->set_flashdata('error', 'Tidak dapat menemukan data yang anda cari.');
+
+				redirect( current_url() );
 			}
 				
 			$this->data['panel_body'] = $form->render();
 
 			$this->baka_theme->load('pages/panel_form', $this->data);
 		}
-		else
-		{
-			$data['skpd_name']		= get_app_setting('skpd_name');
-			$data['skpd_address']	= get_app_setting('skpd_address');
-			$data['skpd_city']		= get_app_setting('skpd_city');
-			$data['skpd_prov']		= get_app_setting('skpd_prov');
-			$data['skpd_telp']		= get_app_setting('skpd_telp');
-			$data['skpd_fax']		= get_app_setting('skpd_fax');
-			$data['skpd_pos']		= get_app_setting('skpd_pos');
-			$data['skpd_web']		= get_app_setting('skpd_web');
-			$data['skpd_email']		= get_app_setting('skpd_email');
-			$data['skpd_logo']		= get_app_setting('skpd_logo');
-			$data['skpd_lead_name']	= get_app_setting('skpd_lead_name');
-			$data['skpd_lead_nip']	= get_app_setting('skpd_lead_nip');
-
-			$data = array_merge( (array) $data, (array) $this->app_data->get_fulldata_by_id( $data_id ) );
-
-			// $this->data['panel_body'] = $data;
-
-			// $this->baka_theme->load('pages/panel_form', $this->data);
-
-			$this->baka_theme->load('prints/'.$data_type, $data, 'print');
-		}
 	}
 
 	public function delete( $data_type, $data_id )
 	{
-		if ( $delete = $this->app_data->delete_data( $data_id, $data_type ) )
+		if ( $this->app_data->delete_data( $data_id, $data_type ) )
 		{
-			$this->session->set_flashdata('message', $delete->message);
+			$this->session->set_flashdata('message', array('Dokumen dengan id #'.$data_id.' berhasil dihapus secara permanen.'));
+		}
+		else
+		{
+			$this->session->set_flashdata('error', array('Terjadi kesalahan penghapusan dokumen sercara permanen.'));
 		}
 
-		redirect( 'data/layanan/ijin/'.$data_type );
+		redirect( $this->data['page_link'] );
 	}
 
 	public function ubah_status( $new_status, $data_id, $redirect )
 	{
 		if ( $this->app_data->change_status( $data_id, $new_status ) )
 		{
-			$this->session->set_flashdata('success', array('Status dokumen dengan id #'.$data_id.' berhasil diganti menjadi '._x('status_'.$new_status)) );
+			$message = ' '.( $new_status != 'deleted' ? 'berhasil diganti menjadi ' : '' );
+
+			$this->session->set_flashdata('success', array('Status dokumen dengan id #'.$data_id.$message._x('status_'.$new_status)) );
 		}
 		else
 		{
 			$this->session->set_flashdata('error', array('Terjadi kesalahan penggantian status dokumen dengan id #'.$data_id) );
 		}
 
-		redirect( $redirect );
+		redirect( $this->data['page_link'] );
 	}
 }
 

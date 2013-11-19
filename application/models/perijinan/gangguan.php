@@ -100,7 +100,7 @@ class Gangguan extends App_main
 		$fields[]	= array(
 			'name'	=> $this->slug.'_usaha_luas',
 			'label'	=> 'Luas perusahaan (M<sup>2</sup>)',
-			'type'	=> 'text',
+			'type'	=> 'number',
 			'std'	=> ( $data_obj ? $data_obj->usaha_luas : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 

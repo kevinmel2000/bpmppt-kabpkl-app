@@ -170,7 +170,7 @@ class Baka_grid Extends Baka_lib
 				$output .= anchor(
 					$this->page_link.$link.$data_id,
 					'<span class="glyphicon glyphicon-'.$icon.'"></span>',
-					'title="'.$title.'" class="bs-tooltip btn btn-sm btn-'.$class.'"');
+					'title="'.$title.'" data-toggle="tooltip" class="btn btn-sm btn-'.$class.'"');
 			}
 
 			$output .= '</div>';
@@ -307,7 +307,8 @@ class Baka_grid Extends Baka_lib
 		if ( !$this->load->is_loaded('table') )
 			$this->load->library('table');
 
-		$this->table->set_template( array('table_open' => '<table class="table table-striped table-hover table-condensed">' ) );
+		$this->table->set_template( array(
+			'table_open' => '<table class="table table-striped table-hover table-condensed">' ) );
 
 		foreach ( $this->table_cols as $head_key => $head_val )
 		{
@@ -371,7 +372,6 @@ class Baka_grid Extends Baka_lib
 					if ( strpos($field, 'callback_') !== FALSE )
 						$row_class = str_replace('callback_', '', $field);
 
-					// Clean up class name
 					if ( strpos($field, ',') !== FALSE )
 						list($row_class) = array_map('trim', explode(",", $field));
 
