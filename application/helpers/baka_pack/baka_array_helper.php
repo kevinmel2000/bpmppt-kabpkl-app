@@ -8,6 +8,26 @@ function print_pre($array)
 }
 
 /**
+ * Converting an array into object
+ * 
+ * @param  array  $array array source
+ * @return object
+ */
+function array_to_object( array $array )
+{
+	$obj = new bakaObject;
+
+	foreach ( $array as $modul => $prop )
+	{
+		$obj->$modul = ( is_array( $prop ) ? array_to_object( $prop ) : $prop );
+	}
+
+	return $obj;
+}
+
+class bakaObject extends stdClass {}
+
+/**
  * Update array value by array key
  * 
  * @param  array

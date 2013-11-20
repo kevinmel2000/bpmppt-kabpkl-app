@@ -15,7 +15,7 @@ class App_data extends CI_Model
 	// Daftar tipe modul
 	private $_type = array();
 
-	private $modul;
+	public $moduls = array();
 
 	public $messages = array();
 
@@ -24,66 +24,128 @@ class App_data extends CI_Model
 	{
 		parent::__construct();
 
-		$this->_list = $this->get_type_list();
+		$this->load_moduls();
 
-		$this->modul = new stdClass();
-
-		foreach ( $this->_list as $data )
-		{
-			if (!$this->load->is_loaded( $this->modul_dir.$data ) )
-				$this->load->model( $this->modul_dir.$data );
-
-			$this->modul->$data = array(
-				'nama'	=> $this->$data->nama,
-				'slug'	=> $this->$data->slug,
-				'kode'	=> (property_exists($this->$data, 'kode') ? $this->$data->kode : NULL) );
-		}
-
-		// print_pre( $this->modul );
 		log_message('debug', "#Baka_pack: Application data model Class Initialized");
 	}
 
 	/**
+	 * Load all modules that available to logged in users
+	 * 
+	 * @return	void
+	 */
+	private function load_moduls()
+	{
+		if ( ! $this->load->is_loaded('directory') )
+			$this->load->helper('directory');
+
+		foreach ( directory_map( APPPATH.'models/'.$this->modul_dir ) as $modul_file)
+		{
+			if (substr($modul_file, 0, 1) !== '_')
+				$modul_name = strtolower(str_replace(EXT, '', $modul_file));
+
+			if ( $this->baka_auth->permit('doc_'.$modul_name.'_manage') )
+			{
+				if (!$this->load->is_loaded( $this->modul_dir.$modul_name ) )
+					$this->load->model( $this->modul_dir.$modul_name );
+
+				$modul	= $this->$modul_name;
+				$kode	= (property_exists( $modul, 'kode' )) ? $modul->kode : FALSE;
+
+				$this->moduls[$modul_name] = array(
+					'nama'	=> $modul->nama,
+					'alias'	=> $modul->slug,
+					'label'	=> $modul->nama.( $kode ? ' ('.$kode.')' : '' ),
+					'kode'	=> $kode,
+					'link'	=> $modul_name );
+			}
+		}
+	}
+
+	/**
+	 * Get an accosiative array of modules
+	 * 
+	 * @return array
+	 */
+	public function get_moduls_assoc()
+	{
+		$ret = array();
+
+		foreach ( $this->moduls as $modul )
+			$ret[$modul['alias']] = $modul['nama'];
+
+		return $ret;
+	}
+
+	/**
+	 * Get all modules in array
+	 * 
+	 * @return array
+	 */
+	public function get_moduls_array()
+	{
+		return (array) $this->moduls;
+	}
+
+	/**
+	 * Get all modules in object
+	 * 
+	 * @return object
+	 */
+	public function get_moduls_object()
+	{
+		return array_to_object( $this->moduls );
+	}
+
+	/**
 	 * Get modul data
+	 * 
 	 * @param  string
 	 * @return mixed
 	 */
 	public function get_modul( $modul_name )
 	{
-		return $this->modul->$modul_name;
+		return $this->moduls[$modul_name];
 	}
 
 	/**
-	 * Mendapatkan nama model
+	 * Get Module name
 	 * 
 	 * @param string $modul_name
 	 */
 	public function get_name( $modul_name )
 	{
-		return $this->get_modul( $modul_name )['nama'];
+		return $this->moduls[$modul_name]['nama'];
 	}
 
-	// get modul code
+	/**
+	 * Get Module name
+	 * 
+	 * @param string $modul_name
+	 */
+	public function get_alias( $modul_name )
+	{
+		return $this->moduls[$modul_name]['alias'];
+	}
+
+	/**
+	 * Get Module name
+	 * 
+	 * @param string $modul_name
+	 */
 	public function get_code( $modul_name )
 	{
-		return $this->get_modul( $modul_name )['kode'];
+		return $this->moduls[$modul_name]['kode'];
 	}
 
-	// get modul slug
-	public function get_slug( $modul_name )
+	/**
+	 * Get Module name
+	 * 
+	 * @param string $modul_name
+	 */
+	public function get_label( $modul_name )
 	{
-		return $this->get_modul( $modul_name )['slug'];
-	}
-
-	public function get_label( $modul )
-	{
-		$modul	= $this->get_modul( $modul );
-		$output	= $modul['nama'];
-
-		if ( ! is_null($modul['kode']))
-			$output .= ' ('.$modul['kode'].')';
-
-		return $output;
+		return $this->moduls[$modul_name]['label'];
 	}
 
 	// get moduls list from dir

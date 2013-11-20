@@ -772,7 +772,7 @@ class Baka_auth Extends Baka_lib
 
 		$user_id			= $this->get_user_id();
 		$user_permissions	= $this->baka_users->get_permissions($user_id);
-		$overrides			= $this->baka_users->get_permission_overrides($user_id);
+		// $overrides			= $this->baka_users->get_permission_overrides($user_id);
 		$allow				= FALSE;
 		
 		// Check role permissions
@@ -786,17 +786,17 @@ class Baka_auth Extends Baka_lib
 		}
 		
 		// Check if there are overrides and overturn the result as needed
-		if($overrides)
-		{
-			foreach($overrides as $val)
-			{
-				if($val['permission'] == $permission)
-				{
-					$allow = (bool)$val['allow'];
-					break;
-				}
-			}
-		}
+		// if($overrides)
+		// {
+		// 	foreach($overrides as $val)
+		// 	{
+		// 		if($val['permission'] == $permission)
+		// 		{
+		// 			$allow = (bool)$val['allow'];
+		// 			break;
+		// 		}
+		// 	}
+		// }
 		
 		return $allow;
 	}

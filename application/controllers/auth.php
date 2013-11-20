@@ -244,7 +244,7 @@ class Auth extends BAKA_Controller
 			if ( $data = $this->baka_auth->change_email( $user_data['email'] ) )
 			{
 				// success
-				$this->load->library('baka_pack/baka_email');
+				$this->load->library('Baka_pack/baka_email');
 
 				$data['activation_period'] = get_app_setting('auth_email_activation_expire') / 3600;
 
@@ -293,7 +293,7 @@ class Auth extends BAKA_Controller
 		{
 			$user_data = $form->submited_data();
 
-			$this->load->library('baka_pack/baka_email');
+			$this->load->library('Baka_pack/baka_email');
 
 			if ( $data = $this->baka_auth->forgot_password( $user_data['forgot_login']) )
 			{
@@ -375,7 +375,7 @@ class Auth extends BAKA_Controller
 			if ( $data = $this->baka_auth->reset_password(  $user_id, $email_key, $user_data['reset_password'] ) )
 			{
 				// success
-				$this->load->library('baka_pack/baka_email');
+				$this->load->library('Baka_pack/baka_email');
 
 				$this->baka_email->send($data['email'], 'activate', $data);
 				$this->_notice('password-reset');

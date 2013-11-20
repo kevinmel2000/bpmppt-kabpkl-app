@@ -93,7 +93,7 @@ class Baka_dbutil Extends Baka_lib
 
 	protected function _restore_files( $file_path )
 	{
-		$this->load->library('baka_pack/Baka_archive');
+		$this->load->library('Baka_pack/Baka_archive');
 
 		if ( ! file_exists( $file_path ) )
 		{

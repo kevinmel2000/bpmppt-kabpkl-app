@@ -135,13 +135,16 @@ function twb_text( $text, $class = '', $tag = 'span' )
 	return '<'.$tag.' class="text-'.$class.'">'.$text.'</'.$tag.'>';
 }
 
-function make_tag( $texts )
+function make_tag( $texts, $limit = 10 )
 {
 	$out = '';
+	$i = 0;
 
 	foreach ( explode(',', $texts) as $text )
 	{
 		$out .= twb_label( $text, 'info' ).' ';
+
+		if (++$i == $limit) break;
 	}
 
 	return $out;

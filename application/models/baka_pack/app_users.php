@@ -23,7 +23,7 @@ class App_users extends CI_Model
 			$email_activation ) )
 		{
 			// success
-			$this->load->library('baka_pack/baka_email');
+			$this->load->library('Baka_pack/baka_email');
 
 			if ( $email_activation )
 			{

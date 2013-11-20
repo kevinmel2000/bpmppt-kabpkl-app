@@ -77,7 +77,7 @@ class Layanan extends BAKA_Controller
 
 	public function form( $data_type, $data_id = FALSE )
 	{
-		$modul_slug	= $this->app_data->get_modul($data_type)['slug'];
+		$modul_slug	= $this->app_data->get_alias( $data_type );
 		$data_obj	= ( $data_id ? $this->app_data->get_fulldata_by_id( $data_id ) : FALSE );
 
 		$this->data['panel_title']	= $this->baka_theme->set_title( 'Input data ' . $this->app_data->get_label( $data_type ) );

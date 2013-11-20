@@ -4,8 +4,6 @@ class App_main extends CI_Model
 {
 	private $username;
 
-	public $data_layanan = array();
-
 	public function __construct()
 	{
 		parent::__construct();
@@ -57,28 +55,22 @@ class App_main extends CI_Model
 		$link	= 'data/layanan/';
 		$nama	= str_replace('/', '_', $link);
 
-		$list_data = $this->app_data->get_type_list();
-		
-		if ( count($list_data) > 0 )
+		if ( count($this->app_data->get_moduls_array()) > 0 )
 		{
 			$this->baka_theme->add_navmenu( $parent, 'dashboard', 'link', 'dashboard', 'Statistik', array(), $position );
 			$this->baka_theme->add_navmenu( $parent, $nama.'laporan', 'link', 'data/utama/laporan', 'Laporan', array(), $position );
 			$this->baka_theme->add_navmenu( $parent, $nama.'d', 'devider', '', '', array(), $position );
 
-			foreach ($list_data as $modul)
+			foreach ($this->app_data->get_moduls_array() as $modul)
 			{
-				$layanan = $this->app_data->get_modul( $modul );
-
 				$this->baka_theme->add_navmenu(
 					$parent,
-					$nama.$layanan['slug'],
+					$nama.$modul['alias'],
 					'link',
-					$link.'ijin/'.$modul,
-					$this->app_data->get_label( $modul ),
+					$link.'ijin/'.$modul['link'],
+					$modul['label'],
 					array(),
 					$position );
-
-				$this->data_layanan[$layanan['slug']] = $layanan['nama'];
 			}
 		}
 	}
@@ -111,18 +103,6 @@ class App_main extends CI_Model
 		$this->baka_theme->add_navmenu( $parent_id, 'profilse', 'link', 'profile', $this->username, array(), $position );
 		$this->baka_theme->add_navmenu( $parent_id, 'user_s', 'devider', '', '', array(), $position);
 		$this->baka_theme->add_navmenu( $parent_id, 'user_logout', 'link', 'logout', 'Logout', array(), $position );
-	}
-
-	public function daftar_perijinan()
-	{
-		$ret = array();
-
-		foreach (directory_map( APPPATH.'models/perijinan/') as $layanan)
-		{
-			$ret[] = strtolower(str_replace(EXT, '', $layanan));
-		}
-
-		return $ret;
 	}
 }
 
