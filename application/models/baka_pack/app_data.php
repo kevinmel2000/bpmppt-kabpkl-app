@@ -15,7 +15,7 @@ class App_data extends CI_Model
 	// Daftar tipe modul
 	private $_type = array();
 
-	public $moduls = array();
+	public $app_modules = array();
 
 	public $messages = array();
 
@@ -52,7 +52,7 @@ class App_data extends CI_Model
 				$modul	= $this->$modul_name;
 				$kode	= (property_exists( $modul, 'kode' )) ? $modul->kode : FALSE;
 
-				$this->moduls[$modul_name] = array(
+				$this->app_modules[$modul_name] = array(
 					'nama'	=> $modul->nama,
 					'alias'	=> $modul->slug,
 					'label'	=> $modul->nama.( $kode ? ' ('.$kode.')' : '' ),
@@ -67,11 +67,11 @@ class App_data extends CI_Model
 	 * 
 	 * @return array
 	 */
-	public function get_moduls_assoc()
+	public function get_modules_assoc()
 	{
 		$ret = array();
 
-		foreach ( $this->moduls as $modul )
+		foreach ( $this->app_modules as $modul )
 			$ret[$modul['alias']] = $modul['nama'];
 
 		return $ret;
@@ -84,7 +84,7 @@ class App_data extends CI_Model
 	 */
 	public function get_moduls_array()
 	{
-		return (array) $this->moduls;
+		return (array) $this->app_modules;
 	}
 
 	/**
@@ -92,9 +92,9 @@ class App_data extends CI_Model
 	 * 
 	 * @return object
 	 */
-	public function get_moduls_object()
+	public function get_modules_object()
 	{
-		return array_to_object( $this->moduls );
+		return array_to_object( $this->app_modules );
 	}
 
 	/**
@@ -105,7 +105,7 @@ class App_data extends CI_Model
 	 */
 	public function get_modul( $modul_name )
 	{
-		return $this->moduls[$modul_name];
+		return $this->app_modules[$modul_name];
 	}
 
 	/**
@@ -115,7 +115,7 @@ class App_data extends CI_Model
 	 */
 	public function get_name( $modul_name )
 	{
-		return $this->moduls[$modul_name]['nama'];
+		return $this->app_modules[$modul_name]['nama'];
 	}
 
 	/**
@@ -125,7 +125,7 @@ class App_data extends CI_Model
 	 */
 	public function get_alias( $modul_name )
 	{
-		return $this->moduls[$modul_name]['alias'];
+		return $this->app_modules[$modul_name]['alias'];
 	}
 
 	/**
@@ -135,7 +135,7 @@ class App_data extends CI_Model
 	 */
 	public function get_code( $modul_name )
 	{
-		return $this->moduls[$modul_name]['kode'];
+		return $this->app_modules[$modul_name]['kode'];
 	}
 
 	/**
@@ -145,7 +145,7 @@ class App_data extends CI_Model
 	 */
 	public function get_label( $modul_name )
 	{
-		return $this->moduls[$modul_name]['label'];
+		return $this->app_modules[$modul_name]['label'];
 	}
 
 	// get moduls list from dir
@@ -186,9 +186,9 @@ class App_data extends CI_Model
 	{
 		$output = array();
 
-		foreach ( $this->_list as $data )
+		foreach ( $this->get_modules_object() as $modul_obj )
 		{
-			$output[$data] = $this->get_table( $data, $page_link.'ijin/'.$data.'/' );
+			$output[$modul_obj->alias] = $this->get_table( $modul_obj->link, $page_link.$modul_obj->link.'/' );
 		}
 
 		return $output;
@@ -197,7 +197,7 @@ class App_data extends CI_Model
 	// get single modul grid
 	public function get_table( $modul_name = '', $page_link = '' )
 	{
-		$modul_slug = $this->get_slug($modul_name);
+		$modul_slug = $this->get_alias( $modul_name );
 
 		switch ( $this->uri->segment(6) ) {
 			case 'status':
@@ -338,20 +338,20 @@ class App_data extends CI_Model
 	}
 
 	// count data
-	public function count_data( $modul_name = '' )
+	public function count_data( $module_alias = '' )
 	{
 		$out = NULL;
 
-		if ( $modul_name == '' )
+		if ( $module_alias == '' )
 		{
-			foreach ( $this->_list as $data )
+			foreach ( $this->get_modules_assoc() as $alias => $name )
 			{
-				$out[$data] = $this->count_data( $data );
+				$out[$alias] = $this->count_data( $alias );
 			}
 		}
 		else
 		{
-			$out = $this->db->where('type', $this->get_slug($modul_name))
+			$out = $this->db->where('type', $module_alias)
 							->count_all_results($this->_data_table);
 		}
 
@@ -409,7 +409,7 @@ class App_data extends CI_Model
 
 	public function delete_data( $data_id, $modul_name )
 	{
-		if ( $data = $this->db->delete( $this->_data_table, array( 'id' => $data_id, 'type' => $this->get_slug($modul_name) ) ) )
+		if ( $data = $this->db->delete( $this->_data_table, array( 'id' => $data_id, 'type' => $this->get_alias($modul_name) ) ) )
 		{
 			if ( $this->db->delete( $this->_datameta_table, array( 'data_id' => $data->id, 'data_type' => $data->type ) ) )
 			{

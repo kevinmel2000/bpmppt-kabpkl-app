@@ -67,7 +67,7 @@ class App_main extends CI_Model
 					$parent,
 					$nama.$modul['alias'],
 					'link',
-					$link.'ijin/'.$modul['link'],
+					$link.'index/'.$modul['link'],
 					$modul['label'],
 					array(),
 					$position );

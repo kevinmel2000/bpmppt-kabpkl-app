@@ -14,9 +14,43 @@ class Layanan extends BAKA_Controller
 		$this->data['page_link'] = 'data/layanan/';
 	}
 
-	public function index()
+	public function index( $data_type = '', $page = 'data', $data_id = FALSE )
 	{
-		redirect( 'dashboard' );
+		if ( $data_type == '' )
+			redirect( 'dashboard' );
+		else if ( !class_exists( $data_type ) )
+			show_404();
+
+		$this->data['load_toolbar']	= TRUE;
+		$this->data['page_link']   .= 'index/'.$data_type.'/';
+
+		switch ( $page )
+		{
+			case 'form':
+				$this->form( $data_type, $data_id );
+				break;
+
+			case 'cetak':
+				$this->cetak( $data_type, $data_id );
+				break;
+
+			case 'hapus':
+				$this->ubah_status( 'deleted', $data_id, $this->data['page_link'] );
+				break;
+
+			case 'delete':
+				$this->delete( $data_type, $data_id );
+				break;
+
+			case 'ubah-status':
+				$this->ubah_status( $this->uri->segment(7) , $data_id, $this->data['page_link'] );
+				break;
+
+			case 'data':
+			default:
+				$this->data( $data_type );
+				break;
+		}
 	}
 
 	public function ijin( $data_type = '', $page = 'data', $data_id = FALSE )

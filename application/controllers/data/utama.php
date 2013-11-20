@@ -2,7 +2,7 @@
 
 class Utama extends BAKA_Controller
 {
-	private $_type_list = array();
+	private $modules_arr = array();
 
 	public function __construct()
 	{
@@ -13,7 +13,7 @@ class Utama extends BAKA_Controller
 		$this->baka_theme->add_navbar( 'data_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
 		$this->app_main->data_navbar( 'data_sidebar', 'side' );
 
-		$this->_type_list = $this->app_data->get_type_list_assoc();
+		$this->modules_arr = $this->app_data->get_modules_assoc();
 
 		$this->data['page_link'] = 'data/';
 	}
@@ -26,18 +26,17 @@ class Utama extends BAKA_Controller
 	public function stat()
 	{
 		$this->data['panel_title']	= $this->baka_theme->set_title('Semua data perijinan');
-		$this->data['data_type']	= $this->_type_list;
+		$this->data['data_type']	= $this->modules_arr;
 
-		if ( count($this->_type_list) > 0 )
+		if ( count($this->modules_arr) > 0 )
 		{
 			$this->data['load_toolbar'] = TRUE;
-			$this->data['search_form']	= TRUE;
-			$this->data['page_link'] .= 'layanan/';
+			// $this->data['search_form']	= TRUE;
+			$this->data['page_link'] .= 'layanan/index/';
 
-			foreach ($this->_type_list as $key => $value)
+			foreach ($this->modules_arr as $alias => $name)
 			{
-				$key = 'layanan/ijin/'.$key.'/form';
-				$this->data['tool_buttons']['Baru:dd|primary'][$key] = $value;
+				$this->data['tool_buttons']['Baru:dd|primary'][$alias.'/form'] = $name;
 			}
 
 			$this->data['tool_buttons']['utama/laporan'] = 'Laporan|default';
@@ -50,7 +49,6 @@ class Utama extends BAKA_Controller
 		{
 			$this->_notice( 'no-data-accessible' );
 		}
-
 	}
 
 	public function laporan()
@@ -61,9 +59,9 @@ class Utama extends BAKA_Controller
 			'name'	=> 'data_type',
 			'label'	=> 'Pilih data perijinan',
 			'type'	=> 'dropdown',
-			'option'=> add_placeholder($this->_type_list),
+			'option'=> add_placeholder($this->modules_arr),
 			'validation'=> 'required',
-			'desc'	=> 'Pilih jenis dokumen yang ingi dicetak. Saat ini terdapat '.count($this->_type_list).' jenis dokumen untuk anda.' );
+			'desc'	=> 'Pilih jenis dokumen yang ingi dicetak. Saat ini terdapat '.count($this->modules_arr).' jenis dokumen untuk anda.' );
 
 		$fields[]	= array(
 			'name'	=> 'data_status',
