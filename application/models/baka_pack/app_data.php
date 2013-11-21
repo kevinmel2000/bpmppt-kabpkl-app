@@ -9,11 +9,7 @@ class App_data extends CI_Model
 	private $_data_table		= 'data';
 	private $_datameta_table	= 'data_meta';
 
-	// Daftar modul
-	private $_list = array();
-
-	// Daftar tipe modul
-	private $_type = array();
+	private $_dashboard_view	= FALSE;
 
 	public $app_modules = array();
 
@@ -148,50 +144,23 @@ class App_data extends CI_Model
 		return $this->app_modules[$modul_name]['label'];
 	}
 
-	// get moduls list from dir
-	public function get_type_list()
-	{
-		if ( ! $this->load->is_loaded('directory') )
-			$this->load->helper('directory');
-
-		$ret = array();
-
-		foreach (directory_map( APPPATH.'models/'.$this->modul_dir) as $modul_name)
-		{
-			if (substr($modul_name, 0, 1) !== '_')
-				$modul = strtolower(str_replace(EXT, '', $modul_name));
-
-			if ( $this->baka_auth->permit('doc_'.$modul.'_manage') )
-				$ret[] = $modul;
-		}
-
-		return $ret;
-	}
-
-	// get moduls associative list from dir
-	public function get_type_list_assoc()
-	{
-		$ret = array();
-
-		foreach ( $this->_list as $modul_name )
-		{
-			$ret[$modul_name] = $this->get_label($modul_name);
-		}
-
-		return $ret;
-	}
-
 	// get all moduls grid
 	public function get_tables( $page_link = '' )
 	{
-		$output = array();
+		$out = array();
+
+		$this->_dashboard_view = TRUE;
 
 		foreach ( $this->get_modules_object() as $modul_obj )
 		{
-			$output[$modul_obj->alias] = $this->get_table( $modul_obj->link, $page_link.$modul_obj->link.'/' );
+			$view = '';
+
+			$view .= $this->get_table( $modul_obj->link, $page_link.$modul_obj->link.'/' );
+
+			$out[$modul_obj->alias] = $view;
 		}
 
-		return $output;
+		return $out;
 	}
 
 	// get single modul grid
@@ -219,12 +188,15 @@ class App_data extends CI_Model
 								->set_baseurl($page_link)
 								->set_column('Pengajuan', 'no_agenda, callback_format_datetime:created_on', '30%', FALSE, '<strong>%s</strong><br><small class="text-muted">Diajukan pada: %s</small>')
 								->set_column('Pemohon', 'petitioner', '40%', FALSE, '<strong>%s</strong>')
-								->set_column('Status', 'status, callback__x:status', '10%', FALSE, '<span class="label label-%s">%s</span>')
-								->set_buttons('form/', 'eye-open', 'primary', 'Lihat data')
-								->set_buttons('hapus/', 'trash', 'danger', 'Hapus data');
+								->set_column('Status', 'status, callback__x:status', '10%', FALSE, '<span class="label label-%s">%s</span>');
+
+		if ( !$this->_dashboard_view )
+		{
+			$grid->set_buttons('form/', 'eye-open', 'primary', 'Lihat data')
+				 ->set_buttons('hapus/', 'trash', 'danger', 'Hapus data');
+		}
 
 		return $grid->make_table( $query );
-		// return $query;
 	}
 
 	public function get_print( $modul_name, $data_id )

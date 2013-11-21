@@ -408,6 +408,10 @@ section#contents-main {
 .panel-title {
 	font-size: 15px;
 	line-height: 1.2em;
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .panel .panel-info {

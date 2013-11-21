@@ -2,6 +2,7 @@
 	Options +FollowSymLinks -Indexes
 	RewriteEngine on
 
+	#RewriteBase /
 	RewriteBase /ci-baka/
 
 	RewriteCond %{REQUEST_FILENAME} !-f
