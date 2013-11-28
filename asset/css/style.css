@@ -48,7 +48,8 @@ a:active {
 }
 
 .label-danger,
-.label-deleted {
+.label-deleted,
+.label-error {
 	background-color: #d9534f;
 }
 

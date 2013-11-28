@@ -9,8 +9,8 @@
 		<div class="row">
 			<div class="col-md-3"><?php echo get_nav('panel') ?></div>
 			<div class="col-md-9">
-				<?php echo uri_string() ?>
-				<?php if ( isset( $panel_body ) ) print_pre( $panel_body ) ?>
+				<?php if ( isset( $count_log ) ) echo '<p>'.$count_log.'</p>' ?>
+				<?php if ( isset( $panel_body ) ) echo $panel_body ?>
 			</div>
 		</div>
 	</div>

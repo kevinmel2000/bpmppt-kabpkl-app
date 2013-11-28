@@ -215,7 +215,7 @@ class Layanan extends BAKA_Controller
 
 			$data = array_merge( (array) $data, (array) $this->app_data->get_fulldata_by_id( $data_id ) );
 
-			$this->baka_theme->load('prints/'.$data_type, $data, 'print');
+			$this->baka_theme->load('prints/products/'.$data_type, $data, 'print');
 		}
 		else
 		{

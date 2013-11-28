@@ -14,12 +14,12 @@ class Maintenance extends BAKA_Controller
 
 	public function index()
 	{
-		$this->backstore();
+		$this->dbbackup();
 	}
 
 	public function dbbackup()
 	{
-		$this->data['panel_title'] = $this->baka_theme->set_title('Backup Database');;
+		$this->data['panel_title'] = $this->baka_theme->set_title('Backup Database');
 
 		$fields[]	= array(
 			'name'	=> 'backup-all',
@@ -49,7 +49,7 @@ class Maintenance extends BAKA_Controller
 		$buttons[]= array(
 			'name'	=> 'do-backup',
 			'type'	=> 'submit',
-			'label'	=> 'backup_btn',
+			'label'	=> 'lang:backup_btn',
 			'class'	=> 'btn-primary pull-right' );
 
 		$backup		= $this->baka_form->add_form( current_url(), 'backup' )
@@ -81,7 +81,7 @@ class Maintenance extends BAKA_Controller
 
 	public function dbrestore()
 	{
-		$this->data['panel_title']	= $this->baka_theme->set_title('Restore Database');;
+		$this->data['panel_title']	= $this->baka_theme->set_title('Restore Database');
 
 		$fields[]	= array(
 			'name'	=> 'restore-from-file',
@@ -92,7 +92,7 @@ class Maintenance extends BAKA_Controller
 		$buttons[]= array(
 			'name'	=> 'do-restore',
 			'type'	=> 'submit',
-			'label'	=> 'restore_btn',
+			'label'	=> 'lang:restore_btn',
 			'class'	=> 'btn-primary pull-right' );
 
 		$restore	= $this->baka_form->add_form_multipart( current_url(), 'restore' )
@@ -130,16 +130,19 @@ class Maintenance extends BAKA_Controller
 
 		$log_path = config_item('log_path');
 
-		foreach (directory_map($log_path) as $log)
+		$scan_dir = directory_map($log_path);
+
+		arsort( $scan_dir );
+
+		foreach ( $scan_dir as $log )
 		{
 			if ( $log != 'index.html')
 			{
 				$log	= strtolower(str_replace(EXT, '', $log));
 				$label	= 'Tanggal '.format_date(str_replace('log-', '', $log));
+				$link	= 'admin/maintenance/syslogs/';
 
-				$latest = 'admin/maintenance/syslogs/'.$log;
-
-				$this->baka_theme->add_navmenu( 'log_sidebar', $log, 'link', 'admin/maintenance/syslogs/'.$log, $label, array(), 'panel' );
+				$this->baka_theme->add_navmenu( 'log_sidebar', $log, 'link', $link.$log, $label, array(), 'panel' );
 			}
 		}
 
@@ -160,20 +163,26 @@ class Maintenance extends BAKA_Controller
 					{
 						$date = explode(' --> ', $state[1]);
 
-						$line[format_datetime($date[0])][] = array(
-							'state'	=> $state[0],
-							'msg'	=> $date[1] );
+						$line[] = array(
+							'time'	=> format_time( $date[0] ),
+							'state'	=> twb_label( $state[0], strtolower( $state[0] ) ),
+							'msg'	=> ( strpos( $date[1], 'Severity: ' ) === false)
+								? $date[1] : twb_label( $date[1], strtolower( $state[0] ) ).' '.$date[2] );
 					}
 				}
 			}
 
-			$this->data['panel_body'] = $line;
-			// $this->data['panel_body'] = read_file( $log_path.$file.EXT );
-		}
-		else
-		{
-			if ( $latest != '' )
-				redirect( $latest );
+			$this->data['count_log'] = 'Terdapat '.count( $line ).' catatan error.';
+
+			$this->load->library('table');
+
+			$this->table->set_heading('Waktu', 'Status', 'Pesan');
+			$this->table->set_template( array(
+				'table_open' => '<table class="table table-striped table-bordered table-hover table-condensed">' ) );
+
+			arsort( $line );
+
+			$this->data['panel_body'] = $this->table->generate( $line );
 		}
 
 		$this->baka_theme->load('pages/syslogs', $this->data);

@@ -52,6 +52,13 @@ function format_datetime( $string = '' )
 	return date( get_app_setting('app_datetime_format'), $string);
 }
 
+function format_time( $string = '' )
+{
+	$string = $string != '' ? strtotime( $string ) : time();
+
+	return date( 'H:i:s', $string);
+}
+
 function string_to_date( $string = '' )
 {
 	$string = $string != '' ? strtotime( $string ) : time();

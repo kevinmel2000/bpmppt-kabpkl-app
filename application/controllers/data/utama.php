@@ -76,7 +76,7 @@ class Utama extends BAKA_Controller
 
 		$fields[]	= array(
 			'name'	=> 'data_date',
-			'label'	=> 'BUlan &amp; Tahun',
+			'label'	=> 'Bulan &amp; Tahun',
 			'type'	=> 'subfield',
 			'fields'=> array(
 				array(
@@ -135,6 +135,26 @@ class Utama extends BAKA_Controller
 		$this->data['panel_body'] = $form->render();
 
 		$this->baka_theme->load('pages/panel_form', $this->data);
+	}
+
+	public function cetak( $data_type, $data_id = FALSE )
+	{
+		$data['skpd_name']		= get_app_setting('skpd_name');
+		$data['skpd_address']	= get_app_setting('skpd_address');
+		$data['skpd_city']		= get_app_setting('skpd_city');
+		$data['skpd_prov']		= get_app_setting('skpd_prov');
+		$data['skpd_telp']		= get_app_setting('skpd_telp');
+		$data['skpd_fax']		= get_app_setting('skpd_fax');
+		$data['skpd_pos']		= get_app_setting('skpd_pos');
+		$data['skpd_web']		= get_app_setting('skpd_web');
+		$data['skpd_email']		= get_app_setting('skpd_email');
+		$data['skpd_logo']		= get_app_setting('skpd_logo');
+		$data['skpd_lead_name']	= get_app_setting('skpd_lead_name');
+		$data['skpd_lead_nip']	= get_app_setting('skpd_lead_nip');
+
+		// $data = array_merge( (array) $data, (array) $this->app_data->get_fulldata_by_id( $data_id ) );
+
+		$this->baka_theme->load('prints/reports/'.$data_type, $data, 'laporan');
 	}
 }
 
