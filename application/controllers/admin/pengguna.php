@@ -16,7 +16,7 @@ class Pengguna extends BAKA_Controller
 
 		$this->current_user = $this->baka_auth->get_user_id();
 
-		$this->load->model('Baka_pack/app_users');
+		$this->load->model('baka_pack/app_users');
 	}
 
 	public function index()
@@ -496,7 +496,7 @@ class Pengguna extends BAKA_Controller
 
 	private function _perm_form( $perm_id = '' )
 	{
-		$perm	= (! is_null( $perm_id ) ? $this->baka_users->get_perms( $perm_id )->row() : FALSE );
+		$perm	= (! is_null( $perm_id ) ? $this->baka_users->get_perms( $perm_id )->get()->row() : FALSE );
 
 		$this->data['panel_title'] = $this->baka_theme->set_title( $perm ? 'Ubah data Kelompok pengguna '.$perm->fullname : 'Buat kelompok pengguna baru' );
 		

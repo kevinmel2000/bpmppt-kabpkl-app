@@ -10,19 +10,34 @@
  */
 class Baka_users extends Baka_lib
 {
-	private $users_table          = 'auth_users';             // user accounts
-	private $user_profile_table   = 'auth_user_profiles';     // user profiles
-	private $user_role_table      = 'auth_user_roles';        // user roles
-	private $roles_table          = 'auth_roles';             // roles
-	private $permissions_table    = 'auth_permissions';       // permissions
-	private $role_perms_table     = 'auth_role_permissions';  // role permissions
-	private $overrides_table      = 'auth_overrides';         // overrides
+	private $users_table		= 'auth_users';             // user accounts
+	private $user_profile_table	= 'auth_user_profiles';     // user profiles
+	private $user_role_table	= 'auth_user_roles';        // user roles
+	private $roles_table		= 'auth_roles';             // roles
+	private $permissions_table	= 'auth_permissions';       // permissions
+	private $role_perms_table	= 'auth_role_permissions';  // role permissions
+	private $overrides_table	= 'auth_overrides';         // overrides
 
 	private $table_prefix;
 
 	public function __construct()
 	{
 		$this->table_prefix = $this->db->dbprefix;
+
+		$tables = array(
+			'users_table',
+			'user_profile_table',
+			'user_role_table',
+			'roles_table',
+			'permissions_table',
+			'role_perms_table',
+			'overrides_table',
+			);
+
+		foreach ( $tables as $table )
+		{
+			$this->$table = $this->config_item( $table );
+		}
 
 		log_message('debug', "#Baka_pack: Users Class Initialized");
 	}
@@ -33,9 +48,12 @@ class Baka_users extends Baka_lib
 	}
 
 	/**
-	 * Get all users/user data and everything that related with it, like roles and permission
-	 * @param	int		$user_id	leave it null and you'll got all users that you have,
-	 *                      		or give it your user id and you got all related table with that id.
+	 * Get all users/user data and everything that related with it, like roles
+	 * and permission
+	 * 
+	 * @param	int		$user_id	leave it null and you'll got all users that
+	 *								you have, or give it your user id and you
+	 *								got all related table with that id.
 	 * @return	object				userobject
 	 */
 	public function get_users( $user_id = NULL )
@@ -114,7 +132,8 @@ class Baka_users extends Baka_lib
 	 */
 	public function get_user_by_id($user_id, $activated)
 	{
-		$query = $this->db->get_where( $this->users_table, array( 'id' => $user_id, 'activated' => ($activated ? 1 : 0) ));
+		$query = $this->db->get_where( $this->users_table,
+				 array( 'id' => $user_id, 'activated' => ($activated ? 1 : 0) ));
 
 		if ($query->num_rows() == 1)
 			return $query->row();
@@ -148,7 +167,8 @@ class Baka_users extends Baka_lib
 	 */
 	public function get_user_by_username($username)
 	{
-		$query = $this->db->get_where( $this->users_table, array( 'LOWER(username)=' => strtolower($username) ));
+		$query = $this->db->get_where( $this->users_table,
+				 array( 'LOWER(username)=' => strtolower($username) ));
 
 		if ($query->num_rows() == 1)
 			return $query->row();
@@ -164,8 +184,8 @@ class Baka_users extends Baka_lib
 	 */
 	public function get_user_by_email($email)
 	{
-		$query = $this->db->get_where( $this->users_table, array(
-			'LOWER(email)=' => strtolower($email) ));
+		$query = $this->db->get_where( $this->users_table,
+				 array( 'LOWER(email)=' => strtolower($email) ));
 
 		if ($query->num_rows() == 1)
 			return $query->row();
@@ -181,7 +201,8 @@ class Baka_users extends Baka_lib
 	 */
 	public function is_username_available($username)
 	{
-		$query = $this->db->limit(1)->get_where($this->users_table, array('LOWER(username)=' => strtolower($username)));
+		$query = $this->db->limit(1)->get_where($this->users_table,
+				 array('LOWER(username)=' => strtolower($username)));
 
 		return $query->num_rows() == 0;
 	}
@@ -323,9 +344,9 @@ class Baka_users extends Baka_lib
 	public function can_reset_password($user_id, $new_pass_key, $expire_period = 900)
 	{
 		$query = $this->db->get( $this->users_table, array(
-				'id' => $user_id,
-				'new_password_key' => $new_pass_key,
-				'UNIX_TIMESTAMP(new_password_requested) >' => (time() - $expire_period)))->limit(1);
+				 'id' => $user_id,
+				 'new_password_key' => $new_pass_key,
+				 'UNIX_TIMESTAMP(new_password_requested) >' => (time() - $expire_period)))->limit(1);
 
 		return $query->num_rows() == 1;
 	}
@@ -551,6 +572,19 @@ class Baka_users extends Baka_lib
 	 */
 	private function get_user_meta($user_id)
 	{
+		$query = $this->db->select("meta")
+						  ->select("count(c.permission_id) perm_count")
+						  ->select("group_concat(distinct c.permission_id) perm_id")
+						  ->select("group_concat(distinct c.description) perm_desc")
+						  ->from($this->users_table.' a')
+						  ->join($this->role_perms_table.' b','b.role_id = a.role_id', 'inner')
+						  ->join($this->permissions_table.' c','c.permission_id = b.permission_id', 'inner');
+		
+		if ( ! is_null( $group_id ) )
+			return $query->where('a.role_id', $group_id)->get();
+		else
+			return $query->group_by('a.role_id');
+
 		$q      = $this->db->query("SELECT meta FROM {$this->users_table} WHERE id=?", array($user_id));
 		$row    = $q->row_array();
 
@@ -572,7 +606,8 @@ class Baka_users extends Baka_lib
 
 	public function permission_exists($permission)
 	{
-		$query = $this->db->get_where( $this->permissions_table, array('permission' => $permission), 1);
+		$query = $this->db->get_where( $this->permissions_table,
+				 array('permission' => $permission), 1);
 
 		return (bool) $query->num_rows();
 	}
@@ -584,8 +619,11 @@ class Baka_users extends Baka_lib
 	 */
 	public function get_role_permissions($role_id)
 	{
-		$query	= $this->db->query("SELECT permission FROM ".$this->table_prefix.$this->permissions_table." INNER JOIN ".$this->table_prefix.$this->role_perms_table." USING(permission_id) WHERE role_id={$role_id}");
-		
+		$query = $this->db->select("permission")
+						  ->from($this->permissions_table.' a')
+						  ->join($this->role_perms_table.' b', 'b.permission_id = a.permission_id', 'inner')
+						  ->where('role_id', $role_id);
+
 		return $query->result();
 	}
 	
@@ -594,8 +632,12 @@ class Baka_users extends Baka_lib
 	 */
 	public function get_permission_overrides($user_id)
 	{
-		$query	= $this->db->query("SELECT permission, allow FROM ".$this->table_prefix.$this->permissions_table." INNER JOIN ".$this->table_prefix.$this->overrides_table." USING(permission_id) WHERE user_id={$user_id}");
-		
+		$query = $this->db->select("permission, allow")
+						  ->from($this->permissions_table.' a')
+						  ->join($this->overrides_table.' b', 'b.permission_id = a.permission_id', 'inner')
+						  ->where('user_id', $user_id)
+						  ->get();
+
 		return $query->result();
 	}
 	
@@ -605,10 +647,15 @@ class Baka_users extends Baka_lib
 	public function get_permissions($user_id)
 	{
 		// Does not include overrites yet
-		$query	= $this->db->query("SELECT GROUP_CONCAT(DISTINCT permission) permission FROM ".$this->table_prefix.$this->user_role_table." JOIN ".$this->table_prefix.$this->roles_table." USING(role_id) JOIN ".$this->table_prefix.$this->role_perms_table." USING(role_id) JOIN ".$this->table_prefix.$this->permissions_table." USING(permission_id) WHERE user_id=?", array($user_id));
-		$row	= $query->row();
-		
-		return explode(',', $row->permission);
+		$query = $this->db->select("GROUP_CONCAT(DISTINCT permission) permission")
+						  ->from($this->user_role_table.' a')
+						  ->join($this->roles_table.' b', 'b.role_id = a.role_id')
+						  ->join($this->role_perms_table.' c', 'c.role_id = b.role_id')
+						  ->join($this->permissions_table.' d', 'd.permission_id = c.permission_id')
+						  ->where('user_id', $user_id)
+						  ->get();
+
+		return explode(',', $query->row()->permission);
 	}
 	
 	/**
@@ -618,7 +665,10 @@ class Baka_users extends Baka_lib
 	 */
 	public function get_user_roles($user_id)
 	{
-		return $this->db->query("SELECT b.role_id, b.role, b.full, b.default FROM ".$this->table_prefix.$this->user_role_table." a INNER JOIN ".$this->table_prefix.$this->roles_table." b USING(role_id) WHERE a.user_id=?", array($user_id));
+		return $this->db->select("b.role_id, b.role, b.full, b.default")
+						->from($this->user_role_table.' a')
+						->join($this->roles_table.' b', 'b.role_id = a.role_id')
+						->where('user_id', $user_id);
 	}
 		
 	/**
@@ -628,7 +678,9 @@ class Baka_users extends Baka_lib
 	 */
 	public function get_roles()
 	{
-		return $this->db->query("SELECT b.role_id, b.role, b.full, b.default FROM ".$this->table_prefix.$this->user_role_table." a INNER JOIN ".$this->table_prefix.$this->roles_table." b USING(role_id)");
+		return $this->db->select("b.role_id, b.role, b.full, b.default")
+						->from($this->user_role_table.' a')
+						->join($this->roles_table.' b', 'b.role_id = a.role_id');
 	}
 	
 	/**
