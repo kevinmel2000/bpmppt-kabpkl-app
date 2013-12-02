@@ -1,8 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
 /**
  * BAKA Form Validation Class
  *
  * Pre-processes global input data for security
+ * Extending native CI Form Validation
  *
  * @package		Baka_pack
  * @subpackage	Libraries
@@ -17,7 +19,7 @@ class BAKA_Form_validation extends CI_Form_validation
 	 * @param	array
 	 * @return	void
 	 */
-	function __construct($rules = array())
+	function __construct( $rules = array() )
 	{
 		parent::__construct($rules);
 
@@ -189,4 +191,4 @@ class BAKA_Form_validation extends CI_Form_validation
 }
 
 /* End of file BAKA_Input.php */
-/* Location: ./application/core/BAKA_Input.php */
+/* Location: ./libraries/BAKA_Form_validation.php */
