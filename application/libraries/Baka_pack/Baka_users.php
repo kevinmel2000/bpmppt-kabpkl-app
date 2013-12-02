@@ -83,7 +83,7 @@ class Baka_users extends Baka_lib
 						  ->from($this->roles_table.' a')
 						  ->join($this->role_perms_table.' b','b.role_id = a.role_id', 'inner')
 						  ->join($this->permissions_table.' c','c.permission_id = b.permission_id', 'inner');
-		
+
 		if ( ! is_null( $group_id ) )
 			return $query->where('a.role_id', $group_id)->get();
 		else
@@ -98,6 +98,11 @@ class Baka_users extends Baka_lib
 						->select("group_concat(distinct description) perm_desc")
 						->from($this->permissions_table)
 						->group_by('parent');
+
+		// if ( ! is_null( $group_id ) )
+		// 	return $query->where('a.role_id', $group_id)->get();
+		// else
+		// 	return $query->group_by('a.role_id');
 	}
 
 	public function get_roles_query()
@@ -110,6 +115,8 @@ class Baka_users extends Baka_lib
 		// return $this->db->query( "SELECT * FROM {$this->permissions_table}" );
 		return $this->db->select('*')->from( $this->permissions_table );
 	}
+
+	public function get_perm() {}
 	
 	/**
 	 * Get user profiles data
@@ -680,7 +687,8 @@ class Baka_users extends Baka_lib
 	{
 		return $this->db->select("b.role_id, b.role, b.full, b.default")
 						->from($this->user_role_table.' a')
-						->join($this->roles_table.' b', 'b.role_id = a.role_id');
+						->join($this->roles_table.' b', 'b.role_id = a.role_id')
+						->get();
 	}
 	
 	/**

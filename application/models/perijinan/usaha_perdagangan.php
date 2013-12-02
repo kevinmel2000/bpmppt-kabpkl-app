@@ -27,6 +27,13 @@ class Usaha_perdagangan extends App_main
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
+			'name'	=> $this->slug.'_pembaruan_ke',
+			'label'	=> 'Daftar ulang Ke',
+			'type'	=> 'text',
+			'std'	=> ( $data_obj ? $data_obj->pembaruan_ke : ''),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
+
+		$fields[]	= array(
 			'name'	=> $this->slug.'_fieldset_data_pemilik',
 			'label'	=> 'Data Pemilik Perusahaan',
 			'attr'	=> ( $data_obj ? 'disabled' : '' ),
@@ -54,17 +61,6 @@ class Usaha_perdagangan extends App_main
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_pemilik_kwn',
-			'label'	=> 'Kewarganegaraan',
-			'type'	=> 'dropdown',
-			'std'	=> ( $data_obj ? $data_obj->pemilik_kwn : ''),
-			'option'=> array(
-				'' => '---',
-				'wni' => 'Warga Negara Indonesia',
-				'wna' => 'Warga Negara Asing' ),
-			'validation'=> ( !$data_obj ? 'required' : '' ) );
-
-		$fields[]	= array(
 			'name'	=> $this->slug.'_pemilik_lahir',
 			'label'	=> 'Tempat &amp; Tgl. Lahir',
 			'type'	=> 'subfield',
@@ -74,16 +70,18 @@ class Usaha_perdagangan extends App_main
 					'name'	=> 'tmpt',
 					'label'	=> 'Tempat Lahir',
 					'type'	=> 'text',
-					'std'	=> ( $data_obj ? $data_obj->pemilik_lahir_tmpt : ''),
-					'validation'=> ( !$data_obj ? 'required' : '' ) ),
+					'std'	=> ( $data_obj ? $data_obj->pemilik_lahir_tmpt : '' ),
+					'validation'=> ''
+					),
 				array(
 					'col'	=> '6',
 					'name'	=> 'tgl',
 					'label'	=> 'Tanggal Lahir',
 					'type'	=> 'datepicker',
 					'std'	=> ( $data_obj ? $data_obj->pemilik_lahir_tgl : ''),
-					'validation'=> ( !$data_obj ? 'required' : '' ),
-					'callback'=> 'string_to_date' ),
+					'callback'=> 'string_to_date',
+					'validation'=> ''
+					),
 				));
 
 		$fields[]	= array(
@@ -154,6 +152,26 @@ class Usaha_perdagangan extends App_main
 			'label'	=> 'Kegiatan Usaha (KBLI)',
 			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->usaha_kegiatan : ''),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
+
+		$fields[]	= array(
+			'name'	=> $this->slug.'_usaha_lembaga',
+			'label'	=> 'Kelembagaan',
+			'type'	=> 'multiselect',
+			'attr'	=> ( $data_obj ? 'disabled' : '' ),
+			'std'	=> ( $data_obj ? $data_obj->usaha_lembaga : ''),
+			'option'=> array(
+				0 => '---',
+				// Kecil
+				1 => 'Pengecer',
+				2 => 'Penyalur',
+				3 => 'Pengumpul',
+				// Menengah
+				4 => 'Produsen',
+				5 => 'Sub Distributor',
+				6 => 'Distributor',
+				7 => 'Distributor',
+				),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
@@ -276,49 +294,24 @@ class Usaha_perdagangan extends App_main
 				));
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_saham_status',
-			'label'	=> 'Status Saham',
-			'type'	=> 'dropdown',
-			'std'	=> ( $data_obj ? $data_obj->usaha_saham_status : ''),
-			'option'=> array(
-				'' => '---',
-				'pmdm' => 'Penanaman Modal Dalam Negeri',
-				'pma' => 'Penanaman Modal Asing' ),
-			'validation'=> ( !$data_obj ? 'required' : '' ) );
-
-		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_modal_awal',
-			'label'	=> 'Modal awal',
-			'type'	=> 'text',
-			'std'	=> ( $data_obj ? $data_obj->usaha_modal_awal : ''),
-			'validation'=> ( !$data_obj ? 'required|numeric' : '' ) );
-
-		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_saham_nilai',
+			'name'	=> $this->slug.'_usaha_siup_lama',
 			'label'	=> 'Nilai Saham',
 			'type'	=> 'subfield',
 			'fields'=> array(
 				array(
 					'col'	=> '6',
-					'name'	=> 'total',
-					'label'	=> 'Total Nilai Saham (Rp.)',
+					'name'	=> 'nomor',
+					'label'	=> 'Nomor Siup Lama',
 					'type'	=> 'text',
-					'std'	=> ( $data_obj ? $data_obj->usaha_saham_nilai_total : ''),
-					'validation'=> ( !$data_obj ? 'required|numeric' : '' ) ),
+					'std'	=> ( $data_obj ? $data_obj->usaha_siup_lama_nomor : ''),
+					'validation'=> ( !$data_obj ? 'numeric' : '' ) ),
 				array(
-					'col'	=> '3',
-					'name'	=> 'nasional',
-					'label'	=> 'Nasional (%)',
-					'type'	=> 'number',
-					'std'	=> ( $data_obj ? $data_obj->usaha_saham_nilai_nasional : ''),
-					'validation'=> ( !$data_obj ? 'required|numeric' : '' ) ),
-				array(
-					'col'	=> '3',
+					'col'	=> '6',
 					'name'	=> 'tgl',
-					'label'	=> 'Asing (%)',
-					'type'	=> 'number',
-					'std'	=> ( $data_obj ? $data_obj->usaha_saham_nilai_tgl : ''),
-					'validation'=> ( !$data_obj ? 'required|numeric' : '' ) ),
+					'label'	=> 'Tanggal',
+					'type'	=> 'datepicker',
+					'std'	=> ( $data_obj ? $data_obj->usaha_siup_lama_tgl : ''),
+					'validation'=> ( !$data_obj ? 'numeric' : '' ) ),
 				));
 
 		return $fields;

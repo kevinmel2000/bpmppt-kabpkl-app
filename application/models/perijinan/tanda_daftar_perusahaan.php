@@ -11,6 +11,14 @@ class Tanda_daftar_perusahaan extends App_main
 		log_message('debug', "#BAKA_modul: Tanda_daftar_perusahaan_model Class Initialized");
 	}
 
+	/**
+	 * Todo
+	 * Tambahan nomor
+	 * - Nomor agenda		posisi atas
+	 * - Nomor registrasi	posisi kolom kiri
+	 * - Masa berlaku
+	 * - Tanggal ditetapkan
+	 */
 	public function form( $data_obj = FALSE )
 	{
 		$fields[]	= array(
@@ -24,6 +32,13 @@ class Tanda_daftar_perusahaan extends App_main
 				'daftar baru'	=> 'Pendaftaran Baru',
 				'balik nama'	=> 'Balik Nama',
 				'daftar ulang'	=> 'Daftar Ulang' ),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
+
+		$fields[]	= array(
+			'name'	=> $this->slug.'_pembaruan_ke',
+			'label'	=> 'Daftar ulang Ke',
+			'type'	=> 'text',
+			'std'	=> ( $data_obj ? $data_obj->pembaruan_ke : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
@@ -128,11 +143,11 @@ class Tanda_daftar_perusahaan extends App_main
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_skala',
-			'label'	=> 'Skala Perusahaan',
+			'name'	=> $this->slug.'_usaha_jenis',
+			'label'	=> 'Jenis Perusahaan',
 			'type'	=> 'dropdown',
 			'attr'	=> ( $data_obj ? 'disabled' : '' ),
-			'std'	=> ( $data_obj ? $data_obj->usaha_skala : ''),
+			'std'	=> ( $data_obj ? $data_obj->usaha_jenis : ''),
 			'option'=> array(
 				'' => '---',
 				'bumn' => 'Badan Usaha Milik Negara (BUMN)',
@@ -143,25 +158,59 @@ class Tanda_daftar_perusahaan extends App_main
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_lembaga',
-			'label'	=> 'Kelembagaan',
-			'type'	=> 'text',
-			'std'	=> ( $data_obj ? $data_obj->usaha_lembaga : ''),
+			'name'	=> $this->slug.'_usaha_skala',
+			'label'	=> 'Skala Perusahaan',
+			'type'	=> 'dropdown',
+			'attr'	=> ( $data_obj ? 'disabled' : '' ),
+			'std'	=> ( $data_obj ? $data_obj->usaha_skala : ''),
+			'option'=> array(
+				'' => '---',
+				'kcl' => 'Perusahaan Kecil',
+				'mng' => 'Menengah',
+				'bsr' => 'Besar' ),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
+
+		$fields[]	= array(
+			'name'	=> $this->slug.'_usaha_status',
+			'label'	=> 'Status Perusahaan',
+			'type'	=> 'dropdown',
+			'attr'	=> ( $data_obj ? 'disabled' : '' ),
+			'std'	=> ( $data_obj ? $data_obj->usaha_status : ''),
+			'option'=> array(
+				'' => '---',
+				'tunggal' => 'Kantor Tunggal',
+				'pusat' => 'Kantor Pusat',
+				'cabang' => 'Kantor Cabang',
+				'pembantu' => 'Kantor Pembantu',
+				'perwakilan' => 'Kantor Perwakilan' ),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
+
+		/**
+		 * 0 - 50	Usaha kecil
+		 * 50 - 500	Menengah
+		 * 500 > 	Besar
+		 */
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_usaha_kegiatan',
-			'label'	=> 'Kegiatan Usaha (KBLI)',
-			'type'	=> 'text',
-			'std'	=> ( $data_obj ? $data_obj->usaha_kegiatan : ''),
-			'validation'=> ( !$data_obj ? 'required' : '' ) );
-
-		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_komoditi',
-			'label'	=> 'Komoditi Usaha',
-			'type'	=> 'textarea',
-			'std'	=> ( $data_obj ? $data_obj->usaha_komoditi : ''),
-			'validation'=> ( !$data_obj ? 'required' : '' ) );
+			'label'	=> 'Kegiatan Usaha &amp; KBLI',
+			'type'	=> 'subfield',
+			'fields'=> array(
+				array(
+					'col'	=> '8',
+					'name'	=> 'pokok',
+					'label'	=> 'Kegiatan Usaha Pokok',
+					'type'	=> 'text',
+					'std'	=> ( $data_obj ? $data_obj->usaha_pokok : ''),
+					'validation'=> 'required' ),
+				array(
+					'col'	=> '4',
+					'name'	=> 'kbli',
+					'label'	=> 'KBLI',
+					'type'	=> 'text',
+					'std'	=> ( $data_obj ? $data_obj->usaha_kbli : ''),
+					'validation'=> 'required' ),
+				));
 
 		$fields[]	= array(
 			'name'	=> $this->slug.'_usaha_alamat',

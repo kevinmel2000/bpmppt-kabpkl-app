@@ -30,7 +30,7 @@ class Mendirikan_bangunan extends App_main
 			'type'	=> 'dropdown',
 			'attr'	=> ( $data_obj ? 'disabled' : '' ),
 			'option'=> array(
-				'rumah'	=> 'Rumah',
+				'rumah'	=> 'Rumah Tinggal',
 				'kios'	=> 'Kios',
 				'toko'	=> 'Toko',
 				'gudang'=> 'Gudang',

@@ -12,6 +12,20 @@ class Usaha_pariwisata extends App_main
 
 	public function form( $data_obj = FALSE )
 	{
+		/**
+		 * TODO:
+		 *
+		 * Nomor Izin:
+		 * 557.142/19/PAR/RM/BPMPPT/XI/2013
+		 * + 557.142 -> Static
+		 * + 19 -> Nomor urut mulai per tahun
+		 * + PAR -> static
+		 * + RM -> Kode Jenis Usaha
+		 *
+		 * Bentuk cetak
+		 * + Surat Ijin
+		 * + kutipan
+		 */
 		$fields[]	= array(
 			'name'	=> $this->slug.'_fieldset_data_pemohon',
 			'label'	=> 'Data Pemohon',
