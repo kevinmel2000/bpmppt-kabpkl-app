@@ -92,7 +92,7 @@ class Layanan extends BAKA_Controller
 
 	public function data( $data_type )
 	{
-		$this->data['search_form']	= TRUE;
+		// $this->data['search_form']	= TRUE;
 
 		$this->data['tool_buttons']['form'] = 'Baru|primary';
 		$this->data['tool_buttons']['cetak'] = 'Laporan|info';
@@ -200,20 +200,10 @@ class Layanan extends BAKA_Controller
 	{
 		if ( $data_id )
 		{
-			$data['skpd_name']		= get_app_setting('skpd_name');
-			$data['skpd_address']	= get_app_setting('skpd_address');
-			$data['skpd_city']		= get_app_setting('skpd_city');
-			$data['skpd_prov']		= get_app_setting('skpd_prov');
-			$data['skpd_telp']		= get_app_setting('skpd_telp');
-			$data['skpd_fax']		= get_app_setting('skpd_fax');
-			$data['skpd_pos']		= get_app_setting('skpd_pos');
-			$data['skpd_web']		= get_app_setting('skpd_web');
-			$data['skpd_email']		= get_app_setting('skpd_email');
-			$data['skpd_logo']		= get_app_setting('skpd_logo');
-			$data['skpd_lead_name']	= get_app_setting('skpd_lead_name');
-			$data['skpd_lead_nip']	= get_app_setting('skpd_lead_nip');
-
-			$data = array_merge( (array) $data, (array) $this->app_data->get_fulldata_by_id( $data_id ) );
+			$data = array_merge(
+					(array) $this->app_data->skpd_properties(),
+					(array) $this->app_data->get_fulldata_by_id( $data_id )
+					);
 
 			$this->baka_theme->load('prints/products/'.$data_type, $data, 'print');
 		}
@@ -236,17 +226,17 @@ class Layanan extends BAKA_Controller
 
 			$fields[]	= array(
 				'name'	=> 'data_date',
-				'label'	=> 'BUlan &amp; Tahun',
+				'label'	=> 'Bulan &amp; Tahun',
 				'type'	=> 'subfield',
 				'fields'=> array(
 					array(
-						'name' => 'data_month',
+						'name' => 'month',
 						'col'	=> 6,
 						'label'	=> 'Bulan',
 						'type'	=> 'dropdown',
 						'option'=> add_placeholder( get_month_assoc(), 'Pilih Bulan') ),
 					array(
-						'name' => 'data_year',
+						'name' => 'year',
 						'col'	=> 6,
 						'label'	=> 'Tahun',
 						'type'	=> 'dropdown',
@@ -254,24 +244,24 @@ class Layanan extends BAKA_Controller
 					),
 				'desc'	=> 'Tentukan tanggal dan bulan dokumen.' );
 
-			$fields[]	= array(
-				'name'	=> 'data_sort',
-				'label'	=> 'Urutan',
-				'type'	=> 'radiobox',
-				'option'=> array(
-					'asc'	=> 'Ascending',
-					'des'	=> 'Descending'),
-				'std'	=> 'asc',
-				'desc'	=> 'Tentukan jenis pengurutan output dokumen.' );
+			// $fields[]	= array(
+			// 	'name'	=> 'data_sort',
+			// 	'label'	=> 'Urutan',
+			// 	'type'	=> 'radiobox',
+			// 	'option'=> array(
+			// 		'asc'	=> 'Ascending',
+			// 		'des'	=> 'Descending'),
+			// 	'std'	=> 'asc',
+			// 	'desc'	=> 'Tentukan jenis pengurutan output dokumen.' );
 
-			$fields[]	= array(
-				'name'	=> 'data_output',
-				'label'	=> 'Pilihan Output',
-				'type'	=> 'radiobox',
-				'option'=> array(
-					'print'	=> 'Cetak Langsung',
-					'excel'	=> 'Export ke file MS Excel'),
-				'std'	=> 'print' );
+			// $fields[]	= array(
+			// 	'name'	=> 'data_output',
+			// 	'label'	=> 'Pilihan Output',
+			// 	'type'	=> 'radiobox',
+			// 	'option'=> array(
+			// 		'print'	=> 'Cetak Langsung',
+			// 		'excel'	=> 'Export ke file MS Excel'),
+			// 	'std'	=> 'print' );
 
 			$buttons[]= array(
 				'name'	=> 'do-print',
@@ -279,22 +269,33 @@ class Layanan extends BAKA_Controller
 				'label'	=> 'Cetak sekarang',
 				'class'	=> 'btn-primary pull-right' );
 
-			$form = $this->baka_form->add_form( current_url(), 'internal-skpd' )
+			$form = $this->baka_form->add_form(
+										current_url(),
+										'internal-skpd',
+										'', '', 'post',
+										array('target' => '_blank') )
 									->add_fields( $fields )
 									->add_buttons( $buttons );
 
 			if ( $form->validate_submition() )
 			{
-				$submited_data = $form->submited_data();
+				$data = $this->app_data->skpd_properties();
 
-				$this->session->set_flashdata('error', 'Tidak dapat menemukan data yang anda cari.');
+				$data['layanan'] = $this->app_data->get_label($data_type);
 
-				redirect( current_url() );
+				$data['results'] = $this->app_data->get_report(
+					$data_type,
+					$form->submited_data()
+					);
+
+				$this->baka_theme->load('prints/reports/'.$data_type, $data, 'laporan');
 			}
-				
-			$this->data['panel_body'] = $form->render();
+			else
+			{
+				$this->data['panel_body'] = $form->render();
 
-			$this->baka_theme->load('pages/panel_form', $this->data);
+				$this->baka_theme->load('pages/panel_form', $this->data);
+			}
 		}
 	}
 
@@ -302,11 +303,13 @@ class Layanan extends BAKA_Controller
 	{
 		if ( $this->app_data->delete_data( $data_id, $data_type ) )
 		{
-			$this->session->set_flashdata('message', array('Dokumen dengan id #'.$data_id.' berhasil dihapus secara permanen.'));
+			$this->session->set_flashdata('message',
+				array('Dokumen dengan id #'.$data_id.' berhasil dihapus secara permanen.'));
 		}
 		else
 		{
-			$this->session->set_flashdata('error', array('Terjadi kesalahan penghapusan dokumen sercara permanen.'));
+			$this->session->set_flashdata('error',
+				array('Terjadi kesalahan penghapusan dokumen sercara permanen.'));
 		}
 
 		redirect( $this->data['page_link'] );
@@ -318,11 +321,13 @@ class Layanan extends BAKA_Controller
 		{
 			$message = ' '.( $new_status != 'deleted' ? 'berhasil diganti menjadi ' : '' );
 
-			$this->session->set_flashdata('success', array('Status dokumen dengan id #'.$data_id.$message._x('status_'.$new_status)) );
+			$this->session->set_flashdata('success',
+				array('Status dokumen dengan id #'.$data_id.$message._x('status_'.$new_status)) );
 		}
 		else
 		{
-			$this->session->set_flashdata('error', array('Terjadi kesalahan penggantian status dokumen dengan id #'.$data_id) );
+			$this->session->set_flashdata('error',
+				array('Terjadi kesalahan penggantian status dokumen dengan id #'.$data_id) );
 		}
 
 		redirect( $this->data['page_link'] );

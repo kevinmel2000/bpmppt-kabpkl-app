@@ -58,7 +58,7 @@ class App_main extends CI_Model
 		if ( count($this->app_data->get_moduls_array()) > 0 )
 		{
 			$this->baka_theme->add_navmenu( $parent, 'dashboard', 'link', 'dashboard', 'Statistik', array(), $position );
-			$this->baka_theme->add_navmenu( $parent, $nama.'laporan', 'link', 'data/utama/laporan', 'Laporan', array(), $position );
+			// $this->baka_theme->add_navmenu( $parent, $nama.'laporan', 'link', 'data/utama/laporan', 'Laporan', array(), $position );
 			$this->baka_theme->add_navmenu( $parent, $nama.'d', 'devider', '', '', array(), $position );
 
 			foreach ($this->app_data->get_moduls_array() as $modul)
@@ -81,7 +81,7 @@ class App_main extends CI_Model
 		$this->baka_theme->add_navmenu( $parent_id, 'ai_skpd', 'link', 'admin/internal/skpd', 'SKPD', array(), $position );
 		$this->baka_theme->add_navmenu( $parent_id, 'ai_application', 'link', 'admin/internal/app', 'Aplikasi', array(), $position );
 		$this->baka_theme->add_navmenu( $parent_id, 'ai_security', 'link', 'admin/internal/keamanan', 'Keamanan', array(), $position );
-		$this->baka_theme->add_navmenu( $parent_id, 'ai_property', 'link', 'admin/internal/prop', 'Properti', array(), $position );
+		// $this->baka_theme->add_navmenu( $parent_id, 'ai_property', 'link', 'admin/internal/prop', 'Properti', array(), $position );
 		// ===========================
 		$this->baka_theme->add_navmenu( $parent_id, 'au_def', 'devider', '', '', array(), $position);
 		$this->baka_theme->add_navmenu( $parent_id, 'au_head', 'header', '', 'Pengguna', array(), $position);

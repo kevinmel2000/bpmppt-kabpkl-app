@@ -3,6 +3,7 @@
 class Utama extends BAKA_Controller
 {
 	private $modules_arr = array();
+	private $modules_count_arr = array();
 
 	public function __construct()
 	{
@@ -13,7 +14,8 @@ class Utama extends BAKA_Controller
 		$this->baka_theme->add_navbar( 'data_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
 		$this->app_main->data_navbar( 'data_sidebar', 'side' );
 
-		$this->modules_arr = $this->app_data->get_modules_assoc();
+		$this->modules_arr			= $this->app_data->get_modules_assoc();
+		$this->modules_count_arr	= $this->app_data->count_data();
 
 		$this->data['page_link'] = 'data/';
 	}
@@ -28,7 +30,7 @@ class Utama extends BAKA_Controller
 		$this->data['panel_title']	= $this->baka_theme->set_title('Semua data perijinan');
 		$this->data['data_type']	= $this->modules_arr;
 
-		if ( count($this->modules_arr) > 0 )
+		if ( !empty($this->modules_arr) )
 		{
 			$this->data['load_toolbar'] = TRUE;
 			// $this->data['search_form']	= TRUE;
@@ -41,7 +43,7 @@ class Utama extends BAKA_Controller
 
 			$this->data['tool_buttons']['utama/laporan'] = 'Laporan|default';
 			$this->data['panel_body']	= $this->app_data->get_tables( $this->data['page_link'] );
-			$this->data['counter']		= $this->app_data->count_data();
+			$this->data['counter']		= $this->modules_count_arr;
 
 			$this->baka_theme->load('pages/panel_alldata', $this->data);
 		}
@@ -55,13 +57,18 @@ class Utama extends BAKA_Controller
 	{
 		$this->data['panel_title'] = $this->baka_theme->set_title('Laporan data');
 
+		foreach ( $this->app_data->get_modules_object() as $module )
+		{
+			$modules[$module->link] = $module->label;
+		}
+
 		$fields[]	= array(
 			'name'	=> 'data_type',
 			'label'	=> 'Pilih data perijinan',
 			'type'	=> 'dropdown',
-			'option'=> add_placeholder($this->modules_arr),
+			'option'=> add_placeholder( $modules ),
 			'validation'=> 'required',
-			'desc'	=> 'Pilih jenis dokumen yang ingi dicetak. Saat ini terdapat '.count($this->modules_arr).' jenis dokumen untuk anda.' );
+			'desc'	=> 'Pilih jenis dokumen yang ingin dicetak. Terdapat '.count( $modules ).' yang dapat anda cetak.' );
 
 		$fields[]	= array(
 			'name'	=> 'data_status',
@@ -94,24 +101,24 @@ class Utama extends BAKA_Controller
 				),
 			'desc'	=> 'Tentukan tanggal dan bulan dokumen.' );
 
-		$fields[]	= array(
-			'name'	=> 'data_sort',
-			'label'	=> 'Urutan',
-			'type'	=> 'radiobox',
-			'option'=> array(
-				'asc'	=> 'Ascending',
-				'des'	=> 'Descending'),
-			'std'	=> 'asc',
-			'desc'	=> 'Tentukan jenis pengurutan output dokumen.' );
+		// $fields[]	= array(
+		// 	'name'	=> 'data_sort',
+		// 	'label'	=> 'Urutan',
+		// 	'type'	=> 'radiobox',
+		// 	'option'=> array(
+		// 		'asc'	=> 'Ascending',
+		// 		'des'	=> 'Descending'),
+		// 	'std'	=> 'asc',
+		// 	'desc'	=> 'Tentukan jenis pengurutan output dokumen.' );
 
-		$fields[]	= array(
-			'name'	=> 'data_output',
-			'label'	=> 'Pilihan Output',
-			'type'	=> 'radiobox',
-			'option'=> array(
-				'print'	=> 'Cetak Langsung',
-				'excel'	=> 'Export ke file MS Excel'),
-			'std'	=> 'print' );
+		// $fields[]	= array(
+		// 	'name'	=> 'data_output',
+		// 	'label'	=> 'Pilihan Output',
+		// 	'type'	=> 'radiobox',
+		// 	'option'=> array(
+		// 		'print'	=> 'Cetak Langsung',
+		// 		'excel'	=> 'Export ke file MS Excel'),
+		// 	'std'	=> 'print' );
 
 		$buttons[]= array(
 			'name'	=> 'do-print',
@@ -119,7 +126,11 @@ class Utama extends BAKA_Controller
 			'label'	=> 'Cetak sekarang',
 			'class'	=> 'btn-primary pull-right' );
 
-		$form = $this->baka_form->add_form( current_url(), 'internal-skpd' )
+		$form = $this->baka_form->add_form(
+									current_url(),
+									'internal-skpd',
+									'', '', 'post',
+									array('target' => '_blank') )
 								->add_fields( $fields )
 								->add_buttons( $buttons );
 
@@ -127,30 +138,23 @@ class Utama extends BAKA_Controller
 		{
 			$submited_data = $form->submited_data();
 
-			$this->session->set_flashdata('error', 'Tidak dapat menemukan data yang anda cari.');
+			$data = $this->app_data->skpd_properties();
+			$data['layanan'] = $this->app_data->get_label($submited_data['data_type']);
+			$data['results'] = array();
 
-			redirect( current_url() );
+			$this->baka_theme->load('prints/reports/'.$submited_data['data_type'], $data, 'laporan');
 		}
-			
-		$this->data['panel_body'] = $form->render();
+		else
+		{
+			$this->data['panel_body'] = $form->render();
 
-		$this->baka_theme->load('pages/panel_form', $this->data);
+			$this->baka_theme->load('pages/panel_form', $this->data);
+		}
 	}
 
 	public function cetak( $data_type, $data_id = FALSE )
 	{
-		$data['skpd_name']		= get_app_setting('skpd_name');
-		$data['skpd_address']	= get_app_setting('skpd_address');
-		$data['skpd_city']		= get_app_setting('skpd_city');
-		$data['skpd_prov']		= get_app_setting('skpd_prov');
-		$data['skpd_telp']		= get_app_setting('skpd_telp');
-		$data['skpd_fax']		= get_app_setting('skpd_fax');
-		$data['skpd_pos']		= get_app_setting('skpd_pos');
-		$data['skpd_web']		= get_app_setting('skpd_web');
-		$data['skpd_email']		= get_app_setting('skpd_email');
-		$data['skpd_logo']		= get_app_setting('skpd_logo');
-		$data['skpd_lead_name']	= get_app_setting('skpd_lead_name');
-		$data['skpd_lead_nip']	= get_app_setting('skpd_lead_nip');
+		$data = $this->app_data->skpd_properties();
 
 		// $data = array_merge( (array) $data, (array) $this->app_data->get_fulldata_by_id( $data_id ) );
 

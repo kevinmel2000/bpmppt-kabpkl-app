@@ -115,7 +115,7 @@ class App_data extends CI_Model
 	}
 
 	/**
-	 * Get Module name
+	 * Get Module alias
 	 * 
 	 * @param string $modul_name
 	 */
@@ -125,7 +125,7 @@ class App_data extends CI_Model
 	}
 
 	/**
-	 * Get Module name
+	 * Get Module code
 	 * 
 	 * @param string $modul_name
 	 */
@@ -135,13 +135,23 @@ class App_data extends CI_Model
 	}
 
 	/**
-	 * Get Module name
+	 * Get Module label
 	 * 
 	 * @param string $modul_name
 	 */
 	public function get_label( $modul_name )
 	{
 		return $this->app_modules[$modul_name]['label'];
+	}
+
+	/**
+	 * Get Module link
+	 * 
+	 * @param string $modul_name
+	 */
+	public function get_link( $modul_name )
+	{
+		return $this->app_modules[$modul_name]['link'];
 	}
 
 	// get all moduls grid
@@ -199,6 +209,22 @@ class App_data extends CI_Model
 		return $grid->make_table( $query );
 	}
 
+	public function skpd_properties()
+	{
+		$prop = array(
+				'skpd_name', 'skpd_address', 'skpd_city', 'skpd_prov',
+				'skpd_telp', 'skpd_fax', 'skpd_pos', 'skpd_web', 'skpd_email',
+				'skpd_logo','skpd_lead_name','skpd_lead_nip'
+				);
+
+		foreach ( $prop as $property )
+		{
+			$data[$property] = get_app_setting( $property );
+		}
+
+		return $data;
+	}
+
 	public function get_print( $modul_name, $data_id )
 	{
 		$data['skpd_name']		= get_app_setting('skpd_name');
@@ -234,13 +260,18 @@ class App_data extends CI_Model
 	// get data by id
 	public function get_data_by_id( $data_id )
 	{
-		return $this->_get_where( $this->_data_table, array( 'id' => $data_id ) );
+		return $this->_get_where( array( 'id' => $data_id ) );
 	}
 
 	// get data by type
 	public function get_data_by_type( $modul_name )
 	{
-		return $this->db->get_where($this->_data_table, array('type' => $modul_name));
+		return $this->db->get_where( $this->_data_table, array('type' => $modul_name));
+	}
+
+	public function get_filtered( $param )
+	{
+		return $this->db->get_where( $this->_data_table, $param );
 	}
 
 	// get data by label
@@ -263,7 +294,7 @@ class App_data extends CI_Model
 		if ($modul_name != '')
 			$where['type'] = $modul_name;
 
-		return $this->_get_where( $this->_data_table, $where );
+		return $this->_get_where( $where );
 	}
 
 	// get data by label
@@ -274,7 +305,7 @@ class App_data extends CI_Model
 		if ($modul_name != '')
 			$where['type'] = $modul_name;
 
-		return $this->_get_where( $this->_data_table, $where );
+		return $this->_get_where( $where );
 	}
 
 	// get data by petitioner
@@ -285,7 +316,7 @@ class App_data extends CI_Model
 		if ($modul_name != '')
 			$where['type'] = $modul_name;
 
-		return $this->_get_where( $this->_data_table, $where );
+		return $this->_get_where( $where );
 	}
 
 	// find data by petitioner
@@ -446,14 +477,41 @@ class App_data extends CI_Model
 		return $this->db->trans_status();
 	}
 
-	private function _get_where( $table_name, $wheres )
+	private function _get_where( $wheres )
 	{
-		$query = $this->db->get_where( $table_name, $wheres );
+		$query = $this->db->get_where( $this->_data_table, $wheres );
 
 		if ( $query->num_rows() == 1 )
 			return $query->row();
 
 		return NULL;
+	}
+
+	public function get_report( $data_type, $filter )
+	{
+		$wheres['type']		= $data_type;
+		$wheres['status']	= $filter['data_status'];
+		$wheres['month']	= $filter['data_date_month'];
+		$wheres['year']		= $filter['data_date_year'];
+
+		return $this->get_data_where( $wheres );
+	}
+
+	public function get_data_where( $wheres )
+	{
+		if ( isset($wheres['month']) )
+		{
+			$wheres['MONTH(created_on)'] = $wheres['month'];
+			unset($wheres['month']);
+		}
+
+		if ( isset($wheres['year']) )
+		{
+			$wheres['YEAR(created_on)'] = $wheres['year'];
+			unset($wheres['year']);
+		}
+
+		return $this->db->get_where( $this->_data_table, $wheres );
 	}
 
 	private function _write_datalog( $data_id, $log_message )

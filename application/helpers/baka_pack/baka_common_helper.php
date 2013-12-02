@@ -40,37 +40,35 @@ function format_size( $size )
 
 function format_date( $string = '' )
 {
-	$string = $string != '' ? strtotime( $string ) : time();
-
-	return date( get_app_setting('app_date_format'), $string);
+	return bdate( get_app_setting('app_date_format'), $string);
 }
 
 function format_datetime( $string = '' )
 {
-	$string = $string != '' ? strtotime( $string ) : time();
-
-	return date( get_app_setting('app_datetime_format'), $string);
+	return bdate( get_app_setting('app_datetime_format'), $string);
 }
 
 function format_time( $string = '' )
 {
-	$string = $string != '' ? strtotime( $string ) : time();
-
-	return date( 'H:i:s', $string);
+	return bdate( 'H:i:s', $string);
 }
 
 function string_to_date( $string = '' )
 {
-	$string = $string != '' ? strtotime( $string ) : time();
-
-	return date( 'Y-m-d', $string);
+	return bdate( 'Y-m-d', $string);
 }
 
 function string_to_datetime( $string = '' )
 {
-	$string = $string != '' ? strtotime( $string ) : time();
+	return bdate( 'Y-m-d H:i:s', $string);
+}
 
-	return date( 'Y-m-d H:i:s', $string);
+function bdate( $format = '', $strdate = '' )
+{
+	$strdate = $strdate != '' ? strtotime( $strdate ) : time();
+	$format	|| $format = 'Y-m-d H:i:s';
+
+	return date( $format, $strdate );
 }
 
 function baka_get_umur( $lahir, $sampai = '' )

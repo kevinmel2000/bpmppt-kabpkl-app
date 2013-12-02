@@ -36,8 +36,24 @@ class Baka_form Extends Baka_lib
 		log_message('debug', "#Baka_pack: Form Class Initialized");
 	}
 
-	public function add_form( $action, $name, $id = '', $class = '', $method = 'post', $extra = array() )
+	/**
+	 * Adding form into page.
+	 *
+	 * @access	public
+	 * @since	0.1.0
+	 * @param	string	$action	Form action url
+	 * @param	string	$name	Form name attribute
+	 * @param	string	$id		Form ID attribute
+	 * @param	string	$class	Form Class attributes
+	 * @param	string	$method	Form Method (post|get|request) default is post
+	 * @param	array	$extra	Additional form attributes.
+	 *
+	 * @return	void
+	 */
+	public function add_form( $action, $name, $id = '', $class = '', $method = '', $extra = array() )
 	{
+		$method || $method = 'post';
+
 		$this->form_action			= $action;
 		$this->form_attrs['name']	= $name;
 		$this->form_attrs['id']		= str_replace('_', '-', 'form-'.($id != '' ? $id : $name));
@@ -65,10 +81,14 @@ class Baka_form Extends Baka_lib
 		return $this->add_form( $action, $name, $id, $class, $method, $extra );
 	}
 
-	public function add_info( $title, $messages )
+	public function add_info( $title, $messages, $type = '' )
 	{
+		if ( !in_array( $type, array('info', 'danger', 'warning', 'success' ) ) )
+			$type = 'info';
+
 		$this->form_info['title']	= $title;
 		$this->form_info['messages']= $messages;
+		$this->form_info['type']	= $type;
 
 		return $this;
 	}
@@ -102,7 +122,7 @@ class Baka_form Extends Baka_lib
 
 		if ( !empty( $this->form_info ) )
 		{
-			$output .= '<div class="alert alert-info"><h4 class="alert-title">'.$this->form_info['title'].'</h4>';
+			$output .= '<div class="alert alert-'.$this->form_info['type'].'"><h4 class="alert-title">'.$this->form_info['title'].'</h4>';
 
 			if (is_array($this->form_info['messages']))
 			{
@@ -362,10 +382,10 @@ class Baka_form Extends Baka_lib
 		$captcha .= anchor( current_url().'#', 'Ganti teks', array(
 			'class'	=> 'small',
 			'class'	=> 'change-image',
-			'onclick'=> "$(function() {
-							$('#cool-captcha-".$name."-img').attr('src', '".$captcha_url."?'+Math.random());
-							$('#cool-captcha-".$name."-input').focus();
-						return false; });" ) );
+			'onclick'=> '$(function() {'
+							.'$(\'#cool-captcha-'.$name.'-img\').attr(\'src\', \''.$captcha_url.'?\'+Math.random());'
+							.'$(\'#cool-captcha-'.$name.'-input\').focus();'
+						.'return false; });' ) );
 
 		$captcha .= form_input( array(
 			'name'	=> $name,
@@ -644,24 +664,24 @@ class Baka_form Extends Baka_lib
 		{
 			if ( $field['type'] == 'subfield' )
 			{
-				foreach ( $field['fields'] as $subfield )
+				foreach ( $field['fields'] as $sub )
 				{
 					$this->set_field_rules(
-						$field['name'].'_'.$subfield['name'],									// Subfield Name
-						$subfield['label'],														// Subfield Label
-						$subfield['type'],
-						(isset($subfield['validation'])	? $subfield['validation']	: ''),		// Subfield Validation	(jika ada)
-						(isset($subfield['callback'])	? $subfield['callback']		: '') );	// Subfield Callback	(jika ada)
+						$field['name'].'_'.$sub['name'],							// Subfield Name
+						$sub['label'],												// Subfield Label
+						$sub['type'],
+						(isset($sub['validation'])	? $sub['validation']: ''),		// Subfield Validation	(jika ada)
+						(isset($sub['callback'])	? $sub['callback']	: '') );	// Subfield Callback	(jika ada)
 				}
 			}
 			else if ( $field['type'] != 'static' AND $field['type'] != 'fieldset' )
 			{
 				$this->set_field_rules(
-					$field['name'],														// Field Name
-					$field['label'],													// Field Label
+					$field['name'],													// Field Name
+					$field['label'],												// Field Label
 					$field['type'],
-					(isset($field['validation'])	? $field['validation']	: ''),		// Field Validation	(jika ada)
-					(isset($field['callback'])		? $field['callback']	: '') );	// Field Callback	(jika ada)
+					(isset($field['validation'])? $field['validation']	: ''),		// Field Validation	(jika ada)
+					(isset($field['callback'])	? $field['callback']	: '') );	// Field Callback	(jika ada)
 			}
 		}
 
@@ -673,26 +693,59 @@ class Baka_form Extends Baka_lib
 		return validation_errors();
 	}
 
-	protected function set_field_rules( $field_name, $field_label, $field_type, $validation_rules = '', $callback = '' )
+	/**
+	 * Setup field validation rules
+	 *
+	 * @since	0.1.0
+	 * @return	void
+	 */
+	protected function set_field_rules( $name, $label, $type, $validation = '', $callback = '' )
 	{
-		$array_field	= ( $field_type == 'checkbox' OR $field_type == 'multiselect' ? TRUE : FALSE );
+		$field_arr	= ( $type == 'checkbox' OR $type == 'multiselect' ? TRUE : FALSE );
+		$rules		= ( $field_arr ? 'xss_clean|' : 'trim|xss_clean|' );
 
-		$validation		= ( $array_field ? 'xss_clean|' : 'trim|xss_clean|' );
+		if ( strlen( $validation ) > 0 )
+			$rules .= $validation;
 
-		if ( strlen($validation_rules) > 0 )
-			$validation .= $validation_rules;
+		$this->form_validation->set_rules( $name, $label, $rules);
 
-		$this->form_validation->set_rules( $field_name, $field_label, $validation);
-
-		if ( strlen($callback) > 0 AND is_callable($callback))
-			$this->form_data[$field_name] = call_user_func( $callback, $this->input->post($field_name) );
+		if ( strlen( $callback ) > 0 and is_callable( $callback ) )
+			$this->form_data[$name] = call_user_func( $callback, $this->input->post( $name ) );
 		else
-			$this->form_data[$field_name] = $this->input->post( $field_name );
+			$this->form_data[$name] = $this->input->post( $name );
 	}
 
+	/**
+	 * Return the submited data
+	 *
+	 * @since	0.1.1
+	 * @return	object
+	 */
 	public function submited_data()
 	{
-		return $this->form_data;
+		$data = $this->form_data;
+		$this->clear();
+
+		return $data;
+	}
+
+	/**
+	 * Clean up form properties
+	 *
+	 * @since	0.1.3
+	 * @return	void
+	 */
+	public function clear()
+	{
+		$this->form_action;
+		$this->form_attrs			= array();
+		$this->form_data			= array();
+		$this->form_info			= array();
+		$this->has_fieldset			= FALSE;
+		$this->fields				= array();
+		$this->buttons				= array();
+		$this->show_action_btns		= TRUE;
+		$this->is_horizontal_form	= FALSE;
 	}
 }
 
