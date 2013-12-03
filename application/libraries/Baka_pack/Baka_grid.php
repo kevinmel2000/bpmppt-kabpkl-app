@@ -107,7 +107,7 @@ class Baka_grid Extends Baka_lib
 		return $this;
 	}
 
-	public function set_column( $head_data, $field_data, $width_data, $sortble = FALSE, $replacement = FALSE )
+	public function set_column( $head_data, $field_data, $width_data = '', $sortble = FALSE, $replacement = FALSE )
 	{
 		if ( is_array($head_data) )
 		{
@@ -283,26 +283,11 @@ class Baka_grid Extends Baka_lib
 		return $output;
 	}
 
-	public function make_table( $query = NULL )
+	public function make_table( $query = FALSE )
 	{
-		$db_query = !is_null( $query ) ? $query : $this->db_query;
+		$db_query = $query ? $query : $this->db_query;
 
-		if ( method_exists($db_query, 'get') )
-		{
-			$db_kueri = clone $db_query;
-			$this->db_result_count = $db_kueri->get()->num_rows();
-
-			$db_query->limit($this->limit, $this->offset);
-			$get_query			= $db_query->get();
-			$this->db_result	= $get_query->result();
-			$this->db_num_rows	= $get_query->num_rows();
-		}
-		else
-		{
-			$this->db_result_count	= $db_query->num_rows();
-			$this->db_result		= $db_query->result();
-			$this->db_num_rows		= $this->db_result_count;
-		}
+		$this->_set_rows( $db_query );
 
 		if ( !$this->load->is_loaded('table') )
 			$this->load->library('table');
@@ -415,6 +400,42 @@ class Baka_grid Extends Baka_lib
 
 		$this->table_cols		= array();
 		$this->action_buttons	= array();
+	}
+
+	private function _set_rows( $obj )
+	{
+		if ( is_array( $obj ) )
+			array_to_object( $obj );
+
+		if ( method_exists($obj, 'get') )
+		{
+			$db_kueri = clone $obj;
+			$this->db_result_count = $db_kueri->get()->num_rows();
+
+			$obj->limit($this->limit, $this->offset);
+			$get_query			= $obj->get();
+			$this->db_result	= $get_query->result();
+			$this->db_num_rows	= $get_query->num_rows();
+		}
+		
+		if ( method_exists($obj, 'result') )
+		{
+			$this->db_result		= $obj->result();
+			$this->db_result_count	= $obj->num_rows();
+			$this->db_num_rows		= $this->db_result_count;
+		}
+
+		if ( count($this->table_cols) == 0 )
+		{
+			foreach ($this->db_result as $key => $val )
+			{
+				if ($key==0)
+				{
+					foreach ($val as $k => $v)
+						$this->set_column( $k, $v );
+				}
+			}
+		}
 	}
 }
 

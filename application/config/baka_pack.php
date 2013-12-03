@@ -38,11 +38,6 @@ $config['baka_app_min_browser']		= array(
 // BAKA media table name
 $config['baka_media_table']			= 'media';
 
-// BAKA data table name
-$config['baka_data_table']			= 'data';
-// BAKA data_meta table name
-$config['baka_data_meta_table']		= 'data_meta';
-
 // BAKA system_opt table name
 $config['baka_system_opt_table']	= 'system_opt';
 // BAKA system_env table name
@@ -187,8 +182,5 @@ $config['baka_autologin_cookie_life']	= 60*60*24*31*2;
 $config['baka_forgot_password_expire']	= 60*15;
 
 
-/* End of file tank_auth.php */
-/* Location: ./application/config/tank_auth.php */
-
-/* End of file aplikasi.php */
-/* Location: ./application/config/aplikasi.php */
+/* End of file baka_pack.php */
+/* Location: ./application/config/baka_pack.php */
