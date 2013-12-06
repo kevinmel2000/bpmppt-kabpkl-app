@@ -1,245 +1,60 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class App_data extends CI_Model
+class bpmppt_model extends CI_Model
 {
-	// Direktori penyimpanan modul
-	public $module_dir 			= 'perijinan/';
-
-	// Nama table
+	/**
+	 * Tables name declaration
+	 * @var string
+	 */
 	private $_data_table		= 'data';
 	private $_datameta_table	= 'data_meta';
 
-	private $_dashboard_view	= FALSE;
+	/**
+	 * Messages wrapper
+	 * @var array
+	 */
+	private $_messages = array();
 
-	public $app_modules = array();
-
-	public $messages = array();
-
-	// Default constructor class
+	/**
+	 * base class constructor
+	 */
 	public function __construct()
 	{
 		parent::__construct();
 
-		$this->load_moduls();
-
-		log_message('debug', "#Baka_pack: Application data model Class Initialized");
+		log_message('debug', "#BPMPPT: model class loaded");
 	}
 
 	/**
-	 * Load all modules that available to logged in users
+	 * Get data
 	 * 
-	 * @return	void
+	 * @param	string	$data_type	Data type
+	 * @param	array	$where		Data filter
+	 * @return	object
 	 */
-	private function load_moduls()
+	public function get_data( $data_type, $wheres = array() )
 	{
-		if ( ! $this->load->is_loaded('directory') )
-			$this->load->helper('directory');
+		$wheres['type'] = $data_type;
 
-		foreach ( directory_map( APPPATH.'models/'.$this->module_dir ) as $module_file)
-		{
-			if (substr($module_file, 0, 1) !== '_')
-				$module_name = strtolower(str_replace(EXT, '', $module_file));
+		$query = $this->db->from( $this->_data_table );
 
-			if ( $this->baka_auth->permit('doc_'.$module_name.'_manage') )
-			{
-				if (!$this->load->is_loaded( $this->module_dir.$module_name ) )
-					$this->load->model( $this->module_dir.$module_name );
+		if ( !isset($wheres['status']) )
+			$query->where_not_in( 'status', array('deleted') );
 
-				$modul	= $this->$module_name;
-				$kode	= (property_exists( $modul, 'kode' )) ? $modul->kode : FALSE;
+		foreach ( $wheres as $field => $value )
+			$query->where( $field, $value );
 
-				$this->app_modules[$module_name] = array(
-					'nama'	=> $modul->nama,
-					'alias'	=> $modul->slug,
-					'label'	=> $modul->nama.( $kode ? ' ('.$kode.')' : '' ),
-					'kode'	=> $kode,
-					'link'	=> $module_name );
-			}
-		}
+		return $query;
 	}
 
 	/**
-	 * Get an accosiative array of modules
-	 * 
-	 * @return array
+	 * get data by id
+	 * @param  integer $data_id Data id
+	 * @return mixed            Data object from ID
 	 */
-	public function get_modules_assoc( $key = '', $val = '' )
-	{
-		$ret = array();
-		$key || $key = 'alias';
-		$val || $val = 'nama';
-
-		foreach ( $this->app_modules as $modul )
-			$ret[$modul[$key]] = $modul[$val];
-
-		return $ret;
-	}
-
-	/**
-	 * Get all modules in array
-	 * 
-	 * @return array
-	 */
-	public function get_moduls_array()
-	{
-		return (array) $this->app_modules;
-	}
-
-	/**
-	 * Get all modules in object
-	 * 
-	 * @return object
-	 */
-	public function get_modules_object()
-	{
-		return array_to_object( $this->app_modules );
-	}
-
-	/**
-	 * Get modul data
-	 * 
-	 * @param  string
-	 * @return mixed
-	 */
-	public function get_modul( $module_name )
-	{
-		return $this->app_modules[$module_name];
-	}
-
-	/**
-	 * Get Module name
-	 * 
-	 * @param string $module_name
-	 */
-	public function get_name( $module_name )
-	{
-		return $this->app_modules[$module_name]['nama'];
-	}
-
-	/**
-	 * Get Module alias
-	 * 
-	 * @param string $module_name
-	 */
-	public function get_alias( $module_name )
-	{
-		return $this->app_modules[$module_name]['alias'];
-	}
-
-	/**
-	 * Get Module code
-	 * 
-	 * @param string $module_name
-	 */
-	public function get_code( $module_name )
-	{
-		return $this->app_modules[$module_name]['kode'];
-	}
-
-	/**
-	 * Get Module label
-	 * 
-	 * @param string $module_name
-	 */
-	public function get_label( $module_name )
-	{
-		return $this->app_modules[$module_name]['label'];
-	}
-
-	/**
-	 * Get Module link
-	 * 
-	 * @param string $module_name
-	 */
-	public function get_link( $module_name )
-	{
-		return $this->app_modules[$module_name]['link'];
-	}
-
-	// get all moduls grid
-	public function get_tables( $page_link = '' )
-	{
-		$out = array();
-
-		$this->_dashboard_view = TRUE;
-
-		foreach ( $this->get_modules_assoc('alias', 'link') as $mod_alias => $mod_link )
-		{
-			$out[$mod_alias] = $this->get_table( $mod_link, $page_link.$mod_link.'/' );
-		}
-
-		return $out;
-	}
-
-	// get single modul grid
-	public function get_table( $module_name = '', $page_link = '' )
-	{
-		$module_slug = $this->get_alias( $module_name );
-
-		switch ( $this->uri->segment(6) )
-		{
-			case 'status':
-				$query = $this->get_data_by_status( $this->uri->segment(7), $module_slug );
-				break;
-
-			case 'page':
-			default:
-				$query = $this->get_data_by_type( $module_slug );
-				break;
-		}
-
-		$this->load->library('Baka_pack/baka_grid');
-
-		$grid = $this->baka_grid->identifier('id')
-								->set_baseurl($page_link)
-								->set_column('Pengajuan',
-									'no_agenda, callback_format_datetime:created_on',
-									'30%',
-									FALSE,
-									'<strong>%s</strong><br><small class="text-muted">Diajukan pada: %s</small>')
-								->set_column('Pemohon', 'petitioner', '40%', FALSE, '<strong>%s</strong>')
-								->set_column('Status', 'status, callback__x:status', '10%', FALSE, '<span class="label label-%s">%s</span>');
-
-		if ( !$this->_dashboard_view )
-		{
-			$grid->set_buttons('form/', 'eye-open', 'primary', 'Lihat data')
-				 ->set_buttons('hapus/', 'trash', 'danger', 'Hapus data');
-		}
-
-		return $grid->make_table( $query );
-	}
-
-	public function skpd_properties()
-	{
-		$prop = array(
-				'skpd_name', 'skpd_address', 'skpd_city', 'skpd_prov',
-				'skpd_telp', 'skpd_fax', 'skpd_pos', 'skpd_web', 'skpd_email',
-				'skpd_logo','skpd_lead_name','skpd_lead_nip'
-				);
-
-		foreach ( $prop as $property )
-		{
-			$data[$property] = get_app_setting( $property );
-		}
-
-		return $data;
-	}
-
-	// get full data by id
-	public function get_fulldata_by_id( $data_id )
-	{
-		if ($data = $this->get_data_by_id( $data_id ))
-		{
-			$meta = $this->get_datameta( $data_id, $data->type );
-
-			return (object) array_merge( (array) $data, (array) $meta );
-		}
-	}
-
-	// get data by id
 	public function get_data_by_id( $data_id )
 	{
-		return $this->get_where( array( 'id' => $data_id ), TRUE );
+		return $this->db->get_where( $this->_data_table, array('id' => $data_id) )->row();
 	}
 
 	// get data by type
@@ -512,5 +327,5 @@ class App_data extends CI_Model
 	}
 }
 
-/* End of file App_data.php */
-/* Location: ./application/models/Baka_pack/App_data.php */
+/* End of file bpmppt_model.php */
+/* Location: ./application/models/bpmppt_model.php */

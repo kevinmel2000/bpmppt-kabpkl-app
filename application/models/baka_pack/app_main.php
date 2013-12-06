@@ -19,6 +19,8 @@ class App_main extends CI_Model
 	{
 		$this->load->model('baka_pack/app_data');
 
+		$this->load->driver('bpmppt');
+
 		$this->navbar();
 	}
 
@@ -69,6 +71,32 @@ class App_main extends CI_Model
 					'link',
 					$link.'index/'.$modul['link'],
 					$modul['label'],
+					array(),
+					$position );
+			}
+		}
+	}
+
+	public function main_navbar( $parent, $position = 'top' )
+	{
+		$link	= 'main/';
+		$nama	= str_replace('/', '_', $link);
+		$mods	= $this->bpmppt->get_modules();
+
+		if ( count( $mods ) > 0 )
+		{
+			$this->baka_theme->add_navmenu( $parent, 'dashboard', 'link', 'dashboard', 'Statistik', array(), $position );
+			// $this->baka_theme->add_navmenu( $parent, $nama.'laporan', 'link', 'data/utama/laporan', 'Laporan', array(), $position );
+			$this->baka_theme->add_navmenu( $parent, $nama.'d', 'devider', '', '', array(), $position );
+
+			foreach ( $mods as $mod => $val )
+			{
+				$this->baka_theme->add_navmenu(
+					$parent,
+					$nama.$val['alias'],
+					'link',
+					$link.'ijin/'.$mod,
+					$val['label'],
 					array(),
 					$position );
 			}

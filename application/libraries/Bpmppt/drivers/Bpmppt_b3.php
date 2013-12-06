@@ -1,10 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Pengelolaan_b3 extends App_main
+class Bpmppt_b3 extends CI_Driver
 {
-	public $kode = 'B3';
-	public $slug = 'izin_pengelolaan_b3';
-	public $nama = 'Izin Penyimpanan Sementara dan Pengumpulan Limbah Bahan Berbahaya dan Beracun';
+	public $code = 'B3';
+	public $alias = 'izin_pengelolaan_b3';
+	public $name = 'Izin Penyimpanan Sementara dan Pengumpulan Limbah Bahan Berbahaya dan Beracun';
 
 	public function __construct()
 	{

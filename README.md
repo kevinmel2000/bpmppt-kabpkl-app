@@ -1,6 +1,5 @@
 # BPMPPT App (beta)
 
-
 Aplikasi ini ditujukan untuk Badan Penanaman Modal dan Pelayanan Perijinan Terbadu Kabupaten Pekalongan
 
 ## Authors
@@ -18,7 +17,7 @@ Aplikasi ini ditujukan untuk Badan Penanaman Modal dan Pelayanan Perijinan Terba
 
 1. Tempatkan direktori ini didalam server.
 1. Buat database MySQL baru (Nama database bebas)
-1. Import file .sql yang ada dalam folder `asset/sql/database.sql` kedalam database yang baru anda buat
+1. Import file `.sql` yang ada dalam folder `asset/sql/database.sql` kedalam database yang baru anda buat
 1. Sesuaikan konfigurasi file `config.php` dan `database.php` yang ada didalam folder `application/config`
 1. enjoy ;)
 

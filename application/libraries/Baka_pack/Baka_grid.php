@@ -287,6 +287,8 @@ class Baka_grid Extends Baka_lib
 	{
 		$db_query = $query ? $query : $this->db_query;
 
+		// var_dump($db_query);
+
 		$this->_set_rows( $db_query );
 
 		if ( !$this->load->is_loaded('table') )
@@ -410,18 +412,24 @@ class Baka_grid Extends Baka_lib
 		if ( method_exists($obj, 'get') )
 		{
 			$db_kueri = clone $obj;
-			$this->db_result_count = $db_kueri->get()->num_rows();
+			$this->db_result_count = $db_kueri->count_all_results();
 
-			$obj->limit($this->limit, $this->offset);
-			$get_query			= $obj->get();
+			var_dump( $db_kueri->get() );
+			$get_query			= $obj->limit($this->limit, $this->offset)->get();
 			$this->db_result	= $get_query->result();
 			$this->db_num_rows	= $get_query->num_rows();
+
 		}
-		
-		if ( method_exists($obj, 'result') )
+		else if ( method_exists($obj, 'result') )
 		{
 			$this->db_result		= $obj->result();
 			$this->db_result_count	= $obj->num_rows();
+			$this->db_num_rows		= $this->db_result_count;
+		}
+		else
+		{
+			$this->db_result		= $obj;
+			$this->db_result_count	= count($obj);
 			$this->db_num_rows		= $this->db_result_count;
 		}
 

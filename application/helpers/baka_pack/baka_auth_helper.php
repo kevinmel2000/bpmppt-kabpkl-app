@@ -1,12 +1,5 @@
 <?php
 
-function get_pegawai( $id )
-{
-	$CI_pegawai =& get_instance()->pegawai;
-	
-	return $CI_pegawai->get_nama_pengguna( $id );
-}
-
 function is_logged_in()
 {
 	$BAKA_auth =& get_instance()->baka_auth;
@@ -19,4 +12,11 @@ function is_logged_in()
 		else if ( $BAKA_auth->is_logged_in(FALSE) )
 			redirect( 'auth/resend' );
 	}
+}
+
+function is_permited( $permission )
+{
+	$BAKA_auth =& get_instance()->baka_auth;
+
+	return $BAKA_auth->permit( $permission );
 }

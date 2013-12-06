@@ -1,64 +1,61 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Layanan extends BAKA_Controller
+class Main extends BAKA_Controller
 {
+	private $modules_arr = array();
+
 	public function __construct()
 	{
 		parent::__construct();
 
-		$this->baka_theme->set_title('Administrasi data');
+		$this->baka_theme->set_title('Data Perijinan');
 
 		$this->baka_theme->add_navbar( 'data_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
-		$this->app_main->data_navbar( 'data_sidebar', 'side');
+		$this->app_main->main_navbar( 'data_sidebar', 'side');
 
-		$this->load->driver('bpmppt');
+		$this->modules_arr = $this->bpmppt->get_modules_assoc( 'alias', 'label' );
 
-		$this->data['page_link'] = 'data/layanan/';
+		$this->data['page_link'] = 'main/';
 	}
 
-	public function index( $data_type = '', $page = 'data', $data_id = FALSE )
+	public function index()
 	{
-		if ( $data_type == '' )
-			redirect( 'dashboard' );
-		else if ( !class_exists( $data_type ) )
-			show_404();
+		// redirect('dashboard');
+		$this->stat();
+	}
 
-		$this->data['load_toolbar']	= TRUE;
-		$this->data['page_link']   .= 'index/'.$data_type.'/';
+	public function stat()
+	{
+		$this->data['panel_title']	= $this->baka_theme->set_title('Dashboard');
+		$this->data['data_type']	= $this->modules_arr;
 
-		switch ( $page )
+		if ( !empty($this->modules_arr) )
 		{
-			case 'form':
-				$this->form( $data_type, $data_id );
-				break;
+			$this->data['load_toolbar'] = TRUE;
+			// $this->data['search_form']	= TRUE;
+			$this->data['page_link'] .= 'layanan/index/';
 
-			case 'cetak':
-				$this->cetak( $data_type, $data_id );
-				break;
+			foreach ($this->modules_arr as $alias => $name)
+				$this->data['tool_buttons']['Baru:dd|primary'][$alias.'/form'] = $name;
 
-			case 'hapus':
-				$this->ubah_status( 'deleted', $data_id, $this->data['page_link'] );
-				break;
+			$this->data['tool_buttons']['utama/laporan'] = 'Laporan|default';
+			$this->data['panel_body']	= $this->app_data->get_tables( $this->data['page_link'] );
+			$this->data['counter']		= array(); //$this->modules_count_arr;
 
-			case 'delete':
-				$this->delete( $data_type, $data_id );
-				break;
-
-			case 'ubah-status':
-				$this->ubah_status( $this->uri->segment(7) , $data_id, $this->data['page_link'] );
-				break;
-
-			case 'data':
-			default:
-				$this->data( $data_type );
-				break;
+			$this->baka_theme->load('pages/panel_stats', $this->data);
+		}
+		else
+		{
+			$this->_notice( 'no-data-accessible' );
 		}
 	}
 
-	public function ijin( $data_type = '', $page = 'data', $data_id = FALSE )
+	public function ijin( $data_type = '', $page = '', $data_id = FALSE )
 	{
-		if ( ! class_exists( $data_type ) )
-			show_404();
+		// if ( ! class_exists( $data_type ) )
+		// 	show_404();
+
+		$page || $page = 'data';
 
 		$this->data['load_toolbar']	= TRUE;
 		$this->data['page_link']   .= 'ijin/'.$data_type.'/';
@@ -95,6 +92,7 @@ class Layanan extends BAKA_Controller
 	public function data( $data_type )
 	{
 		// $this->data['search_form']	= TRUE;
+		$module = $this->bpmppt->get_module( $data_type );
 
 		$this->data['tool_buttons']['form'] = 'Baru|primary';
 		$this->data['tool_buttons']['cetak'] = 'Laporan|info';
@@ -105,43 +103,35 @@ class Layanan extends BAKA_Controller
 			'data/status/done'		=> 'Selesai',
 			'data/status/deleted'	=> 'Dihapus' );
 
-		$this->data['panel_title'] = $this->baka_theme->set_title( 'Semua data ' . $this->app_data->get_label( $data_type ) );
-
-		$slug = $this->get_alias( $module_name );
+		$this->data['panel_title'] = $this->baka_theme->set_title( 'Semua data ' . $module['label'] );
 
 		switch ( $this->uri->segment(6) )
 		{
 			case 'status':
-				$query = $this->get_data_by_status( $this->uri->segment(7), $slug );
+				$query = $this->bpmppt->mod->get_data_by_status( $this->uri->segment(7), $module['slug'] );
 				break;
 			
 			case 'page':
 			default:
-				$query = $this->get_data_by_type( $slug );
+				$query = $this->bpmppt->get_data( $data_type );
 				break;
 		}
 
-		$this->ci->load->library('Baka_pack/baka_grid');
+		$this->load->library('Baka_pack/baka_grid');
 
 		$grid = $this->baka_grid->identifier('id')
-								->set_baseurl($page_link)
+								->set_baseurl( $this->data['page_link'] )
 								->set_column('Pengajuan',
 									'no_agenda, callback_format_datetime:created_on',
 									'30%',
 									FALSE,
 									'<strong>%s</strong><br><small class="text-muted">Diajukan pada: %s</small>')
 								->set_column('Pemohon', 'petitioner', '40%', FALSE, '<strong>%s</strong>')
-								->set_column('Status', 'status, callback__x:status', '10%', FALSE, '<span class="label label-%s">%s</span>');
+								->set_column('Status', 'status, callback__x:status', '10%', FALSE, '<span class="label label-%s">%s</span>')
+								->set_buttons('form/', 'eye-open', 'primary', 'Lihat data')
+								->set_buttons('hapus/', 'trash', 'danger', 'Hapus data');
 
-		if ( !$this->_dashboard_view )
-		{
-			$grid->set_buttons('form/', 'eye-open', 'primary', 'Lihat data')
-				 ->set_buttons('hapus/', 'trash', 'danger', 'Hapus data');
-		}
-
-		return $grid->make_table( $query );
-
-		$this->data['panel_body']	 = $this->app_data->get_table( $data_type, $this->data['page_link'] );
+		$this->data['panel_body'] = $grid->make_table( $query );
 
 		$this->baka_theme->load('pages/panel_data', $this->data);
 	}
@@ -371,5 +361,5 @@ class Layanan extends BAKA_Controller
 	}
 }
 
-/* End of file layanan.php */
-/* Location: ./application/controllers/layanan.php */
+/* End of file Main.php */
+/* Location: ./application/controllers/Main.php */

@@ -75,6 +75,7 @@ $autoload['helper'] = array(
 	'url',
 	'html',
 	'baka_pack/baka_array',
+	'baka_pack/baka_auth',
 	'baka_pack/baka_common',
 	'baka_pack/baka_html',
 	'baka_pack/baka_setting',
