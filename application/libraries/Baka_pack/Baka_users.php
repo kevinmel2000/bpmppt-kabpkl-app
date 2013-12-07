@@ -64,7 +64,7 @@ class Baka_users extends Baka_lib
 						  ->select("GROUP_CONCAT(DISTINCT d.role) role_name")
 						  ->select("GROUP_CONCAT(DISTINCT d.full) role_fullname")
 						  ->from($this->users_table.' a')
-						  ->join($this->user_profile_table.' b','b.id = a.id', 'inner')
+						  // ->join($this->user_profile_table.' b','b.id = a.id', 'inner')
 						  ->join($this->user_role_table.' c','c.user_id = b.id', 'inner')
 						  ->join($this->roles_table.' d','d.role_id = c.role_id', 'inner');
 
@@ -315,7 +315,7 @@ class Baka_users extends Baka_lib
 	{
 		$this->db->trans_start();
 		$this->db->delete($this->users_table,           array('id'      => $user_id));
-		$this->db->delete($this->user_profile_table,    array('id'      => $user_id));
+		// $this->db->delete($this->user_profile_table,    array('id'      => $user_id));
 		$this->db->delete($this->user_role_table,       array('user_id' => $user_id));
 		$this->db->delete($this->overrides_table,       array('user_id' => $user_id));
 		$this->db->trans_complete();
@@ -561,17 +561,6 @@ class Baka_users extends Baka_lib
 				return $this->db->insert($this->user_role_table, array('user_id' => $user_id, 'role_id' => 1));
 			}
 		}
-	}
-	
-	/**
-	 * Gets the datatype of a table
-	 *
-	 * @deprecated useless (at least for me :P)
-	 */
-	public function get_profile_datatypes()
-	{
-		$query = $this->db->query('SELECT column_name, data_type FROM information_schema.columns WHERE table_name=?', array($this->user_profile_table));
-		return $query->result_array();
 	}
 	
 	/**
@@ -1013,7 +1002,7 @@ class Baka_users extends Baka_lib
 	/**
 	 * Add a new permission to the `permissions` table
 	 */
-	public function new_permission($permission, $description, $parent = '', $sort = NULL)
+	public function new_permission($permission, $description, $parent = '')
 	{
 		$query = $this->db->get_where($this->permissions_table, array('permission' => $permission));
 		
@@ -1021,8 +1010,7 @@ class Baka_users extends Baka_lib
 			return $this->db->insert($this->permissions_table, array(
 				'permission' => $permission,
 				'description' => $description,
-				'parent' => $parent,
-				'sort' => $sort ) );
+				'parent' => $parent ) );
 		
 		return TRUE;
 	}

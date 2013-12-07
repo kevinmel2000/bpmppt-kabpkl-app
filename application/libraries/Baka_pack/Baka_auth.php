@@ -118,15 +118,8 @@ class Baka_auth Extends Baka_lib
 			return FALSE;
 		}
 
-		if ( ! $this->is_approved($user->id) )
-		{
-			$this->set_error('auth_inapproved_account');
-			$this->logout();
-			return FALSE;
-		}
-
 		// success
-		$user_profile = $this->baka_users->get_user_profile($user->id);
+		$user_profile = '';//$this->baka_users->get_user_profile($user->id);
 		$this->session->set_userdata('user_profile', $user_profile);
 		
 		if ( $remember )

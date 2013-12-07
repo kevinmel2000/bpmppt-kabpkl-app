@@ -94,32 +94,29 @@ class App_main extends CI_Model
 
 		// Users Management sub-menu (if permited)
 		// =====================================================================
-		// if ( is_permited('auth_manage') )
-		// {
-			// Adding Users menu header
-			$this->baka_theme->add_navmenu( $parent_id, 'au_def', 'devider', '', '', array(), $position);
+		// Adding Users menu header
+		$this->baka_theme->add_navmenu( $parent_id, 'au_def', 'devider', '', '', array(), $position);
+		$this->baka_theme->add_navmenu(
+			$parent_id, 'au_head', 'header', '', 'Pengguna', array(), $position);
+		
+		// Adding Self Profile sub-menu
+		$this->baka_theme->add_navmenu(
+			$parent_id, 'au_me', 'link', 'profile', 'Profil Saya', array(), $position );
+
+		// Adding Users sub-menu (if permited)
+		if ( is_permited('users_manage') )
 			$this->baka_theme->add_navmenu(
-				$parent_id, 'au_head', 'header', '', 'Pengguna', array(), $position);
-			
-			// Adding Self Profile sub-menu
+				$parent_id, 'au_users', 'link', 'admin/pengguna/data', 'Semua Pengguna', array(), $position );
+
+		// Adding Groups sub-menu (if permited)
+		// if ( is_permited('roles_manage') )
 			$this->baka_theme->add_navmenu(
-				$parent_id, 'au_me', 'link', 'profile', 'Profil Saya', array(), $position );
+				$parent_id, 'au_groups', 'link', 'admin/pengguna/groups', 'Kelompok', array(), $position );
 
-			// Adding Users sub-menu (if permited)
-			if ( is_permited('auth_users_manage') )
-				$this->baka_theme->add_navmenu(
-					$parent_id, 'au_users', 'link', 'admin/pengguna/data', 'Semua Pengguna', array(), $position );
-
-			// Adding Groups sub-menu (if permited)
-			// if ( is_permited('auth_groups_manage') )
-				$this->baka_theme->add_navmenu(
-					$parent_id, 'au_groups', 'link', 'admin/pengguna/groups', 'Kelompok', array(), $position );
-
-			// Adding Perms sub-menu (if permited)
-			if ( is_permited('auth_perms_manage') )
-				$this->baka_theme->add_navmenu(
-					$parent_id, 'a_permission', 'link', 'admin/pengguna/permission', 'Hak akses', array(), $position );
-		// }
+		// Adding Perms sub-menu (if permited)
+		if ( is_permited('perms_manage') )
+			$this->baka_theme->add_navmenu(
+				$parent_id, 'a_permission', 'link', 'admin/pengguna/permission', 'Hak akses', array(), $position );
 
 		// Application Mantenances sub-menu
 		// =====================================================================
