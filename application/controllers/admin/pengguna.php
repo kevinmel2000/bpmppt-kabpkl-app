@@ -111,7 +111,7 @@ class Pengguna extends BAKA_Controller
 	{
 		$this->data['tool_buttons']['form'] = 'Baru|primary';
 
-		$this->load->library('Baka_pack/baka_grid');
+		$this->load->library('baka_pack/baka_grid');
 
 		$grid = $this->baka_grid->identifier('id')
 								->set_baseurl($this->data['page_link'])
@@ -448,7 +448,7 @@ class Pengguna extends BAKA_Controller
 		$this->data['panel_title'] = $this->baka_theme->set_title('Semua data kelompok pengguna');
 		$this->data['tool_buttons']['form'] = 'Baru|primary';
 
-		$this->load->library('Baka_pack/baka_grid');
+		$this->load->library('baka_pack/baka_grid');
 
 		$grid = $this->baka_grid->identifier('id')
 								->set_baseurl($this->data['page_link'])
@@ -564,7 +564,7 @@ class Pengguna extends BAKA_Controller
 		$this->data['panel_title']	= $this->baka_theme->set_title('Semua data hak akses pengguna');
 		$this->data['tool_buttons']['form'] = 'Baru|primary';
 
-		$this->load->library('Baka_pack/baka_grid');
+		$this->load->library('baka_pack/baka_grid');
 
 		$grid = $this->baka_grid->identifier('permission_id')
 								->set_baseurl($this->data['page_link'])

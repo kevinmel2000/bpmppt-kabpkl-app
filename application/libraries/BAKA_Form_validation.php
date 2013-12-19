@@ -23,7 +23,7 @@ class BAKA_Form_validation extends CI_Form_validation
 	{
 		parent::__construct($rules);
 
-		$this->CI->load->library('Baka_pack/baka_users');
+		$this->CI->load->library('baka_pack/baka_users');
 
 		log_message('debug', "#Baka_pack: Core Form Validation Class Initialized");
 	}
