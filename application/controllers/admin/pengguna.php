@@ -64,9 +64,7 @@ class Pengguna extends BAKA_Controller
 
 	private function _user_ban( $user_id )
 	{
-		$user = $this->baka_users->get_users( $user_id )->row();
-
-		$username = strlen($user->fullname) > 0 ? $user->fullname : $user->username;
+		$username = $this->baka_users->get_users( $user_id )->row()->username;
 
 		$this->data['panel_title']	= $this->baka_theme->set_title('Cekal pengguna: '.$username);
 
@@ -117,8 +115,8 @@ class Pengguna extends BAKA_Controller
 
 		$grid = $this->baka_grid->identifier('id')
 								->set_baseurl($this->data['page_link'])
-								->set_column('Pengguna', 'username, fullname', '45%', FALSE, '<strong>%s</strong><br><small class="text-muted">%s</small>')
-								->set_column('Email', 'email', '40%', FALSE, '%s')
+								->set_column('Pengguna', 'username, email', '45%', FALSE, '<strong>%s</strong><br><small class="text-muted">%s</small>')
+								->set_column('Kelompok', 'role_fullname', '40%', FALSE, '%s')
 								->set_buttons('form/', 'eye-open', 'primary', 'Lihat data')
 								->set_buttons('delete/', 'trash', 'danger', 'Hapus data');
 
@@ -141,7 +139,7 @@ class Pengguna extends BAKA_Controller
 		$user	= ( $user_id != '' ? $this->baka_users->get_users( $user_id )->row() : FALSE );
 		$judul	= ( $user_id == $this->current_user ? 'Profile anda: ' : 'Data pengguna: ');
 
-		$this->data['panel_title'] = $this->baka_theme->set_title( ( $user ? $judul.( strlen($user->fullname) > 0 ? $user->fullname : $user->username ) : 'Buat pengguna baru' ));
+		$this->data['panel_title'] = $this->baka_theme->set_title( ( $user ? $judul.$user->username : 'Buat pengguna baru' ));
 		
 		$this->data['tool_buttons']['data'] = 'Kembali|default';
 
@@ -153,12 +151,6 @@ class Pengguna extends BAKA_Controller
 					'cekal/'.$user_id => 'Cekal',
 					'hapus/'.$user_id => 'Hapus' );
 			}
-
-			$fields[]	= array(
-				'name'	=> 'user-fullname',
-				'type'	=> 'text',
-				'label'	=> 'Nama lengkap',
-				'std'	=> $user->fullname );
 		}
 
 		$use_username = (bool) get_app_config('use_username');

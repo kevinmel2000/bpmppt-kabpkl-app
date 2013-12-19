@@ -58,15 +58,14 @@ class Baka_users extends Baka_lib
 	 */
 	public function get_users( $user_id = NULL )
 	{
-		$query = $this->db->select("a.id, b.name fullname, a.username, b.gender, a.email")
-						  ->select("a.activated, a.banned, a.ban_reason, a.approved, a.last_ip, a.last_login, a.created, a.modified")
-						  ->select("GROUP_CONCAT(DISTINCT d.role_id) role_id")
-						  ->select("GROUP_CONCAT(DISTINCT d.role) role_name")
-						  ->select("GROUP_CONCAT(DISTINCT d.full) role_fullname")
+		$query = $this->db->select("a.id, a.username, a.email")
+						  ->select("a.activated, a.banned, a.ban_reason, a.last_ip, a.last_login, a.created, a.modified")
+						  ->select("group_concat(distinct c.role_id) role_id")
+						  ->select("group_concat(distinct c.role) role_name")
+						  ->select("group_concat(distinct c.full) role_fullname")
 						  ->from($this->users_table.' a')
-						  // ->join($this->user_profile_table.' b','b.id = a.id', 'inner')
-						  ->join($this->user_role_table.' c','c.user_id = b.id', 'inner')
-						  ->join($this->roles_table.' d','d.role_id = c.role_id', 'inner');
+						  ->join($this->user_role_table.' b','b.user_id = a.id', 'inner')
+						  ->join($this->roles_table.' c','c.role_id = b.role_id', 'inner');
 
 		if ( ! is_null( $user_id ) )
 			return $query->where('a.id', $user_id)->get();
@@ -643,7 +642,7 @@ class Baka_users extends Baka_lib
 	public function get_permissions($user_id)
 	{
 		// Does not include overrites yet
-		$query = $this->db->select("GROUP_CONCAT(DISTINCT permission) permission")
+		$query = $this->db->select("group_concat(distinct permission) permission")
 						  ->from($this->user_role_table.' a')
 						  ->join($this->roles_table.' b', 'b.role_id = a.role_id')
 						  ->join($this->role_perms_table.' c', 'c.role_id = b.role_id')

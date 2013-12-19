@@ -355,7 +355,7 @@ class Baka_grid Extends Baka_lib
 						$fields = array();
 
 						/**
-						 * @todo Antisipasi error kalo field tidak ada atau penulisan field salah.
+						 * @todo  Antisipasi error kalo field tidak ada atau penulisan field salah.
 						 */
 						if ( strpos($field, ',') !== FALSE )
 						{
