@@ -23,8 +23,6 @@
 
 // -----------------------------------------------------------------------------
 
-require_once(APPPATH.'third_party/phpass-0.3/PasswordHash.php');
-
 /**
  * BAKA Auth Class
  *
@@ -61,9 +59,11 @@ class Baka_auth Extends Baka_lib
 	 */
 	private function _do_hash( $pass = '' )
 	{
+		require_once(APPPATH.'third_party/phpass-0.3/PasswordHash.php');
+
 		$phpass = new PasswordHash(
 			$this->config_item('phpass_hash_strength'),
-			$this->config_item('phpass_hash_portable'));
+			$this->config_item('phpass_hash_portable') );
 
 		if ( $pass != '' )
 			return $phpass->HashPassword( $pass );
