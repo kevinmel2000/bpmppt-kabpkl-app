@@ -1,6 +1,29 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
+ * CodeIgniter Baka Pack
+ *
+ * My very own Codeigniter core library that used on all of my projects
+ *
+ * NOTICE OF LICENSE
+ *
+ * Licensed under the Open Software License version 3.0
+ *
+ * This source file is subject to the Open Software License (OSL 3.0) that is
+ * bundled with this package in the files license.txt / license.rst.  It is
+ * also available through the world wide web at this URL:
+ * http://opensource.org/licenses/OSL-3.0
+ *
+ * @package     Baka_pack
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) Fery Wardiyanto. (ferywardiyanto@gmail.com)
+ * @license     http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ * @since       Version 0.1
+ */
+
+// -----------------------------------------------------------------------------
+
+/**
  * BAKA Users Class
  *
  * @package     Baka_pack
@@ -58,15 +81,14 @@ class Baka_users extends Baka_lib
 	 */
 	public function get_users( $user_id = NULL )
 	{
-		$query = $this->db->select("a.id, b.name fullname, a.username, b.gender, a.email")
-						  ->select("a.activated, a.banned, a.ban_reason, a.approved, a.last_ip, a.last_login, a.created, a.modified")
-						  ->select("GROUP_CONCAT(DISTINCT d.role_id) role_id")
-						  ->select("GROUP_CONCAT(DISTINCT d.role) role_name")
-						  ->select("GROUP_CONCAT(DISTINCT d.full) role_fullname")
+		$query = $this->db->select("a.id, a.username, a.email")
+						  ->select("a.activated, a.banned, a.ban_reason, a.last_ip, a.last_login, a.created, a.modified")
+						  ->select("group_concat(distinct c.role_id) role_id")
+						  ->select("group_concat(distinct c.role) role_name")
+						  ->select("group_concat(distinct c.full) role_fullname")
 						  ->from($this->users_table.' a')
-						  ->join($this->user_profile_table.' b','b.id = a.id', 'inner')
-						  ->join($this->user_role_table.' c','c.user_id = b.id', 'inner')
-						  ->join($this->roles_table.' d','d.role_id = c.role_id', 'inner');
+						  ->join($this->user_role_table.' b','b.user_id = a.id', 'inner')
+						  ->join($this->roles_table.' c','c.role_id = b.role_id', 'inner');
 
 		if ( ! is_null( $user_id ) )
 			return $query->where('a.id', $user_id)->get();
@@ -315,7 +337,7 @@ class Baka_users extends Baka_lib
 	{
 		$this->db->trans_start();
 		$this->db->delete($this->users_table,           array('id'      => $user_id));
-		$this->db->delete($this->user_profile_table,    array('id'      => $user_id));
+		// $this->db->delete($this->user_profile_table,    array('id'      => $user_id));
 		$this->db->delete($this->user_role_table,       array('user_id' => $user_id));
 		$this->db->delete($this->overrides_table,       array('user_id' => $user_id));
 		$this->db->trans_complete();
@@ -564,17 +586,6 @@ class Baka_users extends Baka_lib
 	}
 	
 	/**
-	 * Gets the datatype of a table
-	 *
-	 * @deprecated useless (at least for me :P)
-	 */
-	public function get_profile_datatypes()
-	{
-		$query = $this->db->query('SELECT column_name, data_type FROM information_schema.columns WHERE table_name=?', array($this->user_profile_table));
-		return $query->result_array();
-	}
-	
-	/**
 	 * @deprecated useless (at least for me :P)
 	 */
 	private function get_user_meta($user_id)
@@ -654,7 +665,7 @@ class Baka_users extends Baka_lib
 	public function get_permissions($user_id)
 	{
 		// Does not include overrites yet
-		$query = $this->db->select("GROUP_CONCAT(DISTINCT permission) permission")
+		$query = $this->db->select("group_concat(distinct permission) permission")
 						  ->from($this->user_role_table.' a')
 						  ->join($this->roles_table.' b', 'b.role_id = a.role_id')
 						  ->join($this->role_perms_table.' c', 'c.role_id = b.role_id')
@@ -1013,7 +1024,7 @@ class Baka_users extends Baka_lib
 	/**
 	 * Add a new permission to the `permissions` table
 	 */
-	public function new_permission($permission, $description, $parent = '', $sort = NULL)
+	public function new_permission($permission, $description, $parent = '')
 	{
 		$query = $this->db->get_where($this->permissions_table, array('permission' => $permission));
 		
@@ -1021,8 +1032,7 @@ class Baka_users extends Baka_lib
 			return $this->db->insert($this->permissions_table, array(
 				'permission' => $permission,
 				'description' => $description,
-				'parent' => $parent,
-				'sort' => $sort ) );
+				'parent' => $parent ) );
 		
 		return TRUE;
 	}

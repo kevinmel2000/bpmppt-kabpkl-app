@@ -1,6 +1,29 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
+ * CodeIgniter Baka Pack
+ *
+ * My very own Codeigniter core library that used on all of my projects
+ *
+ * NOTICE OF LICENSE
+ *
+ * Licensed under the Open Software License version 3.0
+ *
+ * This source file is subject to the Open Software License (OSL 3.0) that is
+ * bundled with this package in the files license.txt / license.rst.  It is
+ * also available through the world wide web at this URL:
+ * http://opensource.org/licenses/OSL-3.0
+ *
+ * @package     Baka_pack
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) Fery Wardiyanto. (ferywardiyanto@gmail.com)
+ * @license     http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ * @since       Version 0.1
+ */
+
+// -----------------------------------------------------------------------------
+
+/**
  * BAKA Grid Utility Class
  *
  * @package		Baka_pack
@@ -285,11 +308,35 @@ class Baka_grid Extends Baka_lib
 
 	public function make_table( $query = FALSE )
 	{
-		$db_query = $query ? $query : $this->db_query;
+		$db_query = $query
+			? $query
+			: $this->db_query;
 
-		// var_dump($db_query);
+		if ( is_array( $db_query ) )
+			array_to_object( $db_query );
 
-		$this->_set_rows( $db_query );
+		if ( method_exists($db_query, 'get') )
+		{
+			$db_kueri = clone $db_query;
+			$this->db_result_count = $db_kueri->get()->num_rows();
+
+			$get_query			= $db_query->limit($this->limit, $this->offset)->get();
+			$this->db_result	= $get_query->result();
+			$this->db_num_rows	= $get_query->num_rows();
+
+		}
+		else if ( method_exists($db_query, 'result') )
+		{
+			$this->db_result		= $db_query->result();
+			$this->db_result_count	= $db_query->num_rows();
+			$this->db_num_rows		= $this->db_result_count;
+		}
+		else
+		{
+			$this->db_result		= $db_query;
+			$this->db_result_count	= count($db_query);
+			$this->db_num_rows		= $this->db_result_count;
+		}
 
 		if ( !$this->load->is_loaded('table') )
 			$this->load->library('table');
@@ -331,7 +378,7 @@ class Baka_grid Extends Baka_lib
 						$fields = array();
 
 						/**
-						 * @todo Antisipasi error kalo field tidak ada atau penulisan field salah.
+						 * @todo  Antisipasi error kalo field tidak ada atau penulisan field salah.
 						 */
 						if ( strpos($field, ',') !== FALSE )
 						{

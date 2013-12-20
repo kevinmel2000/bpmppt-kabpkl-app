@@ -473,7 +473,7 @@ class Internal extends BAKA_Controller
 
 		$this->data['tool_buttons']['form'] = 'Baru|primary';
 
-		$this->load->library('Baka_pack/baka_grid');
+		$this->load->library('baka_pack/baka_grid');
 
 		$query = $this->db->select()
 						  ->from($this->env_table)

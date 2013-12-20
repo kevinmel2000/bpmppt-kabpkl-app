@@ -58,7 +58,7 @@ class Maintenance extends BAKA_Controller
 
 		if ( $backup->validate_submition() )
 		{
-			$this->load->library('Baka_pack/baka_dbutil');
+			$this->load->library('baka_pack/baka_dbutil');
 
 			$data = $backup->submited_data();
 
@@ -101,7 +101,7 @@ class Maintenance extends BAKA_Controller
 
 		if ( $restore->validate_submition() )
 		{
-			$this->load->library('Baka_pack/baka_dbutil');
+			$this->load->library('baka_pack/baka_dbutil');
 
 			if ( $this->baka_dbutil->restore_upload('restore-from-file') )
 			{

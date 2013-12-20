@@ -188,7 +188,7 @@ class App_data extends CI_Model
 				break;
 		}
 
-		$this->load->library('Baka_pack/baka_grid');
+		$this->load->library('baka_pack/baka_grid');
 
 		$grid = $this->baka_grid->identifier('id')
 								->set_baseurl($page_link)

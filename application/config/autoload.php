@@ -54,11 +54,11 @@ $autoload['packages'] = array();
 
 $autoload['libraries'] = array(
 	'database',
-	'Baka_pack/baka_lib',
-	'Baka_pack/baka_users',
-	'Baka_pack/baka_auth',
-	'Baka_pack/baka_theme',
-	'Baka_pack/baka_form',
+	'baka_pack/baka_lib',
+	'baka_pack/baka_users',
+	'baka_pack/baka_auth',
+	'baka_pack/baka_theme',
+	'baka_pack/baka_form',
 	);
 
 

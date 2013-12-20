@@ -14,8 +14,8 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://devel.local/ci-baka/';
-// $config['base_url']	= 'http://localhost:9001/';
+// $config['base_url']	= 'http://devel.local/ci-baka/';
+$config['base_url']	= 'http://localhost:8088/';
 
 /*
 |--------------------------------------------------------------------------
