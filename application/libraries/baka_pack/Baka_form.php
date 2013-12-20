@@ -26,10 +26,8 @@
 /**
  * BAKA Form Class
  *
- * @package		Baka_pack
  * @subpackage	Libraries
  * @category	Form
- * @author		Fery Wardiyanto (http://github.com/feryardiant/)
  */
 class Baka_form Extends Baka_lib
 {
@@ -306,7 +304,7 @@ class Baka_form Extends Baka_lib
 				$this->load->helper('recaptcha');
 
 				$output .= $this->_form_common(	$field['name'], $field['label'],
-					recaptcha_get_html( get_app_setting('auth_recaptcha_public_key') ),
+					recaptcha_get_html( Setting::get('auth_recaptcha_public_key') ),
 					$field['id'], $field['desc'], $field['validation'] );
 				break;
 

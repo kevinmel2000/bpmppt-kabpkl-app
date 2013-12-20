@@ -55,6 +55,7 @@ $autoload['packages'] = array();
 $autoload['libraries'] = array(
 	'database',
 	'baka_pack/baka_lib',
+	'baka_pack/setting',
 	'baka_pack/baka_users',
 	'baka_pack/baka_auth',
 	'baka_pack/baka_theme',
@@ -78,7 +79,6 @@ $autoload['helper'] = array(
 	'baka_pack/baka_auth',
 	'baka_pack/baka_common',
 	'baka_pack/baka_html',
-	'baka_pack/baka_setting',
 	'baka_pack/baka_data',
 	);
 

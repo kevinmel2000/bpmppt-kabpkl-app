@@ -1,92 +1,110 @@
 <?php
-#
-# Portable PHP password hashing framework.
-#
-# Version 0.3 / genuine.
-#
-# Written by Solar Designer <solar at openwall.com> in 2004-2006 and placed in
-# the public domain.  Revised in subsequent years, still public domain.
-#
-# There's absolutely no warranty.
-#
-# The homepage URL for this framework is:
-#
-#	http://www.openwall.com/phpass/
-#
-# Please be sure to update the Version line if you edit this file in any way.
-# It is suggested that you leave the main version number intact, but indicate
-# your project name (after the slash) and add your own revision information.
-#
-# Please do not change the "private" password hashing method implemented in
-# here, thereby making your hashes incompatible.  However, if you must, please
-# change the hash type identifier (the "$P$") to something different.
-#
-# Obviously, since this code is in the public domain, the above are not
-# requirements (there can be none), but merely suggestions.
-#
-class PasswordHash {
+/**
+ * Portable PHP password hashing framework.
+ * 
+ * Written by Solar Designer <solar at openwall.com> in 2004-2006 and placed in
+ * the public domain. Revised in subsequent years, still public domain.
+ * 
+ * There's absolutely no warranty.
+ * 
+ * Please be sure to update the Version line if you edit this file in any way.
+ * It is suggested that you leave the main version number intact, but indicate
+ * your project name (after the slash) and add your own revision information.
+ * 
+ * Please do not change the "private" password hashing method implemented in
+ * here, thereby making your hashes incompatible. However, if you must, please
+ * change the hash type identifier (the "$P$") to something different.
+ * 
+ * Obviously, since this code is in the public domain, the above are not
+ * requirements (there can be none), but merely suggestions.
+ *
+ * @version  0.3 / Baka_pack.
+ * @link     http://www.openwall.com/phpass/
+ */
+class PasswordHash
+{
 	var $itoa64;
 	var $iteration_count_log2;
 	var $portable_hashes;
 	var $random_state;
 
-	function PasswordHash($iteration_count_log2, $portable_hashes)
+	/**
+	 * PasswordHash __constructor
+	 *
+	 * @param  int   $iteration_count_log2  Hashing iteration
+	 * @param  bool  $portable_hashes       Is a portable hash?
+	 */
+	function __construct($iteration_count_log2, $portable_hashes)
 	{
 		$this->itoa64 = './0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 
-		if ($iteration_count_log2 < 4 || $iteration_count_log2 > 31)
+		if ( $iteration_count_log2 < 4 || $iteration_count_log2 > 31 )
 			$iteration_count_log2 = 8;
+
 		$this->iteration_count_log2 = $iteration_count_log2;
 
 		$this->portable_hashes = $portable_hashes;
 
 		$this->random_state = microtime();
-		if (function_exists('getmypid'))
+		
+		if ( function_exists('getmypid') )
 			$this->random_state .= getmypid();
 	}
 
 	function get_random_bytes($count)
 	{
 		$output = '';
-		if (is_readable('/dev/urandom') &&
-		    ($fh = @fopen('/dev/urandom', 'rb'))) {
+
+		if ( is_readable('/dev/urandom') and ($fh = @fopen('/dev/urandom', 'rb')) )
+		{
 			$output = fread($fh, $count);
 			fclose($fh);
 		}
 
-		if (strlen($output) < $count) {
+		if ( strlen($output) < $count )
+		{
 			$output = '';
-			for ($i = 0; $i < $count; $i += 16) {
-				$this->random_state =
-				    md5(microtime() . $this->random_state);
-				$output .=
-				    pack('H*', md5($this->random_state));
+			
+			for ($i = 0; $i < $count; $i += 16)
+			{
+				$this->random_state = md5(microtime() . $this->random_state);
+				$output .= pack('H*', md5($this->random_state));
 			}
+
 			$output = substr($output, 0, $count);
 		}
 
 		return $output;
 	}
 
-	function encode64($input, $count)
+	function encode64( $input, $count )
 	{
 		$output = '';
 		$i = 0;
+
 		do {
 			$value = ord($input[$i++]);
 			$output .= $this->itoa64[$value & 0x3f];
+			
 			if ($i < $count)
 				$value |= ord($input[$i]) << 8;
+
 			$output .= $this->itoa64[($value >> 6) & 0x3f];
+
 			if ($i++ >= $count)
 				break;
+
 			if ($i < $count)
 				$value |= ord($input[$i]) << 16;
+
 			$output .= $this->itoa64[($value >> 12) & 0x3f];
+
 			if ($i++ >= $count)
 				break;
+
 			$output .= $this->itoa64[($value >> 18) & 0x3f];
-		} while ($i < $count);
+		}
+		while ($i < $count);
 
 		return $output;
 	}
@@ -94,8 +112,7 @@ class PasswordHash {
 	function gensalt_private($input)
 	{
 		$output = '$P$';
-		$output .= $this->itoa64[min($this->iteration_count_log2 +
-			((PHP_VERSION >= '5') ? 5 : 3), 30)];
+		$output .= $this->itoa64[min($this->iteration_count_log2 + ((PHP_VERSION >= '5') ? 5 : 3), 30)];
 		$output .= $this->encode64($input, 6);
 
 		return $output;
@@ -243,6 +260,7 @@ class PasswordHash {
 	function CheckPassword($password, $stored_hash)
 	{
 		$hash = $this->crypt_private($password, $stored_hash);
+
 		if ($hash[0] == '*')
 			$hash = crypt($password, $stored_hash);
 

@@ -45,7 +45,7 @@ class Baka_theme Extends Baka_lib
 
 	public function __construct()
 	{
-		$this->_app_name = $this->config_item('app_name');
+		$this->_app_name = get_conf('app_name');
 
 		$this->_theme_data['page_title'] = $this->_app_name;
 		$this->_theme_data['site_title'] = $this->_app_name;
@@ -78,7 +78,7 @@ class Baka_theme Extends Baka_lib
 				$this->output->set_header('Pragma: no-cache');
 
 				// Let CI do the caching instead of the browser
-				$this->output->cache( $this->config_item('cache_lifetime') );
+				$this->output->cache( get_conf('cache_lifetime') );
 
 				log_message('debug', "#Baka_theme: cache activated");
 			break;
@@ -90,7 +90,7 @@ class Baka_theme Extends Baka_lib
 		if ( ! $this->load->is_loaded('user_agent'))
 			$this->load->library('user_agent');
 
-		$min_browser	= $this->config_item('app_min_browser');
+		$min_browser	= get_conf('app_min_browser');
 		$curent_version	= explode('.', $this->agent->version());
 
 		return ($curent_version[0] <= $min_browser[$this->agent->browser()] ? TRUE : FALSE  );
@@ -191,7 +191,7 @@ class Baka_theme Extends Baka_lib
 				 . '	<div class="container">'
 				 . '		<div class="navbar-header">'
 				 . '			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>'
-				 . '			'.anchor(base_url(), $this->config_item('app_name'), 'class="navbar-brand"')
+				 . '			'.anchor(base_url(), get_conf('app_name'), 'class="navbar-brand"')
 				 . '		</div>';
 
 		if (!is_browser_jadul() AND $this->baka_auth->is_logged_in())

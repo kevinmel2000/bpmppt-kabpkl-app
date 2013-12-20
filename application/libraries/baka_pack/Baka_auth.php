@@ -59,11 +59,11 @@ class Baka_auth Extends Baka_lib
 	 */
 	private function _do_hash( $pass = '' )
 	{
-		require_once(APPPATH.'third_party/phpass-0.3/PasswordHash.php');
+		require_once(APPPATH.'libraries/vendor/PasswordHash.php');
 
 		$phpass = new PasswordHash(
-			$this->config_item('phpass_hash_strength'),
-			$this->config_item('phpass_hash_portable') );
+			get_conf('phpass_hash_strength'),
+			get_conf('phpass_hash_portable') );
 
 		if ( $pass != '' )
 			return $phpass->HashPassword( $pass );
@@ -152,8 +152,8 @@ class Baka_auth Extends Baka_lib
 
 		$this->baka_users->update_login_info(
 			$user->id,
-			$this->config_item('login_record_ip'),
-			$this->config_item('login_record_time') );
+			get_conf('login_record_ip'),
+			get_conf('login_record_time') );
 
 		$this->set_message('auth_login_success');
 		return TRUE;
@@ -234,7 +234,7 @@ class Baka_auth Extends Baka_lib
 			'password'	=> $this->_do_hash($password),
 			'email'		=> $email,
 			'last_ip'	=> $this->input->ip_address(),
-			'approved'	=> (int) $this->config_item('acct_approval') );
+			'approved'	=> (int) get_conf('acct_approval') );
 		
 		if ($email_activation)
 			$data['new_email_key'] = $this->generate_random_key();
@@ -301,7 +301,7 @@ class Baka_auth Extends Baka_lib
 	 */
 	public function activate_user($user_id, $activation_key, $activate_by_email = TRUE)
 	{
-		$this->baka_users->purge_na($this->config_item('email_activation_expire'));
+		$this->baka_users->purge_na(get_conf('email_activation_expire'));
 
 		return $this->baka_users->activate_user($user_id, $activation_key, $activate_by_email);
 	}
@@ -346,7 +346,7 @@ class Baka_auth Extends Baka_lib
 		return $this->baka_users->can_reset_password(
 			$user_id,
 			$new_pass_key,
-			$this->config_item('forgot_password_expire'));
+			get_conf('forgot_password_expire'));
 	}
 
 	/**
@@ -366,7 +366,7 @@ class Baka_auth Extends Baka_lib
 			$user_id,
 			$this->_do_hash($new_password),
 			$new_pass_key,
-			$this->config_item('forgot_password_expire')))
+			get_conf('forgot_password_expire')))
 		{
 			// success
 			// Clear all user's autologins
@@ -511,7 +511,7 @@ class Baka_auth Extends Baka_lib
 		}
 
 		// not logged in (as any user)
-		if ($cookie = get_cookie($this->config_item('autologin_cookie_name'), TRUE))
+		if ($cookie = get_cookie(get_conf('autologin_cookie_name'), TRUE))
 		{
 			$data = unserialize($cookie);
 
@@ -527,14 +527,14 @@ class Baka_auth Extends Baka_lib
 
 					// Renew users cookie to prevent it from expiring
 					set_cookie(array(
-						'name' 		=> $this->config_item('autologin_cookie_name'),
+						'name' 		=> get_conf('autologin_cookie_name'),
 						'value'		=> $cookie,
-						'expire'	=> $this->config_item('autologin_cookie_life') ));
+						'expire'	=> get_conf('autologin_cookie_life') ));
 
 					$this->baka_users->update_login_info(
 						$user->id,
-						$this->config_item('login_record_ip'),
-						$this->config_item('login_record_time'));
+						get_conf('login_record_ip'),
+						get_conf('login_record_time'));
 
 					return TRUE;
 				}
@@ -583,9 +583,9 @@ class Baka_auth Extends Baka_lib
 		if ($this->_set_autologin($user_id, md5($key)))
 		{
 			set_cookie(array(
-				'name' 	=> $this->config_item('autologin_cookie_name'),
+				'name' 	=> get_conf('autologin_cookie_name'),
 				'value'	=> serialize(array('user_id' => $user_id, 'key' => $key)),
-				'expire'=> $this->config_item('autologin_cookie_life'),
+				'expire'=> get_conf('autologin_cookie_life'),
 				));
 			
 			return TRUE;
@@ -617,13 +617,13 @@ class Baka_auth Extends Baka_lib
 	 */
 	private function delete_autologin()
 	{
-		if ($cookie = get_cookie( $this->config_item('autologin_cookie_name'), TRUE))
+		if ($cookie = get_cookie( get_conf('autologin_cookie_name'), TRUE))
 		{
 			$data = unserialize($cookie);
 
 			$this->_delete_autologin($data['user_id'], md5($data['key']));
 
-			delete_cookie($this->config_item('autologin_cookie_name'));
+			delete_cookie(get_conf('autologin_cookie_name'));
 		}
 	}
 
@@ -675,9 +675,9 @@ class Baka_auth Extends Baka_lib
 	 */
 	public function is_max_login_attempts_exceeded($login)
 	{
-		if ($this->config_item('login_count_attempts'))
+		if (get_conf('login_count_attempts'))
 		{
-			return $this->get_attempts_num($this->input->ip_address(), $login) >= $this->config_item('login_max_attempts');
+			return $this->get_attempts_num($this->input->ip_address(), $login) >= get_conf('login_max_attempts');
 		}
 
 		return FALSE;
@@ -708,7 +708,7 @@ class Baka_auth Extends Baka_lib
 	 */
 	private function increase_login_attempt($login)
 	{
-		if ($this->config_item('login_count_attempts'))
+		if (get_conf('login_count_attempts'))
 		{
 			if (!$this->is_max_login_attempts_exceeded($login))
 			{
@@ -738,12 +738,12 @@ class Baka_auth Extends Baka_lib
 	 */
 	private function _clear_login_attempts($login)
 	{
-		if ($this->config_item('login_count_attempts'))
+		if (get_conf('login_count_attempts'))
 		{
 			$this->clear_attempts(
 				$this->input->ip_address(),
 				$login,
-				$this->config_item('login_attempt_expire'));
+				get_conf('login_attempt_expire'));
 		}
 	}
 

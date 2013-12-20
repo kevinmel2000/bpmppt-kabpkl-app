@@ -26,10 +26,8 @@
 /**
  * BAKA Grid Utility Class
  *
- * @package		Baka_pack
  * @subpackage	Libraries
  * @category	Grid
- * @author		Fery Wardiyanto (http://github.com/feryardiant/)
  */
 class Baka_grid Extends Baka_lib
 {
@@ -51,7 +49,7 @@ class Baka_grid Extends Baka_lib
 	public function __construct( $db_query = NULL )
 	{
 		$this->offset	= $this->uri->segment( $this->segment );
-		$this->limit	= get_app_setting('app_data_show_limit');
+		$this->limit	= Setting::get('app_data_show_limit');
 
 		if ( ! is_null($db_query) )
 		{

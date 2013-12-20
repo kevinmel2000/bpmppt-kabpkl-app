@@ -55,11 +55,11 @@ class Baka_media extends Baka_lib
 
 	public function __construct()
 	{
-		$this->allowed_types	= explode('|', $this->config_item('allowed_types'));
+		$this->allowed_types	= explode('|', get_conf('allowed_types'));
 		
 		$this->upload_max_size	= return_bytes( ini_get('upload_max_filesize') );
 
-		$this->upload_dir	= $this->config_item('upload_dir');
+		$this->upload_dir	= get_conf('upload_dir');
 
 		$this->thumb_dir	= $this->upload_dir.'thumbs/';
 
@@ -83,8 +83,8 @@ class Baka_media extends Baka_lib
 		$this->media_path	= $this->upload_dir . $path;
 
 		$this->upload_conf['upload_path']	= realpath( $this->media_path );
-		$this->upload_conf['allowed_types']	= $this->config_item('allowed_types');
-		$this->upload_conf['encrypt_name']	= $this->config_item('encrypt');
+		$this->upload_conf['allowed_types']	= get_conf('allowed_types');
+		$this->upload_conf['encrypt_name']	= get_conf('encrypt');
 		$this->upload_conf['max_size']		= $this->upload_max_size;
 
 		return $this;
@@ -101,8 +101,8 @@ class Baka_media extends Baka_lib
 		$this->resize_conf	= array(
 			'source_image'	=> $source_image['full_path'],
 			'new_image'		=> $source_image['file_path'] . '/thumbs' . $source_image['file_name'],
-			'width'			=> $this->config_item('thumb_width'),
-			'height'		=> $this->config_item('thumb_height'),
+			'width'			=> get_conf('thumb_width'),
+			'height'		=> get_conf('thumb_height'),
 			);
 
 		return $this;

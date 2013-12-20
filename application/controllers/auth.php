@@ -18,8 +18,8 @@ class Auth extends BAKA_Controller
 	{
 		$this->data['panel_title'] = $this->baka_theme->set_title('Login Pengguna');
 
-		$login_by_username	= ( (bool) get_app_setting('auth_login_by_username') AND (bool) get_app_setting('auth_use_username') );
-		$login_by_email		= (bool) get_app_setting('auth_login_by_email');
+		$login_by_username	= ( (bool) Setting::get('auth_login_by_username') AND (bool) Setting::get('auth_use_username') );
+		$login_by_email		= (bool) Setting::get('auth_login_by_email');
 
 		if ( $login_by_username AND $login_by_email )
 			$label	= 'Email atau Username';
@@ -28,7 +28,7 @@ class Auth extends BAKA_Controller
 		else 
 			$label	= 'Email';
 
-		$login = ( get_app_setting('auth_login_count_attempts') AND ($login = $this->input->post('login'))) ?
+		$login = ( Setting::get('auth_login_count_attempts') AND ($login = $this->input->post('login'))) ?
 				$this->security->xss_clean($login) : '';
 
 		$fields[]	= array('name'	=> 'login-username',
@@ -49,7 +49,7 @@ class Auth extends BAKA_Controller
 
 		if ($this->baka_auth->is_max_login_attempts_exceeded($login))
 		{
-			if ( (bool) get_app_setting('auth_use_recaptcha') )
+			if ( (bool) Setting::get('auth_use_recaptcha') )
 			{
 				$fields[]	= array('name'	=> 'login-recaptcha',
 									'type'	=> 'recaptcha',
@@ -76,7 +76,7 @@ class Auth extends BAKA_Controller
 							'url'	=> 'forgot',
 							'class'	=> 'btn-default pull-right' );
 
-		if ( (bool) get_app_setting('auth_allow_registration') )
+		if ( (bool) Setting::get('auth_allow_registration') )
 		{
 			$buttons[]	= array('name'	=> 'register',
 								'type'	=> 'anchor',
@@ -116,17 +116,17 @@ class Auth extends BAKA_Controller
 	{
 		$this->data['panel_title'] = $this->baka_theme->set_title('Register Pengguna');
 
-		if ( ! get_app_config('allow_registration') )
+		if ( !get_conf('allow_registration') )
 			$this->_notice('registration-disabled');
 
-		$use_username = (bool)  get_app_config('use_username');
+		$use_username = (bool)  get_conf('use_username');
 		
 		if ( $use_username )
 		{
 			$fields[]	= array('name'	=> 'register-username',
 								'type'	=> 'text',
 								'label'	=> 'Username',
-								'validation'=> 'required|min_length['.get_app_setting('auth_username_min_length').']|max_length['.get_app_setting('auth_username_max_length').']|callback__check_username_blacklist|callback__check_username_exists' );
+								'validation'=> 'required|min_length['.Setting::get('auth_username_min_length').']|max_length['.Setting::get('auth_username_max_length').']|callback__check_username_blacklist|callback__check_username_exists' );
 		}
 		
 		$fields[]	= array('name'	=> 'register-email',
@@ -137,15 +137,15 @@ class Auth extends BAKA_Controller
 		$fields[]	= array('name'	=> 'register-password',
 							'type'	=> 'password',
 							'label'	=> 'Password',
-							'validation'=> 'required|min_length['.get_app_setting('auth_password_min_length').']|max_length['.get_app_setting('auth_password_max_length').']' );
+							'validation'=> 'required|min_length['.Setting::get('auth_password_min_length').']|max_length['.Setting::get('auth_password_max_length').']' );
 		
 		$fields[]	= array('name'	=> 'register-confirm-password',
 							'type'	=> 'password',
 							'label'	=> 'Ulangi Password',
 							'validation'=> 'required|matches[register-password]' );
 
-		$captcha_registration	=  get_app_config('captcha_registration');
-		$use_recaptcha			=  get_app_config('use_recaptcha');
+		$captcha_registration	=  get_conf('captcha_registration');
+		$use_recaptcha			=  get_conf('use_recaptcha');
 
 		if ($captcha_registration)
 		{
@@ -167,7 +167,7 @@ class Auth extends BAKA_Controller
 
 		$data['errors'] = array();
 
-		$email_activation =  get_app_config('email_activation');
+		$email_activation =  get_conf('email_activation');
 
 		$buttons[]	= array('name'	=> 'register',
 							'type'	=> 'submit',
@@ -246,7 +246,7 @@ class Auth extends BAKA_Controller
 				// success
 				$this->load->library('baka_pack/baka_email');
 
-				$data['activation_period'] = get_app_setting('auth_email_activation_expire') / 3600;
+				$data['activation_period'] = Setting::get('auth_email_activation_expire') / 3600;
 
 				$this->baka_email->send('activate', $user_data['email'], $data);
 				$this->_notice('activation-sent');
@@ -346,7 +346,7 @@ class Auth extends BAKA_Controller
 		$fields[]	= array('name'	=> 'reset_password',
 							'type'	=> 'password',
 							'label'	=> 'Password baru',
-							'validation'=> 'required|min_length['.get_app_setting('auth_password_min_length').']|max_length['.get_app_setting('auth_password_max_length').']' );
+							'validation'=> 'required|min_length['.Setting::get('auth_password_min_length').']|max_length['.Setting::get('auth_password_max_length').']' );
 
 		$fields[]	= array('name'	=> 'confirm_reset_password',
 							'type'	=> 'password',

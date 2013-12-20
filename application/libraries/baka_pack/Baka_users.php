@@ -59,7 +59,7 @@ class Baka_users extends Baka_lib
 
 		foreach ( $tables as $table )
 		{
-			$this->$table = $this->config_item( $table );
+			$this->$table = get_conf( $table );
 		}
 
 		log_message('debug', "#Baka_pack: Users Class Initialized");
