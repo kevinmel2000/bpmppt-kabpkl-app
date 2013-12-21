@@ -131,13 +131,13 @@ class Setting
 	 */
 	public static function get( $key )
 	{
-		if ( self::is_exists( $key ) )
+		if ( !array_key_exists( $key, self::$_settings ) )
 		{
-			return self::$_settings[$key];
+			log_message('error', "#Baka Setting lib: Settings key '{$key}' is not exists");
+			return FALSE;
 		}
 
-		log_message('error', "#Baka Setting lib: Settings key is not exists");
-		return FALSE;
+		return self::$_settings[$key];
 	}
 
 	/**
@@ -155,7 +155,6 @@ class Setting
 
 		if ( $old === FALSE )
 		{
-			log_message('error', "#Baka Setting lib: Setting key {$key} is not exists.");
 			return FALSE;
 		}
 

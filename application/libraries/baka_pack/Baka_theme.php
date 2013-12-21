@@ -270,7 +270,7 @@ class Baka_theme Extends Baka_lib
 	public function add_script( $id, $source, $depend = '', $version = NULL )
 	{
 		if ( filter_var( base_url($source), FILTER_VALIDATE_URL) )
-			$source .= '?ver='.($version != '' ? $version : get_app_config('app_version'));
+			$source .= '?ver='.($version != '' ? $version : get_conf('app_version'));
 
 		if ( array_key_exists($depend, $this->_scripts) )
 		{
@@ -311,7 +311,7 @@ class Baka_theme Extends Baka_lib
 
 	public function add_style( $id, $source, $depend = '', $version = NULL )
 	{
-		$source = $source.'?ver='.($version != '' ? $version : get_app_config('app_version'));
+		$source = $source.'?ver='.($version != '' ? $version : get_conf('app_version'));
 
 		if ( array_key_exists($depend, $this->_styles) )
 		{

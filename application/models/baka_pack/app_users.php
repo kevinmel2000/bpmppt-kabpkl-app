@@ -25,7 +25,7 @@ class App_users extends CI_Model
 			if ( $email_activation )
 			{
 				// send "activate" email
-				$data['activation_period'] = get_app_setting('auth_email_activation_expire') / 3600;
+				$data['activation_period'] = Setting::get('auth_email_activation_expire') / 3600;
 
 				$this->baka_email->send('activate', $user_data['email'], $data);
 

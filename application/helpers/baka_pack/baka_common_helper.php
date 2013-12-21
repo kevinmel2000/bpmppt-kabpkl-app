@@ -40,12 +40,12 @@ function format_size( $size )
 
 function format_date( $string = '' )
 {
-	return bdate( get_app_setting('app_date_format'), $string);
+	return bdate( Setting::get('app_date_format'), $string);
 }
 
 function format_datetime( $string = '' )
 {
-	return bdate( get_app_setting('app_datetime_format'), $string);
+	return bdate( Setting::get('app_datetime_format'), $string);
 }
 
 function format_time( $string = '' )

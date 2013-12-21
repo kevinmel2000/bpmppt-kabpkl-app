@@ -153,12 +153,12 @@ class Pengguna extends BAKA_Controller
 			}
 		}
 
-		$use_username = (bool) get_app_config('use_username');
+		$use_username = (bool) get_conf('use_username');
 
 		if ( $use_username )
 		{
-			$username_min_length = get_app_setting('auth_username_min_length');
-			$username_max_length = get_app_setting('auth_username_max_length');
+			$username_min_length = Setting::get('auth_username_min_length');
+			$username_max_length = Setting::get('auth_username_max_length');
 
 			$fields[]	= array(
 				'name'	=> 'user-username',
@@ -190,8 +190,8 @@ class Pengguna extends BAKA_Controller
 				'label'	=> 'Password lama' );
 		}
 
-		$password_min_length = get_app_setting('auth_password_min_length');
-		$password_max_length = get_app_setting('auth_password_max_length');
+		$password_min_length = Setting::get('auth_password_min_length');
+		$password_max_length = Setting::get('auth_password_max_length');
 
 		$fields[]	= array(
 			'name'	=> 'user-new-password',

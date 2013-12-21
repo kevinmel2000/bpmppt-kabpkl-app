@@ -5,7 +5,7 @@
 	<title><?php echo get_site_title() ?></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="author" content="<?php echo get_app_config('app_author') ?>">
+	<meta name="author" content="<?php echo get_conf('app_author') ?>">
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!--[if lt IE 9]>
 		<script charset="utf-8" src="<?php echo base_url('asset/js/lib/html5shiv.js') ?>"></script>
@@ -40,8 +40,8 @@
 
 <footer id="foots">
 	<div class="container">
-		<p class="text-muted pull-left">&copy; <?php echo get_app_config('app_client') ?></p>
-		<p class="text-muted pull-right"><?php echo get_app_config('app_name') ?> Ver. <?php echo get_app_config('app_version') ?></p>
+		<p class="text-muted pull-left">&copy; <?php echo get_conf('app_client') ?></p>
+		<p class="text-muted pull-right"><?php echo get_conf('app_name') ?> Ver. <?php echo get_conf('app_version') ?></p>
 	</div>
 </footer>
 

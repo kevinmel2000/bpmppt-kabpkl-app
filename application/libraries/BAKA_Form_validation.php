@@ -37,7 +37,7 @@ class BAKA_Form_validation extends CI_Form_validation
 	function valid_recaptcha( $code )
 	{
 		$resp = recaptcha_check_answer(
-					get_app_setting('auth_recaptcha_public_key'),
+					Setting::get('auth_recaptcha_public_key'),
 					$this->ip_address(),
 					$this->post('recaptcha_challenge_field'),
 					$code );
@@ -78,9 +78,9 @@ class BAKA_Form_validation extends CI_Form_validation
 	 */
 	function is_username_blacklist( $username )
 	{
-		$blacklist	= array_map('trim', explode(',', get_app_setting('auth_username_blacklist')));
-		$prepend	= array_map('trim', explode(',', get_app_setting('auth_username_blacklist_prepend')));
-		$exceptions	= array_map('trim', explode(',', get_app_setting('auth_username_exceptions')));
+		$blacklist	= array_map('trim', explode(',', Setting::get('auth_username_blacklist')));
+		$prepend	= array_map('trim', explode(',', Setting::get('auth_username_blacklist_prepend')));
+		$exceptions	= array_map('trim', explode(',', Setting::get('auth_username_exceptions')));
 
 		// Generate complete list of blacklisted names
 		$full_blacklist = $blacklist;

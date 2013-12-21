@@ -1,5 +1,7 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+class bakaObject extends stdClass {}
+
 function print_pre($array)
 {
 	echo '<pre>';
@@ -24,8 +26,6 @@ function array_to_object( array $array )
 
 	return $obj;
 }
-
-class bakaObject extends stdClass {}
 
 /**
  * Update array value by array key

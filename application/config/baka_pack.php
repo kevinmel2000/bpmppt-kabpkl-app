@@ -39,24 +39,30 @@ $config['baka_app_min_browser']		= array(
 $config['baka_media_table']			= 'media';
 
 // BAKA system_opt table name
-$config['baka_system_opt_table']	= 'system_opt';
+$config['baka_system_opt_table']		= 'system_opt';
 // BAKA system_env table name
-$config['baka_system_env_table']	= 'system_env';
+$config['baka_system_env_table']		= 'system_env';
 
 // BAKA users table name
-$config['baka_users_table']			= 'auth_users';
-// BAKA users table name
-$config['baka_user_profile_table']	= 'auth_user_profiles';
-// BAKA user_group table name
-$config['baka_user_role_table']		= 'auth_user_roles';
+$config['baka_users_table']				= 'auth_users';
 // BAKA user_meta table name
-$config['baka_roles_table']			= 'auth_roles';
+$config['baka_user_meta_table']			= 'auth_user_meta';
+// BAKA user_profiles table name
+$config['baka_user_profile_table']		= 'auth_user_profiles';
+// BAKA user_group table name
+$config['baka_user_role_table']			= 'auth_user_roles';
+// BAKA user_meta table name
+$config['baka_roles_table']				= 'auth_roles';
 // BAKA user_permission table name
-$config['baka_permissions_table']	= 'auth_permissions';
+$config['baka_permissions_table']		= 'auth_permissions';
 // BAKA user_permission table name
-$config['baka_role_perms_table']	= 'auth_role_permissions';
+$config['baka_role_perms_table']		= 'auth_role_permissions';
 // BAKA user_permission table name
-$config['baka_overrides_table']		= 'auth_overrides';
+$config['baka_overrides_table']			= 'auth_overrides';
+// BAKA users table name
+$config['baka_user_autologin_table']	= 'auth_user_autologin';
+// BAKA users table name
+$config['baka_login_attempts_table']	= 'auth_login_attempts';
 
 /*
 |--------------------------------------------------------------------------

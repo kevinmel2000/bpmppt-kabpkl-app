@@ -219,7 +219,7 @@ class App_data extends CI_Model
 
 		foreach ( $prop as $property )
 		{
-			$data[$property] = get_app_setting( $property );
+			$data[$property] = Setting::get( $property );
 		}
 
 		return $data;

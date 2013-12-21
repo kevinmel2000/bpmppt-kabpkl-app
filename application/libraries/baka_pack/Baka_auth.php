@@ -26,10 +26,8 @@
 /**
  * BAKA Auth Class
  *
- * @package		Baka_pack
  * @subpackage	Libraries
  * @category	Security
- * @author		Fery Wardiyanto (http://github.com/feryardiant/)
  */
 class Baka_auth Extends Baka_lib
 {
@@ -45,6 +43,16 @@ class Baka_auth Extends Baka_lib
 	{
 		$this->load->helper('cookie');
 		$this->load->library('session');
+
+		$tables = array(
+			'user_autologin_table',
+			'login_attempts_table',
+			);
+
+		foreach ( $tables as $table )
+		{
+			$this->$table = get_conf( $table );
+		}
 
 		$this->_autologin();
 
