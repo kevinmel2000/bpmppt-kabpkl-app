@@ -204,11 +204,16 @@ class Layanan extends BAKA_Controller
 				)
 			);
 
-		$form = $this->baka_form->add_form( current_url(), $modul_slug )
-								->add_fields( array_merge( $fields, $this->$data_type->form( $data_obj )) );
+		$this->load->library('baka_pack/former');
 
-		if ( $data_id != '' )
-			$form->disable_buttons();
+		$no_buttons = $data_id != '' ? TRUE : FALSE ;
+
+		$form = $this->former->init( array(
+			'name' => $modul_slug,
+			'action' => current_url(),
+			'fields' => array_merge( $fields, $this->$data_type->form( $data_obj )),
+			'no_buttons' => $no_buttons,
+			));
 
 		if ( $form->validate_submition() )
 		{
@@ -306,13 +311,15 @@ class Layanan extends BAKA_Controller
 				'label'	=> 'Cetak sekarang',
 				'class'	=> 'btn-primary pull-right' );
 
-			$form = $this->baka_form->add_form(
-										current_url(),
-										'internal-skpd',
-										'', '', 'post',
-										array('target' => '_blank') )
-									->add_fields( $fields )
-									->add_buttons( $buttons );
+			$this->load->library('baka_pack/former');
+
+			$form = $this->former->init( array(
+				'name' => 'print-'.$modul_slug,
+				'action' => current_url(),
+				'extras' => array('target' => '_blank'),
+				'fields' => $fields,
+				'buttons' => $buttons,
+				));
 
 			if ( $form->validate_submition() )
 			{

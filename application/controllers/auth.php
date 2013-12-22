@@ -6,6 +6,8 @@ class Auth extends BAKA_Controller
 	{
 		parent::__construct();
 
+		$this->load->library('baka_pack/former');
+
 		$this->baka_theme->set_title('User Authentication');
 	}
 
@@ -85,9 +87,13 @@ class Auth extends BAKA_Controller
 								'class'	=> 'btn-default pull-right' );
 		}
 
-		$form = $this->baka_form->add_form( current_url(), 'login', '', 'form')
-								->add_fields( $fields )
-								->add_buttons( $buttons );
+		$form = $this->former->init( array(
+			'name' => 'login',
+			'action' => current_url(),
+			'fields' => $fields,
+			'buttons' => $buttons,
+			'is_hform' => FALSE,
+			));
 
 		if ( $form->validate_submition() )
 		{
@@ -107,7 +113,7 @@ class Auth extends BAKA_Controller
 			}
 		}
 
-		$this->data['panel_body'] = $form->render();
+		$this->data['panel_body'] = $form->generate();
 
 		$this->baka_theme->load('pages/auth', $this->data);
 	}
@@ -180,9 +186,13 @@ class Auth extends BAKA_Controller
 							'url'	=> 'forgot',
 							'class'	=> 'btn-default pull-right' );
 
-		$form = $this->baka_form->add_form( current_url(), 'register', '', 'form')
-								->add_fields( $fields )
-								->add_buttons( $buttons );
+		$form = $this->former->init( array(
+			'name' => 'register',
+			'action' => current_url(),
+			'fields' => $fields,
+			'buttons' => $buttons,
+			'is_hform' => FALSE,
+			));
 
 		if ( $form->validate_submition() )
 		{
@@ -204,7 +214,7 @@ class Auth extends BAKA_Controller
 			}
 		}
 		
-		$this->data['panel_body'] = $form->render();
+		$this->data['panel_body'] = $form->generate();
 
 		$this->baka_theme->load('pages/auth', $this->data);
 	}
@@ -233,9 +243,13 @@ class Auth extends BAKA_Controller
 							'url'	=> 'auth/forgot',
 							'class'	=> 'btn-default pull-right' );
 
-		$form = $this->baka_form->add_form( current_url(), 'forgot', '', 'form')
-								->add_fields( $fields )
-								->add_buttons( $buttons );
+		$form = $this->former->init( array(
+			'name' => 'resend',
+			'action' => current_url(),
+			'fields' => $fields,
+			'buttons' => $buttons,
+			'is_hform' => FALSE,
+			));
 
 		if ( $form->validate_submition() )
 		{
@@ -259,7 +273,7 @@ class Auth extends BAKA_Controller
 			}
 		}
 		
-		$this->data['panel_body'] = $form->render();
+		$this->data['panel_body'] = $form->generate();
 
 		$this->baka_theme->load('pages/auth', $this->data);
 	}
@@ -285,9 +299,13 @@ class Auth extends BAKA_Controller
 							'url'	=> 'auth/login',
 							'class'	=> 'btn-default pull-right' );
 
-		$form = $this->baka_form->add_form( current_url(), 'forgot', '', 'form')
-								->add_fields( $fields )
-								->add_buttons( $buttons );
+		$form = $this->former->init( array(
+			'name' => 'forgot',
+			'action' => current_url(),
+			'fields' => $fields,
+			'buttons' => $buttons,
+			'is_hform' => FALSE,
+			));
 
 		if ( $form->validate_submition() )
 		{
@@ -311,7 +329,7 @@ class Auth extends BAKA_Controller
 			}
 		}
 		
-		$this->data['panel_body'] = $form->render();
+		$this->data['panel_body'] = $form->generate();
 
 		$this->baka_theme->load('pages/auth', $this->data);
 	}
@@ -364,9 +382,13 @@ class Auth extends BAKA_Controller
 							'url'	=> 'login',
 							'class'	=> 'btn-default pull-right' );
 
-		$form = $this->baka_form->add_form( current_url(), 'reset', '', 'form')
-								->add_fields( $fields )
-								->add_buttons( $buttons );
+		$form = $this->former->init( array(
+			'name' => 'reset',
+			'action' => current_url(),
+			'fields' => $fields,
+			'buttons' => $buttons,
+			'is_hform' => FALSE,
+			));
 
 		if ( $form->validate_submition() )
 		{
@@ -388,7 +410,7 @@ class Auth extends BAKA_Controller
 			}
 		}
 		
-		$this->data['panel_body'] = $form->render();
+		$this->data['panel_body'] = $form->generate();
 
 		$this->baka_theme->load('pages/auth', $this->data);
 	}

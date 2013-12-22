@@ -117,7 +117,7 @@ class Internal extends BAKA_Controller
 			'std'	=> Setting::get('skpd_lead_nip'),
 			'validation'=>'required' );
 
-		$this->data['panel_body'] = $this->_option_form( $fields );
+		$this->_option_form( $fields );
 
 		$this->baka_theme->load('pages/panel_form', $this->data);
 	}
@@ -241,7 +241,7 @@ class Internal extends BAKA_Controller
 			'desc'	=> 'Prioritas email diisi dengan angka 1-5, angka 1 untuk paling tinggi dan 5 untuk paling rendah.',
 			'validation'=> 'numeric|greater_than[0]|less_than[6]' );
 
-		$this->data['panel_body'] = $this->_option_form( $fields );
+		$this->_option_form( $fields );
 
 		$this->baka_theme->load('pages/panel_form', $this->data);
 	}
@@ -255,18 +255,20 @@ class Internal extends BAKA_Controller
 			'type'	=> 'subfield',
 			'label'	=> 'Jumlah karakter Username',
 			'fields'=> array(
-				array(	'name'	=> 'min',
-						'col'	=> 6,
-						'type'	=> 'number',
-						'label'	=> 'Minimal',
-						'std'	=> Setting::get('auth_username_min_length'),
-						'validation'=>'required|numeric' ),
-				array(	'name'	=> 'max',
-						'col'	=> 6,
-						'type'	=> 'number',
-						'label'	=> 'Maksimal',
-						'std'	=> Setting::get('auth_username_max_length'),
-						'validation'=>'required|numeric' )
+				array(
+					'name'	=> 'min',
+					'col'	=> 6,
+					'type'	=> 'number',
+					'label'	=> 'Minimal',
+					'std'	=> Setting::get('auth_username_min_length'),
+					'validation'=>'required|numeric' ),
+				array(
+					'name'	=> 'max',
+					'col'	=> 6,
+					'type'	=> 'number',
+					'label'	=> 'Maksimal',
+					'std'	=> Setting::get('auth_username_max_length'),
+					'validation'=>'required|numeric' )
 				),
 			'desc'	=> 'Jumlah minimal dan maksimal karakter Username' );
 
@@ -275,18 +277,20 @@ class Internal extends BAKA_Controller
 			'type'	=> 'subfield',
 			'label'	=> 'Jumlah karakter Password',
 			'fields'=> array(
-				array(	'name'	=> 'min',
-						'col'	=> 6,
-						'type'	=> 'number',
-						'label'	=> 'Minimal',
-						'std'	=> Setting::get('auth_password_min_length'),
-						'validation'=>'required|numeric' ),
-				array(	'name'	=> 'max',
-						'col'	=> 6,
-						'type'	=> 'number',
-						'label'	=> 'Maksimal',
-						'std'	=> Setting::get('auth_password_max_length'),
-						'validation'=>'required|numeric' )
+				array(
+					'name'	=> 'min',
+					'col'	=> 6,
+					'type'	=> 'number',
+					'label'	=> 'Minimal',
+					'std'	=> Setting::get('auth_password_min_length'),
+					'validation'=>'required|numeric' ),
+				array(
+					'name'	=> 'max',
+					'col'	=> 6,
+					'type'	=> 'number',
+					'label'	=> 'Maksimal',
+					'std'	=> Setting::get('auth_password_max_length'),
+					'validation'=>'required|numeric' )
 				),
 			'desc'	=> 'Jumlah minimal dan maksimal karakter Password' );
 
@@ -477,9 +481,52 @@ class Internal extends BAKA_Controller
 			'std'	=> Setting::get('auth_username_exceptions'),
 			'desc'	=> 'Daftar pengecualian username yang diijinkan, dipisahkan dengan tanda koma (,)' );
 
-		$this->data['panel_body'] = $this->_option_form( $fields );
+		$this->_option_form( $fields );
 
 		$this->baka_theme->load('pages/panel_form', $this->data);
+	}
+
+	private function _option_form( $fields )
+	{
+		$this->load->library('baka_pack/former');
+
+		$form = $this->former->init( array(
+			'name' => 'app-settings',
+			'action' => current_url(),
+			'fields' => $fields,
+			));
+
+		if ( $form->validate_submition() )
+		{
+			$return = FALSE;
+
+			$this->db->trans_start();
+
+			foreach ( $form->submited_data() as $opt_key => $opt_val )
+			{
+				if ( Setting::get( $opt_key ) != $opt_val )
+				{
+					$return = Setting::edit( $opt_key, $opt_val );
+				}
+			}
+
+			$this->db->trans_complete();
+
+			if ( $return === FALSE )
+			{
+				$this->session->set_flashdata('error', array('Terjadi masalah penyimpanan konfigurasi.'));
+			}
+			else
+			{
+				$this->session->set_flashdata('success', array('Konfigurasi berhasil disimpan.'));
+			}
+
+			redirect( current_url() );
+		}
+
+		// var_dump( $fields );
+
+		$this->data['panel_body'] = $form->generate();
 	}
 
 	private $env_table = 'system_env';
@@ -551,8 +598,13 @@ class Internal extends BAKA_Controller
 							'std'	=> ( $prop ? $prop->env_value : '' ),
 							'validation'=> ( !$prop ? 'required' : '' ) );
 
-		$form = $this->baka_form->add_form( current_url(), 'internal-prop' )
-								->add_fields( $fields );
+		$this->load->library('baka_pack/former');
+
+		$form = $this->former->init( array(
+			'name' => 'internal-prop',
+			'action' => current_url(),
+			'fields' => $fields,
+			));
 
 		if ( $form->validate_submition() )
 		{
@@ -585,7 +637,7 @@ class Internal extends BAKA_Controller
 			}
 		}
 
-		$this->data['panel_body'] = $form->render();
+		$this->data['panel_body'] = $form->generate();
 
 		$this->baka_theme->load('pages/panel_form', $this->data);
 	}
@@ -595,45 +647,13 @@ class Internal extends BAKA_Controller
 		if ( $this->db->delete( get_conf('system_env_table'), array('id' => $prop_id) ) )
 		{
 			$this->session->set_flashdata('success', array('Properti berhasil dihapus.'));
-			redirect( current_url() );
 		}
 		else
 		{
 			$this->session->set_flashdata('error', array('Terjadi masalah penghapusan konfigurasi.'));
-			redirect( current_url() );
 		}
-	}
-
-	private function _option_form( $fields )
-	{
-		$form = $this->baka_form->add_form( current_url(), 'internal-skpd' )
-								->add_fields( $fields );
-
-		if ( $form->validate_submition() )
-		{
-			$return = FALSE;
-
-			$this->db->trans_start();
-
-			foreach ( $form->submited_data() as $opt_key => $opt_val )
-			{
-				if ( Setting::get( $opt_key ) != $opt_val )
-				{
-					$return = Setting::edit( $opt_key, $opt_val );
-				}
-			}
-
-			$this->db->trans_complete();
-
-			if ( $return === FALSE )
-				$this->session->set_flashdata('error', array('Terjadi masalah penyimpanan konfigurasi.'));
-			else
-				$this->session->set_flashdata('success', array('Konfigurasi berhasil disimpan.'));
-
-			redirect( current_url() );
-		}
-
-		return $form->render();
+		
+		redirect( current_url() );
 	}
 }
 

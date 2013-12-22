@@ -82,8 +82,13 @@ class Pengguna extends BAKA_Controller
 			'desc'	=> 'Mohon tuliskan secara lengkap alasan pencekalan pengguna "'.$username.'".',
 			'validation'=> 'required' );
 
-		$form = $this->baka_form->add_form( current_url(), 'ban' )
-								->add_fields( $fields );
+		$this->load->library('baka_pack/former');
+
+		$form = $this->former->init( array(
+			'name' => 'user-ban',
+			'action' => current_url(),
+			'fields' => $fields,
+			));
 
 		if ( $form->validate_submition() )
 		{
@@ -102,7 +107,7 @@ class Pengguna extends BAKA_Controller
 			}
 		}
 
-		$this->data['panel_body'] = $form->render();
+		$this->data['panel_body'] = $form->generate();
 
 		$this->baka_theme->load('pages/panel_form', $this->data);
 	}
@@ -268,8 +273,13 @@ class Pengguna extends BAKA_Controller
 				'std'	=> format_datetime($user->last_login) );
 		}
 
-		$form = $this->baka_form->add_form( current_url(), 'user' )
-								->add_fields( $fields );
+		$this->load->library('baka_pack/former');
+
+		$form = $this->former->init( array(
+			'name' => 'user-form',
+			'action' => current_url(),
+			'fields' => $fields,
+			));
 
 		if ( $form->validate_submition() )
 		{
@@ -300,7 +310,7 @@ class Pengguna extends BAKA_Controller
 			}
 		}
 
-		$this->data['panel_body'] = $form->render();
+		$this->data['panel_body'] = $form->generate();
 
 		$this->baka_theme->load('pages/panel_form', $this->data);
 	}
@@ -394,8 +404,13 @@ class Pengguna extends BAKA_Controller
 				'desc'	=> '' );
 		}
 
-		$form = $this->baka_form->add_form( current_url(), 'group' )
-								->add_fields( $fields );
+		$this->load->library('baka_pack/former');
+
+		$form = $this->former->init( array(
+			'name' => 'user-roles',
+			'action' => current_url(),
+			'fields' => $fields,
+			));
 
 		if ( $form->validate_submition() )
 		{
@@ -435,10 +450,10 @@ class Pengguna extends BAKA_Controller
 		}
 		else
 		{
-			$this->data['panel_body'] = $form->render();
+			$this->data['panel_body'] = $form->generate();
 		}
 
-		// $this->data['panel_body'] = $form->render();
+		// $this->data['panel_body'] = $form->generate();
 
 		$this->baka_theme->load('pages/panel_form', $this->data);
 	}
@@ -521,8 +536,13 @@ class Pengguna extends BAKA_Controller
 			'desc'	=> 'Pilih <em>Ya</em> untuk menjadikna perm ini sebagai perm bawaan setiap mendambahkan pengguna baru, atau pilih <em>Tidak</em> untuk sebaliknya.',
 			'validation'=> ( !$perm ? 'required' : '' ) );
 
-		$form = $this->baka_form->add_form( current_url(), 'perm' )
-								->add_fields( $fields );
+		$this->load->library('baka_pack/former');
+
+		$form = $this->former->init( array(
+			'name' => 'user-perm',
+			'action' => current_url(),
+			'fields' => $fields,
+			));
 
 		if ( $form->validate_submition() )
 		{
@@ -553,7 +573,7 @@ class Pengguna extends BAKA_Controller
 			}
 		}
 
-		$this->data['panel_body'] = $form->render();
+		$this->data['panel_body'] = $form->generate();
 
 		$this->baka_theme->load('pages/panel_form', $this->data);
 	}

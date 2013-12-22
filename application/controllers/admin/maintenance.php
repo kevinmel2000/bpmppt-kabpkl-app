@@ -52,15 +52,20 @@ class Maintenance extends BAKA_Controller
 			'label'	=> 'lang:backup_btn',
 			'class'	=> 'btn-primary pull-right' );
 
-		$backup		= $this->baka_form->add_form( current_url(), 'backup' )
-									   ->add_fields( $fields )
-									   ->add_buttons( $buttons );
+		$this->load->library('baka_pack/former');
 
-		if ( $backup->validate_submition() )
+		$form = $this->former->init( array(
+			'name' => 'backup',
+			'action' => current_url(),
+			'fields' => $fields,
+			'buttons' => $buttons,
+			));
+
+		if ( $form->validate_submition() )
 		{
 			$this->load->library('baka_pack/baka_dbutil');
 
-			$data = $backup->submited_data();
+			$data = $form->submited_data();
 
 			if ( $this->baka_dbutil->backup() )
 			{
@@ -74,7 +79,7 @@ class Maintenance extends BAKA_Controller
 			redirect( current_url() );
 		}
 
-		$this->data['panel_body'] = $backup->render();
+		$this->data['panel_body'] = $form->generate();
 
 		$this->baka_theme->load('pages/panel_form', $this->data);
 	}
@@ -95,11 +100,16 @@ class Maintenance extends BAKA_Controller
 			'label'	=> 'lang:restore_btn',
 			'class'	=> 'btn-primary pull-right' );
 
-		$restore	= $this->baka_form->add_form_multipart( current_url(), 'restore' )
-									  ->add_fields( $fields )
-									  ->add_buttons( $buttons );
+		$this->load->library('baka_pack/former');
 
-		if ( $restore->validate_submition() )
+		$form = $this->former->init( array(
+			'name' => 'restore',
+			'action' => current_url(),
+			'fields' => $fields,
+			'buttons' => $buttons,
+			));
+
+		if ( $form->validate_submition() )
 		{
 			$this->load->library('baka_pack/baka_dbutil');
 
@@ -115,7 +125,7 @@ class Maintenance extends BAKA_Controller
 			redirect( current_url() );
 		}
 
-		$this->data['panel_body'] = $restore->render();
+		$this->data['panel_body'] = $form->generate();
 
 		$this->baka_theme->load('pages/panel_form', $this->data);
 	}
