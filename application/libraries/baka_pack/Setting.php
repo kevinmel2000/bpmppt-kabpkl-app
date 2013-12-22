@@ -27,8 +27,8 @@
  * BAKA Library Class
  *
  * @since       version 0.1.3
- * @subpackage	Libraries
- * @category	Settings
+ * @subpackage  Libraries
+ * @category    Settings
  */
 class Setting
 {
@@ -56,8 +56,8 @@ class Setting
     /**
      * Default constructor
      */
-	public function __construct()
-	{
+    public function __construct()
+    {
         // Load CI super object
         self::$_ci =& get_instance();
 
@@ -68,131 +68,143 @@ class Setting
 
         self::init();
 
-		log_message('debug', "#Baka_pack: Settings Library Class Initialized");
-	}
+        log_message('debug', "#Baka_pack: Settings Library Class Initialized");
+    }
 
-	/**
-	 * Initializing application settings
-	 *
-	 * @since   version 0.1.3
-	 * 
-	 * @return  void
-	 */
-	protected static function init()
-	{
-		$query = self::$_ci->db->get( self::$_table_name );
+    // -------------------------------------------------------------------------
 
-		if ( $query->num_rows() == 0 )
-		{
-			log_message('error', "#Baka Setting lib: Settings table is empty");
-			return FALSE;
-		}
+    /**
+     * Initializing application settings
+     *
+     * @since   version 0.1.3
+     * 
+     * @return  void
+     */
+    protected static function init()
+    {
+        $query = self::$_ci->db->get( self::$_table_name );
 
-		foreach ( $query->result() as $row )
-		{
-			self::$_settings[$row->opt_key] = $row->opt_value;
-		}
+        if ( $query->num_rows() == 0 )
+        {
+            log_message('error', "#Baka Setting lib: Settings table is empty");
+            return FALSE;
+        }
 
-		$query->free_result();
-	}
+        foreach ( $query->result() as $row )
+        {
+            self::$_settings[$row->opt_key] = $row->opt_value;
+        }
 
-	/**
-	 * Get all application settings in array
-	 *
-	 * @since   version 0.1.3
-	 * 
-	 * @return  array
-	 */
-	public static function get_all()
-	{
-		return (array) self::$_settings;
-	}
+        $query->free_result();
+    }
 
-	/**
-	 * Is application setting is exists?
-	 *
-	 * @since   version 0.1.3
-	 * @param   string  $key  Setting key name
-	 *
-	 * @return  bool
-	 */
-	public static function is_exists( $key )
-	{
-		return isset( self::$_settings[$key] );
-	}
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Get application setting
-	 *
-	 * @since   version 0.1.3
-	 * @param   string  $key  Setting key name
-	 *
-	 * @return  mixed
-	 */
-	public static function get( $key )
-	{
-		if ( !array_key_exists( $key, self::$_settings ) )
-		{
-			log_message('error', "#Baka Setting lib: Settings key '{$key}' is not exists");
-			return FALSE;
-		}
+    /**
+     * Get all application settings in array
+     *
+     * @since   version 0.1.3
+     * 
+     * @return  array
+     */
+    public static function get_all()
+    {
+        return (array) self::$_settings;
+    }
 
-		return self::$_settings[$key];
-	}
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Edit existing application setting by key
-	 *
-	 * @since   version 0.1.3
-	 * @param   string  $key  Setting key name
-	 * @param   mixed   $val  Setting values
-	 *
-	 * @return  mixed
-	 */
-	public static function edit( $key, $val )
-	{
-		$old = self::get( $key );
+    /**
+     * Is application setting is exists?
+     *
+     * @since   version 0.1.3
+     * @param   string  $key  Setting key name
+     *
+     * @return  bool
+     */
+    public static function is_exists( $key )
+    {
+        return isset( self::$_settings[$key] );
+    }
 
-		if ( $old === FALSE )
-		{
-			return FALSE;
-		}
+    // -------------------------------------------------------------------------
 
-		if ( $old == $new )
-		{
-			log_message('error', "#Baka Setting lib: Setting val {$val} is not changed.");
-			return FALSE;	
-		}
+    /**
+     * Get application setting
+     *
+     * @since   version 0.1.3
+     * @param   string  $key  Setting key name
+     *
+     * @return  mixed
+     */
+    public static function get( $key )
+    {
+        if ( !array_key_exists( $key, self::$_settings ) )
+        {
+            log_message('error', "#Baka Setting lib: Settings key '{$key}' is not exists");
+            return FALSE;
+        }
 
-		return self::$_ci->db->update(
-			self::$_table_name,
-			array( 'opt_value' => $val ),
-			array( 'opt_key' => $key )
-			);
-	}
+        return self::$_settings[$key];
+    }
 
-	/**
-	 * Set up new application setting
-	 *
-	 * @since   version 0.1.3
-	 * @param   string  $key  Setting key name
-	 * @param   mixed   $val  Setting values
-	 *
-	 * @return  mixed
-	 */
-	public static function set( $key, $val )
-	{
-		if ( !self::is_exists( $key ) )
-		{
-			return self::$_ci->db>insert(
-				self::$_table_name,
-				array( 'opt_key' => $key, 'opt_value' => $val )
-				);
-		}
+    // -------------------------------------------------------------------------
 
-		log_message('error', "#Baka Setting lib: Can not create new setting, key {$key} is still exists.");
-		return FALSE;
-	}
+    /**
+     * Edit existing application setting by key
+     *
+     * @since   version 0.1.3
+     * @param   string  $key  Setting key name
+     * @param   mixed   $val  Setting values
+     *
+     * @return  mixed
+     */
+    public static function edit( $key, $val )
+    {
+        $old = self::get( $key );
+
+        if ( $old === FALSE )
+        {
+            return FALSE;
+        }
+
+        if ( $old == $new )
+        {
+            log_message('error', "#Baka Setting lib: Setting val {$val} is not changed.");
+            return FALSE;   
+        }
+
+        return self::$_ci->db->update(
+            self::$_table_name,
+            array( 'opt_value' => $val ),
+            array( 'opt_key' => $key )
+            );
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Set up new application setting
+     *
+     * @since   version 0.1.3
+     * @param   string  $key  Setting key name
+     * @param   mixed   $val  Setting values
+     *
+     * @return  mixed
+     */
+    public static function set( $key, $val )
+    {
+        if ( !self::is_exists( $key ) )
+        {
+            return self::$_ci->db>insert(
+                self::$_table_name,
+                array( 'opt_key' => $key, 'opt_value' => $val )
+                );
+        }
+
+        log_message('error', "#Baka Setting lib: Can not create new setting, key {$key} is still exists.");
+        return FALSE;
+    }
 }
 
 /* End of file Setting.php */
