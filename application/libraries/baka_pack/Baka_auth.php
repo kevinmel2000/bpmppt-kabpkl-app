@@ -309,7 +309,7 @@ class Baka_auth Extends Baka_lib
 	 */
 	public function activate_user($user_id, $activation_key, $activate_by_email = TRUE)
 	{
-		$this->baka_users->purge_na(get_conf('email_activation_expire'));
+		$this->baka_users->purge_na( get_conf('email_activation_expire') );
 
 		return $this->baka_users->activate_user($user_id, $activation_key, $activate_by_email);
 	}
