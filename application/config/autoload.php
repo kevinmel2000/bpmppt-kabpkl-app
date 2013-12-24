@@ -59,7 +59,6 @@ $autoload['libraries'] = array(
 	'baka_pack/baka_users',
 	'baka_pack/baka_auth',
 	'baka_pack/baka_theme',
-	'baka_pack/baka_form',
 	);
 
 
@@ -80,6 +79,7 @@ $autoload['helper'] = array(
 	'baka_pack/baka_common',
 	'baka_pack/baka_html',
 	'baka_pack/baka_data',
+	'baka_pack/former',
 	);
 
 

@@ -152,7 +152,6 @@ class Former
 
         // Load dependencies
         $this->_ci->load->library('form_validation');
-        $this->_ci->load->helper('baka_pack/baka_form');
 
         // Give some default values
         $this->_attrs['action'] = current_url(); 
