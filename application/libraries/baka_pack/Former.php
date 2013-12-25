@@ -26,8 +26,8 @@
 /**
  * Form Generator Library Class
  *
- * @category    Forms
  * @subpackage  Libraries
+ * @category    Forms
  */
 class Former
 {
