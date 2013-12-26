@@ -138,4 +138,4 @@ class Baka_archive Extends Baka_lib
 }
 
 /* End of file Baka_archive.php */
-/* Location: ./system/application/libraries/Baka_pack/Baka_archive.php */
+/* Location: ./system/application/libraries/baka_pack/Baka_archive.php */

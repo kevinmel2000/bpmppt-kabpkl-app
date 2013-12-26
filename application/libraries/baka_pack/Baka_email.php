@@ -77,4 +77,4 @@ class Baka_email Extends Baka_lib
 }
 
 /* End of file Baka_email.php */
-/* Location: ./system/application/libraries/Baka_pack/Baka_email.php */
+/* Location: ./system/application/libraries/baka_pack/Baka_email.php */

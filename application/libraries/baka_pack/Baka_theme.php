@@ -389,4 +389,4 @@ class Baka_theme Extends Baka_lib
 }
 
 /* End of file Baka_theme.php */
-/* Location: ./system/application/libraries/Baka_pack/Baka_theme.php */
+/* Location: ./system/application/libraries/baka_pack/Baka_theme.php */

@@ -54,4 +54,4 @@ class Baka_print Extends Baka_lib
 }
 
 /* End of file Baka_print.php */
-/* Location: ./system/application/libraries/Baka_pack/Baka_print.php */
+/* Location: ./system/application/libraries/baka_pack/Baka_print.php */

@@ -164,4 +164,4 @@ class Baka_dbutil Extends Baka_lib
 }
 
 /* End of file Baka_dbutil.php */
-/* Location: ./system/application/libraries/Baka_pack/Baka_dbutil.php */
+/* Location: ./system/application/libraries/baka_pack/Baka_dbutil.php */

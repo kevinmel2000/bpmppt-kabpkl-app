@@ -953,4 +953,4 @@ class Baka_auth Extends Baka_lib
 }
 
 /* End of file Baka_auth.php */
-/* Location: ./system/application/libraries/Baka_pack/Baka_auth.php */
+/* Location: ./system/application/libraries/baka_pack/Baka_auth.php */

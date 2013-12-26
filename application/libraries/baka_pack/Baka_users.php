@@ -1107,4 +1107,4 @@ class Baka_users extends Baka_lib
 }
 
 /* End of file users.php */
-/* Location: ./system/application/libraries/Baka_pack/rbac/Baka_users.php */
+/* Location: ./system/application/libraries/baka_pack/rbac/Baka_users.php */
