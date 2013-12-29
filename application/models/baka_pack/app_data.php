@@ -1,5 +1,28 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
 
+/**
+ * CodeIgniter Baka Pack
+ *
+ * My very own Codeigniter core library that used on all of my projects
+ *
+ * NOTICE OF LICENSE
+ *
+ * Licensed under the Open Software License version 3.0
+ *
+ * This source file is subject to the Open Software License (OSL 3.0) that is
+ * bundled with this package in the files license.txt / license.rst.  It is
+ * also available through the world wide web at this URL:
+ * http://opensource.org/licenses/OSL-3.0
+ *
+ * @package     Baka_pack
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) Fery Wardiyanto. (ferywardiyanto@gmail.com)
+ * @license     http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ * @since       Version 0.1
+ */
+
+// -----------------------------------------------------------------------------
+
 class App_data extends CI_Model
 {
     // Direktori penyimpanan modul
@@ -15,7 +38,9 @@ class App_data extends CI_Model
 
     public $messages = array();
 
-    // Default constructor class
+    /**
+     * Default class constructor
+     */
     public function __construct()
     {
         parent::__construct();
@@ -40,7 +65,7 @@ class App_data extends CI_Model
             if (substr($module_file, 0, 1) !== '_')
                 $module_name = strtolower(str_replace(EXT, '', $module_file));
 
-            if ( $this->baka_auth->permit('doc_'.$module_name.'_manage') )
+            if ( $this->authen->permit('doc_'.$module_name.'_manage') )
             {
                 if (!$this->load->is_loaded( $this->module_dir.$module_name ) )
                     $this->load->model( $this->module_dir.$module_name );
@@ -188,9 +213,9 @@ class App_data extends CI_Model
                 break;
         }
 
-        $this->load->library('baka_pack/baka_grid');
+        $this->load->library('baka_pack/gridr');
 
-        $grid = $this->baka_grid->identifier('id')
+        $grid = $this->gridr->identifier('id')
                                 ->set_baseurl($page_link)
                                 ->set_column('Pengajuan',
                                     'no_agenda, callback_format_datetime:created_on',
@@ -392,7 +417,7 @@ class App_data extends CI_Model
     {
         $data['no_agenda']  = $form_data[$module_name.'_surat_nomor'];
         $data['created_on'] = string_to_datetime();
-        $data['created_by'] = $this->baka_auth->get_user_id();
+        $data['created_by'] = $this->authen->get_user_id();
         $data['type']       = $module_name;
         $data['label']      = '-';
         $data['petitioner'] = $form_data[$module_name.'_pemohon_nama'];
@@ -496,7 +521,7 @@ class App_data extends CI_Model
         $data = $this->db->get_where( $this->_data_table, array('id' => $data_id) )->row();
 
         $log[] = array(
-            'user_id'   => $this->baka_auth->get_user_id(),
+            'user_id'   => $this->authen->get_user_id(),
             'date'      => string_to_datetime(),
             'message'   => $log_message,
             );

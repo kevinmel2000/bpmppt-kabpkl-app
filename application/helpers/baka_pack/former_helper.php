@@ -1,5 +1,27 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/**
+ * CodeIgniter Baka Pack
+ *
+ * My very own Codeigniter core library that used on all of my projects
+ *
+ * NOTICE OF LICENSE
+ *
+ * Licensed under the Open Software License version 3.0
+ *
+ * This source file is subject to the Open Software License (OSL 3.0) that is
+ * bundled with this package in the files license.txt / license.rst.  It is
+ * also available through the world wide web at this URL:
+ * http://opensource.org/licenses/OSL-3.0
+ *
+ * @package     Baka_pack
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) Fery Wardiyanto. (ferywardiyanto@gmail.com)
+ * @license     http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ * @since       Version 0.1
+ */
+
+// -----------------------------------------------------------------------------
 
 function set_toolbar( $tool_buttons, $page_link )
 {
@@ -163,37 +185,6 @@ function form_persyaratan( $caption, $persyaratan = array(), $syarats = '' )
 	}
 }
 
-function form_datepicker($data = '', $value = '', $extra = '')
-{
-	Baka_theme::add_style('datepicker-css', 'assets/vendors/bootstrap-datepicker/css/datepicker.css');
-	Baka_theme::add_script('datepicker-js', 'assets/vendors/bootstrap-datepicker/js/bootstrap-datepicker.js', 'foot');
-
-	if (!is_array($data))
-	{
-		$data	= array('name' => $data);
-		$value	= format_date($value);
-	}
-	else
-	{
-		$data['value'] = format_date($data['value']);
-	}
-
-	if (!array_key_exists('data-provide', $data))
-	{
-		$data['data-provide'] = 'datepicker';
-	}
-
-	Baka_theme::add_script('datepicker-script', "$('[data-provide=\"datepicker\"]').datepicker({
-		autoclose: true,
-		todayHighlight: true,
-		format: 'dd-mm-yyyy',
-		language: 'id',
-		mask: '99-99-9999'
-	})\n", 'foot');
-
-	return form_input($data, $value, $extra);
-}
-
 function form_uploader( $label = 'Unggah berkas', $endpoint = 'ajax_request/fine_uploader/berkas', $allowed_type = '' )
 {
 	$CI =& get_instance();
@@ -263,5 +254,5 @@ function form_uploader( $label = 'Unggah berkas', $endpoint = 'ajax_request/fine
 	return $output;
 }
 
-/* End of file apps_form_helper.php */
-/* Location: ./application/helpers/baka_core/apps_form_helper.php */
+/* End of file former_helper.php */
+/* Location: ./application/helpers/baka_pack/former_helper.php */

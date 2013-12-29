@@ -1,5 +1,33 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/**
+ * CodeIgniter Baka Pack
+ *
+ * My very own Codeigniter core library that used on all of my projects
+ *
+ * NOTICE OF LICENSE
+ *
+ * Licensed under the Open Software License version 3.0
+ *
+ * This source file is subject to the Open Software License (OSL 3.0) that is
+ * bundled with this package in the files license.txt / license.rst.  It is
+ * also available through the world wide web at this URL:
+ * http://opensource.org/licenses/OSL-3.0
+ *
+ * @package     Baka_pack
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) Fery Wardiyanto. (ferywardiyanto@gmail.com)
+ * @license     http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ * @since       Version 0.1.3
+ */
+
+// -----------------------------------------------------------------------------
+
+/**
+ * Error Class
+ *
+ * @subpackage  Controller
+ */
 class Error extends BAKA_Controller
 {
     public function __construct()
@@ -14,12 +42,12 @@ class Error extends BAKA_Controller
 
     public function e404()
     {
-        $this->data['heading'] = $this->baka_theme->set_title('404 Halaman tidak ditemukan');
+        $this->data['heading'] = $this->themee->set_title('404 Halaman tidak ditemukan');
         $this->data['message'] = '';
 
         log_message('error', '404 Page Not Found --> '.current_url());
 
-        $this->baka_theme->load('errors/error_view', $this->data);
+        $this->themee->load('errors/error_view', $this->data);
     }
 
     public function notice( $page = '' )
@@ -120,10 +148,10 @@ class Error extends BAKA_Controller
                 break;
         }
 
-        $this->data['panel_title']  = $this->baka_theme->set_title( $page_title );
+        $this->data['panel_title']  = $this->themee->set_title( $page_title );
         $this->data['panel_body']   = $page_message;
 
-        $this->baka_theme->load('pages/notice', $this->data);
+        $this->themee->load('pages/notice', $this->data);
     }
 }
 

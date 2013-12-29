@@ -1,5 +1,33 @@
 <?php if ( ! defined('BASEPATH')) exit ('No direct script access allowed');
 
+/**
+ * CodeIgniter Baka Pack
+ *
+ * My very own Codeigniter core library that used on all of my projects
+ *
+ * NOTICE OF LICENSE
+ *
+ * Licensed under the Open Software License version 3.0
+ *
+ * This source file is subject to the Open Software License (OSL 3.0) that is
+ * bundled with this package in the files license.txt / license.rst.  It is
+ * also available through the world wide web at this URL:
+ * http://opensource.org/licenses/OSL-3.0
+ *
+ * @package     Baka_pack
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) Fery Wardiyanto. (ferywardiyanto@gmail.com)
+ * @license     http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ * @since       Version 0.1.3
+ */
+
+// -----------------------------------------------------------------------------
+
+/**
+ * Utama Class
+ *
+ * @subpackage  Controller
+ */
 class Utama extends BAKA_Controller
 {
     private $modules_arr = array();
@@ -9,9 +37,9 @@ class Utama extends BAKA_Controller
     {
         parent::__construct();
 
-        $this->baka_theme->set_title('Dashboard');
+        $this->themee->set_title('Dashboard');
 
-        $this->baka_theme->add_navbar( 'data_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
+        $this->themee->add_navbar( 'data_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
         $this->app_main->data_navbar( 'data_sidebar', 'side' );
 
         $this->modules_arr          = $this->app_data->get_modules_assoc();
@@ -27,7 +55,7 @@ class Utama extends BAKA_Controller
 
     public function stat()
     {
-        $this->data['panel_title']  = $this->baka_theme->set_title('Semua data perijinan');
+        $this->data['panel_title']  = $this->themee->set_title('Semua data perijinan');
         $this->data['data_type']    = $this->modules_arr;
 
         if ( !empty($this->modules_arr) )
@@ -45,7 +73,7 @@ class Utama extends BAKA_Controller
             $this->data['panel_body']   = $this->app_data->get_tables( $this->data['page_link'] );
             $this->data['counter']      = $this->modules_count_arr;
 
-            $this->baka_theme->load('pages/panel_alldata', $this->data);
+            $this->themee->load('pages/panel_alldata', $this->data);
         }
         else
         {
@@ -55,7 +83,7 @@ class Utama extends BAKA_Controller
 
     public function laporan()
     {
-        $this->data['panel_title'] = $this->baka_theme->set_title('Laporan data');
+        $this->data['panel_title'] = $this->themee->set_title('Laporan data');
 
         foreach ( $this->app_data->get_modules_object() as $module )
         {
@@ -142,13 +170,13 @@ class Utama extends BAKA_Controller
             $data['layanan'] = $this->app_data->get_label($submited_data['data_type']);
             $data['results'] = array();
 
-            $this->baka_theme->load('prints/reports/'.$submited_data['data_type'], $data, 'laporan');
+            $this->themee->load('prints/reports/'.$submited_data['data_type'], $data, 'laporan');
         }
         else
         {
             $this->data['panel_body'] = $form->render();
 
-            $this->baka_theme->load('pages/panel_form', $this->data);
+            $this->themee->load('pages/panel_form', $this->data);
         }
     }
 
@@ -158,7 +186,7 @@ class Utama extends BAKA_Controller
 
         // $data = array_merge( (array) $data, (array) $this->app_data->get_fulldata_by_id( $data_id ) );
 
-        $this->baka_theme->load('prints/reports/'.$data_type, $data, 'laporan');
+        $this->themee->load('prints/reports/'.$data_type, $data, 'laporan');
     }
 }
 

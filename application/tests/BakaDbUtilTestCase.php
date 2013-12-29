@@ -6,24 +6,24 @@ class BakaDbUtilTestCase extends BakaPackTestCase
     {
         parent::__construct($name, $data, $dataName);
 
-		$this->CI->load->library('Baka_pack/baka_dbutil');
+		$this->CI->load->library('baka_pack/utily');
     }
 
     public function testBackup()
     {
-    	if ( $this->CI->baka_dbutil->backup() )
+    	if ( $this->CI->utily->backup() )
     	{
 	    	$this->assertTrue( TRUE );
 
-	    	return $this->CI->baka_dbutil->messages();
+	    	return $this->CI->utily->messages();
     	}
 	    else
 	    {
 	    	$this->assertFalse( FALSE );
 
-	    	return $this->CI->baka_dbutil->errors();
+	    	return $this->CI->utily->errors();
 	    }
 
-    	// return $this->CI->baka_dbutil->backup();
+    	// return $this->CI->utily->backup();
     }
 }

@@ -29,8 +29,15 @@
  * @subpackage  Libraries
  * @category    Media
  */
-class Baka_media extends Baka_lib
+class Medial
 {
+    /**
+     * Codeigniter superobject
+     *
+     * @var  mixed
+     */
+    protected static $_ci;
+
     protected $upload_dir;
 
     protected $thumb_dir;
@@ -51,8 +58,13 @@ class Baka_media extends Baka_lib
 
     private $media_errors = array();
 
+    /**
+     * Default class constructor
+     */
     public function __construct()
     {
+        self::$_ci =& get_instance();
+
         $this->allowed_types    = explode('|', get_conf('allowed_types'));
         
         $this->upload_max_size  = return_bytes( ini_get('upload_max_filesize') );
@@ -264,5 +276,5 @@ class Baka_media extends Baka_lib
     }
 }
 
-/* End of file Baka_media.php */
-/* Location: ./application/libraries/Baka_pack/Baka_media.php */
+/* End of file Medial.php */
+/* Location: ./application/libraries/Baka_pack/Medial.php */

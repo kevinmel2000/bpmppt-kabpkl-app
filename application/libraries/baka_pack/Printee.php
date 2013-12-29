@@ -29,8 +29,15 @@
  * @subpackage  Libraries
  * @category    Printing
  */
-class Baka_print Extends Baka_lib
+class Printee
 {
+    /**
+     * Codeigniter superobject
+     *
+     * @var  mixed
+     */
+    protected static $_ci;
+
     private $_printer;
     
     private $_host;
@@ -43,15 +50,20 @@ class Baka_print Extends Baka_lib
     private $_dim_y;
     private $_auto_size;
 
+    /**
+     * Default class constructor
+     */
     public function __construct()
     {
+        self::$_ci =& get_instance();
+
         $this->initialize();
 
-        log_message('debug', "#Baka_pack: Email Class Initialized");
+        log_message('debug', "#Baka_pack: Printee Class Initialized");
     }
 
     
 }
 
-/* End of file Baka_print.php */
-/* Location: ./system/application/libraries/baka_pack/Baka_print.php */
+/* End of file Printee.php */
+/* Location: ./application/libraries/baka_pack/Printee.php */

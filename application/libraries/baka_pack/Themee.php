@@ -29,8 +29,15 @@
  * @subpackage  Libraries
  * @category    Theme
  */
-class Baka_theme Extends Baka_lib
+class Themee
 {
+    /**
+     * Codeigniter superobject
+     *
+     * @var  mixed
+     */
+    protected static $_ci;
+
     private $_app_name;
 
     private $_theme_data    = array();
@@ -41,8 +48,13 @@ class Baka_theme Extends Baka_lib
     
     public $_styles         = array();
 
+    /**
+     * Default class constructor
+     */
     public function __construct()
     {
+        self::$_ci =& get_instance();
+
         $this->_app_name = get_conf('app_name');
 
         $this->_theme_data['page_title'] = $this->_app_name;
@@ -78,20 +90,19 @@ class Baka_theme Extends Baka_lib
                 // Let CI do the caching instead of the browser
                 $this->output->cache( get_conf('cache_lifetime') );
 
-                log_message('debug', "#Baka_theme: cache activated");
+                log_message('debug', "#Themee: cache activated");
             break;
         }
     }
     
-    public function is_browser_jadul()
+    public static function verify_browser()
     {
-        if ( ! $this->load->is_loaded('user_agent'))
-            $this->load->library('user_agent');
+        self::$_ci->load->library('user_agent');
 
         $min_browser    = get_conf('app_min_browser');
-        $curent_version = explode('.', $this->agent->version());
+        $curent_version = explode('.', self::$_ci->agent->version());
 
-        return ($curent_version[0] <= $min_browser[$this->agent->browser()] ? TRUE : FALSE  );
+        return ( $curent_version[0] <= $min_browser[self::$_ci->agent->browser()] ? TRUE : FALSE  );
     }
     
     /**
@@ -180,7 +191,7 @@ class Baka_theme Extends Baka_lib
         if ( isset($this->_theme_data['navbar'][$position]) )
             return $this->make_menu( $this->_theme_data['navbar'][$position] );
         else
-            log_message('error', '#Baka_theme: '.$position." navbar doesn't exists.");
+            log_message('error', '#Themee: '.$position." navbar doesn't exists.");
     }
 
     public function get_navbar()
@@ -192,7 +203,7 @@ class Baka_theme Extends Baka_lib
                  . '            '.anchor(base_url(), get_conf('app_name'), 'class="navbar-brand"')
                  . '        </div>';
 
-        if (!is_browser_jadul() AND $this->baka_auth->is_logged_in())
+        if ( !self::verify_browser() AND Authen::is_logged_in() )
             $output .= '<div class="navbar-collapse collapse">'.$this->get_nav('top').'</div> <!--/.nav-collapse -->';
 
         $output .=  '</div></header>';
@@ -359,7 +370,7 @@ class Baka_theme Extends Baka_lib
         if ( array_key_exists($name, $this->_theme_data) )
             return $this->_theme_data[$name];
         else
-            log_message('error', "#Baka_theme: Theme data ".$name." doesn't exists.");
+            log_message('error', "#Themee: Theme data ".$name." doesn't exists.");
     }
 
     public function set($name, $value)
@@ -371,22 +382,22 @@ class Baka_theme Extends Baka_lib
     {
         $file || $file = 'index';
 
-        $this->set('contents', $this->load->view( $view, $view_data, TRUE));
+        $this->set('contents', self::$_ci->load->view( $view, $view_data, TRUE));
 
         if ( IS_AJAX )
         {
-            log_message('debug', "#Baka_theme: File ".$file." loaded as view via ajax.");
+            log_message('debug', "#Themee: File ".$file." loaded as view via ajax.");
 
-            return $this->load->view( $view, $view_data, FALSE);
+            return self::$_ci->load->view( $view, $view_data, FALSE);
         }
         else
         {
-            log_message('debug', "#Baka_theme: File ".$file." loaded as view.");
+            log_message('debug', "#Themee: File ".$file." loaded as view.");
 
-            return $this->load->view( $file, $this->_contents, $return );
+            return self::$_ci->load->view( $file, $this->_contents, $return );
         }
     }
 }
 
-/* End of file Baka_theme.php */
-/* Location: ./system/application/libraries/baka_pack/Baka_theme.php */
+/* End of file Themee.php */
+/* Location: ./application/libraries/baka_pack/Themee.php */

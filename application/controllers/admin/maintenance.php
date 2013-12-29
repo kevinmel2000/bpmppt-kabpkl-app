@@ -1,15 +1,43 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/**
+ * CodeIgniter Baka Pack
+ *
+ * My very own Codeigniter core library that used on all of my projects
+ *
+ * NOTICE OF LICENSE
+ *
+ * Licensed under the Open Software License version 3.0
+ *
+ * This source file is subject to the Open Software License (OSL 3.0) that is
+ * bundled with this package in the files license.txt / license.rst.  It is
+ * also available through the world wide web at this URL:
+ * http://opensource.org/licenses/OSL-3.0
+ *
+ * @package     Baka_pack
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) Fery Wardiyanto. (ferywardiyanto@gmail.com)
+ * @license     http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ * @since       Version 0.1.3
+ */
+
+// -----------------------------------------------------------------------------
+
+/**
+ * Maintenance Class
+ *
+ * @subpackage  Controller
+ */
 class Maintenance extends BAKA_Controller
 {
     public function __construct()
     {
         parent::__construct();
 
-        $this->baka_theme->add_navbar( 'admin_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
+        $this->themee->add_navbar( 'admin_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
         $this->app_main->admin_navbar( 'admin_sidebar', 'side' );
 
-        $this->baka_theme->set_title('System Maintenance');
+        $this->themee->set_title('System Maintenance');
     }
 
     public function index()
@@ -19,7 +47,7 @@ class Maintenance extends BAKA_Controller
 
     public function dbbackup()
     {
-        $this->data['panel_title'] = $this->baka_theme->set_title('Backup Database');
+        $this->data['panel_title'] = $this->themee->set_title('Backup Database');
 
         $fields[]   = array(
             'name'  => 'backup-all',
@@ -81,12 +109,12 @@ class Maintenance extends BAKA_Controller
 
         $this->data['panel_body'] = $form->generate();
 
-        $this->baka_theme->load('pages/panel_form', $this->data);
+        $this->themee->load('pages/panel_form', $this->data);
     }
 
     public function dbrestore()
     {
-        $this->data['panel_title']  = $this->baka_theme->set_title('Restore Database');
+        $this->data['panel_title']  = $this->themee->set_title('Restore Database');
 
         $fields[]   = array(
             'name'  => 'restore-from-file',
@@ -127,14 +155,14 @@ class Maintenance extends BAKA_Controller
 
         $this->data['panel_body'] = $form->generate();
 
-        $this->baka_theme->load('pages/panel_form', $this->data);
+        $this->themee->load('pages/panel_form', $this->data);
     }
 
     public function syslogs( $file = '' )
     {
-        $this->data['panel_title'] = $this->baka_theme->set_title('Aktifitas sistem');
+        $this->data['panel_title'] = $this->themee->set_title('Aktifitas sistem');
 
-        $this->baka_theme->add_navbar( 'log_sidebar', 'nav-tabs nav-stacked nav-tabs-left', 'panel' );
+        $this->themee->add_navbar( 'log_sidebar', 'nav-tabs nav-stacked nav-tabs-left', 'panel' );
 
         $latest = '';
 
@@ -152,7 +180,7 @@ class Maintenance extends BAKA_Controller
                 $label  = 'Tanggal '.format_date(str_replace('log-', '', $log));
                 $link   = 'admin/maintenance/syslogs/';
 
-                $this->baka_theme->add_navmenu( 'log_sidebar', $log, 'link', $link.$log, $label, array(), 'panel' );
+                $this->themee->add_navmenu( 'log_sidebar', $log, 'link', $link.$log, $label, array(), 'panel' );
             }
         }
 
@@ -195,7 +223,7 @@ class Maintenance extends BAKA_Controller
             $this->data['panel_body'] = $this->table->generate( $line );
         }
 
-        $this->baka_theme->load('pages/syslogs', $this->data);
+        $this->themee->load('pages/syslogs', $this->data);
     }
 }
 

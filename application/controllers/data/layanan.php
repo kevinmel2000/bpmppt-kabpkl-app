@@ -1,14 +1,42 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/**
+ * CodeIgniter Baka Pack
+ *
+ * My very own Codeigniter core library that used on all of my projects
+ *
+ * NOTICE OF LICENSE
+ *
+ * Licensed under the Open Software License version 3.0
+ *
+ * This source file is subject to the Open Software License (OSL 3.0) that is
+ * bundled with this package in the files license.txt / license.rst.  It is
+ * also available through the world wide web at this URL:
+ * http://opensource.org/licenses/OSL-3.0
+ *
+ * @package     Baka_pack
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) Fery Wardiyanto. (ferywardiyanto@gmail.com)
+ * @license     http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ * @since       Version 0.1.3
+ */
+
+// -----------------------------------------------------------------------------
+
+/**
+ * Layanan Class
+ *
+ * @subpackage  Controller
+ */
 class Layanan extends BAKA_Controller
 {
     public function __construct()
     {
         parent::__construct();
 
-        $this->baka_theme->set_title('Administrasi data');
+        $this->themee->set_title('Administrasi data');
 
-        $this->baka_theme->add_navbar( 'data_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
+        $this->themee->add_navbar( 'data_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
         $this->app_main->data_navbar( 'data_sidebar', 'side');
 
         $this->load->driver('bpmppt');
@@ -105,7 +133,7 @@ class Layanan extends BAKA_Controller
             'data/status/done'      => 'Selesai',
             'data/status/deleted'   => 'Dihapus' );
 
-        $this->data['panel_title'] = $this->baka_theme->set_title( 'Semua data ' . $this->app_data->get_label( $data_type ) );
+        $this->data['panel_title'] = $this->themee->set_title( 'Semua data ' . $this->app_data->get_label( $data_type ) );
 
         $slug = $this->get_alias( $module_name );
 
@@ -121,9 +149,9 @@ class Layanan extends BAKA_Controller
                 break;
         }
 
-        $this->ci->load->library('Baka_pack/baka_grid');
+        $this->ci->load->library('baka_pack/gridr');
 
-        $grid = $this->baka_grid->identifier('id')
+        $grid = $this->gridr->identifier('id')
                                 ->set_baseurl($page_link)
                                 ->set_column('Pengajuan',
                                     'no_agenda, callback_format_datetime:created_on',
@@ -143,7 +171,7 @@ class Layanan extends BAKA_Controller
 
         $this->data['panel_body']    = $this->app_data->get_table( $data_type, $this->data['page_link'] );
 
-        $this->baka_theme->load('pages/panel_data', $this->data);
+        $this->themee->load('pages/panel_data', $this->data);
     }
 
     public function form( $data_type, $data_id = FALSE )
@@ -151,7 +179,7 @@ class Layanan extends BAKA_Controller
         $modul_slug = $this->app_data->get_alias( $data_type );
         $data_obj   = ( $data_id ? $this->app_data->get_fulldata_by_id( $data_id ) : FALSE );
 
-        $this->data['panel_title']  = $this->baka_theme->set_title( 'Input data ' . $this->app_data->get_label( $data_type ) );
+        $this->data['panel_title']  = $this->themee->set_title( 'Input data ' . $this->app_data->get_label( $data_type ) );
 
         $this->data['tool_buttons']['data'] = 'Kembali|default';
 
@@ -235,7 +263,7 @@ class Layanan extends BAKA_Controller
 
         $this->data['panel_body'] = $form->render();
 
-        $this->baka_theme->load('pages/panel_form', $this->data);
+        $this->themee->load('pages/panel_form', $this->data);
     }
 
     public function cetak( $data_type, $data_id = FALSE )
@@ -247,13 +275,13 @@ class Layanan extends BAKA_Controller
                     (array) $this->app_data->get_fulldata_by_id( $data_id )
                     );
 
-            $this->baka_theme->load('prints/products/'.$data_type, $data, 'print');
+            $this->themee->load('prints/products/'.$data_type, $data, 'print');
         }
         else
         {
             $this->data['tool_buttons']['data'] = 'Kembali|default';
 
-            $this->data['panel_title'] = $this->baka_theme->set_title('Laporan data '.$this->app_data->get_label( $data_type ));
+            $this->data['panel_title'] = $this->themee->set_title('Laporan data '.$this->app_data->get_label( $data_type ));
 
             $fields[]   = array(
                 'name'  => 'data_status',
@@ -332,13 +360,13 @@ class Layanan extends BAKA_Controller
                     $form->submited_data()
                     );
 
-                $this->baka_theme->load('prints/reports/'.$data_type, $data, 'laporan');
+                $this->themee->load('prints/reports/'.$data_type, $data, 'laporan');
             }
             else
             {
                 $this->data['panel_body'] = $form->render();
 
-                $this->baka_theme->load('pages/panel_form', $this->data);
+                $this->themee->load('pages/panel_form', $this->data);
             }
         }
     }

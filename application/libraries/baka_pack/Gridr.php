@@ -29,29 +29,38 @@
  * @subpackage  Libraries
  * @category    Grid
  */
-class Baka_grid Extends Baka_lib
+class Gridr
 {
-    private $limit;
-    private $offset     = 0;
-    private $segment    = 5;
-    private $page_link;
-    private $action_buttons = array();
+    /**
+     * Codeigniter superobject
+     *
+     * @var  mixed
+     */
+    protected static $_ci;
 
-    private $db_table   = array();
-    private $db_result_count;
-    private $db_result;
-    private $db_query;
-    private $db_num_rows;
+    protected $limit;
+    protected $offset     = 0;
+    protected $segment    = 5;
+    protected $page_link;
+    protected $action_buttons = array();
 
-    private $table_cols = array();
-    private $table_id   = 'id';
+    protected $db_table   = array();
+    protected $db_result_count;
+    protected $db_result;
+    protected $db_query;
+    protected $db_num_rows;
+
+    protected $table_cols = array();
+    protected $table_id   = 'id';
 
     public function __construct( $db_query = NULL )
     {
-        $this->offset   = $this->uri->segment( $this->segment );
+        self::$_ci =& get_instance();
+
+        $this->offset   = self::$_ci->uri->segment( $this->segment );
         $this->limit    = Setting::get('app_data_show_limit');
 
-        if ( ! is_null($db_query) )
+        if ( !is_null( $db_query ) )
         {
             $this->initialize( $db_query );
         }
@@ -67,15 +76,15 @@ class Baka_grid Extends Baka_lib
     {
         if (!empty($this->db_select) )
         {
-            $this->db->select( implode(',', $this->db_select) );
-            // $this->db->from( $this->db_table );
+            self::$_ci->db->select( implode(',', $this->db_select) );
+            // self::$_ci->db->from( $this->db_table );
         }
 
         if (!empty($this->db_joins) )
         {
             foreach ($this->db_joins as $join)
             {
-                $this->db->join($join[0], $join[1], $join[2]);
+                self::$_ci->db->join($join[0], $join[1], $join[2]);
             }
         }
 
@@ -85,20 +94,20 @@ class Baka_grid Extends Baka_lib
             {
                 list( $w_key, $w_val ) = $where;
 
-                $this->db->where( $w_key, $w_val );
+                self::$_ci->db->where( $w_key, $w_val );
             }
         }
 
         if (!empty($this->db_groups) )
         {
-            $this->db->group_by( $this->db_groups );
+            self::$_ci->db->group_by( $this->db_groups );
         }
 
         $db_table = ( $table != '' ? $table : $this->db_table );
 
-        $this->count = $this->db->get( $db_table )->num_rows();
-        // $this->db->free_result();
-        $this->query = $this->db->get( $db_table, $this->limit, $this->offset );
+        $this->count = self::$_ci->db->get( $db_table )->num_rows();
+        // self::$_ci->db->free_result();
+        $this->query = self::$_ci->db->get( $db_table, $this->limit, $this->offset );
 
         return $this;
     }
@@ -130,7 +139,7 @@ class Baka_grid Extends Baka_lib
 
     public function set_column( $head_data, $field_data, $width_data = '', $sortble = FALSE, $replacement = FALSE )
     {
-        if ( is_array($head_data) )
+        if ( is_array( $head_data ) )
         {
             foreach ( $head_data as $data )
             {
@@ -155,7 +164,7 @@ class Baka_grid Extends Baka_lib
 
     public function set_buttons( $page_link, $icon_class = '', $btn_class = '', $btn_title = '' )
     {
-        if ( is_array($page_link) )
+        if ( is_array( $page_link ) )
         {
             foreach ( $page_link as $data )
             {
@@ -176,7 +185,7 @@ class Baka_grid Extends Baka_lib
         return $this;
     }
 
-    private function _act_btn( $data_id )
+    protected function _act_btn( $data_id )
     {
         $output = '';
 
@@ -208,12 +217,12 @@ class Baka_grid Extends Baka_lib
         return $this;
     }
 
-    private function count_results()
+    protected function count_results()
     {
         return $this->db_result_count;
     }
 
-    private function table_footer()
+    protected function table_footer()
     {
         $output = '<div class="panel-footer clearfix">';
 
@@ -235,10 +244,7 @@ class Baka_grid Extends Baka_lib
         /**
          * Setup pagination using native CI pagination library
          */
-        if ( !$this->load->is_loaded('pagination') )
-            $this->load->library('pagination');
-
-        $configs = array(
+        self::$_ci->load->library('pagination', array(
             'base_url'          => site_url( $this->page_link . '/page/' ),
             'total_rows'        => $this->count_results(),
             'uri_segment'       => $this->segment,
@@ -261,25 +267,23 @@ class Baka_grid Extends Baka_lib
             'last_tag_open'     => '<li class="last">',
             'last_tag_close'    => '</li>',
             'full_tag_close'    => '</ul>',
-            );
+            ) ); 
 
-        $this->pagination->initialize( $configs ); 
-
-        $output .= $this->pagination->create_links();
+        $output .= self::$_ci->pagination->create_links();
 
         $output .= '</div>';
 
         return $output;
     }
 
-    private function filter_callback( $field, $row )
+    protected function filter_callback( $field, $row )
     {
         if ( strpos($field, 'callback_') !== FALSE )
         {
             // Mastiin kalo field ini butuh callback
             $field  = str_replace('callback_', '', $field);
 
-            // Misahin antara nama function dan param
+            // Misahin antara nama function dan argument
             $func   = explode(':', $field);
 
             // Misahin param, kalo memang ada lebih dari 1 
@@ -336,10 +340,10 @@ class Baka_grid Extends Baka_lib
             $this->db_num_rows      = $this->db_result_count;
         }
 
-        if ( !$this->load->is_loaded('table') )
-            $this->load->library('table');
+        if ( !self::$_ci->load->is_loaded('table') )
+            self::$_ci->load->library('table');
 
-        $this->table->set_template( array(
+        self::$_ci->table->set_template( array(
             'table_open' => '<table class="table table-striped table-hover table-condensed">' ) );
 
         foreach ( $this->table_cols as $head_key => $head_val )
@@ -358,7 +362,7 @@ class Baka_grid Extends Baka_lib
                 'width' => '15%' );
         }
 
-        $this->table->set_heading( $heading );
+        self::$_ci->table->set_heading( $heading );
 
         if ( $this->db_num_rows > 0 )
         {
@@ -422,13 +426,13 @@ class Baka_grid Extends Baka_lib
                         'width' => '15%' );
                 }
 
-                $this->table->add_row( $cell[$table_id] );
+                self::$_ci->table->add_row( $cell[$table_id] );
             }
         }
 
-        $output = $this->table->generate();
+        $output = self::$_ci->table->generate();
 
-        $this->table->clear();
+        self::$_ci->table->clear();
 
         $output .= $this->table_footer();
 
@@ -437,7 +441,7 @@ class Baka_grid Extends Baka_lib
         return $output;
     }
 
-    private function clear()
+    protected function clear()
     {
         $this->db_table         = array();
         $this->db_result_count  = NULL;
@@ -448,49 +452,7 @@ class Baka_grid Extends Baka_lib
         $this->table_cols       = array();
         $this->action_buttons   = array();
     }
-
-    private function _set_rows( $obj )
-    {
-        if ( is_array( $obj ) )
-            array_to_object( $obj );
-
-        if ( method_exists($obj, 'get') )
-        {
-            $db_kueri = clone $obj;
-            $this->db_result_count = $db_kueri->count_all_results();
-
-            var_dump( $db_kueri->get() );
-            $get_query          = $obj->limit($this->limit, $this->offset)->get();
-            $this->db_result    = $get_query->result();
-            $this->db_num_rows  = $get_query->num_rows();
-
-        }
-        else if ( method_exists($obj, 'result') )
-        {
-            $this->db_result        = $obj->result();
-            $this->db_result_count  = $obj->num_rows();
-            $this->db_num_rows      = $this->db_result_count;
-        }
-        else
-        {
-            $this->db_result        = $obj;
-            $this->db_result_count  = count($obj);
-            $this->db_num_rows      = $this->db_result_count;
-        }
-
-        if ( count($this->table_cols) == 0 )
-        {
-            foreach ($this->db_result as $key => $val )
-            {
-                if ($key==0)
-                {
-                    foreach ($val as $k => $v)
-                        $this->set_column( $k, $v );
-                }
-            }
-        }
-    }
 }
 
-/* End of file Baka_grid.php */
-/* Location: ./system/application/libraries/baka_pack/Baka_grid.php */
+/* End of file Gridr.php */
+/* Location: ./application/libraries/baka_pack/Gridr.php */

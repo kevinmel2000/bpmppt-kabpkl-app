@@ -54,11 +54,9 @@ $autoload['packages'] = array();
 
 $autoload['libraries'] = array(
 	'database',
-	'baka_pack/baka_lib',
 	'baka_pack/setting',
-	'baka_pack/baka_users',
-	'baka_pack/baka_auth',
-	'baka_pack/baka_theme',
+	'baka_pack/authen',
+	'baka_pack/themee',
 	);
 
 
@@ -74,11 +72,10 @@ $autoload['libraries'] = array(
 $autoload['helper'] = array(
 	'url',
 	'html',
-	'baka_pack/baka_array',
-	'baka_pack/baka_auth',
-	'baka_pack/baka_common',
-	'baka_pack/baka_html',
-	'baka_pack/baka_data',
+	'baka_pack/array',
+	'baka_pack/common',
+	'baka_pack/html',
+	'baka_pack/data',
 	'baka_pack/former',
 	);
 

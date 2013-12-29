@@ -31,14 +31,26 @@
  */
 class Baka_lib
 {
+    /**
+     * Codeigniter superobject
+     *
+     * @var  mixed
+     */
+    protected static $_ci;
+
     /** @var array message wrapper */
     protected $messages = array();
 
     /** @var array error wrapper */
     protected $errors   = array();
 
+    /**
+     * Default class constructor
+     */
     public function __construct()
     {
+        self::$_ci =& get_instance();
+
         log_message('debug', "#Baka_pack: Main Library Class Initialized");
     }
 

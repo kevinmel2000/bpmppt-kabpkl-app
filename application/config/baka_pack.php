@@ -108,7 +108,8 @@ $config['baka_cool_captcha_folder'] = APPPATH.'third_party/captcha/';
 | Security settings
 |
 | The library uses PasswordHash library for operating with hashed passwords.
-| 'phpass_hash_portable' = Can passwords be dumped and exported to another server. If set to FALSE then you won't be able to use this database on another server.
+| 'phpass_hash_portable' = Can passwords be dumped and exported to another server.
+|                           If set to FALSE then you won't be able to use this database on another server.
 | 'phpass_hash_strength' = Password hash strength.
 |--------------------------------------------------------------------------
 */

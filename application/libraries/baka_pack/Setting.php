@@ -62,7 +62,7 @@ class Setting
         self::$_ci =& get_instance();
 
         // Load Setting helper
-        self::$_ci->load->helper('baka_pack/setting');
+        // self::$_ci->load->helper('baka_pack/setting');
 
         self::$_table_name = get_conf( 'system_opt_table' );
 

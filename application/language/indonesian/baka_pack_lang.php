@@ -39,6 +39,10 @@ $lang['auth_current_email']			= 'Anda menggunakan email tersebut saat ini.';
 $lang['auth_inapproved_account']	= 'Akun anda belum disetujui.';
 $lang['auth_registration_success']	= 'Proses registrasi pengguna berhasil, mendaftarkan akun baru.';
 $lang['auth_registration_failed']	= 'Proses registrasi pengguna gagal.';
+$lang['auth_username_min_length']   = 'Username harus lebih dari %s karakter';
+$lang['auth_username_max_length']   = 'Username tidak boleh lebih dari %s karakter';
+$lang['auth_password_min_length']   = 'Password harus lebih dari %s karakter';
+$lang['auth_password_max_length']   = 'Password tidak boleh lebih dari %s karakter';
 
 $lang['dbutil_backup_folder_not_exists']	= 'Direktori %s belum ada pada server anda.';
 $lang['dbutil_backup_folder_not_writable']	= 'Anda tidak memiliki ijin untuk menulis pada direktori %s.';

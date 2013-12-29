@@ -1,12 +1,40 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/**
+ * CodeIgniter Baka Pack
+ *
+ * My very own Codeigniter core library that used on all of my projects
+ *
+ * NOTICE OF LICENSE
+ *
+ * Licensed under the Open Software License version 3.0
+ *
+ * This source file is subject to the Open Software License (OSL 3.0) that is
+ * bundled with this package in the files license.txt / license.rst.  It is
+ * also available through the world wide web at this URL:
+ * http://opensource.org/licenses/OSL-3.0
+ *
+ * @package     Baka_pack
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) Fery Wardiyanto. (ferywardiyanto@gmail.com)
+ * @license     http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ * @since       Version 0.1.3
+ */
+
+// -----------------------------------------------------------------------------
+
+/**
+ * Internal Class
+ *
+ * @subpackage  Controller
+ */
 class Internal extends BAKA_Controller
 {
     public function __construct()
     {
         parent::__construct();
 
-        $this->baka_theme->add_navbar( 'admin_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
+        $this->themee->add_navbar( 'admin_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
         $this->app_main->admin_navbar( 'admin_sidebar', 'side' );
     }
 
@@ -17,7 +45,7 @@ class Internal extends BAKA_Controller
 
     public function skpd()
     {
-        $this->data['panel_title'] = $this->baka_theme->set_title('Properti data SKPD');
+        $this->data['panel_title'] = $this->themee->set_title('Properti data SKPD');
 
         $fields[]   = array(
             'name'  => 'skpd_name',
@@ -119,12 +147,12 @@ class Internal extends BAKA_Controller
 
         $this->_option_form( $fields );
 
-        $this->baka_theme->load('pages/panel_form', $this->data);
+        $this->themee->load('pages/panel_form', $this->data);
     }
 
     public function app()
     {
-        $this->data['panel_title'] = $this->baka_theme->set_title('Pengaturan Aplikasi');
+        $this->data['panel_title'] = $this->themee->set_title('Pengaturan Aplikasi');
 
         $fields[]   = array(
             'name'  => 'app_data_show_limit',
@@ -243,12 +271,12 @@ class Internal extends BAKA_Controller
 
         $this->_option_form( $fields );
 
-        $this->baka_theme->load('pages/panel_form', $this->data);
+        $this->themee->load('pages/panel_form', $this->data);
     }
 
     public function keamanan()
     {
-        $this->data['panel_title'] = $this->baka_theme->set_title('Pengaturan Keamanan');
+        $this->data['panel_title'] = $this->themee->set_title('Pengaturan Keamanan');
 
         $fields[]   = array(
             'name'  => 'auth_username_length',
@@ -483,7 +511,7 @@ class Internal extends BAKA_Controller
 
         $this->_option_form( $fields );
 
-        $this->baka_theme->load('pages/panel_form', $this->data);
+        $this->themee->load('pages/panel_form', $this->data);
     }
 
     private function _option_form( $fields )
@@ -555,18 +583,18 @@ class Internal extends BAKA_Controller
 
     private function _prop_data()
     {
-        $this->data['panel_title']  = $this->baka_theme->set_title('Pengaturan Properti Data');
+        $this->data['panel_title']  = $this->themee->set_title('Pengaturan Properti Data');
 
         $this->data['tool_buttons']['form'] = 'Baru|primary';
 
-        $this->load->library('baka_pack/baka_grid');
+        $this->load->library('baka_pack/gridr');
 
         $query = $this->db->select()
                           ->from( get_conf('system_env_table') )
-                          ->where('user_id', $this->baka_auth->get_user_id())
+                          ->where('user_id', $this->authen->get_user_id())
                           ->or_where('user_id', 0);
 
-        $grid = $this->baka_grid->identifier('id')
+        $grid = $this->gridr->identifier('id')
                                 ->set_baseurl($this->data['page_link'])
                                 ->set_column('Key', 'env_key', '45%', FALSE, '<strong>%s</strong>')
                                 ->set_column('Value', 'env_value', '40%', FALSE, '%s')
@@ -575,12 +603,12 @@ class Internal extends BAKA_Controller
                           
         $this->data['panel_body'] = $grid->make_table( $query );
 
-        $this->baka_theme->load('pages/panel_data', $this->data);
+        $this->themee->load('pages/panel_data', $this->data);
     }
 
     private function _prop_form( $prop_id = NULL )
     {
-        $this->data['panel_title'] = $this->baka_theme->set_title('Pengaturan Properti Data');
+        $this->data['panel_title'] = $this->themee->set_title('Pengaturan Properti Data');
 
         $this->data['tool_buttons']['data'] = 'Kembali|default';
 
@@ -620,7 +648,7 @@ class Internal extends BAKA_Controller
             }
             else
             {
-                $return = $this->db->insert(get_conf('system_env_table'), array('user_id'   => $this->baka_auth->get_user_id(),
+                $return = $this->db->insert(get_conf('system_env_table'), array('user_id'   => $this->authen->get_user_id(),
                                                                     'env_key'   => $form_data['app_env_value'],
                                                                     'env_value' => $form_data['app_env_value'] ));
             }
@@ -639,7 +667,7 @@ class Internal extends BAKA_Controller
 
         $this->data['panel_body'] = $form->generate();
 
-        $this->baka_theme->load('pages/panel_form', $this->data);
+        $this->themee->load('pages/panel_form', $this->data);
     }
 
     private function _prop_del( $prop_id )

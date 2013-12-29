@@ -29,19 +29,31 @@
  * @subpackage  Libraries
  * @category    Database
  */
-class Baka_dbutil Extends Baka_lib
+class Utily
 {
+    /**
+     * Codeigniter superobject
+     *
+     * @var  mixed
+     */
+    protected static $_ci;
+
     protected $_file_name;
 
     protected $_temp_path;
 
     protected $_file_path;
 
+    /**
+     * Default class constructor
+     */
     public function __construct()
     {
-        $this->_file_name   = 'backup_'.str_replace(' ', '_', strtolower(get_app_config('app_name')));
+        self::$_ci =& get_instance();
 
-        $this->_temp_path   = get_app_config('temp_path');
+        $this->_file_name   = 'backup_'.str_replace(' ', '_', strtolower(get_conf('app_name')));
+
+        $this->_temp_path   = get_conf('temp_path');
 
         log_message('debug', "#Baka_pack: Database Utility Class Initialized");
     }
@@ -72,7 +84,7 @@ class Baka_dbutil Extends Baka_lib
         }
         
         // Load the zip helper
-        $this->load->library('zip');
+        self::$_ci->load->library('zip');
 
         // Reading backed up database
         $this->zip->read_file( $this->_file_path );
@@ -96,25 +108,25 @@ class Baka_dbutil Extends Baka_lib
         $config['allowed_types']= 'zip';
         $config['file_name']    = $this->_file_name;
 
-        $this->load->library('upload', $config);
+        self::$_ci->load->library('upload', $config);
 
-        if ( $this->upload->do_upload( $field_name ) )
+        if ( self::$_ci->upload->do_upload( $field_name ) )
         {
-            $upload_data = $this->upload->data();
+            $upload_data = self::$_ci->upload->data();
 
             // Restore to database
             return $this->_restore_files( $this->_temp_path . $this->_file_name . '.zip' );
         }
         else
         {
-            $this->set_error('dbutil_upload_failed', 'Proses upload database gagal. '.$this->upload->display_errors());
+            $this->set_error('dbutil_upload_failed', 'Proses upload database gagal. '.self::$_ci->upload->display_errors());
             return FALSE;
         }
     }
 
     protected function _restore_files( $file_path )
     {
-        $this->load->library('baka_pack/Baka_archive');
+        self::$_ci->load->library('baka_pack/Baka_archive');
 
         if ( ! file_exists( $file_path ) )
         {
@@ -138,20 +150,20 @@ class Baka_dbutil Extends Baka_lib
 
     protected function _backup_command( $file_name )
     {
-        if ( strlen( $this->db->password ) > 0 )
-            $password = " -p" . $this->db->password;
+        if ( strlen( self::$_ci->db->password ) > 0 )
+            $password = " -p" . self::$_ci->db->password;
 
-        shell_exec( "mysqldump -u" . $this->db->username . $password . " --databases " . $this->db->database . " >" . $file_name );
+        shell_exec( "mysqldump -u" . self::$_ci->db->username . $password . " --databases " . self::$_ci->db->database . " >" . $file_name );
         
         return ( file_exists( $file_name ) ? TRUE : FALSE );
     }
 
     protected function _restore_command( $file_name )
     {
-        if ( strlen( $this->db->password ) > 0 )
-            $password = " -p" . $this->db->password;
+        if ( strlen( self::$_ci->db->password ) > 0 )
+            $password = " -p" . self::$_ci->db->password;
         
-        shell_exec( "mysql -u" . $this->db->username . $password . " <" . $file_name );
+        shell_exec( "mysql -u" . self::$_ci->db->username . $password . " <" . $file_name );
 
         $this->clear( $file_name );
     }
@@ -163,5 +175,5 @@ class Baka_dbutil Extends Baka_lib
     }
 }
 
-/* End of file Baka_dbutil.php */
-/* Location: ./system/application/libraries/baka_pack/Baka_dbutil.php */
+/* End of file Utily.php */
+/* Location: ./application/libraries/baka_pack/Utily.php */
