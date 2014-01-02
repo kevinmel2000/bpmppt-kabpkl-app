@@ -1,11 +1,33 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+/**
+ * CodeIgniter Baka Pack
+ *
+ * My very own Codeigniter core library that used on all of my projects
+ *
+ * NOTICE OF LICENSE
+ *
+ * Licensed under the Open Software License version 3.0
+ *
+ * This source file is subject to the Open Software License (OSL 3.0) that is
+ * bundled with this package in the files license.txt / license.rst.  It is
+ * also available through the world wide web at this URL:
+ * http://opensource.org/licenses/OSL-3.0
+ *
+ * @package     Baka_pack
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) Fery Wardiyanto. (ferywardiyanto@gmail.com)
+ * @license     http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ * @since       Version 0.1.3
+ */
+
+// -----------------------------------------------------------------------------
+
 /**
  * BAKA Controller Class
  *
- * @package     Baka_pack
  * @subpackage  Libraries
  * @category    Libraries
- * @author      Fery Wardiyanto
  */
 class BAKA_Controller extends CI_Controller
 {
@@ -58,7 +80,7 @@ class BAKA_Controller extends CI_Controller
         }
         else if ( uri_string() != 'login' AND uri_string() != 'resend' AND uri_string() != 'forgot' AND strpos(current_url(), 'auth') === FALSE AND strpos(current_url(), 'notice') === FALSE )
         {
-            if ( ! $this->authen->is_logged_in() AND ! $this->authen->is_logged_in(FALSE) )
+            if ( !$this->authen->is_logged_in() AND !$this->authen->is_logged_in(FALSE) )
                 redirect( 'login' );
 
             if ( $this->authen->is_logged_in(FALSE) )

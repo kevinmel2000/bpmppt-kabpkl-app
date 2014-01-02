@@ -1,11 +1,33 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+/**
+ * CodeIgniter Baka Pack
+ *
+ * My very own Codeigniter core library that used on all of my projects
+ *
+ * NOTICE OF LICENSE
+ *
+ * Licensed under the Open Software License version 3.0
+ *
+ * This source file is subject to the Open Software License (OSL 3.0) that is
+ * bundled with this package in the files license.txt / license.rst.  It is
+ * also available through the world wide web at this URL:
+ * http://opensource.org/licenses/OSL-3.0
+ *
+ * @package     Baka_pack
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) Fery Wardiyanto. (ferywardiyanto@gmail.com)
+ * @license     http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ * @since       Version 0.1.3
+ */
+
+// -----------------------------------------------------------------------------
+
 /**
  * BAKA Exceptions Class
  *
- * @package     Baka_pack
  * @subpackage  Libraries
  * @category    Exceptions
- * @author      Fery Wardiyanto
  */
 class BAKA_Exceptions extends CI_Exceptions
 {
@@ -30,10 +52,10 @@ class BAKA_Exceptions extends CI_Exceptions
      * General Error Page Modifier
      *
      * @access  private
-     * @param   string  the heading
-     * @param   string  the message
-     * @param   string  the template name
-     * @param   int     the status code
+     * @param   string   the heading
+     * @param   string   the message
+     * @param   string   the template name
+     * @param   int      the status code
      * @return  string
      */
     function show_error( $heading, $message, $template = 'error_general', $status_code = 500 )
@@ -49,7 +71,7 @@ class BAKA_Exceptions extends CI_Exceptions
 
         set_status_header($status_code);
 
-        if (ob_get_level() > $this->ob_level + 1)
+        if ( ob_get_level() > $this->ob_level + 1 )
             ob_end_flush();
         
         ob_start();
@@ -86,7 +108,7 @@ class BAKA_Exceptions extends CI_Exceptions
 
         $alt = ( $this->_is_cli ? '_cli' : '_php' );
 
-        if (ob_get_level() > $this->ob_level + 1)
+        if ( ob_get_level() > $this->ob_level + 1 )
             ob_end_flush();
 
         ob_start();
