@@ -33,6 +33,8 @@ class Error extends BAKA_Controller
     public function __construct()
     {
         parent::__construct();
+
+        $this->verify_login();
     }
 
     public function index( $page = '' )

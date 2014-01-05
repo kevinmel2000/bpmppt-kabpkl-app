@@ -90,7 +90,7 @@ class Themee
                 // Let CI do the caching instead of the browser
                 $this->output->cache( get_conf('cache_lifetime') );
 
-                log_message('debug', "#Themee: cache activated");
+                log_message('debug', "#Baka_pack: cache activated");
             break;
         }
     }
@@ -370,7 +370,7 @@ class Themee
         if ( array_key_exists($name, $this->_theme_data) )
             return $this->_theme_data[$name];
         else
-            log_message('error', "#Themee: Theme data ".$name." doesn't exists.");
+            log_message('error', "#Baka_pack: Themee->get Theme data ".$name." doesn't exists.");
     }
 
     public function set($name, $value)
@@ -386,13 +386,13 @@ class Themee
 
         if ( IS_AJAX )
         {
-            log_message('debug', "#Themee: File ".$file." loaded as view via ajax.");
+            log_message('debug', "#Baka_pack: Themee->load File ".$file." loaded as view via ajax.");
 
             return self::$_ci->load->view( $view, $view_data, FALSE);
         }
         else
         {
-            log_message('debug', "#Themee: File ".$file." loaded as view.");
+            log_message('debug', "#Baka_pack: Themee->load File ".$file." loaded as view.");
 
             return self::$_ci->load->view( $file, $this->_contents, $return );
         }

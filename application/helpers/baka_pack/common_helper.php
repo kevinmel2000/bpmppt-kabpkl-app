@@ -78,6 +78,18 @@ function format_size( $size )
 
 // -----------------------------------------------------------------------------
 
+function baka_echo( $anu )
+{
+    if ( is_array( $anu ) OR is_object( $anu ) )
+        var_dump( $anu );
+    else
+        echo $anu;
+}
+
+// -----------------------------------------------------------------------------
+// Date and Time helper
+// -----------------------------------------------------------------------------
+
 function format_date( $string = '' )
 {
     return bdate( Setting::get('app_date_format'), $string);
@@ -115,6 +127,8 @@ function string_to_datetime( $string = '' )
 
 function bdate( $format = '', $strdate = '' )
 {
+    setlocale(LC_ALL, 'id');
+
     $strdate = $strdate != '' ? strtotime( $strdate ) : time();
     $format || $format = 'Y-m-d H:i:s';
 
@@ -146,12 +160,38 @@ function second_to_day( $second )
 
 // -----------------------------------------------------------------------------
 
-function baka_echo( $anu )
+function get_month_assoc()
 {
-    if ( is_array( $anu ) OR is_object( $anu ) )
-        var_dump( $anu );
-    else
-        echo $anu;
+    $CI =& get_instance();
+
+    if ( !in_array('calendar_lang.php', $CI->lang->is_loaded, TRUE))
+    {
+        $CI->lang->load('calendar');
+    }
+    
+    $output = array();
+
+    for ( $i=1; $i<=12; $i++ )
+    {
+        $month = date('F', mktime(0, 0, 0, $i, 1));
+        $output[$i] = _x( 'cal_'.strtolower($month) );
+    }
+
+    return $output;
+}
+
+// -----------------------------------------------------------------------------
+
+function get_year_assoc( $interfal = 10 )
+{
+    $output = array();
+
+    for ( $i=0; $i<=$interfal; $i++ )
+    {
+        $output[$i] = ($i === 0) ? date('Y') : date('Y', mktime(0, 0, 0, $i, 1, date('Y')-$i));
+    }
+
+    return $output;
 }
 
 // -----------------------------------------------------------------------------

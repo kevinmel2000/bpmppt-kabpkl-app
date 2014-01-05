@@ -46,6 +46,8 @@ class Auth extends BAKA_Controller
 
     public function login()
     {
+        $this->verify_status();
+
         $this->data['panel_title'] = $this->themee->set_title('Login Pengguna');
 
         if ( login_by() == 'login' )
@@ -154,20 +156,22 @@ class Auth extends BAKA_Controller
 
     public function register()
     {
+        $this->verify_status();
+
         $this->data['panel_title'] = $this->themee->set_title('Register Pengguna');
 
-        if ( !get_conf('allow_registration') )
+        if ( !Setting::get('auth_allow_registration') )
             $this->_notice('registration-disabled');
 
-        $use_username = (bool) get_conf('use_username');
+        $use_username = (bool) Setting::get('auth_use_username');
 
-        if ( $use_username )
+        if ( (bool) Setting::get('auth_use_username') )
         {
             $fields[]   = array(
                 'name'  => 'register-username',
                 'type'  => 'text',
                 'label' => 'Username',
-                'validation'=> 'required|min_username_length|max_username_length|is_username_blacklist|is_username_available' );
+                'validation'=> 'required|valid_username_length|is_username_blacklist|is_username_available' );
         }
 
         $fields[]   = array(
@@ -180,7 +184,7 @@ class Auth extends BAKA_Controller
             'name'  => 'register-password',
             'type'  => 'password',
             'label' => 'Password',
-            'validation'=> 'required|min_password_length|max_password_length' );
+            'validation'=> 'required|valid_password_length' );
 
         $fields[]   = array(
             'name'  => 'register-confirm-password',
@@ -188,12 +192,9 @@ class Auth extends BAKA_Controller
             'label' => 'Ulangi Password',
             'validation'=> 'required|matches[register-password]' );
 
-        $captcha_registration   =  get_conf('captcha_registration');
-        $use_recaptcha          =  get_conf('use_recaptcha');
-
-        if ( $captcha_registration )
+        if ( (bool) Setting::get('auth_captcha_registration') )
         {
-            if ( $use_recaptcha )
+            if ( (bool) Setting::get('auth_use_recaptcha') )
             {
                 $fields[]   = array(
                     'name'  => 'register-recaptcha',
@@ -210,10 +211,6 @@ class Auth extends BAKA_Controller
                     'validation'=> 'required|valid_captcha' );
             }
         }
-
-        $data['errors'] = array();
-
-        $email_activation =  get_conf('email_activation');
 
         $buttons[]  = array(
             'name'  => 'register',
@@ -240,11 +237,11 @@ class Auth extends BAKA_Controller
         {
             $form_data  =  $form->submited_data();
 
-            $user_data['username']  = $form_data['register-username'];
-            $user_data['email']     = $form_data['register-email'];
-            $user_data['password']  = $form_data['register-password'];
+            $username  = $form_data['register-username'];
+            $email     = $form_data['register-email'];
+            $password  = $form_data['register-password'];
 
-            if ( $this->app_users->create_user( $user_data, $use_username ) )
+            if ( $this->authen->create_user( $username, $email, $password ) )
             {
                 $this->_notice('registration-success');
             }
@@ -263,10 +260,13 @@ class Auth extends BAKA_Controller
 
     public function resend()
     {
+        if ( Authen::is_logged_in() )
+            redirect( 'dashboard' );
+
         $this->data['panel_title'] = $this->themee->set_title('Kirim ulang aktivasi');
 
         // not logged in or activated
-        if (!$this->authen->is_logged_in(FALSE))
+        if ( !Authen::is_logged_in(FALSE) )
             redirect('login');
 
         $fields[]   = array(
@@ -294,7 +294,8 @@ class Auth extends BAKA_Controller
             'action'    => current_url(),
             'fields'    => $fields,
             'buttons'   => $buttons,
-            'is_hform'  => FALSE ));
+            'is_hform'  => FALSE
+            ));
 
         if ( $form->validate_submition() )
         {
@@ -323,6 +324,9 @@ class Auth extends BAKA_Controller
 
     public function forgot()
     {
+        if ( Authen::is_logged_in() )
+            redirect( 'dashboard' );
+
         $this->data['panel_title'] = $this->themee->set_title('Lupa login');
 
         $fields[]   = array(
@@ -342,7 +346,7 @@ class Auth extends BAKA_Controller
             'name'  => 'login',
             'type'  => 'anchor',
             'label' => 'Login',
-            'url'   => 'auth/login',
+            'url'   => 'login',
             'class' => 'btn-default pull-right' );
 
         $form = $this->former->init( array(
@@ -384,7 +388,7 @@ class Auth extends BAKA_Controller
             redirect('login');
 
         // Activate user
-        if ($this->authen->activate_user($user_id, $email_key))
+        if ( $this->authen->activate( $user_id, $email_key ) )
         {
             // success
             $this->authen->logout();
@@ -409,7 +413,7 @@ class Auth extends BAKA_Controller
             'name'  => 'reset_password',
             'type'  => 'password',
             'label' => 'Password baru',
-            'validation'=> 'required|min_password_length|max_password_length' );
+            'validation'=> 'required|valid_password_length' );
 
         $fields[]   = array(
             'name'  => 'confirm_reset_password',
@@ -459,14 +463,6 @@ class Auth extends BAKA_Controller
 
         $this->themee->load('pages/auth', $this->data);
     }
-
-    private function _change_email(){}
-
-    private function _change_password(){}
-
-    private function _reset_password(){}
-
-    private function _unregister(){}
 
     public function logout()
     {

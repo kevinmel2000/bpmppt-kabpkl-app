@@ -576,7 +576,7 @@ class Former
                     $attr = 'class="'.$input_class.'" id="'.$id.'" '.$attr;
 
                     $form_func = 'form_'.$type;
-                    $input = $form_func( $name, $option, set_select( $name, $std ), $attr );
+                    $input = $form_func( $name, $option, $std, $attr );
                     break;
 
                 // Radiocheckbox field
@@ -592,10 +592,16 @@ class Former
                         $rc         = '';
                         $actived    = FALSE;
 
+                        $set_func   = 'set_'.$type;
+                        $form_func  = 'form_'.$type;
+
                         foreach( $option as $value => $opt )
                         {
                             if ( is_array( $std ) )
                             {
+                                if ( ($_key = array_keys($std)) !== range(0, count($std) - 1) )
+                                    $std = $_key;
+
                                 $actived = ( in_array( $value, $std ) ? TRUE : FALSE );
                             }
                             else if ( is_string($std) )
@@ -603,12 +609,12 @@ class Former
                                 $actived = ( $std == $value ? TRUE : FALSE );
                             }
 
-                            $set_func   = 'set_'.$type;
-                            $form_func  = 'form_'.$type;
+                            $_id = str_replace('-', '-', $name.'-'.$value);
 
-                            $check  = '<div class="'.$type.'"><label>'
-                                    . $form_func( $field, $value, $set_func( $name, $value, $actived ) ).' '.$opt
-                                    . '</label></div>';
+                            $check  = '<div class="'.$type.'">'
+                                    . $form_func( $field, $value, $set_func( $name, $value, $actived ), 'id="'.$_id.'"' )
+                                    . '<label for="'.$_id.'"> '.$opt.'</label>'
+                                    . '</div>';
 
                             $rc .= ( $devide ? '<div class="col-md-6">'.$check.'</div>' : $check );
 
@@ -659,7 +665,7 @@ class Former
 
                 // Static field
                 case 'static':
-                    $input = '<p id="'.$id.'" class="'.$input_class.' form-control-static">'.$std.'</p>';
+                    $input = '<p id="'.$id.'" class="'.str_replace('form-control', 'form-control-static', $input_class).'">'.$std.'</p>';
                     break;
 
                 default:

@@ -65,7 +65,7 @@ class App_data extends CI_Model
             if (substr($module_file, 0, 1) !== '_')
                 $module_name = strtolower(str_replace(EXT, '', $module_file));
 
-            if ( $this->authen->permit('doc_'.$module_name.'_manage') )
+            if ( is_permited('doc_'.$module_name.'_manage') )
             {
                 if (!$this->load->is_loaded( $this->module_dir.$module_name ) )
                     $this->load->model( $this->module_dir.$module_name );

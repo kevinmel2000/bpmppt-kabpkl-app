@@ -72,6 +72,7 @@ $autoload['libraries'] = array(
 $autoload['helper'] = array(
 	'url',
 	'html',
+	'date',
 	'baka_pack/array',
 	'baka_pack/common',
 	'baka_pack/html',

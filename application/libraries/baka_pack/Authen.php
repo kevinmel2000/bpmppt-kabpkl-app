@@ -38,6 +38,8 @@ class Authen
      */
     protected static $_ci;
 
+    protected static $user_perms = array();
+
     public $messages = array();
 
     /**
@@ -82,7 +84,7 @@ class Authen
     /**
      * phpass-0.3 hashing
      *
-     * @param   string  $pass  Password to be hashed
+     * @param   string      $pass  Password to be hashed
      *
      * @return  obj|string
      */
@@ -103,14 +105,14 @@ class Authen
     /**
      * phpass-0.3 check hash
      *
-     * @param   string  $old_pass  Old Password
      * @param   string  $new_pass  New Password
+     * @param   string  $old_pass  Old Password
      *
      * @return  bool
      */
-    protected function validate( $old_pass, $new_pass )
+    protected function validate( $new_pass, $old_pass )
     {
-        return $this->do_hash()->CheckPassword( $old_pass, $new_pass );
+        return $this->do_hash()->CheckPassword( $new_pass, $old_pass );
     }
 
     // -------------------------------------------------------------------------
@@ -127,10 +129,8 @@ class Authen
      */
     public function login( $login, $password, $remember )
     {
-        $user = $this->user( login_by(), $login );
-
         // fail - wrong login
-        if ( !( $user_data = $user->get_data() ) )
+        if ( !( $user = $this->get_user( $login, login_by() ) ) )
         {
             $this->increase_login_attempt( $login );
             $this->set_message( 'error', _x('auth_incorrect_login') );
@@ -138,7 +138,7 @@ class Authen
         }
 
         // fail - wrong password
-        if ( !$this->validate( $password, $user_data->password ) )
+        if ( !$this->validate( $password, $user->password ) )
         {
             $this->increase_login_attempt( $login );
             $this->set_message( 'error', _x('auth_incorrect_password') );
@@ -146,22 +146,28 @@ class Authen
         }
 
         // fail - banned
-        if ( $user_data->banned == 1 )
+        if ( $user->banned == 1 )
         {
-            $this->set_message( 'error', _x('auth_banned_account', $user_data->ban_reason) );
+            $this->set_message( 'error', _x('auth_banned_account', $user->ban_reason) );
+            return FALSE;
+        }
+
+        // fail - deleted
+        if ( $user->deleted == 1 )
+        {
+            $this->set_message( 'error', _x('auth_deleted_account') );
             return FALSE;
         }
 
         // Save to session
         self::$_ci->session->set_userdata( array(
-            'user_id'   => $user_data->id,
-            'username'  => $user_data->username,
-            'status'    => $user_data->activated,
-            // 'roles'     => $user->get_roles()
+            'user_id'   => $user->id,
+            'username'  => $user->username,
+            'status'    => (int) $user->activated
             ));
-        
+
         // fail - not activated
-        if ( $user_data->activated == 0 )
+        if ( $user->activated == 0 )
         {
             $this->set_message( 'error', _x('auth_inactivated_account') );
             return FALSE;
@@ -171,13 +177,16 @@ class Authen
         // $user_profile = '';
         // $this->get_user_profile($user->id);
         // self::$_ci->session->set_userdata('user_profile', $user_profile);
-        
+
+        if ( $user->activated == 1 and ($user_perms = $this->get_user_perms( $user->id )) )
+            self::$_ci->session->set_userdata('user_perms', $user_perms);
+
         if ( (bool) $remember )
-            $this->create_autologin( $user_data->id );
+            $this->create_autologin( $user->id );
 
-        $this->clear_login_attempts( $user_data->username );
+        $this->clear_login_attempts( $user->username );
 
-        $this->update_login_info( $user_data->id );
+        $this->update_login_info( $user->id );
 
         $this->set_message( 'success', _x('auth_login_success') );
         return TRUE;
@@ -195,7 +204,7 @@ class Authen
         $this->delete_autologin();
         
         // See http://codeigniter.com/forums/viewreply/662369/ as the reason for the next line
-        self::$_ci->session->set_userdata(array('user_id' => '', 'username' => '', 'status' => ''));
+        self::$_ci->session->set_userdata( array('user_id' => '', 'username' => '', 'status' => NULL) );
         self::$_ci->session->sess_destroy();
     }
 
@@ -205,21 +214,21 @@ class Authen
      * Check if user logged in. Also test if user is activated and approved.
      * User can log in only if acct has been approved.
      *
-     * @param   bool
-     * 
+     * @param   bool  $activated  Is user activated
+     *
      * @return  bool
      */
     public static function is_logged_in( $activated = TRUE )
     {
-        return (int) self::$_ci->session->userdata('status') === bool_to_int( $activated );
+        return self::$_ci->session->userdata('status') === bool_to_int( $activated );
     }
 
     // -------------------------------------------------------------------------
     
     /**
-     * Get user_id
+     * Get logged in User ID
      *
-     * @return  string
+     * @return  int
      */
     public function get_user_id()
     {
@@ -239,6 +248,18 @@ class Authen
     }
 
     // -------------------------------------------------------------------------
+    
+    /**
+     * Get all data of current logged in user
+     *
+     * @return  array
+     */
+    public function get_current_user()
+    {
+        return self::$ci->session->all_userdata();
+    }
+
+    // -------------------------------------------------------------------------
 
     /**
      * Create new user on the site and return some data about it:
@@ -250,38 +271,108 @@ class Authen
      * @param   bool
      * @return  array
      */
-    public function create_user( $username, $email, $password, $email_activation )
+    public function create_user( $username, $email, $password, $roles = array() )
     {
-        if ( ! $this->is_username_available( $username ) )
+        if ( $this->check_username( $username ) )
         {
-            $this->set_error('auth_username_in_use');
+            $this->set_message( 'error', _x('auth_username_in_use') );
             return FALSE;
         }
-        
-        if ( ! $this->is_email_available( $email ) )
+
+        if ( $this->check_email( $email ) )
         {
-            $this->set_error('auth_email_in_use');
+            $this->set_message( 'error', _x('auth_email_in_use') );
             return FALSE;
         }
-        
-        $data = array(
+
+        $user_data = array(
             'username'  => $username,
-            'password'  => $this->do_hash($password),
-            'email'     => $email,
-            'last_ip'   => $this->input->ip_address(),
-            'approved'  => (int) get_conf('acct_approval') );
-        
-        if ($email_activation)
-            $data['new_email_key'] = $this->generate_random_key();
+            'password'  => $this->do_hash( $password ),
+            'email'     => $email );
 
-        if (!is_null($res = $this->create_user($data, !$email_activation)))
+        $email_activation = (bool) Setting::get('auth_email_activation');
+
+        if ( $email_activation )
         {
-            $data['user_id']    = $res['user_id'];
-            $data['password']   = $password;
-            unset($data['last_ip']);
-
-            return $data;
+            $user_data['new_email_key'] = $this->generate_random_key();
         }
+
+        if ( !($user_id = $this->add_user( $user_data, !$email_activation, $roles )) )
+        {
+            return FALSE;
+        }
+
+        if ( $email_activation )
+        {
+            $user_data['user_id']    = $user_id;
+            $user_data['password']   = $password;
+
+            emailer_send( $email, 'activate', $user_data );
+        }
+
+        return TRUE;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Update User data
+     *
+     * @param   int     $user_id   User ID
+     * @param   string  $username  New Username
+     * @param   string  $email     New Email
+     * @param   string  $old_pass  Old Password
+     * @param   string  $new_pass  New Password
+     * @param   array   $roles     User Roles
+     *
+     * @return  bool
+     */
+    public function update_user( $user_id, $username, $email, $old_pass, $new_pass, $roles = array() )
+    {
+        $user = $this->get_user( $user_id );
+        $data = array();
+
+        if ( strtolower( $user->username ) != strtolower( $username ) and $this->check_username( $username ) === FALSE )
+        {
+            $data['username'] = $username;
+        }
+
+        if ( strtolower( $user->email ) != strtolower( $email ) and $this->check_email( $email ) === FALSE )
+        {
+            $data['email'] = $email;
+        }
+
+        if ( strlen( $old_pass ) > 0 and strlen( $new_pass ) > 0 )
+        {
+            if ( !$this->validate( $old_pass, $user->password ) )
+            {
+                $this->set_message( 'error', _x('auth_incorrect_password') );
+                return FALSE;
+            }
+            else if ( $this->validate( $new_pass, $user->password ) )
+            {
+                $this->set_message( 'error', _x('auth_current_password') );
+                return FALSE;
+            }
+            else
+            {
+                $data['password'] = $this->do_hash( $new_pass );
+            }
+        }
+
+        if ( count( $data ) > 0 and ( $return = $this->edit_user( $user_id, $data ) ) )
+        {
+            $this->set_message( 'success', 'Selamat' );
+        }
+
+        // if ( count( $roles ) > 0 )
+        // {
+        //     $return = TRUE;
+        //     foreach ( $roles as $role )
+        //         $this->set_message( 'success', $role );
+        // }
+
+        return $return;
     }
 
     // -------------------------------------------------------------------------
@@ -291,38 +382,39 @@ class Authen
      * user_id, username, email, new_email_key.
      * Can be called for not activated users only.
      *
-     * @param   string
-     * @return  array
+     * @param   string  $email  User Email
+     *
+     * @return  bool|array
      */
     public function change_email( $email )
     {
         $user_id = $this->get_user_id();
 
-        if ( is_null($user = $this->get_user_by_id($user_id, FALSE)) )
+        if ( !( $user = $this->get_user( $user_id ) ) )
             return FALSE;
-        
+
         $data = array(
             'user_id'   => $user_id,
             'username'  => $user->username,
             'email'     => $email );
 
         // leave activation key as is
-        if (strtolower($user->email) == strtolower($email))
+        if ( strtolower( $user->email ) == strtolower( $email ) )
         {
             $data['new_email_key'] = $user->new_email_key;
             
             return $data;
         }
-        elseif ($this->is_email_available($email))
+        elseif ( $this->is_email_available( $email ) )
         {
             $data['new_email_key'] = $this->generate_random_key();
-            $this->set_new_email($user_id, $email, $data['new_email_key'], FALSE);
+            $this->set_new_email( $user_id, $email, $data['new_email_key'], FALSE );
             
             return $data;
         }
         else
         {
-            $this->set_error('auth_email_in_use');
+            $this->set_message( 'error', _x('auth_email_in_use') );
 
             return FALSE;
         }
@@ -333,16 +425,16 @@ class Authen
     /**
      * Activate user using given key
      *
-     * @param   string
-     * @param   string
-     * @param   bool
+     * @param   int     $user_id         User ID
+     * @param   string  $activation_key  Activation Key
+     *
      * @return  bool
      */
-    public function activate_user($user_id, $activation_key, $activate_by_email = TRUE)
+    public function activate( $user_id, $activation_key )
     {
-        $this->purge_na( get_conf('email_activation_expire') );
+        $this->purge_na();
 
-        return $this->activate_user($user_id, $activation_key, $activate_by_email);
+        return $this->activate_user( $user_id, $activation_key );
     }
 
     // -------------------------------------------------------------------------
@@ -355,11 +447,11 @@ class Authen
      * @param   string
      * @return  array
      */
-    public function forgot_password($login)
+    public function forgot_pass($login)
     {
-        if ( ! ($user = $this->get_user_by_login($login)) )
+        if ( !($user = $this->get_user_by_login($login)) )
         {
-            $this->set_error('auth_incorrect_login');
+            $this->set_message( 'error', _x('auth_incorrect_login') );
             return FALSE;
         }
 
@@ -378,23 +470,6 @@ class Authen
     // -------------------------------------------------------------------------
 
     /**
-     * Check if given password key is valid and user is authenticated.
-     *
-     * @param   string
-     * @param   string
-     * @return  bool
-     */
-    public function can_reset_password($user_id, $new_pass_key)
-    {
-        return $this->can_reset_password(
-            $user_id,
-            $new_pass_key,
-            get_conf('forgot_password_expire'));
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
      * Replace user password (forgotten) with a new one (set by user)
      * and return some data about it: user_id, username, new_password, email.
      *
@@ -402,7 +477,7 @@ class Authen
      * @param   string
      * @return  bool
      */
-    public function reset_password($user_id, $new_pass_key, $new_password)
+    public function reset_pass( $user_id, $new_pass_key, $new_password )
     {
         if (!($user = $this->get_user_by_id($user_id, TRUE)))
             return FALSE;
@@ -432,21 +507,23 @@ class Authen
     /**
      * Change user password (only when user is logged in)
      *
-     * @param   string
-     * @param   string
+     * @deprecated
+     * @param   string  $old_pass  Old Password
+     * @param   string  $new_pass  New Password
+     *
      * @return  bool
      */
-    public function change_password($old_pass, $new_pass)
+    public function change_pass($old_pass, $new_pass)
     {
         $user_id = $this->get_user_id();
 
-        if (is_null($user = $this->get_user_by_id($user_id, TRUE)))
+        if ( !($user = $this->get_user_by_id($user_id, TRUE)))
             return FALSE;
 
         // Check if old password incorrect
         if (!$this->validate($old_pass, $user->password))
         {
-            $this->set_error('auth_incorrect_password');
+            $this->set_message( 'error', _x('auth_incorrect_password') );
             return FALSE;
         }
 
@@ -465,7 +542,7 @@ class Authen
      * @param   string
      * @return  array
      */
-    public function set_new_email($new_email, $password)
+    public function set_new_email( $new_email, $password )
     {
         $user_id = $this->get_user_id();
 
@@ -475,10 +552,10 @@ class Authen
         // Check if password incorrect
         if (!$this->validate($password, $user->password))
         {
-            $this->set_error('auth_incorrect_password');
+            $this->set_message( 'error', _x('auth_incorrect_password') );
             return FALSE;
         }
-            
+
         // success
         $data = array(
             'user_id'   => $user_id,
@@ -488,7 +565,7 @@ class Authen
 
         if ($user->email == $new_email)
         {
-            $this->set_error('auth_current_email');
+            $this->set_message( 'error', _x('auth_current_email') );
             return FALSE;
         }
         elseif ($user->new_email == $new_email)
@@ -505,23 +582,9 @@ class Authen
         }
         else
         {
-            $this->set_error('auth_email_in_use');
+            $this->set_message( 'error', _x('auth_email_in_use') );
             return FALSE;
         }
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Activate new email, if email activation key is valid.
-     *
-     * @param   string
-     * @param   string
-     * @return  bool
-     */
-    public function activate_new_email($user_id, $new_email_key)
-    {
-        return $this->activate_new_email($user_id, $new_email_key);
     }
 
     // -------------------------------------------------------------------------
@@ -532,7 +595,7 @@ class Authen
      * @param   string
      * @return  bool
      */
-    public function delete_user( $password )
+    public function _delete_user( $password )
     {
         $user_id = $this->get_user_id();
 
@@ -541,7 +604,7 @@ class Authen
             
         if ( !$this->validate($password, $user->password) )
         {   
-            $this->set_error('auth_incorrect_password');
+            $this->set_message( 'error', _x('auth_incorrect_password') );
             return FALSE;
         }
 
@@ -560,7 +623,7 @@ class Authen
      */
     private function _autologin()
     {
-        if ( $this->is_logged_in() AND $this->is_logged_in(FALSE) )
+        if ( self::is_logged_in() AND self::is_logged_in(FALSE) )
             return FALSE;
 
         $cookie_name = get_conf('autologin_cookie_name');
@@ -572,34 +635,29 @@ class Authen
 
             if ( isset($data['key']) AND isset($data['user_id']) )
             {
-                if ( $user = $this->user( 'id', $data['user_id'] )->get_autologin( md5($data['key']) ) )
+                if ( $user = $this->get_autologin( $data['user_id'], md5($data['key']) ) )
                 {
+                    $activated = $user->activated;
+
                     // Login user
                     self::$_ci->session->set_userdata( array(
                         'user_id'   => $user->id,
                         'username'  => $user->username,
-                        'status'    => 1 ));
+                        'status'    => (int) $activated,
+                        ));
+
+                    if ( $activated == 1 and ($user_perms = $this->get_user_perms( $user->id )) )
+                    {
+                        self::$_ci->session->set_userdata( 'user_perms', $user_perms );
+                    }
 
                     // Renew users cookie to prevent it from expiring
                     $this->set_cookie( $cookie );
 
                     $this->update_login_info( $user->id );
-
-                    return TRUE;
                 }
             }
         }
-    }
-
-    // -------------------------------------------------------------------------
-
-    protected function set_cookie( $value )
-    {
-        set_cookie( array(
-            'name' => get_conf('autologin_cookie_name'),
-            'value' => $value,
-            'expire' => get_conf('autologin_cookie_life')
-            ));
     }
 
     // -------------------------------------------------------------------------
@@ -628,6 +686,29 @@ class Authen
 
     // -------------------------------------------------------------------------
 
+    protected function set_cookie( $value )
+    {
+        set_cookie( array(
+            'name'   => get_conf('autologin_cookie_name'),
+            'value'  => $value,
+            'expire' => get_conf('autologin_cookie_life')
+            ));
+    }
+
+    // -------------------------------------------------------------------------
+
+    public function update_role( $role_data, $role_id = NULL, $perms = array() )
+    {
+        if ( !( $return = $this->edit_role( $role_data, $role_id = NULL, $perms = array() ) ) )
+        {
+            $this->set_message('error', 'Something Wrong!');
+        }
+
+        return $return;
+    }
+
+    // -------------------------------------------------------------------------
+
     /**
      * Check if user has permission to do an action
      *
@@ -636,19 +717,21 @@ class Authen
      */
     public function permit( $permission )
     {
-        if ( !$this->perm_exists($permission) )
-            $this->new_permission($permission, '-');
+        // if ( !$this->perm_exists($permission) )
+            // $this->new_permission($permission, '-');
 
-        $user   = $this->user( 'id', $this->get_user_id() );
         $allow  = FALSE;
 
-        // Check role permissions
-        foreach( $user->get_perms() as $p_val )
+        if ( $user_perms = self::$_ci->session->userdata('user_perms') )
         {
-            if( $p_val == $permission )
+            // Check role permissions
+            foreach( $user_perms as $p_key => $p_val )
             {
-                $allow = TRUE;
-                break;
+                if( $p_val == $permission )
+                {
+                    $allow = TRUE;
+                    break;
+                }
             }
         }
 
@@ -707,6 +790,19 @@ class Authen
             return $this->messages[$level];
 
         return $this->messages;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Check if login attempts exceeded max login attempts (specified in config)
+     *
+     * @param   string
+     * @return  bool
+     */
+    public function is_max_attempts_exceeded( $login )
+    {
+        return $this->get_attempts_num( $login ) >= Setting::get('auth_login_max_attempts');
     }
 }
 

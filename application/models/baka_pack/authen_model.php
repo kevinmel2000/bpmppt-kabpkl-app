@@ -32,32 +32,18 @@
 class Authen_model extends CI_Model
 {
     /**
-     * User ID
-     *
-     * @var  int
-     */
-    private $user_id = NULL;
-
-    /**
-     * Role ID
-     *
-     * @var  int
-     */
-    private $role_id = NULL;
-
-    /**
-     * Permission ID
-     *
-     * @var  int
-     */
-    private $perm_id = NULL;
-
-    /**
      * Tables definition
      *
      * @var  array
      */
     protected $table = array();
+
+    /**
+     * Update expiration period
+     *
+     * @var  int
+     */
+    protected $update_expired = 900;
 
     /**
      * Class Constructor
@@ -87,128 +73,7 @@ class Authen_model extends CI_Model
     }
 
     // -------------------------------------------------------------------------
-    // Unsorted
-    // @todo  sort it later
-    // -------------------------------------------------------------------------
-
-    public function check_login( $login )
-    {
-        $query = $this->db->where('lower(username)', strtolower($login))
-                          ->or_where('lower(email)', strtolower($login))
-                          ->get($this->table['users'], 1);
-
-        if ( $query->num_rows() > 0 )
-            return $query->row()->id;
-
-        return NULL;
-    }
-
-    // -------------------------------------------------------------------------
-
-    public function check_username( $username )
-    {
-        $query = $this->db->where('lower(username)', strtolower($username))
-                          ->get($this->table['users'], 1);
-
-        if ( $query->num_rows() > 0 )
-            return $query->row()->id;
-
-        return NULL;
-    }
-
-    // -------------------------------------------------------------------------
-
-    public function check_email( $email )
-    {
-        $query = $this->db->or_where('lower(email)', strtolower($email))
-                          ->get($this->table['users'], 1);
-
-        if ( $query->num_rows() > 0 )
-            return $query->row()->id;
-
-        return NULL;
-    }
-
-    // -------------------------------------------------------------------------
-    // Setup relations
-    // -------------------------------------------------------------------------
-
-    /**
-     * Setup table related with $user_id
-     *
-     * @param   string      $key  User Identifier Field (id|login|username|email)
-     * @param   string|int  $val  User Identifier Value
-     *
-     * @return  mixed
-     */
-    public function &user( $key, $val )
-    {
-        if ( !in_array( $key, array( 'id', 'login', 'username', 'email' ) ) )
-        {
-            log_message('error', '#Baka_pack: Authen->get_user failed identifying user using '.$key.' field.');
-            return FALSE;
-        }
-
-        $this->user_id = $val;
-
-        if ( $key != 'id' )
-        {
-            $this->user_id = $this->{'check_'.$key}( $val );
-        }
-
-        return $this;
-    }
-
-    /**
-     * Setup table related with $role_id
-     *
-     * @param   int  $role_id  Role ID
-     *
-     * @return  mixed
-     */
-    public function role_id( $role_id )
-    {
-        $this->role_id = $role_id;
-
-        return $this;
-    }
-
-    /**
-     * Setup table related with $perm_id
-     *
-     * @param   int  $perm_id  Permission ID
-     *
-     * @return  mixed
-     */
-    public function perm_id( $perm_id )
-    {
-        $this->perm_id = $perm_id;
-
-        return $this;
-    }
-
-    // -------------------------------------------------------------------------
     // Users
-    // -------------------------------------------------------------------------
-
-    /**
-     * Users Active Record Query
-     *
-     * @return  mixed
-     */
-    protected function _user_query()
-    {
-        return $this->db->select("a.id, a.username, a.email")
-                        ->select("a.activated, a.banned, a.ban_reason, a.deleted")
-                        ->select("a.last_ip, a.last_login, a.created, a.modified")
-                        ->select("group_concat(distinct c.role_id) role_id")
-                        ->select("group_concat(distinct c.role) role_name")
-                        ->select("group_concat(distinct c.full) role_fullname")
-                        ->from($this->table['users'].' a')
-                        ->join($this->table['user_role'].' b','b.user_id = a.id', 'inner')
-                        ->join($this->table['roles'].' c','c.role_id = b.role_id', 'inner');
-    }
-
     // -------------------------------------------------------------------------
 
     /**
@@ -246,35 +111,73 @@ class Authen_model extends CI_Model
     /**
      * Get single user data
      *
-     * @param   string  $key  Key of user field (id|login|username|email)
      * @param   string  $val  Value of user field
+     * @param   string  $key  Key of user field (id|login|username|email)
      *
-     * @return  object
+     * @return  mixed
      */
-    public function get_data()
+    public function get_user( $val, $key = 'id' )
     {
-        if ( is_null( $this->user_id ) )
+        if ( !in_array( $key, array( 'id', 'login', 'username', 'email' ) ) )
+        {
+            log_message('error', '#Baka_pack: Authen->get_user failed identifying user using '.$key.' field.');
             return FALSE;
+        }
 
-        return $this->db->get_where( $this->table['users'],
-            array('id' => $this->user_id), 1)->row();
+        switch ( $key )
+        {
+            case 'login':
+                $this->db->where( 'lower(username)', strtolower( $val ) );
+                $this->db->or_where( 'lower(email)', strtolower( $val ) );
+                break;
+
+            case 'username':
+                $this->db->where( 'lower(username)', strtolower( $val ) );
+                break;
+
+            case 'email':
+                $this->db->where( 'lower(email)', strtolower( $val ) );
+                break;
+
+            case 'id':
+                $this->db->where( 'id', $val );
+                break;
+        }
+
+        $query = $this->db->get( $this->table['users'], 1 );
+
+        if ( $query->num_rows() > 0 )
+            return $query->row();
+
+        return FALSE;
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Make sure that $username is available for new users
+     * Check is Username or Email already exists
      *
-     * @param   string  $username  New username
+     * @param   string  $login  Username|Email
      *
      * @return  bool
      */
-    public function is_username_available( $username )
+    public function check_login( $login )
     {
-        $query = $this->db->get_where( $this->table['users'],
-                 array('lower(username)=' => strtolower($username)), 1);
+        return $this->get_user( $login, 'login' ) !== FALSE;
+    }
 
-        return $query->num_rows() == 0;
+    // -------------------------------------------------------------------------
+
+    /**
+     * Check is Username already exists
+     *
+     * @param   string  $login  Username
+     *
+     * @return  bool
+     */
+    public function check_username( $username )
+    {
+        return $this->get_user( $username, 'username' ) !== FALSE;
     }
 
     // -------------------------------------------------------------------------
@@ -291,58 +194,128 @@ class Authen_model extends CI_Model
      */
     public function add_user( array $user_data, $activated = FALSE, $roles = array() )
     {
+        $user_data['last_ip']       = $this->input->ip_address();
         $user_data['created']       = date('Y-m-d H:i:s');
         $user_data['last_login']    = date('Y-m-d H:i:s');
         $user_data['activated']     = $activated ? 1 : 0;
 
-        if ( $this->db->insert( $this->table['users'], $user_data ) )
+        if ( !$this->db->insert( $this->table['users'], $user_data ) )
         {
-            $user_id = $this->db->insert_id();
-            
-            if ( $activated )
-                $this->create_profile( $user_id, $roles );
-            
-            return array('user_id' => $user_id);
+            return FALSE;
         }
-        
-        return FALSE;
+
+        $user_id = $this->db->insert_id();
+
+        if ( $activated )
+        {
+            $this->set_user_meta( $user_id );
+
+            if ( count( $roles ) > 0 )
+            {
+                $this->set_user_roles( $user_id, $roles );
+            }
+        }
+
+        return $user_id;
     }
 
     // -------------------------------------------------------------------------
 
-    public function update( $user_data = array() )
+    /**
+     * Update user data
+     *
+     * @param   int     $user_id    User ID
+     * @param   array   $user_data  User Datas
+     *
+     * @return  bool
+     */
+    public function edit_user( $user_id, $user_data = array() )
     {
-        if ( is_null( $user_id = $this->user_id ) )
+        if ( count( $user_data ) == 0 )
             return FALSE;
 
-        if ( $update = $this->db->update( $this->table['users'], $user_data, array( 'id' => $user_id ) ) )
-        {
-            foreach ( $user_data as $field => $value )
-                log_message( 'info', '#Baka_pack: Authen_model->update #'.$user_id.': '.$field.' = '.$value.'.');
-        }
-
-        return $update;
+        return $this->db->update( $this->table['users'], $user_data, array( 'id' => $user_id ) );
     }
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Delete User data
+     *
+     * @param   int     $user_id  User ID
+     * @param   bool    $purge    Purge option, set it to True if you want to completely remove
+     *                            this user
+     *
+     * @return  bool
+     */
     public function delete_user( $user_id, $purge = FALSE )
     {
         if ( $purge )
         {
             $this->db->trans_start();
-            $this->db->delete($this->table['users'],    array('id'      => $user_id));
-            $this->db->delete($this->table['user_role'],array('user_id' => $user_id));
-            $this->db->delete($this->table['overrides'],array('user_id' => $user_id));
+            $this->db->delete($this->table['users'],     array('id'      => $user_id));
+            $this->db->delete($this->table['user_role'], array('user_id' => $user_id));
+            $this->db->delete($this->table['user_meta'], array('user_id' => $user_id));
+            // $this->db->delete($this->table['overrides'], array('user_id' => $user_id));
             $this->db->trans_complete();
-            
-            return $this->db->trans_status() ? TRUE : FALSE;
+
+            if ( !$this->db->trans_status() )
+            {
+                $this->db->trans_rollback();
+                return FALSE;
+            }
+
+            return TRUE;
         }
         else
         {
-            return $this->edit_user( $user_id,
-                array( 'activated' => 0, 'banned' => 0, 'deleted' => 1 ) );
+            return $this->change_user_status( $user_id, 'deleted' );
         }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Change User Status
+     *
+     * @param   int     $user_id     User ID
+     * @param   string  $new_status  New User status (activated|banned|deleted)
+     * @param   bool    $invert      Invert default value of new status
+     * @param   array   $extra       Extra field values
+     *
+     * @return  bool
+     */
+    public function change_user_status( $user_id, $new_status, $invert = FALSE, $extra = array() )
+    {
+        $statuses = array('activated', 'banned', 'deleted');
+
+        if ( !in_array($new_status, $statuses) )
+        {
+            log_message('error', '#Baka_pack: Authen->change_user_status failed to change status.');
+            return FALSE;
+        }
+
+        $data = array();
+
+        foreach ( $statuses as $status )
+        {
+            $data[$status] = ( $status == $new_status ? 1 : 0 );
+        }
+
+        if ( $invert )
+        {
+            $data[$new_status] = 0;
+        }
+
+        if ( count( $extra ) > 0 )
+        {
+            foreach ( $extra as $field => $value )
+            {
+                $data[$field] = $value;
+            }
+        }
+
+        return $this->edit_user( $user_id, $data );
     }
 
     // -------------------------------------------------------------------------
@@ -375,13 +348,13 @@ class Authen_model extends CI_Model
             return FALSE;
         }
 
-        return $this->edit_user( $user_id, array('activated' => 1, $key => NULL) );
+        return $this->change_user_status( $user_id, 'activated', FALSE, array($key => NULL) );
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Activating inactivated specified user
+     * Activating an inactivated specified user
      *
      * @param   int   $user_id  User id who want to be activate
      *
@@ -389,7 +362,7 @@ class Authen_model extends CI_Model
      */
     public function inactivate_user( $user_id )
     {
-        return $this->edit_user( $user_id, array( 'activated' => 0 ) );
+        return $this->change_user_status( $user_id, 'activated', TRUE );
     }
 
     // -------------------------------------------------------------------------
@@ -397,45 +370,62 @@ class Authen_model extends CI_Model
     /**
      * Clean up dumb users (non-active users)
      *
-     * @param   int   $expire_period  Expiration period
-     *
-     * @return  bool
+     * @return  void
      */
-    public function purge_na( $expire_period = null )
+    public function purge_na()
     {
-        if ( is_null( $expire_period ) )
-            $expire_period = 172800;
+        $expired = time() - Setting::get('auth_email_act_expire');
 
         $this->db->delete( $this->table['users'], array(
             'activated' => 0,
-            'unix_timestamp(created) <' => (time() - $expire_period) ) );
-
-        return $this->db->affected_rows() > 0;
+            'unix_timestamp(created) <' => $expired ) );
     }
 
     // -------------------------------------------------------------------------
     // Password
     // -------------------------------------------------------------------------
 
-    public function set_password_key($user_id, $new_pass_key)
+    /**
+     * Set new password key
+     *
+     * @param  int     $user_id       User ID
+     * @param  string  $new_pass_key  Password Key
+     *
+     * @return bool
+     */
+    public function set_password_key( $user_id, $new_pass_key )
     {
-        $this->db->update( $this->table['users'],
-            array('new_password_key' => $new_pass_key, 'new_password_requested' => date('Y-m-d H:i:s')),
-            array('id' => $user_id));
+        $data = array(
+            'new_password_key'       => $new_pass_key,
+            'new_password_requested' => date('Y-m-d H:i:s')
+            );
 
-        return $this->db->affected_rows() > 0;
+        return $this->edit_user( $user_id, $data );
     }
 
     // -------------------------------------------------------------------------
 
-    public function can_reset_password($user_id, $new_pass_key, $expire_period = 900)
+    /**
+     * Check if given password key is valid and user is authenticated.
+     *
+     * @param   int     $user_id       User ID
+     * @param   string  $new_pass_key  New Password Key
+     *
+     * @return  bool
+     */
+    public function can_reset_password( $user_id, $new_pass_key )
     {
-        $query = $this->db->get( $this->table['users'], array(
-                 'id' => $user_id,
-                 'new_password_key' => $new_pass_key,
-                 'UNIX_TIMESTAMP(new_password_requested) >' => (time() - $expire_period)))->limit(1);
+        $expired = time() - get_conf('forgot_password_expire');
 
-        return $query->num_rows() == 1;
+        $wheres = array(
+            'id' => $user_id,
+            'new_password_key' => $new_pass_key,
+            'unix_timestamp(new_password_requested) >' => $expired
+            );
+
+        $query = $this->db->get_where( $this->table['users'], $wheres, 1);
+
+        return $query->num_rows() > 0;
     }
 
     // -------------------------------------------------------------------------
@@ -446,21 +436,18 @@ class Authen_model extends CI_Model
      * @param   int     $user_id        User ID
      * @param   string  $new_pass       New Password
      * @param   string  $new_pass_key   New Password key
-     * @param   int     $expire_period  Expiration Period
      *
      * @return  bool
      */
-    public function reset_password($user_id, $new_pass, $new_pass_key, $expire_period = 900)
+    public function reset_password( $user_id, $new_pass, $new_pass_key )
     {
-        $this->db->update( $this->table['users'],
-            array(  'password' => $new_pass,
-                    'new_password_key' => NULL,
-                    'new_password_requested' => NULL),
-            array(  'id' => $user_id,
-                    'new_password_key' => $new_pass_key,
-                    'unix_timestamp(new_password_requested) >=' => (time() - $expire_period)) );
+        $data = array(
+            'password'               => $new_pass,
+            'new_password_key'       => NULL,
+            'new_password_requested' => NULL
+            );
 
-        return $this->db->affected_rows() > 0;
+        return $this->edit_user( $user_id, $data );
     }
 
     // -------------------------------------------------------------------------
@@ -468,18 +455,20 @@ class Authen_model extends CI_Model
     /**
      * Change user password
      *
-     * @param   int
-     * @param   string
-     * 
+     * @param   int     $user_id   User ID
+     * @param   string  $new_pass  New Password
+     *
      * @return  bool
      */
-    public function change_password($user_id, $new_pass)
+    public function change_password( $user_id, $new_pass )
     {
-        $this->db->update( $this->table['users'],
-            array( 'password'   => $new_pass ),
-            array( 'id'         => $user_id ));
+        $data = array(
+            'password'               => $new_pass,
+            'new_password_key'       => NULL,
+            'new_password_requested' => NULL
+            );
 
-        return $this->db->affected_rows() > 0;
+        return $this->edit_user( $user_id, $data );
     }
 
     // -------------------------------------------------------------------------
@@ -509,9 +498,9 @@ class Authen_model extends CI_Model
     /**
      * Activate new email (replace old email with new one) if activation key is valid.
      *
-     * @param   int
-     * @param   string
-     * 
+     * @param   int     $user_id        User ID
+     * @param   string  $new_email_key  Email Activation Key
+     *
      * @return  bool
      */
     public function activate_new_email( $user_id, $new_email_key )
@@ -532,20 +521,15 @@ class Authen_model extends CI_Model
     // -------------------------------------------------------------------------
 
     /**
-     * Make sure that $email is available for new users
+     * Check is Email already exists
      *
-     * @param   string  $email  New email
+     * @param   string  $login  Email
      *
      * @return  bool
      */
-    public function is_email_available( $email )
+    public function check_email( $email )
     {
-        $query = $this->db->where('lower(email)=', strtolower($email))
-                          ->or_where('lower(new_email)=', strtolower($email))
-                          ->limit(1)
-                          ->get($this->table['users']);
-
-        return $query->num_rows() == 0;
+        return $this->get_user( $email, 'email' ) !== FALSE;
     }
 
     // -------------------------------------------------------------------------
@@ -556,24 +540,20 @@ class Authen_model extends CI_Model
      * Update user login info, such as IP-address or login time, and
      * clear previously generated (but not activated) passwords.
      *
-     * @param   int
-     * @param   bool
-     * @param   bool
-     * 
-     * @return  void
+     * @param   int   $user_id  User ID
+     *
+     * @return  bool
      */
-    public function update_login_info()
+    public function update_login_info( $user_id )
     {
         $user_data['new_password_key']       = NULL;
         $user_data['new_password_requested'] = NULL;
+        $user_data['last_login'] = date('Y-m-d H:i:s');
 
-        if ( get_conf('login_record_ip') )
+        if ( Setting::get('auth_login_record_ip') )
             $user_data['last_ip']    = $this->input->ip_address();
-        
-        if ( get_conf('login_record_time') )
-            $user_data['last_login'] = date('Y-m-d H:i:s');
 
-        return $this->update( $user_data );
+        return $this->edit_user( $user_id, $user_data );
     }
 
     // -------------------------------------------------------------------------
@@ -583,16 +563,14 @@ class Authen_model extends CI_Model
     /**
      * Ban user
      *
-     * @param   int
-     * @param   string
-     * 
-     * @return  void
+     * @param   int     $user_id  User ID
+     * @param   string  $reason   Ban Reasons
+     *
+     * @return  bool
      */
     public function ban_user( $user_id, $reason = NULL )
     {
-        $this->db->update( $this->table['users'],
-            array( 'banned' => 1, 'ban_reason' => $reason ),
-            array( 'id'     => $user_id ));
+        return $this->change_user_status( $user_id, 'banned', FALSE, array('ban_reason' => $reason) );
     }
 
     // -------------------------------------------------------------------------
@@ -606,17 +584,29 @@ class Authen_model extends CI_Model
      */
     public function unban_user( $user_id )
     {
-        $this->db->update( $this->table['users'],
-            array( 'banned' => 0, 'ban_reason' => NULL ),
-            array( 'id'     => $user_id ) );
+        return $this->change_user_status( $user_id, 'banned', TRUE, array('ban_reason' => NULL) );
     }
 
     // -------------------------------------------------------------------------
     // User metas
     // -------------------------------------------------------------------------
 
-    public function get_metas()
-    {}
+    /**
+     * Get user meta by User ID
+     *
+     * @param   int    $user_id  User ID
+     *
+     * @return  mixed
+     */
+    public function get_user_metas( $user_id )
+    {
+        $query = $this->db->get_where( $this->table['user_meta'], array('user_id' => $user_id) );
+
+        if ( $query->num_rows() > 0 )
+            return $query->row();
+
+        return FALSE;
+    }
 
     // -------------------------------------------------------------------------
 
@@ -625,13 +615,91 @@ class Authen_model extends CI_Model
 
     // -------------------------------------------------------------------------
 
-    public function add_meta( $meta_data = array() )
-    {}
+    /**
+     * Setup user meta by User ID
+     *
+     * @param  int     $user_id    User ID
+     * @param  array   $meta_data  User Metas
+     *
+     * @return bool
+     */
+    public function set_user_meta( $user_id, $meta_data = array() )
+    {
+        if ( count( $meta_data ) == 0 )
+        {
+            $meta_data = get_conf('default_meta_fields');
+        }
+
+        $data = array();
+        $i    = 0;
+
+        foreach ( $meta_data as $meta_key => $meta_value )
+        {
+            $data[$i]['user_id']    = $user_id;
+            $data[$i]['meta_key']   = $meta_key;
+            $data[$i]['meta_value'] = $meta_value;
+
+            $i++;
+        }
+
+        return $this->db->insert_batch( $this->table['user_meta'], $data );
+    }
 
     // -------------------------------------------------------------------------
 
-    public function edit_meta( $meta_id, $meta_data = array() )
-    {}
+    /**
+     * Edit User Meta by User ID
+     *
+     * @param   int           $user_id     User ID
+     * @param   array|string  $meta_key    Meta Data or Meta Key Field name
+     * @param   string        $meta_value  Meta Value
+     *
+     * @return  bool
+     */
+    public function edit_user_meta( $user_id, $meta_key, $meta_value = '' )
+    {
+        if ( is_array( $meta_key ) and strlen( $meta_value ) == 0 )
+        {
+            $this->db->trans_start();
+
+            foreach ( $meta_key as $key => $value )
+            {
+                $this->edit_user_meta( $user_id, $key, $value );
+            }
+
+            $this->db->trans_complete();
+            
+            if ( $this->db->trans_status() === FALSE )
+            {
+                $this->db->trans_rollback();
+                return FALSE;
+            }
+
+            return TRUE;
+        }
+        else
+        {
+            return $this->db->update(
+                $this->table['user_meta'],
+                array('meta_value' => $meta_value),
+                array('user_id' => $user_id, 'meta_key' => $meta_key)
+                );
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Clear user meta by User ID
+     *
+     * @param   int   $user_id  User ID
+     *
+     * @return  bool
+     */
+    public function clear_user_meta( $user_id )
+    {
+        return $this->db->delete( $this->table['user_meta'], array('user_id' => $user_id) );
+    }
 
     // -------------------------------------------------------------------------
 
@@ -646,16 +714,26 @@ class Authen_model extends CI_Model
      * Returns a multidimensional array with info on the user's roles in associative format
      * Keys: 'role_id', 'role', 'full', 'default'
      *
-     * @param   int  $user_id  User ID
+     * @param   int    $user_id  User ID
      *
-     * @return  obj
+     * @return  array
      */
     public function get_user_roles( $user_id )
     {
-        return $this->db->select("b.role_id, b.role, b.full, b.default")
-                        ->from($this->table['user_role'].' a')
-                        ->join($this->table['roles'].' b', 'b.role_id = a.role_id')
-                        ->where('user_id', $user_id);
+        $query = $this->db->select("b.role_id, b.role, b.full, b.default")
+                      ->from($this->table['user_role'].' a')
+                      ->join($this->table['roles'].' b', 'b.role_id = a.role_id')
+                      ->where('user_id', $user_id)
+                      ->get();
+
+        $ret = array();
+
+        foreach ( $query->result() as $row )
+        {
+            $ret[$row->role_id] = $row->full;
+        }
+
+        return $ret;
     }
 
     // -------------------------------------------------------------------------
@@ -670,11 +748,11 @@ class Authen_model extends CI_Model
      */
     public function set_user_roles( $user_id, $roles_id = array() )
     {
-        $count_roles = count( $roles_id );
+        $cr = count( $roles_id );
 
-        if ( $count_roles > 0 )
+        if ( $cr > 0 )
         {
-            for ( $i=0; $i<$count_roles; $i++ )
+            for ( $i=0; $i<$cr; $i++ )
             {
                 $role_data[$i]['user_id']   = $user_id;
                 $role_data[$i]['role_id']   = $roles_id[$i];
@@ -734,6 +812,18 @@ class Authen_model extends CI_Model
     }
 
     // -------------------------------------------------------------------------
+    
+    public function edit_user_roles( $user_id, $new_roles )
+    {
+        if ( count( $new_roles ) == 0 )
+        {
+            return FALSE;
+        }
+
+        $old_roles = array_keys( $this->get_user_roles( $user_id ) );
+    }
+
+    // -------------------------------------------------------------------------
 
     /**
      * Change a user's role for another
@@ -764,24 +854,40 @@ class Authen_model extends CI_Model
 
     public function get_roles()
     {
-        $query = $this->db->select("b.role_id id, b.role name, b.full, b.default")
-                          ->from($this->table['user_role'].' a')
-                          ->join($this->table['roles'].' b', 'b.role_id = a.role_id');
+        return $this->db->select("a.role_id id, a.role name, a.full, a.default")
+                        ->select("count(c.permission_id) perm_count")
+                        ->select("group_concat(distinct c.permission_id) perm_id")
+                        ->select("group_concat(distinct c.description) perm_desc")
+                        ->from($this->table['roles'].' a')
+                        ->join($this->table['role_perms'].' b','b.role_id = a.role_id', 'inner')
+                        ->join($this->table['permissions'].' c','c.permission_id = b.permission_id', 'inner')
+                        ->group_by('a.role_id');
+    }
 
-        if ( !is_null( $this->user_id ) )
+    // -------------------------------------------------------------------------
+    
+    public function get_roles_assoc()
+    {
+        $query = $this->db->get($this->table['roles']);
+
+        $ret = array();
+
+        foreach ( $query->result() as $row )
         {
-            return $query->where('a.user_id', $this->user_id)->get()->row();
+            $ret[$row->role_id] = $row->full;
         }
-        else
-        {
-            return $query;
-        }
+
+        return $ret;
     }
 
     // -------------------------------------------------------------------------
 
-    public function get_role( $key, $val )
-    {}
+    public function get_role( $group_id )
+    {
+        $query = $this->get_roles();
+
+        return $query->where('a.role_id', $group_id)->get()->row();
+    }
 
     // -------------------------------------------------------------------------
 
@@ -795,8 +901,43 @@ class Authen_model extends CI_Model
 
     // -------------------------------------------------------------------------
 
-    public function update_role( $role_id, $role_data = array() )
-    {}
+    /**
+     * Updating role fields
+     * 
+     * @param   int     $role_id        Role id that wanna be updated
+     * @param   array   $role_data      Array of new role data
+     * @param   array   $permissions    Array of new permission data
+     * 
+     * @return  bool
+     */
+    public function edit_role( $role_data, $role_id = NULL, $perms = array() )
+    {
+        $this->db->trans_start();
+
+        if ( !is_null($role_id) )
+        {
+            $this->db->update( $this->table['roles'], $role_data, array('role_id' => $role_id ));
+        }
+        else
+        {
+            $this->db->insert( $this->table['roles'], $role_data );
+            $role_id = $this->db->insert_id();
+        }
+
+        if ( count($perms) > 0 )
+        {
+            $return = $this->update_role_perm( $perms, $role_id );
+        }
+
+        $this->db->trans_complete();
+
+        if ( !( $return = $this->db->trans_status() ) )
+        {
+            $this->db->trans_rollback();
+        }
+
+        return $return;
+    }
 
     // -------------------------------------------------------------------------
 
@@ -837,12 +978,122 @@ class Authen_model extends CI_Model
      */
     public function get_role_perms( $role_id )
     {
-        $query = $this->db->select("permission")
-                          ->from($this->table['permissions'].' a')
-                          ->join($this->table['role_perms'].' b', 'b.permission_id = a.permission_id', 'inner')
-                          ->where('role_id', $role_id);
+        // $query = $this->db->select("permission")
+        //                   ->from($this->table['permissions'].' a')
+        //                   ->join($this->table['role_perms'].' b', 'b.permission_id = a.permission_id', 'inner')
+        //                   ->where('role_id', $role_id);
 
-        return $query->result();
+        // return $query->result();
+
+        $query = $this->db->get_where( $this->table['role_perms'], array('role_id' => $role_id ));
+
+        if ( $query->num_rows() > 0 )
+        {
+            foreach ( $query->result() as $row )
+            {
+                $result[] = $row->permission_id;
+            }
+
+            return $result;
+        }
+
+        return FALSE;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Get related permissions of role_id
+     * 
+     * @param   int     $role_id    ID of role
+     * @return  array               list of related permissions
+     */
+    public function get_role_related_perms( $role_id )
+    {
+        $query = $this->db->get_where( $this->table['role_perms'], array('role_id' => $role_id ));
+
+        if ( $query->num_rows() > 0 )
+        {
+            foreach ( $query->result() as $row )
+            {
+                $result[] = $row->permission_id;
+            }
+
+            return $result;
+        }
+
+        return FALSE;
+    }
+
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Update relation of roles and permissions table
+     * 
+     * @param   array   $permission  array of new permissions
+     * @param   int     $role_id     id of role
+     * 
+     * @return  mixed
+     */
+    public function update_role_perm( $permissions = array(), $role_id)
+    {
+        if ( count( $permissions ) > 0 )
+        {
+            $related_permission = $this->get_role_perms( $role_id );
+
+            foreach ($permissions as $perm_id)
+            {
+                if ( !in_array( $perm_id, $related_permission ) )
+                {
+                    $return = $this->db->insert( $this->table['role_perms'], array(
+                        'role_id'       => $role_id,
+                        'permission_id' => $perm_id ));
+                }
+            }
+
+            if ( $related_permission )
+            {
+                foreach ( $related_permission as $rel_id )
+                {
+                    if ( !in_array( $rel_id, $permissions ) )
+                    {
+                        $return = $this->db->delete( $this->table['role_perms'], array(
+                            'permission_id' => $rel_id ));
+                    }
+                }
+            }
+
+            return $return;
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // User Permissions Relation
+    // -------------------------------------------------------------------------
+
+    public function get_user_perms( $user_id )
+    {
+        $query = $this->db->select("d.permission_id id, d.permission perm, d.description")
+                          ->from($this->table['user_role'].' a')
+                          ->join($this->table['roles'].' b', 'b.role_id = a.role_id')
+                          ->join($this->table['role_perms'].' c', 'c.role_id = b.role_id')
+                          ->join($this->table['permissions'].' d', 'd.permission_id = c.permission_id')
+                          ->where('a.user_id', $user_id)
+                          ->get();
+
+        if ( $query->num_rows() > 0 )
+        {
+            $ret = array();
+
+            foreach ( $query->result() as $row )
+            {
+                $ret[$row->id] = $row->perm;
+            }
+
+            return $ret;
+        }
+
+        return FALSE;
     }
 
     // -------------------------------------------------------------------------
@@ -851,32 +1102,47 @@ class Authen_model extends CI_Model
 
     public function get_perms()
     {
-        $query = $this->db->select("d.parent")
-                          ->select("group_concat(distinct d.permission_id) perm_id")
-                          ->select("group_concat(distinct d.permission) perm_name")
-                          ->select("group_concat(distinct d.description) perm_desc");
+        // $query = $this->db->select("parent")
+        //                   ->select("group_concat(distinct permission_id) perm_id")
+        //                   ->select("group_concat(distinct permission) perm_name")
+        //                   ->select("group_concat(distinct description) perm_desc");
 
-        if ( is_null( $this->user_id ) )
-        {
-            return $query->from( $this->table['permissions'] )->group_by('parent');
-        }
-        else
-        {
-            $query = $query->from($this->table['user_role'].' a')
-                           ->join($this->table['roles'].' b', 'b.role_id = a.role_id')
-                           ->join($this->table['role_perms'].' c', 'c.role_id = b.role_id')
-                           ->join($this->table['permissions'].' d', 'd.permission_id = c.permission_id')
-                           ->where('a.user_id', $this->user_id)
-                           ->get();
-
-            return explode(',', $query->row()->perm_name);
-        }
+        return $this->db->select('*')->from( $this->table['permissions'] );;
     }
 
     // -------------------------------------------------------------------------
 
-    public function get_perm( $key, $val )
-    {}
+    public function get_grouped_perms()
+    {
+        return $this->db->select("parent")
+                        ->select("group_concat(distinct permission_id) perm_id")
+                        ->select("group_concat(distinct permission) perm_name")
+                        ->select("group_concat(distinct description) perm_desc")
+                        ->from( $this->table['permissions'] )
+                        ->group_by('parent')
+                        ->get()->result();
+    }
+
+    // -------------------------------------------------------------------------
+
+    public function get_parent_perms()
+    {
+        $ret = array();
+
+        foreach ( $this->get_grouped_perms() as $row )
+        {
+            $ret[$row->parent] = $row->parent;
+        }
+
+        return $ret;
+    }
+
+    // -------------------------------------------------------------------------
+
+    public function get_perm( $perm_id )
+    {
+        return $this->db->get_where( $this->table['permissions'], array('permission_id' => $perm_id) )->row();
+    }
 
     // -------------------------------------------------------------------------
 
@@ -922,15 +1188,12 @@ class Authen_model extends CI_Model
      *
      * @return  obj|bool
      */
-    public function get_autologin( $key )
+    public function get_autologin( $user_id, $key )
     {
-        if ( is_null( $this->user_id ) )
-            return FALSE;
-
-        $query = $this->db->select('a.id, a.username')
+        $query = $this->db->select('a.id, a.username, a.activated')
                           ->from($this->table['users'].' a')
                           ->join($this->table['user_autologin'].' b', 'b.user_id = a.id')
-                          ->where('b.user_id', $this->user_id)
+                          ->where('b.user_id', $user_id)
                           ->where('b.key_id', $key)
                           ->get();
 
@@ -1126,7 +1389,7 @@ class Authen_model extends CI_Model
      */
     public function increase_login_attempt( $login )
     {
-        if ( get_conf('login_count_attempts') )
+        if ( Setting::get('auth_login_count_attempts') )
         {
             if ( !$this->is_max_attempts_exceeded( $login ) )
             {
@@ -1172,26 +1435,6 @@ class Authen_model extends CI_Model
                       ->get( $this->table['login_attempts'] );
 
         return $query->num_rows();
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Check if login attempts exceeded max login attempts (specified in config)
-     *
-     * @param   string
-     * @return  bool
-     */
-    public function is_max_attempts_exceeded( $login )
-    {
-        return $this->get_attempts_num( $login ) >= get_conf('login_max_attempts');
-    }
-
-    public function clear()
-    {
-        $this->user_id = NULL;
-        $this->role_id = NULL;
-        $this->perm_id = NULL;
     }
 }
 

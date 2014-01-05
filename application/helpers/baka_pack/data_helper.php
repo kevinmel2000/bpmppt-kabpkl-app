@@ -37,38 +37,6 @@ function add_placeholder( $array, $placeholder = '---', $langify = FALSE )
 
 // -----------------------------------------------------------------------------
 
-function get_month_assoc()
-{
-	$CI =& get_instance();
-	$CI->load->language('calendar');
-	
-	$output = array();
-
-	for ( $i=1; $i<=12; $i++ )
-	{
-		$month = date('F', mktime(0, 0, 0, $i, 1));
-		$output[$i] = _x( 'cal_'.strtolower($month) );
-	}
-
-	return $output;
-}
-
-// -----------------------------------------------------------------------------
-
-function get_year_assoc( $interfal = 10 )
-{
-	$output = array();
-
-	for ( $i=0; $i<=$interfal; $i++ )
-	{
-		$output[$i] = ($i === 0) ? date('Y') : date('Y', mktime(0, 0, 0, $i, 1, date('Y')-$i));
-	}
-
-	return $output;
-}
-
-// -----------------------------------------------------------------------------
-
 /**
  * Convert Boolean to String
  *
@@ -79,7 +47,7 @@ function get_year_assoc( $interfal = 10 )
  */
 function bool_to_str( $bool, $uc = FALSE )
 {
-	$ret = $bool ? 'true' : 'false';
+	$ret = $bool ? 'ya' : 'tidak';
 
 	return $uc ? strtoupper( $ret ) : $ret;
 }

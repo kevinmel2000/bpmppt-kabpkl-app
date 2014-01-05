@@ -36,6 +36,8 @@ class Pengguna extends BAKA_Controller
     {
         parent::__construct();
 
+        $this->verify_login();
+
         $this->themee->add_navbar( 'admin_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
         $this->app_main->admin_navbar( 'admin_sidebar', 'side' );
 
@@ -43,8 +45,6 @@ class Pengguna extends BAKA_Controller
         $this->data['page_link']    = 'admin/pengguna/';
 
         $this->current_user = $this->authen->get_user_id();
-
-        $this->load->model('baka_pack/app_users');
     }
 
     public function index()
@@ -92,7 +92,7 @@ class Pengguna extends BAKA_Controller
 
     private function _user_ban( $user_id )
     {
-        $username = $this->authen->user( 'id', $user_id )->get_data()->username;
+        $username = $this->authen->get_user( $user_id )->username;
 
         $this->data['panel_title']  = $this->themee->set_title('Cekal pengguna: '.$username);
 
@@ -121,16 +121,16 @@ class Pengguna extends BAKA_Controller
         if ( $form->validate_submition() )
         {
             $form_data  =  $form->submited_data();
-            $result     = $this->app_users->ban_user( $user_id, $form_data['ban-reason'] );
+            $result     = $this->authen->ban_user( $user_id, $form_data['ban-reason'] );
 
             if ( $result )
             {
-                $this->session->set_flashdata('success', $this->baka_lib->messages());
+                $this->session->set_flashdata('success', $this->authen->messages('success'));
                 redirect( $this->data['page_link'] );
             }
             else
             {
-                $this->session->set_flashdata('error', $this->baka_lib->errors());
+                $this->session->set_flashdata('error', $this->authen->messages('error'));
                 redirect( current_url() );
             }
         }
@@ -147,11 +147,11 @@ class Pengguna extends BAKA_Controller
         $this->load->library('baka_pack/gridr');
 
         $grid = $this->gridr->identifier('id')
-                                ->set_baseurl($this->data['page_link'])
-                                ->set_column('Pengguna', 'username, email', '45%', FALSE, '<strong>%s</strong><br><small class="text-muted">%s</small>')
-                                ->set_column('Kelompok', 'role_fullname', '40%', FALSE, '%s')
-                                ->set_buttons('form/', 'eye-open', 'primary', 'Lihat data')
-                                ->set_buttons('delete/', 'trash', 'danger', 'Hapus data');
+                            ->set_baseurl($this->data['page_link'])
+                            ->set_column('Pengguna', 'username, email', '45%', FALSE, '<strong>%s</strong><br><small class="text-muted">%s</small>')
+                            ->set_column('Kelompok', 'callback_make_tag:role_fullname', '40%', FALSE, '%s')
+                            ->set_buttons('form/', 'eye-open', 'primary', 'Lihat data')
+                            ->set_buttons('delete/', 'trash', 'danger', 'Hapus data');
 
         $this->data['panel_title'] = $this->themee->set_title('Semua data pengguna');
         $this->data['panel_body'] = $grid->make_table( $this->authen->get_users() );
@@ -169,18 +169,16 @@ class Pengguna extends BAKA_Controller
         if ( $user_id == $this->current_user AND strpos( current_url(), 'profile' ) === FALSE )
             redirect('profile');
 
-        $user       =& $this->authen->user( 'id', $user_id );
-        $user_data  = ( $user_id != '' ? $user->get_data() : FALSE );
-        $judul      = ( $user_id == $this->current_user ? 'Profile anda: ' : 'Data pengguna: ');
-        $this->authen->clear();
+        $user   = ( $user_id != '' ? $this->authen->get_user( $user_id ) : FALSE );
+        $judul  = ( $user_id == $this->current_user ? 'Profile anda: ' : 'Data pengguna: ');
 
-        $this->data['panel_title'] = $this->themee->set_title( ( $user_data ? $judul.$user_data->username : 'Buat pengguna baru' ));
+        $this->data['panel_title'] = $this->themee->set_title( ( $user ? $judul.$user->username : 'Buat pengguna baru' ));
         
         $this->data['tool_buttons']['data'] = 'Kembali|default';
 
-        if ( $user_data )
+        if ( $user )
         {
-            if ( $user_id != $this->current_user )
+            if ( $user_id != $this->current_user and is_permited('users_manage') )
             {
                 $this->data['tool_buttons']['aksi|danger']  = array(
                     'cekal/'.$user_id => 'Cekal',
@@ -188,9 +186,7 @@ class Pengguna extends BAKA_Controller
             }
         }
 
-        $use_username = (bool) get_conf('use_username');
-
-        if ( $use_username )
+        if ( (bool) Setting::get('auth_use_username') )
         {
             $username_min_length = Setting::get('auth_username_min_length');
             $username_max_length = Setting::get('auth_username_max_length');
@@ -199,20 +195,20 @@ class Pengguna extends BAKA_Controller
                 'name'  => 'user-username',
                 'type'  => 'text',
                 'label' => 'Username',
-                'std'   => ( $user_data ? $user_data->username : '' ),
-                'desc'  => ( !$user_data ? 'Username harus diisi dengan minimal '.$username_min_length.' dan maksimal '.$username_max_length.' karakter.' : '' ),
-                'validation'=> ( !$user_data ? 'required|min_username_length|max_username_length|is_username_blacklist|is_username_available' : '' ) );
+                'std'   => ( $user ? $user->username : '' ),
+                'desc'  => ( !$user ? 'Username harus diisi dengan minimal '.$username_min_length.' dan maksimal '.$username_max_length.' karakter.' : '' ),
+                'validation'=> ( !$user ? 'required|is_username_available' : '' ).'valid_username_length|is_username_blacklist' );
         }
 
         $fields[]   = array(
             'name'  => 'user-email',
             'type'  => 'email',
             'label' => 'Email',
-            'std'   => ( $user_data ? $user_data->email : '' ),
-            'desc'  => ( !$user_data ? 'Dengan alasan keamanan mohon gunakan email aktif anda.' : '' ),
-            'validation'=> 'valid_email'.( !$user_data ? '|required|is_email_available' : '' ) );
+            'std'   => ( $user ? $user->email : '' ),
+            'desc'  => ( !$user ? 'Dengan alasan keamanan mohon gunakan email aktif anda.' : '' ),
+            'validation'=> ( !$user ? 'required|is_email_available' : '' ).'valid_email' );
 
-        if ( $user_data )
+        if ( $user )
         {
             $fields[]   = array(
                 'name'  => 'app-fieldset-password',
@@ -220,7 +216,7 @@ class Pengguna extends BAKA_Controller
                 'label' => 'Ganti password' );
 
             $fields[]   = array(
-                'name'  => 'user-last-password',
+                'name'  => 'user-old-password',
                 'type'  => 'password',
                 'label' => 'Password lama' );
         }
@@ -231,40 +227,34 @@ class Pengguna extends BAKA_Controller
         $fields[]   = array(
             'name'  => 'user-new-password',
             'type'  => 'password',
-            'label' => ( !$user_data ? 'Password' : 'Password baru' ),
-            'desc'  => ( !$user_data ? 'Password harus diisi dengan minimal '.$password_min_length.' dan maksimal '.$password_max_length.' karakter.' : '' ),
-            'validation'=> ( !$user_data ? 'required|' : '' ).'min_length['.$password_min_length.']|max_length['.$password_max_length.']');
+            'label' => ( !$user ? 'Password' : 'Password baru' ),
+            'desc'  => ( !$user ? 'Password harus diisi dengan minimal '.$password_min_length.' dan maksimal '.$password_max_length.' karakter.' : '' ),
+            'validation'=> ( !$user ? 'required|' : '' ).'valid_password_length');
 
         $fields[]   = array(
             'name'  => 'user-confirm-password',
             'type'  => 'password',
             'label' => 'Konfirmasi Password',
-            'desc'  => ( !$user_data ? 'Ulangi penulisan password diatas.' : '' ),
-            'validation'=> ( !$user_data ? 'required|' : '' ).'matches[user-new-password]');
+            'desc'  => ( !$user ? 'Ulangi penulisan password diatas.' : '' ),
+            'validation'=> ( !$user ? 'required|' : '' ).'matches[user-new-password]');
 
-        $fields[]   = array(
-            'name'  => 'app-fieldset-roles',
-            'type'  => 'fieldset',
-            'label' => 'Hak Akses' );
-
-        $roles_option = array();
-
-        // var_dump($this->authen->get_roles());
-
-        foreach ( $this->authen->get_roles() as $role )
+        if ( $user_id != $this->current_user and is_permited('roles_manage') )
         {
-            $roles_option[$role->id] = $role->full;
+            $fields[]   = array(
+                'name'  => 'app-fieldset-roles',
+                'type'  => 'fieldset',
+                'label' => 'Hak Akses' );
+
+            $fields[]   = array(
+                'name'  => 'user-roles',
+                'type'  => 'checkbox',
+                'label' => 'Kelompok pengguna',
+                'option'=> $this->authen->get_roles_assoc(),
+                'std'   => ( $user ? $this->authen->get_user_roles( $user->id ) : '' ),
+                'validation'=> ( !$user ? 'required' : '' ) );
         }
 
-        $fields[]   = array(
-            'name'  => 'user-roles',
-            'type'  => 'checkbox',
-            'label' => 'Kelompok pengguna',
-            'option'=> $roles_option,
-            'std'   => ( $user_data ? ''/*explode(',', $user_data->role_id)*/ : '' ),
-            'validation'=> ( !$user_data ? 'required' : '' ) );
-
-        if ( $user_data )
+        if ( $user )
         {
             $fields[]   = array(
                 'name'  => 'app-fieldset-status',
@@ -275,71 +265,73 @@ class Pengguna extends BAKA_Controller
                 'name'  => 'user-activated',
                 'type'  => 'static',
                 'label' => 'Aktif',
-                'std'   => (bool) $user_data->activated ? twb_label('Ya', 'success') : twb_label('Tidak', 'danger') );
+                'std'   => (bool) $user->activated ? twb_label('Ya', 'success') : twb_label('Tidak', 'danger') );
 
             $fields[]   = array(
                 'name'  => 'user-last-login',
                 'type'  => 'static',
                 'label' => 'Dibuat pada',
-                'std'   => format_datetime($user_data->created) );
+                'std'   => format_datetime($user->created) );
 
             $fields[]   = array(
                 'name'  => 'user-banned',
                 'type'  => 'static',
                 'label' => 'Dicekal',
-                'std'   => (bool) $user_data->banned ? twb_label('Ya', 'danger') : twb_label('Tidak', 'success') );
+                'std'   => (bool) $user->banned ? twb_label('Ya', 'danger') : twb_label('Tidak', 'success') );
 
-            if ( (bool) $user_data->banned )
+            if ( (bool) $user->banned )
             {
                 $fields[]   = array(
                     'name'  => 'user-ban-reason',
                     'type'  => 'static',
                     'label' => 'Alasan pencekalan',
-                    'std'   => $user_data->ban_reason );
+                    'std'   => $user->ban_reason );
             }
 
             $fields[]   = array(
                 'name'  => 'user-last-login',
                 'type'  => 'static',
                 'label' => 'Login terakhir',
-                'std'   => format_datetime($user_data->last_login) );
+                'std'   => format_datetime($user->last_login) );
         }
 
         $this->load->library('baka_pack/former');
 
         $form = $this->former->init( array(
-            'name' => 'user-form',
+            'name'   => 'user-form',
             'action' => current_url(),
             'fields' => $fields,
             ));
 
         if ( $form->validate_submition() )
         {
+            $form_data  =  $form->submited_data();
+
+            $username   = $form_data['user-username'];
+            $email      = $form_data['user-email'];
+            $password   = $form_data['user-new-password'];
+
+            $roles = array();
+            if ( isset( $form_data['user-roles'] ) )
+                $roles = $form_data['user-roles'];
+
             if ( !$user )
             {
-                $form_data  =  $form->submited_data();
-
-                $user_data['username']  = $form_data['user-username'];
-                $user_data['email']     = $form_data['user-email'];
-                $user_data['password']  = $form_data['user-new-password'];
-
-                $result = $this->app_users->create_user( $user_data, $use_username, $form_data['user-roles'] );
+                $result = $this->authen->create_user( $username, $email, $password, $roles );
             }
             else
             {
-                $result = $this->app_users->update_user( $user_id, $form->submited_data(), $use_username );
+                $old_pass = $form_data['user-old-password'];
+
+                $result = $this->authen->update_user( $user_id, $username, $email, $old_pass, $password, $roles );
             }
 
-            if ( $result )
+            foreach ( $this->authen->messages() as $level => $message )
             {
-                $this->session->set_flashdata('success', $this->baka_lib->messages());
-                redirect( $this->data['page_link'] );
+                $this->session->set_flashdata( $level, $message );
             }
-            else
-            {
-                $this->session->set_flashdata('error', $this->baka_lib->errors());
-                redirect( current_url() );
-            }
+
+            redirect( $result ? $this->data['page_link'] : current_url() );
         }
 
         $this->data['panel_body'] = $form->generate();
@@ -374,9 +366,9 @@ class Pengguna extends BAKA_Controller
 
     private function _group_form( $group_id = NULL )
     {
-        $group  = ( !is_null( $group_id ) ? $this->authen->get_groups( $group_id )->row() : FALSE );
+        $group  = ( !is_null( $group_id ) ? $this->authen->get_role( $group_id ) : FALSE );
 
-        $this->data['panel_title'] = $this->themee->set_title( $group ? 'Ubah data Kelompok pengguna '.$group->fullname : 'Buat kelompok pengguna baru' );
+        $this->data['panel_title'] = $this->themee->set_title( $group ? 'Ubah data Kelompok pengguna '.$group->full : 'Buat kelompok pengguna baru' );
         
         $this->data['tool_buttons']['data'] = 'Kembali|default';
 
@@ -384,7 +376,7 @@ class Pengguna extends BAKA_Controller
             'name'  => 'group-full',
             'type'  => 'text',
             'label' => 'Nama lengkap',
-            'std'   => ( $group ? $group->fullname : '' ),
+            'std'   => ( $group ? $group->full : '' ),
             'validation'=> 'required',
             'desc'  => 'Nama lengkap untuk kelompok pengguna, diperbolehkan menggunakan spasi.' );
 
@@ -394,11 +386,11 @@ class Pengguna extends BAKA_Controller
             'label' => 'Nama singkat',
             'std'   => ( $group ? $group->name : '' ),
             'validation'=> 'required',
-            'desc'  => 'Nama singkan untuk kelompok pengguna, tidak diperbolehkan menggunakan spasi.' );
+            'desc'  => 'Nama singkat untuk kelompok pengguna, tidak diperbolehkan menggunakan spasi.' );
 
         $fields[]   = array(
             'name'  => 'group-default',
-            'type'  => 'radiobox',
+            'type'  => 'radio',
             'label' => 'Jadikan default',
             'option'=> array(
                 1 => 'Ya',
@@ -412,7 +404,7 @@ class Pengguna extends BAKA_Controller
             'type'  => 'fieldset',
             'label' => 'Wewenang Kelompok' );
 
-        $permissions = $this->authen->get_perms()->get()->result();
+        $permissions = $this->authen->get_grouped_perms();
 
         foreach ( $permissions as $perms )
         {
@@ -466,19 +458,16 @@ class Pengguna extends BAKA_Controller
                 }
             }
 
-            if ( $this->authen->update_role( $role_data, $group_id, $perm_data ) )
+            $result = $this->authen->update_role( $role_data, $group_id, $perm_data );
+
+            foreach ( $this->authen->messages() as $level => $message )
             {
-                $this->session->set_flashdata('success', $this->baka_lib->messages() );
-            }
-            else
-            {
-                $this->session->set_flashdata('error', $this->baka_lib->errors() );
+                $this->session->set_flashdata( $level, $message );
             }
 
             $this->data['page_link'] .= ( $group ? 'form/'.$group_id : '' );
 
-            redirect( $this->data['page_link'] );
-            // $this->data['panel_body'] = $perm_data;
+            redirect( $result ? $this->data['page_link'] : current_url() );
         }
         else
         {
@@ -498,13 +487,13 @@ class Pengguna extends BAKA_Controller
         $this->load->library('baka_pack/gridr');
 
         $grid = $this->gridr->identifier('id')
-                                ->set_baseurl($this->data['page_link'])
-                                ->set_column('Kelompok', 'fullname, perm_count, callback_make_tag:perm_desc', '65%', FALSE, '<strong>%s</strong> <small class="text-muted">Dengan %s wewenang, antara lain:</small><br>%s')
-                                ->set_column('Default', 'callback_bool_to_str:default|Default', '20%', FALSE, '<span class="badge">%s</span>')
-                                ->set_buttons('form/', 'eye-open', 'primary', 'Lihat data')
-                                ->set_buttons('delete/', 'trash', 'danger', 'Hapus data');
+                            ->set_baseurl($this->data['page_link'])
+                            ->set_column('Kelompok', 'full, perm_count, callback_make_tag:perm_desc', '65%', FALSE, '<strong>%s</strong> <small class="text-muted">Dengan %s wewenang, antara lain:</small><br>%s')
+                            ->set_column('Default', 'callback_bool_to_str:default', '20%', FALSE, '<span class="badge">%s</span>')
+                            ->set_buttons('form/', 'eye-open', 'primary', 'Lihat data')
+                            ->set_buttons('delete/', 'trash', 'danger', 'Hapus data');
 
-        $this->data['panel_body'] = $grid->make_table( $this->authen->get_groups() );
+        $this->data['panel_body'] = $grid->make_table( $this->authen->get_roles() );
 
         $this->themee->load('pages/panel_data', $this->data);
     }
@@ -535,36 +524,34 @@ class Pengguna extends BAKA_Controller
 
     private function _perm_form( $perm_id = '' )
     {
-        $perm   = (!is_null( $perm_id ) ? $this->authen->get_perms( $perm_id )->get()->row() : FALSE );
+        $perm   = ( $perm_id != '' ? $this->authen->get_perm( $perm_id ) : FALSE );
 
-        $this->data['panel_title'] = $this->themee->set_title( $perm ? 'Ubah data Kelompok pengguna '.$perm->fullname : 'Buat kelompok pengguna baru' );
+        $this->data['panel_title'] = $this->themee->set_title( $perm ? 'Ubah data Hak akses pengguna '.$perm->permission : 'Buat Hak akses pengguna baru' );
         
-        $this->data['tool_buttons']['data'] = 'Kembali|default';
+        $this->data['tool_buttons']['permission'] = 'Kembali|default';
 
         $fields[]   = array(
-            'name'  => 'perm-full',
-            'type'  => 'text',
-            'label' => 'Nama lengkap',
-            'std'   => ( $perm ? $perm->fullname : '' ),
-            'desc'  => 'Nama lengkap untuk kelompok pengguna, diperbolehkan menggunakan spasi.',
-            'validation'=> ( !$perm ? 'required' : '' ) );
-
-        $fields[]   = array(
-            'name'  => 'perm-role',
+            'name'  => 'perm-sort',
             'type'  => 'text',
             'label' => 'Nama singkat',
-            'std'   => ( $perm ? $perm->name : '' ),
-            'desc'  => 'Nama singkan untuk kelompok pengguna, tidak diperbolehkan menggunakan spasi.',
+            'std'   => ( $perm ? $perm->permission : '' ),
+            'desc'  => 'Nama singkan untuk Hak akses pengguna, tidak diperbolehkan menggunakan spasi.',
             'validation'=> ( !$perm ? 'required' : '' ) );
 
         $fields[]   = array(
-            'name'  => 'perm-default',
-            'type'  => 'radiobox',
-            'label' => 'Jadikan default',
-            'option'=> array(
-                0 => 'Tidak',
-                1 => 'Ya'),
-            'std'   => ( $perm ? $perm->default : 0 ),
+            'name'  => 'perm-desc',
+            'type'  => 'text',
+            'label' => 'Nama lengkap',
+            'std'   => ( $perm ? $perm->description : '' ),
+            'desc'  => 'Nama lengkap untuk Hak akses pengguna, diperbolehkan menggunakan spasi.',
+            'validation'=> ( !$perm ? 'required' : '' ) );
+
+        $fields[]   = array(
+            'name'  => 'perm-parent',
+            'type'  => 'dropdown',
+            'label' => 'Difisi',
+            'option'=> $this->authen->get_parent_perms(),
+            'std'   => ( $perm ? $perm->parent : 0 ),
             'desc'  => 'Pilih <em>Ya</em> untuk menjadikna perm ini sebagai perm bawaan setiap mendambahkan pengguna baru, atau pilih <em>Tidak</em> untuk sebaliknya.',
             'validation'=> ( !$perm ? 'required' : '' ) );
 
@@ -578,7 +565,7 @@ class Pengguna extends BAKA_Controller
 
         if ( $form->validate_submition() )
         {
-            if ( $user_id == '' )
+            if ( $perm_id == '' )
             {
                 $form_data  =  $form->submited_data();
 
@@ -586,23 +573,19 @@ class Pengguna extends BAKA_Controller
                 $user_data['full']      = $form_data['perm-full'];
                 $user_data['default']   = $form_data['perm-default'];
 
-                $result = $this->app_users->create_user( $user_data, $use_username );
+                $result = $this->authen->create_user( $user_data, $use_username );
             }
             else
             {
-                $result = $this->app_users->update_user( $user_id, $form->submited_data(), $use_username );
+                $result = $this->authen->update_user( $perm_id, $form->submited_data(), $use_username );
             }
 
-            if ( $result )
+            foreach ( $this->authen->messages() as $level => $message )
             {
-                $this->session->set_flashdata('success', $this->baka_lib->messages());
-                redirect( $this->data['page_link'] );
+                $this->session->set_flashdata( $level, $message );
             }
-            else
-            {
-                $this->session->set_flashdata('error', $this->baka_lib->errors());
-                redirect( current_url() );
-            }
+
+            redirect( $result ? $this->data['page_link'] : current_url() );
         }
 
         $this->data['panel_body'] = $form->generate();
@@ -619,28 +602,15 @@ class Pengguna extends BAKA_Controller
         $this->load->library('baka_pack/gridr');
 
         $grid = $this->gridr->identifier('permission_id')
-                                ->set_baseurl($this->data['page_link'])
-                                ->set_column('Hak akses', 'description, permission', '45%', TRUE, '<strong>%s</strong><br><small>%s</small>')
-                                ->set_column('Difisi', 'parent', '40%')
-                                ->set_buttons('form/', 'eye-open', 'primary', 'Lihat data')
-                                ->set_buttons('delete/', 'trash', 'danger', 'Hapus data');
+                            ->set_baseurl($this->data['page_link'])
+                            ->set_column('Hak akses', 'description, permission', '45%', TRUE, '<strong>%s</strong><br><small>%s</small>')
+                            ->set_column('Difisi', 'parent', '40%')
+                            ->set_buttons('form/', 'eye-open', 'primary', 'Lihat data')
+                            ->set_buttons('delete/', 'trash', 'danger', 'Hapus data');
 
-        $this->data['panel_body'] = $grid->make_table( $this->authen->get_perms_query() );
+        $this->data['panel_body'] = $grid->make_table( $this->authen->get_perms() );
 
         $this->themee->load('pages/panel_data', $this->data);
-    }
-
-    private function _act_btn( $form_link, $delete_link )
-    {
-        $class  = 'bs-tooltip btn btn-sm btn-';
-        $icons  = 'glyphicon glyphicon-';
-
-        $output = '<div class="btn-group btn-group-justified">'
-                . anchor( $this->data['page_link'].$form_link, '<span class="'.$icons.'eye-open">', 'title="Lihat data" class="'.$class.'primary"' )
-                . anchor( $this->data['page_link'].$delete_link, '<span class="'.$icons.'trash">', 'title="Hapus data" class="'.$class.'danger"')
-                . '</div>';
-
-        return $output;
     }
 }
 

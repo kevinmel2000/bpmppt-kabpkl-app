@@ -8,8 +8,6 @@ class Gangguan extends App_main
 
 	public function __construct()
 	{
-		// $this->authen->permit( 'manage_'.$this->slug );
-
 		log_message('debug', "#BAKA_modul: Gangguan_model Class Initialized");
 	}
 

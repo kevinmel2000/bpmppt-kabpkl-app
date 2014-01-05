@@ -34,6 +34,8 @@ class Internal extends BAKA_Controller
     {
         parent::__construct();
 
+        $this->verify_login();
+
         $this->themee->add_navbar( 'admin_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
         $this->app_main->admin_navbar( 'admin_sidebar', 'side' );
     }
@@ -189,7 +191,7 @@ class Internal extends BAKA_Controller
 
         $fields[]   = array(
             'name'  => 'email_protocol',
-            'type'  => 'radiobox',
+            'type'  => 'radio',
             'label' => 'Email Protocol',
             'option'=> array(
                 'mail'      => 'Mail',
@@ -245,7 +247,7 @@ class Internal extends BAKA_Controller
 
         $fields[]   = array(
             'name'  => 'email_wordwrap',
-            'type'  => 'radiobox',
+            'type'  => 'radio',
             'label' => 'Wordwrap',
             'option'=> array(
                 0   => 'Tidak',
@@ -254,7 +256,7 @@ class Internal extends BAKA_Controller
 
         $fields[]   = array(
             'name'  => 'email_mailtype',
-            'type'  => 'radiobox',
+            'type'  => 'radio',
             'label' => 'Tipe email',
             'option'=> array(
                 'text'  => 'Teks Email',
@@ -329,7 +331,7 @@ class Internal extends BAKA_Controller
 
         $fields[]   = array(
             'name'  => 'auth_allow_registration',
-            'type'  => 'radiobox',
+            'type'  => 'radio',
             'label' => 'Ijinkan registrasi Umum',
             'std'   => Setting::get('auth_allow_registration'),
             'option'=> array(
@@ -340,7 +342,7 @@ class Internal extends BAKA_Controller
 
         $fields[]   = array(
             'name'  => 'auth_email_activation',
-            'type'  => 'radiobox',
+            'type'  => 'radio',
             'label' => 'Aktivasi via email',
             'std'   => Setting::get('auth_email_activation'),
             'option'=> array(
@@ -348,19 +350,19 @@ class Internal extends BAKA_Controller
                 1   => 'Ya' ),
             'validation'=>'required' );
 
-        $auth_email_act_expire = Setting::get('auth_email_act_expire');
+        $email_expired = Setting::get('auth_email_act_expire');
 
         $fields[]   = array(
             'name'  => 'auth_email_act_expire',
             'type'  => 'number',
             'label' => 'Batas aktivasi email',
-            'std'   => $auth_email_act_expire,
-            'desc'  => 'Batas waktu aktivasi email dalam detik. Nilai '.$auth_email_act_expire.' detik = '.second_to_day( $auth_email_act_expire ).' hari.',
+            'std'   => $email_expired,
+            'desc'  => 'Batas waktu aktivasi email dalam detik. Nilai '.$email_expired.' detik = '.second_to_day( $email_expired ).' hari.',
             'validation'=>'required|numeric' );
 
         $fields[]   = array(
             'name'  => 'auth_use_username',
-            'type'  => 'radiobox',
+            'type'  => 'radio',
             'label' => 'Gunakan username',
             'std'   => Setting::get('auth_use_username'),
             'option'=> array(
@@ -376,7 +378,7 @@ class Internal extends BAKA_Controller
 
         $fields[]   = array(
             'name'  => 'auth_login_by_username',
-            'type'  => 'radiobox',
+            'type'  => 'radio',
             'label' => 'Gunakan username saat login',
             'std'   => Setting::get('auth_login_by_username'),
             'option'=> array(
@@ -386,7 +388,7 @@ class Internal extends BAKA_Controller
 
         $fields[]   = array(
             'name'  => 'auth_login_by_email',
-            'type'  => 'radiobox',
+            'type'  => 'radio',
             'label' => 'Gunakan email saat login',
             'std'   => Setting::get('auth_login_by_email'),
             'option'=> array(
@@ -396,7 +398,7 @@ class Internal extends BAKA_Controller
 
         $fields[]   = array(
             'name'  => 'auth_login_record_ip',
-            'type'  => 'radiobox',
+            'type'  => 'radio',
             'label' => 'Rekam IP',
             'std'   => Setting::get('auth_login_record_ip'),
             'option'=> array(
@@ -406,7 +408,7 @@ class Internal extends BAKA_Controller
 
         $fields[]   = array(
             'name'  => 'auth_login_count_attempts',
-            'type'  => 'radiobox',
+            'type'  => 'radio',
             'label' => 'Hitung kegagalan login',
             'std'   => Setting::get('auth_login_count_attempts'),
             'option'=> array(
@@ -422,14 +424,14 @@ class Internal extends BAKA_Controller
             'desc'  => 'batas maksimum login untuk tiap pengguna',
             'validation'=>'required' );
 
-        $auth_login_attempt_expire = Setting::get('auth_login_attempt_expire');
+        $login_expired = Setting::get('auth_login_attempt_expire');
 
         $fields[]   = array(
             'name'  => 'auth_login_attempt_expire',
             'type'  => 'number',
             'label' => 'Masa kadaluarsa login',
-            'std'   => $auth_login_attempt_expire,
-            'desc'  => 'Batas waktu pengguna dapat login kembali dalam detik. Nilai '.$auth_login_attempt_expire.' detik = '.second_to_day( $auth_login_attempt_expire ).' hari.',
+            'std'   => $login_expired,
+            'desc'  => 'Batas waktu pengguna dapat login kembali dalam detik. Nilai '.$login_expired.' detik = '.second_to_day( $login_expired ).' hari.',
             'validation'=>'required' );
 
         $fields[]   = array(
@@ -439,7 +441,7 @@ class Internal extends BAKA_Controller
 
         $fields[]   = array(
             'name'  => 'auth_captcha_registration',
-            'type'  => 'radiobox',
+            'type'  => 'radio',
             'label' => 'Gunakan captcha',
             'std'   => Setting::get('auth_captcha_registration'),
             'option'=> array(
@@ -449,7 +451,7 @@ class Internal extends BAKA_Controller
 
         $fields[]   = array(
             'name'  => 'auth_use_recaptcha',
-            'type'  => 'radiobox',
+            'type'  => 'radio',
             'label' => 'Gunakan reCaptcha',
             'std'   => Setting::get('auth_use_recaptcha'),
             'option'=> array(
@@ -519,7 +521,7 @@ class Internal extends BAKA_Controller
         $this->load->library('baka_pack/former');
 
         $form = $this->former->init( array(
-            'name' => 'app-settings',
+            'name'   => 'app-settings',
             'action' => current_url(),
             'fields' => $fields,
             ));
@@ -557,8 +559,6 @@ class Internal extends BAKA_Controller
         $this->data['panel_body'] = $form->generate();
     }
 
-    private $env_table = 'system_env';
-
     public function prop( $page = '', $prop_id = NULL )
     {
         $this->data['page_link'] = 'admin/internal/prop/';
@@ -595,11 +595,11 @@ class Internal extends BAKA_Controller
                           ->or_where('user_id', 0);
 
         $grid = $this->gridr->identifier('id')
-                                ->set_baseurl($this->data['page_link'])
-                                ->set_column('Key', 'env_key', '45%', FALSE, '<strong>%s</strong>')
-                                ->set_column('Value', 'env_value', '40%', FALSE, '%s')
-                                ->set_buttons('form/', 'eye-open', 'primary', 'Lihat data')
-                                ->set_buttons('hapus/', 'trash', 'danger', 'Hapus data');
+                            ->set_baseurl($this->data['page_link'])
+                            ->set_column('Key', 'env_key', '45%', FALSE, '<strong>%s</strong>')
+                            ->set_column('Value', 'env_value', '40%', FALSE, '%s')
+                            ->set_buttons('form/', 'eye-open', 'primary', 'Lihat data')
+                            ->set_buttons('hapus/', 'trash', 'danger', 'Hapus data');
                           
         $this->data['panel_body'] = $grid->make_table( $query );
 

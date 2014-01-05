@@ -34,6 +34,8 @@ class Layanan extends BAKA_Controller
     {
         parent::__construct();
 
+        $this->verify_login();
+
         $this->themee->set_title('Administrasi data');
 
         $this->themee->add_navbar( 'data_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
@@ -317,7 +319,7 @@ class Layanan extends BAKA_Controller
             // $fields[]    = array(
             //  'name'  => 'data_sort',
             //  'label' => 'Urutan',
-            //  'type'  => 'radiobox',
+            //  'type'  => 'radio',
             //  'option'=> array(
             //      'asc'   => 'Ascending',
             //      'des'   => 'Descending'),
@@ -327,7 +329,7 @@ class Layanan extends BAKA_Controller
             // $fields[]    = array(
             //  'name'  => 'data_output',
             //  'label' => 'Pilihan Output',
-            //  'type'  => 'radiobox',
+            //  'type'  => 'radio',
             //  'option'=> array(
             //      'print' => 'Cetak Langsung',
             //      'excel' => 'Export ke file MS Excel'),

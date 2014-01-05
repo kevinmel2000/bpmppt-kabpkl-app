@@ -162,7 +162,7 @@ class BAKA_Form_validation extends CI_Form_validation
      */
     function is_username_available( $username )
     {
-        if ( ! $this->CI->authen->is_username_available( $username ) )
+        if ( $this->CI->authen->check_username( $username ) )
         {
             $this->set_message( 'is_username_available', _x('auth_username_in_use') );
             return FALSE;
@@ -182,7 +182,7 @@ class BAKA_Form_validation extends CI_Form_validation
      */
     function is_email_available( $email )
     {
-        if ( ! $this->CI->authen->is_email_available( $email ) )
+        if ( $this->CI->authen->check_email( $email ) )
         {
             $this->set_message( 'is_email_available', _x('auth_email_in_use') );
             return FALSE;
@@ -202,7 +202,7 @@ class BAKA_Form_validation extends CI_Form_validation
      */
     function is_username_exists( $username )
     {
-        if ( $this->is_username_available( $username ) === TRUE  )
+        if ( !$this->CI->authen->check_username( $username ) )
         {
             $this->set_message( 'is_username_available', _x('auth_username_not_exists') );
             return FALSE;
@@ -222,7 +222,7 @@ class BAKA_Form_validation extends CI_Form_validation
      */
     function is_email_exists( $email )
     {
-        if ( $this->is_email_available( $email ) === TRUE )
+        if ( !$this->CI->authen->check_email( $email ) )
         {
             $this->set_message( 'is_email_available', _x('auth_email_not_exists') );
             return FALSE;
@@ -233,14 +233,21 @@ class BAKA_Form_validation extends CI_Form_validation
 
     // -------------------------------------------------------------------------
 
-    function min_username_length( $string )
+    function valid_username_length( $string )
     {
-        $auth_username_min_length = Setting::get('auth_username_min_length');
+        $min_length = Setting::get('auth_username_min_length');
+        $max_length = Setting::get('auth_username_max_length');
 
-        if ( !$this->min_length( $string, $auth_username_min_length ) )
+        if ( !$this->min_length( $string, $min_length ) )
         {
-            $this->set_message( 'min_username_length',
-                _x('auth_username_min_length', array($auth_username_min_length)) );
+            $this->set_message( 'valid_username_length', _x('auth_username_min_length', $min_length) );
+            
+            return FALSE;
+        }
+
+        if ( !$this->max_length( $string, $max_length ) )
+        {
+            $this->set_message( 'valid_username_length', _x('auth_username_max_length', $max_length) );
             
             return FALSE;
         }
@@ -250,48 +257,21 @@ class BAKA_Form_validation extends CI_Form_validation
 
     // -------------------------------------------------------------------------
 
-    function max_username_length( $string )
+    function valid_password_length( $string )
     {
-        $auth_username_max_length = Setting::get('auth_username_max_length');
+        $min_length = Setting::get('auth_password_min_length');
+        $max_length = Setting::get('auth_password_max_length');
 
-        if ( !$this->max_length( $string, $auth_username_max_length ) )
+        if ( !$this->min_length( $string, $min_length ) )
         {
-            $this->set_message( 'max_username_length',
-                _x('auth_username_max_length', array($auth_username_max_length)) );
+            $this->set_message( 'valid_password_length', _x('auth_password_min_length', $min_length) );
             
             return FALSE;
         }
 
-        return TRUE;
-    }
-
-    // -------------------------------------------------------------------------
-
-    function min_password_length( $string )
-    {
-        $auth_password_min_length = Setting::get('auth_password_min_length');
-
-        if ( !$this->min_length( $string, $auth_password_min_length ) )
+        if ( !$this->max_length( $string, $max_length ) )
         {
-            $this->set_message( 'min_password_length',
-                _x('auth_password_min_length', array($auth_password_min_length)) );
-            
-            return FALSE;
-        }
-
-        return TRUE;
-    }
-
-    // -------------------------------------------------------------------------
-
-    function max_password_length( $string )
-    {
-        $auth_password_max_length = Setting::get('auth_password_max_length');
-
-        if ( !$this->max_length( $string, $auth_password_max_length ) )
-        {
-            $this->set_message( 'max_password_length',
-                _x('auth_password_max_length', array($auth_password_max_length)) );
+            $this->set_message( 'valid_password_length', _x('auth_password_max_length', $max_length) );
             
             return FALSE;
         }
