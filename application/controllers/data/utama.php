@@ -42,10 +42,9 @@ class Utama extends BAKA_Controller
         $this->themee->set_title('Dashboard');
 
         $this->themee->add_navbar( 'data_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
-        $this->app_main->data_navbar( 'data_sidebar', 'side' );
+        $this->data_navbar( 'data_sidebar', 'side' );
 
-        $this->modules_arr          = $this->app_data->get_modules_assoc();
-        $this->modules_count_arr    = $this->app_data->count_data();
+        $this->modules_arr          = $this->bpmppt->get_modules_assoc();
 
         $this->data['page_link'] = 'data/';
     }
@@ -69,11 +68,12 @@ class Utama extends BAKA_Controller
             foreach ($this->modules_arr as $alias => $name)
             {
                 $this->data['tool_buttons']['Baru:dd|primary'][$alias.'/form'] = $name;
+                $this->data['counter'][$alias] = $this->bpmppt->count_data($alias);
             }
 
             $this->data['tool_buttons']['utama/laporan'] = 'Laporan|default';
-            $this->data['panel_body']   = $this->app_data->get_tables( $this->data['page_link'] );
-            $this->data['counter']      = $this->modules_count_arr;
+            $this->data['panel_body']   = '' /*$this->bpmppt->get_tables( $this->data['page_link'] )*/;
+            
 
             $this->themee->load('pages/panel_alldata', $this->data);
         }
@@ -87,7 +87,7 @@ class Utama extends BAKA_Controller
     {
         $this->data['panel_title'] = $this->themee->set_title('Laporan data');
 
-        foreach ( $this->app_data->get_modules_object() as $module )
+        foreach ( $this->bpmppt->get_modules_object() as $module )
         {
             $modules[$module->link] = $module->label;
         }
@@ -168,8 +168,8 @@ class Utama extends BAKA_Controller
         {
             $submited_data = $form->submited_data();
 
-            $data = $this->app_data->skpd_properties();
-            $data['layanan'] = $this->app_data->get_label($submited_data['data_type']);
+            $data = $this->bpmppt->skpd_properties();
+            $data['layanan'] = $this->bpmppt->get_label($submited_data['data_type']);
             $data['results'] = array();
 
             $this->themee->load('prints/reports/'.$submited_data['data_type'], $data, 'laporan');
@@ -184,9 +184,9 @@ class Utama extends BAKA_Controller
 
     public function cetak( $data_type, $data_id = FALSE )
     {
-        $data = $this->app_data->skpd_properties();
+        $data = $this->bpmppt->skpd_properties();
 
-        // $data = array_merge( (array) $data, (array) $this->app_data->get_fulldata_by_id( $data_id ) );
+        // $data = array_merge( (array) $data, (array) $this->bpmppt->get_fulldata_by_id( $data_id ) );
 
         $this->themee->load('prints/reports/'.$data_type, $data, 'laporan');
     }

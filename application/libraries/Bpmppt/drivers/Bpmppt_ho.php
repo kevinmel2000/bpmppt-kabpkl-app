@@ -1,20 +1,71 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Gangguan extends App_main
-{
-	public $kode = 'HO';
-	public $slug = 'izin_gangguan';
-	public $nama = 'Izin Gangguan';
+/**
+ * BPMPPT driver
+ *
+ * NOTICE OF LICENSE
+ *
+ * Licensed under the Open Software License version 3.0
+ *
+ * This source file is subject to the Open Software License (OSL 3.0) that is
+ * bundled with this package in the files license.txt / license.rst.  It is
+ * also available through the world wide web at this URL:
+ * http://opensource.org/licenses/OSL-3.0
+ *
+ * @package     BPMPPT
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) Fery Wardiyanto. (ferywardiyanto@gmail.com)
+ * @license     http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ * @since       Version 1.0
+ * @filesource
+ */
 
+// =============================================================================
+
+/**
+ * BPMPPT Izin Gangguan Driver
+ *
+ * @subpackage	Drivers
+ */
+class Bpmppt_ho extends CI_Driver
+{
+	/**
+	 * Document property
+	 *
+	 * @var  string  $code
+	 * @var  string  $alias
+	 * @var  string  $name
+	 */
+	public $code = 'HO';
+	public $alias = 'izin_gangguan';
+	public $name = 'Izin Gangguan';
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Default class constructor,
+	 * Just simply log this class when it loaded
+	 */
 	public function __construct()
 	{
-		log_message('debug', "#BAKA_modul: Gangguan_model Class Initialized");
+		// $this->baka_auth->permit( 'manage_'.$this->alias );
+
+		log_message('debug', "#BPMPPT_driver: Gangguan_model Class Initialized");
 	}
 
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Form fields from this driver
+	 *
+	 * @param   bool    $data_obj  Data field
+	 *
+	 * @return  array
+	 */
 	public function form( $data_obj = FALSE )
 	{
 		$fields[]	= array(
-			'name'	=> $this->slug.'_surat_jenis_pengajuan',
+			'name'	=> $this->alias.'_surat_jenis_pengajuan',
 			'label'	=> 'Jenis Pengajuan',
 			'type'	=> 'dropdown',
 			'attr'	=> ( $data_obj ? 'disabled' : '' ),
@@ -26,20 +77,20 @@ class Gangguan extends App_main
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_fieldset_data_pemohon',
+			'name'	=> $this->alias.'_fieldset_data_pemohon',
 			'label'	=> 'Data Pemohon',
 			'attr'	=> ( $data_obj ? array('disabled'=>'') : '' ),
 			'type'	=> 'fieldset' );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_pemohon_nama',
+			'name'	=> $this->alias.'_pemohon_nama',
 			'label'	=> 'Nama Lengkap',
 			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->pemohon_nama : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_pemohon_kerja',
+			'name'	=> $this->alias.'_pemohon_kerja',
 			'label'	=> 'Pekerjaan',
 			'type'	=> 'dropdown',
 			'std'	=> ( $data_obj ? $data_obj->pemohon_nama : ''),
@@ -48,96 +99,96 @@ class Gangguan extends App_main
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_pemohon_alamat',
+			'name'	=> $this->alias.'_pemohon_alamat',
 			'label'	=> 'Alamat',
 			'type'	=> 'textarea',
 			'std'	=> ( $data_obj ? $data_obj->pemohon_alamat : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_pemohon_telp',
+			'name'	=> $this->alias.'_pemohon_telp',
 			'label'	=> 'Nomor Telpon/HP',
 			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->pemohon_telp : ''),
 			'validation'=> 'numeric|max_length[12]' );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_fieldset_data_perusahaan',
+			'name'	=> $this->alias.'_fieldset_data_perusahaan',
 			'label'	=> 'Data Perusahaan',
 			'attr'	=> ( $data_obj ? array('disabled'=>'') : '' ),
 			'type'	=> 'fieldset' );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_nama',
+			'name'	=> $this->alias.'_usaha_nama',
 			'label'	=> 'Nama Perusahaan',
 			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->usaha_nama : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_jenis',
+			'name'	=> $this->alias.'_usaha_jenis',
 			'label'	=> 'Jenis Usaha',
 			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->usaha_jenis : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_alamat',
+			'name'	=> $this->alias.'_usaha_alamat',
 			'label'	=> 'Alamat Kantor',
 			'type'	=> 'textarea',
 			'std'	=> ( $data_obj ? $data_obj->usaha_alamat : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_lokasi',
+			'name'	=> $this->alias.'_usaha_lokasi',
 			'label'	=> 'Lokasi Perusahaan',
 			'type'	=> 'textarea',
 			'std'	=> ( $data_obj ? $data_obj->usaha_lokasi : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_luas',
+			'name'	=> $this->alias.'_usaha_luas',
 			'label'	=> 'Luas perusahaan (M<sup>2</sup>)',
 			'type'	=> 'number',
 			'std'	=> ( $data_obj ? $data_obj->usaha_luas : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_pekerja',
+			'name'	=> $this->alias.'_usaha_pekerja',
 			'label'	=> 'Jumlah pekerja',
 			'type'	=> 'number',
 			'std'	=> ( $data_obj ? $data_obj->usaha_pekerja : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_fieldset_data_tetangga',
+			'name'	=> $this->alias.'_fieldset_data_tetangga',
 			'label'	=> 'Data Tetangga',
 			'attr'	=> ( $data_obj ? array('disabled'=>'') : '' ),
 			'type'	=> 'fieldset' );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_tetangga_timur',
+			'name'	=> $this->alias.'_usaha_tetangga_timur',
 			'label'	=> 'Tetangga sebelah timur',
 			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->usaha_tetangga_timur : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_tetangga_utara',
+			'name'	=> $this->alias.'_usaha_tetangga_utara',
 			'label'	=> 'Tetangga sebelah utara',
 			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->usaha_tetangga_utara : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_tetangga_selatan',
+			'name'	=> $this->alias.'_usaha_tetangga_selatan',
 			'label'	=> 'Tetangga sebelah selatan',
 			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->usaha_tetangga_selatan : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_tetangga_barat',
+			'name'	=> $this->alias.'_usaha_tetangga_barat',
 			'label'	=> 'Tetangga sebelah barat',
 			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->usaha_tetangga_barat : ''),
@@ -145,7 +196,31 @@ class Gangguan extends App_main
 		
 		return $fields;
 	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Format cetak produk perijinan
+	 *
+	 * @return  mixed
+	 */
+	public function produk()
+	{
+		return false;
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Format output laporan
+	 *
+	 * @return  mixed
+	 */
+	public function laporan()
+	{
+		return false;
+	}
 }
 
-/* End of file ho_model.php */
-/* Location: ./application/models/layanan/ho_model.php */
+/* End of file Bpmppt_ho.php */
+/* Location: ./application/libraries/Bpmppt/drivers/Bpmppt_ho.php */

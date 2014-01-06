@@ -1,32 +1,80 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Reklame extends App_main
-{
-	public $slug = 'izin_reklame';
-	public $nama = 'Izin Reklame';
+/**
+ * BPMPPT driver
+ *
+ * NOTICE OF LICENSE
+ *
+ * Licensed under the Open Software License version 3.0
+ *
+ * This source file is subject to the Open Software License (OSL 3.0) that is
+ * bundled with this package in the files license.txt / license.rst.  It is
+ * also available through the world wide web at this URL:
+ * http://opensource.org/licenses/OSL-3.0
+ *
+ * @package     BPMPPT
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) Fery Wardiyanto. (ferywardiyanto@gmail.com)
+ * @license     http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ * @since       Version 1.0
+ * @filesource
+ */
 
+// =============================================================================
+
+/**
+ * BPMPPT Izin Reklame Driver
+ *
+ * @subpackage	Drivers
+ */
+class Bpmppt_reklame extends CI_Driver
+{
+	/**
+	 * Document property
+	 *
+	 * @var  string  $alias
+	 * @var  string  $name
+	 */
+	public $alias = 'izin_reklame';
+	public $name = 'Izin Reklame';
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Default class constructor,
+	 * Just simply log this class when it loaded
+	 */
 	public function __construct()
 	{
-		log_message('debug', "#BAKA_modul: Reklame_model Class Initialized");
+		log_message('debug', "#BPMPPT_driver: Reklame_model Class Initialized");
 	}
 
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Form fields from this driver
+	 *
+	 * @param   bool    $data_obj  Data field
+	 *
+	 * @return  array
+	 */
 	public function form( $data_obj = FALSE )
 	{
 		$fields[]	= array(
-			'name'	=> $this->slug.'_fieldset_data_pemohon',
+			'name'	=> $this->alias.'_fieldset_data_pemohon',
 			'label'	=> 'Data Pemohon',
 			'attr'	=> ( $data_obj ? 'disabled' : '' ),
 			'type'	=> 'fieldset' );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_pemohon_nama',
+			'name'	=> $this->alias.'_pemohon_nama',
 			'label'	=> 'Nama lengkap',
 			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->pemohon_nama : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_pemohon_kerja',
+			'name'	=> $this->alias.'_pemohon_kerja',
 			'label'	=> 'Pekerjaan',
 			'type'	=> 'dropdown',
 			'std'	=> ( $data_obj ? $data_obj->pemohon_kerja : ''),
@@ -35,48 +83,48 @@ class Reklame extends App_main
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_pemohon_alamat',
+			'name'	=> $this->alias.'_pemohon_alamat',
 			'label'	=> 'Alamat',
 			'type'	=> 'textarea',
 			'std'	=> ( $data_obj ? $data_obj->pemohon_alamat : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_pemohon_telp',
+			'name'	=> $this->alias.'_pemohon_telp',
 			'label'	=> 'No. Telp',
 			'type'	=> 'tel',
 			'std'	=> ( $data_obj ? $data_obj->pemohon_telp : ''),
 			'validation'=> 'numeric' );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_fieldset_data_reklame',
+			'name'	=> $this->alias.'_fieldset_data_reklame',
 			'label'	=> 'Data Reklame',
 			'attr'	=> ( $data_obj ? 'disabled' : '' ),
 			'type'	=> 'fieldset' );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_lokasi_jenis',
+			'name'	=> $this->alias.'_lokasi_jenis',
 			'label'	=> 'Jenis Reklame',
 			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->reklame_jenis : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_reklame_juml',
+			'name'	=> $this->alias.'_reklame_juml',
 			'label'	=> 'Jumlah',
 			'type'	=> 'number',
 			'std'	=> ( $data_obj ? $data_obj->reklame_juml : ''),
 			'validation'=> 'required|numeric' );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_reklame_lokasi',
+			'name'	=> $this->alias.'_reklame_lokasi',
 			'label'	=> 'Lokasi pemasangan',
 			'type'	=> 'textarea',
 			'std'	=> ( $data_obj ? $data_obj->reklame_lokasi : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_reklame_ukuran',
+			'name'	=> $this->alias.'_reklame_ukuran',
 			'label'	=> 'Ukuran (P x L)',
 			'type'	=> 'subfield',
 			'fields'=> array(
@@ -98,7 +146,7 @@ class Reklame extends App_main
 			);
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_reklame_range',
+			'name'	=> $this->alias.'_reklame_range',
 			'label'	=> 'Jangka waktu',
 			'type'	=> 'subfield',
 			'fields'=> array(
@@ -120,14 +168,14 @@ class Reklame extends App_main
 			);
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_reklame_tema',
+			'name'	=> $this->alias.'_reklame_tema',
 			'label'	=> 'Tema/Isi',
 			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->reklame_tema : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_reklame_ket',
+			'name'	=> $this->alias.'_reklame_ket',
 			'label'	=> 'Keterangan',
 			'type'	=> 'textarea',
 			'std'	=> ( $data_obj ? $data_obj->reklame_ket : ''),
@@ -135,7 +183,31 @@ class Reklame extends App_main
 		
 		return $fields;
 	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Format cetak produk perijinan
+	 *
+	 * @return  mixed
+	 */
+	public function produk()
+	{
+		return false;
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Format output laporan
+	 *
+	 * @return  mixed
+	 */
+	public function laporan()
+	{
+		return false;
+	}
 }
 
-/* End of file Izin_reklame.php */
-/* Location: ./application/models/app/Izin_reklame.php */
+/* End of file Bpmppt_reklame.php */
+/* Location: ./application/libraries/Bpmppt/drivers/Bpmppt_reklame.php */

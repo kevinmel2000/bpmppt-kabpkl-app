@@ -1,5 +1,3 @@
-<?php //load_view('header') ?>
-
 <section id="contents">
 	<header id="contents-header">
 		<div class="container">
@@ -16,5 +14,3 @@
 		</div>
 	</section>
 </section>
-
-<?php //load_view('footer') ?>

@@ -1,20 +1,69 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Usaha_perdagangan extends App_main
-{
-	public $kode = 'SIUP';
-	public $slug = 'izin_usaha_perdagangan';
-	public $nama = 'Surat Izin Usaha Perdangangan';
+/**
+ * BPMPPT driver
+ *
+ * NOTICE OF LICENSE
+ *
+ * Licensed under the Open Software License version 3.0
+ *
+ * This source file is subject to the Open Software License (OSL 3.0) that is
+ * bundled with this package in the files license.txt / license.rst.  It is
+ * also available through the world wide web at this URL:
+ * http://opensource.org/licenses/OSL-3.0
+ *
+ * @package     BPMPPT
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) Fery Wardiyanto. (ferywardiyanto@gmail.com)
+ * @license     http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ * @since       Version 1.0
+ * @filesource
+ */
 
+// =============================================================================
+
+/**
+ * BPMPPT Surat Izin Usaha Perdangangan Driver
+ *
+ * @subpackage	Drivers
+ */
+class Bpmppt_siup extends CI_Driver
+{
+	/**
+	 * Document property
+	 *
+	 * @var  string  $code
+	 * @var  string  $alias
+	 * @var  string  $name
+	 */
+	public $code = 'SIUP';
+	public $alias = 'surat_izin_usaha_perdagangan';
+	public $name = 'Surat Izin Usaha Perdangangan';
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Default class constructor,
+	 * Just simply log this class when it loaded
+	 */
 	public function __construct()
 	{
-		log_message('debug', "#BAKA_modul: Usaha_perdagangan_model Class Initialized");
+		log_message('debug', "#BPMPPT_driver: Usaha_perdagangan_model Class Initialized");
 	}
 
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Form fields from this driver
+	 *
+	 * @param   bool    $data_obj  Data field
+	 *
+	 * @return  array
+	 */
 	public function form( $data_obj = FALSE )
 	{
 		$fields[]	= array(
-			'name'	=> $this->slug.'_pengajuan_jenis',
+			'name'	=> $this->alias.'_pengajuan_jenis',
 			'label'	=> 'Jenis Pengajuan',
 			'type'	=> 'dropdown',
 			'attr'	=> ( $data_obj ? 'disabled' : '' ),
@@ -27,41 +76,41 @@ class Usaha_perdagangan extends App_main
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_pembaruan_ke',
+			'name'	=> $this->alias.'_pembaruan_ke',
 			'label'	=> 'Daftar ulang Ke',
 			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->pembaruan_ke : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_fieldset_data_pemilik',
+			'name'	=> $this->alias.'_fieldset_data_pemilik',
 			'label'	=> 'Data Pemilik Perusahaan',
 			'attr'	=> ( $data_obj ? 'disabled' : '' ),
 			'type'	=> 'fieldset' );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_pemilik_nama',
+			'name'	=> $this->alias.'_pemilik_nama',
 			'label'	=> 'Nama lengkap',
 			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->pemilik_nama : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_pemilik_ktp',
+			'name'	=> $this->alias.'_pemilik_ktp',
 			'label'	=> 'Nomor KTP',
 			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->pemilik_ktp : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_pemilik_alamat',
+			'name'	=> $this->alias.'_pemilik_alamat',
 			'label'	=> 'Alamat',
 			'type'	=> 'textarea',
 			'std'	=> ( $data_obj ? $data_obj->pemilik_alamat : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_pemilik_lahir',
+			'name'	=> $this->alias.'_pemilik_lahir',
 			'label'	=> 'Tempat &amp; Tgl. Lahir',
 			'type'	=> 'subfield',
 			'fields'=> array(
@@ -85,7 +134,7 @@ class Usaha_perdagangan extends App_main
 				));
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_pemilik_no',
+			'name'	=> $this->alias.'_pemilik_no',
 			'label'	=> 'Nomor Telp/Fax',
 			'type'	=> 'subfield',
 			'fields'=> array(
@@ -106,27 +155,27 @@ class Usaha_perdagangan extends App_main
 				));
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_pemilik_usaha',
+			'name'	=> $this->alias.'_pemilik_usaha',
 			'label'	=> 'Perusahaan',
 			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->pemilik_usaha : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_fieldset_data_usaha',
+			'name'	=> $this->alias.'_fieldset_data_usaha',
 			'label'	=> 'Data Perusahaan',
 			'attr'	=> ( $data_obj ? 'disabled' : '' ),
 			'type'	=> 'fieldset' );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_nama',
+			'name'	=> $this->alias.'_usaha_nama',
 			'label'	=> 'Nama lengkap',
 			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->usaha_nama : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_skala',
+			'name'	=> $this->alias.'_usaha_skala',
 			'label'	=> 'Skala Perusahaan',
 			'type'	=> 'dropdown',
 			'attr'	=> ( $data_obj ? 'disabled' : '' ),
@@ -141,21 +190,21 @@ class Usaha_perdagangan extends App_main
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_lembaga',
+			'name'	=> $this->alias.'_usaha_lembaga',
 			'label'	=> 'Kelembagaan',
 			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->usaha_lembaga : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_kegiatan',
+			'name'	=> $this->alias.'_usaha_kegiatan',
 			'label'	=> 'Kegiatan Usaha (KBLI)',
 			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->usaha_kegiatan : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_lembaga',
+			'name'	=> $this->alias.'_usaha_lembaga',
 			'label'	=> 'Kelembagaan',
 			'type'	=> 'multiselect',
 			'attr'	=> ( $data_obj ? 'disabled' : '' ),
@@ -175,21 +224,21 @@ class Usaha_perdagangan extends App_main
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_komoditi',
+			'name'	=> $this->alias.'_usaha_komoditi',
 			'label'	=> 'Komoditi Usaha',
 			'type'	=> 'textarea',
 			'std'	=> ( $data_obj ? $data_obj->usaha_komoditi : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_alamat',
+			'name'	=> $this->alias.'_usaha_alamat',
 			'label'	=> 'Alamat',
 			'type'	=> 'textarea',
 			'std'	=> ( $data_obj ? $data_obj->usaha_alamat : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_no',
+			'name'	=> $this->alias.'_usaha_no',
 			'label'	=> 'Nomor Telp/Fax',
 			'type'	=> 'subfield',
 			'fields'=> array(
@@ -210,7 +259,7 @@ class Usaha_perdagangan extends App_main
 				));
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_pendirian_akta',
+			'name'	=> $this->alias.'_usaha_pendirian_akta',
 			'label'	=> 'Akta Pendirian',
 			'type'	=> 'subfield',
 			'fields'=> array(
@@ -231,7 +280,7 @@ class Usaha_perdagangan extends App_main
 				));
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_pendirian_pengesahan',
+			'name'	=> $this->alias.'_usaha_pendirian_pengesahan',
 			'label'	=> 'Pengesahan Pendirian',
 			'type'	=> 'subfield',
 			'fields'=> array(
@@ -252,7 +301,7 @@ class Usaha_perdagangan extends App_main
 				));
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_perubahan_akta',
+			'name'	=> $this->alias.'_usaha_perubahan_akta',
 			'label'	=> 'Akta Perubahan',
 			'type'	=> 'subfield',
 			'fields'=> array(
@@ -273,7 +322,7 @@ class Usaha_perdagangan extends App_main
 				));
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_perubahan_pengesahan',
+			'name'	=> $this->alias.'_usaha_perubahan_pengesahan',
 			'label'	=> 'Pengesahan Perubahan',
 			'type'	=> 'subfield',
 			'fields'=> array(
@@ -294,7 +343,7 @@ class Usaha_perdagangan extends App_main
 				));
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_siup_lama',
+			'name'	=> $this->alias.'_usaha_siup_lama',
 			'label'	=> 'Nilai Saham',
 			'type'	=> 'subfield',
 			'fields'=> array(
@@ -317,98 +366,30 @@ class Usaha_perdagangan extends App_main
 		return $fields;
 	}
 
-	public function data()
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Format cetak produk perijinan
+	 *
+	 * @return  mixed
+	 */
+	public function produk()
 	{
-		$post_data['surat_no']						= $this->input->post('surat_no');
-		$post_data['pemilik_nama']					= $this->input->post('pemilik_nama');
-		$post_data['pemilik_identitas_jenis']		= $this->input->post('pemilik_identitas_jenis');
-		$post_data['pemilik_identitas_nomor']		= $this->input->post('pemilik_identitas_nomor');
-		$post_data['pemilik_lahir_tanggal']			= string_to_date( $this->input->post('pemilik_lahir_tanggal') );
-		$post_data['pemilik_lahir_tempat']			= $this->input->post('pemilik_lahir_tempat');
+		return false;
+	}
 
-		$post_data['pemilik_alamat']				= array(
-			'alamat'	=> $this->input->post('pemilik_alamat'),
-			'propinsi'	=> $this->input->post('pemilik_propinsi'),
-			'kota'		=> $this->input->post('pemilik_kota'),
-			'kecamatan'	=> $this->input->post('pemilik_kecamatan'),
-			'kelurahan'	=> $this->input->post('pemilik_kelurahan'),
-			'desa'		=> $this->input->post('pemilik_desa'),
-			'rt'		=> $this->input->post('pemilik_rt'),
-			'rw'		=> $this->input->post('pemilik_rw'),
-			);
+	// -------------------------------------------------------------------------
 
-		$post_data['pemilik_kwn']					= $this->input->post('pemilik_kwn');
-		$post_data['pemilik_telpon']				= $this->input->post('pemilik_telpon');
-		$post_data['usaha_nama']					= $this->input->post('usaha_nama');
-		$post_data['usaha_bentuk']					= $this->input->post('usaha_bentuk');
-
-		$post_data['usaha_alamat']					= array(
-			'alamat'	=> $this->input->post('usaha_alamat'),
-			'propinsi'	=> $this->input->post('usaha_propinsi'),
-			'kota'		=> $this->input->post('usaha_kota'),
-			'kecamatan'	=> $this->input->post('usaha_kecamatan'),
-			'kelurahan'	=> $this->input->post('usaha_kelurahan'),
-			'desa'		=> $this->input->post('usaha_desa'),
-			'rt'		=> $this->input->post('usaha_rt'),
-			'rw'		=> $this->input->post('usaha_rw'),
-			);
-
-		$post_data['usaha_pos']						= $this->input->post('usaha_pos');
-		$post_data['usaha_telpon']					= $this->input->post('usaha_telpon');
-		$post_data['usaha_fax']						= $this->input->post('usaha_fax');
-		$post_data['usaha_kbli']					= $this->input->post('usaha_kbli');
-		$post_data['usaha_kki']						= $this->input->post('usaha_kki');
-		$post_data['usaha_lembaga']					= $this->input->post('usaha_lembaga');
-		$post_data['usaha_modal']					= $this->input->post('usaha_modal');
-		$post_data['usaha_saham_asing']				= $this->input->post('usaha_saham_asing');
-		$post_data['usaha_saham_nasional']			= $this->input->post('usaha_saham_nasional');
-		$post_data['usaha_saham_nilai']				= $this->input->post('usaha_saham_nilai');
-		$post_data['usaha_saham_status']			= $this->input->post('usaha_saham_status');
-		$post_data['usaha_pendirian_akta_nomor']	= $this->input->post('usaha_pendirian_akta_nomor');
-		$post_data['usaha_pendirian_akta_tanggal']	= string_to_date( $this->input->post('usaha_pendirian_akta_tanggal') );
-		$post_data['usaha_pendirian_sah_nomor']		= $this->input->post('usaha_pendirian_sah_nomor');
-		$post_data['usaha_pendirian_sah_tanggal']	= string_to_date( $this->input->post('usaha_pendirian_sah_tanggal') );
-		$post_data['usaha_perubahan_akta_nomor']	= $this->input->post('usaha_perubahan_akta_nomor');
-		$post_data['usaha_perubahan_akta_tanggal']	= string_to_date( $this->input->post('usaha_perubahan_akta_tanggal') );
-		$post_data['usaha_perubahan_sah_nomor']		= $this->input->post('usaha_perubahan_sah_nomor');
-		$post_data['usaha_perubahan_sah_tanggal']	= string_to_date( $this->input->post('usaha_perubahan_sah_tanggal') );
-
-		// usaha_bentuk:
-		// surat_jenis_pengajuan:
-		// surat_no:
-		// surat_tgl:28-10-2013
-		// pemilik_nama:
-		// pemilik_identitas_jenis:
-		// pemilik_identitas_nomor:
-		// pemilik_alamat:
-		// pemilik_lahir_tempat:
-		// pemilik_lahir_tanggal:28-10-2013
-		// pemilik_telpon:
-		// pemilik_fax:
-		// pemilik_kwn:
-		// usaha_nama:
-		// usaha_lembaga:
-		// usaha_kbli:
-		// usaha_kki:
-		// usaha_alamat:
-		// usaha_telpon:
-		// usaha_fax:
-		// usaha_pendirian_akta_nomor:
-		// usaha_pendirian_akta_tanggal:28-10-2013
-		// usaha_pendirian_sah_nomor:
-		// usaha_pendirian_sah_tanggal:28-10-2013
-		// usaha_perubahan_akta_nomor:
-		// usaha_perubahan_akta_tanggal:28-10-2013
-		// usaha_perubahan_sah_nomor:
-		// usaha_perubahan_sah_tanggal:28-10-2013
-		// usaha_saham_status:
-		// usaha_modal:
-		// usaha_saham_nilai:
-		// usaha_saham_nasional:
-		// usaha_saham_asing:
-		// total_syarat:13
+	/**
+	 * Format output laporan
+	 *
+	 * @return  mixed
+	 */
+	public function laporan()
+	{
+		return false;
 	}
 }
 
-/* End of file Izin_usaha_perdagangan.php */
-/* Location: ./application/models/app/Izin_usaha_perdagangan.php */
+/* End of file Bpmppt_siup.php */
+/* Location: ./application/libraries/Bpmppt/drivers/Bpmppt_siup.php */

@@ -1,67 +1,116 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Pembuangan_limbah extends App_main
-{
-	public $kode = 'IPLC';
-	public $slug = 'izin_pembuangan_air_limbah';
-	public $nama = 'Izin Pembuangan Air Limbah ke Air atau Sumber Air';
+/**
+ * BPMPPT driver
+ *
+ * NOTICE OF LICENSE
+ *
+ * Licensed under the Open Software License version 3.0
+ *
+ * This source file is subject to the Open Software License (OSL 3.0) that is
+ * bundled with this package in the files license.txt / license.rst.  It is
+ * also available through the world wide web at this URL:
+ * http://opensource.org/licenses/OSL-3.0
+ *
+ * @package     BPMPPT
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) Fery Wardiyanto. (ferywardiyanto@gmail.com)
+ * @license     http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ * @since       Version 1.0
+ * @filesource
+ */
 
+// =============================================================================
+
+/**
+ * BPMPPT Izin Pembuangan Air Limbah ke Air atau Sumber Air Driver
+ *
+ * @subpackage	Drivers
+ */
+class Bpmppt_iplc extends CI_Driver
+{
+	/**
+	 * Document property
+	 *
+	 * @var  string  $code
+	 * @var  string  $alias
+	 * @var  string  $name
+	 */
+	public $code = 'IPLC';
+	public $alias = 'izin_pembuangan_air_limbah';
+	public $name = 'Izin Pembuangan Air Limbah ke Air atau Sumber Air';
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Default class constructor,
+	 * Just simply log this class when it loaded
+	 */
 	public function __construct()
 	{
-		log_message('debug', "#BAKA_modul: Pembuangan_limbah_model Class Initialized");
+		log_message('debug', "#BPMPPT_driver: Pembuangan_limbah_model Class Initialized");
 	}
 
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Form fields from this driver
+	 *
+	 * @param   bool    $data_obj  Data field
+	 *
+	 * @return  array
+	 */
 	public function form( $data_obj = FALSE )
 	{
 		$fields[]	= array(
-			'name'	=> $this->slug.'_fieldset_data_pemohon',
+			'name'	=> $this->alias.'_fieldset_data_pemohon',
 			'label'	=> 'Data Pemohon',
 			'attr'	=> ( $data_obj ? 'disabled' : '' ),
 			'type'	=> 'fieldset' );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_pemohon_nama',
+			'name'	=> $this->alias.'_pemohon_nama',
 			'label'	=> 'Nama lengkap',
 			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->pemohon_nama : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_pemohon_jabatan',
+			'name'	=> $this->alias.'_pemohon_jabatan',
 			'label'	=> 'Jabatan',
 			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->pemohon_jabatan : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_pemohon_usaha',
+			'name'	=> $this->alias.'_pemohon_usaha',
 			'label'	=> 'Nama Perusahaan',
 			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->pemohon_usaha : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_pemohon_alamat',
+			'name'	=> $this->alias.'_pemohon_alamat',
 			'label'	=> 'Alamat',
 			'type'	=> 'textarea',
 			'std'	=> ( $data_obj ? $data_obj->pemohon_alamat : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_fieldset_data_lokasi',
+			'name'	=> $this->alias.'_fieldset_data_lokasi',
 			'label'	=> 'Data Lokasi',
 			'attr'	=> ( $data_obj ? 'disabled' : '' ),
 			'type'	=> 'fieldset' );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_limbah_kapasitas_produksi',
+			'name'	=> $this->alias.'_limbah_kapasitas_produksi',
 			'label'	=> 'Kapasitas Produksi',
 			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->limbah_kapasitas_produksi : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_limbah_debit_max',
+			'name'	=> $this->alias.'_limbah_debit_max',
 			'label'	=> 'Debit max limbah',
 			'type'	=> 'subfield',
 			'fields'=> array(
@@ -83,31 +132,31 @@ class Pembuangan_limbah extends App_main
 			);
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_limbah_kadar_max_proses',
+			'name'	=> $this->alias.'_limbah_kadar_max_proses',
 			'label'	=> 'Kadar max proses',
 			'type'	=> 'subfield',
 			'fields'=> $this->subfield_limbah( 'limbah_kadar_max_proses_', $data_obj ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_limbah_beban_max_proses',
+			'name'	=> $this->alias.'_limbah_beban_max_proses',
 			'label'	=> 'Beban pencemaran proses',
 			'type'	=> 'subfield',
 			'fields'=> $this->subfield_limbah( 'limbah_beban_max_proses_', $data_obj ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_limbah_kadar_max_kond',
+			'name'	=> $this->alias.'_limbah_kadar_max_kond',
 			'label'	=> 'Kadar max kondensor',
 			'type'	=> 'subfield',
 			'fields'=> $this->subfield_limbah( 'limbah_kadar_max_kond_', $data_obj ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_limbah_beban_max_kond',
+			'name'	=> $this->alias.'_limbah_beban_max_kond',
 			'label'	=> 'Beban pencemaran kondensor',
 			'type'	=> 'subfield',
 			'fields'=> $this->subfield_limbah( 'limbah_beban_max_kond_', $data_obj ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_limbah_target_buang',
+			'name'	=> $this->alias.'_limbah_target_buang',
 			'label'	=> 'Target pembuangan',
 			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->limbah_target_buang : ''),
@@ -115,6 +164,8 @@ class Pembuangan_limbah extends App_main
 
 		return $fields;
 	}
+
+	// -------------------------------------------------------------------------
 
 	protected function subfield_limbah( $parent, $data_obj = FALSE )
 	{
@@ -168,7 +219,31 @@ class Pembuangan_limbah extends App_main
 
 		return $fields;
 	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Format cetak produk perijinan
+	 *
+	 * @return  mixed
+	 */
+	public function produk()
+	{
+		return false;
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Format output laporan
+	 *
+	 * @return  mixed
+	 */
+	public function laporan()
+	{
+		return false;
+	}
 }
 
-/* End of file Izin_pembuangan_air_limbah.php */
-/* Location: ./application/models/app/Izin_pembuangan_air_limbah.php */
+/* End of file Bpmppt_iplc.php */
+/* Location: ./application/libraries/Bpmppt/drivers/Bpmppt_iplc.php */

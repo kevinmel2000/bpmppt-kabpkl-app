@@ -1,20 +1,69 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Mendirikan_bangunan extends App_main
-{
-	public $kode = 'IMB';
-	public $slug = 'izin_mendirikan_bangunan';
-	public $nama = 'Izin Mendirikan Bangunan';
+/**
+ * BPMPPT driver
+ *
+ * NOTICE OF LICENSE
+ *
+ * Licensed under the Open Software License version 3.0
+ *
+ * This source file is subject to the Open Software License (OSL 3.0) that is
+ * bundled with this package in the files license.txt / license.rst.  It is
+ * also available through the world wide web at this URL:
+ * http://opensource.org/licenses/OSL-3.0
+ *
+ * @package     BPMPPT
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) Fery Wardiyanto. (ferywardiyanto@gmail.com)
+ * @license     http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ * @since       Version 1.0
+ * @filesource
+ */
 
+// =============================================================================
+
+/**
+ * BPMPPT Izin Mendirikan Bangunan Driver
+ *
+ * @subpackage	Drivers
+ */
+class Bpmppt_imb extends CI_Driver
+{
+	/**
+	 * Document property
+	 *
+	 * @var  string  $code
+	 * @var  string  $alias
+	 * @var  string  $name
+	 */
+	public $code = 'IMB';
+	public $alias = 'izin_mendirikan_bangunan';
+	public $name = 'Izin Mendirikan Bangunan';
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Default class constructor,
+	 * Just simply log this class when it loaded
+	 */
 	public function __construct()
 	{
-		log_message('debug', "#BAKA_modul: Mendirikan_bangunan_model Class Initialized");
+		log_message('debug', "#BPMPPT_driver: Mendirikan_bangunan_model Class Initialized");
 	}
 
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Form fields from this driver
+	 *
+	 * @param   bool    $data_obj  Data field
+	 *
+	 * @return  array
+	 */
 	public function form( $data_obj = FALSE )
 	{
 		$fields[]	= array(
-			'name'	=> $this->slug.'_bangunan_maksud',
+			'name'	=> $this->alias.'_bangunan_maksud',
 			'label'	=> 'Maksud Permohonan',
 			'type'	=> 'dropdown',
 			'attr'	=> ( $data_obj ? 'disabled' : '' ),
@@ -25,7 +74,7 @@ class Mendirikan_bangunan extends App_main
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_bangunan_guna',
+			'name'	=> $this->alias.'_bangunan_guna',
 			'label'	=> 'Penggunaan bangunan',
 			'type'	=> 'dropdown',
 			'attr'	=> ( $data_obj ? 'disabled' : '' ),
@@ -40,54 +89,54 @@ class Mendirikan_bangunan extends App_main
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_fieldset_data_pemohon',
+			'name'	=> $this->alias.'_fieldset_data_pemohon',
 			'label'	=> 'Data Pemohon',
 			'attr'	=> ( $data_obj ? 'disabled' : '' ),
 			'type'	=> 'fieldset' );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_pemohon_nama',
+			'name'	=> $this->alias.'_pemohon_nama',
 			'label'	=> 'Nama lengkap',
 			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->pemohon_nama : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_pemohon_kerja',
+			'name'	=> $this->alias.'_pemohon_kerja',
 			'label'	=> 'Pekerjaan',
 			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->pemohon_kerja : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_pemohon_alamat',
+			'name'	=> $this->alias.'_pemohon_alamat',
 			'label'	=> 'Alamat',
 			'type'	=> 'textarea',
 			'std'	=> ( $data_obj ? $data_obj->pemohon_alamat : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_fieldset_data_bangunan',
+			'name'	=> $this->alias.'_fieldset_data_bangunan',
 			'label'	=> 'Data Bangunan',
 			'attr'	=> ( $data_obj ? 'disabled' : '' ),
 			'type'	=> 'fieldset' );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_bangunan_lokasi',
+			'name'	=> $this->alias.'_bangunan_lokasi',
 			'label'	=> 'Lokasi bangunan',
 			'type'	=> 'textarea',
 			'std'	=> ( $data_obj ? $data_obj->bangunan_lokasi : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_bangunan_tanah_luas',
+			'name'	=> $this->alias.'_bangunan_tanah_luas',
 			'label'	=> 'Luas Tanah Bangunan (M<sup>2</sup>)',
 			'type'	=> 'number',
 			'std'	=> ( $data_obj ? $data_obj->bangunan_tanah_luas : ''),
 			'validation'=> ( !$data_obj ? 'required|numeric' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_bangunan_tanah_keadaan',
+			'name'	=> $this->alias.'_bangunan_tanah_keadaan',
 			'label'	=> 'Keadaan Tanah',
 			'type'	=> 'dropdown',
 			'option'=> array(
@@ -98,7 +147,7 @@ class Mendirikan_bangunan extends App_main
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_bangunan_tanah_status',
+			'name'	=> $this->alias.'_bangunan_tanah_status',
 			'label'	=> 'Status Tanah',
 			'type'	=> 'dropdown',
 			'option'=> array(
@@ -108,21 +157,21 @@ class Mendirikan_bangunan extends App_main
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_bangunan_milik_no',
+			'name'	=> $this->alias.'_bangunan_milik_no',
 			'label'	=> 'Nomor kepemilikan',
 			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->bangunan_milik_no : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_bangunan_milik_an',
+			'name'	=> $this->alias.'_bangunan_milik_an',
 			'label'	=> 'Atas Nama kepemilikan',
 			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->bangunan_milik_an : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_bangunan_luas',
+			'name'	=> $this->alias.'_bangunan_luas',
 			'label'	=> 'Luas bangunan (M<sup>2</sup>)',
 			'type'	=> 'number',
 			'std'	=> ( $data_obj ? $data_obj->bangunan_luas : ''),
@@ -130,7 +179,31 @@ class Mendirikan_bangunan extends App_main
 		
 		return $fields;
 	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Format cetak produk perijinan
+	 *
+	 * @return  mixed
+	 */
+	public function produk()
+	{
+		return false;
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Format output laporan
+	 *
+	 * @return  mixed
+	 */
+	public function laporan()
+	{
+		return false;
+	}
 }
 
-/* End of file Izin_mendirikan_bangunan.php */
-/* Location: ./application/models/app/Izin_mendirikan_bangunan.php */
+/* End of file Bpmppt_imb.php */
+/* Location: ./application/libraries/Bpmppt/drivers/Bpmppt_imb.php */

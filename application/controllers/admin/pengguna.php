@@ -30,8 +30,6 @@
  */
 class Pengguna extends BAKA_Controller
 {
-    private $current_user;
-
     public function __construct()
     {
         parent::__construct();
@@ -39,12 +37,10 @@ class Pengguna extends BAKA_Controller
         $this->verify_login();
 
         $this->themee->add_navbar( 'admin_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
-        $this->app_main->admin_navbar( 'admin_sidebar', 'side' );
+        $this->admin_navbar( 'admin_sidebar', 'side' );
 
         $this->data['load_toolbar'] = TRUE;
         $this->data['page_link']    = 'admin/pengguna/';
-
-        $this->current_user = $this->authen->get_user_id();
     }
 
     public function index()
@@ -166,11 +162,11 @@ class Pengguna extends BAKA_Controller
 
     private function _user_form( $user_id = '' )
     {
-        if ( $user_id == $this->current_user AND strpos( current_url(), 'profile' ) === FALSE )
+        if ( $user_id == $this->current_user['user_id'] AND strpos( current_url(), 'profile' ) === FALSE )
             redirect('profile');
 
         $user   = ( $user_id != '' ? $this->authen->get_user( $user_id ) : FALSE );
-        $judul  = ( $user_id == $this->current_user ? 'Profile anda: ' : 'Data pengguna: ');
+        $judul  = ( $user_id == $this->current_user['user_id'] ? 'Profile anda: ' : 'Data pengguna: ');
 
         $this->data['panel_title'] = $this->themee->set_title( ( $user ? $judul.$user->username : 'Buat pengguna baru' ));
         
@@ -178,7 +174,7 @@ class Pengguna extends BAKA_Controller
 
         if ( $user )
         {
-            if ( $user_id != $this->current_user and is_permited('users_manage') )
+            if ( $user_id != $this->current_user['user_id'] and is_permited('users_manage') )
             {
                 $this->data['tool_buttons']['aksi|danger']  = array(
                     'cekal/'.$user_id => 'Cekal',
@@ -238,7 +234,7 @@ class Pengguna extends BAKA_Controller
             'desc'  => ( !$user ? 'Ulangi penulisan password diatas.' : '' ),
             'validation'=> ( !$user ? 'required|' : '' ).'matches[user-new-password]');
 
-        if ( $user_id != $this->current_user and is_permited('roles_manage') )
+        if ( $user_id != $this->current_user['user_id'] and is_permited('roles_manage') )
         {
             $fields[]   = array(
                 'name'  => 'app-fieldset-roles',

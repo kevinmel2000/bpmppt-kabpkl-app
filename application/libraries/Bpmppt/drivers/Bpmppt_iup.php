@@ -1,20 +1,69 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Usaha_pertambangan extends App_main
-{
-	public $kode = 'IUP';
-	public $slug = 'izin_usaha_pertambangan';
-	public $nama = 'Izin Usaha Pertambangan';
+/**
+ * BPMPPT driver
+ *
+ * NOTICE OF LICENSE
+ *
+ * Licensed under the Open Software License version 3.0
+ *
+ * This source file is subject to the Open Software License (OSL 3.0) that is
+ * bundled with this package in the files license.txt / license.rst.  It is
+ * also available through the world wide web at this URL:
+ * http://opensource.org/licenses/OSL-3.0
+ *
+ * @package     BPMPPT
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) Fery Wardiyanto. (ferywardiyanto@gmail.com)
+ * @license     http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ * @since       Version 1.0
+ * @filesource
+ */
 
+// =============================================================================
+
+/**
+ * BPMPPT Izin Usaha Pertambangan Driver
+ *
+ * @subpackage	Drivers
+ */
+class Bpmppt_iup extends CI_Driver
+{
+	/**
+	 * Document property
+	 *
+	 * @var  string  $code
+	 * @var  string  $alias
+	 * @var  string  $name
+	 */
+	public $code = 'IUP';
+	public $alias = 'izin_usaha_pertambangan';
+	public $name = 'Izin Usaha Pertambangan';
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Default class constructor,
+	 * Just simply log this class when it loaded
+	 */
 	public function __construct()
 	{
-		log_message('debug', "#BAKA_modul: Usaha_pertambangan_model Class Initialized");
+		log_message('debug', "#BPMPPT_driver: Usaha_pertambangan_model Class Initialized");
 	}
 
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Form fields from this driver
+	 *
+	 * @param   bool    $data_obj  Data field
+	 *
+	 * @return  array
+	 */
 	public function form( $data_obj = FALSE )
 	{
 		$fields[]	= array(
-			'name'	=> $this->slug.'_rekomendasi',
+			'name'	=> $this->alias.'_rekomendasi',
 			'label'	=> 'Surat Rekomendasi',
 			'type'	=> 'subfield',
 			'attr'	=> ( $data_obj ? 'disabled' : '' ),
@@ -37,33 +86,33 @@ class Usaha_pertambangan extends App_main
 				));
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_fieldset_data_pemohon',
+			'name'	=> $this->alias.'_fieldset_data_pemohon',
 			'label'	=> 'Data Pemohon',
 			'attr'	=> ( $data_obj ? array( 'disabled' => TRUE ) : '' ),
 			'type'	=> 'fieldset' );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_pemohon_nama',
+			'name'	=> $this->alias.'_pemohon_nama',
 			'label'	=> 'Nama lengkap',
 			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->pemohon_nama : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_pemohon_alamat',
+			'name'	=> $this->alias.'_pemohon_alamat',
 			'label'	=> 'Alamat',
 			'type'	=> 'textarea',
 			'std'	=> ( $data_obj ? $data_obj->pemohon_alamat : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_fieldset_tambang',
+			'name'	=> $this->alias.'_fieldset_tambang',
 			'label'	=> 'Ketentuan Perijinan',
 			'attr'	=> ( $data_obj ? array( 'disabled' => TRUE ) : '' ),
 			'type'	=> 'fieldset' );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_tambang_waktu',
+			'name'	=> $this->alias.'_tambang_waktu',
 			'label'	=> 'Jangka waktu',
 			'type'	=> 'subfield',
 			'fields'=> array(
@@ -85,34 +134,34 @@ class Usaha_pertambangan extends App_main
 				));
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_tambang_jns_galian',
+			'name'	=> $this->alias.'_tambang_jns_galian',
 			'label'	=> 'Jenis Galian',
 			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->tambang_jns_galian : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_tambang_luas',
+			'name'	=> $this->alias.'_tambang_luas',
 			'label'	=> 'Luas Area (M<sup>2</sup>)',
 			'type'	=> 'number',
 			'std'	=> ( $data_obj ? $data_obj->tambang_luas : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_tambang_alamat',
+			'name'	=> $this->alias.'_tambang_alamat',
 			'label'	=> 'Alamat Lokasi',
 			'type'	=> 'textarea',
 			'std'	=> ( $data_obj ? $data_obj->tambang_alamat : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_fieldset_tambang',
+			'name'	=> $this->alias.'_fieldset_tambang',
 			'label'	=> 'Ketentuan Perijinan',
 			'attr'	=> ( $data_obj ? 'disabled' : '' ),
 			'type'	=> 'fieldset' );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_tambang_koor',
+			'name'	=> $this->alias.'_tambang_koor',
 			'label'	=> 'Kode Koordinat',
 			'type'	=> 'custom',
 			'value'	=> $this->custom_field(),
@@ -120,6 +169,8 @@ class Usaha_pertambangan extends App_main
 
 		return $fields;
 	}
+
+	// -------------------------------------------------------------------------
 
 	private function custom_field( $data = NULL)
 	{
@@ -292,56 +343,30 @@ class Usaha_pertambangan extends App_main
 		return $this->table->generate();
 	}
 
-	public function data()
-	{
-		$post_data['surat_rekomendasi_nomor']		= $this->input->post('surat_rekomendasi_nomor');
-		$post_data['surat_rekomendasi_tanggal']		= $this->input->post('surat_rekomendasi_tanggal');
-		$post_data['pemohon_nama']					= $this->input->post('pemohon_nama');
-		$post_data['pemohon_alamat']				= $this->input->post('pemohon_alamat');
-		$post_data['pemohon_propinsi']				= $this->input->post('pemohon_propinsi');
-		$post_data['pemohon_kota']					= $this->input->post('pemohon_kota');
-		$post_data['pemohon_kecamatan']				= $this->input->post('pemohon_kecamatan');
-		$post_data['pemohon_kelurahan']				= $this->input->post('pemohon_kelurahan');
-		$post_data['pemohon_rt']					= $this->input->post('pemohon_rt');
-		$post_data['pemohon_rw']					= $this->input->post('pemohon_rw');
-		$post_data['pemohon_an']					= $this->input->post('pemohon_an');
-		$post_data['tambang_jangka_waktu_mulai']	= string_to_date( $this->input->post('tambang_jangka_waktu_mulai') );
-		$post_data['tambang_jangka_waktu_selesai']	= string_to_date( $this->input->post('tambang_jangka_waktu_selesai') );
-		$post_data['tambang_jenis_bahan']			= $this->input->post('tambang_jenis_bahan');
-		$post_data['tambang_luas']					= $this->input->post('tambang_luas');
-		$post_data['tambang_alamat']				= $this->input->post('tambang_alamat');
-		$post_data['tambang_propinsi']				= $this->input->post('tambang_propinsi');
-		$post_data['tambang_kota']					= $this->input->post('tambang_kota');
-		$post_data['tambang_kecamatan']				= $this->input->post('tambang_kecamatan');
-		$post_data['tambang_kelurahan']				= $this->input->post('tambang_kelurahan');
-		$post_data['tambang_rt']					= $this->input->post('tambang_rt');
-		$post_data['tambang_rw']					= $this->input->post('tambang_rw');
+	// -------------------------------------------------------------------------
 
-		// surat_no:
-		// surat_tgl:28-10-2013
-		// surat_rekomendasi_nomor:
-		// surat_rekomendasi_tanggal:28-10-2013
-		// pemohon_nama:
-		// pemohon_alamat:
-		// pemohon_alamat:
-		// pemohon_an:
-		// tambang_jangka_waktu_mulai:28-10-2013
-		// tambang_jangka_waktu_selesai:28-10-2013
-		// tambang_jenis_bahan:
-		// tambang_luas:
-		// tambang_kode:
-		// tambang_alamat:
-		// tambang_alamat:
-		// tambang_koordinat[]:
-		// tambang_koordinat[]:
-		// tambang_koordinat[]:
-		// tambang_koordinat[]:
-		// tambang_koordinat[]:
-		// tambang_koordinat[]:
-		// tambang_koordinat[]:
-		// tambang_koordinat[]:
+	/**
+	 * Format cetak produk perijinan
+	 *
+	 * @return  mixed
+	 */
+	public function produk()
+	{
+		return false;
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Format output laporan
+	 *
+	 * @return  mixed
+	 */
+	public function laporan()
+	{
+		return false;
 	}
 }
 
-/* End of file Izin_usaha_pertambangan.php */
-/* Location: ./application/models/app/Izin_usaha_pertambangan.php */
+/* End of file Bpmppt_iup.php */
+/* Location: ./application/libraries/Bpmppt/drivers/Bpmppt_iup.php */

@@ -37,7 +37,7 @@ class Maintenance extends BAKA_Controller
         $this->verify_login();
 
         $this->themee->add_navbar( 'admin_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
-        $this->app_main->admin_navbar( 'admin_sidebar', 'side' );
+        $this->admin_navbar( 'admin_sidebar', 'side' );
 
         $this->themee->set_title('System Maintenance');
     }

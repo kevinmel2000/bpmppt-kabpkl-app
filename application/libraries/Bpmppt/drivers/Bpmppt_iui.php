@@ -1,20 +1,69 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Usaha_industri extends App_main
-{
-	public $kode = 'IUI';
-	public $slug = 'izin_usaha_industri';
-	public $nama = 'Izin Usaha Industri';
+/**
+ * BPMPPT driver
+ *
+ * NOTICE OF LICENSE
+ *
+ * Licensed under the Open Software License version 3.0
+ *
+ * This source file is subject to the Open Software License (OSL 3.0) that is
+ * bundled with this package in the files license.txt / license.rst.  It is
+ * also available through the world wide web at this URL:
+ * http://opensource.org/licenses/OSL-3.0
+ *
+ * @package     BPMPPT
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) Fery Wardiyanto. (ferywardiyanto@gmail.com)
+ * @license     http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ * @since       Version 1.0
+ * @filesource
+ */
 
+// =============================================================================
+
+/**
+ * BPMPPT Izin Usaha Industri Driver
+ *
+ * @subpackage	Drivers
+ */
+class Bpmppt_iui extends CI_Driver
+{
+	/**
+	 * Document property
+	 *
+	 * @var  string  $code
+	 * @var  string  $alias
+	 * @var  string  $name
+	 */
+	public $code = 'IUI';
+	public $alias = 'izin_usaha_industri';
+	public $name = 'Izin Usaha Industri';
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Default class constructor,
+	 * Just simply log this class when it loaded
+	 */
 	public function __construct()
 	{
-		log_message('debug', "#BAKA_modul: Usaha_industri_model Class Initialized");
+		log_message('debug', "#BPMPPT_driver: Usaha_industri_model Class Initialized");
 	}
 
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Form fields from this driver
+	 *
+	 * @param   bool    $data_obj  Data field
+	 *
+	 * @return  array
+	 */
 	public function form( $data_obj = FALSE )
 	{
 		$fields[]	= array(
-			'name'	=> $this->slug.'_permohonan_jenis',
+			'name'	=> $this->alias.'_permohonan_jenis',
 			'label'	=> 'Jenis Pengajuan',
 			'type'	=> 'dropdown',
 			'attr'	=> ( $data_obj ? 'disabled' : '' ),
@@ -26,20 +75,20 @@ class Usaha_industri extends App_main
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_fieldset_data_pemohon',
+			'name'	=> $this->alias.'_fieldset_data_pemohon',
 			'label'	=> 'Data Pemohon',
 			'type'	=> 'fieldset',
 			'attr'	=> ( $data_obj ? 'disabled' : '' ));
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_pemohon_nama',
+			'name'	=> $this->alias.'_pemohon_nama',
 			'label'	=> 'Nama lengkap',
 			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->pemohon_nama : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_pemohon_kerja',
+			'name'	=> $this->alias.'_pemohon_kerja',
 			'label'	=> 'Pekerjaan',
 			'type'	=> 'dropdown',
 			'std'	=> ( $data_obj ? $data_obj->pemohon_kerja : ''),
@@ -48,61 +97,61 @@ class Usaha_industri extends App_main
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_pemohon_alamat',
+			'name'	=> $this->alias.'_pemohon_alamat',
 			'label'	=> 'Alamat',
 			'type'	=> 'textarea',
 			'std'	=> ( $data_obj ? $data_obj->pemohon_alamat : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_pemohon_telp',
+			'name'	=> $this->alias.'_pemohon_telp',
 			'label'	=> 'No. Telp',
 			'type'	=> 'tel',
 			'std'	=> ( $data_obj ? $data_obj->pemohon_telp : ''),
 			'validation'=> 'numeric' );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_fieldset_data_pemilik',
+			'name'	=> $this->alias.'_fieldset_data_pemilik',
 			'label'	=> 'Data Pemilik Perusahaan',
 			'type'	=> 'fieldset',
 			'attr'	=> ( $data_obj ? 'disabled' : '' ));
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_pemilik_nama',
+			'name'	=> $this->alias.'_pemilik_nama',
 			'label'	=> 'Nama lengkap',
 			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->pemilik_nama : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_pemilik_alamat',
+			'name'	=> $this->alias.'_pemilik_alamat',
 			'label'	=> 'Alamat',
 			'type'	=> 'textarea',
 			'std'	=> ( $data_obj ? $data_obj->pemilik_alamat : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_pemilik_telp',
+			'name'	=> $this->alias.'_pemilik_telp',
 			'label'	=> 'No. Telp',
 			'type'	=> 'tel',
 			'std'	=> ( $data_obj ? $data_obj->pemilik_telp : ''),
 			'validation'=> 'numeric' );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_fieldset_data_usaha',
+			'name'	=> $this->alias.'_fieldset_data_usaha',
 			'label'	=> 'Data Perusahaan',
 			'type'	=> 'fieldset',
 			'attr'	=> ( $data_obj ? 'disabled' : '' ));
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_nama',
+			'name'	=> $this->alias.'_usaha_nama',
 			'label'	=> 'Nama Perusahaan',
 			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->usaha_nama : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_skala',
+			'name'	=> $this->alias.'_usaha_skala',
 			'label'	=> 'Skala',
 			'type'	=> 'dropdown',
 			'std'	=> ( $data_obj ? $data_obj->usaha_skala : ''),
@@ -113,49 +162,49 @@ class Usaha_industri extends App_main
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_npwp',
+			'name'	=> $this->alias.'_usaha_npwp',
 			'label'	=> 'No. NPWP',
 			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->usaha_npwp : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_alamat',
+			'name'	=> $this->alias.'_usaha_alamat',
 			'label'	=> 'Alamat',
 			'type'	=> 'textarea',
 			'std'	=> ( $data_obj ? $data_obj->usaha_alamat : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_telp',
+			'name'	=> $this->alias.'_usaha_telp',
 			'label'	=> 'No. Telp',
 			'type'	=> 'tel',
 			'std'	=> ( $data_obj ? $data_obj->usaha_telp : ''),
 			'validation'=> 'numeric' );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_kawasan',
+			'name'	=> $this->alias.'_usaha_kawasan',
 			'label'	=> 'Kawasan Industri',
 			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->usaha_kawasan : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_pj',
+			'name'	=> $this->alias.'_usaha_pj',
 			'label'	=> 'Nama Penanggungjawab',
 			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->usaha_pj : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_npwp',
+			'name'	=> $this->alias.'_usaha_npwp',
 			'label'	=> 'No. NPWP',
 			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->usaha_npwp : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_jenis',
+			'name'	=> $this->alias.'_usaha_jenis',
 			'label'	=> 'Jenis Perusahaan',
 			'type'	=> 'subfield',
 			'fields'=> array(
@@ -177,7 +226,7 @@ class Usaha_industri extends App_main
 			);
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_akta',
+			'name'	=> $this->alias.'_usaha_akta',
 			'label'	=> 'Pendirian',
 			'type'	=> 'subfield',
 			'attr'	=> ( $data_obj ? 'disabled' : '' ),
@@ -200,7 +249,7 @@ class Usaha_industri extends App_main
 			);
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_direksi',
+			'name'	=> $this->alias.'_usaha_direksi',
 			'label'	=> 'Nama Direksi',
 			'type'	=> 'text',
 			'attr'	=> ( $data_obj ? 'disabled' : '' ),
@@ -208,7 +257,7 @@ class Usaha_industri extends App_main
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_lokasi',
+			'name'	=> $this->alias.'_usaha_lokasi',
 			'label'	=> 'Lokasi Pabrik',
 			'type'	=> 'textarea',
 			'attr'	=> ( $data_obj ? 'disabled' : '' ),
@@ -216,7 +265,7 @@ class Usaha_industri extends App_main
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
-			'name'	=> $this->slug.'_usaha_nama',
+			'name'	=> $this->alias.'_usaha_nama',
 			'label'	=> 'Luas Tanah (M<sup>2</sup>)',
 			'type'	=> 'number',
 			'attr'	=> ( $data_obj ? 'disabled' : '' ),
@@ -225,7 +274,31 @@ class Usaha_industri extends App_main
 		
 		return $fields;
 	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Format cetak produk perijinan
+	 *
+	 * @return  mixed
+	 */
+	public function produk()
+	{
+		return false;
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Format output laporan
+	 *
+	 * @return  mixed
+	 */
+	public function laporan()
+	{
+		return false;
+	}
 }
 
-/* End of file Izin_usaha_industri.php */
-/* Location: ./application/models/app/Izin_usaha_industri.php */
+/* End of file Bpmppt_iui.php */
+/* Location: ./application/libraries/Bpmppt/drivers/Bpmppt_iui.php */

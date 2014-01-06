@@ -124,10 +124,7 @@ $autoload['language'] = array('baka_pack');
 |
 */
 
-$autoload['model'] = array(
-	'baka_pack/app_main',
-	// 'baka_pack/app_data',
-	);
+$autoload['model'] = array();
 
 
 /* End of file autoload.php */

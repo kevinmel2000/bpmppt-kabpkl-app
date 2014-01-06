@@ -256,7 +256,7 @@ class Authen
      */
     public function get_current_user()
     {
-        return self::$ci->session->all_userdata();
+        return self::$_ci->session->all_userdata();
     }
 
     // -------------------------------------------------------------------------
