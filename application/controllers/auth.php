@@ -151,7 +151,7 @@ class Auth extends BAKA_Controller
 
         $this->data['panel_body'] = $form->generate();
 
-        $this->themee->load('pages/auth', $this->data);
+        $this->load->theme('pages/auth', $this->data);
     }
 
     public function register()
@@ -255,7 +255,7 @@ class Auth extends BAKA_Controller
         
         $this->data['panel_body'] = $form->generate();
 
-        $this->themee->load('pages/auth', $this->data);
+        $this->load->theme('pages/auth', $this->data);
     }
 
     public function resend()
@@ -319,7 +319,7 @@ class Auth extends BAKA_Controller
         
         $this->data['panel_body'] = $form->generate();
 
-        $this->themee->load('pages/auth', $this->data);
+        $this->load->theme('pages/auth', $this->data);
     }
 
     public function forgot()
@@ -379,7 +379,7 @@ class Auth extends BAKA_Controller
         
         $this->data['panel_body'] = $form->generate();
 
-        $this->themee->load('pages/auth', $this->data);
+        $this->load->theme('pages/auth', $this->data);
     }
 
     public function activate( $user_id = NULL, $email_key = NULL )
@@ -461,7 +461,7 @@ class Auth extends BAKA_Controller
         
         $this->data['panel_body'] = $form->generate();
 
-        $this->themee->load('pages/auth', $this->data);
+        $this->load->theme('pages/auth', $this->data);
     }
 
     public function logout()

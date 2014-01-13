@@ -4,14 +4,14 @@ Aplikasi ini ditujukan untuk Badan Penanaman Modal dan Pelayanan Perijinan Terba
 
 ## Authors
 
-**Fery Wardiyanto**
-
-+ [http://github.com/feryardiant](http://github.com/feryardiant)
+**[Fery Wardiyanto](http://github.com/feryardiant)**
 
 ## Credits
 
 + [Codeigniter](http://ellislab.com/codeigniter)
-+ [Google](https://google.com/)
++ [CI Tank Auth Enchance (modified)](http://github.com/TankAuth/Tank-Auth/tree/enchance)
++ [Twitter Bootstrap](http:getbootstrap.com)
++ [Google](http://google.com/)
 
 ## Installation
 
@@ -23,16 +23,11 @@ Aplikasi ini ditujukan untuk Badan Penanaman Modal dan Pelayanan Perijinan Terba
 
 ## Copyright and license
 
-Copyright 2012 Twitter, Inc.
+NOTICE OF LICENSE
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this work except in compliance with the License.
-You may obtain a copy of the License in the LICENSE file, or at:
+Licensed under the Open Software License version 3.0
 
-  [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+This source file is subject to the Open Software License (OSL 3.0) that is
+bundled with this package in the files license.txt / license.rst.  It is
+also available through the world wide web at this URL:
+http://opensource.org/licenses/OSL-3.0

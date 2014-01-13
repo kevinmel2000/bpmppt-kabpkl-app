@@ -49,7 +49,7 @@ class Error extends BAKA_Controller
 
         log_message('error', '404 Page Not Found --> '.current_url());
 
-        $this->themee->load('errors/error_view', $this->data);
+        $this->load->theme('errors/error_view', $this->data);
     }
 
     public function notice( $page = '' )
@@ -153,7 +153,7 @@ class Error extends BAKA_Controller
         $this->data['panel_title']  = $this->themee->set_title( $page_title );
         $this->data['panel_body']   = $page_message;
 
-        $this->themee->load('pages/notice', $this->data);
+        $this->load->theme('pages/notice', $this->data);
     }
 }
 

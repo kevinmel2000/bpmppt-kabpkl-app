@@ -48,7 +48,7 @@ class Bpmppt_imb extends CI_Driver
 	 */
 	public function __construct()
 	{
-		log_message('debug', "#BPMPPT_driver: Mendirikan_bangunan_model Class Initialized");
+		log_message('debug', "#BPMPPT_driver: Mendirikan_bangunan Class Initialized");
 	}
 
 	// -------------------------------------------------------------------------

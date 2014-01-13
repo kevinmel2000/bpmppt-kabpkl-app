@@ -48,7 +48,7 @@ class Bpmppt_iplc extends CI_Driver
 	 */
 	public function __construct()
 	{
-		log_message('debug', "#BPMPPT_driver: Pembuangan_limbah_model Class Initialized");
+		log_message('debug', "#BPMPPT_driver: Pembuangan_limbah Class Initialized");
 	}
 
 	// -------------------------------------------------------------------------

@@ -47,6 +47,9 @@ class Internal extends BAKA_Controller
 
     public function skpd()
     {
+        if ( !is_permited('internal_skpd_manage') )
+            $this->_notice( 'access-denied' );
+
         $this->data['panel_title'] = $this->themee->set_title('Properti data SKPD');
 
         $fields[]   = array(
@@ -149,11 +152,14 @@ class Internal extends BAKA_Controller
 
         $this->_option_form( $fields );
 
-        $this->themee->load('pages/panel_form', $this->data);
+        $this->load->theme('pages/panel_form', $this->data);
     }
 
     public function app()
     {
+        if ( !is_permited('internal_application_manage') )
+            $this->_notice( 'access-denied' );
+
         $this->data['panel_title'] = $this->themee->set_title('Pengaturan Aplikasi');
 
         $fields[]   = array(
@@ -273,11 +279,14 @@ class Internal extends BAKA_Controller
 
         $this->_option_form( $fields );
 
-        $this->themee->load('pages/panel_form', $this->data);
+        $this->load->theme('pages/panel_form', $this->data);
     }
 
     public function keamanan()
     {
+        if ( !is_permited('internal_security_manage') )
+            $this->_notice( 'access-denied' );
+
         $this->data['panel_title'] = $this->themee->set_title('Pengaturan Keamanan');
 
         $fields[]   = array(
@@ -513,7 +522,7 @@ class Internal extends BAKA_Controller
 
         $this->_option_form( $fields );
 
-        $this->themee->load('pages/panel_form', $this->data);
+        $this->load->theme('pages/panel_form', $this->data);
     }
 
     private function _option_form( $fields )
@@ -603,7 +612,7 @@ class Internal extends BAKA_Controller
                           
         $this->data['panel_body'] = $grid->make_table( $query );
 
-        $this->themee->load('pages/panel_data', $this->data);
+        $this->load->theme('pages/panel_data', $this->data);
     }
 
     private function _prop_form( $prop_id = NULL )
@@ -667,7 +676,7 @@ class Internal extends BAKA_Controller
 
         $this->data['panel_body'] = $form->generate();
 
-        $this->themee->load('pages/panel_form', $this->data);
+        $this->load->theme('pages/panel_form', $this->data);
     }
 
     private function _prop_del( $prop_id )

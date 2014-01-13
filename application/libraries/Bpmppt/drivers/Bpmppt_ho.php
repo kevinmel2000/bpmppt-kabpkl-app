@@ -50,7 +50,7 @@ class Bpmppt_ho extends CI_Driver
 	{
 		// $this->baka_auth->permit( 'manage_'.$this->alias );
 
-		log_message('debug', "#BPMPPT_driver: Gangguan_model Class Initialized");
+		log_message('debug', "#BPMPPT_driver: Gangguan Class Initialized");
 	}
 
 	// -------------------------------------------------------------------------

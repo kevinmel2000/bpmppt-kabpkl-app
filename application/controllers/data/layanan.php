@@ -135,7 +135,7 @@ class Layanan extends BAKA_Controller
         // $this->data['panel_body']    = $this->bpmppt->get_table( $data_type, $this->data['page_link'] );
         $this->data['panel_body']    = $grid->make_table( $query );
 
-        $this->themee->load('pages/panel_data', $this->data);
+        $this->load->theme('pages/panel_data', $this->data);
     }
 
     public function form( $data_type, $data_id = FALSE )
@@ -227,7 +227,7 @@ class Layanan extends BAKA_Controller
 
         $this->data['panel_body'] = $form->generate();
 
-        $this->themee->load('pages/panel_form', $this->data);
+        $this->load->theme('pages/panel_form', $this->data);
     }
 
     public function cetak( $data_type, $data_id = FALSE )
@@ -239,7 +239,7 @@ class Layanan extends BAKA_Controller
                     (array) $this->bpmppt->get_fulldata_by_id( $data_id )
                     );
 
-            $this->themee->load('prints/products/'.$data_type, $data, 'print');
+            $this->load->theme('prints/products/'.$data_type, $data, 'print');
         }
         else
         {
@@ -324,13 +324,13 @@ class Layanan extends BAKA_Controller
                     $form->submited_data()
                     );
 
-                $this->themee->load('prints/reports/'.$data_type, $data, 'laporan');
+                $this->load->theme('prints/reports/'.$data_type, $data, 'laporan');
             }
             else
             {
                 $this->data['panel_body'] = $form->generate();
 
-                $this->themee->load('pages/panel_form', $this->data);
+                $this->load->theme('pages/panel_form', $this->data);
             }
         }
     }

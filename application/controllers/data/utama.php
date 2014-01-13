@@ -75,7 +75,7 @@ class Utama extends BAKA_Controller
             $this->data['panel_body']   = '' /*$this->bpmppt->get_tables( $this->data['page_link'] )*/;
             
 
-            $this->themee->load('pages/panel_alldata', $this->data);
+            $this->load->theme('pages/panel_alldata', $this->data);
         }
         else
         {
@@ -172,13 +172,13 @@ class Utama extends BAKA_Controller
             $data['layanan'] = $this->bpmppt->get_label($submited_data['data_type']);
             $data['results'] = array();
 
-            $this->themee->load('prints/reports/'.$submited_data['data_type'], $data, 'laporan');
+            $this->load->theme('prints/reports/'.$submited_data['data_type'], $data, 'laporan');
         }
         else
         {
             $this->data['panel_body'] = $form->render();
 
-            $this->themee->load('pages/panel_form', $this->data);
+            $this->load->theme('pages/panel_form', $this->data);
         }
     }
 
@@ -188,7 +188,7 @@ class Utama extends BAKA_Controller
 
         // $data = array_merge( (array) $data, (array) $this->bpmppt->get_fulldata_by_id( $data_id ) );
 
-        $this->themee->load('prints/reports/'.$data_type, $data, 'laporan');
+        $this->load->theme('prints/reports/'.$data_type, $data, 'laporan');
     }
 }
 

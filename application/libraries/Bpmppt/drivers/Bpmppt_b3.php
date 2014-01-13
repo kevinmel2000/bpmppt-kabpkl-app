@@ -49,7 +49,7 @@ class Bpmppt_b3 extends CI_Driver
 	 */
 	public function __construct()
 	{
-		log_message('debug', "#BPMPPT_driver: Pengelolaan_b3_model Class Initialized");
+		log_message('debug', "#BPMPPT_driver: Pengelolaan_b3 Class Initialized");
 	}
 
 	// -------------------------------------------------------------------------

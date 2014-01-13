@@ -55,6 +55,8 @@ class Themee
     {
         self::$_ci =& get_instance();
 
+        self::$_ci->load->library('user_agent');
+
         $this->_app_name = get_conf('app_name');
 
         $this->_theme_data['page_title'] = $this->_app_name;
@@ -69,6 +71,8 @@ class Themee
 
         log_message('debug', "#Baka_pack: Theme Class Initialized");
     }
+
+    // -------------------------------------------------------------------------
 
     private function _caching()
     {
@@ -94,16 +98,18 @@ class Themee
             break;
         }
     }
+
+    // -------------------------------------------------------------------------
     
     public static function verify_browser()
     {
-        self::$_ci->load->library('user_agent');
-
         $min_browser    = get_conf('app_min_browser');
         $curent_version = explode('.', self::$_ci->agent->version());
 
         return ( $curent_version[0] <= $min_browser[self::$_ci->agent->browser()] ? TRUE : FALSE  );
     }
+
+    // -------------------------------------------------------------------------
     
     /**
      * Menetapkan judul halaman
@@ -123,6 +129,8 @@ class Themee
         return $the_title;
     }
 
+    // -------------------------------------------------------------------------
+
     public function add_navbar( $id, $class = '', $position = 'top' )
     {
         $class .= ' nav';
@@ -130,6 +138,8 @@ class Themee
         $this->_theme_data['navbar'][$position][$id] = array(
             'class' => $class );
     }
+
+    // -------------------------------------------------------------------------
 
     public function add_navmenu( $parent_id, $menu_id, $type = 'link', $url = '', $label = '', $attr = array(), $position = 'top' )
     {
@@ -186,6 +196,8 @@ class Themee
         }
     }
 
+    // -------------------------------------------------------------------------
+
     public function get_nav( $position )
     {
         if ( isset($this->_theme_data['navbar'][$position]) )
@@ -193,6 +205,8 @@ class Themee
         else
             log_message('error', '#Themee: '.$position." navbar doesn't exists.");
     }
+
+    // -------------------------------------------------------------------------
 
     public function get_navbar()
     {
@@ -210,6 +224,8 @@ class Themee
 
         return $output;
     }
+
+    // -------------------------------------------------------------------------
 
     /**
      * creating menu on sidebar
@@ -276,6 +292,8 @@ class Themee
         return $output;
     }
 
+    // -------------------------------------------------------------------------
+
     public function add_script( $id, $source, $depend = '', $version = NULL )
     {
         if ( filter_var( base_url($source), FILTER_VALIDATE_URL) )
@@ -290,6 +308,8 @@ class Themee
             $this->_scripts[$id] = $source;
         }
     }
+
+    // -------------------------------------------------------------------------
 
     public function load_scripts()
     {
@@ -318,6 +338,8 @@ class Themee
         return $output;
     }
 
+    // -------------------------------------------------------------------------
+
     public function add_style( $id, $source, $depend = '', $version = NULL )
     {
         $source = $source.'?ver='.($version != '' ? $version : get_conf('app_version'));
@@ -331,6 +353,8 @@ class Themee
             $this->_styles[$id] = $source;
         }
     }
+
+    // -------------------------------------------------------------------------
 
     public function load_styles()
     {
@@ -365,6 +389,8 @@ class Themee
         return $output;
     }
 
+    // -------------------------------------------------------------------------
+
     public function get( $name )
     {
         if ( array_key_exists($name, $this->_theme_data) )
@@ -373,10 +399,14 @@ class Themee
             log_message('error', "#Baka_pack: Themee->get Theme data ".$name." doesn't exists.");
     }
 
+    // -------------------------------------------------------------------------
+
     public function set($name, $value)
     {
         $this->_contents[$name] = $value;
     }
+
+    // -------------------------------------------------------------------------
 
     public function load($view = '' , $view_data = array(), $file = '', $return = FALSE)
     {

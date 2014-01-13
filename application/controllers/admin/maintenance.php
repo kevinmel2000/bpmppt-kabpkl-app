@@ -36,6 +36,9 @@ class Maintenance extends BAKA_Controller
 
         $this->verify_login();
 
+        if ( !is_permited('sys_manage') )
+            $this->_notice( 'access-denied' );
+
         $this->themee->add_navbar( 'admin_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
         $this->admin_navbar( 'admin_sidebar', 'side' );
 
@@ -49,6 +52,9 @@ class Maintenance extends BAKA_Controller
 
     public function dbbackup()
     {
+        if ( !is_permited('sys_backstore_manage') )
+            $this->_notice( 'access-denied' );
+
         $this->data['panel_title'] = $this->themee->set_title('Backup Database');
 
         $fields[]   = array(
@@ -111,11 +117,14 @@ class Maintenance extends BAKA_Controller
 
         $this->data['panel_body'] = $form->generate();
 
-        $this->themee->load('pages/panel_form', $this->data);
+        $this->load->theme('pages/panel_form', $this->data);
     }
 
     public function dbrestore()
     {
+        if ( !is_permited('sys_backstore_manage') )
+            $this->_notice( 'access-denied' );
+
         $this->data['panel_title']  = $this->themee->set_title('Restore Database');
 
         $fields[]   = array(
@@ -157,19 +166,22 @@ class Maintenance extends BAKA_Controller
 
         $this->data['panel_body'] = $form->generate();
 
-        $this->themee->load('pages/panel_form', $this->data);
+        $this->load->theme('pages/panel_form', $this->data);
     }
 
     public function syslogs( $file = '' )
     {
+        if ( !is_permited('sys_logs_manage') )
+            $this->_notice( 'access-denied' );
+
+        $this->load->helper('directory');
+
         $this->data['panel_title'] = $this->themee->set_title('Aktifitas sistem');
 
         $this->themee->add_navbar( 'log_sidebar', 'nav-tabs nav-stacked nav-tabs-left', 'panel' );
 
-        $latest = '';
-
+        $latest   = '';
         $log_path = config_item('log_path');
-
         $scan_dir = directory_map($log_path);
 
         arsort( $scan_dir );
@@ -225,7 +237,7 @@ class Maintenance extends BAKA_Controller
             $this->data['panel_body'] = $this->table->generate( $line );
         }
 
-        $this->themee->load('pages/syslogs', $this->data);
+        $this->load->theme('pages/syslogs', $this->data);
     }
 }
 

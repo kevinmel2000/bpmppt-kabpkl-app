@@ -46,7 +46,7 @@ class Bpmppt_obat extends CI_Driver
 	 */
 	public function __construct()
 	{
-		log_message('debug', "#BPMPPT_driver: Pengobatan_tradisional_model Class Initialized");
+		log_message('debug', "#BPMPPT_driver: Pengobatan_tradisional Class Initialized");
 	}
 
 	// -------------------------------------------------------------------------

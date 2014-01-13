@@ -433,7 +433,7 @@ class Former
                 $html .= form_fieldset_close();
 
             // If your attributes is string, turn it into an array
-            // @todo  Please make a better attribute parser than this one
+            // @TODO: Please make a better attribute parser than this one
             if ( is_string( $attr ) )
                 $attr = array( $attr => '' );
 
@@ -559,7 +559,7 @@ class Former
                     break;
 
                 // Ajax Upload using FineUploader.JS
-                // @todo: done it! :v
+                // @TODO: done it! :v
                 case 'fineupload':
                     $input = form_button( array(
                                 // 'name'  => 'reset',

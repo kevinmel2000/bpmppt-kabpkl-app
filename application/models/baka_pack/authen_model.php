@@ -721,10 +721,10 @@ class Authen_model extends CI_Model
     public function get_user_roles( $user_id )
     {
         $query = $this->db->select("b.role_id, b.role, b.full, b.default")
-                      ->from($this->table['user_role'].' a')
-                      ->join($this->table['roles'].' b', 'b.role_id = a.role_id')
-                      ->where('user_id', $user_id)
-                      ->get();
+                          ->from($this->table['user_role'].' a')
+                          ->join($this->table['roles'].' b', 'b.role_id = a.role_id')
+                          ->where('user_id', $user_id)
+                          ->get();
 
         $ret = array();
 

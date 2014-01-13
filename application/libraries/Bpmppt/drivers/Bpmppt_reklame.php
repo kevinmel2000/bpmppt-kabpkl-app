@@ -46,7 +46,7 @@ class Bpmppt_reklame extends CI_Driver
 	 */
 	public function __construct()
 	{
-		log_message('debug', "#BPMPPT_driver: Reklame_model Class Initialized");
+		log_message('debug', "#BPMPPT_driver: Reklame Class Initialized");
 	}
 
 	// -------------------------------------------------------------------------

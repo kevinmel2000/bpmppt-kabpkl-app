@@ -58,6 +58,8 @@ class Utily
         log_message('debug', "#Baka_pack: Database Utility Class Initialized");
     }
 
+    // -------------------------------------------------------------------------
+
     public function backup( $tables = array(), $ignores = array(), $file_name = '', $download = TRUE )
     {
         if ( !is_dir( $this->_temp_path ) )
@@ -102,6 +104,8 @@ class Utily
         return TRUE;
     }
 
+    // -------------------------------------------------------------------------
+
     public function restore_upload( $field_name )
     {
         $config['upload_path']  = $this->_temp_path;
@@ -123,6 +127,8 @@ class Utily
             return FALSE;
         }
     }
+
+    // -------------------------------------------------------------------------
 
     protected function _restore_files( $file_path )
     {
@@ -148,6 +154,8 @@ class Utily
         return TRUE;
     }
 
+    // -------------------------------------------------------------------------
+
     protected function _backup_command( $file_name )
     {
         if ( strlen( self::$_ci->db->password ) > 0 )
@@ -158,6 +166,8 @@ class Utily
         return ( file_exists( $file_name ) ? TRUE : FALSE );
     }
 
+    // -------------------------------------------------------------------------
+
     protected function _restore_command( $file_name )
     {
         if ( strlen( self::$_ci->db->password ) > 0 )
@@ -167,6 +177,8 @@ class Utily
 
         $this->clear( $file_name );
     }
+
+    // -------------------------------------------------------------------------
 
     public function clear( $file_path )
     {

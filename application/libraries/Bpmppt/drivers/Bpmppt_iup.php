@@ -48,7 +48,7 @@ class Bpmppt_iup extends CI_Driver
 	 */
 	public function __construct()
 	{
-		log_message('debug', "#BPMPPT_driver: Usaha_pertambangan_model Class Initialized");
+		log_message('debug', "#BPMPPT_driver: Usaha_pertambangan Class Initialized");
 	}
 
 	// -------------------------------------------------------------------------

@@ -46,7 +46,7 @@ class Bpmppt_prinsip extends CI_Driver
 	 */
 	public function __construct()
 	{
-		log_message('debug', "#BPMPPT_driver: Persetujuan_prinsip_model Class Initialized");
+		log_message('debug', "#BPMPPT_driver: Persetujuan_prinsip Class Initialized");
 	}
 
 	// -------------------------------------------------------------------------

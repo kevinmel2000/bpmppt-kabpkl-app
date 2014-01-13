@@ -133,11 +133,14 @@ class Pengguna extends BAKA_Controller
 
         $this->data['panel_body'] = $form->generate();
 
-        $this->themee->load('pages/panel_form', $this->data);
+        $this->load->theme('pages/panel_form', $this->data);
     }
 
     private function _user_table()
     {
+        if ( !is_permited('users_manage') )
+            $this->_notice( 'access-denied' );
+
         $this->data['tool_buttons']['form'] = 'Baru|primary';
 
         $this->load->library('baka_pack/gridr');
@@ -152,12 +155,12 @@ class Pengguna extends BAKA_Controller
         $this->data['panel_title'] = $this->themee->set_title('Semua data pengguna');
         $this->data['panel_body'] = $grid->make_table( $this->authen->get_users() );
 
-        $this->themee->load('pages/panel_data', $this->data);
+        $this->load->theme('pages/panel_data', $this->data);
     }
 
     public function profile()
     {
-        $this->_user_form( $this->authen->get_user_id() );
+        $this->_user_form( Authen::get_user_id() );
     }
 
     private function _user_form( $user_id = '' )
@@ -332,7 +335,7 @@ class Pengguna extends BAKA_Controller
 
         $this->data['panel_body'] = $form->generate();
 
-        $this->themee->load('pages/panel_form', $this->data);
+        $this->load->theme('pages/panel_form', $this->data);
     }
 
     public function groups( $page = '', $group_id = NULL )
@@ -472,7 +475,7 @@ class Pengguna extends BAKA_Controller
 
         // $this->data['panel_body'] = $form->generate();
 
-        $this->themee->load('pages/panel_form', $this->data);
+        $this->load->theme('pages/panel_form', $this->data);
     }
 
     private function _group_table()
@@ -491,7 +494,7 @@ class Pengguna extends BAKA_Controller
 
         $this->data['panel_body'] = $grid->make_table( $this->authen->get_roles() );
 
-        $this->themee->load('pages/panel_data', $this->data);
+        $this->load->theme('pages/panel_data', $this->data);
     }
 
     public function permission( $page = '', $perm_id = '' )
@@ -586,7 +589,7 @@ class Pengguna extends BAKA_Controller
 
         $this->data['panel_body'] = $form->generate();
 
-        $this->themee->load('pages/panel_form', $this->data);
+        $this->load->theme('pages/panel_form', $this->data);
     }
 
     private function _perm_table()
@@ -606,7 +609,7 @@ class Pengguna extends BAKA_Controller
 
         $this->data['panel_body'] = $grid->make_table( $this->authen->get_perms() );
 
-        $this->themee->load('pages/panel_data', $this->data);
+        $this->load->theme('pages/panel_data', $this->data);
     }
 }
 

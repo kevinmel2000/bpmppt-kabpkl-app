@@ -70,6 +70,13 @@ class BAKA_Controller extends CI_Controller
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Redirecting to notice page
+     *
+     * @param   string  $page  Page name
+     *
+     * @return  void
+     */
     protected function _notice( $page )
     {
         redirect('notice/'.$page);

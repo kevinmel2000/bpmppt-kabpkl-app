@@ -48,7 +48,7 @@ class Bpmppt_tdp extends CI_Driver
 	 */
 	public function __construct()
 	{
-		log_message('debug', "#BPMPPT_driver: Tanda_daftar_perusahaan_model Class Initialized");
+		log_message('debug', "#BPMPPT_driver: Tanda_daftar_perusahaan Class Initialized");
 	}
 
 	// -------------------------------------------------------------------------
