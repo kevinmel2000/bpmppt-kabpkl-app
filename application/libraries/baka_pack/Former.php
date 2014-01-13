@@ -579,6 +579,17 @@ class Former
                     $input = $form_func( $name, $option, $std, $attr );
                     break;
 
+                // Selectbox field
+                case 'select2':
+                    $path = 'asset/vendor/select2/';
+                    add_script( 'select2', $path.'select2.min.js', 'jquery', '3.4.5' );
+                    add_script( 'select2-trigger', "$('.form-control-select2').select2();\n", 'select2' );
+                    add_style( 'select2', $path.'select2.css', 'bootstrap', '3.4.5' );
+                    $attr = 'class="form-control-select2 '.$input_class.'" id="'.$id.'" '.$attr;
+
+                    $input = form_dropdown( $name, $option, $std, $attr );
+                    break;
+
                 // Radiocheckbox field
                 case 'radio':
                 case 'checkbox':
@@ -698,7 +709,7 @@ class Former
         extract( $this->_template );
 
         $attrs = $this->_set_defaults( $attrs );
-        $is_error = FALSE;
+        $is_error = '';
 
         if ( !is_array( $attrs['desc'] ) )
         {
@@ -706,7 +717,7 @@ class Former
         }
         else if ( is_array( $attrs['desc'] ) and isset( $attrs['desc']['err'] ) )
         {
-            $is_error = $attrs['desc']['err'];
+            $is_error = $this->_form_desc( $attrs['desc'] );
         }
         
         if ( $attrs['validation'] != '' )
@@ -717,7 +728,7 @@ class Former
                 $group_class .= ' form-required';
             }
 
-            if ( $is_error != FALSE )
+            if ( $is_error != '' )
                 $group_class .= ' has-error';
 
             // var_dump( $is_error );
@@ -738,7 +749,6 @@ class Former
         $html .= sprintf( $field_open, $input_col, '' )
               . $input
               . $is_error
-              . $this->_form_desc( $attrs['desc'] )
               . $field_close.$group_close;
 
         return $html;
@@ -782,7 +792,7 @@ class Former
         // Let's reset your button attributes.
         $button_attr = array();
 
-        foreach ($this->_buttons as $attr)
+        foreach ( $this->_buttons as $attr )
         {
             // Button name is inheritance with form ID.
             $button_attr['name']    = $this->_attrs['name'].'-'.$attr['name'];
@@ -794,7 +804,7 @@ class Former
             if ( substr( $attr['label'], 0, 5 ) == 'lang:' )
                 $attr['label'] = _x( str_replace( 'lang:', '', $attr['label'] ) );
 
-            switch ($attr['type']) {
+            switch ( $attr['type'] ) {
                 case 'submit':
                 case 'reset':
                     $func = 'form_'.$attr['type'];

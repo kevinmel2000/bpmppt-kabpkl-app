@@ -242,13 +242,14 @@ class Bpmppt extends CI_Driver_Library
 	 * Get form properties from child driver (if available)
 	 *
 	 * @param   string  $driver  Driver name
+	 * @param   object  $driver  Data Object
 	 *
 	 * @return  array|false
 	 */
-	public function get_form( $driver )
+	public function get_form( $driver, $data_obj )
 	{
 		if ( method_exists( $this->$driver, 'form') )
-			return $this->$driver->form();
+			return $this->$driver->form( $data_obj );
 
 		return FALSE;
 	}

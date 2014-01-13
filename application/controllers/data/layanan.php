@@ -147,6 +147,8 @@ class Layanan extends BAKA_Controller
 
         $this->data['tool_buttons']['data'] = 'Kembali|default';
 
+        $fields = array();
+
         if ( $data_obj )
         {
             $this->data['tool_buttons']['form'] = 'Baru|primary';
@@ -172,29 +174,32 @@ class Layanan extends BAKA_Controller
                 'std'   => '<span class="label label-'.$status.'">'._x('status_'.$status).'</span>'.$date );
         }
 
-        $fields[]   = array(
-            'name'  => $modul_slug.'_surat',
-            'label' => 'Nomor &amp; Tanggal Permohonan',
-            'type'  => 'subfield',
-            'attr'  => ( $data_obj ? 'disabled' : ''),
-            'fields'=> array(
-                array(
-                    'col'   => '6',
-                    'name'  => 'nomor',
-                    'label' => 'Nomor',
-                    'type'  => 'text',
-                    'std'   => ( $data_obj ? $data_obj->surat_nomor : ''),
-                    'validation'=> ( !$data_obj ? 'required' : '' ) ),
-                array(
-                    'col'   => '6',
-                    'name'  => 'tanggal',
-                    'label' => 'Tanggal',
-                    'type'  => 'datepicker',
-                    'std'   => ( $data_obj ? format_date( $data_obj->surat_tanggal ) : ''),
-                    'validation'=> ( !$data_obj ? 'required' : '' ),
-                    'callback'=> 'string_to_date' ),
-                )
-            );
+        if ( $data_type != 'imb' )
+        {
+            $fields[]   = array(
+                'name'  => $modul_slug.'_surat',
+                'label' => 'Nomor &amp; Tanggal Permohonan',
+                'type'  => 'subfield',
+                'attr'  => ( $data_obj ? 'disabled' : ''),
+                'fields'=> array(
+                    array(
+                        'col'   => '6',
+                        'name'  => 'nomor',
+                        'label' => 'Nomor',
+                        'type'  => 'text',
+                        'std'   => ( $data_obj ? $data_obj->surat_nomor : ''),
+                        'validation'=> ( !$data_obj ? 'required' : '' ) ),
+                    array(
+                        'col'   => '6',
+                        'name'  => 'tanggal',
+                        'label' => 'Tanggal',
+                        'type'  => 'datepicker',
+                        'std'   => ( $data_obj ? format_date( $data_obj->surat_tanggal ) : ''),
+                        'validation'=> ( !$data_obj ? 'required' : '' ),
+                        'callback'=> 'string_to_date' ),
+                    )
+                );
+        }
 
         $this->load->library('baka_pack/former');
 

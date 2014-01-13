@@ -92,10 +92,8 @@ class Bpmppt_ho extends CI_Driver
 		$fields[]	= array(
 			'name'	=> $this->alias.'_pemohon_kerja',
 			'label'	=> 'Pekerjaan',
-			'type'	=> 'dropdown',
+			'type'	=> 'text',
 			'std'	=> ( $data_obj ? $data_obj->pemohon_nama : ''),
-			'option'=> array(
-				'p' => 'Pekerjaan' ),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(

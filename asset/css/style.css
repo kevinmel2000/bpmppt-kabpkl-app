@@ -535,6 +535,13 @@ section#contents-main {
 	padding-right: 1em;
 }
 
+.form-control-select2 {
+	padding-top: 0;
+	padding-left: 0;
+	padding-right: 0;
+	border: 0;
+}
+
 .form-control[disabled],
 .form-control[readonly],
 fieldset[disabled] .form-control {

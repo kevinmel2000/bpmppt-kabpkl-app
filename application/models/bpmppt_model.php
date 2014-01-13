@@ -233,12 +233,12 @@ class Bpmppt_model extends CI_Model
     {
         $data['no_agenda']  = $form_data[$module_name.'_surat_nomor'];
         $data['created_on'] = string_to_datetime();
-        $data['created_by'] = $this->authen->get_user_id();
+        $data['created_by'] = Authen::get_user_id();
         $data['type']       = $module_name;
         $data['label']      = '-';
         $data['petitioner'] = $form_data[$module_name.'_pemohon_nama'];
         $data['status']     = 'pending';
-        $data['desc']       = '';
+        // $data['desc']       = '';
 
         if ( $this->db->insert( $this->_table['data'], $data ) )
         {
@@ -247,7 +247,7 @@ class Bpmppt_model extends CI_Model
             if ( $this->_create_datameta( $data_id, $module_name, $form_data ) )
             {
                 $this->messages['success'] = array(
-                    'Permohonan dari saudara/i '.$data[$petitioner].' berhasil disimpan.',
+                    'Permohonan dari saudara/i '.$data['petitioner'].' berhasil disimpan.',
                     'Klik cetak jika anda ingin langsung mencetaknya.');
 
                 return $data_id;
@@ -337,7 +337,7 @@ class Bpmppt_model extends CI_Model
         $data = $this->db->get_where( $this->_table['data'], array('id' => $data_id) )->row();
 
         $log[] = array(
-            'user_id'   => $this->authen->get_user_id(),
+            'user_id'   => Authen::get_user_id(),
             'date'      => string_to_datetime(),
             'message'   => $log_message,
             );
