@@ -363,7 +363,7 @@ class Former
             $_extras = $this->_attrs['extras'];
             unset( $this->_attrs['extras'] );
 
-            $this->_attrs = array_merge( $this->_attrs, $this->_attrs['extras'] );
+            $this->_attrs = array_merge( $this->_attrs, $_extras );
         }
 
         // getting started
@@ -576,7 +576,8 @@ class Former
                     $attr = 'class="'.$input_class.'" id="'.$id.'" '.$attr;
 
                     $form_func = 'form_'.$type;
-                    $input = $form_func( $name, $option, $std, $attr );
+                    $input = $form_func( $name, $option, set_value( $name, $std), $attr );
+                    // $input = $form_func( $name, $option, set_select( $name, 'one', TRUE, $std), $attr );
                     break;
 
                 // Selectbox field

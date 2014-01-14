@@ -72,6 +72,8 @@ class Bpmppt extends CI_Driver_Library
 	 */
 	private $modules = array();
 
+	private $messages = array();
+
 	/**
 	 * Default class constructor
 	 */
@@ -280,12 +282,55 @@ class Bpmppt extends CI_Driver_Library
 	 *
 	 * @return  array|false
 	 */
-	public function get_report( $driver )
+	public function get_report( $driver, $where = array() )
 	{
-		if ( method_exists( $this->$driver, 'laporan') )
-			return $this->$driver->laporan();
+		$wheres = array(
+			'type'                => $this->$driver->alias,
+			'month(created_on)'   => (int) $where['data_date_month'],
+			'year(created_on)'    => (int) $where['data_date_year'],
+			);
 
-		return FALSE;
+		if ( $where['data_status'] != 'all' )
+			$wheres['status'] = $where['data_status'];
+
+		return $this->q_report( $wheres );
+	}
+
+    // -------------------------------------------------------------------------
+
+	public function simpan( $driver_alias, $form_data, $data_id = NULL )
+	{
+		// $driver_alias = $this->get_alias( $driver );
+
+		$data['no_agenda']  = $form_data[$driver_alias.'_surat_nomor'];
+        $data['created_on'] = string_to_datetime();
+        $data['created_by'] = Authen::get_user_id();
+        $data['type']       = $driver_alias;
+        $data['label']      = '-';
+        $data['petitioner'] = $form_data[$driver_alias.'_pemohon_nama'];
+        $data['status']     = 'pending';
+
+        if ( $result = $this->create_data( $driver_alias, $data, $form_data ) )
+        {
+        	$this->messages['success'] = array(
+                'Permohonan dari saudara/i '.$data['petitioner'].' berhasil disimpan.',
+                'Klik cetak jika anda ingin langsung mencetaknya.');
+
+        	return $result;
+        }
+        else
+        {
+        	$this->messages['error'] =  'Terjadi kegagalan penginputan data.' ;
+
+            return FALSE;
+        }
+	}
+
+    // -------------------------------------------------------------------------
+
+	public function messages()
+	{
+		return $this->messages;
 	}
 }
 

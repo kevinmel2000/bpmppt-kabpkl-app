@@ -60,6 +60,8 @@ class Bpmppt_model extends CI_Model
         log_message('debug', "#BPMPPT: model Class Initialized");
     }
 
+    // -------------------------------------------------------------------------
+
     public function skpd_properties()
     {
         $prop = array(
@@ -76,7 +78,15 @@ class Bpmppt_model extends CI_Model
         return $data;
     }
 
-    // get full data by id
+    // -------------------------------------------------------------------------
+
+    /**
+     * get full data by id
+     *
+     * @param   int  $data_id  Data ID
+     *
+     * @return  obj
+     */
     public function get_fulldata_by_id( $data_id )
     {
         if ($data = $this->get_data_by_id( $data_id ))
@@ -87,17 +97,23 @@ class Bpmppt_model extends CI_Model
         }
     }
 
+    // -------------------------------------------------------------------------
+
     // get data by id
     public function get_data_by_id( $data_id )
     {
         return $this->get_where( array( 'id' => $data_id ), TRUE );
     }
 
+    // -------------------------------------------------------------------------
+
     // get data by type
     public function get_data_by_type( $module_name )
     {
         return $this->get_where( array( 'type' => $module_name ) );
     }
+
+    // -------------------------------------------------------------------------
 
     // get data by label
     public function get_data_by_status( $data_status, $module_name = '' )
@@ -111,6 +127,8 @@ class Bpmppt_model extends CI_Model
         return $this->get_where( $where );
     }
 
+    // -------------------------------------------------------------------------
+
     // get data by author
     public function get_data_by_author( $data_created_by, $module_name = '' )
     {
@@ -121,6 +139,8 @@ class Bpmppt_model extends CI_Model
 
         return $this->get_where( $where );
     }
+
+    // -------------------------------------------------------------------------
 
     // get data by petitioner
     public function get_data_by_petitioner( $data_petitioner, $module_name = '' )
@@ -133,6 +153,8 @@ class Bpmppt_model extends CI_Model
         return $this->get_where( $where );
     }
 
+    // -------------------------------------------------------------------------
+
     // find data by petitioner
     public function find_data_by_petitioner( $data_petitioner, $module_name = '' )
     {
@@ -144,15 +166,7 @@ class Bpmppt_model extends CI_Model
         return $this->db->get($this->_table['data']);
     }
 
-    public function get_report( $data_type, $filter )
-    {
-        $wheres['type']     = $data_type;
-        $wheres['status']   = $filter['data_status'];
-        $wheres['month']    = $filter['data_date_month'];
-        $wheres['year']     = $filter['data_date_year'];
-
-        return $this->get_where( $wheres );
-    }
+    // -------------------------------------------------------------------------
 
     public function get_where( $wheres, $is_single = FALSE )
     {
@@ -183,6 +197,8 @@ class Bpmppt_model extends CI_Model
 
     }
 
+    // -------------------------------------------------------------------------
+
     // find datameta by key
     public function find_data_by_meta_value( $module_name, $datameta_key, $datameta_value )
     {
@@ -192,6 +208,8 @@ class Bpmppt_model extends CI_Model
                         ->group_by('data_id')
                         ->get($this->_table['data_meta']);
     }
+
+    // -------------------------------------------------------------------------
 
     // count data
     public function count_data( $module_alias = '' )
@@ -203,6 +221,8 @@ class Bpmppt_model extends CI_Model
 
         return $out;
     }
+
+    // -------------------------------------------------------------------------
 
     // get datameta
     public function get_datameta( $data_id, $module_alias )
@@ -223,33 +243,25 @@ class Bpmppt_model extends CI_Model
         return FALSE;
     }
 
-    /**
-     * Create data
-     * @param  string $module_name
-     * @param  array  $form_data
-     * @return mixed
-     */
-    public function create_data( $module_name, $form_data )
-    {
-        $data['no_agenda']  = $form_data[$module_name.'_surat_nomor'];
-        $data['created_on'] = string_to_datetime();
-        $data['created_by'] = Authen::get_user_id();
-        $data['type']       = $module_name;
-        $data['label']      = '-';
-        $data['petitioner'] = $form_data[$module_name.'_pemohon_nama'];
-        $data['status']     = 'pending';
-        // $data['desc']       = '';
+    // -------------------------------------------------------------------------
 
-        if ( $this->db->insert( $this->_table['data'], $data ) )
+    /**
+     * Create new data
+     *
+     * @param   string  $module_alias  Module Alias
+     * @param   array   $main_data     Main Data
+     * @param   array   $meta_data     Meta Data
+     *
+     * @return  bool|int
+     */
+    public function create_data( $module_alias, $main_data, $meta_data )
+    {
+        if ( $this->db->insert( $this->_table['data'], $main_data ) )
         {
             $data_id = $this->db->insert_id();
 
-            if ( $this->_create_datameta( $data_id, $module_name, $form_data ) )
+            if ( $this->_create_datameta( $data_id, $module_alias, $meta_data ) )
             {
-                $this->messages['success'] = array(
-                    'Permohonan dari saudara/i '.$data['petitioner'].' berhasil disimpan.',
-                    'Klik cetak jika anda ingin langsung mencetaknya.');
-
                 return $data_id;
             }
         }
@@ -260,6 +272,8 @@ class Bpmppt_model extends CI_Model
             return FALSE;
         }
     }
+
+    // -------------------------------------------------------------------------
 
     public function delete_data( $data_id, $module_name )
     {
@@ -280,6 +294,8 @@ class Bpmppt_model extends CI_Model
         }
     }
 
+    // -------------------------------------------------------------------------
+
     public function change_status( $data_id, $new_status )
     {
         $this->db->update( $this->_table['data'],
@@ -290,6 +306,8 @@ class Bpmppt_model extends CI_Model
 
         return $this->db->affected_rows() > 0;
     }
+
+    // -------------------------------------------------------------------------
 
     /**
      * Update datameta for a new user
@@ -307,6 +325,8 @@ class Bpmppt_model extends CI_Model
                     'meta_key'  => $meta_key )
             );
     }
+
+    // -------------------------------------------------------------------------
 
     /**
      * Create an empty datameta for a new user
@@ -332,6 +352,8 @@ class Bpmppt_model extends CI_Model
         return $this->db->trans_status();
     }
 
+    // -------------------------------------------------------------------------
+
     private function _write_datalog( $data_id, $log_message )
     {
         $data = $this->db->get_where( $this->_table['data'], array('id' => $data_id) )->row();
@@ -350,6 +372,28 @@ class Bpmppt_model extends CI_Model
         $this->db->update( $this->_table['data'],
             array( 'logs' => serialize( $log ) ),
             array( 'id' => $data_id ) );
+    }
+
+    // -------------------------------------------------------------------------
+
+    public function q_report( $where = array() )
+    {
+        $query = $this->db->get_where( $this->_table['data'], $where );
+
+        if ( $query->num_rows() > 0 )
+        {
+            $main_data = $query->result();
+
+            foreach ( $main_data as $row )
+            {
+                $meta = $this->get_datameta( $row->id, $row->type );
+                $result[] = (object) array_merge( (array) $row, (array) $meta );
+            }
+
+            return $result;
+        }
+        
+        return FALSE;
     }
 }
 

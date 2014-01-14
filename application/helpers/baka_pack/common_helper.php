@@ -188,7 +188,8 @@ function get_year_assoc( $interfal = 10 )
 
     for ( $i=0; $i<=$interfal; $i++ )
     {
-        $output[$i] = ($i === 0) ? date('Y') : date('Y', mktime(0, 0, 0, $i, 1, date('Y')-$i));
+        $year = $i === 0 ? date('Y') : date('Y', mktime(0, 0, 0, $i, 1, date('Y')-$i));
+        $output[$year] = $year;
     }
 
     return $output;

@@ -96,10 +96,10 @@ class Bpmppt_tdp extends CI_Driver
 			'type'	=> 'fieldset' );
 
 		$fields[]	= array(
-			'name'	=> $this->alias.'_pemilik_nama',
+			'name'	=> $this->alias.'_pemohon_nama',
 			'label'	=> 'Nama lengkap',
 			'type'	=> 'text',
-			'std'	=> ( $data_obj ? $data_obj->pemilik_nama : ''),
+			'std'	=> ( $data_obj ? $data_obj->pemohon_nama : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(

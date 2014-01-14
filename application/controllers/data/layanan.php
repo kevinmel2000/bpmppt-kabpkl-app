@@ -216,9 +216,9 @@ class Layanan extends BAKA_Controller
         {
             $form_data  = $form->submited_data();
 
-            $data = $this->bpmppt->create_data( $modul_slug, $form_data );
+            $data = $this->bpmppt->simpan( $modul_slug, $form_data );
             
-            foreach ( $this->bpmppt->messages as $level => $message )
+            foreach ( $this->bpmppt->messages() as $level => $message )
             {
                 $this->session->set_flashdata( $level, $message );
             }
@@ -311,11 +311,11 @@ class Layanan extends BAKA_Controller
             $this->load->library('baka_pack/former');
 
             $form = $this->former->init( array(
-                'name' => 'print-'.$modul_slug,
-                'action' => current_url(),
-                'extras' => array('target' => '_blank'),
-                'fields' => $fields,
-                'buttons' => $buttons,
+                'name'      => 'print-'.$data_type,
+                'action'    => current_url(),
+                'extras'    => array('target' => '_blank'),
+                'fields'    => $fields,
+                'buttons'   => $buttons,
                 ));
 
             if ( $form->validate_submition() )
@@ -324,10 +324,8 @@ class Layanan extends BAKA_Controller
 
                 $data['layanan'] = $this->bpmppt->get_label($data_type);
 
-                $data['results'] = $this->bpmppt->get_report(
-                    $data_type,
-                    $form->submited_data()
-                    );
+                $data['submited'] = $form->submited_data();
+                $data['results'] = $this->bpmppt->get_report( $data_type, $form->submited_data() );
 
                 $this->load->theme('prints/reports/'.$data_type, $data, 'laporan');
             }

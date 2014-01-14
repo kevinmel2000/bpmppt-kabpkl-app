@@ -44,7 +44,7 @@ class Utama extends BAKA_Controller
         $this->themee->add_navbar( 'data_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
         $this->data_navbar( 'data_sidebar', 'side' );
 
-        $this->modules_arr          = $this->bpmppt->get_modules_assoc();
+        $this->modules_arr = $this->bpmppt->get_modules_assoc();
 
         $this->data['page_link'] = 'data/';
     }
