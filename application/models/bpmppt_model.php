@@ -155,7 +155,14 @@ class Bpmppt_model extends CI_Model
 
     // -------------------------------------------------------------------------
 
-    // find data by petitioner
+    /**
+     * find data by petitioner
+     *
+     * @param   string  $data_petitioner  Petitioner data
+     * @param   string  $module_name      Module Name
+     *
+     * @return  obj
+     */
     public function find_data_by_petitioner( $data_petitioner, $module_name = '' )
     {
         if ($module_name != '')
@@ -168,27 +175,51 @@ class Bpmppt_model extends CI_Model
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Default get where data
+     *
+     * @param   array   $wheres     Data Filter
+     * @param   bool    $is_single  Is Singular
+     *
+     * @return  mixed
+     */
     public function get_where( $wheres, $is_single = FALSE )
     {
+        // If filtered by created month
         if ( isset($wheres['month']) )
         {
             $wheres['month(created_on)'] = $wheres['month'];
             unset($wheres['month']);
         }
 
+        // If filtered by created year
         if ( isset($wheres['year']) )
         {
             $wheres['year(created_on)'] = $wheres['year'];
             unset($wheres['year']);
         }
 
-        $query = $this->db->get_where($this->_table['data'], $wheres);
+        // Selecting data
+        $query = $this->db->select('*')->from($this->_table['data']);
 
+        // If not filtered by specified status
+        if ( !isset( $wheres['status'] ) and $is_single == FALSE )
+        {
+            $query->where( 'status !=', 'deleted' );
+            unset($wheres['status']);
+        }
+
+        // Loop the filter
+        foreach ( $wheres as $key => $val )
+        {
+            $query->where( $key, $val );
+        }
+
+        // Is it a singular result
         if ( $is_single )
         {
-            return ( $query->num_rows() == 1 )
-                ? $query->row()
-                : FALSE;
+            $get_query = $query->get();
+            return ( $get_query->num_rows() == 1 ) ? $get_query->row() : FALSE;
         }
         else
         {
