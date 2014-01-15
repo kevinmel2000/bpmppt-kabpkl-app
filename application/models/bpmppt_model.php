@@ -308,19 +308,15 @@ class Bpmppt_model extends CI_Model
 
     public function delete_data( $data_id, $module_name )
     {
-        if ( $data = $this->db->delete( $this->_table['data'], array( 'id' => $data_id, 'type' => $this->get_alias($module_name) ) ) )
+        if ( $data = $this->db->delete( $this->_table['data'], array( 'id' => $data_id, 'type' => $module_name ) ) )
         {
-            if ( $this->db->delete( $this->_table['data_meta'], array( 'data_id' => $data->id, 'data_type' => $data->type ) ) )
+            if ( $this->db->delete( $this->_table['data_meta'], array( 'data_id' => $data_id, 'data_type' => $module_name ) ) )
             {
-                $this->messages['success'] = 'Data dengan id #'.$data_id.' berhasil dihapus.';
-
                 return TRUE;
             }
         }
         else
         {
-            $this->messages['error'] = 'Terjadi kegagalan penghapusan data.';
-
             return FALSE;
         }
     }

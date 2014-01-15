@@ -196,6 +196,53 @@ function get_year_assoc( $interfal = 10 )
 }
 
 // -----------------------------------------------------------------------------
+
+/**
+ * Conver Numeric into Roman characters
+ * @link    http://nerdspace.co/131
+ *
+ * @param   int     $num  Numeric Caracter
+ *
+ * @return  string
+ */
+function format_roman( $num )
+{
+    $n = intval( $num );
+    $res = '';
+  
+    // roman_numerals array
+    $romans = array(
+        'M'  => 1000,
+        'CM' => 900,
+        'D'  => 500,
+        'CD' => 400,
+        'C'  => 100,
+        'XC' => 90,
+        'L'  => 50,
+        'XL' => 40,
+        'X'  => 10,
+        'IX' => 9,
+        'V'  => 5,
+        'IV' => 4,
+        'I'  => 1);
+  
+    foreach ($romans as $roman => $number)
+    {
+        // divide to get  matches
+        $matches = intval($n / $number);
+  
+        // assign the roman char * $matches
+        $res .= str_repeat($roman, $matches);
+  
+        // substract from the number
+        $n = $n % $number;
+    }
+  
+    // return the res
+    return $res;
+}
+
+// -----------------------------------------------------------------------------
 // Twitter Bootstrap helper
 //
 // Just another simplify to use twbs

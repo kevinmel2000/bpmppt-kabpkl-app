@@ -89,7 +89,7 @@ class Layanan extends BAKA_Controller
 
         $this->data['tool_buttons']['form'] = 'Baru|primary';
         $this->data['tool_buttons']['cetak'] = 'Laporan|info';
-        $this->data['tool_buttons']['status:dd|default'] = array(
+        $this->data['tool_buttons']['Status:dd|default'] = array(
             'data/status/semua'     => 'Semua',
             'data/status/pending'   => 'Pending',
             'data/status/approved'  => 'Disetujui',
@@ -99,11 +99,13 @@ class Layanan extends BAKA_Controller
         $this->data['panel_title'] = $this->themee->set_title( 'Semua data ' . $this->bpmppt->get_label( $data_type ) );
 
         $slug = $this->bpmppt->get_alias( $data_type );
+        $stat  = FALSE;
 
         switch ( $this->uri->segment(6) )
         {
             case 'status':
-                $query = $this->bpmppt->get_data_by_status( $this->uri->segment(7), $slug );
+                $stat   = $this->uri->segment(7);
+                $query  = $this->bpmppt->get_data_by_status( $stat, $slug );
                 break;
             
             case 'page':
@@ -124,13 +126,12 @@ class Layanan extends BAKA_Controller
                             ->set_column('Pemohon', 'petitioner', '40%', FALSE, '<strong>%s</strong>')
                             ->set_column('Status', 'status, callback__x:status', '10%', FALSE, '<span class="label label-%s">%s</span>');
 
-        // if ( !$this->_dashboard_view )
-        // {
-            $grid->set_buttons('form/', 'eye-open', 'primary', 'Lihat data')
-                 ->set_buttons('hapus/', 'trash', 'danger', 'Hapus data');
-        // }
+        $grid->set_buttons('form/', 'eye-open', 'primary', 'Lihat data');
 
-        // return $grid->make_table( $query );
+        if ( $stat == 'deleted' )
+            $grid->set_buttons('delete/', 'trash', 'danger', 'Hapus data secara permanen');
+        else
+            $grid->set_buttons('hapus/', 'trash', 'danger', 'Hapus data');
 
         // $this->data['panel_body']    = $this->bpmppt->get_table( $data_type, $this->data['page_link'] );
         $this->data['panel_body']    = $grid->make_table( $query );
@@ -227,10 +228,6 @@ class Layanan extends BAKA_Controller
             }
 
             redirect( $this->data['page_link'].'form/'.$data );
-        }
-        else
-        {
-            $this->session->set_flashdata( 'error', $form->validation_errors() );
         }
 
         $this->data['panel_body'] = $form->generate();
@@ -343,7 +340,7 @@ class Layanan extends BAKA_Controller
 
     public function delete( $data_type, $data_id )
     {
-        if ( $this->bpmppt->delete_data( $data_id, $data_type ) )
+        if ( $this->bpmppt->delete_data( $data_id, $this->bpmppt->get_alias($data_type) ) )
         {
             $this->session->set_flashdata('message',
                 array('Dokumen dengan id #'.$data_id.' berhasil dihapus secara permanen.'));

@@ -12,8 +12,8 @@
 		<p style="font-family: 'Arial'">BERDASARKAN<br>
 UNDANG-UNDANG REPUBLIK INDONESIA NOMOR 3 TAHUN 1982<br>
 TENTANG WAJIB DAFTAR PERUSAHAAN<br>
-<?php // koprasi ---------------------------------------------------------------
-if( strtolower($usaha_jenis) == 'koprasi' ) : ?>
+<?php // koperasi ---------------------------------------------------------------
+if( strtolower($usaha_jenis) == 'koperasi' ) : ?>
 UNDANG-UNDANG REPUBLIK INDONESIA NOMOR 25 TAHUN 1992<br>
 TENTANG PERKOPERASIAN
 <?php // Perseroan Terbatas (PT) -----------------------------------------------
@@ -70,8 +70,8 @@ TENTANG PERSEROAN TERBATAS
 </tr>
 
 <tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom: 1px solid #ccc">
-<?php // koprasi ---------------------------------------------------------------
-if( strtolower($usaha_jenis) == 'koprasi' ) : ?>
+<?php // koperasi ---------------------------------------------------------------
+if( strtolower($usaha_jenis) == 'koperasi' ) : ?>
 	<td colspan="6" style="width:100%; border-right: 2px solid #000;" class="bold underline">PENGESAHAN MENTERI NEGARA KOPERASI DAN USAHA KECIL DAN MENENGAH REPUBLIK INDONESIA ATAS AKTA PENDIRIAN KOPERASI</td>
 </tr>
 <tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0;">

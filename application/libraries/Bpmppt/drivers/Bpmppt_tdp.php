@@ -88,7 +88,7 @@ class Bpmppt_tdp extends CI_Driver
 			'label'	=> 'Tgl. Masa Berlaku',
 			'type'	=> 'datepicker',
 			'std'	=> ( $data_obj ? $data_obj->tgl_berlaku : ''),
-			'validation'=> ( !$data_obj ? 'required' : '' ) );
+			'validation'=> ( !$data_obj ? '' : '' ) );
 
 		$fields[]	= array(
 			'name'	=> $this->alias.'_pengajuan_jenis',
@@ -192,13 +192,6 @@ class Bpmppt_tdp extends CI_Driver
 				));
 
 		$fields[]	= array(
-			'name'	=> $this->alias.'_pemilik_usaha',
-			'label'	=> 'Perusahaan',
-			'type'	=> 'text',
-			'std'	=> ( $data_obj ? $data_obj->pemilik_usaha : ''),
-			'validation'=> ( !$data_obj ? 'required' : '' ) );
-
-		$fields[]	= array(
 			'name'	=> $this->alias.'_fieldset_data_usaha',
 			'label'	=> 'Data Perusahaan',
 			'attr'	=> ( $data_obj ? 'disabled' : '' ),
@@ -211,11 +204,13 @@ class Bpmppt_tdp extends CI_Driver
 			'std'	=> ( $data_obj ? $data_obj->usaha_nama : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-		$u_jenis = array('Badan Usaha Milik Negara (BUMN)',
-			'Koperasi',
-			'Perorangan (PO)',
+		$u_jenis = array(
+			'Perseroan Terbatas (PT)',
 			'Perseroan Komanditer (CV)',
-			'Perseroan Terbatas (PT)' );
+			'Badan Usaha Milik Negara (BUMN)',
+			'Perorangan (PO)',
+			'Koperasi',
+			);
 
 		foreach ( $u_jenis as $jenis )
 			$jns_opt[$jenis] = $jenis;

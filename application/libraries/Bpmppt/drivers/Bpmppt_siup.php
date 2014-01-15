@@ -154,12 +154,12 @@ class Bpmppt_siup extends CI_Driver
 					'validation'=> 'numeric' ),
 				));
 
-		$fields[]	= array(
-			'name'	=> $this->alias.'_pemilik_usaha',
-			'label'	=> 'Perusahaan',
-			'type'	=> 'text',
-			'std'	=> ( $data_obj ? $data_obj->pemilik_usaha : ''),
-			'validation'=> ( !$data_obj ? 'required' : '' ) );
+		// $fields[]	= array(
+		// 	'name'	=> $this->alias.'_pemilik_usaha',
+		// 	'label'	=> 'Perusahaan',
+		// 	'type'	=> 'text',
+		// 	'std'	=> ( $data_obj ? $data_obj->pemilik_usaha : ''),
+		// 	'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
 			'name'	=> $this->alias.'_fieldset_data_usaha',
@@ -174,6 +174,26 @@ class Bpmppt_siup extends CI_Driver
 			'std'	=> ( $data_obj ? $data_obj->usaha_nama : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
+		$u_jenis = array(
+			'Perseroan Terbatas (PT)',
+			'Perseroan Komanditer (CV)',
+			'Badan Usaha Milik Negara (BUMN)',
+			'Perorangan (PO)',
+			'Koperasi',
+			);
+
+		foreach ( $u_jenis as $jenis )
+			$jns_opt[$jenis] = $jenis;
+
+		$fields[]	= array(
+			'name'	=> $this->alias.'_usaha_jenis',
+			'label'	=> 'Jenis Perusahaan',
+			'type'	=> 'dropdown',
+			'attr'	=> ( $data_obj ? 'disabled' : '' ),
+			'std'	=> ( $data_obj ? $data_obj->usaha_jenis : ''),
+			'option'=> add_placeholder( $jns_opt ),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
+
 		$fields[]	= array(
 			'name'	=> $this->alias.'_usaha_skala',
 			'label'	=> 'Skala Perusahaan',
@@ -182,18 +202,9 @@ class Bpmppt_siup extends CI_Driver
 			'std'	=> ( $data_obj ? $data_obj->usaha_skala : ''),
 			'option'=> array(
 				'' => '---',
-				'bumn' => 'Badan Usaha Milik Negara (BUMN)',
-				'kpr' => 'Koperasi',
-				'po' => 'Perorangan (PO)',
-				'cv' => 'Perseroan Komanditer (CV)',
-				'pt' => 'Perseroan Terbatas (PT)' ),
-			'validation'=> ( !$data_obj ? 'required' : '' ) );
-
-		$fields[]	= array(
-			'name'	=> $this->alias.'_usaha_lembaga',
-			'label'	=> 'Kelembagaan',
-			'type'	=> 'text',
-			'std'	=> ( $data_obj ? $data_obj->usaha_lembaga : ''),
+				'PK' => 'Perusahaan Kecil',
+				'PM' => 'Menengah',
+				'PB' => 'Besar' ),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
@@ -203,24 +214,18 @@ class Bpmppt_siup extends CI_Driver
 			'std'	=> ( $data_obj ? $data_obj->usaha_kegiatan : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
+		$lembs = array( 'Pengecer', 'Penyalur', 'Pengumpul', 'Produsen', 'Sub Distributor', 'Distributor', 'Distributor' );
+
+		foreach ( $lembs as $lemb )
+			$lemb_opt[$lemb] = $lemb;
+
 		$fields[]	= array(
 			'name'	=> $this->alias.'_usaha_lembaga',
 			'label'	=> 'Kelembagaan',
 			'type'	=> 'multiselect',
 			'attr'	=> ( $data_obj ? 'disabled' : '' ),
 			'std'	=> ( $data_obj ? $data_obj->usaha_lembaga : ''),
-			'option'=> array(
-				0 => '---',
-				// Kecil
-				1 => 'Pengecer',
-				2 => 'Penyalur',
-				3 => 'Pengumpul',
-				// Menengah
-				4 => 'Produsen',
-				5 => 'Sub Distributor',
-				6 => 'Distributor',
-				7 => 'Distributor',
-				),
+			'option'=> $lemb_opt,
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
@@ -353,14 +358,14 @@ class Bpmppt_siup extends CI_Driver
 					'label'	=> 'Nomor Siup Lama',
 					'type'	=> 'text',
 					'std'	=> ( $data_obj ? $data_obj->usaha_siup_lama_nomor : ''),
-					'validation'=> ( !$data_obj ? 'numeric' : '' ) ),
+					'validation'=> ( !$data_obj ? '' : '' ) ),
 				array(
 					'col'	=> '6',
 					'name'	=> 'tgl',
 					'label'	=> 'Tanggal',
 					'type'	=> 'datepicker',
 					'std'	=> ( $data_obj ? $data_obj->usaha_siup_lama_tgl : ''),
-					'validation'=> ( !$data_obj ? 'numeric' : '' ) ),
+					'validation'=> ( !$data_obj ? '' : '' ) ),
 				));
 
 		$fields[]	= array(

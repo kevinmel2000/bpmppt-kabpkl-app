@@ -1,102 +1,75 @@
-<tr><td colspan="6" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="4">&nbsp;</td></tr>
 <tr style="font-family: 'Arial'" class="align-center bold">
-	<td colspan="6" style="width:100%; font-family: 'Arial'">
-		<span style="font-size: 30px">SURAT IZIN USAHA PERDAGANGAN</span>
-		<span >NOMOR : <?php echo $no_agenda.'/11.19/PK/V/'.bdate('Y') ?></span>
+	<td colspan="4">
+		<span style="font-size: 30px">SURAT IZIN USAHA PERDAGANGAN</span><br>
+		<span >NOMOR : <?php echo strtoupper($no_agenda.'/11.19/'.$usaha_skala.'/'.format_roman(bdate('m', $created_on)).'/'.bdate('Y')) ?></span>
 	</td>
 </tr>
-<tr><td colspan="6" style="width:100%">&nbsp;</td></tr>
-<tr class="bold" style="font-family: 'Arial'; border: 2px solid #000">
-	<td style="width:20%; border-right: 1px solid #000;">NOMOR TDP<br><?php echo $no_agenda ?></td>
-	<td colspan="3" style="width:55%; border-right: 1px solid #000;">BERLAKU S/D TANGGAL<br><?php echo bdate('d F Y', $created_on) ?></td>
-	<td colspan="2" style="width:35%; border-right: 2px solid #000;">PENDAFTARAN / PEMBAHARUAN KE : <?php echo $pembaruan_ke ?></td>
-</tr>
-<tr><td colspan="6" style="width:100%; line-height: 5px">&nbsp;</td></tr>
-<tr style="font-family: 'Arial'; border: 2px solid #000">
-	<td colspan="4" style="width:65%"><span class="underline bold">AGENDA PENDAFTARAN</span><br>NOMOR: <?php echo $no_agenda ?></td>
-	<td colspan="2" style="width:35%; border-right: 2px solid #000;">TANGGAL : <?php echo bdate('d F Y', $created_on) ?></td>
-</tr>
-<tr><td colspan="6" style="width:100%; line-height: 5px">&nbsp;</td></tr>
-<tr class="bold" style="font-family: 'Arial'; border: 2px solid #000; border-bottom-width: 1px;">
-	<td style="width:20%">NAMA PERUSAHAAN</td>
+<tr><td colspan="4" style="width:100%">&nbsp;</td></tr>
+<tr class="bold" style="font-family: 'Arial'; border: 2px solid #000; border-bottom-width: 1px">
+	<td style="width:25%">NAMA PERUSAHAAN</td>
 	<td style="width:5%">:</td>
-	<td colspan="3" style="width:55%"><?php echo strtoupper($usaha_nama) ?></td>
-	<td style="width:20%; border-left: 1px solid #000; border-right: 2px solid #000;">STATUS TANGGAL</td>
+	<td colspan="2" style="width:70%; border-right: 2px solid #000;"><?php echo $usaha_nama ?></td>
 </tr>
-<tr class="bold" style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom-width: 1px;">
-	<td style="width:20%">NAMA PENGURUS / PENANGGUNG JAWAB</td>
+<tr class="bold" style="font-family: 'Arial'; border: 2px solid #000; border-bottom-width: 1px; border-top-width: 1px">
+	<td style="width:25%">NAMA PENANGGUNG JAWAB DAN JABATAN</td>
 	<td style="width:5%">:</td>
-	<td colspan="4" style="width:75%; border-right: 2px solid #000;"><?php echo strtoupper($pemohon_nama) ?></td>
+	<td colspan="2" style="width:70%; border-right: 2px solid #000;"><?php echo $pemohon_nama ?></td>
 </tr>
-<tr class="bold" style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom-width: 1px;">
-	<td style="width:20%">ALAMAT PERUSAHAAN</td>
+<tr class="bold" style="font-family: 'Arial'; border: 2px solid #000; border-bottom-width: 1px; border-top-width: 1px">
+	<td style="width:25%">ALAMAT PERUSAHAAN</td>
 	<td style="width:5%">:</td>
-	<td colspan="4" style="width:75%; border-right: 2px solid #000;"><?php echo strtoupper($usaha_alamat) ?></td>
+	<td colspan="2" style="width:70%; border-right: 2px solid #000;"><?php echo $usaha_alamat ?></td>
 </tr>
-<tr class="bold" style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom-width: 1px;">
-	<td style="width:20%">NPWP</td>
+<tr class="bold" style="font-family: 'Arial'; border: 2px solid #000; border-bottom-width: 1px; border-top-width: 1px">
+	<td style="width:25%">NOMOR TELEPON</td>
 	<td style="width:5%">:</td>
-	<td colspan="4" style="width:75%; border-right: 2px solid #000;"><?php echo strtoupper($usaha_npwp) ?></td>
+	<td colspan="2" style="width:70%; border-right: 2px solid #000;"><?php echo $usaha_no_telp ?></td>
 </tr>
-<tr class="bold" style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom-width: 1px;">
-	<td style="width:20%">NOMOR TELEPON</td>
+<tr class="bold" style="font-family: 'Arial'; border: 2px solid #000; border-bottom-width: 1px; border-top-width: 1px">
+	<td style="width:25%">MODAL DAN KEKAYAAN BERSIH PERUSAHAAN (TIDAK TERMASUK TANAH DAN BANGUNAN)</td>
 	<td style="width:5%">:</td>
-	<td colspan="2" style="width:45%;"><?php echo strtoupper($usaha_no_telp) ?></td>
-	<td colspan="2" style="width:30%; border-right: 2px solid #000;">FAX : <?php echo strtoupper($usaha_no_telp) ?></td>
+	<td colspan="2" style="width:70%; border-right: 2px solid #000;"><?php echo $usaha_modal_awal ?></td>
 </tr>
-<tr class="bold" style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom-width: 1px;">
-	<td style="width:20%">KEGIATAN USAHA POKOK</td>
+<tr class="bold" style="font-family: 'Arial'; border: 2px solid #000; border-bottom-width: 1px; border-top-width: 1px">
+	<td style="width:25%">KELEMBAGAAN</td>
 	<td style="width:5%">:</td>
-	<td colspan="3" style="width:55%;"><?php echo strtoupper($usaha_pokok) ?></td>
-	<td class="align-center" style="width:20%; border-left: 1px solid #000; border-right: 2px solid #000;">KBLI :<br><?php echo strtoupper($usaha_kbli) ?></td>
+	<td colspan="2" style="width:70%; border-right: 2px solid #000;"><?php echo $usaha_lembaga ?></td>
+</tr>
+<tr class="bold" style="font-family: 'Arial'; border: 2px solid #000; border-bottom-width: 1px; border-top-width: 1px">
+	<td style="width:25%">KEGIATAN USAHA (KBLI)</td>
+	<td style="width:5%">:</td>
+	<td colspan="2" style="width:70%; border-right: 2px solid #000;"><?php echo $usaha_kegiatan ?></td>
+</tr>
+<tr class="bold" style="font-family: 'Arial'; border: 2px solid #000; border-bottom-width: 1px; border-top-width: 1px">
+	<td style="width:25%">BARANG/JASA DAGANGAN UTAMA</td>
+	<td style="width:5%">:</td>
+	<td colspan="2" style="width:70%; border-right: 2px solid #000;"><?php echo $usaha_komoditi ?></td>
+</tr>
+<tr class="bold" style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 1px">
+	<td colspan="4" style="width:70%; border-right: 2px solid #000;">
+<?php if ($status == 'approved')
+
+?>
+IZIN INI BERLAKU UNTUK MELAKUKAN KEGIATAN USAHA PERDAGANGAN DISELURUH WILAYAH REPUBLIK INDONESIA, SELAMA PERUSAHAAN MASUK MENJALANKAN USAHANYA, DAN WAJIB DIDAFTAR ULANG SETIAP 5 (LIMA) TAHUN SEKALI<br>
+PERUSAHAAN WAJIB MENDAFTARKAN ULANG SIUP PADA TANGGAL : <?php echo date('d F Y', strtotime('+5 years')) ?>
+	</td>
 </tr>
 
-<tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom: 1px solid #ccc">
-<?php // koprasi ---------------------------------------------------------------
-if( strtolower($usaha_jenis) == 'koprasi' ) : ?>
-	<td colspan="6" style="width:100%; border-right: 2px solid #000;" class="bold underline">PENGESAHAN MENTERI NEGARA KOPERASI DAN USAHA KECIL DAN MENENGAH REPUBLIK INDONESIA ATAS AKTA PENDIRIAN KOPERASI</td>
-</tr>
-<tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0;">
-	<td colspan="4" style="width:70%; border-right: 1px solid #ccc;">NOMOR : 518/9436.a/BH/XI2006</td>
-	<td colspan="2" style="width:30%; border-right: 2px solid #000;">TANGGAL : 23 NOVEMBER 2006</td>
-<?php // Perseroan Terbatas (PT) -----------------------------------------------
-elseif( strtolower($usaha_jenis) == 'Perseroan Terbatas (PT)' ) : ?>
-	<td colspan="6" style="width:100%; border-right: 2px solid #000;" class="bold underline">PENGESAHAN MENTERI KEHAKIMAN</td>
-</tr>
-<tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom-width: 1px;">
-	<td colspan="4" style="width:70%; border-right: 1px solid #ccc;">NOMOR : C2-8679.HT 01 01 TH. 2001</td>
-	<td colspan="2" style="width:30%; border-right: 2px solid #000;">TANGGAL : 8 AGUSTUS 2001</td>
-</tr>
-<tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom: 1px solid #ccc">
-	<td colspan="6" style="width:100%; border-right: 2px solid #000;" class="bold underline">PERSETUJUAN MENTERI KEHAKIMAN ATAS AKTA PERUBAHAN ANGGARAN DASAR</td>
-</tr>
-<tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom-width: 1px;">
-	<td colspan="4" style="width:70%; border-right: 1px solid #ccc;">NOMOR : C-22542. AH. 01. 04 TH. 2005</td>
-	<td colspan="2" style="width:30%; border-right: 2px solid #000;">TANGGAL : 12 AGUSTUS 2005</td>
-</tr>
-<tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom: 1px solid #ccc">
-	<td colspan="6" style="width:100%; border-right: 2px solid #000;" class="bold underline">PERSETUJUAN METNERI HUKUM DAN HAM REPUBLIK INDONESIA ATAS AKTA PERUBAHAN ANGGARAN DASAR PERSEROAN</td>
-</tr>
-<tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0;">
-	<td colspan="4" style="width:70%; border-right: 1px solid #ccc;">NOMOR : AHU-50221. AH. O1. 02. TH. 2008</td>
-	<td colspan="2" style="width:30%; border-right: 2px solid #000;">TANGGAL : 12 AGUSTUS 2008</td>
-<?php endif; ?>
-</tr>
-
-<tr><td colspan="6" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="4" style="width:100%">&nbsp;</td></tr>
 <tr style="font-family: 'Arial'">
-	<td colspan="3">&nbsp;</td>
-	<td colspan="3" style="border-bottom: 2px solid #000">Dikeluarkan di : KAJEN<br>Pada Tanggal : <?php echo bdate('d F Y', $approved_on) ?></td>
+	<td colspan="3" style="width: 70%">&nbsp;</td>
+	<td style="width: 30%; border-bottom: 2px solid #000">Dikeluarkan di : KAJEN<br>Pada Tanggal : <?php echo bdate('d F Y', $approved_on) ?></td>
 </tr>
-<tr><td colspan="6" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="4" style="width:100%">&nbsp;</td></tr>
 <tr style="font-family: 'Arial'" class="align-center bold">
 	<td colspan="3">&nbsp;</td>
-	<td colspan="3">
-	A.n. BUPATI PEKALONGAN<br>
-	KEPALA <?php echo strtoupper($skpd_name) ?><br>
-	<?php echo strtoupper($skpd_city) ?><br><br><br>
-	<span class="underline"><?php echo strtoupper($skpd_lead_name) ?></span><br>
-	Pembina Tingkat I<br>
-	NIP. <?php echo strtoupper($skpd_lead_nip) ?>
+	<td>
+A.n. BUPATI PEKALONGAN<br>
+KEPALA <?php echo strtoupper($skpd_name) ?><br>
+<?php echo strtoupper($skpd_city) ?><br><br><br>
+<span class="underline"><?php echo strtoupper($skpd_lead_name) ?></span><br>
+Pembina Tingkat I<br>
+NIP. <?php echo strtoupper($skpd_lead_nip) ?>
 	</td>
 </tr>
