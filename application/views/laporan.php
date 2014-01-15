@@ -8,8 +8,8 @@
     <meta name="author" content="<?php echo get_conf('app_author') ?>">
     <link href="<?php echo base_url('asset/css/print.css') ?>" type="text/css" rel="stylesheet" media="all">
 </head>
-<body <?php echo get_body_class() ?>>
-<!-- <body onload="window.print()" <?php echo get_body_class() ?>> -->
+<!-- <body <?php echo get_body_class() ?>> -->
+<body onload="window.print()" <?php echo get_body_class() ?>>
 <p style="text-align: center; font-weight: bold;"><?php echo strtoupper($skpd_name.' '.$skpd_city) ?></p>
 <p>&nbsp;</p>
 <p style="font-weight: bold; display: block;"><span style="display: inline-block; width: 20%;"><?php echo strtoupper($skpd_city) ?></span><span style="display: inline-block; width:80%;"><?php echo ': '.strtoupper($layanan) ?></span></p>
