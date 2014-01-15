@@ -2,19 +2,13 @@
 	<thead>
 		<tr>
 			<th>No.</th>
-			<th>Nama Perusahaan</th>
-			<th>Alamat Perusahaan</th>
 			<th>Nama Pemohon</th>
-			<th>Nomor IUI</th>
-			<th>Berlaku Mulai</th>
-			<th>Berlaku Sp. Dengan</th>
-			<th>Komoditi</th>
-			<th>Total Investasi</th>
-			<th>Jenis Industri</th>
-			<th>Kapasitas Industri</th>
-			<th>KBLI</th>
-			<th colspan="2">Naker</th>
-			<th>Skala Perusahaan</th>
+			<th>Alamat Pemohon</th>
+			<th>Lokasi</th>
+			<th>Nomor Izin</th>
+			<th>Tanggal Terbit</th>
+			<th>Tanggal Berlaku</th>
+			<th>Keterangan</th>
 		</tr>
 		<tr class="align-center">
 			<td>1</td>
@@ -25,32 +19,19 @@
 			<td>6</td>
 			<td>7</td>
 			<td>8</td>
-			<td>9</td>
-			<td>10</td>
-			<td>11</td>
-			<td>12</td>
-			<td>13</td>
-			<td>14</td>
-			<td>15</td>
 		</tr>
 	</thead>
 	<tbody>
 	<?php if ( $results ) : $i = 1; foreach( $results as $row ) : ?>
 		<tr id="baris-<?php echo $row->id ?>" style="text-transform: uppercase;">
 			<td class="align-center"><?php echo $i ?></td>
-			<td class="align-center"><?php echo $row->no_agenda ?></td>
-			<td class="align-left"><?php echo $row->usaha_jenis ?></td>
-			<td class="align-center"><?php echo $row->no_agenda ?></td>
-			<td class="align-left"><?php echo $row->usaha_nama ?></td>
-			<td class="align-left"><?php echo $row->usaha_alamat ?></td>
 			<td class="align-left"><?php echo $row->pemohon_nama ?></td>
-			<td class="align-left"><?php echo $row->usaha_status ?></td>
-			<td class="align-left"><?php echo $row->usaha_kegiatan_pokok ?></td>
-			<td class="align-center"><?php echo $row->usaha_kegiatan_kbli ?></td>
-			<td class="align-center"><?php echo $row->pembaruan_ke ?></td>
-			<td class="align-left"><?php echo $row->pengajuan_jenis ?></td>
+			<td class="align-left"><?php echo $row->pemohon_alamat ?></td>
+			<td class="align-center"><?php echo $row->usaha_lokasi ?></td>
+			<td class="align-center"><?php echo $row->no_agenda ?></td>
 			<td class="align-center"><?php echo bdate( 'd F Y', $row->created_on ) ?></td>
 			<td class="align-center"><?php echo bdate( 'd F Y', $row->created_on ) ?></td>
+			<td class="align-left"><?php echo '-' ?></td>
 		</tr>
 	<?php $i++; endforeach; else : ?>
 		<tr>
