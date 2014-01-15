@@ -89,10 +89,10 @@ class Bpmppt_siup extends CI_Driver
 			'type'	=> 'fieldset' );
 
 		$fields[]	= array(
-			'name'	=> $this->alias.'_pemilik_nama',
+			'name'	=> $this->alias.'_pemohon_nama',
 			'label'	=> 'Nama lengkap',
 			'type'	=> 'text',
-			'std'	=> ( $data_obj ? $data_obj->pemilik_nama : ''),
+			'std'	=> ( $data_obj ? $data_obj->pemohon_nama : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
@@ -361,6 +361,52 @@ class Bpmppt_siup extends CI_Driver
 					'type'	=> 'datepicker',
 					'std'	=> ( $data_obj ? $data_obj->usaha_siup_lama_tgl : ''),
 					'validation'=> ( !$data_obj ? 'numeric' : '' ) ),
+				));
+
+		$fields[]	= array(
+			'name'	=> $this->alias.'_usaha_saham_status',
+			'label'	=> 'Status Saham',
+			'type'	=> 'dropdown',
+			'std'	=> ( $data_obj ? $data_obj->usaha_saham_status : ''),
+			'option'=> array(
+				'' => '---',
+				'pmdm' => 'Penanaman Modal Dalam Negeri',
+				'pma' => 'Penanaman Modal Asing' ),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
+
+		$fields[]	= array(
+			'name'	=> $this->alias.'_usaha_modal_awal',
+			'label'	=> 'Modal awal',
+			'type'	=> 'text',
+			'std'	=> ( $data_obj ? $data_obj->usaha_modal_awal : ''),
+			'validation'=> ( !$data_obj ? 'required|numeric' : '' ) );
+
+		$fields[]	= array(
+			'name'	=> $this->alias.'_usaha_saham_nilai',
+			'label'	=> 'Nilai Saham',
+			'type'	=> 'subfield',
+			'fields'=> array(
+				array(
+					'col'	=> '6',
+					'name'	=> 'total',
+					'label'	=> 'Total Nilai Saham (Rp.)',
+					'type'	=> 'text',
+					'std'	=> ( $data_obj ? $data_obj->usaha_saham_nilai_total : ''),
+					'validation'=> ( !$data_obj ? 'required|numeric' : '' ) ),
+				array(
+					'col'	=> '3',
+					'name'	=> 'nasional',
+					'label'	=> 'Nasional (%)',
+					'type'	=> 'number',
+					'std'	=> ( $data_obj ? $data_obj->usaha_saham_nilai_nasional : ''),
+					'validation'=> ( !$data_obj ? 'required|numeric' : '' ) ),
+				array(
+					'col'	=> '3',
+					'name'	=> 'tgl',
+					'label'	=> 'Asing (%)',
+					'type'	=> 'number',
+					'std'	=> ( $data_obj ? $data_obj->usaha_saham_nilai_tgl : ''),
+					'validation'=> ( !$data_obj ? 'required|numeric' : '' ) ),
 				));
 
 		return $fields;

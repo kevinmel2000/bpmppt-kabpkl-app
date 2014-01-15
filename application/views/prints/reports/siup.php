@@ -2,18 +2,17 @@
 	<thead>
 		<tr>
 			<th>No.</th>
+			<th>Nomor Pendaftaran</th>
 			<th>Nama Perusahaan</th>
 			<th>Alamat Perusahaan</th>
-			<th>Nama Pemohon</th>
-			<th>Nomor IUI</th>
-			<th>Berlaku Mulai</th>
-			<th>Berlaku Sp. Dengan</th>
-			<th>Komoditi</th>
-			<th>Total Investasi</th>
-			<th>Jenis Industri</th>
-			<th>Kapasitas Industri</th>
+			<th>Penanggung Jawab</th>
+			<th>No. Telp</th>
+			<th>Nilai Modal</th>
 			<th>KBLI</th>
-			<th colspan="2">Naker</th>
+			<th>Komoditi</th>
+			<th>Berlaku Mulai</th>
+			<th>Berlaku s.d</th>
+			<th>Baru/Daftar Ulang</th>
 			<th>Skala Perusahaan</th>
 		</tr>
 		<tr class="align-center">
@@ -30,8 +29,6 @@
 			<td>11</td>
 			<td>12</td>
 			<td>13</td>
-			<td>14</td>
-			<td>15</td>
 		</tr>
 	</thead>
 	<tbody>
@@ -39,18 +36,17 @@
 		<tr id="baris-<?php echo $row->id ?>" style="text-transform: uppercase;">
 			<td class="align-center"><?php echo $i ?></td>
 			<td class="align-center"><?php echo $row->no_agenda ?></td>
-			<td class="align-left"><?php echo $row->usaha_jenis ?></td>
-			<td class="align-center"><?php echo $row->no_agenda ?></td>
 			<td class="align-left"><?php echo $row->usaha_nama ?></td>
 			<td class="align-left"><?php echo $row->usaha_alamat ?></td>
 			<td class="align-left"><?php echo $row->pemohon_nama ?></td>
-			<td class="align-left"><?php echo $row->usaha_status ?></td>
-			<td class="align-left"><?php echo $row->usaha_kegiatan_pokok ?></td>
-			<td class="align-center"><?php echo $row->usaha_kegiatan_kbli ?></td>
+			<td class="align-left"><?php echo $row->usaha_nama ?></td>
+			<td class="align-left"><?php echo $row->pemilik_no_telp ?></td>
+			<td class="align-left"><?php echo $row->usaha_modal_awal ?></td>
+			<td class="align-center"><?php echo $row->usaha_kegiatan_kbliusaha_kegiatan_pokok ?></td>
+			<td class="align-center"><?php echo bdate( 'd F Y', $row->created_on ) ?></td>
+			<td class="align-center"><?php echo bdate( 'd F Y', $row->created_on ) ?></td>
 			<td class="align-center"><?php echo $row->pembaruan_ke ?></td>
-			<td class="align-left"><?php echo $row->pengajuan_jenis ?></td>
-			<td class="align-center"><?php echo bdate( 'd F Y', $row->created_on ) ?></td>
-			<td class="align-center"><?php echo bdate( 'd F Y', $row->created_on ) ?></td>
+			<td class="align-left"><?php echo $row->usaha_skala ?></td>
 		</tr>
 	<?php $i++; endforeach; else : ?>
 		<tr>
