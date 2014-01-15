@@ -298,9 +298,12 @@ class Bpmppt_model extends CI_Model
 
     public function change_status( $data_id, $new_status )
     {
-        $this->db->update( $this->_table['data'],
-            array('status' => $new_status, $new_status.'_on' => string_to_datetime()),
-            array('id' => $data_id) );
+        $new_data['status'] = $new_status;
+
+        if ( $new_status != 'pending' )
+            $new_data[$new_status.'_on'] = string_to_datetime();
+
+        $this->db->update( $this->_table['data'], $new_data, array('id' => $data_id) );
 
         $this->_write_datalog( $data_id, 'Mengubah status dokumen menjadi '._x('status_'.$new_status) );
 

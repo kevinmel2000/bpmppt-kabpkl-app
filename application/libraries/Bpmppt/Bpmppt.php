@@ -286,8 +286,8 @@ class Bpmppt extends CI_Driver_Library
 	{
 		$wheres = array(
 			'type'                => $this->$driver->alias,
-			'month(created_on)'   => (int) $where['data_date_month'],
-			'year(created_on)'    => (int) $where['data_date_year'],
+			'month(created_on)'   => (int) ( !empty($where['data_date_month']) ? $where['data_date_month'] : bdate('m') ),
+			'year(created_on)'    => (int) ( !empty($where['data_date_year']) ? $where['data_date_year'] : bdate('Y') ),
 			);
 
 		if ( $where['data_status'] != 'all' )
