@@ -1,29 +1,29 @@
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr>
+<tr class="align-center bold">
 	<td colspan="7" style="width:100%">
-		<p style="text-align:center"><strong>KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN</strong></p>
-		<p style="text-align:center"><strong>PELAYANAN PERIZINAN TERPADU KABUPATEN PEKALONGAN</strong></p>
-		<p style="text-align:center"><strong>NOMOR : 510.8 /&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/ BPMPPT / P. Kayu / VI / 2013</strong></p>
+		<p>KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN</p>
+		<p>PELAYANAN PERIZINAN TERPADU KABUPATEN PEKALONGAN</p>
+		<p>NOMOR : 510.8 /&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/ BPMPPT / P. Kayu / VI / 2013</p>
 	</td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr>
-	<td colspan="7" style="width:100%"><p style="text-align:center"><strong>TENTANG</strong></p></td>
+<tr class="align-center bold">
+	<td colspan="7" style="width:100%"><p>TENTANG</p></td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr>
+<tr class="align-center bold">
 	<td colspan="7" style="width:100%">
-		<p style="text-align:center"><strong>PEMBERIAN IZIN PEMBUANGAN AIR LIMBAH KE AIR ATAU SUMBER AIR</strong></p>
-		<p style="text-align:center"><strong>KEPADA PT. PERKEBUNAN NUSANTARA IX (PERSERO)</strong></p>
-		<p style="text-align:center"><strong>DIVISI TANAMAN TAHUNAN KEBUN BLIMBING</strong></p>
-		<p style="text-align:center"><strong>PABRIK BLIMBING</strong></p>
+		<p>PEMBERIAN IZIN PEMBUANGAN AIR LIMBAH KE AIR ATAU SUMBER AIR</p>
+		<p>KEPADA PT. PERKEBUNAN NUSANTARA IX (PERSERO)</p>
+		<p>DIVISI TANAMAN TAHUNAN KEBUN BLIMBING</p>
+		<p>PABRIK BLIMBING</p>
 	</td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr>
+<tr class="align-center bold">
 	<td colspan="7" style="width:100%">
-		<p style="text-align:center"><strong>KEPALA BADAN PENANAMAN MODAL DAN PELAYANAN PERIZINAN TERPADU</strong></p>
-		<p style="text-align:center"><strong>KABUPATEN PEKALONGAN</strong></p>
+		<p>KEPALA BADAN PENANAMAN MODAL DAN PELAYANAN PERIZINAN TERPADU</p>
+		<p>KABUPATEN PEKALONGAN</p>
 	</td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>

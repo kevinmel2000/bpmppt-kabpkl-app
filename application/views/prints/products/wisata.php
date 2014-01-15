@@ -1,14 +1,14 @@
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr>
-	<td colspan="7" style="width:100%"><p style="text-align:center"><strong>IZIN USAHA KARAOKE</strong></p></td>
+<tr class="align-center bold">
+	<td colspan="7" style="width:100%">IZIN USAHA KARAOKE</td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr>
-	<td colspan="7" style="width:100%"><p style="text-align:center"><strong>NOMOR : 556.142/12/PAR/KAR/BPMPPT/V/2013</strong></p></td>
+<tr class="align-center bold">
+	<td colspan="7" style="width:100%">NOMOR : 556.142/12/PAR/KAR/BPMPPT/V/2013</td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr>
-	<td colspan="7" style="width:100%"><p style="text-align:center"><strong>BUPATI PEKALONGAN</strong></p></td>
+<tr class="align-center bold">
+	<td colspan="7" style="width:100%">BUPATI PEKALONGAN</td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>

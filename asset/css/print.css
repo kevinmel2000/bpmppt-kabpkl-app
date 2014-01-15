@@ -83,3 +83,7 @@ p, ol, ul {
 .align-right {
 	text-align: right;
 }
+
+.bold {
+    font-weight: bold;
+}

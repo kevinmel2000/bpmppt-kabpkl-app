@@ -1,22 +1,22 @@
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr>
-	<td colspan="7" style="width:100%"><p style="text-align:center"><strong>KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN PELAYANAN PERIZINAN TERPADU<br>KABUPATEN PEKALONGAN</strong></p></td>
+<tr class="align-center bold">
+	<td colspan="7" style="width:100%">KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN PELAYANAN PERIZINAN TERPADU<br>KABUPATEN PEKALONGAN</td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr>
-	<td colspan="7" style="width:100%"><p style="text-align:center"><strong>NOMOR : 640 /&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/ IMB / BPM PPT / VI / 2013</strong></p></td>
+<tr class="align-center bold">
+	<td colspan="7" style="width:100%">NOMOR : 640 /&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/ IMB / BPM PPT / VI / 2013</td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr>
-	<td colspan="7" style="width:100%"><p style="text-align:center"><strong>TENTANG</strong></p></td>
+<tr class="align-center bold">
+	<td colspan="7" style="width:100%">TENTANG</td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr>
-	<td colspan="7" style="width:100%"><p style="text-align:center"><strong>IZIN MENDIRIKAN / MEREHAB / MEROBOHKAN BANGUNAN</strong></p></td>
+<tr class="align-center bold">
+	<td colspan="7" style="width:100%">IZIN MENDIRIKAN / MEREHAB / MEROBOHKAN BANGUNAN</td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr>
-	<td colspan="7" style="width:100%"><p style="text-align:center"><strong>KEPALA <?php echo strtoupper($skpd_name) ?><br><?php echo strtoupper($skpd_city) ?></strong></p></td>
+<tr class="align-center bold">
+	<td colspan="7" style="width:100%">KEPALA <?php echo strtoupper($skpd_name) ?><br><?php echo strtoupper($skpd_city) ?></td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
