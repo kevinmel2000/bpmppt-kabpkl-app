@@ -38,7 +38,7 @@
 |
 */
 
-$route['default_controller']	= "data/utama/stat";
+$route['default_controller']	= "data/utama/index";
 
 // Overiding 404 page not found
 $route['404_override']	= 'error/notice/404';

@@ -5,23 +5,23 @@
 <?php echo form_alert() ?>
 
 <div id="dashboard-callout" class="row">
-	<div class="col-md-6">
+	<!-- <div class="col-md-6">
 
-<?php foreach ( $data_type as $alias => $label ) : if ( $counter[$alias] > 0 ) : ?>
-<?php $i = $counter[$alias]/2 ?>
-<div id="panel-<?php echo $alias ?>" class="panel panel-default">
+<?php // foreach ( $data_type as $alias => $label ) : if ( $counter[$alias] > 0 ) : ?>
+<?php // $i = $counter[$alias]/2 ?>
+<div id="panel-<?php // echo $alias ?>" class="panel panel-default">
 	
 	<div class="panel-heading">
-		<h3 class="panel-title"><?php echo $label ?></h3>
+		<h3 class="panel-title"><?php // echo $label ?></h3>
 	</div>
 	
-	<?php echo $panel_body[$alias] ?>
+	<?php // echo $panel_body[$alias] ?>
 </div>
 
-<?php echo ( $i % $counter[$alias]  === 0 ) ? '</div><div class="col-md-6">' : '' ?>
-<?php endif; endforeach; ?>
+<?php // echo ( $i % $counter[$alias]  === 0 ) ? '</div><div class="col-md-6">' : '' ?>
+<?php // endif; endforeach; ?>
 
-	</div>
+	</div> -->
 </div>
 
 	</div>
