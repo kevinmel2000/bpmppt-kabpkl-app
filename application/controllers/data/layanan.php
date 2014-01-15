@@ -151,8 +151,12 @@ class Layanan extends BAKA_Controller
 
         if ( $data_obj )
         {
+            $status = $data_obj->status;
+
             $this->data['tool_buttons']['form'] = 'Baru|primary';
-            $this->data['tool_buttons']['aksi|default']['cetak/'.$data_id] = 'Cetak';
+
+            if ( $status == 'approved' )
+                $this->data['tool_buttons']['aksi|default']['cetak/'.$data_id] = 'Cetak';
 
             if ( $data_obj->status !== 'deleted' )
                 $this->data['tool_buttons']['aksi|default']['hapus/'.$data_id] = 'Hapus&message="Anda yakin ingin menghapus data nomor '.$data_obj->surat_nomor.'"';
@@ -164,7 +168,6 @@ class Layanan extends BAKA_Controller
                 'ubah-status/'.$data_id.'/approved/'    => 'Disetujui',
                 'ubah-status/'.$data_id.'/done/'        => 'Selesai' );
 
-            $status = $data_obj->status;
             $date   = ( $status != 'pending' ? ' pada: '.format_datetime( $data_obj->{$status.'_on'} ) : '' );
 
             $fields[]   = array(

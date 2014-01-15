@@ -70,6 +70,27 @@ class Bpmppt_tdp extends CI_Driver
 	public function form( $data_obj = FALSE )
 	{
 		$fields[]	= array(
+			'name'	=> $this->alias.'_no_daftar',
+			'label'	=> 'Nomor Registrasi',
+			'type'	=> 'text',
+			'std'	=> ( $data_obj ? $data_obj->no_daftar : ''),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
+
+		$fields[]	= array(
+			'name'	=> $this->alias.'_no_sk',
+			'label'	=> 'Nomor Ditetapkan',
+			'type'	=> 'text',
+			'std'	=> ( $data_obj ? $data_obj->no_sk : ''),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
+
+		$fields[]	= array(
+			'name'	=> $this->alias.'_tgl_berlaku',
+			'label'	=> 'Tgl. Masa Berlaku',
+			'type'	=> 'datepicker',
+			'std'	=> ( $data_obj ? $data_obj->tgl_berlaku : ''),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
+
+		$fields[]	= array(
 			'name'	=> $this->alias.'_pengajuan_jenis',
 			'label'	=> 'Jenis Pengajuan',
 			'type'	=> 'dropdown',
@@ -190,19 +211,22 @@ class Bpmppt_tdp extends CI_Driver
 			'std'	=> ( $data_obj ? $data_obj->usaha_nama : ''),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
+		$u_jenis = array('Badan Usaha Milik Negara (BUMN)',
+			'Koperasi',
+			'Perorangan (PO)',
+			'Perseroan Komanditer (CV)',
+			'Perseroan Terbatas (PT)' );
+
+		foreach ( $u_jenis as $jenis )
+			$jns_opt[$jenis] = $jenis;
+
 		$fields[]	= array(
 			'name'	=> $this->alias.'_usaha_jenis',
 			'label'	=> 'Jenis Perusahaan',
 			'type'	=> 'dropdown',
 			'attr'	=> ( $data_obj ? 'disabled' : '' ),
 			'std'	=> ( $data_obj ? $data_obj->usaha_jenis : ''),
-			'option'=> array(
-				'' => '---',
-				'bumn' => 'Badan Usaha Milik Negara (BUMN)',
-				'kpr' => 'Koperasi',
-				'po' => 'Perorangan (PO)',
-				'cv' => 'Perseroan Komanditer (CV)',
-				'pt' => 'Perseroan Terbatas (PT)' ),
+			'option'=> $jns_opt,
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
@@ -371,6 +395,13 @@ class Bpmppt_tdp extends CI_Driver
 					'std'	=> ( $data_obj ? $data_obj->usaha_perubahan_pengesahan_tgl : ''),
 					'validation'=> '' ),
 				));
+
+		$fields[]	= array(
+			'name'	=> $this->alias.'_usaha_npwp',
+			'label'	=> 'NPWP Perusahaan',
+			'type'	=> 'text',
+			'std'	=> ( $data_obj ? $data_obj->usaha_npwp : ''),
+			'validation'=> ( !$data_obj ? 'required|numeric' : '' ) );
 
 		$fields[]	= array(
 			'name'	=> $this->alias.'_usaha_saham_status',

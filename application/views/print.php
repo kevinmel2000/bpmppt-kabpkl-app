@@ -8,8 +8,8 @@
     <meta name="author" content="<?php echo get_conf('app_author') ?>">
     <link href="<?php echo base_url('asset/css/print.css') ?>" type="text/css" rel="stylesheet" media="all">
 </head>
-<!-- <body <?php echo get_body_class() ?>> -->
-<body onload="window.print()" <?php echo get_body_class() ?>>
+<body <?php echo get_body_class() ?>>
+<!-- <body onload="window.print()" <?php echo get_body_class() ?>> -->
 
 <table width="100%">
     <tr class="t-header">

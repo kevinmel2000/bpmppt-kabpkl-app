@@ -1,211 +1,207 @@
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr class="align-center bold">
-	<td colspan="7" style="width:100%">KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN PELAYANAN PERIZINAN TERPADU<br>KABUPATEN PEKALONGAN</td>
+<tr><td colspan="6" style="width:100%">&nbsp;</td></tr>
+<tr style="font-family: 'Arial'" class="align-center bold">
+	<td colspan="6" style="width:100%; font-size: 30px; font-family: 'Arial'">TANDA DAFTAR PERUSAHAAN</td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr class="align-center bold">
-	<td colspan="7" style="width:100%">NOMOR : 640 /&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/ IMB / BPM PPT / VI / 2013</td>
+<tr><td colspan="6" style="width:100%">&nbsp;</td></tr>
+<tr style="font-family: 'Arial'" class="align-center bold">
+	<td colspan="6" style="width:100%"><?php echo strtoupper($usaha_jenis) ?></td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr class="align-center bold">
-	<td colspan="7" style="width:100%">TENTANG</td>
-</tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr class="align-center bold">
-	<td colspan="7" style="width:100%">IZIN MENDIRIKAN / MEREHAB / MEROBOHKAN BANGUNAN</td>
-</tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr class="align-center bold">
-	<td colspan="7" style="width:100%">KEPALA <?php echo strtoupper($skpd_name) ?><br><?php echo strtoupper($skpd_city) ?></td>
-</tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr>
-	<td colspan="3" style="width:30%">&nbsp;</td>
-	<td style="width:10%"><p>Membaca</p></td>
-	<td style="width:2%"><p>:</p></td>
-	<td colspan="2" style="width:47%"><p>dst ;</p></td>
-</tr>
-<tr>
-	<td colspan="3" style="width:30%">&nbsp;</td>
-	<td style="width:10%"><p>Menimbang</p></td>
-	<td style="width:2%"><p>:</p></td>
-	<td colspan="2" style="width:47%"><p>dst ;</p></td>
-</tr>
-<tr>
-	<td colspan="3" style="width:30%">&nbsp;</td>
-	<td style="width:10%"><p>Mengingat</p></td>
-	<td style="width:2%"><p>:</p></td>
-	<td colspan="2" style="width:47%"><p>dst ;</p></td>
-</tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr>
-	<td colspan="7" style="width:100%"><p style="text-align:center"><strong>M E M U T U S K A N :</strong></p></td>
-</tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr>
-	<td style="width:20%"><p>Menetapkan</p></td>
-	<td style="width:2%"><p>:</p></td>
-	<td colspan="5" style="width:78%">&nbsp;</td>
-</tr>
-<tr>
-	<td style="width:20%"><p>KESATU</p></td>
-	<td style="width:2%"><p>:</p></td>
-	<td colspan="5" style="width:78%">Memberikan Izin Kepada :</td>
-</tr>
-<tr>
-	<td colspan="2">&nbsp;</td>
-	<td colspan="2" style="width:30%"><p>Nama Pemohon</p></td>
-	<td style="width:2%"><p>:</p></td>
-	<td colspan="2" style="width:47%"><p><strong><?php echo $pemohon_nama ?></strong></p></td>
-</tr>
-<tr>
-	<td colspan="2">&nbsp;</td>
-	<td colspan="2" style="width:30%"><p>Alamat Pemohon</p></td>
-	<td style="width:2%"><p>:</p></td>
-	<td colspan="2" style="width:47%"><p><strong><?php echo $pemohon_alamat ?></strong></p></td>
-</tr>
-<tr>
-	<td colspan="2">&nbsp;</td>
-	<td colspan="2" style="width:30%"><p>Pekerjaan</p></td>
-	<td style="width:2%"><p>:</p></td>
-	<td colspan="2" style="width:47%"><p><strong><?php echo $pemohon_kerja ?></strong></p></td>
-</tr>
-<tr>
-	<td colspan="2">&nbsp;</td>
-	<td colspan="2" style="width:30%"><p>Maksud Permohonan</p></td>
-	<td style="width:2%"><p>:</p></td>
-	<td colspan="2" style="width:47%"><p><strong><?php echo $bangunan_maksud ?></strong></p></td>
-</tr>
-<tr>
-	<td colspan="2">&nbsp;</td>
-	<td colspan="2" style="width:30%"><p>Penggunaan Bangunan</p></td>
-	<td style="width:2%"><p>:</p></td>
-	<td colspan="2" style="width:47%"><p><strong><?php echo $bangunan_guna ?></strong></p></td>
-</tr>
-<tr>
-	<td colspan="2">&nbsp;</td>
-	<td colspan="2" style="width:30%"><p>Lokasi Bangunan</p></td>
-	<td style="width:2%"><p>:</p></td>
-	<td colspan="2" style="width:47%"><p><strong><?php echo $bangunan_lokasi ?></strong></p></td>
-</tr>
-<tr>
-	<td colspan="2">&nbsp;</td>
-	<td colspan="2" style="width:30%"><p>Luas / Keadaan Tanah</p></td>
-	<td style="width:2%"><p>:</p></td>
-	<td colspan="2" style="width:47%"><p><strong><?php echo '&#177; '.$bangunan_tanah_luas.' M<sup>2</sup> / '.strtoupper($bangunan_tanah_keadaan) ?></strong></p></td>
-</tr>
-<tr>
-	<td colspan="2">&nbsp;</td>
-	<td colspan="2" style="width:30%"><p>Status Tanah</p></td>
-	<td style="width:2%"><p>:</p></td>
-	<td colspan="2" style="width:47%"><p><strong><?php echo $bangunan_tanah_status.$bangunan_milik_no.$bangunan_milik_an ?></strong></p></td>
-</tr>
-<tr>
-	<td colspan="2">&nbsp;</td>
-	<td colspan="2" style="width:30%"><p>Luas Bangunan</p></td>
-	<td style="width:2%"><p>:</p></td>
-	<td colspan="2" style="width:47%"><p><strong><?php echo '&#177; '.$bangunan_luas.' M<sup>2</sup> / ' ?></strong></p></td>
-</tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr>
-	<td style="width:20%"><p>KEDUA</p></td>
-	<td style="width:2%"><p>:</p></td>
-	<td colspan="5" style="width:78%">Ketentuan-ketentuan :</td>
-</tr>
-<tr>
-	<td colspan="2">&nbsp;</td>
-	<td colspan="5" style="width:78%">
-		<ol>
-			<li>Pelaksanaan pembangunan tidak boleh menyimpang dari lampiran yang   merupakan bagian tak terpisahkan dari keputusan ini.</li>
-			<li>Pelaksanaan pembangunan sesuai dengan Perda No. 1 Tahun  2012  Tetang Retribusi Daerah.</li>
-		</ol>
+<tr><td colspan="6" style="width:100%">&nbsp;</td></tr>
+<tr style="font-family: 'Arial'" class="align-center bold">
+	<td colspan="6" style="width:100%">
+		<p style="font-family: 'Arial'">BERDASARKAN<br>
+UNDANG-UNDANG REPUBLIK INDONESIA NOMOR 3 TAHUN 1982<br>
+TENTANG WAJIB DAFTAR PERUSAHAAN<br>
+<?php if( strtolower($usaha_jenis) == 'koprasi' ) : ?>
+UNDANG-UNDANG REPUBLIK INDONESIA NOMOR 25 TAHUN 1992<br>
+TENTANG PERKOPERASIAN</p>
+<?php elseif( strtolower($usaha_jenis) == 'badan usaha milik negara (bumn)' ) : ?>
+UNDANG-UNDANG REPUBLIK INDONESIA NOMOR 3 TAHUN 1982<br>
+TENTANG WAJIB DAFTAR PERUSAHAAN<br>
+<?php elseif( strtolower($usaha_jenis) == 'Perorangan (PO)' ) : ?>
+UNDANG-UNDANG REPUBLIK INDONESIA NOMOR 3 TAHUN 1982<br>
+TENTANG WAJIB DAFTAR PERUSAHAAN<br>
+<?php elseif( strtolower($usaha_jenis) == 'Perseroan Komanditer (CV)' ) : ?>
+UNDANG-UNDANG REPUBLIK INDONESIA NOMOR 3 TAHUN 1982<br>
+TENTANG WAJIB DAFTAR PERUSAHAAN<br>
+<?php elseif( strtolower($usaha_jenis) == 'Perseroan Terbatas (PT)' ) : ?>
+UNDANG-UNDANG REPUBLIK INDONESIA NOMOR 40 TAHUN 2007<br>
+TENTANG PERSEROAN TERBATAS<br>
+<?php endif; ?>
 	</td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr>
-	<td style="width:20%"><p>KETIGA</p></td>
-	<td style="width:2%"><p>:</p></td>
-	<td colspan="5" style="width:78%">Hal –hal yang harus diperhatikan dan ditaati oleh penerima / pemegang Izin</td>
+<tr><td colspan="6" style="width:100%">&nbsp;</td></tr>
+<tr class="bold" style="font-family: 'Arial'; border: 2px solid #000">
+	<td style="width:20%; border-right: 1px solid #000;">NOMOR TDP<br><?php echo $no_agenda ?></td>
+	<td colspan="3" style="width:55%; border-right: 1px solid #000;">BERLAKU S/D TANGGAL<br><?php echo bdate('d F Y', $created_on) ?></td>
+	<td colspan="2" style="width:35%; border-right: 2px solid #000;">PENDAFTARAN / PEMBAHARUAN KE : <?php echo $pembaruan_ke ?></td>
 </tr>
-<tr>
-	<td colspan="2">&nbsp;</td>
-	<td colspan="5" style="width:78%">
-		<ol>
-			<li>Pemegang Izin sebagaimana dimaksud diktum KESATU Keputusan ini wajib membayar Retribusi Izin Mendirikan Bangunan sebesar sebagaimana tercantum dalam Surat Ketetapan Retribusi Daerah ( SKRD ).</li>
-			<li>Selama pelaksanaan pekerjaan / kegiatan fisik berlangsung sekali-kali tidak boleh menimbulkan kerugian pihak lain / tetangga / lingkungan.</li>
-			<li>Penerima / pemegang Izin wajib melaksanakan segala usaha  pembangunan untuk terciptanya keselarasan dan kelestarian lingkungan.</li>
-			<li>Tiap-tiap kali apabila pondasi, dinding dan kerangka atap bangunan akan / sedang dikerjakan,penerima / pemegang Izin ataupun pelaksana / pemborong pekerjaan wajib memberitahukan hal itu kepada pengawasan bangunan untuk diperiksa dan disetujui .</li>
-			<li>Untuk pekerjaan beton / baja harus sesuai dengan Gambar Detail dan perhitungan yang telah diperiksa dan disetujui oleh Kepala Dinas Pekerjaan Umum.</li>
-			<li>Guna menghindari terjadinya kecelakaan karena tersengat aliran listrik, maka bangunan yang didirikan dengan kawat jaringan listrik tegangan menengah harus mempunyai jarak tegangan minimal 3 meter.</li>
-			<li>Sesuai dengan fungsi bangunan, penerima / pemegang izin / pemilik bangunan diwajibkan menyediakan fasilitas alat pencegahan kebakaran menurut ketentuan yang berlaku.</li>
-			<li>Pembuatan, perubahan / penghilangan bagian-bagian bangunan / unsur-unsur penunjang lain seperti jalan jembatan maupun unsur penunjang lain, harus berdasarkan rencana konstruksi yang secara teknis telah diperiksa dan disetuji oleh Kepala Dinas Pekejaan Umum.</li>
-			<li>Izin Mendirikan / Merubah / Merobohkan Bangunan ( IMB ) ini dapat dicabut apabila :
-				<ol>
-					<li>Dalam waktu 6 ( enam ) bulan terhitung mulai tanggal Surat Keputusan Izin,  pelaksanaan / kegiatan fisik dimulai selama 6 ( enam ) bulan berturut-turut,kecuali permohonan untuk perpanjangan waktu yang bersangkutan dikabulkan.</li>
-					<li>Ternyata dalam permohonan Izin yang diajukan, terdapat keterangan yang tidak benar / palsu atau dipalsukan.</li>
-					<li>Pelaksanaan pembangunan ternyata menyimpang dari gambar rencana yang telah disahkan yang merupakan lampiran surat keputusan izin.</li>
-				</ol>
-			</li>
-		</ol>
-	</td>
+<tr><td colspan="6" style="width:100%; line-height: 5px">&nbsp;</td></tr>
+<tr style="font-family: 'Arial'; border: 2px solid #000">
+	<td colspan="4" style="width:65%"><span class="underline bold">AGENDA PENDAFTARAN</span><br>NOMOR: <?php echo $no_agenda ?></td>
+	<td colspan="2" style="width:35%; border-right: 2px solid #000;">TANGGAL : <?php echo bdate('d F Y', $created_on) ?></td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr>
-	<td style="width:20%"><p>KEEMPAT</p></td>
-	<td style="width:2%"><p>:</p></td>
-	<td colspan="5" style="width:78%">Mencatat bahwa :</td>
+<tr><td colspan="6" style="width:100%; line-height: 5px">&nbsp;</td></tr>
+<tr class="bold" style="font-family: 'Arial'; border: 2px solid #000; border-bottom-width: 1px;">
+	<td style="width:20%">NAMA PERUSAHAAN</td>
+	<td style="width:5%">:</td>
+	<td colspan="3" style="width:55%"><?php echo strtoupper($usaha_nama) ?></td>
+	<td style="width:20%; border-left: 1px solid #000; border-right: 2px solid #000;">STATUS TANGGAL</td>
 </tr>
-<tr>
-	<td colspan="2">&nbsp;</td>
-	<td colspan="5" style="width:78%">
-		<ol>
-			<li>Izin ini tidak memberikan hak untuk pemakaian / penguasaan tanah.</li>
-			<li>Retribusi IMB / biaya lain yang telah dibayarkan tidak dapat diminta kembali apabila :
-				<ol>
-					<li>Setelah surat Izin ini diberikan ternyata tidak dipergunakan sebagaimana  penggunaan bangunan.</li>
-					<li>Karena suatu alasan yang sah, permohonan ini tidak dapat dikabulkan / dikabulkan sebagian.</li>
-				</ol>
-			</li>
-			<li>Bagian-bagian bangunan / unsur-unsur penunjangannya yang tidak diizinkan seperti tercantum pada gambar rencana lampiran surat izin ini dengan tanda warna kuning, harus dihilangkan / dibonkar penerima / pemegang Izin sendiri.</li>
-			<li>Apabila di kemudian hari ternyata terdapat kekeliruan dalam penetapannya akan dilakukan perbaikan / peninjauan kembali sebagaimana mestinya.</li>
-		</ol>
-	</td>
+<tr class="bold" style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom-width: 1px;">
+	<td style="width:20%">NAMA PENGURUS / PENANGGUNG JAWAB</td>
+	<td style="width:5%">:</td>
+	<td colspan="4" style="width:75%; border-right: 2px solid #000;"><?php echo strtoupper($pemohon_nama) ?></td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr>
-	<td colspan="6">&nbsp;</td>
-	<td style="width:30%"><p>Ditetapkan di : Kajen</p></td>
+<tr class="bold" style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom-width: 1px;">
+	<td style="width:20%">ALAMAT PERUSAHAAN</td>
+	<td style="width:5%">:</td>
+	<td colspan="4" style="width:75%; border-right: 2px solid #000;"><?php echo strtoupper($usaha_alamat) ?></td>
 </tr>
-<tr>
-	<td colspan="6">&nbsp;</td>
-	<td style="width:30%"><p>Pada Tanggal : Juni 2013</p></td>
+<tr class="bold" style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom-width: 1px;">
+	<td style="width:20%">NPWP</td>
+	<td style="width:5%">:</td>
+	<td colspan="4" style="width:75%; border-right: 2px solid #000;"><?php echo strtoupper($usaha_npwp) ?></td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr>
-	<td colspan="5">&nbsp;</td>
-	<td colspan="2" style="width:20%"><p style="text-align:center"><strong>An. BUPATI PEKALONGAN</strong></p></td>
+<tr class="bold" style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom-width: 1px;">
+	<td style="width:20%">NOMOR TELEPON</td>
+	<td style="width:5%">:</td>
+	<td colspan="2" style="width:45%;"><?php echo strtoupper($usaha_no_telp) ?></td>
+	<td colspan="2" style="width:30%; border-right: 2px solid #000;">FAX : <?php echo strtoupper($usaha_no_telp) ?></td>
 </tr>
-<tr>
-	<td colspan="5">&nbsp;</td>
-	<td colspan="2" style="width:20%"><p style="text-align:center"><strong>KEPALA <?php echo strtoupper($skpd_name) ?></strong></p></td>
-</tr>
-<tr>
-	<td colspan="5">&nbsp;</td>
-	<td colspan="2" style="width:20%"><p style="text-align:center"><strong><?php echo strtoupper($skpd_city) ?></strong></p></td>
-</tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr>
-	<td colspan="5">&nbsp;</td>
-	<td colspan="2" style="width:20%"><p style="text-align:center"><strong><?php echo strtoupper($skpd_lead_name) ?></strong></p></td>
-</tr>
-<tr>
-	<td colspan="5">&nbsp;</td>
-	<td colspan="2" style="width:20%"><p style="text-align:center"><strong>Pembina Tingkat I</strong></p></td>
-</tr>
-<tr>
-	<td colspan="5">&nbsp;</td>
-	<td colspan="2" style="width:20%"><p style="text-align:center"><strong>NIP. <?php echo strtoupper($skpd_lead_nip) ?></strong></p></td>
+<tr class="bold" style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom-width: 1px;">
+	<td style="width:20%">KEGIATAN USAHA POKOK</td>
+	<td style="width:5%">:</td>
+	<td colspan="3" style="width:55%;"><?php echo strtoupper($usaha_pokok) ?></td>
+	<td class="align-center" style="width:20%; border-left: 1px solid #000; border-right: 2px solid #000;">KBLI :<br><?php echo strtoupper($usaha_kbli) ?></td>
 </tr>
 
+<?php if( strtolower($usaha_jenis) == 'koprasi' ) : ?>
+<tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom: 1px solid #ccc">
+	<td colspan="6" style="width:100%; border-right: 2px solid #000;" class="bold underline">PENGESAHAN MENTERI KEHAKIMAN</td>
+</tr>
+<tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom-width: 1px;">
+	<td colspan="4" style="width:70%; border-right: 1px solid #ccc;">NOMOR : C2-8679.HT 01 01 TH. 2001</td>
+	<td colspan="2" style="width:30%; border-right: 2px solid #000;">TANGGAL : 8 AGUSTUS 2001</td>
+</tr>
+<tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom: 1px solid #ccc">
+	<td colspan="6" style="width:100%; border-right: 2px solid #000;" class="bold underline">PERSETUJUAN MENTERI KEHAKIMAN ATAS AKTA PERUBAHAN ANGGARAN DASAR</td>
+</tr>
+<tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom-width: 1px;">
+	<td colspan="4" style="width:70%; border-right: 1px solid #ccc;">NOMOR : C-22542. AH. 01. 04 TH. 2005</td>
+	<td colspan="2" style="width:30%; border-right: 2px solid #000;">TANGGAL : 12 AGUSTUS 2005</td>
+</tr>
+<tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom: 1px solid #ccc">
+	<td colspan="6" style="width:100%; border-right: 2px solid #000;" class="bold underline">PERSETUJUAN METNERI HUKUM DAN HAM REPUBLIK INDONESIA ATAS AKTA PERUBAHAN ANGGARAN DASAR PERSEROAN</td>
+</tr>
+<tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0;">
+	<td colspan="4" style="width:70%; border-right: 1px solid #ccc;">NOMOR : AHU-50221. AH. O1. 02. TH. 2008</td>
+	<td colspan="2" style="width:30%; border-right: 2px solid #000;">TANGGAL : 12 AGUSTUS 2008</td>
+</tr>
+<?php elseif( strtolower($usaha_jenis) == 'badan usaha milik negara (bumn)' ) : ?>
+<tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom: 1px solid #ccc">
+	<td colspan="6" style="width:100%; border-right: 2px solid #000;" class="bold underline">PENGESAHAN MENTERI KEHAKIMAN</td>
+</tr>
+<tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom-width: 1px;">
+	<td colspan="4" style="width:70%; border-right: 1px solid #ccc;">NOMOR : C2-8679.HT 01 01 TH. 2001</td>
+	<td colspan="2" style="width:30%; border-right: 2px solid #000;">TANGGAL : 8 AGUSTUS 2001</td>
+</tr>
+<tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom: 1px solid #ccc">
+	<td colspan="6" style="width:100%; border-right: 2px solid #000;" class="bold underline">PERSETUJUAN MENTERI KEHAKIMAN ATAS AKTA PERUBAHAN ANGGARAN DASAR</td>
+</tr>
+<tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom-width: 1px;">
+	<td colspan="4" style="width:70%; border-right: 1px solid #ccc;">NOMOR : C-22542. AH. 01. 04 TH. 2005</td>
+	<td colspan="2" style="width:30%; border-right: 2px solid #000;">TANGGAL : 12 AGUSTUS 2005</td>
+</tr>
+<tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom: 1px solid #ccc">
+	<td colspan="6" style="width:100%; border-right: 2px solid #000;" class="bold underline">PERSETUJUAN METNERI HUKUM DAN HAM REPUBLIK INDONESIA ATAS AKTA PERUBAHAN ANGGARAN DASAR PERSEROAN</td>
+</tr>
+<tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0;">
+	<td colspan="4" style="width:70%; border-right: 1px solid #ccc;">NOMOR : AHU-50221. AH. O1. 02. TH. 2008</td>
+	<td colspan="2" style="width:30%; border-right: 2px solid #000;">TANGGAL : 12 AGUSTUS 2008</td>
+</tr>
+<?php elseif( strtolower($usaha_jenis) == 'Perorangan (PO)' ) : ?>
+<tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom: 1px solid #ccc">
+	<td colspan="6" style="width:100%; border-right: 2px solid #000;" class="bold underline">PENGESAHAN MENTERI KEHAKIMAN</td>
+</tr>
+<tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom-width: 1px;">
+	<td colspan="4" style="width:70%; border-right: 1px solid #ccc;">NOMOR : C2-8679.HT 01 01 TH. 2001</td>
+	<td colspan="2" style="width:30%; border-right: 2px solid #000;">TANGGAL : 8 AGUSTUS 2001</td>
+</tr>
+<tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom: 1px solid #ccc">
+	<td colspan="6" style="width:100%; border-right: 2px solid #000;" class="bold underline">PERSETUJUAN MENTERI KEHAKIMAN ATAS AKTA PERUBAHAN ANGGARAN DASAR</td>
+</tr>
+<tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom-width: 1px;">
+	<td colspan="4" style="width:70%; border-right: 1px solid #ccc;">NOMOR : C-22542. AH. 01. 04 TH. 2005</td>
+	<td colspan="2" style="width:30%; border-right: 2px solid #000;">TANGGAL : 12 AGUSTUS 2005</td>
+</tr>
+<tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom: 1px solid #ccc">
+	<td colspan="6" style="width:100%; border-right: 2px solid #000;" class="bold underline">PERSETUJUAN METNERI HUKUM DAN HAM REPUBLIK INDONESIA ATAS AKTA PERUBAHAN ANGGARAN DASAR PERSEROAN</td>
+</tr>
+<tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0;">
+	<td colspan="4" style="width:70%; border-right: 1px solid #ccc;">NOMOR : AHU-50221. AH. O1. 02. TH. 2008</td>
+	<td colspan="2" style="width:30%; border-right: 2px solid #000;">TANGGAL : 12 AGUSTUS 2008</td>
+</tr>
+<?php elseif( strtolower($usaha_jenis) == 'Perseroan Komanditer (CV)' ) : ?>
+<tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom: 1px solid #ccc">
+	<td colspan="6" style="width:100%; border-right: 2px solid #000;" class="bold underline">PENGESAHAN MENTERI KEHAKIMAN</td>
+</tr>
+<tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom-width: 1px;">
+	<td colspan="4" style="width:70%; border-right: 1px solid #ccc;">NOMOR : C2-8679.HT 01 01 TH. 2001</td>
+	<td colspan="2" style="width:30%; border-right: 2px solid #000;">TANGGAL : 8 AGUSTUS 2001</td>
+</tr>
+<tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom: 1px solid #ccc">
+	<td colspan="6" style="width:100%; border-right: 2px solid #000;" class="bold underline">PERSETUJUAN MENTERI KEHAKIMAN ATAS AKTA PERUBAHAN ANGGARAN DASAR</td>
+</tr>
+<tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom-width: 1px;">
+	<td colspan="4" style="width:70%; border-right: 1px solid #ccc;">NOMOR : C-22542. AH. 01. 04 TH. 2005</td>
+	<td colspan="2" style="width:30%; border-right: 2px solid #000;">TANGGAL : 12 AGUSTUS 2005</td>
+</tr>
+<tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom: 1px solid #ccc">
+	<td colspan="6" style="width:100%; border-right: 2px solid #000;" class="bold underline">PERSETUJUAN METNERI HUKUM DAN HAM REPUBLIK INDONESIA ATAS AKTA PERUBAHAN ANGGARAN DASAR PERSEROAN</td>
+</tr>
+<tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0;">
+	<td colspan="4" style="width:70%; border-right: 1px solid #ccc;">NOMOR : AHU-50221. AH. O1. 02. TH. 2008</td>
+	<td colspan="2" style="width:30%; border-right: 2px solid #000;">TANGGAL : 12 AGUSTUS 2008</td>
+</tr>
+<?php elseif( strtolower($usaha_jenis) == 'Perseroan Terbatas (PT)' ) : ?>
+<tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom: 1px solid #ccc">
+	<td colspan="6" style="width:100%; border-right: 2px solid #000;" class="bold underline">PENGESAHAN MENTERI KEHAKIMAN</td>
+</tr>
+<tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom-width: 1px;">
+	<td colspan="4" style="width:70%; border-right: 1px solid #ccc;">NOMOR : C2-8679.HT 01 01 TH. 2001</td>
+	<td colspan="2" style="width:30%; border-right: 2px solid #000;">TANGGAL : 8 AGUSTUS 2001</td>
+</tr>
+<tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom: 1px solid #ccc">
+	<td colspan="6" style="width:100%; border-right: 2px solid #000;" class="bold underline">PERSETUJUAN MENTERI KEHAKIMAN ATAS AKTA PERUBAHAN ANGGARAN DASAR</td>
+</tr>
+<tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom-width: 1px;">
+	<td colspan="4" style="width:70%; border-right: 1px solid #ccc;">NOMOR : C-22542. AH. 01. 04 TH. 2005</td>
+	<td colspan="2" style="width:30%; border-right: 2px solid #000;">TANGGAL : 12 AGUSTUS 2005</td>
+</tr>
+<tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0; border-bottom: 1px solid #ccc">
+	<td colspan="6" style="width:100%; border-right: 2px solid #000;" class="bold underline">PERSETUJUAN METNERI HUKUM DAN HAM REPUBLIK INDONESIA ATAS AKTA PERUBAHAN ANGGARAN DASAR PERSEROAN</td>
+</tr>
+<tr style="font-family: 'Arial'; border: 2px solid #000; border-top-width: 0;">
+	<td colspan="4" style="width:70%; border-right: 1px solid #ccc;">NOMOR : AHU-50221. AH. O1. 02. TH. 2008</td>
+	<td colspan="2" style="width:30%; border-right: 2px solid #000;">TANGGAL : 12 AGUSTUS 2008</td>
+</tr>
+<?php endif; ?>
+
+<tr><td colspan="6" style="width:100%">&nbsp;</td></tr>
+<tr style="font-family: 'Arial'">
+	<td colspan="3">&nbsp;</td>
+	<td colspan="3" style="border-bottom: 2px solid #000">Dikeluarkan di : KAJEN<br>Pada Tanggal : <?php echo bdate('d F Y', $approved_on) ?></td>
+</tr>
+<tr><td colspan="6" style="width:100%">&nbsp;</td></tr>
+<tr style="font-family: 'Arial'" class="align-center bold">
+	<td colspan="3">&nbsp;</td>
+	<td colspan="3">
+	A.n. BUPATI PEKALONGAN<br>
+	KEPALA <?php echo strtoupper($skpd_name) ?><br>
+	<?php echo strtoupper($skpd_city) ?><br><br><br>
+	<span class="underline"><?php echo strtoupper($skpd_lead_name) ?></span><br>
+	Pembina Tingkat I<br>
+	NIP. <?php echo strtoupper($skpd_lead_nip) ?>
+	</td>
+</tr>
