@@ -10,15 +10,15 @@
 			<th>Tanggal Berlaku</th>
 			<th>Keterangan</th>
 		</tr>
-		<tr class="align-center">
-			<td>1</td>
-			<td>2</td>
-			<td>3</td>
-			<td>4</td>
-			<td>5</td>
-			<td>6</td>
-			<td>7</td>
-			<td>8</td>
+		<tr>
+			<th>1</th>
+			<th>2</th>
+			<th>3</th>
+			<th>4</th>
+			<th>5</th>
+			<th>6</th>
+			<th>7</th>
+			<th>8</th>
 		</tr>
 	</thead>
 	<tbody>
