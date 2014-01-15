@@ -456,14 +456,14 @@ class Former
                 foreach ( $fields as $field )
                 {
                     $input .= '<div class="col-md-'.$field['col'].'">';
-                    $validation = '';
+                    $field_attrs['validation'] = '';
 
                     if ( isset( $field['validation'] ) AND $field['validation'] != '' )
                     {
                         if ( strpos( 'required', $field['validation'] ) !== FALSE )
                             $field['label'] .= ' *';
 
-                        $validation = $field['validation'];
+                        $field_attrs['validation'] = $field['validation'];
                     }
 
                     $field['name']  = $name.'_'.$field['name'];

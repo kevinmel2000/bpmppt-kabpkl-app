@@ -115,14 +115,14 @@ class Layanan extends BAKA_Controller
         $this->load->library('baka_pack/gridr');
 
         $grid = $this->gridr->identifier('id')
-                                ->set_baseurl($this->data['page_link'])
-                                ->set_column('Pengajuan',
-                                    'no_agenda, callback_format_datetime:created_on',
-                                    '30%',
-                                    FALSE,
-                                    '<strong>%s</strong><br><small class="text-muted">Diajukan pada: %s</small>')
-                                ->set_column('Pemohon', 'petitioner', '40%', FALSE, '<strong>%s</strong>')
-                                ->set_column('Status', 'status, callback__x:status', '10%', FALSE, '<span class="label label-%s">%s</span>');
+                            ->set_baseurl($this->data['page_link'])
+                            ->set_column('Pengajuan',
+                                'no_agenda, callback_format_datetime:created_on',
+                                '30%',
+                                FALSE,
+                                '<strong>%s</strong><br><small class="text-muted">Diajukan pada: %s</small>')
+                            ->set_column('Pemohon', 'petitioner', '40%', FALSE, '<strong>%s</strong>')
+                            ->set_column('Status', 'status, callback__x:status', '10%', FALSE, '<span class="label label-%s">%s</span>');
 
         // if ( !$this->_dashboard_view )
         // {
@@ -181,7 +181,7 @@ class Layanan extends BAKA_Controller
         {
             $fields[]   = array(
                 'name'  => $modul_slug.'_surat',
-                'label' => 'Nomor &amp; Tanggal Permohonan',
+                'label' => 'No. &amp; Tgl. Permohonan',
                 'type'  => 'subfield',
                 'attr'  => ( $data_obj ? 'disabled' : ''),
                 'fields'=> array(
@@ -209,9 +209,9 @@ class Layanan extends BAKA_Controller
         $no_buttons = $data_id != '' ? TRUE : FALSE ;
 
         $form = $this->former->init( array(
-            'name' => $modul_slug,
-            'action' => current_url(),
-            'fields' => array_merge( $fields, $this->bpmppt->get_form( $data_type, $data_obj )),
+            'name'       => $modul_slug,
+            'action'     => current_url(),
+            'fields'     => array_merge( $fields, $this->bpmppt->get_form( $data_type, $data_obj )),
             'no_buttons' => $no_buttons,
             ));
 

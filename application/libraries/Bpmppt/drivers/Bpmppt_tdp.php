@@ -179,14 +179,14 @@ class Bpmppt_tdp extends CI_Driver
 					'col'	=> '6',
 					'name'	=> 'telp',
 					'label'	=> 'Telpon',
-					'type'	=> 'number',
+					'type'	=> 'tel',
 					'std'	=> ( $data_obj ? $data_obj->pemilik_no_telp : ''),
 					'validation'=> 'numeric' ),
 				array(
 					'col'	=> '6',
 					'name'	=> 'fax',
 					'label'	=> 'Faksimili',
-					'type'	=> 'number',
+					'type'	=> 'tel',
 					'std'	=> ( $data_obj ? $data_obj->pemilik_no_fax : ''),
 					'validation'=> 'numeric' ),
 				));
@@ -226,7 +226,7 @@ class Bpmppt_tdp extends CI_Driver
 			'type'	=> 'dropdown',
 			'attr'	=> ( $data_obj ? 'disabled' : '' ),
 			'std'	=> ( $data_obj ? $data_obj->usaha_jenis : ''),
-			'option'=> $jns_opt,
+			'option'=> add_placeholder( $jns_opt ),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
@@ -237,9 +237,9 @@ class Bpmppt_tdp extends CI_Driver
 			'std'	=> ( $data_obj ? $data_obj->usaha_skala : ''),
 			'option'=> array(
 				'' => '---',
-				'kcl' => 'Perusahaan Kecil',
-				'mng' => 'Menengah',
-				'bsr' => 'Besar' ),
+				'PK' => 'Perusahaan Kecil',
+				'PM' => 'Menengah',
+				'PB' => 'Besar' ),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
@@ -257,33 +257,6 @@ class Bpmppt_tdp extends CI_Driver
 				'perwakilan' => 'Kantor Perwakilan' ),
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-		/**
-		 * 0 - 50	Usaha kecil
-		 * 50 - 500	Menengah
-		 * 500 > 	Besar
-		 */
-
-		$fields[]	= array(
-			'name'	=> $this->alias.'_usaha_kegiatan',
-			'label'	=> 'Kegiatan Usaha &amp; KBLI',
-			'type'	=> 'subfield',
-			'fields'=> array(
-				array(
-					'col'	=> '8',
-					'name'	=> 'pokok',
-					'label'	=> 'Kegiatan Usaha Pokok',
-					'type'	=> 'text',
-					'std'	=> ( $data_obj ? $data_obj->usaha_pokok : ''),
-					'validation'=> 'required' ),
-				array(
-					'col'	=> '4',
-					'name'	=> 'kbli',
-					'label'	=> 'KBLI',
-					'type'	=> 'text',
-					'std'	=> ( $data_obj ? $data_obj->usaha_kbli : ''),
-					'validation'=> 'required' ),
-				));
-
 		$fields[]	= array(
 			'name'	=> $this->alias.'_usaha_alamat',
 			'label'	=> 'Alamat',
@@ -300,17 +273,37 @@ class Bpmppt_tdp extends CI_Driver
 					'col'	=> '6',
 					'name'	=> 'telp',
 					'label'	=> 'Telpon',
-					'type'	=> 'number',
+					'type'	=> 'tel',
 					'std'	=> ( $data_obj ? $data_obj->usaha_no_telp : ''),
 					'validation'=> 'numeric' ),
 				array(
 					'col'	=> '6',
 					'name'	=> 'fax',
 					'label'	=> 'Faksimili',
-					'type'	=> 'number',
+					'type'	=> 'tel',
 					'std'	=> ( $data_obj ? $data_obj->usaha_no_fax : ''),
 					'validation'=> 'numeric' ),
 				));
+
+		/**
+		 * 0 - 50	Usaha kecil
+		 * 50 - 500	Menengah
+		 * 500 > 	Besar
+		 */
+
+		$fields[]	= array(
+			'name'	=> $this->alias.'_usaha_pokok',
+			'label'	=> 'Kegiatan Usaha Pokok',
+			'type'	=> 'textarea',
+			'std'	=> ( $data_obj ? $data_obj->usaha_pokok : ''),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
+
+		$fields[]	= array(
+			'name'	=> $this->alias.'_usaha_kbli',
+			'label'	=> 'KBLI',
+			'type'	=> 'text',
+			'std'	=> ( $data_obj ? $data_obj->usaha_kbli : ''),
+			'validation'=> ( !$data_obj ? 'required' : '' ) );
 
 		$fields[]	= array(
 			'name'	=> $this->alias.'_usaha_pendirian_akta',
