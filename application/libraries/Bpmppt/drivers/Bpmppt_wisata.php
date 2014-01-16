@@ -91,7 +91,7 @@ class Bpmppt_wisata extends CI_Driver
             'name'  => $this->alias.'_pemohon_kerja',
             'label' => 'Pekerjaan',
             'type'  => 'dropdown',
-            'std'   => ( $data_obj ? $data_obj->pemohon_nama : ''),
+            'std'   => ( $data_obj ? $data_obj->pemohon_kerja : ''),
             'option'=> array(
                 'p' => 'Pekerjaan' ),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
