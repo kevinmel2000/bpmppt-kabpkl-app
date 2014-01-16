@@ -296,12 +296,8 @@ class Bpmppt_model extends CI_Model
                 return $data_id;
             }
         }
-        else
-        {
-            $this->messages['error'] =  'Terjadi kegagalan penginputan data.' ;
 
-            return FALSE;
-        }
+        return FALSE;
     }
 
     // -------------------------------------------------------------------------
@@ -370,6 +366,9 @@ class Bpmppt_model extends CI_Model
 
         foreach ($meta_fields as $meta_key => $meta_value)
         {
+            if ( is_array($meta_value) )
+                $meta_value = serialize($meta_value);
+
             $this->db->insert( $this->_table['data_meta'], array(
                 'data_id'   => $data_id,
                 'data_type' => $module_name,

@@ -224,7 +224,7 @@ class Bpmppt_siup extends CI_Driver
 			'label'	=> 'Kelembagaan',
 			'type'	=> 'multiselect',
 			'attr'	=> ( $data_obj ? 'disabled' : '' ),
-			'std'	=> ( $data_obj ? $data_obj->usaha_lembaga : ''),
+			'std'	=> ( $data_obj ? unserialize($data_obj->usaha_lembaga) : ''),
 			'option'=> $lemb_opt,
 			'validation'=> ( !$data_obj ? 'required' : '' ) );
 

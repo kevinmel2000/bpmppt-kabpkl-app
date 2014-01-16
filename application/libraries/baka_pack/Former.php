@@ -575,9 +575,11 @@ class Former
                 case 'dropdown':
                     $attr = 'class="'.$input_class.'" id="'.$id.'" '.$attr;
 
+                    if ( $type == 'multiselect' )
+                        $name = $name.'[]';
+
                     $form_func = 'form_'.$type;
                     $input = $form_func( $name, $option, set_value( $name, $std), $attr );
-                    // $input = $form_func( $name, $option, set_select( $name, 'one', TRUE, $std), $attr );
                     break;
 
                 // Selectbox field
