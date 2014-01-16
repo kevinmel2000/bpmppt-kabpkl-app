@@ -25,87 +25,87 @@
 /**
  * BPMPPT Driver
  *
- * @subpackage	Drivers
+ * @subpackage  Drivers
  * @category    Application
  */
 class Bpmppt extends CI_Driver_Library
 {
-	/**
-	 * Base CI instance wrapper
-	 *
-	 * @var  string
-	 */
-	protected $_ci = '';
+    /**
+     * Base CI instance wrapper
+     *
+     * @var  string
+     */
+    protected $_ci = '';
 
-	/**
-	 * Valid drivers that will be loaded
-	 *
-	 * @var  array
-	 */
-	public $valid_drivers = array();
+    /**
+     * Valid drivers that will be loaded
+     *
+     * @var  array
+     */
+    public $valid_drivers = array();
 
-	/**
-	 * All drivers that available to be load
-	 *
-	 * @var  array
-	 */
-	private $available_drivers = array(
-		'b3',
-		'ho',
-		'imb',
-		'iplc',
-		'iui',
-		'iup',
-		'lokasi',
-		// 'obat',
-		// 'prinsip',
-		'reklame',
-		'siup',
-		'tdp',
-		'wisata',
-		);
+    /**
+     * All drivers that available to be load
+     *
+     * @var  array
+     */
+    private $available_drivers = array(
+        'b3',
+        'ho',
+        'imb',
+        'iplc',
+        'iui',
+        'iup',
+        'lokasi',
+        // 'obat',
+        // 'prinsip',
+        'reklame',
+        'siup',
+        'tdp',
+        'wisata',
+        );
 
-	/**
-	 * All modules wrapper
-	 *
-	 * @var  array
-	 */
-	private $modules = array();
+    /**
+     * All modules wrapper
+     *
+     * @var  array
+     */
+    private $modules = array();
 
-	private $messages = array();
+    private $messages = array();
 
-	/**
-	 * Default class constructor
-	 */
-	public function __construct()
-	{
-		$this->_ci =& get_instance();
+    /**
+     * Default class constructor
+     */
+    public function __construct()
+    {
+        $this->_ci =& get_instance();
 
-		$this->_ci->load->model('bpmppt_model');
+        $this->_ci->load->model('bpmppt_model');
 
-		$self = get_class( $this );
+        $self = get_class( $this );
 
-		foreach ( $this->available_drivers as $module )
-		{
-			if ( is_permited( 'doc_'.$module.'_manage' ) )
-			{
-				$this->valid_drivers[] = $self.'_'.$module;
+        foreach ( $this->available_drivers as $module )
+        {
+            if ( is_permited( 'doc_'.$module.'_manage' ) )
+            {
+                $this->valid_drivers[] = $self.'_'.$module;
 
-				$child	= $this->$module;
-				$code	= ( property_exists( $this->$module, 'code' ) )
-					? $child->code
-					: FALSE;
+                $child  = $this->$module;
+                $code   = ( property_exists( $this->$module, 'code' ) )
+                    ? $child->code
+                    : FALSE;
 
-				$this->modules[$module] = array(
-					'name'	=> $child->name,
-					'alias'	=> $child->alias,
-					'label'	=> $child->name.( $code ? ' ('.$code.')' : '' ),
-					'code'	=> $code );
-			}
-		}
+                $this->modules[$module] = array(
+                    'name'  => $child->name,
+                    'alias' => $child->alias,
+                    'label' => $child->name.( $code ? ' ('.$code.')' : '' ),
+                    'code'  => $code );
+            }
+        }
 
-		log_message('debug', '#BPMPPT: Drivers Library initialized.');
-	}
+        log_message('debug', '#BPMPPT: Drivers Library initialized.');
+    }
 
     // -------------------------------------------------------------------------
 
@@ -129,180 +129,180 @@ class Bpmppt extends CI_Driver_Library
 
     // -------------------------------------------------------------------------
 
-	/**
-	 * Get all modules properties
-	 *
-	 * @param   bool    $obj  return option
-	 *                        set it TRUE if you want return it as Object
-	 *                        set it FALSE or leave it empty to return it as is
-	 *
-	 * @return  mixed
-	 */
-	public function get_modules( $obj = FALSE )
-	{
-		if ( $obj )
-			return array_to_object( $this->modules );
+    /**
+     * Get all modules properties
+     *
+     * @param   bool    $obj  return option
+     *                        set it TRUE if you want return it as Object
+     *                        set it FALSE or leave it empty to return it as is
+     *
+     * @return  mixed
+     */
+    public function get_modules( $obj = FALSE )
+    {
+        if ( $obj )
+            return array_to_object( $this->modules );
 
-		return (array) $this->modules;
-	}
-
-    // -------------------------------------------------------------------------
-
-	/**
-	 * Get all modules in associative array
-	 *
-	 * @param   string  $key  Module prop that you want to use as return key
-	 * @param   string  $val  Module prop that you want to use as return val
-	 *
-	 * @return  array
-	 */
-	public function get_modules_assoc( $key = '', $val = '' )
-	{
-		$ret = array();
-		$key || $key = 'alias';
-		$val || $val = 'name';
-
-		foreach ( $this->modules as $module )
-			$ret[$module[$key]] = $module[$val];
-
-		return $ret;
-	}
+        return (array) $this->modules;
+    }
 
     // -------------------------------------------------------------------------
 
-	/**
-	 * Get single module name
-	 *
-	 * @param   string  $name  Module name
-	 *
-	 * @return  array
-	 */
-	public function get_module( $name )
-	{
-		return $this->modules[$name];
-	}
+    /**
+     * Get all modules in associative array
+     *
+     * @param   string  $key  Module prop that you want to use as return key
+     * @param   string  $val  Module prop that you want to use as return val
+     *
+     * @return  array
+     */
+    public function get_modules_assoc( $key = '', $val = '' )
+    {
+        $ret = array();
+        $key || $key = 'alias';
+        $val || $val = 'name';
+
+        foreach ( $this->modules as $module )
+            $ret[$module[$key]] = $module[$val];
+
+        return $ret;
+    }
 
     // -------------------------------------------------------------------------
 
-	/**
-	 * Get Module name
-	 * 
-	 * @param   string  $name
-	 *
-	 * @return  string
-	 */
-	public function get_name( $name )
-	{
-		return $this->modules[$name]['name'];
-	}
+    /**
+     * Get single module name
+     *
+     * @param   string  $name  Module name
+     *
+     * @return  array
+     */
+    public function get_module( $name )
+    {
+        return $this->modules[$name];
+    }
 
     // -------------------------------------------------------------------------
 
-	/**
-	 * Get Module alias
-	 * 
-	 * @param   string  $name
-	 *
-	 * @return  string
-	 */
-	public function get_alias( $name )
-	{
-		return $this->modules[$name]['alias'];
-	}
+    /**
+     * Get Module name
+     * 
+     * @param   string  $name
+     *
+     * @return  string
+     */
+    public function get_name( $name )
+    {
+        return $this->modules[$name]['name'];
+    }
 
     // -------------------------------------------------------------------------
 
-	/**
-	 * Get Module code
-	 * 
-	 * @param   string  $name
-	 *
-	 * @return  string
-	 */
-	public function get_code( $name )
-	{
-		return $this->modules[$name]['code'];
-	}
+    /**
+     * Get Module alias
+     * 
+     * @param   string  $name
+     *
+     * @return  string
+     */
+    public function get_alias( $name )
+    {
+        return $this->modules[$name]['alias'];
+    }
 
     // -------------------------------------------------------------------------
 
-	/**
-	 * Get Module label
-	 * 
-	 * @param   string  $name
-	 *
-	 * @return  string
-	 */
-	public function get_label( $name )
-	{
-		return $this->modules[$name]['label'];
-	}
+    /**
+     * Get Module code
+     * 
+     * @param   string  $name
+     *
+     * @return  string
+     */
+    public function get_code( $name )
+    {
+        return $this->modules[$name]['code'];
+    }
 
     // -------------------------------------------------------------------------
 
-	/**
-	 * Get form properties from child driver (if available)
-	 *
-	 * @param   string  $driver  Driver name
-	 * @param   object  $driver  Data Object
-	 *
-	 * @return  array|false
-	 */
-	public function get_form( $driver, $data_obj )
-	{
-		if ( method_exists( $this->$driver, 'form') )
-			return $this->$driver->form( $data_obj );
-
-		return FALSE;
-	}
+    /**
+     * Get Module label
+     * 
+     * @param   string  $name
+     *
+     * @return  string
+     */
+    public function get_label( $name )
+    {
+        return $this->modules[$name]['label'];
+    }
 
     // -------------------------------------------------------------------------
 
-	/**
-	 * Get Print properties from child driver (if available)
-	 *
-	 * @param   string  $driver  Driver name
-	 *
-	 * @return  array|false
-	 */
-	public function get_print( $driver )
-	{
-		if ( method_exists( $this->$driver, 'produk') )
-			return $this->$driver->produk();
+    /**
+     * Get form properties from child driver (if available)
+     *
+     * @param   string  $driver  Driver name
+     * @param   object  $driver  Data Object
+     *
+     * @return  array|false
+     */
+    public function get_form( $driver, $data_obj )
+    {
+        if ( method_exists( $this->$driver, 'form') )
+            return $this->$driver->form( $data_obj );
 
-		return FALSE;
-	}
-
-    // -------------------------------------------------------------------------
-
-	/**
-	 * Get Reports properties from child driver (if available)
-	 *
-	 * @param   string  $driver  Driver name
-	 *
-	 * @return  array|false
-	 */
-	public function get_report( $driver, $where = array() )
-	{
-		$wheres = array(
-			'type'                => $this->$driver->alias,
-			'month(created_on)'   => (int) ( !empty($where['data_date_month']) ? $where['data_date_month'] : bdate('m') ),
-			'year(created_on)'    => (int) ( !empty($where['data_date_year']) ? $where['data_date_year'] : bdate('Y') ),
-			);
-
-		if ( $where['data_status'] != 'all' )
-			$wheres['status'] = $where['data_status'];
-
-		return $this->q_report( $wheres );
-	}
+        return FALSE;
+    }
 
     // -------------------------------------------------------------------------
 
-	public function simpan( $driver_alias, $form_data, $data_id = NULL )
-	{
-		// $driver_alias = $this->get_alias( $driver );
+    /**
+     * Get Print properties from child driver (if available)
+     *
+     * @param   string  $driver  Driver name
+     *
+     * @return  array|false
+     */
+    public function get_print( $driver )
+    {
+        if ( method_exists( $this->$driver, 'produk') )
+            return $this->$driver->produk();
 
-		$data['no_agenda']  = $form_data[$driver_alias.'_surat_nomor'];
+        return FALSE;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Get Reports properties from child driver (if available)
+     *
+     * @param   string  $driver  Driver name
+     *
+     * @return  array|false
+     */
+    public function get_report( $driver, $where = array() )
+    {
+        $wheres = array(
+            'type'                => $this->$driver->alias,
+            'month(created_on)'   => (int) ( !empty($where['data_date_month']) ? $where['data_date_month'] : bdate('m') ),
+            'year(created_on)'    => (int) ( !empty($where['data_date_year']) ? $where['data_date_year'] : bdate('Y') ),
+            );
+
+        if ( $where['data_status'] != 'all' )
+            $wheres['status'] = $where['data_status'];
+
+        return $this->q_report( $wheres );
+    }
+
+    // -------------------------------------------------------------------------
+
+    public function simpan( $driver_alias, $form_data, $data_id = NULL )
+    {
+        // $driver_alias = $this->get_alias( $driver );
+
+        $data['no_agenda']  = $form_data[$driver_alias.'_surat_nomor'];
         $data['created_on'] = string_to_datetime();
         $data['created_by'] = Authen::get_user_id();
         $data['type']       = $driver_alias;
@@ -312,26 +312,26 @@ class Bpmppt extends CI_Driver_Library
 
         if ( $result = $this->create_data( $driver_alias, $data, $form_data ) )
         {
-        	$this->messages['success'] = array(
+            $this->messages['success'] = array(
                 'Permohonan dari saudara/i '.$data['petitioner'].' berhasil disimpan.',
                 'Klik cetak jika anda ingin langsung mencetaknya.');
 
-        	return $result;
+            return $result;
         }
         else
         {
-        	$this->messages['error'] =  'Terjadi kegagalan penginputan data.' ;
+            $this->messages['error'] =  'Terjadi kegagalan penginputan data.' ;
 
             return FALSE;
         }
-	}
+    }
 
     // -------------------------------------------------------------------------
 
-	public function messages()
-	{
-		return $this->messages;
-	}
+    public function messages()
+    {
+        return $this->messages;
+    }
 }
 
 /* End of file Bpmppt.php */
