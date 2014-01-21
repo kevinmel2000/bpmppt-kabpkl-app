@@ -1391,7 +1391,7 @@ class Authen_model extends CI_Model
     {
         if ( Setting::get('auth_login_count_attempts') )
         {
-            if ( !$this->is_max_attempts_exceeded( $login ) )
+            if ( !$this->authen->is_max_attempts_exceeded( $login ) )
             {
                 $this->db->insert( $this->table['login_attempts'],
                     array('ip_address' => $this->input->ip_address(), 'login' => $login));
