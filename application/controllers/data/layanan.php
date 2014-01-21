@@ -216,18 +216,21 @@ class Layanan extends BAKA_Controller
             'no_buttons' => $no_buttons,
             ));
 
-        if ( $form->validate_submition() )
+        if ( $form_data = $form->validate_submition() )
         {
-            $form_data  = $form->submited_data();
+            if ( $data_type == 'imb' )
+            {
+                $form_data[$modul_slug.'_surat_nomor'] = 614;
+            }
 
-            $data = $this->bpmppt->simpan( $modul_slug, $form_data );
+            $data_id = $this->bpmppt->simpan( $modul_slug, $form_data );
             
             foreach ( $this->bpmppt->messages() as $level => $message )
             {
                 $this->session->set_flashdata( $level, $message );
             }
 
-            redirect( $this->data['page_link'].'form/'.$data );
+            redirect( $this->data['page_link'].'form/'.$data_id );
         }
 
         $this->data['panel_body'] = $form->generate();
@@ -318,14 +321,13 @@ class Layanan extends BAKA_Controller
                 'buttons'   => $buttons,
                 ));
 
-            if ( $form->validate_submition() )
+            if ( $form_data = $form->validate_submition() )
             {
                 $data = $this->bpmppt->skpd_properties();
 
-                $data['layanan'] = $this->bpmppt->get_label($data_type);
-
-                $data['submited'] = $form->submited_data();
-                $data['results'] = $this->bpmppt->get_report( $data_type, $form->submited_data() );
+                $data['submited'] = $form_data;
+                $data['layanan']  = $this->bpmppt->get_label( $data_type );
+                $data['results']  = $this->bpmppt->get_report( $data_type, $form->submited_data() );
 
                 $this->load->theme('prints/reports/'.$data_type, $data, 'laporan');
             }

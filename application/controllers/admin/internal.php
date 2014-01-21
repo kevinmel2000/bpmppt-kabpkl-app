@@ -535,13 +535,13 @@ class Internal extends BAKA_Controller
             'fields' => $fields,
             ));
 
-        if ( $form->validate_submition() )
+        if ( $form_data = $form->validate_submition() )
         {
             $return = FALSE;
 
             $this->db->trans_start();
 
-            foreach ( $form->submited_data() as $opt_key => $opt_val )
+            foreach ( $form_data as $opt_key => $opt_val )
             {
                 if ( Setting::get( $opt_key ) != $opt_val )
                 {
@@ -643,7 +643,7 @@ class Internal extends BAKA_Controller
             'fields' => $fields,
             ));
 
-        if ( $form->validate_submition() )
+        if ( $form_data = $form->validate_submition() )
         {
             $return = FALSE;
 

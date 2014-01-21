@@ -97,11 +97,9 @@ class Maintenance extends BAKA_Controller
             'buttons' => $buttons,
             ));
 
-        if ( $form->validate_submition() )
+        if ( $form_data = $form->validate_submition() )
         {
             $this->load->library('baka_pack/baka_dbutil');
-
-            $data = $form->submited_data();
 
             if ( $this->baka_dbutil->backup() )
             {
@@ -148,7 +146,7 @@ class Maintenance extends BAKA_Controller
             'buttons' => $buttons,
             ));
 
-        if ( $form->validate_submition() )
+        if ( $form_data = $form->validate_submition() )
         {
             $this->load->library('baka_pack/baka_dbutil');
 

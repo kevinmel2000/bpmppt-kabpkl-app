@@ -874,7 +874,18 @@ class Former
             }
         }
 
-        return $this->_ci->form_validation->run();
+        // if is valid submissions
+        if ( $this->_ci->form_validation->run() )
+        {
+            // return the submission values
+            $submited_data = $this->form_data;
+            $this->clear();
+
+            return $submited_data;
+        }
+
+        // otherwise
+        return false;
     }
 
     // -------------------------------------------------------------------------

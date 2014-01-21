@@ -32,7 +32,7 @@
             </div>
         </header>
         <section id="contents-main">
-            <div class="container"><?php echo $contents ?></div>
+            <div class="container"><?php echo form_alert() . $contents ?></div>
         </section>
     </section>
 

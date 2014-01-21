@@ -114,9 +114,8 @@ class Pengguna extends BAKA_Controller
             'fields' => $fields,
             ));
 
-        if ( $form->validate_submition() )
+        if ( $form_data = $form->validate_submition() )
         {
-            $form_data  =  $form->submited_data();
             $result     = $this->authen->ban_user( $user_id, $form_data['ban-reason'] );
 
             if ( $result )
@@ -302,10 +301,8 @@ class Pengguna extends BAKA_Controller
             'fields' => $fields,
             ));
 
-        if ( $form->validate_submition() )
+        if ( $form_data = $form->validate_submition() )
         {
-            $form_data  =  $form->submited_data();
-
             $username   = $form_data['user-username'];
             $email      = $form_data['user-email'];
             $password   = $form_data['user-new-password'];
@@ -435,10 +432,8 @@ class Pengguna extends BAKA_Controller
             'fields' => $fields,
             ));
 
-        if ( $form->validate_submition() )
+        if ( $form_data = $form->validate_submition() )
         {
-            $form_data  =  $form->submited_data();
-
             $role_data['role']      = $form_data['group-role'];
             $role_data['full']      = $form_data['group-full'];
             $role_data['default']   = $form_data['group-default'];
@@ -562,7 +557,7 @@ class Pengguna extends BAKA_Controller
             'fields' => $fields,
             ));
 
-        if ( $form->validate_submition() )
+        if ( $form_data = $form->validate_submition() )
         {
             if ( $perm_id == '' )
             {

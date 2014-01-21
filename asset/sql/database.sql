@@ -74,6 +74,7 @@ CREATE TABLE IF NOT EXISTS `baka_auth_permissions` (
 
 INSERT INTO `baka_auth_permissions` (`parent`, `permission`, `description`, `status`) VALUES
 ('Dokumen', 'doc_manage', 'Mengelola Dokumen perijinan',1),
+('Dokumen', 'doc_edit', 'Mengubah Dokumen perijinan yang sudah ada',1),
 ('Dokumen', 'doc_lokasi_manage', 'Mengelola Dokumen ijin Lokasi',1),
 ('Dokumen', 'doc_reklame_manage', 'Mengelola Dokumen ijin Reklame',1),
 ('Dokumen', 'doc_b3_manage', 'Mengelola Dokumen ijin B3',1),
@@ -173,6 +174,7 @@ INSERT INTO `baka_auth_role_permissions` (`role_id`, `permission_id`) VALUES
 (1, 23),
 (1, 24),
 (1, 25),
+(1, 26),
 (2, 1),
 (2, 10),
 (2, 11),
@@ -201,8 +203,9 @@ CREATE TABLE IF NOT EXISTS `baka_auth_users` (
   `username` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `email` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `activated` tinyint(1) NOT NULL DEFAULT '1',
-  `banned` tinyint(1) NOT NULL DEFAULT '0',
+  `activated` tinyint(1) NOT NULL DEFAULT 1,
+  `banned` tinyint(1) NOT NULL DEFAULT 0,
+  `deleted` tinyint(1) NOT NULL DEFAULT 0,
   `ban_reason` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   `new_password_key` char(32) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   `new_password_requested` datetime DEFAULT NULL,
@@ -212,7 +215,7 @@ CREATE TABLE IF NOT EXISTS `baka_auth_users` (
   `last_login` datetime DEFAULT '0000-00-00 00:00:00',
   `created` datetime NOT NULL,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `log` longtext DEFAULT NULL DEFAULT NULL DEFAULT NULL,
+  `log` longtext DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`),
   UNIQUE KEY `email_UNIQUE` (`email`)
@@ -223,8 +226,8 @@ CREATE TABLE IF NOT EXISTS `baka_auth_users` (
 --
 
 INSERT INTO `baka_auth_users` (`username`, `password`, `email`, `activated`, `created`) VALUES
-('feryardiant', '$2a$08$LhuaYcUIVOy1tt7CJjyNh.2ECzQcJoeW44d/DSNVRUoFNriUtAyse', 'ferywardiyanto@gmail.com', 1, '2013-10-31 22:07:55'),
-('mimin-ardiant', '$2a$08$ugoMu3b9ULNzFBMHKm1cfeLY57u31iblFe6BQ8eoQ98ifGTEGo5we', 'feryardiant@gmail.com', 1, '2013-11-04 18:29:46');
+('admin', '$2a$08$LhuaYcUIVOy1tt7CJjyNh.2ECzQcJoeW44d/DSNVRUoFNriUtAyse', 'administrator@bpmppt.com', 1, '2013-10-31 22:07:55'),
+('pengguna', '$2a$08$ugoMu3b9ULNzFBMHKm1cfeLY57u31iblFe6BQ8eoQ98ifGTEGo5we', 'pengguna@bpmppt.com', 1, '2013-11-04 18:29:46');
 
 -- --------------------------------------------------------
 
@@ -317,7 +320,7 @@ CREATE TABLE IF NOT EXISTS `baka_data` (
   `done_on` datetime DEFAULT '0000-00-00 00:00:00',
   `printed_on` datetime DEFAULT '0000-00-00 00:00:00',
   `deleted_on` datetime DEFAULT '0000-00-00 00:00:00',
-  `logs` longtext DEFAULT NULL DEFAULT NULL,
+  `logs` longtext DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -598,7 +601,7 @@ CREATE TABLE IF NOT EXISTS `baka_system_opt` (
 --
 
 INSERT INTO `baka_system_opt` (`opt_key`, `opt_value`) VALUES
-('skpd_name', 'Badan Penanaman Modal dan Pusat Perijinan Terpadu'),
+('skpd_name', 'Badan Penanaman Modal dan Pelayanan Perijinan Terpadu'),
 ('skpd_address', 'Jalan Mandurejo'),
 ('skpd_city', 'Kabupaten Pekalongan'),
 ('skpd_prov', 'Jawa Tengah'),
@@ -610,7 +613,7 @@ INSERT INTO `baka_system_opt` (`opt_key`, `opt_value`) VALUES
 ('skpd_logo', 'application/storage/upload/logo_cetak.png'),
 ('skpd_lead_name', 'M. JANU HARYANTO,SH.MH'),
 ('skpd_lead_nip', '19570126 198007 1 001'),
-('skpd_kab', 'KAJEN'),
+('skpd_kab', 'Kajen'),
 ('app_data_show_limit', '10'),
 ('app_date_format', 'j F Y'),
 ('app_datetime_format', 'j F Y\\,\\  H:i:s'),
@@ -619,7 +622,7 @@ INSERT INTO `baka_system_opt` (`opt_key`, `opt_value`) VALUES
 ('auth_username_max_length', '20'),
 ('auth_password_min_length', '4'),
 ('auth_password_max_length', '20'),
-('auth_allow_registration', '1'),
+('auth_allow_registration', '0'),
 ('auth_captcha_registration', '1'),
 ('auth_email_activation', '0'),
 ('auth_email_act_expire', '172800'),
@@ -636,20 +639,16 @@ INSERT INTO `baka_system_opt` (`opt_key`, `opt_value`) VALUES
 ('auth_username_blacklist', 'admin,administrator,mod,moderator,root'),
 ('auth_username_blacklist_prepend', 'the,sys,system,site,super'),
 ('auth_username_exceptions', NULL),
-('email_protocol', 'smtp'),
-('email_mailpath', '/usr/sbin/sendmail  '),
-('email_smtp_host', 'ssl://smtp.googlemail.com'),
-('email_smtp_user', 'feryardiant@gmail.com'),
-('email_smtp_pass', '7733b8wck9'),
-('email_smtp_port', '465'),
+('email_protocol', '-'),
+('email_mailpath', ''),
+('email_smtp_host', ''),
+('email_smtp_user', ''),
+('email_smtp_pass', ''),
+('email_smtp_port', ''),
 ('email_smtp_timeout', '30'),
 ('email_wordwrap', '1'),
 ('email_mailtype', 'html'),
-('email_priority', '1'),
-('auth_username_length_min', '4'),
-('auth_username_length_max', '20'),
-('auth_password_length_min', '4'),
-('auth_password_length_max', '20');
+('email_priority', '1');
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)

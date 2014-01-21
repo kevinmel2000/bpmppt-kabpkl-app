@@ -61,19 +61,19 @@ class Auth extends BAKA_Controller
                 $this->security->xss_clean($login) : '';
 
         $fields[]   = array(
-            'name'  => 'login-username',
+            'name'  => 'username',
             'type'  => 'text',
             'label' => $label,
             'validation'=> 'required' );
 
         $fields[]   = array(
-            'name'  => 'login-password',
+            'name'  => 'password',
             'type'  => 'password',
             'label' => 'Password',
             'validation'=> 'required' );
 
         $fields[]   = array(
-            'name'  => 'login-remember',
+            'name'  => 'remember',
             'type'  => 'checkbox',
             'label' => '',
             'option'=> array( 1 => 'Ingat saya dikomputer ini.' ) );
@@ -83,7 +83,7 @@ class Auth extends BAKA_Controller
             if ( (bool) Setting::get('auth_use_recaptcha') )
             {
                 $fields[]   = array(
-                    'name'  => 'login-recaptcha',
+                    'name'  => 'recaptcha',
                     'type'  => 'recaptcha',
                     'label' => 'Validasi',
                     'validation'=> 'required|valid_recaptcha');
@@ -91,7 +91,7 @@ class Auth extends BAKA_Controller
             else
             {
                 $fields[]   = array(
-                    'name'  => 'login-captcha',
+                    'name'  => 'captcha',
                     'type'  => 'captcha',
                     'label' => 'Validasi',
                     'validation'=> 'required|valid_captcha');
@@ -128,25 +128,16 @@ class Auth extends BAKA_Controller
             'buttons'   => $buttons,
             'is_hform'  => FALSE ));
 
-        // var_dump( $_SESSION );
-
-        if ( $form->validate_submition() )
+        if ( $input = $form->validate_submition() )
         {
-            $user_data = $form->submited_data();
-
-            if ( $this->authen->login( $user_data['login-username'], $user_data['login-password'], $user_data['login-remember'] ) )
-            {
-                redirect('dashboard');
-            }
-            else
-            {
-                redirect( current_url() );
-            }
+            $goto = $this->authen->login( $input['username'], $input['password'], $input['remember'] ) ? 'dashboard' : current_url();
 
             foreach ( $this->authen->messages() as $level => $item )
             {
                 $this->session->set_flashdata( $level, $item );
             }
+
+            redirect( $goto );
         }
 
         $this->data['panel_body'] = $form->generate();
@@ -233,10 +224,8 @@ class Auth extends BAKA_Controller
             'is_hform'  => FALSE,
             ));
 
-        if ( $form->validate_submition() )
+        if ( $form_data = $form->validate_submition() )
         {
-            $form_data  =  $form->submited_data();
-
             $username  = $form_data['register-username'];
             $email     = $form_data['register-email'];
             $password  = $form_data['register-password'];
@@ -297,10 +286,8 @@ class Auth extends BAKA_Controller
             'is_hform'  => FALSE
             ));
 
-        if ( $form->validate_submition() )
+        if ( $form_data = $form->validate_submition() )
         {
-            $user_data = $form->submited_data();
-
             if ( $data = $this->authen->change_email( $user_data['email'] ) )
             {
                 // success
@@ -357,10 +344,8 @@ class Auth extends BAKA_Controller
             'is_hform'  => FALSE,
             ));
 
-        if ( $form->validate_submition() )
+        if ( $form_data = $form->validate_submition() )
         {
-            $user_data = $form->submited_data();
-
 
             if ( $data = $this->authen->forgot_password( $user_data['forgot_login']) )
             {
@@ -442,10 +427,8 @@ class Auth extends BAKA_Controller
             'is_hform'  => FALSE,
             ));
 
-        if ( $form->validate_submition() )
+        if ( $form_data = $form->validate_submition() )
         {
-            $user_data = $form->submited_data();
-
             if ( $data = $this->authen->reset_password( $user_id, $email_key, $user_data['reset_password'] ) )
             {
                 // success

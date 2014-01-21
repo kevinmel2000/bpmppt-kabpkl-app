@@ -1,8 +1,6 @@
 <div class="row">
 	<div class="col-md-9">
 
-<?php echo form_alert() ?>
-
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<h3 class="panel-title"><?php echo $panel_backup_title ?></h3>

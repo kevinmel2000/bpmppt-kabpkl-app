@@ -101,7 +101,7 @@ $config['baka_upload_path']	= APPPATH.'storage/upload/';
 | with the new version. No editing required.
 |--------------------------------------------------------------------------
 */
-$config['baka_cool_captcha_folder'] = APPPATH.'libraries/vendor/';
+$config['baka_cool_captcha_folder'] = APPPATH.'libraries/vendor/captcha/';
 
 /*
 |--------------------------------------------------------------------------
