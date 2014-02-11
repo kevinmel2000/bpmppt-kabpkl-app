@@ -11,14 +11,11 @@
         <script charset="utf-8" type="text/javascript" src="<?php echo base_url('asset/js/lib/html5shiv.js') ?>"></script>
         <script charset="utf-8" type="text/javascript" src="<?php echo base_url('asset/js/lib/respond.min.js') ?>"></script>
     <![endif]-->    
-    <link rel="stylesheet/less" type="text/css" href="<?php echo base_url('asset/less/style.less') ?>" />
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url('asset/css/style.min.css') ?>" />
     <!-- Bootstrap -->
-    <?php // echo load_styles() ?>
+    <?php echo load_styles() ?>
     <!-- Rresponsive Icons -->
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="<?php echo base_url('asset/img/favicon/icon-144.png') ?>">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?php echo base_url('asset/img/favicon/icon-114.png') ?>">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?php echo base_url('asset/img/favicon/icon-72.png') ?>">
-    <link rel="apple-touch-icon-precomposed" href="<?php echo base_url('asset/img/favicon/icon-57.png') ?>">
     <link rel="shortcut icon" href="<?php echo base_url('asset/img/favicon/favicon.png') ?>">
 </head>
 <body <?php echo get_body_class() ?>>

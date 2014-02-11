@@ -12,19 +12,19 @@ module.exports = function(grunt) {
         options: {
           keepalive: true,
           open: true,
-            port: 8088
+            port: 8008
         }
       }
     },
     less: {
       compileCore: {
-        // options: {
-        //   strictMath: true,
-        //   sourceMap: true,
-        //   outputSourceFiles: true,
-        //   sourceMapURL: 'style.css.map',
-        //   sourceMapFilename: 'asset/css/style.css.map'
-        // },
+        options: {
+          strictMath: true,
+          sourceMap: true,
+          outputSourceFiles: true,
+          sourceMapURL: 'style.css.map',
+          sourceMapFilename: 'asset/css/style.css.map'
+        },
         files: {
           "asset/css/style.css": "asset/less/style.less"
         }
