@@ -135,8 +135,8 @@ class Former
         'label_class'   => "control-label",
         'field_open'    => "<div class='%s' %s>",
         'field_close'   => "</div>",
-        'field_class'   => "form-control input-sm",
-        'buttons_class' => "btn btn-sm",
+        'field_class'   => "form-control input",
+        'buttons_class' => "btn",
         'required_attr' => " <abbr title='Field ini harus diisi'>*</abbr>",
         'desc_open'     => "<span class='help-block'>",
         'desc_close'    => "</span>",
@@ -433,7 +433,7 @@ class Former
                 $html .= form_fieldset_close();
 
             // If your attributes is string, turn it into an array
-            // @TODO: Please make a better attribute parser than this one
+            // TODO: Please make a better attribute parser than this one
             if ( is_string( $attr ) )
                 $attr = array( $attr => '' );
 
@@ -559,7 +559,7 @@ class Former
                     break;
 
                 // Ajax Upload using FineUploader.JS
-                // @TODO: done it! :v
+                // TODO: done it! :v
                 case 'fineupload':
                     $input = form_button( array(
                                 // 'name'  => 'reset',
@@ -573,7 +573,12 @@ class Former
                 // Selectbox field
                 case 'multiselect':
                 case 'dropdown':
-                    $attr = 'class="'.$input_class.'" id="'.$id.'" '.$attr;
+                    $path = 'asset/vendor/select2/';
+                    add_script( 'select2', $path.'js/select2.min.js', 'jquery', '3.4.5' );
+                    add_script( 'select2-trigger', "$('.form-control-select2').select2();\n", 'select2' );
+                    add_style( 'select2', $path.'css/select2.css', 'bootstrap', '3.4.5' );
+
+                    $attr = 'class="form-control-select2 '.$input_class.'" id="'.$id.'" '.$attr;
 
                     if ( $type == 'multiselect' )
                         $name = $name.'[]';
@@ -585,9 +590,9 @@ class Former
                 // Selectbox field
                 case 'select2':
                     $path = 'asset/vendor/select2/';
-                    add_script( 'select2', $path.'select2.min.js', 'jquery', '3.4.5' );
+                    add_script( 'select2', $path.'js/select2.min.js', 'jquery', '3.4.5' );
                     add_script( 'select2-trigger', "$('.form-control-select2').select2();\n", 'select2' );
-                    add_style( 'select2', $path.'select2.css', 'bootstrap', '3.4.5' );
+                    add_style( 'select2', $path.'css/select2.css', 'bootstrap', '3.4.5' );
                     $attr = 'class="form-control-select2 '.$input_class.'" id="'.$id.'" '.$attr;
 
                     $input = form_dropdown( $name, $option, $std, $attr );

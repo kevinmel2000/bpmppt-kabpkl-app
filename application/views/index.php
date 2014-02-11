@@ -8,11 +8,12 @@
     <meta name="author" content="<?php echo get_conf('app_author') ?>">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-        <script charset="utf-8" src="<?php echo base_url('asset/js/lib/html5shiv.js') ?>"></script>
-        <script charset="utf-8" src="<?php echo base_url('asset/js/lib/respond.min.js') ?>"></script>
-    <![endif]-->
+        <script charset="utf-8" type="text/javascript" src="<?php echo base_url('asset/js/lib/html5shiv.js') ?>"></script>
+        <script charset="utf-8" type="text/javascript" src="<?php echo base_url('asset/js/lib/respond.min.js') ?>"></script>
+    <![endif]-->    
+    <link rel="stylesheet/less" type="text/css" href="<?php echo base_url('asset/less/style.less') ?>" />
     <!-- Bootstrap -->
-    <?php echo load_styles() ?>
+    <?php // echo load_styles() ?>
     <!-- Rresponsive Icons -->
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="<?php echo base_url('asset/img/favicon/icon-144.png') ?>">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?php echo base_url('asset/img/favicon/icon-114.png') ?>">
@@ -53,5 +54,6 @@
 <?php endif ?>
 
 <?php echo get_foot() ?>
+    <script charset="utf-8" type="text/javascript" src="<?php echo base_url('asset/js/lib/less.min.js') ?>"></script>
 </body>
 </html>

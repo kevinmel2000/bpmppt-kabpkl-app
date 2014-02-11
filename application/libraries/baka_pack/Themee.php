@@ -63,11 +63,13 @@ class Themee
         $this->_theme_data['site_title'] = $this->_app_name;
         $this->_theme_data['body_class'] = 'page';
 
+        // $this->add_script('less', 'asset/js/lib/less.min.js', '', '1.5.0');
         $this->add_script('jquery', 'asset/js/lib/jquery.min.js', '', '2.0.3');
         $this->add_script('baka_pack', 'asset/js/script.js', 'jquery' );
         $this->add_script('bootstrap', 'asset/vendor/bootstrap/js/bootstrap.min.js', 'jquery', '3.0.0' );
-        $this->add_style( 'bootstrap', 'asset/vendor/bootstrap/css/bootstrap.min.css', '', '3.0.0' );
-        $this->add_style( 'baka_pack', 'asset/css/style.css' );
+        // $this->add_style( 'bootstrap', 'asset/vendor/bootstrap/css/bootstrap.min.css', '', '3.0.0' );
+        // $this->add_style( 'baka_pack', 'asset/css/style.css' );
+        // $this->add_style( 'baka_pack', 'asset/less/style.less' );
 
         log_message('debug', "#Baka_pack: Theme Class Initialized");
     }
