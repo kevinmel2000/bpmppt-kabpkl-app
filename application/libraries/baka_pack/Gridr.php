@@ -224,7 +224,7 @@ class Gridr
 
     protected function table_footer()
     {
-        $output = '<div class="panel-footer clearfix">';
+        $output = '<div class="panel-footer">';
 
         /**
          * Set text info

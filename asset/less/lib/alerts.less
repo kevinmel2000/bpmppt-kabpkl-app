@@ -7,7 +7,7 @@
 
 .alert {
   padding: @alert-padding;
-  margin-bottom: @line-height-computed;
+  margin-bottom: (@line-height-computed - 3);
   border: 1px solid transparent;
   border-radius: @alert-border-radius;
 
@@ -26,6 +26,9 @@
   > p,
   > ul {
     margin-bottom: 0;
+  }
+  > ul {
+    padding-left: 20px;
   }
   > p + p {
     margin-top: 5px;

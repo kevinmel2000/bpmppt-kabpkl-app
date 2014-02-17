@@ -10,10 +10,11 @@
     <!--[if lt IE 9]>
         <script charset="utf-8" type="text/javascript" src="<?php echo base_url('asset/js/lib/html5shiv.js') ?>"></script>
         <script charset="utf-8" type="text/javascript" src="<?php echo base_url('asset/js/lib/respond.min.js') ?>"></script>
-    <![endif]-->    
+    <![endif]-->
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic' rel='stylesheet' type='text/css'>  
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('asset/css/style.min.css') ?>" />
     <!-- Bootstrap -->
-    <?php echo load_styles() ?>
+    <?php // echo load_styles() ?>
     <!-- Rresponsive Icons -->
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="<?php echo base_url('asset/img/favicon/icon-144.png') ?>">
     <link rel="shortcut icon" href="<?php echo base_url('asset/img/favicon/favicon.png') ?>">
@@ -24,16 +25,8 @@
     <?php echo get_navbar() ?>
 
     <section id="contents">
-        <header id="contents-header">
-            <div class="container">
-                <h1 class="page-header"><?php echo get_page_title() ?></h1>
-            </div>
-        </header>
-        <section id="contents-main">
-            <div class="container"><?php echo form_alert() . $contents ?></div>
-        </section>
+        <div class="container"><?php echo form_alert() . $contents ?></div>
     </section>
-
 </div>
 
 <footer id="foots">
@@ -51,6 +44,5 @@
 <?php endif ?>
 
 <?php echo get_foot() ?>
-    <script charset="utf-8" type="text/javascript" src="<?php echo base_url('asset/js/lib/less.min.js') ?>"></script>
 </body>
 </html>

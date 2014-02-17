@@ -407,28 +407,6 @@ class Themee
     {
         $this->_contents[$name] = $value;
     }
-
-    // -------------------------------------------------------------------------
-
-    public function load($view = '' , $view_data = array(), $file = '', $return = FALSE)
-    {
-        $file || $file = 'index';
-
-        $this->set('contents', self::$_ci->load->view( $view, $view_data, TRUE));
-
-        if ( IS_AJAX )
-        {
-            log_message('debug', "#Baka_pack: Themee->load File ".$file." loaded as view via ajax.");
-
-            return self::$_ci->load->view( $view, $view_data, FALSE);
-        }
-        else
-        {
-            log_message('debug', "#Baka_pack: Themee->load File ".$file." loaded as view.");
-
-            return self::$_ci->load->view( $file, $this->_contents, $return );
-        }
-    }
 }
 
 /* End of file Themee.php */

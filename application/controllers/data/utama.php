@@ -39,10 +39,9 @@ class Utama extends BAKA_Controller
 
         $this->verify_login();
 
-        $this->themee->set_title('Dashboard');
+        $this->load->driver('bpmppt');
 
-        $this->themee->add_navbar( 'data_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
-        $this->data_navbar( 'data_sidebar', 'side' );
+        $this->themee->set_title('Dashboard');
 
         $this->modules_arr = $this->bpmppt->get_modules_assoc();
 
@@ -85,11 +84,14 @@ class Utama extends BAKA_Controller
 
     public function laporan()
     {
+        $this->themee->add_navbar( 'data_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
+        $this->data_navbar( 'data_sidebar', 'side' );
+
         $this->data['panel_title'] = $this->themee->set_title('Laporan data');
 
-        foreach ( $this->bpmppt->get_modules_object() as $module )
+        foreach ( $this->bpmppt->get_modules(TRUE) as $module => $prop )
         {
-            $modules[$module->link] = $module->label;
+            $modules[$prop->alias] = $prop->label;
         }
 
         $fields[]   = array(
@@ -156,13 +158,15 @@ class Utama extends BAKA_Controller
             'label' => 'Cetak sekarang',
             'class' => 'btn-primary pull-right' );
 
-        $form = $this->baka_form->add_form(
-                                    current_url(),
-                                    'internal-skpd',
-                                    '', '', 'post',
-                                    array('target' => '_blank') )
-                                ->add_fields( $fields )
-                                ->add_buttons( $buttons );
+        $this->load->library('baka_pack/former');
+
+        $form = $this->former->init( array(
+            'name'      => 'print-all',
+            'action'    => current_url(),
+            'extras'    => array('target' => '_blank'),
+            'fields'    => $fields,
+            'buttons'   => $buttons,
+            ));
 
         if ( $form->validate_submition() )
         {
@@ -176,7 +180,7 @@ class Utama extends BAKA_Controller
         }
         else
         {
-            $this->data['panel_body'] = $form->render();
+            $this->data['panel_body'] = $form->generate();
 
             $this->load->theme('pages/panel_form', $this->data);
         }

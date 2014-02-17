@@ -17,7 +17,7 @@ legend {
   display: block;
   width: 100%;
   padding: 0;
-  margin-bottom: @line-height-computed;
+  margin-bottom: (@line-height-computed - 8);
   font-size: (@font-size-base * 1.5);
   line-height: inherit;
   color: @legend-color;
@@ -46,7 +46,7 @@ input[type="search"] {
 // Position radios and checkboxes better
 input[type="radio"],
 input[type="checkbox"] {
-  margin: 4px 0 0;
+  margin: 2px 0 0;
   margin-top: 1px \9; /* IE8-9 */
   line-height: normal;
 }
@@ -161,6 +161,7 @@ output {
   // Reset height for `textarea`s
   textarea& {
     height: auto;
+    padding: 4px 4px 4px 10px;
   }
 }
 
@@ -172,6 +173,12 @@ input[type="date"] {
   line-height: @input-height-base;
 }
 
+input[type="file"] {
+  padding: 3px 0;
+  border: 0;
+  box-shadow: none;
+}
+
 
 // Form groups
 //
@@ -179,7 +186,7 @@ input[type="date"] {
 // horizontal forms, use the predefined grid classes.
 
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 
@@ -429,5 +436,23 @@ input[type="checkbox"],
   .has-feedback .form-control-feedback {
     top: 0;
     right: (@grid-gutter-width / 2);
+  }
+}
+
+.form-required abbr {
+  color: @brand-danger;
+}
+
+.form-action {
+  margin-bottom: 0;
+  padding-top: @padding-base-horizontal;
+  border-top: 1px solid #EEE;
+
+  .btn.pull-left {
+    margin-right: @padding-base-horizontal;
+  }
+
+  .btn.pull-right {
+    margin-left: @padding-base-horizontal;
   }
 }

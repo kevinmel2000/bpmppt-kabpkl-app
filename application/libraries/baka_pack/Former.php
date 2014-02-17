@@ -265,7 +265,7 @@ class Former
     {
         if ( empty( $fields ) )
         {
-            $this->_errors[] = 'You can\'t give me an empty field.';
+            Messg::set('error', 'You can\'t give me an empty field.');
             return FALSE;
         }
 
@@ -293,7 +293,9 @@ class Former
             $this->is_multipart = TRUE;
         }
 
-        $this->_fields[] = $field;
+        // Make sure that you have no duplicated field name
+        $name = $field['name'];
+        $this->_fields[$name] = $field;
 
         return $this;
     }
@@ -310,7 +312,7 @@ class Former
     {
         if ( count( $buttons ) === 0 )
         {
-            $this->_errors[] = 'You can\'t give me an empty button.';
+            Messg::set('error', 'You can\'t give me an empty button.');
             return FALSE;
         }
 
@@ -366,10 +368,8 @@ class Former
             $this->_attrs = array_merge( $this->_attrs, $_extras );
         }
 
-        // getting started
+        // Let's get started
         $html = form_open( $_action, $this->_attrs );
-
-        // var_dump( $this->_fields );
 
         // Loop the fields if not empty
         if ( count( $this->_fields ) > 0 )
@@ -408,9 +408,8 @@ class Former
         $counter     = 0;
         $input_class = $this->_template['field_class'];
 
-        $field_attrs['id'] = 'field-'.str_replace( '_', '-', isset( $field_attrs['id'] )
-            ? $field_attrs['id']
-            : $field_attrs['name'] );
+        $field_id   = isset( $field_attrs['id'] ) ? $field_attrs['id'] : $field_attrs['name'];
+        $field_attrs['id'] = 'field-'.str_replace( '_', '-', $field_id );
 
         if ( $is_sub and isset( $field_attrs['label'] ) )
             $field_attrs['attr'] = 'placeholder="'.$field_attrs['label'].'"';
@@ -552,10 +551,17 @@ class Former
                 // Using CI form_upload() function
                 case 'file':
                 case 'upload':
-                    $input = form_upload( array(
-                            'name'  => $name,
-                            'id'    => $id,
-                            'class' => $input_class ) );
+                    // $input = form_upload( array(
+                    //         'name'  => $name,
+                    //         'id'    => $id,
+                    //         'class' => $input_class ) );
+
+                    $input = form_button( array(
+                            'name'    => $name,
+                            'type'    => 'button',
+                            'id'      => $id,
+                            'content' => 'Pilih berkas',
+                            'class'   => 'btn btn-primary btn-sm' ) );
                     break;
 
                 // Ajax Upload using FineUploader.JS
@@ -881,13 +887,7 @@ class Former
 
         // if is valid submissions
         if ( $this->_ci->form_validation->run() )
-        {
-            // return the submission values
-            $submited_data = $this->form_data;
-            $this->clear();
-
-            return $submited_data;
-        }
+            return $this->submited_data();
 
         // otherwise
         return false;
@@ -927,8 +927,6 @@ class Former
 
         $this->_ci->form_validation->set_rules( $name, $label, $rules);
 
-        // log_message( 'error', '#Form set field "'.$name.'" rules "'.$rules.'"' );
-
         $method = $this->_attrs['method'];
 
         if ( strlen( $callback ) > 0 and is_callable( $callback ) )
@@ -948,36 +946,9 @@ class Former
     public function submited_data()
     {
         $data = $this->form_data;
-
         $this->clear();
 
         return $data;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Clean up form properties
-     * It's useful if you have multiple form declarations.
-     *
-     * @since   0.1.3
-     * @return  void
-     */
-    public function clear()
-    {
-        $this->_attrs = array(
-            'action'  => '',
-            'name'    => '',
-            'class'   => '',
-            'method'  => 'post' );
-
-        $this->is_hform     = FALSE;
-        $this->is_multipart = FALSE;
-        $this->no_buttons   = FALSE;
-        $this->has_fieldset = FALSE;
-        $this->_fields      = array();
-        $this->_buttons     = array();
-        $this->_errors      = array();
     }
 
     // -------------------------------------------------------------------------
@@ -1040,6 +1011,32 @@ class Former
         }
 
         return $field;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Clean up form properties
+     * It's useful if you have multiple form declarations.
+     *
+     * @since   0.1.3
+     * @return  void
+     */
+    public function clear()
+    {
+        $this->_attrs = array(
+            'action'  => '',
+            'name'    => '',
+            'class'   => '',
+            'method'  => 'post' );
+
+        $this->is_hform     = FALSE;
+        $this->is_multipart = FALSE;
+        $this->no_buttons   = FALSE;
+        $this->has_fieldset = FALSE;
+        $this->_fields      = array();
+        $this->_buttons     = array();
+        $this->_errors      = array();
     }
 }
 

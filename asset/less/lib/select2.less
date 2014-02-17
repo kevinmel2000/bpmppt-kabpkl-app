@@ -76,7 +76,7 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
       .select2-arrow {
         display: inline-block;
         width: 18px;
-        height: 100%;
+        height: @input-height-select2;
         position: absolute;
         right: 0;
         top: 0;
@@ -166,15 +166,12 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
     }
 
     &-above {
-      margin-top: 1px;
-      border-top: 1px solid @input-border;
-      border-bottom: 0;
-
-      .border-right-radius(@border-radius-base);
+      .border-bottom-radius(@border-radius-base);
       .box-shadow(0 -4px 5px rgba(0, 0, 0, .15));
 
       &.select2-drop-active {
-        border-top: 1px solid @brand-primary;
+        border-top: 1px solid @input-border;
+        border-radius: @border-radius-base;
       }
 
       .select2-search input {
@@ -232,7 +229,7 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
       &.select2-drop-above {
         .select2-choice,
         .select2-choices {
-          border: 1px solid @brand-primary;
+          // border: 1px solid @input-border;
           border-top-color: transparent;
           background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, @body-bg), color-stop(0.5, @gray-lighter));
           background-image: -webkit-linear-gradient(center top, @body-bg 0%, @gray-lighter 50%);

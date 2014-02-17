@@ -127,18 +127,18 @@ class BAKA_Controller extends CI_Controller
             // Adding dashboard menu to main navbar
             $this->themee->add_navmenu( 'main_navbar', 'dashboard', 'link', 'dashboard', 'Dashboard' );
             // Adding data menu to main navbar
-            $this->themee->add_navmenu( 'main_navbar', 'master', 'link', 'data', 'Data Perijinan' );
+            $this->themee->add_navmenu( 'main_navbar', 'master', 'link', 'data/layanan/index', 'Data Perijinan' );
 
             // Adding submenu to main_navbar-data
-            $this->data_navbar( 'main_navbar-master', 'top' );
+            // $this->data_navbar( 'main_navbar-master', 'top' );
         }
 
         // Adding admin menu to main navbar
-        $this->themee->add_navmenu( 'main_navbar', 'admin', 'link', 'admin', 'Administrasi' );
+        $this->themee->add_navmenu( 'main_navbar', 'admin', 'link', 'admin/', 'Administrasi' );
         // Adding account menu to user navbar
         $this->themee->add_navmenu( 'user_navbar', 'account', 'link', 'profile', $this->current_user['username'] );
         // Adding submenu to main_navbar-admin
-        $this->admin_navbar( 'main_navbar-admin', 'top' );
+        // $this->admin_navbar( 'main_navbar-admin', 'top' );
         // Adding submenu to user_navbar-account
         $this->account_navbar( 'user_navbar-account', 'top' );
     }
@@ -150,13 +150,11 @@ class BAKA_Controller extends CI_Controller
         $link   = 'data/layanan/';
         $nama   = str_replace('/', '_', $link);
 
-        $this->load->driver('bpmppt');
-
         $modules = $this->bpmppt->get_modules();
 
         if ( count( $modules ) > 0 )
         {
-            $this->themee->add_navmenu( $parent, 'dashboard', 'link', 'dashboard', 'Statistik', array(), $position );
+            $this->themee->add_navmenu( $parent, 'laporan', 'link', 'data/utama/laporan', 'Laporan', array(), $position );
             // $this->themee->add_navmenu( $parent, $nama.'laporan', 'link', 'data/utama/laporan', 'Laporan', array(), $position );
             $this->themee->add_navmenu( $parent, $nama.'d', 'devider', '', '', array(), $position );
 

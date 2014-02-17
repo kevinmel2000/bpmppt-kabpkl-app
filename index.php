@@ -18,7 +18,18 @@
  * NOTE: If you change these, also change the error_reporting() code below
  *
  */
-	define('ENVIRONMENT', 'development');
+
+switch (dirname(__FILE__))
+{
+	case '/home/feryardiant/localhost/devel/bpmppt':
+		define('ENVIRONMENT', 'development');
+		break;
+	
+	default:
+		define('ENVIRONMENT', 'production');
+		break;
+}
+
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING

@@ -153,8 +153,7 @@ class PasswordHash
 
             do {
                 $hash = md5($hash . $password, TRUE);
-            }
-            while (--$count);
+            } while (--$count);
         }
         else
         {
@@ -162,8 +161,7 @@ class PasswordHash
 
             do {
                 $hash = pack('H*', md5($hash . $password));
-            }
-            while (--$count);
+            } while (--$count);
         }
 
         $output  = substr($setting, 0, 12);
@@ -277,5 +275,3 @@ class PasswordHash
         return $hash == $stored_hash;
     }
 }
-
-?>

@@ -1,5 +1,5 @@
 <?php if ( $load_toolbar ) : ?>
-<div id="action-bar" class="row">
+<div class="row action-bar">
     <div class="col-md-9">
 
     <?php echo set_toolbar( $tool_buttons, $page_link ) ?>

@@ -36,6 +36,8 @@ class Layanan extends BAKA_Controller
 
         $this->verify_login();
 
+        $this->load->driver('bpmppt');
+
         $this->themee->set_title('Administrasi data');
 
         $this->themee->add_navbar( 'data_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
@@ -47,39 +49,48 @@ class Layanan extends BAKA_Controller
     public function index( $data_type = '', $page = 'data', $data_id = FALSE )
     {
         if ( $data_type == '' )
-            redirect( 'dashboard' );
-        // else if ( !class_exists( $data_type ) )
-        //     show_404();
-
-        $this->data['load_toolbar'] = TRUE;
-        $this->data['page_link']   .= 'index/'.$data_type.'/';
-
-        switch ( $page )
         {
-            case 'form':
-                $this->form( $data_type, $data_id );
-                break;
+            $this->data['panel_title']  = $this->themee->set_title('Semua data perijinan');
+            $this->data['panel_body']   = '';
 
-            case 'cetak':
-                $this->cetak( $data_type, $data_id );
-                break;
+            $this->load->theme('pages/panel_alldata', $this->data);
+        }
+        else
+        {
+            // redirect( 'dashboard' );
+            // else if ( !class_exists( $data_type ) )
+            //     show_404();
 
-            case 'hapus':
-                $this->ubah_status( 'deleted', $data_id, $this->data['page_link'] );
-                break;
+            $this->data['load_toolbar'] = TRUE;
+            $this->data['page_link']   .= 'index/'.$data_type.'/';
 
-            case 'delete':
-                $this->delete( $data_type, $data_id );
-                break;
+            switch ( $page )
+            {
+                case 'form':
+                    $this->form( $data_type, $data_id );
+                    break;
 
-            case 'ubah-status':
-                $this->ubah_status( $this->uri->segment(7) , $data_id, $this->data['page_link'] );
-                break;
+                case 'cetak':
+                    $this->cetak( $data_type, $data_id );
+                    break;
 
-            case 'data':
-            default:
-                $this->data( $data_type );
-                break;
+                case 'hapus':
+                    $this->ubah_status( 'deleted', $data_id, $this->data['page_link'] );
+                    break;
+
+                case 'delete':
+                    $this->delete( $data_type, $data_id );
+                    break;
+
+                case 'ubah-status':
+                    $this->ubah_status( $this->uri->segment(7) , $data_id, $this->data['page_link'] );
+                    break;
+
+                case 'data':
+                default:
+                    $this->data( $data_type );
+                    break;
+            }
         }
     }
 

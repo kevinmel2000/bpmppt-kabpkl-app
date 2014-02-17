@@ -133,7 +133,7 @@ class Authen
         if ( !( $user = $this->get_user( $login, login_by() ) ) )
         {
             $this->increase_login_attempt( $login );
-            $this->set_message( 'error', _x('auth_incorrect_login') );
+            Messg::set( 'error', _x('auth_incorrect_login') );
             return FALSE;
         }
 
@@ -141,21 +141,21 @@ class Authen
         if ( !$this->validate( $password, $user->password ) )
         {
             $this->increase_login_attempt( $login );
-            $this->set_message( 'error', _x('auth_incorrect_password') );
+            Messg::set( 'error', _x('auth_incorrect_password') );
             return FALSE;
         }
 
         // fail - banned
         if ( $user->banned == 1 )
         {
-            $this->set_message( 'error', _x('auth_banned_account', $user->ban_reason) );
+            Messg::set( 'error', _x('auth_banned_account', $user->ban_reason) );
             return FALSE;
         }
 
         // fail - deleted
         if ( $user->deleted == 1 )
         {
-            $this->set_message( 'error', _x('auth_deleted_account') );
+            Messg::set( 'error', _x('auth_deleted_account') );
             return FALSE;
         }
 
@@ -169,7 +169,7 @@ class Authen
         // fail - not activated
         if ( $user->activated == 0 )
         {
-            $this->set_message( 'error', _x('auth_inactivated_account') );
+            Messg::set( 'error', _x('auth_inactivated_account') );
             return FALSE;
         }
 
@@ -188,7 +188,7 @@ class Authen
 
         $this->update_login_info( $user->id );
 
-        $this->set_message( 'success', _x('auth_login_success') );
+        Messg::set( 'success', _x('auth_login_success') );
         return TRUE;
     }
 
@@ -273,18 +273,6 @@ class Authen
      */
     public function create_user( $username, $email, $password, $roles = array() )
     {
-        if ( $this->check_username( $username ) )
-        {
-            $this->set_message( 'error', _x('auth_username_in_use') );
-            return FALSE;
-        }
-
-        if ( $this->check_email( $email ) )
-        {
-            $this->set_message( 'error', _x('auth_email_in_use') );
-            return FALSE;
-        }
-
         $user_data = array(
             'username'  => $username,
             'password'  => $this->do_hash( $password ),
@@ -346,12 +334,12 @@ class Authen
         {
             if ( !$this->validate( $old_pass, $user->password ) )
             {
-                $this->set_message( 'error', _x('auth_incorrect_password') );
+                Messg::set( 'error', _x('auth_incorrect_password') );
                 return FALSE;
             }
             else if ( $this->validate( $new_pass, $user->password ) )
             {
-                $this->set_message( 'error', _x('auth_current_password') );
+                Messg::set( 'error', _x('auth_current_password') );
                 return FALSE;
             }
             else
@@ -362,14 +350,14 @@ class Authen
 
         if ( count( $data ) > 0 and ( $return = $this->edit_user( $user_id, $data ) ) )
         {
-            $this->set_message( 'success', 'Selamat' );
+            Messg::set( 'success', 'Selamat' );
         }
 
         // if ( count( $roles ) > 0 )
         // {
         //     $return = TRUE;
         //     foreach ( $roles as $role )
-        //         $this->set_message( 'success', $role );
+        //         Messg::set( 'success', $role );
         // }
 
         return $return;
@@ -414,7 +402,7 @@ class Authen
         }
         else
         {
-            $this->set_message( 'error', _x('auth_email_in_use') );
+            Messg::set( 'error', _x('auth_email_in_use') );
 
             return FALSE;
         }
@@ -451,7 +439,7 @@ class Authen
     {
         if ( !($user = $this->get_user_by_login($login)) )
         {
-            $this->set_message( 'error', _x('auth_incorrect_login') );
+            Messg::set( 'error', _x('auth_incorrect_login') );
             return FALSE;
         }
 
@@ -523,7 +511,7 @@ class Authen
         // Check if old password incorrect
         if (!$this->validate($old_pass, $user->password))
         {
-            $this->set_message( 'error', _x('auth_incorrect_password') );
+            Messg::set( 'error', _x('auth_incorrect_password') );
             return FALSE;
         }
 
@@ -552,7 +540,7 @@ class Authen
         // Check if password incorrect
         if (!$this->validate($password, $user->password))
         {
-            $this->set_message( 'error', _x('auth_incorrect_password') );
+            Messg::set( 'error', _x('auth_incorrect_password') );
             return FALSE;
         }
 
@@ -565,7 +553,7 @@ class Authen
 
         if ($user->email == $new_email)
         {
-            $this->set_message( 'error', _x('auth_current_email') );
+            Messg::set( 'error', _x('auth_current_email') );
             return FALSE;
         }
         elseif ($user->new_email == $new_email)
@@ -582,7 +570,7 @@ class Authen
         }
         else
         {
-            $this->set_message( 'error', _x('auth_email_in_use') );
+            Messg::set( 'error', _x('auth_email_in_use') );
             return FALSE;
         }
     }
@@ -604,7 +592,7 @@ class Authen
             
         if ( !$this->validate($password, $user->password) )
         {   
-            $this->set_message( 'error', _x('auth_incorrect_password') );
+            Messg::set( 'error', _x('auth_incorrect_password') );
             return FALSE;
         }
 
@@ -701,7 +689,7 @@ class Authen
     {
         if ( !( $return = $this->edit_role( $role_data, $role_id = NULL, $perms = array() ) ) )
         {
-            $this->set_message('error', 'Something Wrong!');
+            Messg::set('error', 'Something Wrong!');
         }
 
         return $return;
@@ -775,6 +763,19 @@ class Authen
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Check if login attempts exceeded max login attempts (specified in config)
+     *
+     * @param   string
+     * @return  bool
+     */
+    public function is_max_attempts_exceeded( $login )
+    {
+        return $this->get_attempts_num( $login ) >= Setting::get('auth_login_max_attempts');
+    }
+
+    // -------------------------------------------------------------------------
+
     protected function set_message( $level, $msg_item )
     {
         $this->messages[$level][] = $msg_item;
@@ -790,19 +791,6 @@ class Authen
             return $this->messages[$level];
 
         return $this->messages;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Check if login attempts exceeded max login attempts (specified in config)
-     *
-     * @param   string
-     * @return  bool
-     */
-    public function is_max_attempts_exceeded( $login )
-    {
-        return $this->get_attempts_num( $login ) >= Setting::get('auth_login_max_attempts');
     }
 }
 
