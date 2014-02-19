@@ -1,211 +1,120 @@
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="5" style="width:100%">&nbsp;</td></tr>
 <tr class="align-center bold">
-    <td colspan="7" style="width:100%">KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN PELAYANAN PERIZINAN TERPADU<br>KABUPATEN PEKALONGAN</td>
+    <td colspan="5" style="width:100%">
+        <p>SURAT IZIN BUPATI PEKALONGAN</p>
+        <p>NOMOR : <?php echo $surat_nomor?>/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo strtoupper('/BPM PPT/rEKL/'.format_roman(bdate('m', $created_on)).'/'.bdate('Y')) ?></p>
+        <p>IZIN PEMASANGAN REKLAME</p>
+    </td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr class="align-center bold">
-    <td colspan="7" style="width:100%">NOMOR : 640 /&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/ IMB / BPM PPT / VI / 2013</td>
-</tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr class="align-center bold">
-    <td colspan="7" style="width:100%">TENTANG</td>
-</tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr class="align-center bold">
-    <td colspan="7" style="width:100%">IZIN MENDIRIKAN / MEREHAB / MEROBOHKAN BANGUNAN</td>
-</tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr class="align-center bold">
-    <td colspan="7" style="width:100%">KEPALA <?php echo strtoupper($skpd_name) ?><br><?php echo strtoupper($skpd_city) ?></td>
-</tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="5" style="width:100%">&nbsp;</td></tr>
 <tr>
-    <td colspan="3" style="width:30%">&nbsp;</td>
-    <td style="width:10%"><p>Membaca</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p>dst ;</p></td>
-</tr>
-<tr>
-    <td colspan="3" style="width:30%">&nbsp;</td>
-    <td style="width:10%"><p>Menimbang</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p>dst ;</p></td>
-</tr>
-<tr>
-    <td colspan="3" style="width:30%">&nbsp;</td>
-    <td style="width:10%"><p>Mengingat</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p>dst ;</p></td>
-</tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr>
-    <td colspan="7" style="width:100%"><p style="text-align:center"><strong>M E M U T U S K A N :</strong></p></td>
-</tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr>
-    <td style="width:20%"><p>Menetapkan</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%">&nbsp;</td>
-</tr>
-<tr>
-    <td style="width:20%"><p>KESATU</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%">Memberikan Izin Kepada :</td>
-</tr>
-<tr>
-    <td colspan="2">&nbsp;</td>
-    <td colspan="2" style="width:30%"><p>Nama Pemohon</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><strong><?php echo $pemohon_nama ?></strong></p></td>
-</tr>
-<tr>
-    <td colspan="2">&nbsp;</td>
-    <td colspan="2" style="width:30%"><p>Alamat Pemohon</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><strong><?php echo $pemohon_alamat ?></strong></p></td>
-</tr>
-<tr>
-    <td colspan="2">&nbsp;</td>
-    <td colspan="2" style="width:30%"><p>Pekerjaan</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><strong><?php echo $pemohon_kerja ?></strong></p></td>
-</tr>
-<tr>
-    <td colspan="2">&nbsp;</td>
-    <td colspan="2" style="width:30%"><p>Maksud Permohonan</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><strong><?php echo $bangunan_maksud ?></strong></p></td>
-</tr>
-<tr>
-    <td colspan="2">&nbsp;</td>
-    <td colspan="2" style="width:30%"><p>Penggunaan Bangunan</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><strong><?php echo $bangunan_guna ?></strong></p></td>
-</tr>
-<tr>
-    <td colspan="2">&nbsp;</td>
-    <td colspan="2" style="width:30%"><p>Lokasi Bangunan</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><strong><?php echo $bangunan_lokasi ?></strong></p></td>
-</tr>
-<tr>
-    <td colspan="2">&nbsp;</td>
-    <td colspan="2" style="width:30%"><p>Luas / Keadaan Tanah</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><strong><?php echo '&#177; '.$bangunan_tanah_luas.' M<sup>2</sup> / '.strtoupper($bangunan_tanah_keadaan) ?></strong></p></td>
-</tr>
-<tr>
-    <td colspan="2">&nbsp;</td>
-    <td colspan="2" style="width:30%"><p>Status Tanah</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><strong><?php echo $bangunan_tanah_status.$bangunan_milik_no.$bangunan_milik_an ?></strong></p></td>
-</tr>
-<tr>
-    <td colspan="2">&nbsp;</td>
-    <td colspan="2" style="width:30%"><p>Luas Bangunan</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><strong><?php echo '&#177; '.$bangunan_luas.' M<sup>2</sup> / ' ?></strong></p></td>
-</tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr>
-    <td style="width:20%"><p>KEDUA</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%">Ketentuan-ketentuan :</td>
-</tr>
-<tr>
-    <td colspan="2">&nbsp;</td>
-    <td colspan="5" style="width:78%">
-        <ol>
-            <li>Pelaksanaan pembangunan tidak boleh menyimpang dari lampiran yang   merupakan bagian tak terpisahkan dari keputusan ini.</li>
-            <li>Pelaksanaan pembangunan sesuai dengan Perda No. 1 Tahun  2012  Tetang Retribusi Daerah.</li>
+    <td style="width:10%"><p>Dasar :</p></td>
+    <td colspan="4" style="width:90%">
+        <ol class="lower-alpha">
+            <li>Peraturan Daerah Kabupaten Pekalongan no 1 Tahun 2012 tentang Retribusi Daerah</li>
+            <li>Peraturan Bupati Pekalongan No. 12 Tahun 2012 tentang Pendelegasian Kewenangan Penandatanganan Perizinan dan Non Perizinan Kepada Kepala Badan Penanaman Modal dan Pelayanan Perijinan Terpadu Kabupaten Pekalongan</li>
+            <li>Surat permohonan izin pemasangan reklame dari Sdr. <?php echo $pemohon_nama?> tanggal permohonan <?php echo $surat_tanggal?> tentang Permohonan Izin Reklame <b><?php echo $reklame_jenis ?></b>.</li>
         </ol>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="5" style="width:100%">&nbsp;</td></tr>
+<tr class="align-center bold">
+    <td colspan="5">M E N G I Z I N  K A N</td>
+</tr>
+<tr><td colspan="5" style="width:100%">&nbsp;</td></tr>
 <tr>
-    <td style="width:20%"><p>KETIGA</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%">Hal –hal yang harus diperhatikan dan ditaati oleh penerima / pemegang Izin</td>
+    <td colspan="5" style="width:100%"><p>Kepada :</p></td>
 </tr>
 <tr>
-    <td colspan="2">&nbsp;</td>
-    <td colspan="5" style="width:78%">
+    <td colspan="2" style="width:30%">
         <ol>
-            <li>Pemegang Izin sebagaimana dimaksud diktum KESATU Keputusan ini wajib membayar Retribusi Izin Mendirikan Bangunan sebesar sebagaimana tercantum dalam Surat Ketetapan Retribusi Daerah ( SKRD ).</li>
-            <li>Selama pelaksanaan pekerjaan / kegiatan fisik berlangsung sekali-kali tidak boleh menimbulkan kerugian pihak lain / tetangga / lingkungan.</li>
-            <li>Penerima / pemegang Izin wajib melaksanakan segala usaha  pembangunan untuk terciptanya keselarasan dan kelestarian lingkungan.</li>
-            <li>Tiap-tiap kali apabila pondasi, dinding dan kerangka atap bangunan akan / sedang dikerjakan,penerima / pemegang Izin ataupun pelaksana / pemborong pekerjaan wajib memberitahukan hal itu kepada pengawasan bangunan untuk diperiksa dan disetujui .</li>
-            <li>Untuk pekerjaan beton / baja harus sesuai dengan Gambar Detail dan perhitungan yang telah diperiksa dan disetujui oleh Kepala Dinas Pekerjaan Umum.</li>
-            <li>Guna menghindari terjadinya kecelakaan karena tersengat aliran listrik, maka bangunan yang didirikan dengan kawat jaringan listrik tegangan menengah harus mempunyai jarak tegangan minimal 3 meter.</li>
-            <li>Sesuai dengan fungsi bangunan, penerima / pemegang izin / pemilik bangunan diwajibkan menyediakan fasilitas alat pencegahan kebakaran menurut ketentuan yang berlaku.</li>
-            <li>Pembuatan, perubahan / penghilangan bagian-bagian bangunan / unsur-unsur penunjang lain seperti jalan jembatan maupun unsur penunjang lain, harus berdasarkan rencana konstruksi yang secara teknis telah diperiksa dan disetuji oleh Kepala Dinas Pekejaan Umum.</li>
-            <li>Izin Mendirikan / Merubah / Merobohkan Bangunan ( IMB ) ini dapat dicabut apabila :
-                <ol>
-                    <li>Dalam waktu 6 ( enam ) bulan terhitung mulai tanggal Surat Keputusan Izin,  pelaksanaan / kegiatan fisik dimulai selama 6 ( enam ) bulan berturut-turut,kecuali permohonan untuk perpanjangan waktu yang bersangkutan dikabulkan.</li>
-                    <li>Ternyata dalam permohonan Izin yang diajukan, terdapat keterangan yang tidak benar / palsu atau dipalsukan.</li>
-                    <li>Pelaksanaan pembangunan ternyata menyimpang dari gambar rencana yang telah disahkan yang merupakan lampiran surat keputusan izin.</li>
-                </ol>
-            </li>
+            <li>Nama</li>
+            <li>Alamat</li>
+            <li>Tempat/Lok. Pemasangan</li>
+            <li>Tema Pemasangan</li>
+            <li>Ukuran</li>
+            <li>Jumlah</li>
+            <li>Jangka Waktu Pemasangan</li>
+        </ol>
+    </td>
+    <td style="width:2%">
+        <ol class="none">
+            <li>:</li>
+            <li>:</li>
+            <li>:</li>
+            <li>:</li>
+            <li>:</li>
+            <li>:</li>
+            <li>:</li>
+        </ol>
+    </td>
+    <td colspan="3" style="width:68%">
+        <ol class="none">
+            <li><?php echo $pemohon_nama ?></li>
+            <li><?php echo $pemohon_alamat ?></li>
+            <li><?php echo $reklame_lokasi ?></li>
+            <li><?php echo $reklame_tema ?></li>
+            <li><?php echo $reklame_ukuran_panjang.' m x '.$reklame_ukuran_lebar.' m' ?></li>
+            <li><?php echo $reklame_juml.' Unit' ?></li>
+            <li><?php echo '1 (satu) Bulan '.$reklame_range_tgl_mulai.' '.$reklame_range_tgl_selesai ?></li>
         </ol>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="5" style="width:100%">&nbsp;</td></tr>
 <tr>
-    <td style="width:20%"><p>KEEMPAT</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%">Mencatat bahwa :</td>
+    <td colspan="5" style="width:100%"><p>Dengan Ketentuan :</p></td>
 </tr>
 <tr>
-    <td colspan="2">&nbsp;</td>
-    <td colspan="5" style="width:78%">
+    <td colspan="5" style="width:100%">
         <ol>
-            <li>Izin ini tidak memberikan hak untuk pemakaian / penguasaan tanah.</li>
-            <li>Retribusi IMB / biaya lain yang telah dibayarkan tidak dapat diminta kembali apabila :
-                <ol>
-                    <li>Setelah surat Izin ini diberikan ternyata tidak dipergunakan sebagaimana  penggunaan bangunan.</li>
-                    <li>Karena suatu alasan yang sah, permohonan ini tidak dapat dikabulkan / dikabulkan sebagian.</li>
-                </ol>
-            </li>
-            <li>Bagian-bagian bangunan / unsur-unsur penunjangannya yang tidak diizinkan seperti tercantum pada gambar rencana lampiran surat izin ini dengan tanda warna kuning, harus dihilangkan / dibonkar penerima / pemegang Izin sendiri.</li>
-            <li>Apabila di kemudian hari ternyata terdapat kekeliruan dalam penetapannya akan dilakukan perbaikan / peninjauan kembali sebagaimana mestinya.</li>
+            <li>Menaati Peraturan Daerah Kabupaten Peklaongan No. 1 Tahun 2012 tentang Retribusi Daerah</li>
+            <li>Membayar pajak reklame di Dinas Pendapatan dan pengelolaan Keuangan Daerah Kabupaten Pekalongan</li>
+            <li>Pemasangan papan reklame harus dikoordinasikan dengan Dinas Pekerjaan Umum (DPU) Kabupaten Peklaongan/Balai Pelaksana Teknis Bina Marga Wilayah Kabupaten Pekalongan agar tidak mengganggu lalulintas umum, khususnya untuk reklame spanduk tidak boleh melintang di jalan.</li>
+            <li>Di dalam pelaksanaannya wajib menjaga kebersihan, keamanan, ketertiban, keindahan, kesopanan, dan kesusilaan sesuai dengan kepribadian Bangsa Indonesia.</li>
+            <li>Pemegang izin apabila memperpanjang/memperbaharui masa berlaku izinnya harus mengajukan permohonan selambat-lambatnya 1 (satu) bulan sebelum masa izin berakhir</li>
+            <li>Apabila masa berlaku izin sudah habis dan tidak diperbaharui, maka reklame tersebut harus dibongkar dengan biaya ditanggung oleh pemegang izin.</li>
+            <li>Apabila dalam waktu 12 (lima belas) hari setelah masa berlaku izin berakhir, pemohon tidak melakukan pemboingkaran, maka Pemerintah Daerah akan melakukan pembongkaran terhadap papan reklame tersebut.</li>
+            <li>Apabila terdapat kekeliruan/kesalahan maka diadakan perubahan sebagaimana mestinya atau dapat dicabut</li>
+            <li>Jeputusan ini mulai berlaku pada tanggal ditetapkan.</li>
         </ol>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="5" style="width:100%">&nbsp;</td></tr>
 <tr>
-    <td colspan="6">&nbsp;</td>
-    <td style="width:30%"><p>Ditetapkan di : Kajen</p></td>
+    <td colspan="4" style="width:60%">&nbsp;</td>
+    <td colspan="1" style="width:40%">
+        <p>Ditetapkan di : Kajen</p>
+        <p>Pada Tanggal : <?php echo bdate('F', $created_on).' '.bdate('Y') ?></p>
+    </td>
+</tr>
+<tr><td colspan="5" style="width:100%">&nbsp;</td></tr>
+<tr class="align-center bold">
+    <td colspan="3" style="width:60%">&nbsp;</td>
+    <td colspan="2" style="width:40%">
+        <p>An. BUPATI PEKALONGAN</p>
+        <p>KEPALA <?php echo strtoupper($skpd_name) ?></p>
+        <p><?php echo strtoupper($skpd_city) ?></p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p><?php echo strtoupper($skpd_lead_name) ?></p>
+        <p>NIP. <?php echo strtoupper($skpd_lead_nip) ?></p>
+    </td>
+</tr>
+<tr><td colspan="5" style="width:100%">&nbsp;</td></tr>
+<tr>
+    <td colspan="5" style="width:100%"><p>Tembusan :</p></td>
 </tr>
 <tr>
-    <td colspan="6">&nbsp;</td>
-    <td style="width:30%"><p>Pada Tanggal : Juni 2013</p></td>
+    <td colspan="5" style="width:100%">
+        <ol>
+            <li>Inspektur Kabupaten Pekalongan</li>
+            <li>Ka. DPU Kabupaten Pekalongan</li>
+            <li>Ka. DPPKD Kabupaten Pekalongan</li>
+            <li>Ka Dinhub Kominfo Kabupaten Pekalongan</li>
+            <li>Ka. Satpol PP Kabupaten Pekalongan</li>
+            <li>Ka. Bag. Hukum Setda Kabupaten Pekalongan</li>
+            <li>Camat Kajen dan Wonopringgo Kabupaten Pekalongan</li>
+        </ol>
+    </td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr>
-    <td colspan="5">&nbsp;</td>
-    <td colspan="2" style="width:20%"><p style="text-align:center"><strong>An. BUPATI PEKALONGAN</strong></p></td>
-</tr>
-<tr>
-    <td colspan="5">&nbsp;</td>
-    <td colspan="2" style="width:20%"><p style="text-align:center"><strong>KEPALA <?php echo strtoupper($skpd_name) ?></strong></p></td>
-</tr>
-<tr>
-    <td colspan="5">&nbsp;</td>
-    <td colspan="2" style="width:20%"><p style="text-align:center"><strong><?php echo strtoupper($skpd_city) ?></strong></p></td>
-</tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr>
-    <td colspan="5">&nbsp;</td>
-    <td colspan="2" style="width:20%"><p style="text-align:center"><strong><?php echo strtoupper($skpd_lead_name) ?></strong></p></td>
-</tr>
-<tr>
-    <td colspan="5">&nbsp;</td>
-    <td colspan="2" style="width:20%"><p style="text-align:center"><strong>Pembina Tingkat I</strong></p></td>
-</tr>
-<tr>
-    <td colspan="5">&nbsp;</td>
-    <td colspan="2" style="width:20%"><p style="text-align:center"><strong>NIP. <?php echo strtoupper($skpd_lead_nip) ?></strong></p></td>
-</tr>
-

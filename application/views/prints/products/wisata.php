@@ -124,39 +124,23 @@
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
-    <td colspan="6">&nbsp;</td>
-    <td style="width:30%"><p>Ditetapkan di : Kajen</p></td>
-</tr>
-<tr>
-    <td colspan="6">&nbsp;</td>
-    <td style="width:30%"><p>Pada Tanggal : Juni 2013</p></td>
-</tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr>
-    <td colspan="5">&nbsp;</td>
-    <td colspan="2" style="width:20%"><p style="text-align:center"><strong>An. BUPATI PEKALONGAN</strong></p></td>
-</tr>
-<tr>
-    <td colspan="5">&nbsp;</td>
-    <td colspan="2" style="width:20%"><p style="text-align:center"><strong>KEPALA <?php echo strtoupper($skpd_name) ?></strong></p></td>
-</tr>
-<tr>
-    <td colspan="5">&nbsp;</td>
-    <td colspan="2" style="width:20%"><p style="text-align:center"><strong><?php echo strtoupper($skpd_city) ?></strong></p></td>
+    <td colspan="6" style="width:60%">&nbsp;</td>
+    <td style="width:40%">
+        <p>Ditetapkan di : Kajen</p>
+        <p>Pada Tanggal : <?php echo bdate('F', $created_on).' '.bdate('Y') ?></p>
+    </td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr>
-    <td colspan="5">&nbsp;</td>
-    <td colspan="2" style="width:20%"><p style="text-align:center"><strong><?php echo strtoupper($skpd_lead_name) ?></strong></p></td>
+<tr class="align-center bold">
+    <td colspan="5" style="width:60%">&nbsp;</td>
+    <td colspan="2" style="width:40%">
+        <p>An. BUPATI PEKALONGAN</p>
+        <p>KEPALA <?php echo strtoupper($skpd_name) ?></p>
+        <p><?php echo strtoupper($skpd_city) ?></p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p><?php echo strtoupper($skpd_lead_name) ?></p>
+        <p>NIP. <?php echo strtoupper($skpd_lead_nip) ?></p>
+    </td>
 </tr>
-<tr>
-    <td colspan="5">&nbsp;</td>
-    <td colspan="2" style="width:20%"><p style="text-align:center"><strong>Pembina Tingkat I</strong></p></td>
-</tr>
-<tr>
-    <td colspan="5">&nbsp;</td>
-    <td colspan="2" style="width:20%"><p style="text-align:center"><strong>NIP. <?php echo strtoupper($skpd_lead_nip) ?></strong></p></td>
-</tr>
-
