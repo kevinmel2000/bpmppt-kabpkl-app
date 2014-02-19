@@ -41,6 +41,27 @@ class Bpmppt_b3 extends CI_Driver
     public $alias = 'izin_pengelolaan_b3';
     public $name = 'Izin Penyimpanan Sementara dan Pengumpulan Limbah Bahan Berbahaya dan Beracun';
 
+    /**
+     * Default field
+     *
+     * @var  array
+     */
+    public $fields = array(
+        'pemohon_nama'      => '',
+        'pemohon_alamat'    => '',
+        'pemohon_jabatan'   => '',
+        'usaha_nama'        => '',
+        'usaha_bidang'      => '',
+        'usaha_alamat'      => '',
+        'usaha_lokasi'      => '',
+        'usaha_kontak_telp' => '',
+        'usaha_kontak_fax'  => '',
+        'usaha_tps_fungsi'  => '',
+        'usaha_tps_ukuran'  => '',
+        'usaha_tps_koor_s'  => '',
+        'usaha_tps_koor_e'  => '',
+        );
+
     // -------------------------------------------------------------------------
 
     /**

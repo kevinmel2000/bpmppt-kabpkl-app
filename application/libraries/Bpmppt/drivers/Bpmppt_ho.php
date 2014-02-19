@@ -40,6 +40,29 @@ class Bpmppt_ho extends CI_Driver
     public $alias = 'izin_gangguan';
     public $name = 'Izin Gangguan';
 
+    /**
+     * Default field
+     *
+     * @var  array
+     */
+    public $fields = array(
+        'surat_jenis_pengajuan'     => '',
+        'pemohon_nama'              => '',
+        'pemohon_nama'              => '',
+        'pemohon_alamat'            => '',
+        'pemohon_telp'              => '',
+        'usaha_nama'                => '',
+        'usaha_jenis'               => '',
+        'usaha_alamat'              => '',
+        'usaha_lokasi'              => '',
+        'usaha_luas'                => '',
+        'usaha_pekerja'             => '',
+        'usaha_tetangga_timur'      => '',
+        'usaha_tetangga_utara'      => '',
+        'usaha_tetangga_selatan'    => '',
+        'usaha_tetangga_barat'      => '',
+        );
+
     // -------------------------------------------------------------------------
 
     /**

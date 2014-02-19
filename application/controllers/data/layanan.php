@@ -159,9 +159,7 @@ class Layanan extends BAKA_Controller
             $status = $data_obj->status;
 
             $this->data['tool_buttons']['form'] = 'Baru|primary';
-
-            if ( $status == 'approved' )
-                $this->data['tool_buttons']['aksi|default']['cetak/'.$data_id] = 'Cetak';
+            $this->data['tool_buttons']['aksi|default']['cetak/'.$data_id] = 'Cetak';
 
             if ( $data_obj->status !== 'deleted' )
                 $this->data['tool_buttons']['aksi|default']['hapus/'.$data_id] = 'Hapus&message="Anda yakin ingin menghapus data nomor '.$data_obj->surat_nomor.'"';
@@ -225,6 +223,12 @@ class Layanan extends BAKA_Controller
             if ( $data_type == 'imb' )
             {
                 $form_data[$modul_slug.'_surat_nomor'] = 614;
+            }
+
+            foreach ($this->bpmppt->$data_type->fields as $field)
+            {
+                if (!isset($form_data[$modul_slug.$field]))
+                    $form_data[$modul_slug.$field] = '';
             }
 
             $data_id = $this->bpmppt->simpan( $modul_slug, $form_data );

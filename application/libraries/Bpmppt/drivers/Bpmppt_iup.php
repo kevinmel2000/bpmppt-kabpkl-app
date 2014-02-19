@@ -40,6 +40,23 @@ class Bpmppt_iup extends CI_Driver
     public $alias = 'izin_usaha_pertambangan';
     public $name = 'Izin Usaha Pertambangan';
 
+    /**
+     * Default field
+     *
+     * @var  array
+     */
+    public $fields = array(
+        'rekomendasi_nomor'     => '',
+        'rekomendasi_tanggal'   => '',
+        'pemohon_nama'          => '',
+        'pemohon_alamat'        => '',
+        'tambang_waktu_mulai'   => '',
+        'tambang_waktu_selesai' => '',
+        'tambang_jns_galian'    => '',
+        'tambang_luas'          => '',
+        'tambang_alamat'        => '',
+        );
+
     // -------------------------------------------------------------------------
 
     /**

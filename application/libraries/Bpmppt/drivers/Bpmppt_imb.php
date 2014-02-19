@@ -40,6 +40,26 @@ class Bpmppt_imb extends CI_Driver
     public $alias = 'izin_mendirikan_bangunan';
     public $name = 'Izin Mendirikan Bangunan';
 
+    /**
+     * Default field
+     *
+     * @var  array
+     */
+    public $fields = array(
+        'bangunan_maksud'           => '',
+        'bangunan_guna'             => '',
+        'pemohon_nama'              => '',
+        'pemohon_kerja'             => '',
+        'pemohon_alamat'            => '',
+        'bangunan_lokasi'           => '',
+        'bangunan_tanah_luas'       => '',
+        'bangunan_tanah_keadaan'    => '',
+        'bangunan_tanah_status'     => '',
+        'bangunan_milik_no'         => '',
+        'bangunan_milik_an'         => '',
+        'bangunan_luas'             => '',
+        );
+
     // -------------------------------------------------------------------------
 
     /**

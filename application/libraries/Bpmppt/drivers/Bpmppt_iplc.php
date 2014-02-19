@@ -40,6 +40,22 @@ class Bpmppt_iplc extends CI_Driver
     public $alias = 'izin_pembuangan_air_limbah';
     public $name = 'Izin Pembuangan Air Limbah ke Air atau Sumber Air';
 
+    /**
+     * Default field
+     *
+     * @var  array
+     */
+    public $fields = array(
+        'pemohon_nama'              => '',
+        'pemohon_jabatan'           => '',
+        'pemohon_usaha'             => '',
+        'pemohon_alamat'            => '',
+        'limbah_kapasitas_produksi' => '',
+        'limbah_debit_max_proses'   => '',
+        'limbah_debit_max_kond'     => '',
+        'limbah_target_buang'       => '',
+        );
+
     // -------------------------------------------------------------------------
 
     /**
@@ -169,6 +185,14 @@ class Bpmppt_iplc extends CI_Driver
 
     protected function subfield_limbah( $parent, $data_obj = FALSE )
     {
+        
+        $this->fields[$parent.'bod']        = '';
+        $this->fields[$parent.'cod']        = '';
+        $this->fields[$parent.'tts']        = '';
+        $this->fields[$parent.'minyak']     = '';
+        $this->fields[$parent.'sulfida']    = '';
+        $this->fields[$parent.'ph']         = '';
+
         $fields[]   = array(
             'col'   => '2',
             'name'  => 'bod',

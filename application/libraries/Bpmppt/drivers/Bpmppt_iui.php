@@ -40,6 +40,37 @@ class Bpmppt_iui extends CI_Driver
     public $alias = 'izin_usaha_industri';
     public $name = 'Izin Usaha Industri';
 
+    /**
+     * Default field
+     *
+     * @var  array
+     */
+    public $fields = array(
+        'permohonan_jenis'  => '',
+        'pemohon_nama'      => '',
+        'pemohon_kerja'     => '',
+        'pemohon_alamat'    => '',
+        'pemohon_telp'      => '',
+        'pemilik_nama'      => '',
+        'pemilik_alamat'    => '',
+        'pemilik_telp'      => '',
+        'usaha_nama'        => '',
+        'usaha_skala'       => '',
+        'usaha_npwp'        => '',
+        'usaha_alamat'      => '',
+        'usaha_telp'        => '',
+        'usaha_kawasan'     => '',
+        'usaha_pj'          => '',
+        'usaha_npwp'        => '',
+        'usaha_jenis_kbli'  => '',
+        'usaha_jenis_kki'   => '',
+        'usaha_akta_ntrs'   => '',
+        'usaha_akta_nomor'  => '',
+        'usaha_direksi'     => '',
+        'usaha_lokasi'      => '',
+        'usaha_nama'        => '',
+        );
+
     // -------------------------------------------------------------------------
 
     /**

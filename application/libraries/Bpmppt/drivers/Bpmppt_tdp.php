@@ -40,6 +40,50 @@ class Bpmppt_tdp extends CI_Driver
     public $alias = 'tanda_daftar_perusahaan';
     public $name = 'Tanda Daftar Perusahaan';
 
+    /**
+     * Default field
+     *
+     * @var  array
+     */
+    public $fields = array(
+        'no_daftar'                         => '',
+        'no_sk'                             => '',
+        'tgl_berlaku'                       => '',
+        'pengajuan_jenis'                   => '',
+        'pembaruan_ke'                      => '',
+        'pemohon_nama'                      => '',
+        'pemilik_ktp'                       => '',
+        'pemilik_alamat'                    => '',
+        'pemilik_kwn'                       => '',
+        'pemilik_lahir_tmpt'                => '',
+        'pemilik_lahir_tgl'                 => '',
+        'pemilik_no_telp'                   => '',
+        'pemilik_no_fax'                    => '',
+        'usaha_nama'                        => '',
+        'usaha_jenis'                       => '',
+        'usaha_skala'                       => '',
+        'usaha_status'                      => '',
+        'usaha_alamat'                      => '',
+        'usaha_no_telp'                     => '',
+        'usaha_no_fax'                      => '',
+        'usaha_pokok'                       => '',
+        'usaha_kbli'                        => '',
+        'usaha_pendirian_akta_no'           => '',
+        'usaha_pendirian_akta_tgl'          => '',
+        'usaha_pendirian_pengesahan_no'     => '',
+        'usaha_pendirian_pengesahan_tgl'    => '',
+        'usaha_perubahan_akta_no'           => '',
+        'usaha_perubahan_akta_tgl'          => '',
+        'usaha_perubahan_pengesahan_no'     => '',
+        'usaha_perubahan_pengesahan_tgl'    => '',
+        'usaha_npwp'                        => '',
+        'usaha_saham_status'                => '',
+        'usaha_modal_awal'                  => '',
+        'usaha_saham_nilai_total'           => '',
+        'usaha_saham_nilai_nasional'        => '',
+        'usaha_saham_nilai_tgl'             => '',
+        );
+
     // -------------------------------------------------------------------------
 
     /**

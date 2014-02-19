@@ -38,6 +38,22 @@ class Bpmppt_prinsip extends CI_Driver
     public $alias = 'persetujuan_prinsip';
     public $name = 'Persetujuan Prinsip';
 
+    /**
+     * Default field
+     *
+     * @var  array
+     */
+    public $fields = array(
+        'pemohon_nama'      => '',
+        'pemohon_jabatan'   => '',
+        'pemohon_usaha'     => '',
+        'pemohon_alamat'    => '',
+        'lokasi_tujuan'     => '',
+        'lokasi_alamat'     => '',
+        'lokasi_nama'       => '',
+        'lokasi_area_hijau' => '',
+        );
+
     // -------------------------------------------------------------------------
 
     /**

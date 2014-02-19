@@ -36,7 +36,28 @@ class Bpmppt_reklame extends CI_Driver
      * @var  string  $name
      */
     public $alias = 'izin_reklame';
-    public $name = 'Izin Reklame';
+    public $name  = 'Izin Reklame';
+
+    /**
+     * Default field
+     *
+     * @var  array
+     */
+    public $fields = array(
+        'pemohon_nama'              => '',
+        'pemohon_kerja'             => '',
+        'pemohon_alamat'            => '',
+        'pemohon_telp'              => '',
+        'reklame_jenis'             => '',
+        'reklame_juml'              => '',
+        'reklame_lokasi'            => '',
+        'reklame_ukuran_panjang'    => '',
+        'reklame_ukuran_lebar'      => '',
+        'reklame_range_tgl_mulai'   => '',
+        'reklame_range_tgl_selesai' => '',
+        'reklame_tema'              => '',
+        'reklame_ket'               => '',
+        );
 
     // -------------------------------------------------------------------------
 
@@ -103,7 +124,7 @@ class Bpmppt_reklame extends CI_Driver
             'type'  => 'fieldset' );
 
         $fields[]   = array(
-            'name'  => $this->alias.'_lokasi_jenis',
+            'name'  => $this->alias.'_reklame_jenis',
             'label' => 'Jenis Reklame',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->reklame_jenis : ''),
@@ -154,14 +175,14 @@ class Bpmppt_reklame extends CI_Driver
                     'col'   => '6',
                     'name'  => 'tgl_mulai',
                     'label' => 'Mulai Tanggal',
-                    'type'  => 'text',
+                    'type'  => 'datepicker',
                     'std'   => ( $data_obj ? $data_obj->reklame_range_tgl_mulai : ''),
                     'validation'=> 'required|numerik' ),
                 array(
                     'col'   => '6',
                     'name'  => 'tgl_selesai',
                     'label' => 'Sampai Tanggal',
-                    'type'  => 'text',
+                    'type'  => 'datepicker',
                     'std'   => ( $data_obj ? $data_obj->reklame_range_tgl_selesai : ''),
                     'validation'=> 'required|numerik' ),
                 )

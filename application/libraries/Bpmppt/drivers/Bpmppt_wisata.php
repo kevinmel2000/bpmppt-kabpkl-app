@@ -38,6 +38,25 @@ class Bpmppt_wisata extends CI_Driver
     public $alias = 'pariwisata';
     public $name = 'Izin Usaha Pariwisata';
 
+    /**
+     * Default field
+     *
+     * @var  array
+     */
+    public $fields = array(
+        'pemohon_nama'      => '',
+        'pemohon_kerja'     => '',
+        'pemohon_jabatan'   => '',
+        'pemohon_alamat'    => '',
+        'pemohon_telp'      => '',
+        'usaha_nama'        => '',
+        'usaha_jenis'       => '',
+        'usaha_alamat'      => '',
+        'usaha_luas'        => '',
+        'usaha_an'          => '',
+        'usaha_ket'         => '',
+        );
+
     // -------------------------------------------------------------------------
 
     /**

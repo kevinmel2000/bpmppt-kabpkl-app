@@ -40,6 +40,48 @@ class Bpmppt_siup extends CI_Driver
     public $alias = 'surat_izin_usaha_perdagangan';
     public $name = 'Surat Izin Usaha Perdangangan';
 
+    /**
+     * Default field
+     *
+     * @var  array
+     */
+    public $fields = array(
+        'pengajuan_jenis'                   => '',
+        'pembaruan_ke'                      => '',
+        'pemohon_nama'                      => '',
+        'pemilik_ktp'                       => '',
+        'pemilik_alamat'                    => '',
+        'pemilik_lahir_tmpt'                => '',
+        'pemilik_lahir_tgl'                 => '',
+        'pemilik_no_telp'                   => '',
+        'pemilik_no_fax'                    => '',
+        'pemilik_usaha'                     => '',
+        'usaha_nama'                        => '',
+        'usaha_jenis'                       => '',
+        'usaha_skala'                       => '',
+        'usaha_kegiatan'                    => '',
+        'usaha_lembaga'                     => '',
+        'usaha_komoditi'                    => '',
+        'usaha_alamat'                      => '',
+        'usaha_no_telp'                     => '',
+        'usaha_no_fax'                      => '',
+        'usaha_pendirian_akta_no'           => '',
+        'usaha_pendirian_akta_tgl'          => '',
+        'usaha_pendirian_pengesahan_no'     => '',
+        'usaha_pendirian_pengesahan_tgl'    => '',
+        'usaha_perubahan_akta_no'           => '',
+        'usaha_perubahan_akta_tgl'          => '',
+        'usaha_perubahan_pengesahan_no'     => '',
+        'usaha_perubahan_pengesahan_tgl'    => '',
+        'usaha_siup_lama_nomor'             => '',
+        'usaha_siup_lama_tgl'               => '',
+        'usaha_saham_status'                => '',
+        'usaha_modal_awal'                  => '',
+        'usaha_saham_nilai_total'           => '',
+        'usaha_saham_nilai_nasional'        => '',
+        'usaha_saham_nilai_tgl'             => '',
+        );
+
     // -------------------------------------------------------------------------
 
     /**
