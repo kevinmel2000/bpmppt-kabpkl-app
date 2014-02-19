@@ -49,31 +49,38 @@
     }
 
     &.datepicker-orient {
-      &-left:before   { left: 6px; }
-
-      &-left:before   { left: 6px; }
-
-      &-left:after    { left: 7px; }
-
-      &-right:before  { right: 6px; }
-
-      &-right:after   { right: 7px; }
-
-      &-top:before    { top: -7px; }
-
-      &-top:after     { top: -6px; }
-
-      &-bottom:before {
-        bottom: -7px;
-        border-bottom: 0;
-        border-top: 7px solid #999;
+      &-left {
+        &:before  { left: 6px; }
+        &:after   { left: 7px; }
       }
-  
-      &-bottom:after {
-        bottom: -6px;
-        border-bottom: 0;
-        border-top: 6px solid @body-bg;
+
+      &-right {
+        &:before  { right: 6px; }
+        &:after   { right: 7px; }
       }
+      
+      &-top {
+        &:before  { top: -7px; }
+        &:after   { top: -6px; }
+      }
+
+      &-bottom {
+        &:before,
+        &:after {
+          border-bottom: 0;
+        }
+          
+        &:before {
+          bottom: -7px;
+          border-top: 7px solid #999;
+        }
+    
+        &:after {
+          bottom: -6px;
+          border-top: 6px solid @body-bg;
+        }
+      }
+
     }
   }
   

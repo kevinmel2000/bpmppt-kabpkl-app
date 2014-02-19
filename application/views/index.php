@@ -11,7 +11,6 @@
         <script charset="utf-8" type="text/javascript" src="<?php echo base_url('asset/js/lib/html5shiv.js') ?>"></script>
         <script charset="utf-8" type="text/javascript" src="<?php echo base_url('asset/js/lib/respond.min.js') ?>"></script>
     <![endif]-->
-    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic' rel='stylesheet' type='text/css'>  
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('asset/css/style.min.css') ?>" />
     <!-- Bootstrap -->
     <?php // echo load_styles() ?>
