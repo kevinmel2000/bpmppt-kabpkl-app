@@ -3,7 +3,7 @@
     <td colspan="7" style="width:100%">
         <p>KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN</p>
         <p>PELAYANAN PERIZINAN TERPADU KABUPATEN PEKALONGAN</p>
-        <p>NOMOR : 510.8 /&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/ BPMPPT / P. Kayu / VI / 2013</p>
+        <p>NOMOR : <?php echo $surat_nomor?> /&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/ BPMPPT / IPLC / <?php echo strtoupper(format_roman(bdate('m', $created_on)).' / '.bdate('Y')) ?></p>
     </td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
@@ -14,9 +14,7 @@
 <tr class="align-center bold">
     <td colspan="7" style="width:100%">
         <p>PEMBERIAN IZIN PEMBUANGAN AIR LIMBAH KE AIR ATAU SUMBER AIR</p>
-        <p>KEPADA PT. PERKEBUNAN NUSANTARA IX (PERSERO)</p>
-        <p>DIVISI TANAMAN TAHUNAN KEBUN BLIMBING</p>
-        <p>PABRIK BLIMBING</p>
+        <p><?php echo $pemohon_usaha ?></p>
     </td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
@@ -32,8 +30,8 @@
     <td style="width:2%"><p>:</p></td>
     <td colspan="5" style="width:78%">
         <ol class="lower-alpha">
-            <li>bahwa berdasarkan hasil penelitian dan evaluasi administrasi terhadap permohonan PT. Perkebunan Nusantara IX (Persero) Divisi Tanaman Tahunan Kebun Blimbing untuk melakukan pembuangan limbah cair ke perairan umum, PT. Perkebunan Nusantara IX (Persero) Divisi Tanaman Tahunan Kebun Blimbing telah membuat Surat Kesanggupan Memenuhi Persyaratan Limbah Cair, Gas, dan Padat sehingga memenuhi baku mutu yang dipersyaratkan serta tidak mengganggu lingkungan;</li>
-            <li>bahwa berdasarkan Pasal 40 ayat (1) Peraturan Pemerintah Nomor 82 Tahun 2001 tentang Pengelolaan Kualitas Air, Setiap usaha dan kegiatan yang akan membuang limbah ke air atau sumber air wajib mendapat izin tertulis, maka guna memenuhi persyaratan dan pengendalian pencemaran air, perlu menerbitkan izin pembuangan air limbah.</li>
+            <li>Bahwa berdasarkan hasil penelitian dan evaluasi administrasi terhadap permohonan <?php echo $pemohon_usaha ?> untuk melakukan pembuangan limbah cair ke perairan umum, <?php echo $pemohon_usaha ?> telah membuat Surat Kesanggupan Memenuhi Persyaratan Limbah Cair, Gas, dan Padat sehingga memenuhi baku mutu yang dipersyaratkan serta tidak mengganggu lingkungan;</li>
+            <li>Bahwa berdasarkan Pasal 40 ayat (1) Peraturan Pemerintah Nomor 82 Tahun 2001 tentang Pengelolaan Kualitas Air, Setiap usaha dan kegiatan yang akan membuang limbah ke air atau sumber air wajib mendapat izin tertulis, maka guna memenuhi persyaratan dan pengendalian pencemaran air, perlu menerbitkan izin pembuangan air limbah.</li>
         </ol>
     </td>
 </tr>
@@ -85,10 +83,10 @@
     </td>
     <td style="width:2%"><p>:</p><p>:</p><p>:</p><p>:</p></td>
     <td colspan="2" style="width:47%">
+        <p><?php echo $pemohon_usaha ?></p>
+        <p><?php echo $pemohon_alamat ?></p>
         <p><?php echo $pemohon_nama ?></p>
-        <p><?php echo $pemohon_nama ?></p>
-        <p><?php echo $pemohon_nama ?></p>
-        <p><?php echo $pemohon_nama ?></p>
+        <p><?php echo $pemohon_jabatan ?></p>
     </td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
@@ -100,50 +98,76 @@
         <ol class="lower-alpha">
             <li>
                 <p>Ketentuan Teknis</p>
-                <p>Pembuangan air limbah pabrik Pengolahan Karet Mentah dengan kapasitas produksi 1,8 Ton/hari harus memenuhi persyaratan :</p>
+                <p>Pembuangan air limbah pabrik Pengolahan Karet Mentah dengan kapasitas produksi <?php echo $limbah_kapasitas_produksi ?> Ton/hari harus memenuhi persyaratan :</p>
                 <ol class="decimal">
                     <li>
-                        <p>Debit maksimum air limbah yang dibuang 72 m3/hari (Proses pengolahan getah karet menjadi karet kering) harus memenuhi persyaratan baku mutu air limbah sesuai dengan Peraturan Daerah Provinsi Jawa Tengah Nomor 5 Tahun 2012. Dengan kualitas air limbah, yaitu konsentrasi dan beban pencemaran maksimum sebagai berikut :</p>
+                        <p>Debit maksimum air limbah yang dibuang <?php echo $limbah_debit_max_proses ?> m3/hari (Proses pengolahan getah karet menjadi karet kering) harus memenuhi persyaratan baku mutu air limbah sesuai dengan Peraturan Daerah Provinsi Jawa Tengah Nomor 5 Tahun 2012. Dengan kualitas air limbah, yaitu konsentrasi dan beban pencemaran maksimum sebagai berikut :</p>
                         <table class="bordered">
                             <tr>
                                 <td>NO</td>
                                 <td>Parameter</td>
                                 <td>Kadar Maksimum (Mg/l)</td>
                                 <td>Beban Maksimum (Mg/l)</td>
+                                <?php if ($limbah_kadar_max_kond_bod) : ?>
+                                    <td>Kadar max kondensor (Mg/l)</td>
+                                    <td>Beban pencemaran kondensor (Mg/l)</td>
+                                <?php endif; ?>
                             </tr>
                             <tr>
                                 <td>1</td>
                                 <td>BOD<sub>5</sub></td>
-                                <td>150</td>
-                                <td>10,8</td>
+                                <td><?php echo $limbah_kadar_max_proses_bod ?></td>
+                                <td><?php echo $limbah_beban_max_proses_bod ?></td>
+                                <?php if ($limbah_kadar_max_kond_bod) : ?>
+                                    <td><?php echo $limbah_kadar_max_kond_bod ?></td>
+                                    <td><?php echo $limbah_beban_max_proses_bod ?></td>
+                                <?php endif; ?>
                             </tr>
                             <tr>
                                 <td>2</td>
                                 <td>COD</td>
-                                <td>300</td>
-                                <td>21</td>
+                                <td><?php echo $limbah_kadar_max_proses_cod ?></td>
+                                <td><?php echo $limbah_beban_max_proses_cod ?></td>
+                                <?php if ($limbah_kadar_max_kond_bod) : ?>
+                                    <td><?php echo $limbah_kadar_max_kond_cod ?></td>
+                                    <td><?php echo $limbah_beban_max_proses_cod ?></td>
+                                <?php endif; ?>
                             </tr>
                             <tr>
                                 <td>3</td>
                                 <td>TTS</td>
-                                <td>100</td>
-                                <td>10</td>
+                                <td><?php echo $limbah_kadar_max_proses_tts ?></td>
+                                <td><?php echo $limbah_beban_max_proses_tts ?></td>
+                                <?php if ($limbah_kadar_max_kond_bod) : ?>
+                                    <td><?php echo $limbah_kadar_max_kond_tts ?></td>
+                                    <td><?php echo $limbah_beban_max_proses_tts ?></td>
+                                <?php endif; ?>
                             </tr>
                             <tr>
                                 <td>4</td>
                                 <td>Amonia (MH3/N)</td>
-                                <td>0,7</td>
-                                <td>0,7</td>
+                                <td><?php echo $limbah_kadar_max_proses_minyak ?></td>
+                                <td><?php echo $limbah_beban_max_proses_minyak ?></td>
+                                <?php if ($limbah_kadar_max_kond_bod) : ?>
+                                    <td><?php echo $limbah_kadar_max_kond_minyak ?></td>
+                                    <td><?php echo $limbah_beban_max_proses_minyak ?></td>
+                                <?php endif; ?>
                             </tr>
                             <tr>
                                 <td>5</td>
                                 <td>pH</td>
-                                <td colspan="2">6,0 - 9,0</td>
+                                <td colspan="2"><?php echo $limbah_kadar_max_proses_sulfida ?></td>
+                                <?php if ($limbah_kadar_max_kond_bod) : ?>
+                                    <td colspan="2"><?php echo $limbah_kadar_max_kond_bod ?></td>
+                                <?php endif; ?>
                             </tr>
                             <tr>
                                 <td>6</td>
                                 <td>Debit Maksimum</td>
-                                <td colspan="2">72 M<sup>3</sup>/Hari</td>
+                                <td colspan="2"><?php echo $limbah_kadar_max_proses_ph ?></td>
+                                <?php if ($limbah_kadar_max_kond_bod) : ?>
+                                    <td colspan="2"><?php echo $limbah_kadar_max_kond_bod ?></td>
+                                <?php endif; ?>
                             </tr>
                         </table>
                     </li>
@@ -187,7 +211,7 @@
 <tr>
     <td style="width:20%"><p>KEENAM</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%">Keputusan ini mulai berlaku sejak tanggal ditetapkan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;Mei 2013 s/d&nbsp;&nbsp;Mei 2016)</td>
+    <td colspan="5" style="width:78%">Keputusan ini mulai berlaku sejak tanggal ditetapkan ( <?php echo bdate('F', $created_on).' / '.bdate('Y') ?> s/d Mei 2016)</td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>

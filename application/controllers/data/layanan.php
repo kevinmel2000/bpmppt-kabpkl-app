@@ -173,11 +173,11 @@ class Layanan extends BAKA_Controller
 
             $date   = ( $status != 'pending' ? ' pada: '.format_datetime( $data_obj->{$status.'_on'} ) : '' );
 
-            $fields[]   = array(
-                'name'  => $modul_slug.'_pemohon_jabatan',
-                'label' => 'Status Pengajuan',
-                'type'  => 'static',
-                'std'   => '<span class="label label-'.$status.'">'._x('status_'.$status).'</span>'.$date );
+            // $fields[]   = array(
+            //     'name'  => $modul_slug.'_pemohon_jabatan',
+            //     'label' => 'Status Pengajuan',
+            //     'type'  => 'static',
+            //     'std'   => '<span class="label label-'.$status.'">'._x('status_'.$status).'</span>'.$date );
         }
 
         if ( $data_type != 'imb' )
