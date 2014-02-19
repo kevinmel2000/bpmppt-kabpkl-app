@@ -50,20 +50,13 @@ class Auth extends BAKA_Controller
 
         $this->data['panel_title'] = $this->themee->set_title('Login Pengguna');
 
-        if ( login_by() == 'login' )
-            $label  = 'Email atau Username';
-        else if ( login_by() == 'username' )
-            $label  = 'Username';
-        else 
-            $label  = 'Email';
-
-        $login = ( Setting::get('auth_login_count_attempts') AND ($login = $this->input->post('login-username'))) ?
+        $login = ( Setting::get('auth_login_count_attempts') AND ($login = $this->input->post('username'))) ?
                 $this->security->xss_clean($login) : '';
 
         $fields[]   = array(
             'name'  => 'username',
             'type'  => 'text',
-            'label' => $label,
+            'label' => _x('auth_login_by_'.login_by()),
             'validation'=> 'required' );
 
         $fields[]   = array(
@@ -130,7 +123,7 @@ class Auth extends BAKA_Controller
 
         if ( $input = $form->validate_submition() )
         {
-            $goto = $this->authen->login( $input['username'], $input['password'], $input['remember'] ) ? 'dashboard' : current_url();
+            $goto = $this->authen->login( $input['username'], $input['password'], $input['remember'] ) ? 'data/utama' : current_url();
 
             foreach ( $this->authen->messages() as $level => $item )
             {
@@ -154,41 +147,39 @@ class Auth extends BAKA_Controller
         if ( !Setting::get('auth_allow_registration') )
             $this->_notice('registration-disabled');
 
-        $use_username = (bool) Setting::get('auth_use_username');
-
         if ( (bool) Setting::get('auth_use_username') )
         {
             $fields[]   = array(
-                'name'  => 'register-username',
+                'name'  => 'username',
                 'type'  => 'text',
                 'label' => 'Username',
                 'validation'=> 'required|valid_username_length|is_username_blacklist|is_username_available' );
         }
 
         $fields[]   = array(
-            'name'  => 'register-email',
+            'name'  => 'email',
             'type'  => 'text',
             'label' => 'Email',
             'validation'=> 'required|valid_email' );
 
         $fields[]   = array(
-            'name'  => 'register-password',
+            'name'  => 'password',
             'type'  => 'password',
             'label' => 'Password',
             'validation'=> 'required|valid_password_length' );
 
         $fields[]   = array(
-            'name'  => 'register-confirm-password',
+            'name'  => 'confirm-password',
             'type'  => 'password',
             'label' => 'Ulangi Password',
-            'validation'=> 'required|matches[register-password]' );
+            'validation'=> 'required|matches[password]' );
 
         if ( (bool) Setting::get('auth_captcha_registration') )
         {
             if ( (bool) Setting::get('auth_use_recaptcha') )
             {
                 $fields[]   = array(
-                    'name'  => 'register-recaptcha',
+                    'name'  => 'recaptcha',
                     'type'  => 'recaptcha',
                     'label' => 'Confirmation Code',
                     'validation'=> 'required|valid_recaptcha' );
@@ -196,7 +187,7 @@ class Auth extends BAKA_Controller
             else
             {
                 $fields[]   = array(
-                    'name'  => 'register-captcha',
+                    'name'  => 'captcha',
                     'type'  => 'captcha',
                     'label' => 'Confirmation Code',
                     'validation'=> 'required|valid_captcha' );
@@ -226,20 +217,14 @@ class Auth extends BAKA_Controller
 
         if ( $form_data = $form->validate_submition() )
         {
-            $username  = $form_data['register-username'];
-            $email     = $form_data['register-email'];
-            $password  = $form_data['register-password'];
+            $goto = $this->authen->create_user( $form_data['username'], $form_data['email'], $form_data['password'] ) ? 'notice/registration-success' : current_url();
 
-            if ( $this->authen->create_user( $username, $email, $password ) )
+            foreach ( $this->authen->messages() as $level => $item )
             {
-                $this->_notice('registration-success');
+                $this->session->set_flashdata( $level, $item );
             }
-            else
-            {
-                $this->session->set_flashdata('error', $this->authen->errors());
 
-                redirect( current_url() );
-            }
+            redirect( $goto );
         }
         
         $this->data['panel_body'] = $form->generate();
@@ -250,7 +235,7 @@ class Auth extends BAKA_Controller
     public function resend()
     {
         if ( Authen::is_logged_in() )
-            redirect( 'dashboard' );
+            redirect('data/utama');
 
         $this->data['panel_title'] = $this->themee->set_title('Kirim ulang aktivasi');
 
@@ -312,7 +297,7 @@ class Auth extends BAKA_Controller
     public function forgot()
     {
         if ( Authen::is_logged_in() )
-            redirect( 'dashboard' );
+            redirect('data/utama');
 
         $this->data['panel_title'] = $this->themee->set_title('Lupa login');
 

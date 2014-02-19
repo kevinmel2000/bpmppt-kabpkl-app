@@ -36,12 +36,10 @@ class Layanan extends BAKA_Controller
 
         $this->verify_login();
 
-        $this->load->driver('bpmppt');
+        $this->themee->add_navbar( 'data_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
+        $this->data_navbar( 'data_sidebar', 'side' );
 
         $this->themee->set_title('Administrasi data');
-
-        $this->themee->add_navbar( 'data_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
-        $this->data_navbar( 'data_sidebar', 'side');
 
         $this->data['page_link'] = 'data/layanan/';
     }
@@ -57,12 +55,8 @@ class Layanan extends BAKA_Controller
         }
         else
         {
-            // redirect( 'dashboard' );
-            // else if ( !class_exists( $data_type ) )
-            //     show_404();
-
             $this->data['load_toolbar'] = TRUE;
-            $this->data['page_link']   .= 'index/'.$data_type.'/';
+            $this->data['page_link']   .= $data_type.'/';
 
             switch ( $page )
             {
@@ -144,7 +138,6 @@ class Layanan extends BAKA_Controller
         else
             $grid->set_buttons('hapus/', 'trash', 'danger', 'Hapus data');
 
-        // $this->data['panel_body']    = $this->bpmppt->get_table( $data_type, $this->data['page_link'] );
         $this->data['panel_body']    = $grid->make_table( $query );
 
         $this->load->theme('pages/panel_data', $this->data);
@@ -255,8 +248,7 @@ class Layanan extends BAKA_Controller
         {
             $data = array_merge(
                     (array) $this->bpmppt->skpd_properties(),
-                    (array) $this->bpmppt->get_fulldata_by_id( $data_id )
-                    );
+                    (array) $this->bpmppt->get_fulldata_by_id($data_id));
 
             $this->load->theme('prints/products/'.$data_type, $data, 'print');
         }
@@ -296,25 +288,6 @@ class Layanan extends BAKA_Controller
                         'option'=> add_placeholder( get_year_assoc(), 'Pilih Tahun') )
                     ),
                 'desc'  => 'Tentukan tanggal dan bulan dokumen.' );
-
-            // $fields[]    = array(
-            //  'name'  => 'data_sort',
-            //  'label' => 'Urutan',
-            //  'type'  => 'radio',
-            //  'option'=> array(
-            //      'asc'   => 'Ascending',
-            //      'des'   => 'Descending'),
-            //  'std'   => 'asc',
-            //  'desc'  => 'Tentukan jenis pengurutan output dokumen.' );
-
-            // $fields[]    = array(
-            //  'name'  => 'data_output',
-            //  'label' => 'Pilihan Output',
-            //  'type'  => 'radio',
-            //  'option'=> array(
-            //      'print' => 'Cetak Langsung',
-            //      'excel' => 'Export ke file MS Excel'),
-            //  'std'   => 'print' );
 
             $buttons[]= array(
                 'name'  => 'do-print',

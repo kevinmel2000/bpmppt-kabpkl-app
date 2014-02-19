@@ -93,6 +93,9 @@ $lang['auth_username_min_length']   = 'Username harus lebih dari %s karakter';
 $lang['auth_username_max_length']   = 'Username tidak boleh lebih dari %s karakter';
 $lang['auth_password_min_length']   = 'Password harus lebih dari %s karakter';
 $lang['auth_password_max_length']   = 'Password tidak boleh lebih dari %s karakter';
+$lang['auth_login_by_login']        = 'Username atau Email';
+$lang['auth_login_by_username']     = 'Username';
+$lang['auth_login_by_email']        = 'Email';
 
 // -----------------------------------------------------------------------------
 // Database Utility

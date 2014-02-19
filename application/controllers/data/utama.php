@@ -30,41 +30,35 @@
  */
 class Utama extends BAKA_Controller
 {
-    private $modules_arr = array();
-    private $modules_count_arr = array();
-
     public function __construct()
     {
         parent::__construct();
 
         $this->verify_login();
 
-        $this->load->driver('bpmppt');
+        $this->themee->add_navbar( 'data_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
+        $this->data_navbar( 'data_sidebar', 'side' );
 
         $this->themee->set_title('Dashboard');
 
-        $this->modules_arr = $this->bpmppt->get_modules_assoc();
+        $this->data['page_link'] = 'data/utama/';
 
-        $this->data['page_link'] = 'data/';
+        if ($this->data['page_link'] != $this->uri->uri_string().'/')
+            redirect($this->data['page_link']);
     }
 
     public function index()
     {
-        redirect('dashboard');
-    }
-
-    public function stat()
-    {
         $this->data['panel_title']  = $this->themee->set_title('Semua data perijinan');
-        $this->data['data_type']    = $this->modules_arr;
+        $this->data['data_type']    = $this->_modules_arr;
 
-        if ( !empty($this->modules_arr) )
+        if ( !empty($this->_modules_arr) )
         {
             $this->data['load_toolbar'] = TRUE;
             // $this->data['search_form']   = TRUE;
             $this->data['page_link'] .= 'layanan/index/';
 
-            foreach ($this->modules_arr as $alias => $name)
+            foreach ($this->_modules_arr as $alias => $name)
             {
                 $this->data['tool_buttons']['Baru:dd|primary'][$alias.'/form'] = $name;
                 $this->data['counter'][$alias] = $this->bpmppt->count_data($alias);
@@ -79,110 +73,6 @@ class Utama extends BAKA_Controller
         else
         {
             $this->_notice( 'no-data-accessible' );
-        }
-    }
-
-    public function laporan()
-    {
-        $this->themee->add_navbar( 'data_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
-        $this->data_navbar( 'data_sidebar', 'side' );
-
-        $this->data['panel_title'] = $this->themee->set_title('Laporan data');
-
-        foreach ( $this->bpmppt->get_modules(TRUE) as $module => $prop )
-        {
-            $modules[$prop->alias] = $prop->label;
-        }
-
-        $fields[]   = array(
-            'name'  => 'data_type',
-            'label' => 'Pilih data perijinan',
-            'type'  => 'dropdown',
-            'option'=> add_placeholder( $modules ),
-            'validation'=> 'required',
-            'desc'  => 'Pilih jenis dokumen yang ingin dicetak. Terdapat '.count( $modules ).' yang dapat anda cetak.' );
-
-        $fields[]   = array(
-            'name'  => 'data_status',
-            'label' => 'Status Pengajuan',
-            'type'  => 'dropdown',
-            'option'=> array(
-                'all'       => 'Semua',
-                'pending'   => 'Tertunda',
-                'approved'  => 'Disetujui',
-                'done'      => 'Selesai' ),
-            'desc'  => 'tentukan status dokumennya, pilih <em>Semua</em> untuk mencetak semua dokumen dengan jenis dokumen diatas, atau anda dapat sesuaikan dengan kebutuhan.' );
-
-        $fields[]   = array(
-            'name'  => 'data_date',
-            'label' => 'Bulan &amp; Tahun',
-            'type'  => 'subfield',
-            'fields'=> array(
-                array(
-                    'name' => 'data_month',
-                    'col'   => 6,
-                    'label' => 'Bulan',
-                    'type'  => 'dropdown',
-                    'option'=> add_placeholder( get_month_assoc(), 'Pilih Bulan') ),
-                array(
-                    'name' => 'data_year',
-                    'col'   => 6,
-                    'label' => 'Tahun',
-                    'type'  => 'dropdown',
-                    'option'=> add_placeholder( get_year_assoc(), 'Pilih Tahun') )
-                ),
-            'desc'  => 'Tentukan tanggal dan bulan dokumen.' );
-
-        // $fields[]    = array(
-        //  'name'  => 'data_sort',
-        //  'label' => 'Urutan',
-        //  'type'  => 'radio',
-        //  'option'=> array(
-        //      'asc'   => 'Ascending',
-        //      'des'   => 'Descending'),
-        //  'std'   => 'asc',
-        //  'desc'  => 'Tentukan jenis pengurutan output dokumen.' );
-
-        // $fields[]    = array(
-        //  'name'  => 'data_output',
-        //  'label' => 'Pilihan Output',
-        //  'type'  => 'radio',
-        //  'option'=> array(
-        //      'print' => 'Cetak Langsung',
-        //      'excel' => 'Export ke file MS Excel'),
-        //  'std'   => 'print' );
-
-        $buttons[]= array(
-            'name'  => 'do-print',
-            'type'  => 'submit',
-            'label' => 'Cetak sekarang',
-            'class' => 'btn-primary pull-right' );
-
-        $this->load->library('baka_pack/former');
-
-        $form = $this->former->init( array(
-            'name'      => 'print-all',
-            'action'    => current_url(),
-            'extras'    => array('target' => '_blank'),
-            'fields'    => $fields,
-            'buttons'   => $buttons,
-            ));
-
-        if ( $form->validate_submition() )
-        {
-            $submited_data = $form->submited_data();
-
-            $data = $this->bpmppt->skpd_properties();
-            $data['layanan'] = $this->bpmppt->get_label($submited_data['data_type']);
-            $data['results'] = array();
-
-            $this->load->theme('prints/reports/'.$submited_data['data_type'], $data, 'laporan');
-        }
-        else
-        {
-            $this->data['panel_body'] = $form->generate();
-
-            $this->load->theme('pages/panel_form', $this->data);
         }
     }
 
