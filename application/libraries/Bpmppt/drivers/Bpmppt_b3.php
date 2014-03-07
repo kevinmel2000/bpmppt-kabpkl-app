@@ -50,6 +50,8 @@ class Bpmppt_b3 extends CI_Driver
         'pemohon_nama'      => '',
         'pemohon_alamat'    => '',
         'pemohon_jabatan'   => '',
+        'daftar_nomor'      => '',
+        'daftar_tanggal'    => '',
         'usaha_nama'        => '',
         'usaha_bidang'      => '',
         'usaha_alamat'      => '',
@@ -109,6 +111,26 @@ class Bpmppt_b3 extends CI_Driver
             'label' => 'Jabatan',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->pemohon_jabatan : ''),
+            'validation'=> ( !$data_obj ? 'required' : '' ) );
+
+        $fields[]   = array(
+            'name'  => $this->alias.'_fieldset_data_daftar',
+            'label' => 'Data Pendaftaran',
+            'attr'  => ( $data_obj ? 'disabled' : '' ),
+            'type'  => 'fieldset' );
+
+        $fields[]   = array(
+            'name'  => $this->alias.'_daftar_nomor',
+            'label' => 'Nomor Daftar Permohonan.',
+            'type'  => 'text',
+            'std'   => ( $data_obj ? $data_obj->daftar_nomor : ''),
+            'validation'=> ( !$data_obj ? 'required' : '' ) );
+
+        $fields[]   = array(
+            'name'  => $this->alias.'_daftar_tanggal',
+            'label' => 'Tanggal Daftar Permohonan.',
+            'type'  => 'datepicker',
+            'std'   => ( $data_obj ? $data_obj->daftar_tanggal : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
         $fields[]   = array(
