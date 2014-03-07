@@ -549,52 +549,17 @@ INSERT INTO `baka_data_props` (`name`, `prop_key`, `prop_value`) VALUES
 -- Struktur dari tabel `baka_media`
 --
 
-DROP TABLE IF EXISTS `baka_media`;
-CREATE TABLE IF NOT EXISTS `baka_media` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `uploaded_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `title` varchar(50) NOT NULL,
-  `filename` varchar(50) NOT NULL,
-  `path` varchar(255) NOT NULL,
-  `mime` varchar(15) NOT NULL,
-  `ext` varchar(5) NOT NULL,
-  `size` int(11) NOT NULL,
-  `width` int(11) DEFAULT NULL,
-  `height` int(11) DEFAULT NULL,
-  `attached` tinyint(1) DEFAULT NULL,
-  `attached_to` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 -- --------------------------------------------------------
 
 --
 -- Struktur dari tabel `baka_system_env`
 --
 
-DROP TABLE IF EXISTS `baka_system_env`;
-CREATE TABLE IF NOT EXISTS `baka_system_env` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL DEFAULT '0',
-  `env_key` varchar(100) NOT NULL,
-  `env_value` longtext,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 -- --------------------------------------------------------
 
 --
 -- Struktur dari tabel `baka_system_opt`
 --
-
-DROP TABLE IF EXISTS `baka_system_opt`;
-CREATE TABLE IF NOT EXISTS `baka_system_opt` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `opt_key` varchar(100) NOT NULL,
-  `opt_value` longtext,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `opt_key_UNIQUE` (`opt_key`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data untuk tabel `baka_system_opt`

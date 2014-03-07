@@ -191,7 +191,7 @@ class Migration_First_install extends Migration
         'user_id' => array(
             'type' => 'INT',
             'constraint' => 11,
-            'default' => '0'
+            'default' => 0,
             'null' => false,
             ),
         'env_key' => array(
@@ -215,6 +215,98 @@ class Migration_First_install extends Migration
             'constraint'     => 11,
             'auto_increment' => true,
             'null'           => false,
+            ),
+        'username' => array(
+            'type' => 'VARCHAR',
+            'constraint' => 100,
+            'null' => false,
+            ),
+        'password' => array(
+            'type' => 'VARCHAR',
+            'constraint' => 255,
+            'null' => false,
+            ),
+        'email' => array(
+            'type' => 'VARCHAR',
+            'constraint' => 100,
+            'null' => false,
+            ),
+        'activated' => array(
+            'type' => 'TINYINT',
+            'constraint' => 1,
+            'default' => 0,
+            'null' => false,
+            ),
+        'banned' => array(
+            'type' => 'TINYINT',
+            'constraint' => 1,
+            'default' => 0,
+            'null' => false,
+            ),
+        'deleted' => array(
+            'type' => 'TINYINT',
+            'constraint' => 1,
+            'default' => 0,
+            'null' => false,
+            ),
+        'ban_reason' => array(
+            'type' => 'VARCHAR',
+            'constraint' => 255,
+            'default' => null,
+            ),
+        'new_password_key' => array(
+            'type' => '',
+            'constraint' => 11,
+            'default' => '',
+            'null' => false,
+            ),
+        'new_password_requested' => array(
+            'type' => '',
+            'constraint' => 11,
+            'default' => '',
+            'null' => false,
+            ),
+        'new_email' => array(
+            'type' => '',
+            'constraint' => 11,
+            'default' => '',
+            'null' => false,
+            ),
+        'new_email_key' => array(
+            'type' => '',
+            'constraint' => 11,
+            'default' => '',
+            'null' => false,
+            ),
+        'last_ip' => array(
+            'type' => '',
+            'constraint' => 11,
+            'default' => '',
+            'null' => false,
+            ),
+        'last_login' => array(
+            'type' => '',
+            'constraint' => 11,
+            'default' => '',
+            'null' => false,
+            ),
+        'created' => array(
+            'type' => '',
+            'constraint' => 11,
+            'default' => '',
+            'null' => false,
+            ),
+        'modified' => array(
+            'type' => '',
+            'constraint' => 11,
+            'default' => '',
+            'null' => false,
+            ),
+        'log' => array(
+            'type' => '',
+            'constraint' => 11,
+            'default' => '',
+            'null' => false,
             ),
         );
 
