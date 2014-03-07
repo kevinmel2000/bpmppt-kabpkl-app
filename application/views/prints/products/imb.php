@@ -4,7 +4,7 @@
 </tr>
 <tr><td colspan="7">&nbsp;</td></tr>
 <tr class="align-center bold">
-    <td colspan="7">NOMOR : <?php echo strtoupper('640/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/IMB/BPM PPT/'.format_roman(bdate('m', $created_on)).'/'.bdate('Y')) ?></td>
+    <td colspan="7" style="width:100%">NOMOR : 640/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo strtoupper('/IMB/BPM PPT/'.format_roman(bdate('m', $created_on)).'/'.bdate('Y')) ?></td>
 </tr>
 <tr><td colspan="7">&nbsp;</td></tr>
 <tr class="align-center bold">
@@ -54,57 +54,57 @@
 </tr>
 <tr>
     <td colspan="2">&nbsp;</td>
-    <td colspan="2" style="width:30%"><p>Nama Pemohon</p></td>
+    <td colspan="2" style="width:30%"><p class="bold">Nama Pemohon</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><strong><?php echo $pemohon_nama ?></strong></p></td>
+    <td colspan="2" style="width:47%"><p class="bold"><?php echo strtoupper($pemohon_nama) ?></p></td>
 </tr>
 <tr>
     <td colspan="2">&nbsp;</td>
     <td colspan="2" style="width:30%"><p>Alamat Pemohon</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><strong><?php echo $pemohon_alamat ?></strong></p></td>
+    <td colspan="2" style="width:47%"><p><?php echo $pemohon_alamat ?></strong></p></td>
 </tr>
 <tr>
     <td colspan="2">&nbsp;</td>
     <td colspan="2" style="width:30%"><p>Pekerjaan</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><strong><?php echo $pemohon_kerja ?></strong></p></td>
+    <td colspan="2" style="width:47%"><p><?php echo $pemohon_kerja ?></p></td>
 </tr>
 <tr>
     <td colspan="2">&nbsp;</td>
     <td colspan="2" style="width:30%"><p>Maksud Permohonan</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><strong><?php echo $bangunan_maksud ?></strong></p></td>
+    <td colspan="2" style="width:47%"><p><?php echo $bangunan_maksud ? 'Mendirikan bangunan baru' : 'Merehab bangunan' ?></p></td>
 </tr>
 <tr>
     <td colspan="2">&nbsp;</td>
-    <td colspan="2" style="width:30%"><p>Penggunaan Bangunan</p></td>
+    <td colspan="2" style="width:30%"><p class="bold">Penggunaan Bangunan</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><strong><?php echo $bangunan_guna ?></strong></p></td>
+    <td colspan="2" style="width:47%"><p class="bold"><?php echo strtoupper($bangunan_guna) ?></p></td>
 </tr>
 <tr>
     <td colspan="2">&nbsp;</td>
     <td colspan="2" style="width:30%"><p>Lokasi Bangunan</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><strong><?php echo $bangunan_lokasi ?></strong></p></td>
+    <td colspan="2" style="width:47%"><p><?php echo $bangunan_lokasi ?></p></td>
 </tr>
 <tr>
     <td colspan="2">&nbsp;</td>
     <td colspan="2" style="width:30%"><p>Luas / Keadaan Tanah</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><strong><?php echo '&#177; '.$bangunan_tanah_luas.' M<sup>2</sup> / '.strtoupper($bangunan_tanah_keadaan) ?></strong></p></td>
+    <td colspan="2" style="width:47%"><p><?php echo '&#177; '.$bangunan_tanah_luas.' M<sup>2</sup> / '.strtoupper($bangunan_tanah_keadaan) ?></p></td>
 </tr>
 <tr>
     <td colspan="2">&nbsp;</td>
     <td colspan="2" style="width:30%"><p>Status Tanah</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><strong><?php echo $bangunan_tanah_status.$bangunan_milik_no.$bangunan_milik_an ?></strong></p></td>
+    <td colspan="2" style="width:47%"><p><?php echo ($bangunan_tanah_status == 'hm' ? 'Hak Milik, No, '.$bangunan_milik_no : 'Hak Guna Bangunan').', an. '.$bangunan_milik_an ?></p></td>
 </tr>
 <tr>
     <td colspan="2">&nbsp;</td>
     <td colspan="2" style="width:30%"><p>Luas Bangunan</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><strong><?php echo '&#177; '.$bangunan_luas.' M<sup>2</sup> / ' ?></strong></p></td>
+    <td colspan="2" style="width:47%"><p><?php echo '&#177; '.$bangunan_luas.' M<sup>2</sup> / ' ?></p></td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>

@@ -99,7 +99,7 @@ class Bpmppt_imb extends CI_Driver
             'type'  => 'dropdown',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
             'option'=> array(
-                'rumah' => 'Rumah Tinggal',
+                'Rumah Tinggal' => 'Rumah Tinggal',
                 'kios'  => 'Kios',
                 'toko'  => 'Toko',
                 'gudang'=> 'Gudang',
@@ -171,8 +171,8 @@ class Bpmppt_imb extends CI_Driver
             'label' => 'Status Tanah',
             'type'  => 'dropdown',
             'option'=> array(
-                'hm'    => 'Hak guna bangunan',
-                'hg'    => 'Hak milik' ),
+                'hm'    => 'Hak milik',
+                'hg'    => 'Hak guna bangunan' ),
             'std'   => ( $data_obj ? $data_obj->bangunan_tanah_status : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
