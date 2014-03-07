@@ -3,7 +3,7 @@
     <td colspan="7" style="width:100%">
         <p>KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN</p>
         <p>PELAYANAN PERIZINAN TERPADU KABUPATEN PEKALONGAN</p>
-        <p>NOMOR : <?php echo $surat_nomor?> /&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/ BPMPPT / IPLC / <?php echo strtoupper(format_roman(bdate('m', $created_on)).' / '.bdate('Y')) ?></p>
+        <p>NOMOR : 658.31 /&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/ BPMPPT / IPLC / <?php echo strtoupper(format_roman(bdate('m', $created_on)).' / '.bdate('Y')) ?></p>
     </td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
@@ -239,21 +239,14 @@
     <td colspan="7">
         <p>Tembusan :</p>
         <ol>
-            <li>Bupati Pekalongan.</li>
-            <li>Inspektur Kabupaten Pekalongan.</li>
+            <li>Kepala Bappeda Propinsi Jawa Tengah;</li>
+            <li>Bupati Pekalongan;</li>
+            <li>Inspektur Kabupaten Pekalongan;</li>
+            <li>Kepala DPU Kabupaten Pekalongan;</li>
+            <li>Kepala Dinas PSDA ESDM Kabupaten Pekalongan;</li>
             <li>Kepala DPPKD Kabupaten Pekalongan.</li>
-            <li>Kepala BAPPEDA Kabupaten Pekalongan.</li>
-            <li>Kepala DPU Kabupaten Pekalongan.</li>
-            <li>Kepala DPPK Kabupaten Pekalongan.</li>
-            <li>Kepala DINSOS NAKERTRANS Kabupaten Pekalongan.</li>
-            <li>Kepala DINPERINDAGKOP Kabupaten Pekalongan.</li>
-            <li>Kepala Kantor LH Kabupaten Pekalongan.</li>
+            <li>Kepala Kantor Lingkungan Hidup Kabupaten Pekalongan.</li>
             <li>Kepala Satpol PP Kabuaten Pekalongan.</li>
-            <li>Kepala Bagian Hukum Setda Kabupaten Pekalongan.</li>
-            <li>Camat Kajen Kabupaten Pekalongan.</li>
-            <li>Camat Karanganyar Kabupaten Pekalongan.</li>
-            <li>Kepala Desa Tanjung Kulon.</li>
-            <li>Kepala Desa Kulu.</li>
         </ol>
     </td>
 </tr>
