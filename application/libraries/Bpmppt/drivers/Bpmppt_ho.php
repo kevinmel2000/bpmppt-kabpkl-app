@@ -48,12 +48,13 @@ class Bpmppt_ho extends CI_Driver
     public $fields = array(
         'surat_jenis_pengajuan'     => '',
         'pemohon_nama'              => '',
-        'pemohon_nama'              => '',
+        'pemohon_kerja'             => '',
         'pemohon_alamat'            => '',
         'pemohon_telp'              => '',
         'usaha_nama'                => '',
         'usaha_jenis'               => '',
         'usaha_alamat'              => '',
+        'usaha_tanah_milik'         => '',
         'usaha_lokasi'              => '',
         'usaha_luas'                => '',
         'usaha_pekerja'             => '',
@@ -116,7 +117,7 @@ class Bpmppt_ho extends CI_Driver
             'name'  => $this->alias.'_pemohon_kerja',
             'label' => 'Pekerjaan',
             'type'  => 'text',
-            'std'   => ( $data_obj ? $data_obj->pemohon_nama : ''),
+            'std'   => ( $data_obj ? $data_obj->pemohon_kerja : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
         $fields[]   = array(
@@ -158,6 +159,13 @@ class Bpmppt_ho extends CI_Driver
             'label' => 'Alamat Kantor',
             'type'  => 'textarea',
             'std'   => ( $data_obj ? $data_obj->usaha_alamat : ''),
+            'validation'=> ( !$data_obj ? 'required' : '' ) );
+
+        $fields[]   = array(
+            'name'  => $this->alias.'_usaha_tanah_milik',
+            'label' => 'A.N. Kepemilikan Tanah',
+            'type'  => 'text',
+            'std'   => ( $data_obj ? $data_obj->usaha_tanah_milik : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
         $fields[]   = array(

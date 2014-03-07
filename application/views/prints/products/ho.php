@@ -1,38 +1,37 @@
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
-    <td colspan="7" style="width:100%"><p style="text-align:center"><strong>IZIN GANGGUAN ( HO )</strong></p></td>
+    <td colspan="7" style="width:100%" class="align-center bold">IZIN GANGGUAN ( HO )</td>
+</tr>
+<tr>
+    <td colspan="7" style="width:100%" class="align-center bold">NOMOR : 510.8 /&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/ BPMPPT / P. Kayu / <?php echo strtoupper(format_roman(bdate('m', $created_on)).' / '.bdate('Y')) ?></td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
-    <td colspan="7" style="width:100%"><p style="text-align:center"><strong>NOMOR : 510.8 /&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/ BPMPPT / P. Kayu / VI / 2013</strong></p></td>
+    <td colspan="2" style="width:30%">&nbsp;</td>
+    <td style="width:10%">JENIS USAHA / KEGIATAN</td>
+    <td style="width:2%">:</td>
+    <td colspan="3" style="width:47%" class="bold"><?php echo $usaha_jenis.' * '.$usaha_nama ?> *</td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
-    <td colspan="3" style="width:30%">&nbsp;</td>
-    <td style="width:10%"><p>JENIS USAHA / KEGIATAN</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><strong>Pengolahan Kayu * PT. DUTA ALBASY *</strong></p></td>
-</tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr>
-    <td colspan="3" style="width:30%">&nbsp;</td>
+    <td colspan="2" style="width:30%">&nbsp;</td>
     <td style="width:10%"><p>An. SAUDARA</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><strong>EKO ARIFIYANTO</strong></p></td>
+    <td style="width:2%">:</td>
+    <td colspan="3" style="width:47%" class="bold"><?php echo strtoupper($pemohon_nama) ?></td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
-    <td colspan="7" style="width:100%"><p style="text-align:center"><strong>BUPATI PEKALONGAN</strong></p></td>
+    <td colspan="7" style="width:100%" class="align-center bold">BUPATI PEKALONGAN</td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
     <td style="width:20%"><p>Membaca</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%"><p>Surat Permohonan Saudara Eko Arifiyanto selaku Direktur PT. Duta Albasy, Alamat Kantor di Jl. Singosari Desa Tanjung Kulon Kecamatan Kajen Kabupaten Pekalongan, tanggal 10 Mei 2013 untuk Izin tempat usaha Pengolahan Kayu, yang terletak di Jl. Singosari Desa Tanjung Kulon Kecamatan Kajen Kabupaten Pekalongan.</p></td>
+    <td style="width:2%">:</td>
+    <td colspan="5" style="width:78%"><p>Surat Permohonan Saudara <?php echo $pemohon_nama ?> selaku <?php echo $pemohon_kerja.' '.$usaha_nama ?>, Alamat Kantor di <?php echo $usaha_alamat ?>, tanggal <?php echo $surat_tanggal ?> untuk Izin tempat usaha <?php echo $usaha_jenis ?>, yang terletak di <?php echo $usaha_lokasi ?>.</p></td>
 </tr>
 <tr>
     <td style="width:20%"><p>Menimbang</p></td>
-    <td style="width:2%"><p>:</p></td>
+    <td style="width:2%">:</td>
     <td colspan="5" style="width:78%">
         <ol>
             <li>Bahwa permohonan tersebut telah diumumkan menurut cara - cara tersebut dalam pasal 5 Undang-undang Gangguan ( HO )</li>
@@ -43,7 +42,7 @@
 </tr>
 <tr>
     <td style="width:20%"><p>Mengingat</p></td>
-    <td style="width:2%"><p>:</p></td>
+    <td style="width:2%">:</td>
     <td colspan="5" style="width:78%">
         <ol>
             <li>Undang-undang Gangguan (HO) Stbl Tahun 1926 yang telah beberapa kali diubah dan terakhir ditambah dengan Ordinantie Stbl Tahun 1940 Nomor 450;</li>
@@ -61,22 +60,22 @@
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
-    <td colspan="7" style="width:100%"><p style="text-align:center"><strong>M E M U T U S K A N :</strong></p></td>
+    <td colspan="7" style="width:100%" class="align-center bold">M E M U T U S K A N :</td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
     <td style="width:20%"><p>Menetapkan</p></td>
-    <td style="width:2%"><p>:</p></td>
+    <td style="width:2%">:</td>
     <td colspan="5" style="width:78%">&nbsp;</td>
 </tr>
 <tr>
     <td style="width:20%"><p>KESATU</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%"><p>Memberi Izin Gangguan ( HO ) kepada Saudara <strong><?php echo $pemohon_nama ?></strong> selaku <?php echo $pemohon_nama ?> <strong><?php echo $pemohon_nama ?></strong>, Alamat Kantor di <?php echo $pemohon_nama ?>, untuk Izin tempat usaha <?php echo $pemohon_nama ?> yang terletak <?php echo $pemohon_nama ?> di atas tanah milik <?php echo $pemohon_nama ?> di <?php echo $pemohon_nama ?> dengan luas tempat usaha ± <?php echo $pemohon_nama ?> M<sup>2</sup>.Adapun persil tersebut berbatasan :</p></td>
+    <td style="width:2%">:</td>
+    <td colspan="5" style="width:78%"><p>Memberi Izin Gangguan ( HO ) kepada Saudara <strong><?php echo $pemohon_nama ?></strong> selaku <?php echo $pemohon_kerja ?> <strong><?php echo $usaha_nama ?></strong>, Alamat Kantor di <?php echo $usaha_alamat ?>, untuk Izin tempat usaha <?php echo $usaha_jenis ?> yang terletak <?php echo $usaha_lokasi ?> di atas tanah milik <?php echo $usaha_tanah_milik ?> dengan luas tempat usaha ± <?php echo $usaha_luas ?> M<sup>2</sup>.Adapun persil tersebut berbatasan :</p></td>
 </tr>
 <tr>
     <td colspan="2">&nbsp;</td>
-    <td colspan="2" style="width:30%">
+    <td colspan="2" style="width:35%">
         <ol>
             <li>Sebelah Utara</li>
             <li>Sebelah Timur</li>
@@ -85,11 +84,11 @@
         </ol>
     </td>
     <td style="width:2%"><p>:</p><p>:</p><p>:</p><p>:</p></td>
-    <td colspan="2" style="width:47%">
-        <p><?php echo $pemohon_nama ?></p>
-        <p><?php echo $pemohon_nama ?></p>
-        <p><?php echo $pemohon_nama ?></p>
-        <p><?php echo $pemohon_nama ?></p>
+    <td colspan="2" style="width:42%">
+        <p><?php echo $usaha_tetangga_utara ?></p>
+        <p><?php echo $usaha_tetangga_timur ?></p>
+        <p><?php echo $usaha_tetangga_selatan ?></p>
+        <p><?php echo $usaha_tetangga_barat ?></p>
     </td>
 </tr>
 <tr>
@@ -115,7 +114,7 @@
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
     <td style="width:20%"><p>KEDUA</p></td>
-    <td style="width:2%"><p>:</p></td>
+    <td style="width:2%">:</td>
     <td colspan="5" style="width:78%">
         <p>Surat Keputusan ini berlaku sejak ditetapkan dengan ketentuan :</p>
         <ul>
@@ -132,7 +131,7 @@
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
     <td style="width:20%"><p>KETIGA</p></td>
-    <td style="width:2%"><p>:</p></td>
+    <td style="width:2%">:</td>
     <td colspan="5" style="width:78%">Keputusan ini mulai berlaku pada tanggal ditetapkan.</td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>

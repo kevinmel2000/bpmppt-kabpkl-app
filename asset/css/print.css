@@ -48,22 +48,8 @@ p, ol, ul {
     font-size: 10pt;
 }
 
-.align-center {
-    text-align: center;
-}
-
-.align-left {
-    text-align: left;
-}
-
-.align-right {
-    text-align: right;
-}
-
-.bold {
-    font-weight: bold;
-}
-
-.underline {
-    text-decoration: underline;
-}
+.align-center   { text-align: center; }
+.align-left     { text-align: left; }
+.align-right    { text-align: right; }
+.bold           { font-weight: bold; }
+.underline      { text-decoration: underline; }
