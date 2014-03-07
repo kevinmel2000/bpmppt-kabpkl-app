@@ -205,13 +205,13 @@
 <tr>
     <td style="width:20%"><p>KELIMA</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%">Masa berlakunya izin sebagaimana dimaksud dalam Diktum&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;KESATU adalah 3 (tiga) tahun sejak ditetapkannya keputusan ini</td>
+    <td colspan="5" style="width:78%">Masa berlakunya izin sebagaimana dimaksud dalam Diktum KESATU adalah 3 (tiga) tahun sejak ditetapkannya keputusan ini</td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
     <td style="width:20%"><p>KEENAM</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%">Keputusan ini mulai berlaku sejak tanggal ditetapkan ( <?php echo bdate('F', $created_on).' / '.bdate('Y') ?> s/d Mei 2016)</td>
+    <td colspan="5" style="width:78%">Keputusan ini mulai berlaku sejak tanggal ditetapkan ( <?php echo bdate('F', $created_on).' / '.bdate('Y') ?> s/d <?php echo bdate('F', $created_on).' / '.(bdate('Y') + 5) ?> )</td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
