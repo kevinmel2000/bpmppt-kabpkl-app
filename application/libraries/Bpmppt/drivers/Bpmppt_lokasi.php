@@ -50,7 +50,7 @@ class Bpmppt_lokasi extends CI_Driver
         'pemohon_alamat'    => '',
         'lokasi_tujuan'     => '',
         'lokasi_alamat'     => '',
-        'lokasi_nama'       => '',
+        'lokasi_luas'       => '',
         'lokasi_area_hijau' => '',
         );
 
@@ -131,10 +131,10 @@ class Bpmppt_lokasi extends CI_Driver
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
         $fields[]   = array(
-            'name'  => $this->alias.'_lokasi_nama',
+            'name'  => $this->alias.'_lokasi_luas',
             'label' => 'Luas Area (M<sup>2</sup>)',
             'type'  => 'number',
-            'std'   => ( $data_obj ? $data_obj->lokasi_nama : ''),
+            'std'   => ( $data_obj ? $data_obj->lokasi_luas : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
         $fields[]   = array(

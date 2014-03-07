@@ -1,173 +1,93 @@
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr class="align-center bold">
-    <td colspan="7">KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN PELAYANAN PERIZINAN TERPADU<br>KABUPATEN PEKALONGAN</td>
+    <td colspan="7" style="width:100%">
+        <p>BUPATI PEKALONGAN</p>
+        <p>&nbsp;</p>
+        <p>SURAT IZIN BUPATI PEKALONGAN</p>
+        <p>NOMOR : 510.4 / 156 / TAHUN <?php echo bdate('Y') ?></p>
+    </td>
 </tr>
-<tr><td colspan="7">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr class="align-center bold">
-    <td colspan="7" style="width:100%">NOMOR : 640/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo strtoupper('/IMB/BPM PPT/'.format_roman(bdate('m', $created_on)).'/'.bdate('Y')) ?></td>
+    <td colspan="7" style="width:100%"><p>TENTANG</p></td>
 </tr>
-<tr><td colspan="7">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr class="align-center bold">
-    <td colspan="7">TENTANG</td>
+    <td colspan="7" style="width:100%">
+        <p>PEMBERIAN IZIN LOKASI <?php echo $pemohon_usaha ?></p>
+        <p><?php echo $lokasi_tujuan ?></p>
+        <p><?php echo $lokasi_alamat ?></p>
+        <p>KABUPATEN PEKALONGAN</p>
+    </td>
 </tr>
-<tr><td colspan="7">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr class="align-center bold">
-    <td colspan="7">IZIN MENDIRIKAN / MEREHAB / MEROBOHKAN BANGUNAN</td>
-</tr>
-<tr><td colspan="7">&nbsp;</td></tr>
-<tr class="align-center bold">
-    <td colspan="7">KEPALA <?php echo strtoupper($skpd_name) ?><br><?php echo strtoupper($skpd_city) ?></td>
-</tr>
-<tr><td colspan="7">&nbsp;</td></tr>
-<tr>
-    <td colspan="3" style="width:30%">&nbsp;</td>
-    <td style="width:10%"><p>Membaca</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p>dst ;</p></td>
-</tr>
-<tr>
-    <td colspan="3" style="width:30%">&nbsp;</td>
-    <td style="width:10%"><p>Menimbang</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p>dst ;</p></td>
-</tr>
-<tr>
-    <td colspan="3" style="width:30%">&nbsp;</td>
-    <td style="width:10%"><p>Mengingat</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p>dst ;</p></td>
+    <td colspan="7" style="width:100%">
+        <p>BUPATI PEKALONGAN</p>
+    </td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
-    <td colspan="7" style="width:100%"><p style="text-align:center"><strong>M E M U T U S K A N :</strong></p></td>
+    <td style="width:20%"><p>dasar</p></td>
+    <td style="width:2%"><p>:</p></td>
+    <td colspan="5" style="width:78%">
+        <ol>
+            <li>Undang-undang Nomor 13 Tahun 950 tentang Pembentukan Daerah-daerah Kabupaten Dalam Lingkungan Propinsi Jawa Tengah;</li>
+            <li>Undang-undanga Nomor 9 Tahun 1965tengang Pembentukan Daerah Tingkat II Batang dengan mengubah Undang-Undang Nomoe 13 Tahun 1965 tentang Pembentukan Daerah-daerah Kabupaten Dalam Lingkungan Propinsi Jawa Tengah (Lembaran Negara Tahun 1965 Nomor 52, Tambahan Lembaran Negara Nomor 2757);</li>
+            <li>Undang-undang nomor 4 tahun 1992 tentang Perumahan dan Pemukiman (Lembaran Negara Tahun 1992 Nomor 23, Tambahnan Lembaran Negara Nomor 3469);</li>
+            <li>Keputusan-keputusan Presiden Nomor 34 Tahun 2003 tentang Kebijakan Nasional di Bidang Pertanahan (Lembaran Negara Tahun 2003 Nomor 60);</li>
+            <li>Peraturan-peraturan Menteri Negara Agraria / Kepala Badan Pertanahan Nasional Nomor 2 Tahun 1993 tentang Tata Cara Memperoleh Izin Lokasi dan Hak Atas Tanah Bagi Perusahaan Dalam Rangka Penanaman Modal;</li>
+            <li>Peraturan Menteri Negara / Kepala Badan Pertanahan Nasional Nomor 2 Tahun 1999 tentang Izin Lokasi</li>
+            <li>Keputusan Kepala Badan Pertanahan Nasional Nomor 2 Tahun 2003 tentang Norma dan Standar Mekanisme Ketatalaksanaan KEwenangan Pemerintah di Bidang Pertanahan yang dilaksanakan oleh pemerintah Kabupaten / Kota;</li>
+            <li>Keputusan Bupati Pekalongan Nomor 15 Tahun 2000 tentang Tata Cara Pemberian Izin Lokasi Bagi Perusahaan DAlam Rangka Penanaman Modal;</li>
+            <li>Keputusan Bupati Pekalongan Nomor 570/27 Tahun 2004 tentang Pembentukan Tim Koordinasi Pemberian Izin Lokasi Tanah Bagi Perusahaan Dalam Rangka Penanaman Modal Di Kabupaten Pekalongan</li>
+            <li>Keputusan Bupati Pekalongan Nomor 050/142/A Tahun 2007 tentang Badan Pengendalian Pembangunan Perumahan dan Pemukiman Daerah (BP4D) Kabupaten Pekalongan</li>
+        </ol>
+    </td>
+</tr>
+<tr>
+    <td colspan="7" style="width:100%">MENGIZINKAN</td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
-    <td style="width:20%"><p>Menetapkan</p></td>
+    <td style="width:20%"><p>Kepada</p></td>
     <td style="width:2%"><p>:</p></td>
     <td colspan="5" style="width:78%">&nbsp;</td>
 </tr>
 <tr>
-    <td style="width:20%"><p>KESATU</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%">Memberikan Izin Kepada :</td>
-</tr>
-<tr>
-    <td colspan="2">&nbsp;</td>
-    <td colspan="2" style="width:30%"><p>Nama Pemohon</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><strong><?php echo $pemohon_nama ?></strong></p></td>
-</tr>
-<tr>
-    <td colspan="2">&nbsp;</td>
-    <td colspan="2" style="width:30%"><p>Alamat Pemohon</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><strong><?php echo $pemohon_alamat ?></strong></p></td>
-</tr>
-<tr>
-    <td colspan="2">&nbsp;</td>
-    <td colspan="2" style="width:30%"><p>Pekerjaan</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><strong><?php echo $pemohon_kerja ?></strong></p></td>
-</tr>
-<tr>
-    <td colspan="2">&nbsp;</td>
-    <td colspan="2" style="width:30%"><p>Maksud Permohonan</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><strong><?php echo $bangunan_maksud ?></strong></p></td>
-</tr>
-<tr>
-    <td colspan="2">&nbsp;</td>
-    <td colspan="2" style="width:30%"><p>Penggunaan Bangunan</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><strong><?php echo $bangunan_guna ?></strong></p></td>
-</tr>
-<tr>
-    <td colspan="2">&nbsp;</td>
-    <td colspan="2" style="width:30%"><p>Lokasi Bangunan</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><strong><?php echo $bangunan_lokasi ?></strong></p></td>
-</tr>
-<tr>
-    <td colspan="2">&nbsp;</td>
-    <td colspan="2" style="width:30%"><p>Luas / Keadaan Tanah</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><strong><?php echo '&#177; '.$bangunan_tanah_luas.' M<sup>2</sup> / '.strtoupper($bangunan_tanah_keadaan) ?></strong></p></td>
-</tr>
-<tr>
-    <td colspan="2">&nbsp;</td>
-    <td colspan="2" style="width:30%"><p>Status Tanah</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><strong><?php echo $bangunan_tanah_status.$bangunan_milik_no.$bangunan_milik_an ?></strong></p></td>
-</tr>
-<tr>
-    <td colspan="2">&nbsp;</td>
-    <td colspan="2" style="width:30%"><p>Luas Bangunan</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><strong><?php echo '&#177; '.$bangunan_luas.' M<sup>2</sup> / ' ?></strong></p></td>
-</tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr>
-    <td style="width:20%"><p>KEDUA</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%">Ketentuan-ketentuan :</td>
-</tr>
-<tr>
-    <td colspan="2">&nbsp;</td>
+    <td style="width:20%">
+        <p>Nama</p>
+        <p>Jabatan</p>
+        <p>Alamat</p>
+        <p>Untuk</p>
+    </td>
+    <td style="width:2%"><p>:</p><p>:</p><p>:</p><p>:</p></td>
     <td colspan="5" style="width:78%">
-        <ol>
-            <li>Pelaksanaan pembangunan tidak boleh menyimpang dari lampiran yang   merupakan bagian tak terpisahkan dari keputusan ini.</li>
-            <li>Pelaksanaan pembangunan sesuai dengan Perda No. 1 Tahun  2012  Tetang Retribusi Daerah.</li>
-        </ol>
+        <p><?php echo $pemohon_nama ?></p>
+        <p><?php echo $pemohon_jabatan ?></p>
+        <p><?php echo $pemohon_alamat ?></p>
+        <p><?php echo $lokasi_tujuan.'<br>'.$lokasi_alamat ?></p>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
-    <td style="width:20%"><p>KETIGA</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%">Hal –hal yang harus diperhatikan dan ditaati oleh penerima / pemegang Izin</td>
-</tr>
-<tr>
-    <td colspan="2">&nbsp;</td>
-    <td colspan="5" style="width:78%">
+    <td colspan="7" style="width:100%">
+        <p>Dengan ketentuan sebagai berikut :</p>
         <ol>
-            <li>Pemegang Izin sebagaimana dimaksud diktum KESATU Keputusan ini wajib membayar Retribusi Izin Mendirikan Bangunan sebesar sebagaimana tercantum dalam Surat Ketetapan Retribusi Daerah ( SKRD ).</li>
-            <li>Selama pelaksanaan pekerjaan / kegiatan fisik berlangsung sekali-kali tidak boleh menimbulkan kerugian pihak lain / tetangga / lingkungan.</li>
-            <li>Penerima / pemegang Izin wajib melaksanakan segala usaha  pembangunan untuk terciptanya keselarasan dan kelestarian lingkungan.</li>
-            <li>Tiap-tiap kali apabila pondasi, dinding dan kerangka atap bangunan akan / sedang dikerjakan,penerima / pemegang Izin ataupun pelaksana / pemborong pekerjaan wajib memberitahukan hal itu kepada pengawasan bangunan untuk diperiksa dan disetujui .</li>
-            <li>Untuk pekerjaan beton / baja harus sesuai dengan Gambar Detail dan perhitungan yang telah diperiksa dan disetujui oleh Kepala Dinas Pekerjaan Umum.</li>
-            <li>Guna menghindari terjadinya kecelakaan karena tersengat aliran listrik, maka bangunan yang didirikan dengan kawat jaringan listrik tegangan menengah harus mempunyai jarak tegangan minimal 3 meter.</li>
-            <li>Sesuai dengan fungsi bangunan, penerima / pemegang izin / pemilik bangunan diwajibkan menyediakan fasilitas alat pencegahan kebakaran menurut ketentuan yang berlaku.</li>
-            <li>Pembuatan, perubahan / penghilangan bagian-bagian bangunan / unsur-unsur penunjang lain seperti jalan jembatan maupun unsur penunjang lain, harus berdasarkan rencana konstruksi yang secara teknis telah diperiksa dan disetuji oleh Kepala Dinas Pekejaan Umum.</li>
-            <li>Izin Mendirikan / Merubah / Merobohkan Bangunan ( IMB ) ini dapat dicabut apabila :
+            <li>Pemberian izin lokasi <?php echo $lokasi_tujuan ?> dimaksud seluas &#177; <?php echo $lokasi_luas ?> m<sup>2</sup> terletak di <?php echo $lokasi_alamat ?>;</li>
+            <li>Pemegang izin lokasi wajib melaporkan perolehan dan pemanfaatan tanahnya setiap tiga (tiga) bulan kepada Bupati Pekalongan Cq. Kepala Kantor Pertanahan Kabupaten Pekalongan;</li>
+            <li>Atas tanah yang sudah diperoleh pemegang izin lokasi diwajibkan mengajukan permohonan hak atas tanah kepada pejabat yang berwenang sesuai ketentuan yang berlaku;</li>
+            <li>Tanah tersebut dilarang digunakan untuk kegiatan lain selain untuk pembangunan perumahan;</li>
+            <li>Pemegang izin lokasi dilarang mengalihkan hak izinnya kepada siapapun dan dengan dalih apapun;</li>
+            <li>Dalam melaksanakan <?php echo $lokasi_tujuan ?> :
                 <ol>
-                    <li>Dalam waktu 6 ( enam ) bulan terhitung mulai tanggal Surat Keputusan Izin,  pelaksanaan / kegiatan fisik dimulai selama 6 ( enam ) bulan berturut-turut,kecuali permohonan untuk perpanjangan waktu yang bersangkutan dikabulkan.</li>
-                    <li>Ternyata dalam permohonan Izin yang diajukan, terdapat keterangan yang tidak benar / palsu atau dipalsukan.</li>
-                    <li>Pelaksanaan pembangunan ternyata menyimpang dari gambar rencana yang telah disahkan yang merupakan lampiran surat keputusan izin.</li>
+                    <li>Agar memenuhi ketentuan imbangan areal yang dibangun dan areal terbuka hijau perbandingan <?php echo $lokasi_area_hijau ?></li>
+                    <li>Menyediakan prasarana instalasi pengolahan - limbah dan drainase dengan mempertimbangkan rencana jaringan pembuangan di wilayah sekitarnya, sehingga keamanan dan kenyamanan lingkungan tetap terjaga</li>
+                    <li>Memenuhi segala peraturan dan ketentuan yang berlaku berkaitan dengan <?php echo $lokasi_tujuan ?></li>
                 </ol>
             </li>
-        </ol>
-    </td>
-</tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr>
-    <td style="width:20%"><p>KEEMPAT</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%">Mencatat bahwa :</td>
-</tr>
-<tr>
-    <td colspan="2">&nbsp;</td>
-    <td colspan="5" style="width:78%">
-        <ol>
-            <li>Izin ini tidak memberikan hak untuk pemakaian / penguasaan tanah.</li>
-            <li>Retribusi IMB / biaya lain yang telah dibayarkan tidak dapat diminta kembali apabila :
-                <ol>
-                    <li>Setelah surat Izin ini diberikan ternyata tidak dipergunakan sebagaimana  penggunaan bangunan.</li>
-                    <li>Karena suatu alasan yang sah, permohonan ini tidak dapat dikabulkan / dikabulkan sebagian.</li>
-                </ol>
-            </li>
-            <li>Bagian-bagian bangunan / unsur-unsur penunjangannya yang tidak diizinkan seperti tercantum pada gambar rencana lampiran surat izin ini dengan tanda warna kuning, harus dihilangkan / dibonkar penerima / pemegang Izin sendiri.</li>
-            <li>Apabila di kemudian hari ternyata terdapat kekeliruan dalam penetapannya akan dilakukan perbaikan / peninjauan kembali sebagaimana mestinya.</li>
+            <li>Pengawasan terhadap pelaksanaan ketentuan pada keputusan ini dilaksanakan oleh Bupati Pekalongan dan hasil-hasilnya dilaporkan kepada Gubernur Jawa Tengah dengan tembusan kepada Kepala Kantor Wilayah Badan Pertanaah Nasional Propinsi Jawa Tengah;</li>
+            <li>Penyimpangan terhadap ketentuan dalam keputusan ini berakibat dicabutnya keputusan ini;</li>
+            <li>Keputusan ini berlaku selama 1 (satu) tahun sejak tanggal ditetapkan.</li>
         </ol>
     </td>
 </tr>
@@ -193,3 +113,18 @@
         <p>NIP. <?php echo strtoupper($skpd_lead_nip) ?></p>
     </td>
 </tr>
+<tr>
+    <td colspan="7">
+        <p>Tembusan :</p>
+        <ol>
+            <li>Gubernur Jawa Tengah;</li>
+            <li>Kepala Kantor Wilayah Badan Pertanahan Nasional Propinsi Jawa Tengah;</li>
+            <li>Wakil Bupati Pekalongan;</li>
+            <li>Asisten Ekonmomi, Pembangunan dan Kesejahteraan Rakyat Setda Kabupaten Pekalongan;</li>
+            <li>Inspektur Kabupaten Pekalongan;</li>
+            <li>Tim BP4D KAbupaten Pekalongan;</li>
+            <li>Camat Kajen;</li>
+        </ol>
+    </td>
+</tr>
+
