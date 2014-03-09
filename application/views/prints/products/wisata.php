@@ -120,7 +120,7 @@
 <tr>
     <td style="width:20%"><p>KELIMA</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%"><p>Keputusan  ini mulai berlaku pada tanggal ditetapkan.</p></td>
+    <td colspan="5" style="width:78%"><p>Keputusan ini mulai berlaku pada tanggal ditetapkan.</p></td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>

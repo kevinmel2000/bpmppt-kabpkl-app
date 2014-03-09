@@ -1,175 +1,135 @@
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr class="align-center bold">
-    <td colspan="7">KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN PELAYANAN PERIZINAN TERPADU<br>KABUPATEN PEKALONGAN</td>
+    <td colspan="7" style="width:100%">
+        <p>KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN</p>
+        <p>PELAYANAN PERIZINAN TERPADU KABUPATEN PEKALONGAN</p>
+        <p>NOMOR : 534 /<?php echo $surat_nomor ?>/ BPMPPT / IUI / <?php echo strtoupper(format_roman(bdate('m', $created_on)).' / '.bdate('Y')) ?></p>
+    </td>
 </tr>
-<tr><td colspan="7">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr class="align-center bold">
-    <td colspan="7" style="width:100%">NOMOR : 640/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo strtoupper('/IMB/BPM PPT/'.format_roman(bdate('m', $created_on)).'/'.bdate('Y')) ?></td>
+    <td colspan="7" style="width:100%"><p>TENTANG</p></td>
 </tr>
-<tr><td colspan="7">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr class="align-center bold">
-    <td colspan="7">TENTANG</td>
+    <td colspan="7" style="width:100%">
+        <p>IZIN USAHA INDUSTRI</p>
+        <p>(TANPA MELALUI TAHAP PERSETUJUAN PRINSIP)</p>
+    </td>
 </tr>
-<tr><td colspan="7">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr class="align-center bold">
-    <td colspan="7">IZIN MENDIRIKAN / MEREHAB / MEROBOHKAN BANGUNAN</td>
-</tr>
-<tr><td colspan="7">&nbsp;</td></tr>
-<tr class="align-center bold">
-    <td colspan="7">KEPALA <?php echo strtoupper($skpd_name) ?><br><?php echo strtoupper($skpd_city) ?></td>
-</tr>
-<tr><td colspan="7">&nbsp;</td></tr>
-<tr>
-    <td colspan="3" style="width:30%">&nbsp;</td>
-    <td style="width:10%"><p>Membaca</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p>dst ;</p></td>
-</tr>
-<tr>
-    <td colspan="3" style="width:30%">&nbsp;</td>
-    <td style="width:10%"><p>Menimbang</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p>dst ;</p></td>
-</tr>
-<tr>
-    <td colspan="3" style="width:30%">&nbsp;</td>
-    <td style="width:10%"><p>Mengingat</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p>dst ;</p></td>
+    <td colspan="7" style="width:100%">
+        <p>KEPALA BADAN PENANAMAN MODAL DAN PELAYANAN PERIZINAN TERPADU</p>
+        <p>KABUPATEN PEKALONGAN</p>
+    </td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
-    <td colspan="7" style="width:100%" class="align-center bold">M E M U T U S K A N :</td>
+    <td style="width:20%"><p>Membaca</p></td>
+    <td style="width:2%"><p>:</p></td>
+    <td colspan="5" style="width:78%">Surat dari Perusahaan <?php echo $usaha_nama ?><br>Tanggal <?php echo $surat_nomor ?> Perihal Permohonan Izin Usaha Industri.</td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
-    <td style="width:20%"><p>Menetapkan</p></td>
+    <td style="width:20%"><p>Menimbang</p></td>
     <td style="width:2%"><p>:</p></td>
+    <td colspan="5" style="width:78%">
+        <ol>
+            <li>Bahwa berdasarkan penilaian dan penelitian terhadap realisasi pembangunan pabrik dan sarana produksi oleh perusahaan <?php echo $usaha_nama ?> dianggap telah memenuhi syarat-syarat yang diperlukan bagi industri tersebut untuk mendapatkan Izin Usaha Industri;</li>
+            <li>Bahwa untuk itu perlu diberikan Izin Usaha Industri.</li>
+        </ol>
+    </td>
+</tr>
+<tr>
+    <td style="width:20%"><p>Mengingat</p></td>
+    <td style="width:2%"><p>:</p></td>
+    <td colspan="5" style="width:78%">
+        <ol>
+            <li>Undang-Undang Nomor 13 Tahun 1950 tentang Pembentukan Daerah-daerah Kabupaten dalam Lingkungan Propinsi Jawa Tengah;</li>
+            <li>Undang-Undang Nomor 9 Tahun 1965 tentang Pembentukan Daerah Tingkat II Batang dengan mengubah Undang-Undang Nomor 13 Tahun 1950 tentang Pembentukan Daerah-daerah Kabupaten dalam Lingkungan Propinsi Jawa Tengah (Lembaran Negara Republik Indonesia Tahun 1965 Nomor 52, Tambahan Lembaran Negara Republik Indonesia Tahun 1965 Nomor 52, Tambahan Lembaran Negara Republik Indonesia Nomor 2757);</li>
+            <li>Undang-Undang Nomor 8 Tahun 1981 tentang Hukum Acara Pidana (Lembaran Negara Republik Indonesia Tahun 1981 Nomor 7, Tambahan Lembaran Negara Republik Indonesia Nomor 3209);</li>
+            <li>Undang-Undang Nomor 5 Tahun 1984 tentang Perindustrian (Lembaran Negara Republik Indonesia Tahun 1984 Nomor 22 Tambahan Lembaran Negara Republik Indonesia Nomor 3274);</li>
+            <li>Undang-Undang Nomor 1 Tahun 1995 tentang Perseroan Terbatas (Lembaran Negara Republik Indonesia Tahun 1995 Nomor 13, Tambahan Lembaran Negara Republik Indonesia Nomor 3587);</li>
+            <li>Undang-Undang Nomor 9 Tahun 1995 tentang Usaha Kecil (Lembaran Negara Republik Indonesia Tahun 1995 Nomor 74, Tambahan Lembaran Negara Republik Indonesia Nomor 3611);</li>
+            <li>Undang-Undang Nomor 23 Tahun 1997 tentang Pengelolaan Lingkungan Hidup (Lembaran Negara Republik Indonesia Tahun 1997 Nomor 68, Tambahan Lembaran Negara Republik Indonesia Nomor 3699);</li>
+            <li>Undang-Undang Nomor 10 Tahun 2004 tentang Pembentukan Peraturan Perundang-Undangan (Lembaran Negara Republik Indonesia Tahun 2004 Nomor 53, Tambahan Lembaran Negara Nomor 4389);</li>
+            <li>Undang-Undang Nomor 32 Tahun 2004 tentang Pemerintahan Daerah (Lembaran Negara Republik Indonesia Tahun 2004 Nomor 125, Tambahan Lembaran Negara Republik Indonesia Nomor 4437);</li>
+            <li>Undang-Undang Nomor 33 Tahun 2004 tentang Perimbangan Keuangan Antara Pemerintah Pusat dan Pemerintah Daerah (Lembaran Negara Republik Indonesia Tahun 2004 Nomor 126, Tambahan Lembaran Negara Republik Indonesia Nomor 4438);</li>
+            <li>Peraturan Pemerintah Nomor 27 Tahun 1983 tentang Pelaksanaan Undang-Undang Nomor 8 Tahun 1981 tentang Hukum Acara Pidana (Lembaran Negara Republik Indonesia Tahun 1983 Nomor 6, Tambahan Lembaran Negara Republik Indonesia Nomor 3258);</li>
+            <li>Peraturan Pemerintah Nomor 48 Tahun 1986 tentang Pemindahan Ibukota Kabupaten Daerah Tingkat II Pekalongan dari Wilayah Kotamadya Daerah Tingkat II Pekalongan ke Kota Kajen di Wilayah Kabupaten Daerah Tingkat II Pekalongan (Lembaran Negara Republik Indonesia Tahun 1986 Nomor 70);</li>
+            <li>Peraturan Pemerintah Nomor 21 Tahun 1988 tentang Perubahan Batas Wilayah Kotamadya Daerah Tingkat II Pekalongan, Kabupaten Daerah Tingkat II Pekalongan dan Kabupaten Daerah Tingkat II Batang (Lembaran Negara Republik Indonesia Tahun 1988 Nomor 42, Tambahan Lembaran Negara Republik Indonesia Nomor 3381);</li>
+            <li>Peraturan Pemerintah Nomor 13 Tahun 1995 tentang Izin Usaha Industri (Lembaran Negara Republik Indonesia Tahun 1995 Nomor 25, Tambahan Lembaran Negara Republik Indonesia Nomor 2330);</li>
+            <li>Peraturan Pemerintah Nomor 25 Tahun 2000 Kewenangan Pemerintah dan Kewenangan Propinsi sebagai Daerah Otonom (Lembaran Negara Republik Indonesia Tahun 2001 Nomor 54, Tambahan Lembaran Negara Republik Indonesia Nomor 3952);</li>
+            <li>Peraturan Daerah Kabupaten Pekalongan Nomor 11 Tahun 2001 tentang Rencana Tata Ruang Wilayah Kabupaten Daerah Tingkat II Pekalongan (Lembaran Daerah Kabupaten Daerah Tingkat II Pekalongan Tahun 2001 Nomor 23);</li>
+            <li>Peraturan Daerah Kabupaten Pekalongan Nomor 2 Tahun 2005 tentang Retribusi Izin Usaha Industri (Lembaran Daerah Kabupaten Pekalongan Tahun 2005 Nomor 6);</li>
+            <li>Peraturan Daerah Kabupaten Pekalongan Nomor 6 Tahun 2011 tentang Organisasi dan Tata Kerja Lembaga Teknis Daerah, Satuan Polisi Pamong Praja dan Badan Penanggulangan Bencana Daerah (Lembaga Daerah Kabupaten Pekalongan Tahun 2011 Nomor 6, Tambahan Lembaran Daerah Nomor 22);</li>
+            <li>Peraturan Bupati Pekalongan No.12 Tahun 2012 tentang Pendelegasian Kewenangan Penandatanganan Perizinan dan Non perizinan kepada Kepala Badan Penanaman Modal dan Pelayanan Perizinan Terpadu Kabupaten Pekalongan.</li>
+        </ol>
+    </td>
+</tr>
+<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr>
+    <td colspan="7" style="width:100%"><p style="text-align:center"><strong>M E M U T U S K A N :</strong></p></td>
+</tr>
+<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr>
+    <td style="width:20%">Menetapkan</td>
+    <td style="width:2%">:</td>
     <td colspan="5" style="width:78%">&nbsp;</td>
 </tr>
 <tr>
-    <td style="width:20%"><p>KESATU</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%">Memberikan Izin Kepada :</td>
+    <td style="width:20%">PERTAMA</td>
+    <td style="width:2%">:</td>
+    <td colspan="5" style="width:78%">Memberikan Izin Usaha Industri :</td>
 </tr>
 <tr>
     <td colspan="2">&nbsp;</td>
-    <td colspan="2" style="width:30%"><p>Nama Pemohon</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><strong><?php echo $pemohon_nama ?></strong></p></td>
+    <td colspan="2" style="width:30%">
+        <p>Kepada</p>
+        <p>Nomor Pokok Wajib Pajak (NPWP)</p>
+        <p>Untuk menjalankan Perusahaan Industri</p>
+        <p>Jenis Industri (KBLI)</p>
+        <p>a. Alamat Perusahaan</p>
+        <p>b. Alamat Pabrik</p>
+    </td>
+    <td style="width:2%"><p>:</p><p>:</p><p>:</p><p>:</p><p>:</p><p>:</p></td>
+    <td colspan="2" style="width:47%">
+        <p><?php echo $usaha_nama ?></p>
+        <p><?php echo $usaha_npwp ?></p>
+        <p>&nbsp;</p>
+        <p><?php echo $usaha_jenis_kbli ?></p>
+        <p><?php echo $usaha_alamat ?></p>
+        <p><?php echo $usaha_lokasi ?></p>
+    </td>
 </tr>
 <tr>
     <td colspan="2">&nbsp;</td>
-    <td colspan="2" style="width:30%"><p>Alamat Pemohon</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><strong><?php echo $pemohon_alamat ?></strong></p></td>
-</tr>
-<tr>
-    <td colspan="2">&nbsp;</td>
-    <td colspan="2" style="width:30%"><p>Pekerjaan</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><strong><?php echo $pemohon_kerja ?></strong></p></td>
-</tr>
-<tr>
-    <td colspan="2">&nbsp;</td>
-    <td colspan="2" style="width:30%"><p>Maksud Permohonan</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><strong><?php echo $bangunan_maksud ?></strong></p></td>
-</tr>
-<tr>
-    <td colspan="2">&nbsp;</td>
-    <td colspan="2" style="width:30%"><p>Penggunaan Bangunan</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><strong><?php echo $bangunan_guna ?></strong></p></td>
-</tr>
-<tr>
-    <td colspan="2">&nbsp;</td>
-    <td colspan="2" style="width:30%"><p>Lokasi Bangunan</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><strong><?php echo $bangunan_lokasi ?></strong></p></td>
-</tr>
-<tr>
-    <td colspan="2">&nbsp;</td>
-    <td colspan="2" style="width:30%"><p>Luas / Keadaan Tanah</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><strong><?php echo '&#177; '.$bangunan_tanah_luas.' M<sup>2</sup> / '.strtoupper($bangunan_tanah_keadaan) ?></strong></p></td>
-</tr>
-<tr>
-    <td colspan="2">&nbsp;</td>
-    <td colspan="2" style="width:30%"><p>Status Tanah</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><strong><?php echo $bangunan_tanah_status.$bangunan_milik_no.$bangunan_milik_an ?></strong></p></td>
-</tr>
-<tr>
-    <td colspan="2">&nbsp;</td>
-    <td colspan="2" style="width:30%"><p>Luas Bangunan</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><strong><?php echo '&#177; '.$bangunan_luas.' M<sup>2</sup> / ' ?></strong></p></td>
+    <td colspan="5">Dengan ketentuan dan persyaratan sebagaimana terlampir pada Izin Usaha Industri ini.</td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
     <td style="width:20%"><p>KEDUA</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%">Ketentuan-ketentuan :</td>
-</tr>
-<tr>
-    <td colspan="2">&nbsp;</td>
-    <td colspan="5" style="width:78%">
-        <ol>
-            <li>Pelaksanaan pembangunan tidak boleh menyimpang dari lampiran yang   merupakan bagian tak terpisahkan dari keputusan ini.</li>
-            <li>Pelaksanaan pembangunan sesuai dengan Perda No. 1 Tahun  2012  Tetang Retribusi Daerah.</li>
-        </ol>
-    </td>
+    <td colspan="5" style="width:78%">Izin Usaha Industri ini berlaku selama perusahaan industri ini beroperasi, kecuali apabila dalam jangka waktu 4 (empat) tahun terhitung mulai tanggal Surat Pernyataan dibuat, tidak merealisasikan pembangunan pabrik dan sarana produksi serta tidak memenuhi kesanggupan yang tercantum dalam Surat Pernyataan, Izin Usaha Industri batal dengan sendirinya.</td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
-    <td style="width:20%"><p>KETIGA</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%">Hal –hal yang harus diperhatikan dan ditaati oleh penerima / pemegang Izin</td>
-</tr>
-<tr>
-    <td colspan="2">&nbsp;</td>
-    <td colspan="5" style="width:78%">
-        <ol>
-            <li>Pemegang Izin sebagaimana dimaksud diktum KESATU Keputusan ini wajib membayar Retribusi Izin Mendirikan Bangunan sebesar sebagaimana tercantum dalam Surat Ketetapan Retribusi Daerah ( SKRD ).</li>
-            <li>Selama pelaksanaan pekerjaan / kegiatan fisik berlangsung sekali-kali tidak boleh menimbulkan kerugian pihak lain / tetangga / lingkungan.</li>
-            <li>Penerima / pemegang Izin wajib melaksanakan segala usaha  pembangunan untuk terciptanya keselarasan dan kelestarian lingkungan.</li>
-            <li>Tiap-tiap kali apabila pondasi, dinding dan kerangka atap bangunan akan / sedang dikerjakan,penerima / pemegang Izin ataupun pelaksana / pemborong pekerjaan wajib memberitahukan hal itu kepada pengawasan bangunan untuk diperiksa dan disetujui .</li>
-            <li>Untuk pekerjaan beton / baja harus sesuai dengan Gambar Detail dan perhitungan yang telah diperiksa dan disetujui oleh Kepala Dinas Pekerjaan Umum.</li>
-            <li>Guna menghindari terjadinya kecelakaan karena tersengat aliran listrik, maka bangunan yang didirikan dengan kawat jaringan listrik tegangan menengah harus mempunyai jarak tegangan minimal 3 meter.</li>
-            <li>Sesuai dengan fungsi bangunan, penerima / pemegang izin / pemilik bangunan diwajibkan menyediakan fasilitas alat pencegahan kebakaran menurut ketentuan yang berlaku.</li>
-            <li>Pembuatan, perubahan / penghilangan bagian-bagian bangunan / unsur-unsur penunjang lain seperti jalan jembatan maupun unsur penunjang lain, harus berdasarkan rencana konstruksi yang secara teknis telah diperiksa dan disetuji oleh Kepala Dinas Pekejaan Umum.</li>
-            <li>Izin Mendirikan / Merubah / Merobohkan Bangunan ( IMB ) ini dapat dicabut apabila :
-                <ol>
-                    <li>Dalam waktu 6 ( enam ) bulan terhitung mulai tanggal Surat Keputusan Izin,  pelaksanaan / kegiatan fisik dimulai selama 6 ( enam ) bulan berturut-turut,kecuali permohonan untuk perpanjangan waktu yang bersangkutan dikabulkan.</li>
-                    <li>Ternyata dalam permohonan Izin yang diajukan, terdapat keterangan yang tidak benar / palsu atau dipalsukan.</li>
-                    <li>Pelaksanaan pembangunan ternyata menyimpang dari gambar rencana yang telah disahkan yang merupakan lampiran surat keputusan izin.</li>
-                </ol>
-            </li>
-        </ol>
-    </td>
+    <td style="width:20%">KETIGA</td>
+    <td style="width:2%">:</td>
+    <td colspan="5" style="width:78%">Izin Usaha Industri ini merupakan bagian yang tidak terpisahkan dari Surat Pernyataan tertanggal <?php echo $surat_tanggal ?> yang dibuat oleh perusahaan yang bersangkutan.</td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
-    <td style="width:20%"><p>KEEMPAT</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%">Mencatat bahwa :</td>
+    <td style="width:20%">KEEMPAT</td>
+    <td style="width:2%">:</td>
+    <td colspan="5" style="width:78%">Izin Usaha Industri ini terlepas dari Izin-izin yang diharuskan berdasarkan peraturan perundang-undangan lain yang berlaku.</td>
 </tr>
+<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
-    <td colspan="2">&nbsp;</td>
-    <td colspan="5" style="width:78%">
-        <ol>
-            <li>Izin ini tidak memberikan hak untuk pemakaian / penguasaan tanah.</li>
-            <li>Retribusi IMB / biaya lain yang telah dibayarkan tidak dapat diminta kembali apabila :
-                <ol>
-                    <li>Setelah surat Izin ini diberikan ternyata tidak dipergunakan sebagaimana  penggunaan bangunan.</li>
-                    <li>Karena suatu alasan yang sah, permohonan ini tidak dapat dikabulkan / dikabulkan sebagian.</li>
-                </ol>
-            </li>
-            <li>Bagian-bagian bangunan / unsur-unsur penunjangannya yang tidak diizinkan seperti tercantum pada gambar rencana lampiran surat izin ini dengan tanda warna kuning, harus dihilangkan / dibonkar penerima / pemegang Izin sendiri.</li>
-            <li>Apabila di kemudian hari ternyata terdapat kekeliruan dalam penetapannya akan dilakukan perbaikan / peninjauan kembali sebagaimana mestinya.</li>
-        </ol>
-    </td>
+    <td style="width:20%">KELIMA</td>
+    <td style="width:2%">:</td>
+    <td colspan="5" style="width:78%">Izin Usaha Industri ini mulai berlaku pada tanggal ditetapkan.</td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
@@ -193,3 +153,21 @@
         <p>NIP. <?php echo strtoupper($skpd_lead_nip) ?></p>
     </td>
 </tr>
+<tr>
+    <td colspan="7">
+        <p>Tembusan :</p>
+        <ol>
+            <li>Menteri Perindustrian RI</li>
+            <li>Cq. Sekretaris Jenderal Kementerian Perindustrian RI</li>
+            <li>Inspektur Jenderal Kementerian Perindustrian RI</li>
+            <li>Dirjen IKM Kementerian Perindustrian RI</li>
+            <li>Gubernur Jawa Tengah</li>
+            <li>Kepala PUSDATIN Kementerian Perindustrian RI</li>
+            <li>Kepala Dinas Perindustrian Prop. Jawa Tengah</li>
+            <li>Bupati Pekalongan</li>
+            <li>Kepala DINPERINDAGKOP Kab. Pekalongan</li>
+            <li>A r s i p </li>
+        </ol>
+    </td>
+</tr>
+
