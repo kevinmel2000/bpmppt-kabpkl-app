@@ -123,7 +123,7 @@ class Bpmppt_iup extends CI_Driver
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
         $fields[]   = array(
-            'name'  => $this->alias.'_fieldset_tambang',
+            'name'  => $this->alias.'_fieldset_perijinan',
             'label' => 'Ketentuan Perijinan',
             'attr'  => ( $data_obj ? array( 'disabled' => TRUE ) : '' ),
             'type'  => 'fieldset' );
@@ -135,14 +135,14 @@ class Bpmppt_iup extends CI_Driver
             'fields'=> array(
                 array(
                     'col'   => '6',
-                    'name'  => 'nomor',
+                    'name'  => 'mulai',
                     'label' => 'Mulai',
-                    'type'  => 'text',
+                    'type'  => 'datepicker',
                     'std'   => ( $data_obj ? $data_obj->tambang_waktu_mulai : ''),
                     'validation'=> ( !$data_obj ? 'required' : '' ) ),
                 array(
                     'col'   => '6',
-                    'name'  => 'tanggal',
+                    'name'  => 'selesai',
                     'label' => 'Selesai',
                     'type'  => 'datepicker',
                     'std'   => ( $data_obj ? $data_obj->tambang_waktu_selesai : ''),
@@ -173,7 +173,7 @@ class Bpmppt_iup extends CI_Driver
 
         $fields[]   = array(
             'name'  => $this->alias.'_fieldset_tambang',
-            'label' => 'Ketentuan Perijinan',
+            'label' => 'Data Pertambangan',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
             'type'  => 'fieldset' );
 
@@ -181,19 +181,22 @@ class Bpmppt_iup extends CI_Driver
             'name'  => $this->alias.'_tambang_koor',
             'label' => 'Kode Koordinat',
             'type'  => 'custom',
-            'value' => $this->custom_field(),
-            'validation'=> ( !$data_obj ? 'required' : '' ) );
+            'value' => $this->custom_field($data_obj, 'tambang_koor'),
+            'validation'=> ( !$data_obj ? '' : '' ) );
 
         return $fields;
     }
 
     // -------------------------------------------------------------------------
 
-    private function custom_field( $data = NULL)
+    private function custom_field( $data = FALSE, $field_name )
     {
         // if ( ! $this->load->is_loaded('table'))
         $ci =& get_instance();
         $ci->load->library('table');
+        $ci->table->set_template( array('table_open' => '<table id="table-koordinat" class="table table-striped table-hover table-condensed">' ) );
+
+        $data_mode = $data and !empty($data->$field_name);
 
         // var_dump($this);
         $head[] = array(
@@ -212,53 +215,78 @@ class Bpmppt_iup extends CI_Driver
             'class' => 'head-value',
             'width' => '30%',
             'colspan'=> 4 );
-
-        $head[] = array(
-            'data'  => form_button( array(
-                'name'  => 'no',
-                'type'  => 'button',
-                'id'    => 'no',
-                'class' => 'btn btn-primary bs-tooltip btn-block btn-sm',
-                'value' => 'add',
-                'title' => 'Tambahkan baris',
-                'content'=> 'Add' ) ),
-            'class' => 'head-action',
-            'width' => '10%' );
+        
+        if (!$data_mode)
+        {
+            $head[] = array(
+                'data'  => form_button( array(
+                    'name'  => $this->alias.'_'.$field_name.'_add-btn',
+                    'type'  => 'button',
+                    'class' => 'btn btn-primary bs-tooltip btn-block btn-sm',
+                    'value' => 'add',
+                    'title' => 'Tambahkan baris',
+                    'content'=> 'Add' ) ),
+                'class' => 'head-action',
+                'width' => '10%' );
+        }
 
         $ci->table->set_heading( $head );
 
-        if ( !is_null($data) )
+        if ( $data and !empty($data->$field_name) )
         {
-            foreach ( $data->result() as $row )
+            $i = 0;
+            foreach ( unserialize($data->$field_name) as $row )
             {
-                $cols[] = array(
-                    'data'  => anchor($form_link.'/'.$row->id, '#'.$row->id),
+                $cols[$i][] = array(
+                    'data'  => $row['no'],
                     'class' => 'data-id',
                     'width' => '10%' );
 
-                $cols[] = array(
-                    'data'  => '<strong>'.anchor($form_link.'/'.$row->id, 'No. '.$row->no_agenda).'</strong><br><small class="text-muted">'.format_datetime($row->created_on).'</small>',
-                    'class' => 'data-value',
-                    'width' => '30%' );
-
-                $cols[] = array(
-                    'data'  => '<strong>'.$row->petitioner.'</strong><br><small class="text-muted">'.format_datetime($row->adopted_on).'</small>',
-                    'class' => 'data-value',
-                    'width' => '30%' );
-
-                $cols[] = array(
-                    'data'  => $row->status,
-                    'class' => '',
+                $cols[$i][] = array(
+                    'data'  => $row['gb-1'],
+                    'class' => 'data-id',
                     'width' => '10%' );
+
+                $cols[$i][] = array(
+                    'data'  => $row['gb-2'],
+                    'class' => 'data-id',
+                    'width' => '10%' );
+
+                $cols[$i][] = array(
+                    'data'  => $row['gb-3'],
+                    'class' => 'data-id',
+                    'width' => '10%' );
+
+                $cols[$i][] = array(
+                    'data'  => $row['gl-1'],
+                    'class' => 'data-id',
+                    'width' => '10%' );
+
+                $cols[$i][] = array(
+                    'data'  => $row['gl-2'],
+                    'class' => 'data-id',
+                    'width' => '10%' );
+
+                $cols[$i][] = array(
+                    'data'  => $row['gl-3'],
+                    'class' => 'data-id',
+                    'width' => '10%' );
+
+                $cols[$i][] = array(
+                    'data'  => $row['lsu'],
+                    'class' => 'data-id',
+                    'width' => '10%' );
+
+                $ci->table->add_row( $cols[$i] );
+                $i++;
             }
         }
         else
         {
             $cols[] = array(
                 'data'  => form_input( array(
-                    'name'  => 'no',
+                    'name'  => $this->alias.'_'.$field_name.'_no[]',
                     'type'  => 'text',
-                    'id'    => 'no',
                     'class' => 'form-control bs-tooltip input-sm',
                     'title' => 'Masukan nomor titik',
                     'placeholder'=> 'No' ), '', ''),
@@ -267,9 +295,8 @@ class Bpmppt_iup extends CI_Driver
 
             $cols[] = array(
                 'data'  => form_input( array(
-                    'name'  => 'no',
+                    'name'  => $this->alias.'_'.$field_name.'_gb-1[]',
                     'type'  => 'text',
-                    'id'    => 'no',
                     'class' => 'form-control bs-tooltip input-sm',
                     'title' => 'Masukan nilai &deg; Garis Bujur',
                     'placeholder'=> '&deg;' ), '', ''),
@@ -278,9 +305,8 @@ class Bpmppt_iup extends CI_Driver
 
             $cols[] = array(
                 'data'  => form_input( array(
-                    'name'  => 'no',
+                    'name'  => $this->alias.'_'.$field_name.'_gb-2[]',
                     'type'  => 'text',
-                    'id'    => 'no',
                     'class' => 'form-control bs-tooltip input-sm',
                     'title' => 'Masukan nilai &apos; Garis Bujur',
                     'placeholder'=> '&apos;' ), '', ''),
@@ -289,9 +315,8 @@ class Bpmppt_iup extends CI_Driver
 
             $cols[] = array(
                 'data'  => form_input( array(
-                    'name'  => 'no',
+                    'name'  => $this->alias.'_'.$field_name.'_gb-3[]',
                     'type'  => 'text',
-                    'id'    => 'no',
                     'class' => 'form-control bs-tooltip input-sm',
                     'title' => 'Masukan nilai &quot; Garis Bujur',
                     'placeholder'=> '&quot;' ), '', ''),
@@ -300,9 +325,8 @@ class Bpmppt_iup extends CI_Driver
 
             $cols[] = array(
                 'data'  => form_input( array(
-                    'name'  => 'no',
+                    'name'  => $this->alias.'_'.$field_name.'_gl-1[]',
                     'type'  => 'text',
-                    'id'    => 'no',
                     'class' => 'form-control bs-tooltip input-sm',
                     'title' => 'Masukan nilai &deg; Garis Lintang',
                     'placeholder'=> '&deg;' ), '', ''),
@@ -311,9 +335,8 @@ class Bpmppt_iup extends CI_Driver
 
             $cols[] = array(
                 'data'  => form_input( array(
-                    'name'  => 'no',
+                    'name'  => $this->alias.'_'.$field_name.'_gl-2[]',
                     'type'  => 'text',
-                    'id'    => 'no',
                     'class' => 'form-control bs-tooltip input-sm',
                     'title' => 'Masukan nilai &apos; Garis Lintang',
                     'placeholder'=> '&apos;' ), '', ''),
@@ -322,9 +345,8 @@ class Bpmppt_iup extends CI_Driver
 
             $cols[] = array(
                 'data'  => form_input( array(
-                    'name'  => 'no',
+                    'name'  => $this->alias.'_'.$field_name.'_gl-3[]',
                     'type'  => 'text',
-                    'id'    => 'no',
                     'class' => 'form-control bs-tooltip input-sm',
                     'title' => 'Masukan nilai &quot; Garis Lintang',
                     'placeholder'=> '&quot;' ), '', ''),
@@ -333,31 +355,30 @@ class Bpmppt_iup extends CI_Driver
 
             $cols[] = array(
                 'data'  => form_input( array(
-                    'name'  => 'no',
+                    'name'  => $this->alias.'_'.$field_name.'_lsu[]',
                     'type'  => 'text',
-                    'id'    => 'no',
                     'class' => 'form-control bs-tooltip input-sm',
                     'title' => 'ini tooltip',
                     'placeholder'=> 'LS/U' ), '', ''),
                 'class' => 'data-id',
                 'width' => '10%' );
 
-            $cols[] = array(
-                'data'  => form_button( array(
-                    'name'  => 'no',
-                    'type'  => 'button',
-                    'id'    => 'no',
-                    'class' => 'btn btn-danger bs-tooltip btn-block btn-sm',
-                    'value' => 'remove',
-                    'title' => 'Hapus baris ini',
-                    'content'=> '&times;' ) ),
-                'class' => '',
-                'width' => '10%' );
+            if (!$data_mode)
+            {
+                $cols[] = array(
+                    'data'  => form_button( array(
+                        'name'  => $this->alias.'_'.$field_name.'_remove-btn',
+                        'type'  => 'button',
+                        'class' => 'btn btn-danger bs-tooltip btn-block btn-sm koor-remove-btn',
+                        'value' => 'remove',
+                        'title' => 'Hapus baris ini',
+                        'content'=> '&times;' ) ),
+                    'class' => '',
+                    'width' => '10%' );
+            }
+
+            $ci->table->add_row( $cols );
         }
-
-        $ci->table->add_row( $cols );
-
-        $ci->table->set_template( array('table_open' => '<table id="table-koordinat" class="table table-striped table-hover table-condensed">' ) );
 
         return $ci->table->generate();
     }

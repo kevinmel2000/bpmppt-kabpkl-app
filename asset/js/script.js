@@ -38,10 +38,15 @@ $(document).ready( function () {
 	// 	$(this).tooltip('show');
 	// })
 
-	$('#table-koordinat .btn-primary').on('click', function () {
+	$('#table-koordinat').on('click', '.btn-primary', function () {
 		var table = $('#table-koordinat');
 		
 		table.find('tbody').append( table.find('tbody > tr:first').clone() )
+	})
+
+	$('#table-koordinat').on('click', '.koor-remove-btn', function () {
+		// $(this).parents('tr').addClass('danger')
+		$(this).parents('tr').remove()
 	})
 	
 });

@@ -2,7 +2,7 @@
 <tr class="align-center bold">
     <td colspan="5" style="width:100%">
         <p>SURAT IZIN BUPATI PEKALONGAN</p>
-        <p>NOMOR : <?php echo $surat_nomor?>/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo strtoupper('/BPM PPT/rEKL/'.format_roman(bdate('m', $created_on)).'/'.bdate('Y')) ?></p>
+        <p>NOMOR : <?php echo $surat_nomor?>/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo strtoupper('/BPM PPT/Rekl/'.format_roman(bdate('m', $created_on)).'/'.bdate('Y')) ?></p>
         <p>IZIN PEMASANGAN REKLAME</p>
     </td>
 </tr>

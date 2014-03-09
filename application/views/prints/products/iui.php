@@ -1,24 +1,24 @@
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr class="align-center bold">
-    <td colspan="7" style="width:100%">KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN PELAYANAN PERIZINAN TERPADU<br>KABUPATEN PEKALONGAN</td>
+    <td colspan="7">KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN PELAYANAN PERIZINAN TERPADU<br>KABUPATEN PEKALONGAN</td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7">&nbsp;</td></tr>
 <tr class="align-center bold">
-    <td colspan="7" style="width:100%">NOMOR : 640 /&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/ IMB / BPM PPT / VI / 2013</td>
+    <td colspan="7" style="width:100%">NOMOR : 640/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo strtoupper('/IMB/BPM PPT/'.format_roman(bdate('m', $created_on)).'/'.bdate('Y')) ?></td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7">&nbsp;</td></tr>
 <tr class="align-center bold">
-    <td colspan="7" style="width:100%">TENTANG</td>
+    <td colspan="7">TENTANG</td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7">&nbsp;</td></tr>
 <tr class="align-center bold">
-    <td colspan="7" style="width:100%">IZIN MENDIRIKAN / MEREHAB / MEROBOHKAN BANGUNAN</td>
+    <td colspan="7">IZIN MENDIRIKAN / MEREHAB / MEROBOHKAN BANGUNAN</td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7">&nbsp;</td></tr>
 <tr class="align-center bold">
-    <td colspan="7" style="width:100%">KEPALA <?php echo strtoupper($skpd_name) ?><br><?php echo strtoupper($skpd_city) ?></td>
+    <td colspan="7">KEPALA <?php echo strtoupper($skpd_name) ?><br><?php echo strtoupper($skpd_city) ?></td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7">&nbsp;</td></tr>
 <tr>
     <td colspan="3" style="width:30%">&nbsp;</td>
     <td style="width:10%"><p>Membaca</p></td>

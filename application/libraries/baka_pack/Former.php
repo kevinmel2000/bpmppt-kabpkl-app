@@ -693,6 +693,11 @@ class Former
                     $input = '<p id="'.$id.'" class="'.str_replace('form-control', 'form-control-static', $input_class).'">'.$std.'</p>';
                     break;
 
+                // Static field
+                case 'custom':
+                    $input = $value;
+                    break;
+
                 default:
                     log_message('error', '#Baka_form: '.$type.' Field type are not supported currently');
                     break;

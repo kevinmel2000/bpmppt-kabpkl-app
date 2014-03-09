@@ -225,11 +225,35 @@ class Layanan extends BAKA_Controller
                 $form_data[$modul_slug.'_surat_nomor'] = 614;
             }
 
+            if ( $data_type == 'iup' )
+            {
+                $i = 0;
+                $koor_fn = $modul_slug.'_tambang_koor';
+
+                foreach ($_POST[$koor_fn.'_no'] as $no)
+                {
+                    foreach (array('no', 'gb-1', 'gb-2', 'gb-3', 'gl-1', 'gl-2', 'gl-3', 'lsu') as $name)
+                    {
+                        $koor_name = $koor_fn.'_'.$name;
+                        $koordinat[$i][$name] = isset($_POST[$koor_name][$i]) ? $_POST[$koor_name][$i] : 0;
+                        unset($_POST[$koor_name][$i]);
+                    }
+
+                    $i++;
+                }
+
+                $form_data[$modul_slug.'_tambang_koor'] = serialize($koordinat);
+            }
+
             foreach ($this->bpmppt->$data_type->fields as $field)
             {
                 if (!isset($form_data[$modul_slug.$field]))
                     $form_data[$modul_slug.$field] = '';
             }
+
+            unset($form_data[$modul_slug]);
+
+            // var_dump($form_data);
 
             $data_id = $this->bpmppt->simpan( $modul_slug, $form_data );
             
