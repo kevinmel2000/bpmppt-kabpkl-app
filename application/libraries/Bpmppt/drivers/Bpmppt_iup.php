@@ -192,8 +192,10 @@ class Bpmppt_iup extends CI_Driver
     private function custom_field( $data = NULL)
     {
         // if ( ! $this->load->is_loaded('table'))
-        $this->load->library('table');
+        $ci =& get_instance();
+        $ci->load->library('table');
 
+        // var_dump($this);
         $head[] = array(
             'data'  => 'No. Titik',
             'class' => 'head-id',
@@ -223,11 +225,11 @@ class Bpmppt_iup extends CI_Driver
             'class' => 'head-action',
             'width' => '10%' );
 
-        $this->table->set_heading( $head );
+        $ci->table->set_heading( $head );
 
-        if ( ! is_null( $data ) )
+        if ( !is_null($data) )
         {
-            foreach ( $query->result() as $row )
+            foreach ( $data->result() as $row )
             {
                 $cols[] = array(
                     'data'  => anchor($form_link.'/'.$row->id, '#'.$row->id),
@@ -353,11 +355,11 @@ class Bpmppt_iup extends CI_Driver
                 'width' => '10%' );
         }
 
-        $this->table->add_row( $cols );
+        $ci->table->add_row( $cols );
 
-        $this->table->set_template( array('table_open' => '<table id="table-koordinat" class="table table-striped table-hover table-condensed">' ) );
+        $ci->table->set_template( array('table_open' => '<table id="table-koordinat" class="table table-striped table-hover table-condensed">' ) );
 
-        return $this->table->generate();
+        return $ci->table->generate();
     }
 
     // -------------------------------------------------------------------------
