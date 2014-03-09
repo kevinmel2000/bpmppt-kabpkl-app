@@ -243,9 +243,17 @@ class Bpmppt_model extends CI_Model
     // -------------------------------------------------------------------------
 
     // count data
-    public function count_data( $module_alias = '' )
+    public function count_data( $module_alias, $wheres = array() )
     {
         $out = NULL;
+
+        if (!empty($wheres))
+        {
+            foreach($wheres as $key => $val)
+            {
+                $this->db->where($key, $val);
+            }
+        }
 
         $out = $this->db->where('type', $module_alias)
                         ->count_all_results($this->_table['data']);

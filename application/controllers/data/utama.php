@@ -54,18 +54,21 @@ class Utama extends BAKA_Controller
 
         if ( !empty($this->_modules_arr) )
         {
-            $this->data['load_toolbar'] = TRUE;
+            // $this->data['load_toolbar'] = TRUE;
             // $this->data['search_form']   = TRUE;
-            $this->data['page_link'] .= 'layanan/index/';
 
-            foreach ($this->_modules_arr as $alias => $name)
+            foreach($this->bpmppt->get_modules() as $link => $layanan)
             {
-                $this->data['tool_buttons']['Baru:dd|primary'][$alias.'/form'] = $name;
-                $this->data['counter'][$alias] = $this->bpmppt->count_data($alias);
+                $this->data['panel_body'][$link] = array(
+                    'label' => $layanan['label'],
+                    'alias' => $layanan['alias'],
+                    'total' => $this->bpmppt->count_data($layanan['alias']),
+                    'pending' => $this->bpmppt->count_data($layanan['alias'], array('status' => 'pending')),
+                    'approved' => $this->bpmppt->count_data($layanan['alias'], array('status' => 'approved')),
+                    'deleted' => $this->bpmppt->count_data($layanan['alias'], array('status' => 'deleted')),
+                    'done' => $this->bpmppt->count_data($layanan['alias'], array('status' => 'done')),
+                    );
             }
-
-            $this->data['tool_buttons']['utama/laporan'] = 'Laporan|default';
-            $this->data['panel_body']   = '' /*$this->bpmppt->get_tables( $this->data['page_link'] )*/;
             
 
             $this->load->theme('pages/panel_alldata', $this->data);

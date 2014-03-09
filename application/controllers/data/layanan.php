@@ -44,12 +44,24 @@ class Layanan extends BAKA_Controller
         $this->data['page_link'] = 'data/layanan/';
     }
 
-    public function index( $data_type = '', $page = 'data', $data_id = FALSE )
+    public function index( $data_type = FALSE, $page = 'data', $data_id = FALSE )
     {
-        if ( $data_type == '' )
+        if ( $data_type )
         {
             $this->data['panel_title']  = $this->themee->set_title('Semua data perijinan');
-            $this->data['panel_body']   = '';
+            
+            foreach($this->bpmppt->get_modules() as $link => $layanan)
+            {
+                $this->data['panel_body'][$link] = array(
+                    'label' => $layanan['label'],
+                    'alias' => $layanan['alias'],
+                    'total' => $this->bpmppt->count_data($layanan['alias']),
+                    'pending' => $this->bpmppt->count_data($layanan['alias'], array('status' => 'pending')),
+                    'approved' => $this->bpmppt->count_data($layanan['alias'], array('status' => 'approved')),
+                    'deleted' => $this->bpmppt->count_data($layanan['alias'], array('status' => 'deleted')),
+                    'done' => $this->bpmppt->count_data($layanan['alias'], array('status' => 'done')),
+                    );
+            }
 
             $this->load->theme('pages/panel_alldata', $this->data);
         }
@@ -81,7 +93,6 @@ class Layanan extends BAKA_Controller
                     break;
 
                 case 'data':
-                default:
                     $this->data( $data_type );
                     break;
             }
