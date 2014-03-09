@@ -50,14 +50,14 @@ class Utama extends BAKA_Controller
     public function index()
     {
         $this->data['panel_title']  = $this->themee->set_title('Semua data perijinan');
-        $this->data['data_type']    = $this->_modules_arr;
+        $modules = $this->bpmppt->get_modules();
 
-        if ( !empty($this->_modules_arr) )
+        if ( !empty($modules) )
         {
             // $this->data['load_toolbar'] = TRUE;
             // $this->data['search_form']   = TRUE;
 
-            foreach($this->bpmppt->get_modules() as $link => $layanan)
+            foreach($modules as $link => $layanan)
             {
                 $this->data['panel_body'][$link] = array(
                     'label' => $layanan['label'],

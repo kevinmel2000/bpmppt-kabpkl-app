@@ -46,7 +46,7 @@ $config['baka_system_env_table']        = 'system_env';
 // BAKA users table name
 $config['baka_users_table']             = 'auth_users';
 // BAKA user_meta table name
-$config['baka_user_meta_table']         = 'auth_user_meta';
+$config['baka_user_meta_table']         = 'auth_usermeta';
 // BAKA user_profiles table name
 $config['baka_user_profile_table']      = 'auth_user_profiles';
 // BAKA user_group table name
