@@ -231,7 +231,6 @@ class Bpmppt_iup extends CI_Driver
         }
 
         $ci->table->set_heading( $head );
-        $ci->table->set_footer( $head );
 
         if ( $data and !empty($data->$field_name) )
         {
