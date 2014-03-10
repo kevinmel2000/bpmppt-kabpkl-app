@@ -50,14 +50,14 @@ class Laporan extends BAKA_Controller
 
         foreach ( $this->bpmppt->get_modules(TRUE) as $module => $prop )
         {
-            $modules[$prop->alias] = $prop->label;
+            $modules[$module] = $prop->label;
         }
 
         $fields[]   = array(
             'name'  => 'data_type',
             'label' => 'Pilih data perijinan',
             'type'  => 'dropdown',
-            'option'=> add_placeholder( $this->_modules_arr ),
+            'option'=> add_placeholder( $modules ),
             'validation'=> 'required',
             'desc'  => 'Pilih jenis dokumen yang ingin dicetak. Terdapat '.count( $this->_modules_arr ).' yang dapat anda cetak.' );
 

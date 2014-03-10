@@ -201,9 +201,17 @@ class Layanan extends BAKA_Controller
 
         if ( $data_type != 'imb' )
         {
+            $data_label = 'Permohonan';
+
+            if ($data_type == 'tdp')
+                $data_label = 'Agenda';
+            
+            if ($data_type == 'siup')
+                $data_label = 'SIUP';
+
             $fields[]   = array(
                 'name'  => $modul_slug.'_surat',
-                'label' => 'No. &amp; Tgl. Permohonan',
+                'label' => 'No. &amp; Tgl. '.$data_label,
                 'type'  => 'subfield',
                 'attr'  => ( $data_obj ? 'disabled' : ''),
                 'fields'=> array(

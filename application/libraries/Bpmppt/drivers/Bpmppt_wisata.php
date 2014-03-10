@@ -93,6 +93,31 @@ class Bpmppt_wisata extends CI_Driver
          * + Surat Ijin
          * + kutipan
          */
+
+        $fields[]   = array(
+            'name'  => $this->alias.'_penetapan',
+            'label' => 'No. &amp; Tgl. Ditetapkan',
+            'type'  => 'subfield',
+            'fields'=> array(
+                array(
+                    'col'   => '6',
+                    'name'  => 'nomor',
+                    'label' => 'Nomor Ditetapkan',
+                    'type'  => 'text',
+                    'std'   => ( $data_obj ? $data_obj->pemilik_lahir_tmpt : '' ),
+                    'validation'=> ''
+                    ),
+                array(
+                    'col'   => '6',
+                    'name'  => 'tgl',
+                    'label' => 'Tanggal Ditetapkan',
+                    'type'  => 'datepicker',
+                    'std'   => ( $data_obj ? $data_obj->pemilik_lahir_tgl : ''),
+                    'callback'=> 'string_to_date',
+                    'validation'=> ''
+                    ),
+                ));
+
         $fields[]   = array(
             'name'  => $this->alias.'_fieldset_data_pemohon',
             'label' => 'Data Pemohon',
@@ -103,31 +128,25 @@ class Bpmppt_wisata extends CI_Driver
             'name'  => $this->alias.'_pemohon_nama',
             'label' => 'Nama lengkap',
             'type'  => 'text',
-            'std'   => ( $data_obj ? $data_obj->pemohon_nama : ''),
-            'validation'=> ( !$data_obj ? 'required' : '' ) );
+            'std'   => ( $data_obj ? $data_obj->pemohon_nama : '') );
 
         $fields[]   = array(
             'name'  => $this->alias.'_pemohon_kerja',
             'label' => 'Pekerjaan',
-            'type'  => 'dropdown',
-            'std'   => ( $data_obj ? $data_obj->pemohon_kerja : ''),
-            'option'=> array(
-                'p' => 'Pekerjaan' ),
-            'validation'=> ( !$data_obj ? 'required' : '' ) );
+            'type'  => 'text',
+            'std'   => ( $data_obj ? $data_obj->pemohon_kerja : '') );
 
         $fields[]   = array(
             'name'  => $this->alias.'_pemohon_jabatan',
             'label' => 'Jabatan',
             'type'  => 'text',
-            'std'   => ( $data_obj ? $data_obj->pemohon_jabatan : ''),
-            'validation'=> ( !$data_obj ? 'required' : '' ) );
+            'std'   => ( $data_obj ? $data_obj->pemohon_jabatan : '') );
 
         $fields[]   = array(
             'name'  => $this->alias.'_pemohon_alamat',
             'label' => 'Alamat',
             'type'  => 'textarea',
-            'std'   => ( $data_obj ? $data_obj->pemohon_alamat : ''),
-            'validation'=> ( !$data_obj ? 'required' : '' ) );
+            'std'   => ( $data_obj ? $data_obj->pemohon_alamat : '') );
 
         $fields[]   = array(
             'name'  => $this->alias.'_pemohon_telp',
@@ -146,36 +165,31 @@ class Bpmppt_wisata extends CI_Driver
             'name'  => $this->alias.'_usaha_nama',
             'label' => 'Nama Perusahaan',
             'type'  => 'text',
-            'std'   => ( $data_obj ? $data_obj->usaha_nama : ''),
-            'validation'=> ( !$data_obj ? 'required' : '' ) );
+            'std'   => ( $data_obj ? $data_obj->usaha_nama : '') );
 
         $fields[]   = array(
             'name'  => $this->alias.'_usaha_jenis',
             'label' => 'Jenis Usaha',
             'type'  => 'text',
-            'std'   => ( $data_obj ? $data_obj->usaha_jenis : ''),
-            'validation'=> ( !$data_obj ? 'required' : '' ) );
+            'std'   => ( $data_obj ? $data_obj->usaha_jenis : '') );
 
         $fields[]   = array(
             'name'  => $this->alias.'_usaha_alamat',
             'label' => 'Alamat Kantor',
             'type'  => 'textarea',
-            'std'   => ( $data_obj ? $data_obj->usaha_alamat : ''),
-            'validation'=> ( !$data_obj ? 'required' : '' ) );
+            'std'   => ( $data_obj ? $data_obj->usaha_alamat : '') );
 
         $fields[]   = array(
             'name'  => $this->alias.'_usaha_luas',
             'label' => 'Luas perusahaan (M<sup>2</sup>)',
             'type'  => 'number',
-            'std'   => ( $data_obj ? $data_obj->usaha_luas : ''),
-            'validation'=> ( !$data_obj ? 'required' : '' ) );
+            'std'   => ( $data_obj ? $data_obj->usaha_luas : '') );
 
         $fields[]   = array(
             'name'  => $this->alias.'_usaha_an',
             'label' => 'Atas Nama Pendirian',
             'type'  => 'text',
-            'std'   => ( $data_obj ? $data_obj->usaha_an : ''),
-            'validation'=> ( !$data_obj ? 'required' : '' ) );
+            'std'   => ( $data_obj ? $data_obj->usaha_an : '') );
 
         $fields[]   = array(
             'name'  => $this->alias.'_usaha_ket',
