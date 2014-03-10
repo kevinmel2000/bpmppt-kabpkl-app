@@ -30,23 +30,36 @@ $(document).ready( function () {
 		return new Baka.confirm(message);
 	})
 
-	// $('.form-control.bs-tooltip').on('focus', function () {
-	// 	$(this).tooltip('show');
-	// })
+	if ($('.table-exp tbody tr').length === 1) {
+		$('.table-exp .remove-btn').addClass('disabled')
+	}
 
-	// $('.btn.bs-tooltip').on('hover', function () {
-	// 	$(this).tooltip('show');
-	// })
+	$('.table-exp')
+		.on('click', '.btn-primary', function () {
+			var table = $('.table-exp');
+			table.find('tbody').append( table.find('tbody > tr:first').clone() );
+			$('.remove-btn').removeClass('disabled');
+		})
+		.on('click', '.remove-btn', function () {
+			$(this).parents('tr').remove()
+		})
 
-	$('#table-koordinat').on('click', '.btn-primary', function () {
-		var table = $('#table-koordinat');
-		
-		table.find('tbody').append( table.find('tbody > tr:first').clone() )
-	})
+	$('.form-group').each(function () {
+		if ($(this).data('fold') === 1) {
+			var el	= $(this),
+				key = $(this).data('fold-key'),
+				val = $(this).data('fold-value')
 
-	$('#table-koordinat').on('click', '.koor-remove-btn', function () {
-		// $(this).parents('tr').addClass('danger')
-		$(this).parents('tr').remove()
+			$(this).addClass('hide fade');
+
+			$('#field-'+key).on('change', function () {
+				if ($(this).val() === val) {
+					el.removeClass('hide')
+				} else {
+					el.addClass('hide')
+				}
+			})
+		}
 	})
 	
 });

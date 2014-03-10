@@ -411,8 +411,10 @@ class Former
         $field_id   = isset( $field_attrs['id'] ) ? $field_attrs['id'] : $field_attrs['name'];
         $field_attrs['id'] = 'field-'.str_replace( '_', '-', $field_id );
 
+        $field_attrs['attr'] = '';
+
         if ( $is_sub and isset( $field_attrs['label'] ) )
-            $field_attrs['attr'] = 'placeholder="'.$field_attrs['label'].'"';
+            $field_attrs['attr'] .= 'placeholder="'.$field_attrs['label'].'"';
 
         $attributes  = $this->_set_defaults( $field_attrs );
         extract( $attributes );
@@ -757,6 +759,10 @@ class Former
         $input_col = $this->is_hform ? ' col-lg-9 col-md-9 ' : '';
 
         $group_attr = 'id="group-'.str_replace('_', '-', $attrs['name']).'"';
+
+        if (isset($attrs['fold']) and !empty($attrs['fold']))
+            $group_attr .= ' data-fold="1" data-fold-key="'.str_replace('_', '-', $attrs['fold']['key']).'" data-fold-value="'.$attrs['fold']['value'].'"';
+
         $html = sprintf( $group_open, $group_class, $group_attr );
 
         if ( $attrs['label'] != '' OR $this->is_hform )

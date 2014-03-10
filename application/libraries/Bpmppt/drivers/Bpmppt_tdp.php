@@ -114,14 +114,14 @@ class Bpmppt_tdp extends CI_Driver
     public function form( $data_obj = FALSE )
     {
         $fields[]   = array(
-            'name'  => $this->alias.'_no_daftar',
+            'name'  => $this->alias.'_no_tdp',
             'label' => 'Nomor TDP',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->no_daftar : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
         $fields[]   = array(
-            'name'  => $this->alias.'_no_sk',
+            'name'  => $this->alias.'_no_agenda',
             'label' => 'Nomor Agenda PT',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->no_sk : '') );
@@ -148,6 +148,9 @@ class Bpmppt_tdp extends CI_Driver
             'name'  => $this->alias.'_pembaruan_ke',
             'label' => 'Daftar ulang Ke',
             'type'  => 'text',
+            'fold'  => array(
+                'key' => $this->alias.'_pengajuan_jenis',
+                'value' => 'daftar ulang' ),
             'std'   => ( $data_obj ? $data_obj->pembaruan_ke : ''));
 
         $fields[]   = array(

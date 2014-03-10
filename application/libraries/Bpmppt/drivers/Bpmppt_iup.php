@@ -194,7 +194,7 @@ class Bpmppt_iup extends CI_Driver
         // if ( ! $this->load->is_loaded('table'))
         $ci =& get_instance();
         $ci->load->library('table');
-        $ci->table->set_template( array('table_open' => '<table id="table-koordinat" class="table table-striped table-hover table-condensed">' ) );
+        $ci->table->set_template( array('table_open' => '<table id="table-koordinat" class="table table-exp table-striped table-hover table-condensed">' ) );
 
         $data_mode = $data and !empty($data->$field_name);
 
@@ -231,6 +231,7 @@ class Bpmppt_iup extends CI_Driver
         }
 
         $ci->table->set_heading( $head );
+        $ci->table->set_footer( $head );
 
         if ( $data and !empty($data->$field_name) )
         {
@@ -369,7 +370,7 @@ class Bpmppt_iup extends CI_Driver
                     'data'  => form_button( array(
                         'name'  => $this->alias.'_'.$field_name.'_remove-btn',
                         'type'  => 'button',
-                        'class' => 'btn btn-danger bs-tooltip btn-block btn-sm koor-remove-btn',
+                        'class' => 'btn btn-danger bs-tooltip btn-block btn-sm remove-btn',
                         'value' => 'remove',
                         'title' => 'Hapus baris ini',
                         'content'=> '&times;' ) ),

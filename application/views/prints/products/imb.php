@@ -21,95 +21,95 @@
 <tr><td colspan="7">&nbsp;</td></tr>
 <tr>
     <td colspan="3" style="width:30%">&nbsp;</td>
-    <td style="width:10%"><p>Membaca</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p>dst ;</p></td>
-</tr>
-<tr>
-    <td colspan="3" style="width:30%">&nbsp;</td>
-    <td style="width:10%"><p>Menimbang</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p>dst ;</p></td>
-</tr>
-<tr>
-    <td colspan="3" style="width:30%">&nbsp;</td>
-    <td style="width:10%"><p>Mengingat</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p>dst ;</p></td>
-</tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
-<tr>
-    <td colspan="7" style="width:100%"><p style="text-align:center"><strong>M E M U T U S K A N :</strong></p></td>
+    <td style="width:10%">
+        <p>Membaca</p>
+        <p>Menimbang</p>
+        <p>Mengingat</p>
+    </td>
+    <td style="width:2%">
+        <p>:</p>
+        <p>:</p>
+        <p>:</p>
+    </td>
+    <td colspan="2" style="width:47%">
+        <p>dst ;</p>
+        <p>dst ;</p>
+        <p>dst ;</p>
+    </td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
-    <td style="width:20%"><p>Menetapkan</p></td>
-    <td style="width:2%"><p>:</p></td>
+    <td colspan="7" style="width:100%" class="align-center bold underline">M E M U T U S K A N :</td>
+</tr>
+<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr>
+    <td style="width:20%" class="bold">Menetapkan</td>
+    <td style="width:2%">:</td>
     <td colspan="5" style="width:78%">&nbsp;</td>
 </tr>
 <tr>
     <td style="width:20%"><p>KESATU</p></td>
-    <td style="width:2%"><p>:</p></td>
+    <td style="width:2%">:</td>
     <td colspan="5" style="width:78%">Memberikan Izin Kepada :</td>
 </tr>
 <tr>
     <td colspan="2">&nbsp;</td>
-    <td colspan="2" style="width:30%"><p class="bold">Nama Pemohon</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p class="bold"><?php echo strtoupper($pemohon_nama) ?></p></td>
+    <td colspan="2" style="width:30%">Nama Pemohon</td>
+    <td style="width:2%">:</td>
+    <td colspan="2" style="width:47%" class="bold"><?php echo strtoupper($pemohon_nama) ?></td>
 </tr>
 <tr>
     <td colspan="2">&nbsp;</td>
     <td colspan="2" style="width:30%"><p>Alamat Pemohon</p></td>
-    <td style="width:2%"><p>:</p></td>
+    <td style="width:2%">:</td>
     <td colspan="2" style="width:47%"><p><?php echo $pemohon_alamat ?></strong></p></td>
 </tr>
 <tr>
     <td colspan="2">&nbsp;</td>
     <td colspan="2" style="width:30%"><p>Pekerjaan</p></td>
-    <td style="width:2%"><p>:</p></td>
+    <td style="width:2%">:</td>
     <td colspan="2" style="width:47%"><p><?php echo $pemohon_kerja ?></p></td>
 </tr>
 <tr>
     <td colspan="2">&nbsp;</td>
     <td colspan="2" style="width:30%"><p>Maksud Permohonan</p></td>
-    <td style="width:2%"><p>:</p></td>
+    <td style="width:2%">:</td>
     <td colspan="2" style="width:47%"><p><?php echo $bangunan_maksud ? 'Mendirikan bangunan baru' : 'Merehab bangunan' ?></p></td>
 </tr>
 <tr>
     <td colspan="2">&nbsp;</td>
     <td colspan="2" style="width:30%"><p class="bold">Penggunaan Bangunan</p></td>
-    <td style="width:2%"><p>:</p></td>
+    <td style="width:2%">:</td>
     <td colspan="2" style="width:47%"><p class="bold"><?php echo strtoupper($bangunan_guna) ?></p></td>
 </tr>
 <tr>
     <td colspan="2">&nbsp;</td>
     <td colspan="2" style="width:30%"><p>Lokasi Bangunan</p></td>
-    <td style="width:2%"><p>:</p></td>
+    <td style="width:2%">:</td>
     <td colspan="2" style="width:47%"><p><?php echo $bangunan_lokasi ?></p></td>
 </tr>
 <tr>
     <td colspan="2">&nbsp;</td>
     <td colspan="2" style="width:30%"><p>Luas / Keadaan Tanah</p></td>
-    <td style="width:2%"><p>:</p></td>
+    <td style="width:2%">:</td>
     <td colspan="2" style="width:47%"><p><?php echo '&#177; '.$bangunan_tanah_luas.' M<sup>2</sup> / '.strtoupper($bangunan_tanah_keadaan) ?></p></td>
 </tr>
 <tr>
     <td colspan="2">&nbsp;</td>
     <td colspan="2" style="width:30%"><p>Status Tanah</p></td>
-    <td style="width:2%"><p>:</p></td>
+    <td style="width:2%">:</td>
     <td colspan="2" style="width:47%"><p><?php echo ($bangunan_tanah_status == 'hm' ? 'Hak Milik, No, '.$bangunan_milik_no : 'Hak Guna Bangunan').', an. '.$bangunan_milik_an ?></p></td>
 </tr>
 <tr>
     <td colspan="2">&nbsp;</td>
     <td colspan="2" style="width:30%"><p>Luas Bangunan</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="2" style="width:47%"><p><?php echo '&#177; '.$bangunan_luas.' M<sup>2</sup> / ' ?></p></td>
+    <td style="width:2%">:</td>
+    <td colspan="2" style="width:47%"><p><?php echo '&#177; '.$bangunan_luas.' M<sup>2</sup>' ?></p></td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
     <td style="width:20%"><p>KEDUA</p></td>
-    <td style="width:2%"><p>:</p></td>
+    <td style="width:2%">:</td>
     <td colspan="5" style="width:78%">Ketentuan-ketentuan :</td>
 </tr>
 <tr>
@@ -124,7 +124,7 @@
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
     <td style="width:20%"><p>KETIGA</p></td>
-    <td style="width:2%"><p>:</p></td>
+    <td style="width:2%">:</td>
     <td colspan="5" style="width:78%">Hal –hal yang harus diperhatikan dan ditaati oleh penerima / pemegang Izin</td>
 </tr>
 <tr>
@@ -140,7 +140,7 @@
             <li>Sesuai dengan fungsi bangunan, penerima / pemegang izin / pemilik bangunan diwajibkan menyediakan fasilitas alat pencegahan kebakaran menurut ketentuan yang berlaku.</li>
             <li>Pembuatan, perubahan / penghilangan bagian-bagian bangunan / unsur-unsur penunjang lain seperti jalan jembatan maupun unsur penunjang lain, harus berdasarkan rencana konstruksi yang secara teknis telah diperiksa dan disetuji oleh Kepala Dinas Pekejaan Umum.</li>
             <li>Izin Mendirikan / Merubah / Merobohkan Bangunan ( IMB ) ini dapat dicabut apabila :
-                <ol>
+                <ol class="lower-alpha">
                     <li>Dalam waktu 6 ( enam ) bulan terhitung mulai tanggal Surat Keputusan Izin,  pelaksanaan / kegiatan fisik dimulai selama 6 ( enam ) bulan berturut-turut,kecuali permohonan untuk perpanjangan waktu yang bersangkutan dikabulkan.</li>
                     <li>Ternyata dalam permohonan Izin yang diajukan, terdapat keterangan yang tidak benar / palsu atau dipalsukan.</li>
                     <li>Pelaksanaan pembangunan ternyata menyimpang dari gambar rencana yang telah disahkan yang merupakan lampiran surat keputusan izin.</li>
@@ -152,7 +152,7 @@
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
     <td style="width:20%"><p>KEEMPAT</p></td>
-    <td style="width:2%"><p>:</p></td>
+    <td style="width:2%">:</td>
     <td colspan="5" style="width:78%">Mencatat bahwa :</td>
 </tr>
 <tr>
@@ -161,7 +161,7 @@
         <ol>
             <li>Izin ini tidak memberikan hak untuk pemakaian / penguasaan tanah.</li>
             <li>Retribusi IMB / biaya lain yang telah dibayarkan tidak dapat diminta kembali apabila :
-                <ol>
+                <ol class="lower-alpha">
                     <li>Setelah surat Izin ini diberikan ternyata tidak dipergunakan sebagaimana  penggunaan bangunan.</li>
                     <li>Karena suatu alasan yang sah, permohonan ini tidak dapat dikabulkan / dikabulkan sebagian.</li>
                 </ol>
@@ -174,9 +174,9 @@
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
     <td colspan="6" style="width:60%">&nbsp;</td>
-    <td style="width:40%">
+    <td style="width:40%" class="bold ">
         <p>Ditetapkan di : Kajen</p>
-        <p>Pada Tanggal : <?php echo bdate('F', $created_on).' '.bdate('Y') ?></p>
+        <p class="underline">Pada Tanggal :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo bdate('F', $created_on).' '.bdate('Y') ?></p>
     </td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
@@ -189,7 +189,8 @@
         <p>&nbsp;</p>
         <p>&nbsp;</p>
         <p>&nbsp;</p>
-        <p><?php echo strtoupper($skpd_lead_name) ?></p>
+        <p class="underline"><?php echo strtoupper($skpd_lead_name) ?></p>
+        <p>Pembina Tingkat I</p>
         <p>NIP. <?php echo strtoupper($skpd_lead_nip) ?></p>
     </td>
 </tr>
