@@ -1,18 +1,18 @@
 module.exports = function(grunt) {
-  'use strict';
+  // 'use strict';
 
-  // Force use of Unix newlines
-  grunt.util.linefeed = '\n';
+  grunt.loadNpmTasks('grunt-php');
+  grunt.loadNpmTasks('grunt-contrib-less');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
   grunt.initConfig({
     // Metadata.
-    pkg: grunt.file.readJSON('package.json'),
     php: {
-      dist: {
+      test: {
         options: {
           keepalive: true,
           open: true,
-            port: 8088
+          port: 8088
         }
       }
     },
@@ -42,15 +42,14 @@ module.exports = function(grunt) {
     watch: {
       less:{
         files: 'asset/less/lib/*.less',
-        tasks: 'less'
+        tasks: 'less',
+        options: {
+          nospawn: true
+        }
       }
     },
   });
 
-  grunt.loadNpmTasks('grunt-php');
-  grunt.loadNpmTasks('grunt-contrib-less');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-
-  // grunt.registerTask('default', ['less', 'watch']);
+  grunt.registerTask('watch', ['less', 'watch']);
   grunt.registerTask('default', ['php']);
 }

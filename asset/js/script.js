@@ -1,7 +1,7 @@
 var Baka = {
 
-	confirm: function(message) {
-		return confirm(message)
+	confrm: function(message) {
+		confirm(message)
 	},
 
 	popup: function(url, title, w, h) {
@@ -24,10 +24,10 @@ $(document).ready( function () {
 		e.preventDefault();
 	})
 
-	$('[id="toolbar-btn-hapus*"]').on('click', function(e) {
+	$('#toolbar-btn-hapus*').on('click', function(e) {
 		var message = $(this).data('message');
 
-		return new Baka.confirm(message);
+		return new Baka.confrm(message);
 	})
 
 	if ($('.table-exp tbody tr').length === 1) {
@@ -42,13 +42,16 @@ $(document).ready( function () {
 		})
 		.on('click', '.remove-btn', function () {
 			$(this).parents('tr').remove()
+			if ($('.remove-btn').length === 1) {
+				$('.remove-btn').addClass('disabled')
+			}
 		})
 
 	$('.form-group').each(function () {
 		if ($(this).data('fold') === 1) {
 			var el	= $(this),
-				key = $(this).data('fold-key'),
-				val = $(this).data('fold-value')
+				key = el.data('fold-key'),
+				val = el.data('fold-value')
 
 			$(this).addClass('hide fade');
 
