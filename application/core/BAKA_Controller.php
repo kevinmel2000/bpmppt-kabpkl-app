@@ -44,7 +44,7 @@ class BAKA_Controller extends CI_Controller
 
         if (Themee::verify_browser() AND !(php_sapi_name() === 'cli' OR defined('STDIN')))
         {
-            log_message('error', "error_browser_jadul");
+            log_message('error', lang("error_browser_jadul"));
             show_error(array('Peramban yang anda gunakan tidak memenuhi syarat minimal penggunaan aplikasi ini.','Silahkan gunakan '.anchor('http://www.mozilla.org/id/', 'Mozilla Firefox', 'target="_blank"').' atau '.anchor('https://www.google.com/intl/id/chrome/browser/', 'Google Chrome', 'target="_blank"').' biar lebih GREGET!'), 500, 'error_browser_jadul');
         }
 
@@ -192,11 +192,11 @@ class BAKA_Controller extends CI_Controller
 
         // Adding application sub-menu (if permited)
         if (is_permited('internal_application_manage'))
-            $this->themee->add_navmenu($parent, 'ai_application', 'link', 'admin/internal/app', 'Aplikasi', array(), $position);
+            $this->themee->add_navmenu($parent, 'ai_application', 'link', 'admin/internal/app', 'Pengaturan Aplikasi', array(), $position);
 
         // Adding security sub-menu (if permited)
-        if (is_permited('internal_security_manage'))
-            $this->themee->add_navmenu($parent, 'ai_security', 'link', 'admin/internal/keamanan', 'Keamanan', array(), $position);
+        // if (is_permited('internal_security_manage'))
+        //     $this->themee->add_navmenu($parent, 'ai_security', 'link', 'admin/internal/keamanan', 'Keamanan', array(), $position);
 
         // $this->themee->add_navmenu(
         // $parent, 'ai_property', 'link', 'admin/internal/prop', 'Properti', array(), $position);

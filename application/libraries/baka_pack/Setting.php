@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
+<?php if (! defined('BASEPATH')) exit('No direct script access allowed'); 
 
 /**
  * CodeIgniter Baka Pack
@@ -64,7 +64,7 @@ class Setting
         // Load Setting helper
         // self::$_ci->load->helper('baka_pack/setting');
 
-        self::$_table_name = get_conf( 'system_opt_table' );
+        self::$_table_name = get_conf('system_opt_table');
 
         self::init();
 
@@ -82,15 +82,15 @@ class Setting
      */
     protected static function init()
     {
-        $query = self::$_ci->db->get( self::$_table_name );
+        $query = self::$_ci->db->get(self::$_table_name);
 
-        if ( $query->num_rows() == 0 )
+        if ($query->num_rows() == 0)
         {
             log_message('error', "#Baka Setting lib: Settings table is empty");
             return FALSE;
         }
 
-        foreach ( $query->result() as $row )
+        foreach ($query->result() as $row)
         {
             self::$_settings[$row->opt_key] = $row->opt_value;
         }
@@ -122,9 +122,9 @@ class Setting
      *
      * @return  bool
      */
-    public static function is_exists( $key )
+    public static function is_exists($key)
     {
-        return isset( self::$_settings[$key] );
+        return isset(self::$_settings[$key]);
     }
 
     // -------------------------------------------------------------------------
@@ -137,9 +137,9 @@ class Setting
      *
      * @return  mixed
      */
-    public static function get( $key )
+    public static function get($key)
     {
-        if ( !array_key_exists( $key, self::$_settings ) )
+        if (!array_key_exists($key, self::$_settings))
         {
             log_message('error', "#Baka Setting lib: Settings key '{$key}' is not exists");
             return FALSE;
@@ -159,26 +159,18 @@ class Setting
      *
      * @return  mixed
      */
-    public static function edit( $key, $val )
+    public static function edit($key, $val)
     {
-        $old = self::get( $key );
+        $old = self::get($key);
 
-        if ( $old === FALSE )
+        if ($old != $val and $old !== FALSE)
         {
-            return FALSE;
+            return self::$_ci->db->update(
+                self::$_table_name,
+                array('opt_value' => $val),
+                array('opt_key' => $key)
+                );
         }
-
-        if ( $old == $new )
-        {
-            log_message('error', "#Baka Setting lib: Setting val {$val} is not changed.");
-            return FALSE;   
-        }
-
-        return self::$_ci->db->update(
-            self::$_table_name,
-            array( 'opt_value' => $val ),
-            array( 'opt_key' => $key )
-            );
     }
 
     // -------------------------------------------------------------------------
@@ -192,13 +184,13 @@ class Setting
      *
      * @return  mixed
      */
-    public static function set( $key, $val )
+    public static function set($key, $val)
     {
-        if ( !self::is_exists( $key ) )
+        if (!self::is_exists($key))
         {
             return self::$_ci->db>insert(
                 self::$_table_name,
-                array( 'opt_key' => $key, 'opt_value' => $val )
+                array('opt_key' => $key, 'opt_value' => $val)
                 );
         }
 

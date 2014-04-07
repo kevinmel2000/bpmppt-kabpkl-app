@@ -185,26 +185,22 @@ class Gridr
         return $this;
     }
 
-    protected function _act_btn( $data_id )
+    protected function _act_btn( $data_id, $action_buttons )
     {
-        $output = '';
+        $output = '<div class="btn-group btn-justified">'
+                . '<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">'
+                . '<span class="glyphicon glyphicon-cog"></span> <span class="caret"></span>'
+                . '</button>'
+                . '<ul class="dropdown-menu dropdown-menu-right" role="menu">';
 
-        if ( count($this->action_buttons) > 0 )
+        foreach ( $action_buttons as $btn_key => $btn_val )
         {
-            $output .= '<div class="btn-group btn-group-justified">';
-
-            foreach ( $this->action_buttons as $btn_key => $btn_val )
-            {
-                extract($btn_val);
-
-                $output .= anchor(
-                    $this->page_link.$link.$data_id,
-                    '<span class="glyphicon glyphicon-'.$icon.'"></span>',
-                    'title="'.$title.'" data-toggle="tooltip" class="btn btn-sm btn-'.$class.'"');
-            }
-
-            $output .= '</div>';
+            extract($btn_val);
+            // '<span class="glyphicon glyphicon-'.$icon.'"></span> '
+            $output .= '<li>'.anchor( $this->page_link.$link.$data_id, $title ).'</li>';
         }
+
+        $output .= '</ul></div>';
 
         return $output;
     }
@@ -232,9 +228,11 @@ class Gridr
         if ( (int) $this->db_result_count > 0 )
         {
             if ( $this->db_result_count >= $this->limit )
-                $text_info = 'Menampilkan '.$this->db_num_rows.' data dari total '.$this->db_result_count.' data keseluruhan';
+                $text_info = $this->db_num_rows.' data dari total '.$this->db_result_count;
             else
-                $text_info = 'Menampilkan '.$this->db_result_count.' dari keseluruhan data';
+                $text_info = $this->db_result_count.' dari';
+
+            $text_info = 'Menampilkan '.$text_info.' keseluruhan data';
         }
         else
             $text_info = 'Belum ada data';
@@ -267,11 +265,10 @@ class Gridr
             'last_tag_open'     => '<li class="last">',
             'last_tag_close'    => '</li>',
             'full_tag_close'    => '</ul>',
-            ) ); 
+            )); 
 
-        $output .= self::$_ci->pagination->create_links();
-
-        $output .= '</div>';
+        $output .= self::$_ci->pagination->create_links()
+                .  '</div>';
 
         return $output;
     }
@@ -358,8 +355,8 @@ class Gridr
         {
             $heading[]  = array(
                 'data'  => 'Aksi',
-                'class' => 'heading-action',
-                'width' => '15%' );
+                'class' => 'heading-action text-center',
+                'width' => '5%' );
         }
 
         self::$_ci->table->set_heading( $heading );
@@ -421,9 +418,9 @@ class Gridr
                 if ( count($this->action_buttons) > 0 )
                 {
                     $cell[$table_id][] = array(
-                        'data'  => $this->_act_btn( $table_id ),
-                        'class' => 'data-action',
-                        'width' => '15%' );
+                        'data'  => $this->_act_btn( $table_id, $this->action_buttons ),
+                        'class' => 'field-action text-center',
+                        'width' => '5%' );
                 }
 
                 self::$_ci->table->add_row( $cell[$table_id] );

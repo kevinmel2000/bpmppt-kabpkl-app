@@ -248,8 +248,8 @@ function form_uploader( $label = 'Unggah berkas', $endpoint = 'ajax_request/fine
 	$version = '3.5.0';
 
 	Baka_theme::add_style('fine-uploader', 'assets/vendors/jquery.fineuploader/fineuploader-'.$version.'.css', 'foot');
-	Baka_theme::add_script('fine-uploader', 'assets/vendors/jquery.fineuploader/jquery.fineuploader-'.$version.'.min.js', 'foot');
-	Baka_theme::add_script('form-upload', $script, 'foot');
+	Asssets::set_script('fine-uploader', 'assets/vendors/jquery.fineuploader/jquery.fineuploader-'.$version.'.min.js', 'foot');
+	Asssets::set_script('form-upload', $script, 'foot');
 
 	return $output;
 }

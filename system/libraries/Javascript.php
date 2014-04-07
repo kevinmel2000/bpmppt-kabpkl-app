@@ -648,7 +648,7 @@ class CI_Javascript {
 			}
 		}
 
-		if ($relative === TRUE OR strncmp($external_file, 'http://', 7) == 0 OR strncmp($external_file, 'https://', 8) == 0)
+		if ($relative === TRUE OR strncmp( $external_file, 'http://', 7) == 0 OR strncmp($external_file, 'https://', 8) == 0)
 		{
 			$str = $this->_open_script($external_file);
 		}

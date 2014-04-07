@@ -3,7 +3,7 @@
 	RewriteEngine on
 
 	RewriteBase /
-	# RewriteBase /ci-baka/
+	#RewriteBase /bpmppt/
 
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d

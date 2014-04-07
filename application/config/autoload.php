@@ -55,6 +55,7 @@ $autoload['packages'] = array();
 $autoload['libraries'] = array(
 	'database',
 	'baka_pack/messg',
+	'baka_pack/asssets',
 	'baka_pack/setting',
 	'baka_pack/authen',
 	'baka_pack/themee',

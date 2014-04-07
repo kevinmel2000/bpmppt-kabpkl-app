@@ -44,10 +44,6 @@ class Themee
 
     private $_contents      = array();
 
-    public $_scripts        = array();
-    
-    public $_styles         = array();
-
     /**
      * Default class constructor
      */
@@ -55,60 +51,37 @@ class Themee
     {
         self::$_ci =& get_instance();
 
-        self::$_ci->load->library('user_agent');
-
         $this->_app_name = get_conf('app_name');
 
         $this->_theme_data['page_title'] = $this->_app_name;
         $this->_theme_data['site_title'] = $this->_app_name;
         $this->_theme_data['body_class'] = 'page';
 
-        // $this->add_script('less', 'asset/js/lib/less.min.js', '', '1.5.0');
-        $this->add_script('jquery', 'asset/js/lib/jquery.min.js', '', '2.0.3');
-        $this->add_script('baka_pack', 'asset/js/script.js', 'jquery' );
-        $this->add_script('bootstrap', 'asset/vendor/bootstrap/js/bootstrap.min.js', 'jquery', '3.0.0' );
-        // $this->add_style( 'bootstrap', 'asset/vendor/bootstrap/css/bootstrap.min.css', '', '3.0.0' );
-        // $this->add_style( 'baka_pack', 'asset/css/style.css' );
-        // $this->add_style( 'baka_pack', 'asset/less/style.less' );
+        Asssets::set_script('jquery', 'lib/jquery.min.js', '', '2.0.3');
+        Asssets::set_script('baka_pack', 'script.js', 'jquery' );
+        Asssets::set_script('bootstrap', 'lib/bootstrap.min.js', 'jquery', '3.0.0' );
+        Asssets::set_style('baka_pack', 'style.min.css');
 
         log_message('debug', "#Baka_pack: Theme Class Initialized");
-    }
-
-    // -------------------------------------------------------------------------
-
-    private function _caching()
-    {
-        switch (ENVIRONMENT)
-        {
-            case 'development':
-                // noting :P
-            break;
-        
-            case 'testing':
-            case 'production':
-                // Disable sodding IE7's constant cacheing!!
-                $this->output->set_header('Expires: Sat, 01 Jan 2000 00:00:01 GMT');
-                $this->output->set_header('Cache-Control: no-store, no-cache, must-revalidate');
-                $this->output->set_header('Cache-Control: post-check=0, pre-check=0, max-age=0');
-                $this->output->set_header('Last-Modified: '.gmdate( 'D, d M Y H:i:s' ).' GMT' );
-                $this->output->set_header('Pragma: no-cache');
-
-                // Let CI do the caching instead of the browser
-                $this->output->cache( get_conf('cache_lifetime') );
-
-                log_message('debug', "#Baka_pack: cache activated");
-            break;
-        }
     }
 
     // -------------------------------------------------------------------------
     
     public static function verify_browser()
     {
-        $min_browser    = get_conf('app_min_browser');
-        $curent_version = explode('.', self::$_ci->agent->version());
+        $min_browser = get_conf('app_min_browser');
 
-        return ( $curent_version[0] <= $min_browser[self::$_ci->agent->browser()] ? TRUE : FALSE  );
+        self::$_ci->load->library('user_agent');
+        $current_browser = self::$_ci->agent->browser();
+        $current_version = explode('.', self::$_ci->agent->version());
+
+        if ($current_browser == 'MSIE' and $current_version < 9)
+        {
+            Asssets::set_script('html5shiv', 'lib/html5shiv.js', '', '3.6.2', FALSE);
+            Asssets::set_script('respond', 'lib/respond.min.js', '', '1.3.0', FALSE);
+        }
+
+        return ( $current_version[0] <= $min_browser[$current_browser] ? TRUE : FALSE  );
     }
 
     // -------------------------------------------------------------------------
@@ -289,103 +262,6 @@ class Themee
             }
 
             $output .= '</ul>';
-        }
-
-        return $output;
-    }
-
-    // -------------------------------------------------------------------------
-
-    public function add_script( $id, $source, $depend = '', $version = NULL )
-    {
-        if ( filter_var( base_url($source), FILTER_VALIDATE_URL) )
-            $source .= '?ver='.($version != '' ? $version : get_conf('app_version'));
-
-        if ( array_key_exists($depend, $this->_scripts) )
-        {
-            $this->_scripts = array_insert_after_node( $this->_scripts, $depend, $id, $source );
-        }
-        else
-        {
-            $this->_scripts[$id] = $source;
-        }
-    }
-
-    // -------------------------------------------------------------------------
-
-    public function load_scripts()
-    {
-        $output = '';
-        $attr   = 'type="text/javascript" charset="'.get_charset().'"';
-
-        foreach ( $this->_scripts as $id => $src )
-        {
-            $output .= "<script $attr id=\"$id\"";
-
-            if (strpos($src, '://') !== FALSE)
-            {
-                $output .= " src=\"$src\">";
-            }
-            else
-            {
-                $script = base_url().$src;
-                $output .= filter_var( $script, FILTER_VALIDATE_URL) ?
-                    " src=\"$script\">" :
-                    ">\n$(function(){\n$src\n});\n";
-            }
-
-            $output .= "</script>\n\t";
-        }
-
-        return $output;
-    }
-
-    // -------------------------------------------------------------------------
-
-    public function add_style( $id, $source, $depend = '', $version = NULL )
-    {
-        $source = $source.'?ver='.($version != '' ? $version : get_conf('app_version'));
-
-        if ( array_key_exists($depend, $this->_styles) )
-        {
-            $this->_styles = array_insert_after_node( $this->_styles, $depend, $id, $source );
-        }
-        else
-        {
-            $this->_styles[$id] = $source;
-        }
-    }
-
-    // -------------------------------------------------------------------------
-
-    public function load_styles()
-    {
-        $output = '';
-
-        foreach ( $this->_styles as $id => $style )
-        {
-            $link = array(
-                'id'    => $id,
-                'rel'   => 'stylesheet',
-                'type'  => 'text/css',
-                'charset'=> get_charset() );
-
-            if (strpos($style, '://') !== FALSE)
-            {
-                $link['href'] = $style;
-
-                $output .= link_tag( $link )."\n\t";
-            }
-            else if( filter_var( base_url( $style ), FILTER_VALIDATE_URL) )
-            {
-                $link['href'] = base_url( $style );
-
-                $output .= link_tag( $link )."\n\t";
-            }
-            else
-            {
-                $output = "<style id=\"$id\" rel=\"stylesheet\" ".get_charset()." type=\"text/css\">\n$style\n</style>\n\t";
-            }
         }
 
         return $output;

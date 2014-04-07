@@ -60,22 +60,29 @@ class Internal extends BAKA_Controller
             'validation'=>'required' );
 
         $fields[]   = array(
+            'name'  => 'skpd_lead_name',
+            'type'  => 'text',
+            'label' => 'Nama Pimpinan',
+            'std'   => Setting::get('skpd_lead_name'),
+            'validation'=>'required' );
+
+        $fields[]   = array(
+            'name'  => 'skpd_lead_nip',
+            'type'  => 'text',
+            'label' => 'NIP Pimpinan',
+            'std'   => Setting::get('skpd_lead_nip'),
+            'validation'=>'required' );
+
+        $fields[]   = array(
             'name'  => 'skpd_addrresses',
             'type'  => 'fieldset',
-            'label' => 'Data Alamat SKPD' );
+            'label' => 'Alamat dan Kontak SKPD' );
 
         $fields[]   = array(
             'name'  => 'skpd_address',
             'type'  => 'textarea',
             'label' => 'Alamat',
             'std'   => Setting::get('skpd_address'),
-            'validation'=>'required' );
-
-        $fields[]   = array(
-            'name'  => 'skpd_city',
-            'type'  => 'text',
-            'label' => 'Kota',
-            'std'   => Setting::get('skpd_city'),
             'validation'=>'required' );
 
         $fields[]   = array(
@@ -86,6 +93,13 @@ class Internal extends BAKA_Controller
             'validation'=>'required' );
 
         $fields[]   = array(
+            'name'  => 'skpd_city',
+            'type'  => 'text',
+            'label' => 'Kota',
+            'std'   => Setting::get('skpd_city'),
+            'validation'=>'required' );
+
+        $fields[]   = array(
             'name'  => 'skpd_prov',
             'type'  => 'text',
             'label' => 'Propinsi',
@@ -93,23 +107,24 @@ class Internal extends BAKA_Controller
             'validation'=>'required' );
 
         $fields[]   = array(
-            'name'  => 'skpd_contact',
-            'type'  => 'fieldset',
-            'label' => 'Data Kontak SKPD' );
-
-        $fields[]   = array(
-            'name'  => 'skpd_telp',
-            'type'  => 'tel',
-            'label' => 'No. Telp.',
-            'std'   => Setting::get('skpd_telp'),
-            'validation'=>'required|min_length[6]|max_length[15]' );
-
-        $fields[]   = array(
-            'name'  => 'skpd_fax',
-            'type'  => 'tel',
-            'label' => 'No. Telp.',
-            'std'   => Setting::get('skpd_fax'),
-            'validation'=>'required|min_length[6]|max_length[15]' );
+            'name'  => 'skpd_no',
+            'type'  => 'subfield',
+            'label' => 'No. Telp dan Fax',
+            'fields'=> array(
+                array(
+                    'name'  => 'telp',
+                    'type'  => 'tel',
+                    'label' => 'No. Telp.',
+                    'std'   => Setting::get('skpd_telp'),
+                    'validation'=>'required|min_length[6]|max_length[15]' ),
+                array(
+                    'name'  => 'max',
+                    'type'  => 'tel',
+                    'label' => 'Maksimal',
+                    'std'   => Setting::get('skpd_fax'),
+                    'validation'=>'required|min_length[6]|max_length[15]' )
+                ),
+            );
 
         $fields[]   = array(
             'name'  => 'skpd_pos',
@@ -130,25 +145,6 @@ class Internal extends BAKA_Controller
             'label' => 'Alamat Email',
             'std'   => Setting::get('skpd_email'),
             'validation'=>'valid_email' );
-
-        $fields[]   = array(
-            'name'  => 'skpd_leader',
-            'type'  => 'fieldset',
-            'label' => 'Data Pimpinan SKPD' );
-
-        $fields[]   = array(
-            'name'  => 'skpd_lead_name',
-            'type'  => 'text',
-            'label' => 'Nama Pimpinan',
-            'std'   => Setting::get('skpd_lead_name'),
-            'validation'=>'required' );
-
-        $fields[]   = array(
-            'name'  => 'skpd_lead_nip',
-            'type'  => 'text',
-            'label' => 'Nama Pimpinan',
-            'std'   => Setting::get('skpd_lead_nip'),
-            'validation'=>'required' );
 
         $this->_option_form( $fields );
 
@@ -191,7 +187,7 @@ class Internal extends BAKA_Controller
         $fields[]   = array(
             'name'  => 'app_fieldset_email',
             'type'  => 'fieldset',
-            'label' => 'Pengaturan Email' );
+            'label' => 'Email' );
 
         $email_protocol = Setting::get('email_protocol');
 
@@ -205,89 +201,96 @@ class Internal extends BAKA_Controller
                 'smtp'      => 'SMPT'),
             'std'   => $email_protocol );
 
-        if ( $email_protocol == 'sendmail' )
-        {
-            $fields[]   = array(
-                'name'  => 'email_mailpath',
-                'type'  => 'text',
-                'label' => 'Email path',
-                'std'   => Setting::get('email_mailpath') );
-        }
-        else if ( $email_protocol == 'smtp' )
-        {
-            $fields[]   = array(
-                'name'  => 'email_smtp_host',
-                'type'  => 'text',
-                'label' => 'Host SMTP',
-                'std'   => Setting::get('email_smtp_host'),
-                'validation'=> 'required' );
+        $fields[]   = array(
+            'name'  => 'email_mailpath',
+            'type'  => 'text',
+            'label' => 'Email path',
+            'fold'  => array(
+                'key'   => 'email_protocol',
+                'value' => 'sendmail' ),
+            'std'   => Setting::get('email_mailpath') );
 
-            $fields[]   = array(
-                'name'  => 'email_smtp_user',
-                'type'  => 'text',
-                'label' => 'Pengguna SMTP',
-                'std'   => Setting::get('email_smtp_user'),
-                'validation'=> 'required|valid_email' );
+        $fields[]   = array(
+            'name'  => 'email_smtp_host',
+            'type'  => 'text',
+            'label' => 'Host SMTP',
+            'fold'  => array(
+                'key'   => 'email_protocol',
+                'value' => 'smtp' ),
+            'std'   => Setting::get('email_smtp_host') );
 
-            $fields[]   = array(
-                'name'  => 'email_smtp_pass',
-                'type'  => 'password',
-                'label' => 'Password SMTP',
-                'std'   => Setting::get('email_smtp_pass'),
-                'validation'=> 'required' );
+        $fields[]   = array(
+            'name'  => 'email_smtp_user',
+            'type'  => 'text',
+            'label' => 'Pengguna SMTP',
+            'fold'  => array(
+                'key'   => 'email_protocol',
+                'value' => 'smtp' ),
+            'std'   => Setting::get('email_smtp_user'),
+            // 'validation'=> 'valid_email'
+            );
 
-            $fields[]   = array(
-                'name'  => 'email_smtp_port',
-                'type'  => 'number',
-                'label' => 'Port SMTP',
-                'std'   => Setting::get('email_smtp_port'),
-                'validation'=> 'required|numeric' );
+        $fields[]   = array(
+            'name'  => 'email_smtp_pass',
+            'type'  => 'password',
+            'label' => 'Password SMTP',
+            'fold'  => array(
+                'key'   => 'email_protocol',
+                'value' => 'smtp' ),
+            'std'   => Setting::get('email_smtp_pass') );
 
-            $fields[]   = array(
-                'name'  => 'email_smtp_timeout',
-                'type'  => 'number',
-                'label' => 'Batas waktu SMTP',
-                'std'   => Setting::get('email_smtp_timeout'),
-                'validation'=> 'numeric' );
-        }
+        $fields[]   = array(
+            'name'  => 'email_smtp_port',
+            'type'  => 'number',
+            'label' => 'Port SMTP',
+            'fold'  => array(
+                'key'   => 'email_protocol',
+                'value' => 'smtp' ),
+            'std'   => Setting::get('email_smtp_port'),
+            'validation'=> 'numeric' );
+
+        $fields[]   = array(
+            'name'  => 'email_smtp_timeout',
+            'type'  => 'number',
+            'label' => 'Batas waktu SMTP',
+            'fold'  => array(
+                'key'   => 'email_protocol',
+                'value' => 'smtp' ),
+            'std'   => Setting::get('email_smtp_timeout'),
+            'validation'=> 'numeric' );
 
         $fields[]   = array(
             'name'  => 'email_wordwrap',
-            'type'  => 'radio',
+            'type'  => 'switch',
             'label' => 'Wordwrap',
-            'option'=> array(
-                0   => 'Tidak',
-                1   => 'Ya' ),
+            'desc'  => 'Membatasi jumlah huruf ditiap baris dalam kiriman email sebanyak 80 karakter dan sisanya dilanjutkan pada baris berikutnya.',
             'std'   => Setting::get('email_wordwrap') );
 
         $fields[]   = array(
             'name'  => 'email_mailtype',
-            'type'  => 'radio',
-            'label' => 'Tipe email',
+            'type'  => 'switch',
+            'label' => 'Format kiriman email',
             'option'=> array(
-                'text'  => 'Teks Email',
-                'html'  => 'HTML Email' ),
+                0  => 'Teks',
+                1  => 'HTML' ),
+            'desc'  => 'Format kiriman email. Disarankan menggunakan format HTML agar tampilan lebih baik.',
             'std'   => Setting::get('email_mailtype') );
 
         $fields[]   = array(
             'name'  => 'email_priority',
-            'type'  => 'number',
+            'type'  => 'slider',
             'label' => 'Prioritas',
+            'min'   => 1,
+            'max'   => 5,
+            'step'  => 1,
             'std'   => Setting::get('email_priority'),
             'desc'  => 'Prioritas email diisi dengan angka 1-5, angka 1 untuk paling tinggi dan 5 untuk paling rendah.',
             'validation'=> 'numeric|greater_than[0]|less_than[6]' );
 
-        $this->_option_form( $fields );
-
-        $this->load->theme('pages/panel_form', $this->data);
-    }
-
-    public function keamanan()
-    {
-        if ( !is_permited('internal_security_manage') )
-            $this->_notice( 'access-denied' );
-
-        $this->data['panel_title'] = $this->themee->set_title('Pengaturan Keamanan');
+        $fields[]   = array(
+            'name'  => 'app_fieldset_security',
+            'type'  => 'fieldset',
+            'label' => 'Keamanan' );
 
         $fields[]   = array(
             'name'  => 'auth_username_length',
@@ -296,14 +299,12 @@ class Internal extends BAKA_Controller
             'fields'=> array(
                 array(
                     'name'  => 'min',
-                    'col'   => 6,
                     'type'  => 'number',
                     'label' => 'Minimal',
                     'std'   => Setting::get('auth_username_min_length'),
                     'validation'=>'required|numeric' ),
                 array(
                     'name'  => 'max',
-                    'col'   => 6,
                     'type'  => 'number',
                     'label' => 'Maksimal',
                     'std'   => Setting::get('auth_username_max_length'),
@@ -318,14 +319,12 @@ class Internal extends BAKA_Controller
             'fields'=> array(
                 array(
                     'name'  => 'min',
-                    'col'   => 6,
                     'type'  => 'number',
                     'label' => 'Minimal',
                     'std'   => Setting::get('auth_password_min_length'),
                     'validation'=>'required|numeric' ),
                 array(
                     'name'  => 'max',
-                    'col'   => 6,
                     'type'  => 'number',
                     'label' => 'Maksimal',
                     'std'   => Setting::get('auth_password_max_length'),
@@ -340,24 +339,17 @@ class Internal extends BAKA_Controller
 
         $fields[]   = array(
             'name'  => 'auth_allow_registration',
-            'type'  => 'radio',
+            'type'  => 'switch',
             'label' => 'Ijinkan registrasi Umum',
             'std'   => Setting::get('auth_allow_registration'),
-            'option'=> array(
-                0   => 'Tidak',
-                1   => 'Ya' ),
             'desc'  => 'Ijinkan registrasi umum',
-            'validation'=>'required|numeric' );
+            'validation'=>'numeric' );
 
         $fields[]   = array(
             'name'  => 'auth_email_activation',
-            'type'  => 'radio',
+            'type'  => 'switch',
             'label' => 'Aktivasi via email',
-            'std'   => Setting::get('auth_email_activation'),
-            'option'=> array(
-                0   => 'Tidak',
-                1   => 'Ya' ),
-            'validation'=>'required' );
+            'std'   => Setting::get('auth_email_activation'));
 
         $email_expired = Setting::get('auth_email_act_expire');
 
@@ -367,18 +359,14 @@ class Internal extends BAKA_Controller
             'label' => 'Batas aktivasi email',
             'std'   => $email_expired,
             'desc'  => 'Batas waktu aktivasi email dalam detik. Nilai '.$email_expired.' detik = '.second_to_day( $email_expired ).' hari.',
-            'validation'=>'required|numeric' );
+            'validation'=>'numeric' );
 
         $fields[]   = array(
             'name'  => 'auth_use_username',
-            'type'  => 'radio',
+            'type'  => 'switch',
             'label' => 'Gunakan username',
             'std'   => Setting::get('auth_use_username'),
-            'option'=> array(
-                0   => 'Tidak',
-                1   => 'Ya' ),
-            'desc'  => 'Gunakan username untuk setiap pengguna.',
-            'validation'=>'required' );
+            'desc'  => 'Gunakan username untuk setiap pengguna.');
 
         $fields[]   = array(
             'name'  => 'auth_fieldset_login',
@@ -387,51 +375,34 @@ class Internal extends BAKA_Controller
 
         $fields[]   = array(
             'name'  => 'auth_login_by_username',
-            'type'  => 'radio',
+            'type'  => 'switch',
             'label' => 'Gunakan username saat login',
-            'std'   => Setting::get('auth_login_by_username'),
-            'option'=> array(
-                0   => 'Tidak',
-                1   => 'Ya' ),
-            'validation'=>'required' );
+            'std'   => Setting::get('auth_login_by_username'));
 
         $fields[]   = array(
             'name'  => 'auth_login_by_email',
-            'type'  => 'radio',
+            'type'  => 'switch',
             'label' => 'Gunakan email saat login',
-            'std'   => Setting::get('auth_login_by_email'),
-            'option'=> array(
-                0   => 'Tidak',
-                1   => 'Ya' ),
-            'validation'=>'required' );
+            'std'   => Setting::get('auth_login_by_email'));
 
         $fields[]   = array(
             'name'  => 'auth_login_record_ip',
-            'type'  => 'radio',
+            'type'  => 'switch',
             'label' => 'Rekam IP',
-            'std'   => Setting::get('auth_login_record_ip'),
-            'option'=> array(
-                0   => 'Tidak',
-                1   => 'Ya' ),
-            'validation'=>'required' );
+            'std'   => Setting::get('auth_login_record_ip'));
 
         $fields[]   = array(
             'name'  => 'auth_login_count_attempts',
-            'type'  => 'radio',
+            'type'  => 'switch',
             'label' => 'Hitung kegagalan login',
-            'std'   => Setting::get('auth_login_count_attempts'),
-            'option'=> array(
-                0   => 'Tidak',
-                1   => 'Ya' ),
-            'validation'=>'required' );
+            'std'   => Setting::get('auth_login_count_attempts'));
 
         $fields[]   = array(
             'name'  => 'auth_login_max_attempts',
             'type'  => 'number',
             'label' => 'Maksimum login',
             'std'   => Setting::get('auth_login_max_attempts'),
-            'desc'  => 'batas maksimum login untuk tiap pengguna',
-            'validation'=>'required' );
+            'desc'  => 'batas maksimum login untuk tiap pengguna');
 
         $login_expired = Setting::get('auth_login_attempt_expire');
 
@@ -440,8 +411,7 @@ class Internal extends BAKA_Controller
             'type'  => 'number',
             'label' => 'Masa kadaluarsa login',
             'std'   => $login_expired,
-            'desc'  => 'Batas waktu pengguna dapat login kembali dalam detik. Nilai '.$login_expired.' detik = '.second_to_day( $login_expired ).' hari.',
-            'validation'=>'required' );
+            'desc'  => 'Batas waktu pengguna dapat login kembali dalam detik. Nilai '.$login_expired.' detik = '.second_to_day( $login_expired ).' hari.');
 
         $fields[]   = array(
             'name'  => 'auth_fieldset_captcha',
@@ -450,24 +420,16 @@ class Internal extends BAKA_Controller
 
         $fields[]   = array(
             'name'  => 'auth_captcha_registration',
-            'type'  => 'radio',
+            'type'  => 'switch',
             'label' => 'Gunakan captcha',
-            'std'   => Setting::get('auth_captcha_registration'),
-            'option'=> array(
-                0   => 'Tidak',
-                1   => 'Ya' ),
-            'validation'=>'required' );
+            'std'   => Setting::get('auth_captcha_registration') );
 
         $fields[]   = array(
             'name'  => 'auth_use_recaptcha',
-            'type'  => 'radio',
+            'type'  => 'switch',
             'label' => 'Gunakan reCaptcha',
             'std'   => Setting::get('auth_use_recaptcha'),
-            'option'=> array(
-                0   => 'Tidak',
-                1   => 'Ya' ),
-            'desc'  => 'Gunakan '.anchor('https://www.google.com/recaptcha', 'google reCaptcha', 'target="_blank"').' untuk validasi.',
-            'validation'=>'required' );
+            'desc'  => 'Gunakan '.anchor('https://www.google.com/recaptcha', 'google reCaptcha', 'target="_blank"').' untuk validasi.' );
 
         $key_attr = '';
         $key_validation = 'required';
@@ -483,6 +445,9 @@ class Internal extends BAKA_Controller
             'type'  => 'text',
             'attr'  => $key_attr,
             'label' => 'reCaptcha public key',
+            'fold'  => array(
+                'key'   => 'auth_use_recaptcha',
+                'value' => 1),
             'std'   => Setting::get('auth_recaptcha_public_key'),
             'validation'=> $key_validation );
 
@@ -491,6 +456,9 @@ class Internal extends BAKA_Controller
             'type'  => 'text',
             'attr'  => $key_attr,
             'label' => 'reCaptcha private key',
+            'fold'  => array(
+                'key'   => 'auth_use_recaptcha',
+                'value' => 1),
             'std'   => Setting::get('auth_recaptcha_private_key'),
             'validation'=> $key_validation );
 
@@ -543,10 +511,7 @@ class Internal extends BAKA_Controller
 
             foreach ( $form_data as $opt_key => $opt_val )
             {
-                if ( Setting::get( $opt_key ) != $opt_val )
-                {
-                    $return = Setting::edit( $opt_key, $opt_val );
-                }
+                $return = Setting::edit( $opt_key, $opt_val );
             }
 
             $this->db->trans_complete();
@@ -562,6 +527,9 @@ class Internal extends BAKA_Controller
 
             redirect( current_url() );
         }
+
+        // var_dump(validation_errors());
+        // var_dump($form_data);
 
         // var_dump( $fields );
 
@@ -645,9 +613,8 @@ class Internal extends BAKA_Controller
 
         if ( $form_data = $form->validate_submition() )
         {
-            $return = FALSE;
-
-            $form_data = $form->submited_data();
+            $return     = FALSE;
+            $form_data  = $form->submited_data();
 
             if ( $prop )
             {

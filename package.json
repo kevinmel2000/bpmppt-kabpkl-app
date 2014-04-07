@@ -11,9 +11,9 @@
     "codeigniter"
   ],
   "dependencies": {
-    "grunt": "~0.4.1",
-    "grunt-php": "~0.1.1",
-    "grunt-contrib-less": "~0.5.2"
+    "grunt": "*",
+    "grunt-php": "*",
+    "grunt-contrib-less": "*"
   },
   "devDependencies": {
     "grunt-contrib-watch": "~0.4.4"

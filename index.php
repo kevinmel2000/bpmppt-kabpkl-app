@@ -18,16 +18,7 @@
  *
  */
 
-switch (dirname(__FILE__))
-{
-	case '/home/feryardiant/localhost/devel/bpmppt':
-		define('ENVIRONMENT', 'development');
-		break;
-	
-	default:
-		define('ENVIRONMENT', 'production');
-		break;
-}
+define('ENVIRONMENT', 'development');
 
 /*
  *---------------------------------------------------------------

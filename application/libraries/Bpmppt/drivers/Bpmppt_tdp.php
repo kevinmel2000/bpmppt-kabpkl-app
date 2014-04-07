@@ -149,7 +149,7 @@ class Bpmppt_tdp extends CI_Driver
             'label' => 'Daftar ulang Ke',
             'type'  => 'text',
             'fold'  => array(
-                'key' => $this->alias.'_pengajuan_jenis',
+                'key'   => $this->alias.'_pengajuan_jenis',
                 'value' => 'daftar ulang' ),
             'std'   => ( $data_obj ? $data_obj->pembaruan_ke : ''));
 

@@ -1,0 +1,91 @@
+// jQuery UI Slider 1.10.4
+// http://jqueryui.com
+//
+// Copyright 2014 jQuery Foundation and other contributors
+// Released under the MIT license.
+// http://jquery.org/license
+//
+// http://api.jqueryui.com/slider/#theming
+
+@slider-height-base: floor((@input-height-base / 3));
+@slider-handle-height-base: (@slider-height-base * 2);
+@slider-handle-posotion: (floor((@slider-handle-height-base / 3)) - 1);
+
+.ui-slider {
+  position: relative;
+  text-align: left;
+  margin: @slider-height-base 0;
+
+  &-handle {
+    // &:extend(.btn all);
+    &:extend(.btn-default all);
+    position: absolute;
+    z-index: 2;
+    width: @slider-handle-height-base;
+    height: @slider-handle-height-base;
+    // cursor: default;
+  }
+
+  &-range {
+    position: absolute;
+    z-index: 1;
+    font-size: .7em;
+    display: block;
+    border: 0;
+    background-position: 0 0;
+  }
+
+  // For IE8 - See #6727 
+  &.ui-state-disabled {
+    .ui-slider-handle,
+    .ui-slider-range {
+      filter: inherit;
+    }
+  }
+
+  &-horizontal {
+    height: @slider-height-base;
+
+    .ui-slider-handle {
+      top: -@slider-handle-posotion;
+      margin-left: -.6em;
+    }
+
+    .ui-slider-range {
+      top: 0;
+      height: 100%;
+
+      &-min {
+        left: 0;
+      }
+
+      &-max {
+        right: 0;
+      }
+    }
+  }
+
+  &-vertical {
+    width: @slider-height-base;
+    height: 100px;
+
+    .ui-slider-handle {
+      left: -.3em;
+      margin-left: 0;
+      margin-bottom: -.6em;
+    }
+
+    .ui-slider-range {
+      left: 0;
+      width: 100%;
+
+      &-min {
+        bottom: 0;
+      }
+
+      &-max {
+        top: 0;
+      }
+    }
+  }
+}

@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
+<?php if (! defined('BASEPATH')) exit('No direct script access allowed'); 
 
 /**
  * CodeIgniter Baka Pack
@@ -55,7 +55,7 @@ class Former
      *
      * @var  array
      */
-    protected $_file_fields = array( 'file', 'upload' );
+    protected $_file_fields = array('file', 'upload');
 
     /**
      * Is it a Horizontal Form?
@@ -84,6 +84,13 @@ class Former
      * @var  bool
      */
     private $has_fieldset = FALSE;
+
+    /**
+     * Is it has any tabsets?
+     *
+     * @var  bool
+     */
+    private $has_tabset = FALSE;
 
     /**
      * Form fields placeholder
@@ -145,7 +152,7 @@ class Former
     /**
      * Default class constructor
      */
-    public function __construct( array $attrs = array() )
+    public function __construct(array $attrs = array())
     {
         // Load CI super object
         $this->_ci =& get_instance();
@@ -157,8 +164,8 @@ class Former
         $this->_attrs['action'] = current_url(); 
         $this->_attrs['name']   = str_replace('/', '-', uri_string());
 
-        if ( !empty( $attrs ) )
-            $this->init( $attrs );
+        if (!empty($attrs))
+            $this->init($attrs);
 
         log_message('debug', "#Baka_pack: Former Class Initialized");
     }
@@ -173,43 +180,43 @@ class Former
      *
      * @return  mixed
      */
-    public function init( array $attrs = array() )
+    public function init(array $attrs = array())
     {
         // Applying default form attributes
-        foreach ( array('action', 'name', 'id', 'class', 'method', 'extras') as $attr_key )
+        foreach (array('action', 'name', 'id', 'class', 'method', 'extras') as $attr_key)
         {
-            if ( isset( $attrs[$attr_key] ) )
+            if (isset($attrs[$attr_key]))
                 $this->_attrs[$attr_key] = $attrs[$attr_key];
         }
 
-        if ( !isset( $attrs['id'] ) )
+        if (!isset($attrs['id']))
             $this->_attrs['id'] = 'form-'.$this->_attrs['name'];
 
         // Is 'is_hform' already declarated? if not make it true
-        $this->is_hform = isset( $attrs['is_hform'] ) ? $attrs['is_hform'] : TRUE;
+        $this->is_hform = isset($attrs['is_hform']) ? $attrs['is_hform'] : TRUE;
 
         // make it horizontal form by default
-        if ( $this->is_hform == TRUE )
+        if ($this->is_hform == TRUE)
             $this->_attrs['class'] .= ' form-horizontal';
 
         // set-up HTML5 role attribute
         $this->_attrs['role'] = 'form';
 
         // if fields is already declarated in the config, just make it happen ;)
-        if ( isset( $attrs['fields'] ) and is_array( $attrs['fields'] ) and !empty( $attrs['fields'] ) )
-            $this->set_fields( $attrs['fields'] );
+        if (isset($attrs['fields']) and is_array($attrs['fields']) and !empty($attrs['fields']))
+            $this->set_fields($attrs['fields']);
 
         // if buttons is already declarated in the config, just make it happen ;)
-        if ( isset( $attrs['buttons'] ) and is_array( $attrs['buttons'] ) and !empty( $attrs['buttons'] ) )
-            $this->set_buttons( $attrs['buttons'] );
+        if (isset($attrs['buttons']) and is_array($attrs['buttons']) and !empty($attrs['buttons']))
+            $this->set_buttons($attrs['buttons']);
 
         // set this up and you'll lose your buttons :P
-        if ( isset( $attrs['no_buttons'] ) )
+        if (isset($attrs['no_buttons']))
             $this->no_buttons = $attrs['no_buttons'];
 
         // set this up and you'll lose your buttons :P
-        if ( isset( $attrs['template'] ) )
-            $this->set_template( $attrs['template'] );
+        if (isset($attrs['template']))
+            $this->set_template($attrs['template']);
 
         return $this;
     }
@@ -226,7 +233,7 @@ class Former
      *
      * @return  obj
      */
-    public function set_template( array $template )
+    public function set_template(array $template)
     {
         $valid_tmpl = array(
             'group_open',
@@ -244,9 +251,9 @@ class Former
             'desc_close',
             );
 
-        foreach ( $valid_tmpl as $option )
+        foreach ($valid_tmpl as $option)
         {
-            if ( isset( $template[$option] ) )
+            if (isset($template[$option]))
                 $this->_template[$option] = $template[$option];
         }
 
@@ -261,17 +268,17 @@ class Former
      * @since   version 0.1.3
      * @param   array  $fields  Form fields
      */
-    public function set_fields( array $fields )
+    public function set_fields(array $fields)
     {
-        if ( empty( $fields ) )
+        if (empty($fields))
         {
             Messg::set('error', 'You can\'t give me an empty field.');
             return FALSE;
         }
 
-        foreach ( $fields as $id => $field )
+        foreach ($fields as $id => $field)
         {
-            $this->set_field( $field );
+            $this->set_field($field);
         }
 
         return $this;
@@ -286,9 +293,9 @@ class Former
      * @since   version 0.1.3
      * @param   array  $field  Field attributes
      */
-    public function set_field( array $field )
+    public function set_field(array $field)
     {
-        if ( isset( $field['type'] ) and in_array( $field['type'], $this->_file_fields ) )
+        if (isset($field['type']) and in_array($field['type'], $this->_file_fields))
         {
             $this->is_multipart = TRUE;
         }
@@ -308,17 +315,17 @@ class Former
      * @since   version 0.1.3
      * @param   array  $buttons  Form buttons
      */
-    public function set_buttons( array $buttons )
+    public function set_buttons(array $buttons)
     {
-        if ( count( $buttons ) === 0 )
+        if (count($buttons) === 0)
         {
             Messg::set('error', 'You can\'t give me an empty button.');
             return FALSE;
         }
 
-        foreach ( $buttons as $button )
+        foreach ($buttons as $button)
         {
-            $this->set_button( $button );
+            $this->set_button($button);
         }
 
         return $this;
@@ -333,7 +340,7 @@ class Former
      * @since   version 0.1.3
      * @param   array  $button  Button attributes
      */
-    public function set_button( array $button )
+    public function set_button(array $button)
     {
         $this->_buttons[] = $button;
 
@@ -354,38 +361,45 @@ class Former
     {
         // push Form action out from Attributes
         $_action = $this->_attrs['action'];
-        unset( $this->_attrs['action'] );
+        unset($this->_attrs['action']);
 
         // is it an upload form?
-        if ( $this->is_multipart == TRUE )
+        if ($this->is_multipart == TRUE)
             $this->_attrs['enctype'] = 'multipart/form-data';
 
-        if ( isset( $this->_attrs['extras'] ) )
+        if (isset($this->_attrs['extras']))
         {
             $_extras = $this->_attrs['extras'];
-            unset( $this->_attrs['extras'] );
+            unset($this->_attrs['extras']);
 
-            $this->_attrs = array_merge( $this->_attrs, $_extras );
+            $this->_attrs = array_merge($this->_attrs, $_extras);
         }
 
         // Let's get started
-        $html = form_open( $_action, $this->_attrs );
+        $html = form_open($_action, $this->_attrs);
 
         // Loop the fields if not empty
-        if ( count( $this->_fields ) > 0 )
+        if (count($this->_fields) > 0)
         {
-            foreach( $this->_fields as $field_attrs )
+            foreach($this->_fields as $field_attrs)
             {
-                $html .= $this->_compile( $field_attrs );
+                $html .= $this->_compile($field_attrs);
             }
         }
 
-        if( $this->has_fieldset === TRUE )
+        // Close the fieldset before you close your form
+        if($this->has_fieldset === TRUE)
             $html .= form_fieldset_close();
 
-        if ( $this->no_buttons === FALSE )
+        // Close the tabset before you close your form
+        if($this->has_tabset === TRUE)
+            $html .= form_fieldset_close();
+
+        // Let them see your form has an action button(s)
+        if ($this->no_buttons === FALSE)
             $html .= $this->_form_actions();
     
+        // Now you can close your form
         $html .= form_close();
 
         return $html;
@@ -402,80 +416,109 @@ class Former
      *
      * @return  string
      */
-    protected function _compile( array $field_attrs, $is_sub = FALSE )
+    protected function _compile(array $field_attrs, $is_sub = FALSE)
     {
         $html        = '';
         $counter     = 0;
         $input_class = $this->_template['field_class'];
 
-        $field_id   = isset( $field_attrs['id'] ) ? $field_attrs['id'] : $field_attrs['name'];
-        $field_attrs['id'] = 'field-'.str_replace( '_', '-', $field_id );
+        $field_id   = isset($field_attrs['id']) ? $field_attrs['id'] : $field_attrs['name'];
+        $field_attrs['id'] = 'field-'.str_replace('_', '-', $field_id);
 
         $field_attrs['attr'] = '';
 
-        if ( $is_sub and isset( $field_attrs['label'] ) )
+        if ($is_sub and isset($field_attrs['label']))
             $field_attrs['attr'] .= 'placeholder="'.$field_attrs['label'].'"';
 
-        $attributes  = $this->_set_defaults( $field_attrs );
-        extract( $attributes );
+        $attributes  = $this->_set_defaults($field_attrs);
+        extract($attributes);
 
-        if ( $type == 'hidden' )
+        if ($type == 'hidden')
         {
             // Form hidden
             // CI form_hidden() function
-            $html .= form_hidden( $name, $value );
+            $html .= form_hidden($name, $value);
         }
-        else if ( $type == 'fieldset' )
+        else if ($type == 'tabset')
         {
             // Fieldset counter. If you have more that one fieldset in
             // you form, be sure to close it befor call the new one.
             $counter++;
-            if ( $counter >= 2 )
+            if ($counter >= 2)
                 $html .= form_fieldset_close();
 
             // If your attributes is string, turn it into an array
             // TODO: Please make a better attribute parser than this one
-            if ( is_string( $attr ) )
-                $attr = array( $attr => '' );
+            if (is_string($attr))
+                $attr = array($attr => '');
 
             // Call the fieldset and give it an ID with 'fieldset-' prefix
-            $html .= form_fieldset( $label,
-                array_merge( $attr, array( 'id'=>'fieldset-'.$id ) )
-                );
+            $html .= form_fieldset($label,
+                array_merge($attr, array('id'=>'fieldset-'.$id))
+               );
 
             // indicate you have an opened fieldset 
             $this->has_fieldset = TRUE;
         }
-        else if ( $type == 'subfield' )
+        else if ($type == 'fieldset')
+        {
+            // Fieldset counter. If you have more that one fieldset in
+            // you form, be sure to close it befor call the new one.
+            $counter++;
+            if ($counter >= 2)
+                $html .= form_fieldset_close();
+
+            // If your attributes is string, turn it into an array
+            // TODO: Please make a better attribute parser than this one
+            if (is_string($attr))
+                $attr = array($attr => '');
+
+            // Call the fieldset and give it an ID with 'fieldset-' prefix
+            $html .= form_fieldset($label,
+                array_merge($attr, array('id'=>'fieldset-'.$id))
+               );
+
+            // indicate you have an opened fieldset 
+            $this->has_fieldset = TRUE;
+        }
+        else if ($type == 'subfield')
         {
             $id = 'sub'.$id;
             $errors = array();
             $input = '<div id="'.$id.'" class="row">';
+            $field_attrs['for'] = 'field-sub'.str_replace('_', '-', 'input-'.$name.'-'.$fields[0]['name']);
             
-            if ( isset( $fields ) and !empty( $fields ) )
+            if (isset($fields) and !empty($fields))
             {
-                foreach ( $fields as $field )
+                $c_fields = count($fields);
+
+                foreach ($fields as $field)
                 {
+                    if (!isset($field['col']))
+                    {
+                        $field['col'] = floor(12/$c_fields);
+                    }
+
                     $input .= '<div class="col-md-'.$field['col'].'">';
                     $field_attrs['validation'] = '';
 
-                    if ( isset( $field['validation'] ) AND $field['validation'] != '' )
+                    if (isset($field['validation']) AND $field['validation'] != '')
                     {
-                        if ( strpos( 'required', $field['validation'] ) !== FALSE )
+                        if (strpos('required', $field['validation']) !== FALSE)
                             $field['label'] .= ' *';
 
                         $field_attrs['validation'] = $field['validation'];
                     }
 
                     $field['name']  = $name.'_'.$field['name'];
-                    $field['id']    = 'sub'.str_replace( '_', '-', 'input-'.$field['name'] );
-                    $field['attr']  = isset( $field['attr'] ) ? $field['attr'] : $attr;
-                    $field['std']   = isset( $field['std'] ) ? $field['std'] : '';
+                    $field['id']    = 'sub'.str_replace('_', '-', 'input-'.$field['name']);
+                    $field['attr']  = isset($field['attr']) ? $field['attr'] : $attr;
+                    $field['std']   = isset($field['std']) ? $field['std'] : '';
 
-                    $input .= $this->_compile( $field, TRUE );
+                    $input .= $this->_compile($field, TRUE);
                     $input .= '</div>';
 
-                    if ( $is_error = form_error( $field['name'], $this->_template['desc_open'], $this->_template['desc_close'] ) )
+                    if ($is_error = form_error($field['name'], $this->_template['desc_open'], $this->_template['desc_close']))
                     {
                         $errors[] = $is_error;
                     }
@@ -484,96 +527,182 @@ class Former
 
             $input .= '</div>';
 
-            if ( count( $errors ) > 0 )
+            if (count($errors) > 0)
                 $field_attrs['desc']['err'] = $errors;
 
-            $html .= $this->_form_common( $field_attrs, $input );
+            $html .= $this->_form_common($field_attrs, $input);
         }
         else
         {
-            switch( $type )
+            $jqui_load = FALSE;
+            $jqui_path = 'lib/jquery-ui/';
+
+            switch($type)
             {
                 // Text Input fields
-                // date, number, email, url, search, tel, password, text
-                case 'date':
-                case 'number':
+                // date, email, url, search, tel, password, text
                 case 'email':
                 case 'url':
                 case 'search':
                 case 'tel':
                 case 'password':
                 case 'text':
-                    $input = form_input( array(
+                    $input = form_input(array(
                             'name'  => $name,
                             'type'  => $type,
                             'id'    => $id,
-                            'class' => $input_class ), set_value( $name, $std ), $attr);
+                            'class' => $input_class), set_value($name, $std), $attr);
+                    break;
+
+                // Jquery-UI Spinner
+                case 'number':
+                case 'spinner':
+                    $jqui_load = TRUE;
+                    Asssets::set_script('jqui-spinner', $jqui_path.'jquery.ui.spinner.js', 'jqui-core', '1.10.4');
+
+                    if (!isset($min)) $min = 0;
+                    if (!isset($max)) $max = 10;
+                    
+                    $script = "$('.jqui-spinner').spinner({\n"
+                            . "spin: function(event, ui) {\n"
+                            . "    var max = $(this).data('max'),\n"
+                            . "        min = $(this).data('min');\n"
+                            . "    if (ui.value > max) {\n"
+                            . "        $(this).spinner('value', min);\n"
+                            . "    } else if (ui.value < min) {\n"
+                            . "        $(this).spinner('value', max);\n"
+                            . "    }\n"
+                            . "    event.preventDefault();\n"
+                            . "  }\n"
+                            . "});";
+
+                    Asssets::set_script('jqui-spinner-trigger', $script, 'jqui-spinner');
+
+                    $input = form_input(array(
+                            'name'      => $name,
+                            'id'        => $id,
+                            'data-min'  => $min,
+                            'data-max'  => $max,
+                            'class'     => $input_class.' jqui-spinner'), set_value($name, $std), $attr);
+                    break;
+
+                // Jquery-ui Slider
+                case 'slider':
+                case 'rangeslider':
+                    $jqui_load = TRUE;
+                    Asssets::set_script('jqui-slider', $jqui_path.'jquery.ui.slider.js', 'jqui-core', '1.10.4');
+
+                    if (!isset($min)) $min = 0;
+                    if (!isset($max)) $max = 10;
+                    if (!isset($step)) $step = 1;
+
+                    if ($type == 'rangeslider')
+                    {
+                        if (!isset($std['min'])) $std['min'] = $min;
+                        if (!isset($std['max'])) $std['max'] = $max;
+                        $std = $std['min'].'-'.$std['max'];
+                    }
+                    
+                    $script = "$('.jqui-slider').each( function() {\n"
+                            . "    var el = $(this),"
+                            . "        input = el.data('slider-input-target')\n"
+                            . "    el.slider({\n"
+                            . "        min: el.data('slider-min'),\n"
+                            . "        max: el.data('slider-max'),\n"
+                            . "        range: 'min',\n"
+                            . "        value: $('#'+input).val(),\n"
+                            . "        step: el.data('slider-step'),\n"
+                            . "        slide: function(event, ui) {\n"
+                            . "            $('#'+input).val(ui.value);\n"
+                            . "        }\n"
+                            . "    });\n"
+                            . "    $('#'+input).on('change', function() {\n"
+                            . "        var val = $(this).val();"
+                            . "        if (val > el.data('slider-max')) {\n"
+                            . "            val = el.data('slider-max')\n"
+                            . "        } else if (val < el.data('slider-min')) {\n"
+                            . "            val = el.data('slider-min')\n"
+                            . "        }\n"
+                            . "        $(this).val(val)\n"
+                            . "        el.slider('value', val)\n"
+                            . "    });\n"
+                            . "});";
+
+                    Asssets::set_script('jqui-slider-trigger', $script, 'jqui-slider');
+
+                    $input  = '<div class="row"><div class="col-lg-2">'
+                            . form_input(array(
+                                'name'  => $name,
+                                'id'    => $id,
+                                'type'  => 'number',
+                                'class' => $input_class), set_value($name, $std), $attr)
+                            . '</div><div class="col-lg-10">'
+                            . '<div class="jqui-slider" data-slider-input-target="'.$id.'" data-slider-step="'.$step.'" data-slider-min="'.$min.'" data-slider-max="'.$max.'"></div>'
+                            . '</div></div>';
                     break;
 
                 // Date picker field
+                case 'date':
                 case 'datepicker':
-                    $path = 'asset/vendor/bootstrap-datepicker/';
-                    add_script( 'bt-datepicker', $path.'js/bootstrap-datepicker.js', 'bootstrap', '1.1.1' );
-                    add_script( 'bt-datepicker-id', $path.'js/locales/bootstrap-datepicker.id.js', 'bt-datepicker', '1.1.1' );
-                    add_style( 'bt-datepicker', $path.'css/datepicker.css', 'bootstrap', '1.1.1' );
+                    Asssets::set_script('bt-datepicker', 'lib/bootstrap.datepicker.js', 'bootstrap', '1.1.1');
+                    Asssets::set_script('bt-datepicker-id', 'lib/bootstrap.datepicker.id.js', 'bt-datepicker', '1.1.1');
                     
                     $script = "$('.bs-datepicker').datepicker({\n"
-                            . "format: 'dd-mm-yyyy',\n"
-                            . "language: 'id',\n"
-                            . "autoclose: true,\n"
-                            . "todayBtn: true\n"
-                            . "});\n";
+                            . "    format: 'dd-mm-yyyy',\n"
+                            . "    language: 'id',\n"
+                            . "    autoclose: true,\n"
+                            . "    todayBtn: true\n"
+                            . "});";
 
-                    add_script( 'dp-trigger', $script, 'bt-datepicker' );
+                    Asssets::set_script('dp-trigger', $script, 'bt-datepicker');
 
-                    $input = form_input( array(
+                    $input = form_input(array(
                         'name'  => $name,
                         'type'  => 'text',
                         'id'    => $id,
-                        'class' => $input_class.' bs-datepicker' ), set_value( $name, $std ), $attr );
+                        'class' => $input_class.' bs-datepicker'), set_value($name, $std), $attr);
                     break;
 
                 // Textarea field
                 // Using CI form_textarea() function.
                 // adding jquery-autosize.js to make it more useful
                 case 'textarea':
-                    $path = 'asset/vendor/jquery-autosize/';
-                    add_script( 'jquery-autosize', $path.'jquery.autosize.js', 'jquery', '1.18.0' );
-                    add_script( 'autosize-trigger', "$('textarea').autosize();\n", 'jquery-autosize' );
+                    Asssets::set_script('jquery-autosize', 'lib/jquery.autosize.js', 'jquery', '1.18.0');
+                    Asssets::set_script('autosize-trigger', "$('textarea').autosize();\n", 'jquery-autosize');
 
-                    $input = form_textarea( array(
+                    $input = form_textarea(array(
                             'name'  => $name,
                             'rows'  => 3,
                             'cols'  => '',
                             'id'    => $id,
-                            'class' => $input_class ), set_value( $name, $std ), $attr);
+                            'class' => $input_class), set_value($name, $std), $attr);
                     break;
 
                 // Upload field
                 // Using CI form_upload() function
                 case 'file':
                 case 'upload':
-                    // $input = form_upload( array(
+                    // $input = form_upload(array(
                     //         'name'  => $name,
                     //         'id'    => $id,
-                    //         'class' => $input_class ) );
+                    //         'class' => $input_class));
 
-                    $input = form_button( array(
+                    $input = form_button(array(
                             'name'    => $name,
                             'type'    => 'button',
                             'id'      => $id,
                             'content' => 'Pilih berkas',
-                            'class'   => 'btn btn-primary btn-sm' ) );
+                            'class'   => 'btn btn-primary btn-sm'));
                     break;
 
                 // Ajax Upload using FineUploader.JS
                 // TODO: done it! :v
                 case 'fineupload':
-                    $input = form_button( array(
+                    $input = form_button(array(
                                 // 'name'  => 'reset',
                                 'type'  => 'button',
                                 'class' => 'btn btn-primary btn-sm',
-                                'content'=> 'Pilih berkas' ))
+                                'content'=> 'Pilih berkas'))
                            . '<div id="'.$id.'" class="upload-placeholder">'
                            . '</div>';
                     break;
@@ -581,29 +710,48 @@ class Former
                 // Selectbox field
                 case 'multiselect':
                 case 'dropdown':
-                    $path = 'asset/vendor/select2/';
-                    add_script( 'select2', $path.'js/select2.min.js', 'jquery', '3.4.5' );
-                    add_script( 'select2-trigger', "$('.form-control-select2').select2();\n", 'select2' );
-                    add_style( 'select2', $path.'css/select2.css', 'bootstrap', '3.4.5' );
+                case 'select2':
+                    Asssets::set_script('select2', 'lib/select2.min.js', 'jquery', '3.4.5');
+                    Asssets::set_script('select2-trigger', "$('.form-control-select2').select2();\n", 'select2');
 
                     $attr = 'class="form-control-select2 '.$input_class.'" id="'.$id.'" '.$attr;
 
-                    if ( $type == 'multiselect' )
+                    if ($type == 'multiselect')
                         $name = $name.'[]';
 
                     $form_func = 'form_'.$type;
-                    $input = $form_func( $name, $option, set_value( $name, $std), $attr );
+                    $input = $form_func($name, $option, set_value($name, $std), $attr);
                     break;
 
-                // Selectbox field
-                case 'select2':
-                    $path = 'asset/vendor/select2/';
-                    add_script( 'select2', $path.'js/select2.min.js', 'jquery', '3.4.5' );
-                    add_script( 'select2-trigger', "$('.form-control-select2').select2();\n", 'select2' );
-                    add_style( 'select2', $path.'css/select2.css', 'bootstrap', '3.4.5' );
-                    $attr = 'class="form-control-select2 '.$input_class.'" id="'.$id.'" '.$attr;
+                // Bootstrap Switch field
+                case 'switch':
+                    Asssets::set_script('bs-switch', 'lib/bootstrap.switch.min.js', 'bootstrap', '3.0.0');
 
-                    $input = form_dropdown( $name, $option, $std, $attr );
+                    if (!isset($option))
+                    {
+                        $option = array(
+                            0 => 'Off',
+                            1 => 'On',
+                            );
+                    }
+
+                    Asssets::set_script('bs-switch-trigger', "$('.bs-switch').bootstrapSwitch();", 'bs-switch');
+
+                    $_id = str_replace('-', '-', $name);
+                    $checked = ($std == 1 ? TRUE : FALSE);
+
+                    $input = form_checkbox(array(
+                            'name'          => $name,
+                            'id'            => $_id,
+                            'class'         => 'bs-switch',
+                            'value'         => 1,
+                            'checked'       => set_checkbox($name, 1, $checked),
+                            'data-off-text' => $option[0],
+                            'data-on-text'  => $option[1],
+                            ));
+
+                    if (count($option) > 2)
+                        $input = '<span class="form-control form-control-static">Pilihan tidak boleh lebih dari 2 (dua)!!</span>';
                     break;
 
                 // Radiocheckbox field
@@ -611,10 +759,10 @@ class Former
                 case 'checkbox':
                     $count  = 1;
                     $input  = '';
-                    $field  = ( $type == 'checkbox' ? $name.'[]' : $name );
-                    $devide = ( count( $option ) > 8 ? TRUE : FALSE );
+                    $field  = ($type == 'checkbox' ? $name.'[]' : $name);
+                    $devide = (count($option) > 8 ? TRUE : FALSE);
 
-                    if ( !empty( $option ) )
+                    if (!empty($option))
                     {
                         $rc         = '';
                         $actived    = FALSE;
@@ -622,31 +770,35 @@ class Former
                         $set_func   = 'set_'.$type;
                         $form_func  = 'form_'.$type;
 
-                        foreach( $option as $value => $opt )
+                        foreach($option as $value => $opt)
                         {
-                            if ( is_array( $std ) )
+                            if (is_array($std))
                             {
-                                if ( ($_key = array_keys($std)) !== range(0, count($std) - 1) )
+                                if (($_key = array_keys($std)) !== range(0, count($std) - 1))
+                                {
                                     $std = $_key;
+                                }
 
-                                $actived = ( in_array( $value, $std ) ? TRUE : FALSE );
+                                $actived = (in_array($value, $std) ? TRUE : FALSE);
                             }
-                            else if ( is_string($std) )
+                            else if (is_string($std))
                             {
-                                $actived = ( $std == $value ? TRUE : FALSE );
+                                $actived = ($std == $value ? TRUE : FALSE);
                             }
 
                             $_id = str_replace('-', '-', $name.'-'.$value);
 
                             $check  = '<div class="'.$type.'">'
-                                    . $form_func( $field, $value, $set_func( $name, $value, $actived ), 'id="'.$_id.'"' )
+                                    . $form_func($field, $value, $set_func($name, $value, $actived), 'id="'.$_id.'"')
                                     . '<label for="'.$_id.'"> '.$opt.'</label>'
                                     . '</div>';
 
-                            $rc .= ( $devide ? '<div class="col-md-6">'.$check.'</div>' : $check );
+                            $rc .= ($devide ? '<div class="col-md-6">'.$check.'</div>' : $check);
 
-                            if ( $devide AND $count % 2 == 0)
+                            if ($devide AND $count % 2 == 0)
+                            {
                                 $rc .= '</div><div class="row">';
+                            }
 
                             $count++;
                         }
@@ -658,36 +810,36 @@ class Former
                 // Recaptcha field
                 case 'recaptcha':
                     $this->_ci->load->helper('recaptcha');
-                    $input = recaptcha_get_html( Setting::get('auth_recaptcha_public_key') );
+                    $input = recaptcha_get_html(Setting::get('auth_recaptcha_public_key'));
                     break;
 
                 // Captcha field
                 case 'captcha':
-                    $captcha_url = base_url( get_conf('cool_captcha_folder').'captcha'.EXT );
+                    $captcha_url = base_url(get_conf('cool_captcha_folder').'captcha'.EXT);
                     $image_id = 'captcha-'.$id.'-img';
                     $input_id = 'captcha-'.$id.'-input';
 
-                    $input = img( array(
+                    $input = img(array(
                         'src'   => $captcha_url,
                         'alt'   => 'Cool captcha image',
                         'id'    => $image_id,
                         'class' => 'img',
                         'width' => '200',
                         'height'=> '70',
-                        'rel'   => 'cool-captcha' ));
+                        'rel'   => 'cool-captcha'));
 
-                    $input .= anchor( current_url().'#', 'Ganti teks', array(
+                    $input .= anchor(current_url().'#', 'Ganti teks', array(
                         'class'   => 'small change-image',
                         'onclick' => '$(function() {'
-                                    .'$(\'#'.$image_id.'\').attr(\'src\', \''.$captcha_url.'?\'+Math.random());'
-                                    .'$(\'#'.$input_id.'\').focus();'
-                                .'return false; });' ) );
+                                        .'$(\'#'.$image_id.'\').attr(\'src\', \''.$captcha_url.'?\'+Math.random());'
+                                        .'$(\'#'.$input_id.'\').focus();'
+                                    .'return false; });'));
 
-                    $input .= form_input( array(
+                    $input .= form_input(array(
                         'name'  => $name,
                         'type'  => 'text',
                         'id'    => $input_id,
-                        'class' => $input_class ), set_value( $name, '' ), $attr );
+                        'class' => $input_class), set_value($name, ''), $attr);
                     break;
 
                 // Static field
@@ -695,7 +847,7 @@ class Former
                     $input = '<p id="'.$id.'" class="'.str_replace('form-control', 'form-control-static', $input_class).'">'.$std.'</p>';
                     break;
 
-                // Static field
+                // Custom field
                 case 'custom':
                     $input = $value;
                     break;
@@ -705,9 +857,19 @@ class Former
                     break;
             }
 
-            if ( isset( $input ) )
+            if ($jqui_load)
             {
-                $html .= $is_sub == FALSE ? $this->_form_common( $field_attrs, $input ) : $input;
+                Asssets::set_script('jqui-core', $jqui_path.'jquery.ui.core.js', 'jquery', '1.10.4');
+                Asssets::set_script('jqui-widget', $jqui_path.'jquery.ui.widget.js', 'jqui-core', '1.10.4');
+                Asssets::set_script('jqui-button', $jqui_path.'jquery.ui.button.js', 'jqui-widget', '1.10.4');
+                Asssets::set_script('jqui-mouse', $jqui_path.'jquery.ui.mouse.js', 'jqui-widget', '1.10.4');
+                Asssets::set_script('jqui-position', $jqui_path.'jquery.ui.position.js', 'jqui-widget', '1.10.4');
+                Asssets::set_script('jquery-mousewheel', 'lib/jquery.mousewheel.js', 'jqui-core', '3.1.0');
+            }
+
+            if (isset($input))
+            {
+                $html .= $is_sub == FALSE ? $this->_form_common($field_attrs, $input) : $input;
             }
         }
 
@@ -725,34 +887,34 @@ class Former
      *
      * @return  string
      */
-    protected function _form_common( $attrs, $input )
+    protected function _form_common($attrs, $input)
     {
-        extract( $this->_template );
+        extract($this->_template);
 
-        $attrs = $this->_set_defaults( $attrs );
+        $attrs = $this->_set_defaults($attrs);
         $is_error = '';
 
-        if ( !is_array( $attrs['desc'] ) )
+        if (!is_array($attrs['desc']))
         {
-            $is_error = form_error( $attrs['name'], $desc_open, $desc_close );
+            $is_error = form_error($attrs['name'], $desc_open, $desc_close);
         }
-        else if ( is_array( $attrs['desc'] ) and isset( $attrs['desc']['err'] ) )
+        else if (is_array($attrs['desc']) and isset($attrs['desc']['err']))
         {
-            $is_error = $this->_form_desc( $attrs['desc'] );
+            $is_error = $attrs['desc'];
         }
         
-        if ( $attrs['validation'] != '' )
+        if ($attrs['validation'] != '')
         {
-            if ( FALSE !== strpos( $attrs['validation'], 'required' ) )
+            if (FALSE !== strpos($attrs['validation'], 'required'))
             {
                 $attrs['label'] .= $required_attr;
                 $group_class .= ' form-required';
             }
 
-            if ( $is_error != '' )
+            if ($is_error != '')
                 $group_class .= ' has-error';
 
-            // var_dump( $is_error );
+            // var_dump($is_error);
         }
 
         $label_col = $this->is_hform ? ' col-lg-3 col-md-3 ' : '';
@@ -761,19 +923,22 @@ class Former
         $group_attr = 'id="group-'.str_replace('_', '-', $attrs['name']).'"';
 
         if (isset($attrs['fold']) and !empty($attrs['fold']))
-            $group_attr .= ' data-fold="1" data-fold-key="'.str_replace('_', '-', $attrs['fold']['key']).'" data-fold-value="'.$attrs['fold']['value'].'"';
+            $group_attr .= ' data-fold="1" data-fold-key="'.$attrs['fold']['key'].'" data-fold-value="'.$attrs['fold']['value'].'"';
 
-        $html = sprintf( $group_open, $group_class, $group_attr );
+        $html = sprintf($group_open, $group_class, $group_attr);
 
-        if ( $attrs['label'] != '' OR $this->is_hform )
+        if ($attrs['label'] != '' OR $this->is_hform)
         {
             $label_class .= $label_col;
-            $html .= form_label( $attrs['label'], $attrs['id'], array('class'=> $label_class) );
+            $label_target = (isset($attrs['for']) ? $attrs['for'] : $attrs['id']);
+            $html .= form_label($attrs['label'], $label_target, array('class'=> $label_class));
         }
+
+        $errors = ($is_error != '' and !is_array($attrs['desc'])) ? $is_error : $attrs['desc'];
     
-        $html .= sprintf( $field_open, $input_col, '' )
+        $html .= sprintf($field_open, $input_col, '')
               . $input
-              . $is_error
+              . $this->_form_desc($errors)
               . $field_close.$group_close;
 
         return $html;
@@ -793,19 +958,19 @@ class Former
         // If you have no buttons i'll give you two as default ;)
         // 1. Submit button as Bootstrap btn-primary on the left side
         // 2. Reset button as Bootstrap btn-default on the right side
-        if ( count( $this->_buttons ) == 0 )
+        if (count($this->_buttons) == 0)
         {
             $this->_buttons = array(
                 array(
                     'name'  => 'submit',
                     'type'  => 'submit',
                     'label' => 'lang:submit_btn',
-                    'class' => 'pull-left btn-primary' ),
+                    'class' => 'pull-left btn-primary'),
                 array(
                     'name'  => 'reset',
                     'type'  => 'reset',
                     'label' => 'lang:reset_btn',
-                    'class' => 'pull-right btn-default' )
+                    'class' => 'pull-right btn-default')
                 );
         }
 
@@ -817,19 +982,22 @@ class Former
         // Let's reset your button attributes.
         $button_attr = array();
 
-        foreach ( $this->_buttons as $attr )
+        foreach ($this->_buttons as $attr)
         {
             // Button name is inheritance with form ID.
             $button_attr['name']    = $this->_attrs['name'].'-'.$attr['name'];
             // If you not specify your Button ID, you'll get it from Button name with '-btn' as surfix.
-            $button_attr['id']      = ( isset( $attr['id'] ) ? $attr['id'] : $button_attr['name'] ).'-btn';
+            $button_attr['id']      = (isset($attr['id']) ? $attr['id'] : $button_attr['name']).'-btn';
             // I prefer to use Bootstrap btn-sm as default.
-            $button_attr['class']   = $this->_template['buttons_class'].( isset( $attr['class'] ) ? ' '.$attr['class'] : '' );
+            $button_attr['class']   = $this->_template['buttons_class'].(isset($attr['class']) ? ' '.$attr['class'] : '');
 
-            if ( substr( $attr['label'], 0, 5 ) == 'lang:' )
-                $attr['label'] = _x( str_replace( 'lang:', '', $attr['label'] ) );
+            if (substr($attr['label'], 0, 5) == 'lang:')
+            {
+                $attr['label'] = _x(str_replace('lang:', '', $attr['label']));
+            }
 
-            switch ( $attr['type'] ) {
+            switch ($attr['type'])
+            {
                 case 'submit':
                 case 'reset':
                     $func = 'form_'.$attr['type'];
@@ -838,18 +1006,18 @@ class Former
                     $button_attr['data-loading-text'] = 'Loading...';
                     $button_attr['data-complete-text'] = 'Finished!';
 
-                    $output .= $func( $button_attr );
+                    $output .= $func($button_attr);
                     break;
 
                 case 'button':
                     $button_attr['content'] = $attr['label'];
 
-                    $output .= form_button( $button_attr );
+                    $output .= form_button($button_attr);
                     break;
 
                 case 'anchor':
-                    $attr['url'] = ( isset( $attr['url'] ) AND $attr['url'] != '' ) ? $attr['url'] : current_url();
-                    $output .= anchor( $attr['url'], $attr['label'], $button_attr );
+                    $attr['url'] = (isset($attr['url']) AND $attr['url'] != '') ? $attr['url'] : current_url();
+                    $output .= anchor($attr['url'], $attr['label'], $button_attr);
                     break;
             }
         }
@@ -873,31 +1041,31 @@ class Former
     {
         foreach ($this->_fields as $field)
         {
-            if ( $field['type'] == 'subfield' )
+            if ($field['type'] == 'subfield')
             {
-                foreach ( $field['fields'] as $sub )
+                foreach ($field['fields'] as $sub)
                 {
                     $this->set_field_rules(
                         $field['name'].'_'.$sub['name'],                            // Subfield Name
                         $sub['label'],                                              // Subfield Label
                         $sub['type'],
                         (isset($sub['validation'])  ? $sub['validation']: ''),      // Subfield Validation  (jika ada)
-                        (isset($sub['callback'])    ? $sub['callback']  : '') );    // Subfield Callback    (jika ada)
+                        (isset($sub['callback'])    ? $sub['callback']  : ''));     // Subfield Callback    (jika ada)
                 }
             }
-            else if ( $field['type'] != 'static' AND $field['type'] != 'fieldset' )
+            else if ($field['type'] != 'static' AND $field['type'] != 'fieldset')
             {
                 $this->set_field_rules(
                     $field['name'],                                                 // Field Name
                     $field['label'],                                                // Field Label
                     $field['type'],
                     (isset($field['validation'])? $field['validation']  : ''),      // Field Validation (jika ada)
-                    (isset($field['callback'])  ? $field['callback']    : '') );    // Field Callback   (jika ada)
+                    (isset($field['callback'])  ? $field['callback']    : ''));     // Field Callback   (jika ada)
             }
         }
 
         // if is valid submissions
-        if ( $this->_ci->form_validation->run() )
+        if ($this->_ci->form_validation->run() )
             return $this->submited_data();
 
         // otherwise
@@ -928,22 +1096,22 @@ class Former
      * 
      * @return  void
      */
-    protected function set_field_rules( $name, $label, $type, $validation = '', $callback = '' )
+    protected function set_field_rules($name, $label, $type, $validation = '', $callback = '')
     {
-        $field_arr  = ( $type == 'checkbox' OR $type == 'multiselect' ? TRUE : FALSE );
-        $rules      = ( $field_arr ? 'xss_clean' : 'trim|xss_clean' );
+        $field_arr  = ($type == 'checkbox' OR $type == 'multiselect' ? TRUE : FALSE);
+        $rules      = ($field_arr ? 'xss_clean' : 'trim|xss_clean');
 
-        if ( strlen( $validation ) > 0 )
+        if (strlen($validation) > 0)
             $rules .= '|'.$validation;
 
-        $this->_ci->form_validation->set_rules( $name, $label, $rules);
+        $this->_ci->form_validation->set_rules($name, $label, $rules);
 
         $method = $this->_attrs['method'];
 
-        if ( strlen( $callback ) > 0 and is_callable( $callback ) )
-            $this->form_data[$name] = call_user_func( $callback, $this->_ci->input->$method( $name ) );
+        if (strlen($callback) > 0 and is_callable($callback))
+            $this->form_data[$name] = call_user_func($callback, $this->_ci->input->$method($name));
         else
-            $this->form_data[$name] = $this->_ci->input->$method( $name );
+            $this->form_data[$name] = $this->_ci->input->$method($name);
     }
 
     // -------------------------------------------------------------------------
@@ -971,23 +1139,23 @@ class Former
      *
      * @return  string
      */
-    protected function _form_desc( $desc = NULL )
+    protected function _form_desc($desc = NULL)
     {
         $ret = '';
 
-        if ( is_null( $desc ) )
+        if (is_null($desc))
         {
             $ret = '';
         }
-        else if ( is_string( $desc ) and strlen( $desc ) > 0 )
+        else if (is_string($desc) and strlen($desc) > 0)
         {
             $ret = $this->_template['desc_open'].$desc.$this->_template['desc_close'];
         }
-        else if ( is_array( $desc ) and !empty( $desc ) )
+        else if (is_array($desc) and !empty($desc))
         {
-            $descs = isset( $desc['err'] ) ? $desc['err'] : $desc;
+            $descs = isset($desc['err']) ? $desc['err'] : $desc;
 
-            foreach ( $descs as $ket )
+            foreach ($descs as $ket)
                 $ret .= $ket;
         }
 
@@ -1008,16 +1176,16 @@ class Former
      *
      * @return  array
      */
-    private function _set_defaults( array $field, $array_keys = array() )
+    private function _set_defaults(array $field, $array_keys = array())
     {
-        if ( empty( $array_keys ) )
+        if (empty($array_keys))
         {
             $array_keys = $this->_default_attr;
         }
 
-        foreach ( $array_keys as $key => $val )
+        foreach ($array_keys as $key => $val)
         {
-            if ( !array_key_exists($key, $field) AND !isset( $field[$key] ) )
+            if (!array_key_exists($key, $field) AND !isset($field[$key]))
                 $field[$key] = $val;
         }
 
@@ -1045,6 +1213,7 @@ class Former
         $this->is_multipart = FALSE;
         $this->no_buttons   = FALSE;
         $this->has_fieldset = FALSE;
+        $this->has_tabset   = FALSE;
         $this->_fields      = array();
         $this->_buttons     = array();
         $this->_errors      = array();

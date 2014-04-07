@@ -196,17 +196,20 @@ input[type="file"] {
 
 .radio,
 .checkbox {
+  position: relative;
   display: block;
   min-height: @line-height-computed; // clear the floating input if there is no label text
   margin-top: 10px;
   margin-bottom: 10px;
   padding-left: 20px;
+
   label {
     display: inline;
     font-weight: normal;
     cursor: pointer;
   }
 }
+
 .radio input[type="radio"],
 .radio-inline input[type="radio"],
 .checkbox input[type="checkbox"],
@@ -214,6 +217,7 @@ input[type="file"] {
   float: left;
   margin-left: -20px;
 }
+
 .radio + .radio,
 .checkbox + .checkbox {
   margin-top: -5px; // Move up sibling radios or checkboxes for tighter spacing
@@ -229,10 +233,76 @@ input[type="file"] {
   font-weight: normal;
   cursor: pointer;
 }
+
 .radio-inline + .radio-inline,
 .checkbox-inline + .checkbox-inline {
   margin-top: 0;
   margin-left: 10px; // space out consecutive inline controls
+}
+
+input[type=checkbox],
+input[type=radio] {
+  font-family: 'FontAwesome';
+  font-size: ceil((@font-size-base * 1.2));
+  line-height: @line-height-computed;
+  width: ceil((@font-size-base * 1.2));
+  height: ceil((@font-size-base * 1.2));
+  cursor: pointer;
+  border: 0;
+  clear: none;
+  display: inline-block;
+  margin: 0px;
+  padding: 0 !important;
+  vertical-align: middle;
+  -webkit-appearance: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  .box-sizing(border-box);
+
+  &:before {
+    color: @gray;
+    text-align: left;
+    // height: ceil((@font-size-base * 1.2));
+  }
+
+  &:checked:before,
+  &:hover:before,
+  &:focus:before {
+    color: #1e8cbe;
+    outline: 0;
+  }
+
+  &:active:before {
+    outline: 0;
+  }
+
+  &:checked:before {
+    float: left;
+    outline: 0;
+    display: inline-block;
+    vertical-align: middle;
+    speak: none;
+  }
+}
+
+input[type=checkbox] {
+  &:before {
+    content: '\f096';
+  }
+
+  &:checked:before {
+    content: '\f046';
+  }
+}
+
+input[type=radio] {
+  &:before {
+    content: '\f10c';
+  }
+
+  &:checked:before {
+    content: '\f192';
+  }
 }
 
 // Apply same disabled cursor tweak as for inputs
@@ -295,9 +365,11 @@ input[type="checkbox"],
 .has-success {
   .form-control-validation(@state-success-text; @state-success-text; @state-success-bg);
 }
+
 .has-warning {
   .form-control-validation(@state-warning-text; @state-warning-text; @state-warning-bg);
 }
+
 .has-error {
   .form-control-validation(@state-danger-text; @state-danger-text; @state-danger-bg);
 }
@@ -309,7 +381,11 @@ input[type="checkbox"],
 // a horizontal form layout.
 
 .form-control-static {
+  // padding-top: (@padding-base-vertical + 1);
   margin-bottom: 0; // Remove default margin from `p`
+  padding: (@padding-base-vertical + 1) 0;
+  border: 0;
+  .box-shadow(none);
 }
 
 
@@ -416,10 +492,6 @@ input[type="checkbox"],
   // Make form groups behave like rows
   .form-group {
     .make-row();
-  }
-
-  .form-control-static {
-    padding-top: (@padding-base-vertical + 1);
   }
 
   // Only right align form labels here when the columns stop stacking
