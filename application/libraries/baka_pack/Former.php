@@ -107,6 +107,13 @@ class Former
     protected $_buttons = array();
 
     /**
+     * Form Fields counters
+     *
+     * @var  array
+     */
+    protected $_counts = array();
+
+    /**
      * Defualt field attributes,
      * in case you forget to give it an value, you'll get an empty string from
      * this
@@ -161,11 +168,13 @@ class Former
         $this->_ci->load->library('form_validation');
 
         // Give some default values
-        $this->_attrs['action'] = current_url(); 
-        $this->_attrs['name']   = str_replace('/', '-', uri_string());
+        $this->_attrs['action']     = current_url(); 
+        $this->_attrs['name']       = str_replace('/', '-', uri_string());
 
         if (!empty($attrs))
+        {
             $this->init($attrs);
+        }
 
         log_message('debug', "#Baka_pack: Former Class Initialized");
     }
@@ -381,6 +390,8 @@ class Former
         // Loop the fields if not empty
         if (count($this->_fields) > 0)
         {
+            $this->_counts['feildsets'] = 0;
+
             foreach($this->_fields as $field_attrs)
             {
                 $html .= $this->_compile($field_attrs);
@@ -419,7 +430,6 @@ class Former
     protected function _compile(array $field_attrs, $is_sub = FALSE)
     {
         $html        = '';
-        $counter     = 0;
         $input_class = $this->_template['field_class'];
 
         $field_id   = isset($field_attrs['id']) ? $field_attrs['id'] : $field_attrs['name'];
@@ -439,47 +449,28 @@ class Former
             // CI form_hidden() function
             $html .= form_hidden($name, $value);
         }
-        else if ($type == 'tabset')
-        {
-            // Fieldset counter. If you have more that one fieldset in
-            // you form, be sure to close it befor call the new one.
-            $counter++;
-            if ($counter >= 2)
-                $html .= form_fieldset_close();
-
-            // If your attributes is string, turn it into an array
-            // TODO: Please make a better attribute parser than this one
-            if (is_string($attr))
-                $attr = array($attr => '');
-
-            // Call the fieldset and give it an ID with 'fieldset-' prefix
-            $html .= form_fieldset($label,
-                array_merge($attr, array('id'=>'fieldset-'.$id))
-               );
-
-            // indicate you have an opened fieldset 
-            $this->has_fieldset = TRUE;
-        }
         else if ($type == 'fieldset')
         {
             // Fieldset counter. If you have more that one fieldset in
             // you form, be sure to close it befor call the new one.
-            $counter++;
-            if ($counter >= 2)
+            if ($this->_counts['feildsets'] >= 1)
+            {
                 $html .= form_fieldset_close();
+            }
 
             // If your attributes is string, turn it into an array
             // TODO: Please make a better attribute parser than this one
             if (is_string($attr))
+            {
                 $attr = array($attr => '');
+            }
 
             // Call the fieldset and give it an ID with 'fieldset-' prefix
-            $html .= form_fieldset($label,
-                array_merge($attr, array('id'=>'fieldset-'.$id))
-               );
+            $html .= form_fieldset($label, array_merge($attr, array('id'=>'fieldset-'.$id)));
 
             // indicate you have an opened fieldset 
             $this->has_fieldset = TRUE;
+            $this->_counts['feildsets']++;
         }
         else if ($type == 'subfield')
         {
@@ -564,16 +555,18 @@ class Former
                     if (!isset($max)) $max = 10;
                     
                     $script = "$('.jqui-spinner').spinner({\n"
-                            . "spin: function(event, ui) {\n"
-                            . "    var max = $(this).data('max'),\n"
-                            . "        min = $(this).data('min');\n"
-                            . "    if (ui.value > max) {\n"
-                            . "        $(this).spinner('value', min);\n"
-                            . "    } else if (ui.value < min) {\n"
-                            . "        $(this).spinner('value', max);\n"
+                            . "    spin: function(event, ui) {\n"
+                            . "        var val = ui.value,\n"
+                            . "            max = $(this).data('spinner-max'),\n"
+                            . "            min = $(this).data('spinner-min');\n"
+                            . "        if (val > max) {\n"
+                            . "            val = min;\n"
+                            . "        } else if (val < min) {\n"
+                            . "            val = max;\n"
+                            . "        }\n"
+                            . "        $(this).spinner('value', val);\n"
+                            . "        event.preventDefault();\n"
                             . "    }\n"
-                            . "    event.preventDefault();\n"
-                            . "  }\n"
                             . "});";
 
                     Asssets::set_script('jqui-spinner-trigger', $script, 'jqui-spinner');
@@ -581,8 +574,8 @@ class Former
                     $input = form_input(array(
                             'name'      => $name,
                             'id'        => $id,
-                            'data-min'  => $min,
-                            'data-max'  => $max,
+                            'data-spinner-min'  => $min,
+                            'data-spinner-max'  => $max,
                             'class'     => $input_class.' jqui-spinner'), set_value($name, $std), $attr);
                     break;
 
@@ -605,10 +598,12 @@ class Former
                     
                     $script = "$('.jqui-slider').each( function() {\n"
                             . "    var el = $(this),"
-                            . "        input = el.data('slider-input-target')\n"
+                            . "        input = el.data('slider-input-target'),\n"
+                            . "        elmax = el.data('slider-max'),\n"
+                            . "        elmin = el.data('slider-min')\n\n"
                             . "    el.slider({\n"
-                            . "        min: el.data('slider-min'),\n"
-                            . "        max: el.data('slider-max'),\n"
+                            . "        max: elmax,\n"
+                            . "        min: elmin,\n"
                             . "        range: 'min',\n"
                             . "        value: $('#'+input).val(),\n"
                             . "        step: el.data('slider-step'),\n"
@@ -618,10 +613,10 @@ class Former
                             . "    });\n"
                             . "    $('#'+input).on('change', function() {\n"
                             . "        var val = $(this).val();"
-                            . "        if (val > el.data('slider-max')) {\n"
-                            . "            val = el.data('slider-max')\n"
-                            . "        } else if (val < el.data('slider-min')) {\n"
-                            . "            val = el.data('slider-min')\n"
+                            . "        if (val > elmax) {\n"
+                            . "            val = elmax\n"
+                            . "        } else if (val < elmin) {\n"
+                            . "            val = elmin\n"
                             . "        }\n"
                             . "        $(this).val(val)\n"
                             . "        el.slider('value', val)\n"

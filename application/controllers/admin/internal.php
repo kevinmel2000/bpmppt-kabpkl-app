@@ -292,6 +292,9 @@ class Internal extends BAKA_Controller
             'type'  => 'fieldset',
             'label' => 'Keamanan' );
 
+        $user_min = 1;
+        $user_max = 50;
+
         $fields[]   = array(
             'name'  => 'auth_username_length',
             'type'  => 'subfield',
@@ -300,12 +303,16 @@ class Internal extends BAKA_Controller
                 array(
                     'name'  => 'min',
                     'type'  => 'number',
+                    'min'   => $user_min,
+                    'max'   => $user_max,
                     'label' => 'Minimal',
                     'std'   => Setting::get('auth_username_min_length'),
                     'validation'=>'required|numeric' ),
                 array(
                     'name'  => 'max',
                     'type'  => 'number',
+                    'min'   => $user_min,
+                    'max'   => $user_max,
                     'label' => 'Maksimal',
                     'std'   => Setting::get('auth_username_max_length'),
                     'validation'=>'required|numeric' )
@@ -320,12 +327,16 @@ class Internal extends BAKA_Controller
                 array(
                     'name'  => 'min',
                     'type'  => 'number',
+                    'min'   => $user_min,
+                    'max'   => $user_max,
                     'label' => 'Minimal',
                     'std'   => Setting::get('auth_password_min_length'),
                     'validation'=>'required|numeric' ),
                 array(
                     'name'  => 'max',
                     'type'  => 'number',
+                    'min'   => $user_min,
+                    'max'   => $user_max,
                     'label' => 'Maksimal',
                     'std'   => Setting::get('auth_password_max_length'),
                     'validation'=>'required|numeric' )
