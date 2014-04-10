@@ -40,11 +40,14 @@ class Internal extends BAKA_Controller
 
         $this->themee->add_navbar( 'admin_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
         $this->admin_navbar( 'admin_sidebar', 'side' );
+
+        $this->data['page_link'] = 'admin/internal/skpd';
     }
 
     public function index()
     {
-        $this->skpd();
+        if ($this->data['page_link'] != current_url())
+            redirect($this->data['page_link']);
     }
 
     public function skpd()

@@ -83,9 +83,11 @@ $config['baka_default_meta_fields']	= array(
 |--------------------------------------------------------------------------
 */
 // BAKA temporary folder name
-$config['baka_temp_path']	= APPPATH.'storage/tmp/';
+$config['baka_temp_path']		= APPPATH.'storage/tmp/';
 // BAKA upload folder name
-$config['baka_upload_path']	= APPPATH.'storage/upload/';
+$config['baka_upload_path']		= APPPATH.'storage/upload/';
+// BAKA allowed file types
+$config['baka_allowed_types']	= 'gif|jpg|jpeg|png';
 
 /*
 |--------------------------------------------------------------------------

@@ -62,7 +62,7 @@ $route['forgot']                = "auth/forgot";
 // notice route
 $route['notice/(:any)']         = "error/notice/$1";
 // Profile route
-$route['admin']                 = "admin/internal/skpd";
+$route['admin']                 = "admin/internal/index";
 // Profile route
 $route['profile']               = "admin/pengguna/profile";
 

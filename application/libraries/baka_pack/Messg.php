@@ -40,7 +40,7 @@ class Messg
      */
     protected static $messages = array();
 
-    protected static $levels = array('success', 'info', 'warning', 'error');
+    protected static $levels   = array('success', 'info', 'warning', 'error');
 
     /**
      * Default class constructor
@@ -53,8 +53,8 @@ class Messg
     /**
      * Setup messages
      *
-     * @param   string  $level     Message Level
-     * @param   string  $msg_item  Message Items
+     * @param   string        $level     Message Level
+     * @param   string|array  $msg_item  Message Items
      *
      * @return  void
      */
@@ -66,7 +66,17 @@ class Messg
             return FALSE;
         }
 
-        self::$messages[$level][] = $msg_item;
+        if (is_array($msg_item) and count($msg_item) > 0)
+        {
+            foreach ($msg_item as $item)
+            {
+                self::set($level, $item);
+            }
+        }
+        else
+        {
+            self::$messages[$level][] = $msg_item;
+        }
     }
 
     /**
@@ -81,7 +91,9 @@ class Messg
         if (!empty(self::$messages))
         {
             if ($level)
+            {
                 return self::$messages[$level];
+            }
 
             return self::$messages;
         }
