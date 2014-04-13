@@ -58,13 +58,13 @@ class Layanan extends BAKA_Controller
                 foreach($this->bpmppt->get_modules() as $link => $layanan)
                 {
                     $this->data['panel_body'][$link] = array(
-                        'label' => $layanan['label'],
-                        'alias' => $layanan['alias'],
-                        'total' => $this->bpmppt->count_data($layanan['alias']),
-                        'pending' => $this->bpmppt->count_data($layanan['alias'], array('status' => 'pending')),
-                        'approved' => $this->bpmppt->count_data($layanan['alias'], array('status' => 'approved')),
-                        'deleted' => $this->bpmppt->count_data($layanan['alias'], array('status' => 'deleted')),
-                        'done' => $this->bpmppt->count_data($layanan['alias'], array('status' => 'done')),
+                        'label'     => $layanan['label'],
+                        'alias'     => $layanan['alias'],
+                        'total'     => $this->bpmppt->count_data($layanan['alias']),
+                        'pending'   => $this->bpmppt->count_data($layanan['alias'], array('status' => 'pending')),
+                        'approved'  => $this->bpmppt->count_data($layanan['alias'], array('status' => 'approved')),
+                        'deleted'   => $this->bpmppt->count_data($layanan['alias'], array('status' => 'deleted')),
+                        'done'      => $this->bpmppt->count_data($layanan['alias'], array('status' => 'done')),
                         );
                 }
             }
@@ -105,16 +105,28 @@ class Layanan extends BAKA_Controller
                 case 'data':
                     $this->data( $data_type );
                     break;
+
+                default:
+                    if (is_numeric($page))
+                    {
+                        $this->data( $data_type, $page );
+                    }
+                    break;
             }
         }
     }
 
-    public function data( $data_type )
+    public function data( $data_type, $id = FALSE )
     {
         // $this->data['search_form']   = TRUE;
+        
+        if ($id)
+        {
+            redirect($this->data['page_link'].'form/'.$id);
+        }
 
-        $this->data['tool_buttons']['form'] = 'Baru|primary';
-        $this->data['tool_buttons']['cetak'] = 'Laporan|info';
+        $this->data['tool_buttons']['form']              = 'Baru|primary';
+        $this->data['tool_buttons']['cetak']             = 'Laporan|info';
         $this->data['tool_buttons']['Status:dd|default'] = array(
             'data/status/semua'     => 'Semua',
             'data/status/pending'   => 'Pending',
@@ -145,7 +157,7 @@ class Layanan extends BAKA_Controller
         $grid = $this->gridr->identifier('id')
                             ->set_baseurl($this->data['page_link'])
                             ->set_column('Pengajuan',
-                                'no_agenda, callback_format_datetime:created_on',
+                                'callback_anchor:id|no_agenda, callback_format_datetime:created_on',
                                 '30%',
                                 FALSE,
                                 '<strong>%s</strong><br><small class="text-muted">Diajukan pada: %s</small>')

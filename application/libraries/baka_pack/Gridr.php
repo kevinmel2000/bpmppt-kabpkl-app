@@ -199,7 +199,7 @@ class Gridr
         {
             extract($btn_val);
             // '<span class="glyphicon glyphicon-'.$icon.'"></span> '
-            $output .= '<li>'.anchor( $this->page_link.$link.$data_id, $title ).'</li>';
+            $output .= '<li class="text-left">'.anchor( $this->page_link.$link.$data_id, $title ).'</li>';
         }
 
         $output .= '</ul></div>';
@@ -292,6 +292,11 @@ class Gridr
             foreach ( $params as $param )
             {
                 $args[] = isset($row->$param) ? $row->$param : $param ;
+            }
+
+            if ($func[0] == 'anchor')
+            {
+                $args[0] = $this->page_link.$args[0];
             }
 
             // Mastiin kalo function yg dimaksud ada dan bisa dipanggil
