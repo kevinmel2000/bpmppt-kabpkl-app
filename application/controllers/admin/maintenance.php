@@ -60,19 +60,19 @@ class Maintenance extends BAKA_Controller
         $this->data['panel_title'] = $this->themee->set_title('Backup Database');
 
         $fields[]   = array(
-            'name'  => 'backup-all',
+            'name'  => 'db-driver',
             'type'  => 'static',
             'label' => 'Database driver',
             'std'   => $this->db->dbdriver );
 
         $fields[]   = array(
-            'name'  => 'backup-all',
+            'name'  => 'host-info',
             'type'  => 'static',
             'label' => 'Host info',
             'std'   => $this->db->conn_id->host_info );
 
         $fields[]   = array(
-            'name'  => 'backup-all',
+            'name'  => 'server-info',
             'type'  => 'static',
             'label' => 'Server info',
             'std'   => $this->db->conn_id->server_info.' Version. '.$this->db->conn_id->server_version );
@@ -93,10 +93,10 @@ class Maintenance extends BAKA_Controller
         $this->load->library('baka_pack/former');
 
         $form = $this->former->init( array(
-            'name' => 'backup',
-            'action' => current_url(),
-            'fields' => $fields,
-            'buttons' => $buttons,
+            'name'      => 'backup',
+            'action'    => current_url(),
+            'fields'    => $fields,
+            'buttons'   => $buttons,
             ));
 
         if ( $form_data = $form->validate_submition() )
@@ -131,6 +131,7 @@ class Maintenance extends BAKA_Controller
             'name'  => 'restore-from-file',
             'type'  => 'upload',
             'label' => 'Restore dari berkas',
+            'file_limit' => 1,
             'allowed_types' => 'zip|sql',
             'desc'  => 'Pilih berkas yang akan digunakan untuk me-restore database' );
 
@@ -143,10 +144,10 @@ class Maintenance extends BAKA_Controller
         $this->load->library('baka_pack/former');
 
         $form = $this->former->init( array(
-            'name' => 'restore',
-            'action' => current_url(),
-            'fields' => $fields,
-            'buttons' => $buttons,
+            'name'      => 'restore',
+            'action'    => current_url(),
+            'fields'    => $fields,
+            'buttons'   => $buttons,
             ));
 
         if ( $form_data = $form->validate_submition() )
