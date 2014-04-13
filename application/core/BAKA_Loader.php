@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
  * CodeIgniter Baka Pack
@@ -43,23 +43,32 @@ class BAKA_Loader extends CI_Loader
 
     // -------------------------------------------------------------------------
 
-    function theme( $view, $vars = array(), $file = '', $return = FALSE )
+    function theme($view, $vars = array(), $file = '', $return = FALSE)
     {
         $file || $file = 'index';
 
-        $data['contents'] = $this->view( $view, $vars, TRUE);
+        // if (IS_AJAX)
+        // {
+        //     log_message('debug', "#Baka_pack: Loader->theme File \"$file\" loaded as view via ajax.");
 
-        if ( IS_AJAX )
+        //     return $this->view($view, $vars, FALSE);
+        // }
+        // else
+        // {
+        //     $data['contents'] = $this->view($view, $vars, TRUE);
+
+        //     log_message('debug', "#Baka_pack: Loader->theme File \"$file\" loaded as view.");
+
+        //     return $this->view($file, $data, $return);
+        // }
+
+        if (!IS_AJAX)
         {
-            log_message('debug', "#Baka_pack: Loader->theme File ".$file." loaded as view via ajax.");
+            $data['contents'] = $this->view($view, $vars, TRUE);
 
-            return $this->view( $view, $vars, FALSE);
-        }
-        else
-        {
-            log_message('debug', "#Baka_pack: Loader->theme File ".$file." loaded as view.");
+            log_message('debug', "#Baka_pack: Loader->theme File \"$file\" loaded as view.");
 
-            return $this->view( $file, $data, $return );
+            return $this->view($file, $data, $return);
         }
     }
 }

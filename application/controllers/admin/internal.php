@@ -47,7 +47,9 @@ class Internal extends BAKA_Controller
     public function index()
     {
         if ($this->data['page_link'] != current_url())
+        {
             redirect($this->data['page_link']);
+        }
     }
 
     public function skpd()

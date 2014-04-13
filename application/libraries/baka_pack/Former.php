@@ -376,7 +376,11 @@ class Former
 
         // is it an upload form?
         if ($this->is_multipart == TRUE)
+        {
             $this->_attrs['enctype'] = 'multipart/form-data';
+
+            $this->_ci->load->library('baka_pack/median');
+        }
 
         if (isset($this->_attrs['extras']))
         {
@@ -402,18 +406,25 @@ class Former
 
         // Close the fieldset before you close your form
         if($this->has_fieldset === TRUE)
+        {
             $html .= form_fieldset_close();
-
-        // Close the tabset before you close your form
-        if($this->has_tabset === TRUE)
-            $html .= form_fieldset_close();
+        }
 
         // Let them see your form has an action button(s)
         if ($this->no_buttons === FALSE)
+        {
             $html .= $this->_form_actions();
+        }
     
         // Now you can close your form
         $html .= form_close();
+
+        // is it an upload form?
+        if ($this->is_multipart == TRUE)
+        {
+            // Now you can close your form
+            $html .= $this->_ci->median->template();
+        }
 
         return $html;
     }
@@ -677,31 +688,29 @@ class Former
 
                 // Upload field
                 // Using CI form_upload() function
+                // Ajax Upload using FineUploader.JS
                 case 'file':
                 case 'upload':
-                    // $input = form_upload(array(
-                    //         'name'  => $name,
-                    //         'id'    => $id,
-                    //         'class' => $input_class));
-
-                    $input = form_button(array(
-                            'name'    => $name,
-                            'type'    => 'button',
-                            'id'      => $id,
-                            'content' => 'Pilih berkas',
-                            'class'   => 'btn btn-primary btn-sm'));
-                    break;
-
-                // Ajax Upload using FineUploader.JS
-                // TODO: done it! :v
                 case 'fineupload':
-                    $input = form_button(array(
-                                // 'name'  => 'reset',
-                                'type'  => 'button',
-                                'class' => 'btn btn-primary btn-sm',
-                                'content'=> 'Pilih berkas'))
-                           . '<div id="'.$id.'" class="upload-placeholder">'
-                           . '</div>';
+                    if (!isset($allowed_types))
+                        $allowed_types = get_conf('allowed_types');
+
+                    if (!isset($file_limit))
+                        $file_limit = 5;
+
+                    if (is_array($allowed_types))
+                    {
+                        $allowed_types = implode('|', $allowed_types);
+                    }
+
+                    $this->_ci->median->init(array(
+                        'allowed_types' => $allowed_types,
+                        'file_limit'    => $file_limit,
+                        ));
+
+                    $field_attrs['desc'] .= $this->_ci->median->upload_policy();
+
+                    $input = $this->_ci->median->get_html();
                     break;
 
                 // Selectbox field

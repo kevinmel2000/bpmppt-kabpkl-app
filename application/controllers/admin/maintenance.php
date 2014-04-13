@@ -131,7 +131,8 @@ class Maintenance extends BAKA_Controller
             'name'  => 'restore-from-file',
             'type'  => 'upload',
             'label' => 'Restore dari berkas',
-            'desc'  => 'Pilih berkas yang akan digunakan untuk me-restore database, berkas yg diperbolehkan antara lain: <i>.zip</i> dan <i>.sql</i>' );
+            'allowed_types' => 'zip|sql',
+            'desc'  => 'Pilih berkas yang akan digunakan untuk me-restore database' );
 
         $buttons[]= array(
             'name'  => 'do-restore',
@@ -150,16 +151,16 @@ class Maintenance extends BAKA_Controller
 
         if ( $form_data = $form->validate_submition() )
         {
-            $this->load->library('baka_pack/baka_dbutil');
+            // $this->load->library('baka_pack/baka_dbutil');
 
-            if ( $this->baka_dbutil->restore_upload('restore-from-file') )
-            {
-                $this->session->set_flashdata('success', $this->baka_lib->messages());
-            }
-            else
-            {
-                $this->session->set_flashdata('error', $this->baka_lib->errors());
-            }
+            // if ( $this->baka_dbutil->restore_upload('restore-from-file') )
+            // {
+            //     $this->session->set_flashdata('success', $this->baka_lib->messages());
+            // }
+            // else
+            // {
+            //     $this->session->set_flashdata('error', $this->baka_lib->errors());
+            // }
 
             redirect( current_url() );
         }

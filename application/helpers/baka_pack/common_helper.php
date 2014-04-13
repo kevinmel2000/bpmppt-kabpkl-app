@@ -25,19 +25,19 @@
 
 // -----------------------------------------------------------------------------
 
-function _x( $lang_line, $replacement = '' )
+function _x($lang_line, $replacement = '')
 {
     $CI_lang =& get_instance()->lang;
 
-    $lang_line = $CI_lang->line( $lang_line );
+    $lang_line = $CI_lang->line($lang_line);
 
-    if ( is_array( $replacement ) and count( $replacement ) > 0 )
+    if (is_array($replacement) and count($replacement) > 0)
     {
-        return vsprintf( $lang_line, $replacement );
+        return vsprintf($lang_line, $replacement);
     }
-    else if ( is_string( $replacement ) and strlen( $replacement ) > 0 )
+    else if (is_string($replacement) and strlen($replacement) > 0)
     {
-        return sprintf( $lang_line, $replacement );
+        return sprintf($lang_line, $replacement);
     }
     else
     {
@@ -47,12 +47,15 @@ function _x( $lang_line, $replacement = '' )
 
 // -----------------------------------------------------------------------------
 
-function return_bytes( $val )
+function return_bytes($val)
 {
-    $val    = trim( $val );
-    $last   = strtolower( $val[strlen($val)-1] );
+    if (!is_string($val))
+        return FALSE;
 
-    switch ( $last )
+    $val    = trim($val);
+    $last   = strtolower($val[strlen($val)-1]);
+
+    switch ($last)
     {
         case 'g': $val *= 1024;
         case 'm': $val *= 1024;
@@ -64,12 +67,12 @@ function return_bytes( $val )
 
 // -----------------------------------------------------------------------------
 
-function format_size( $size )
+function format_size($size)
 {
     $sizes  = Array('B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB');
     $y      = $sizes[0];
 
-    for ( $i = 1; (($i < count($sizes)) && ($size >= 1024)); $i++ )
+    for ($i = 1; (($i < count($sizes)) && ($size >= 1024)); $i++)
     {
         $size   = $size / 1024;
         $y      = $sizes[$i];
@@ -80,10 +83,10 @@ function format_size( $size )
 
 // -----------------------------------------------------------------------------
 
-function baka_echo( $anu )
+function baka_echo($anu)
 {
-    if ( is_array( $anu ) OR is_object( $anu ) )
-        var_dump( $anu );
+    if (is_array($anu) OR is_object($anu))
+        var_dump($anu);
     else
         echo $anu;
 }
@@ -92,59 +95,59 @@ function baka_echo( $anu )
 // Date and Time helper
 // -----------------------------------------------------------------------------
 
-function format_date( $string = '' )
+function format_date($string = '')
 {
-    return bdate( Setting::get('app_date_format'), $string);
+    return bdate(Setting::get('app_date_format'), $string);
 }
 
 // -----------------------------------------------------------------------------
 
-function format_datetime( $string = '' )
+function format_datetime($string = '')
 {
-    return bdate( Setting::get('app_datetime_format'), $string);
+    return bdate(Setting::get('app_datetime_format'), $string);
 }
 
 // -----------------------------------------------------------------------------
 
-function format_time( $string = '' )
+function format_time($string = '')
 {
-    return bdate( 'H:i:s', $string);
+    return bdate('H:i:s', $string);
 }
 
 // -----------------------------------------------------------------------------
 
-function string_to_date( $string = '' )
+function string_to_date($string = '')
 {
-    return bdate( 'Y-m-d', $string);
+    return bdate('Y-m-d', $string);
 }
 
 // -----------------------------------------------------------------------------
 
-function string_to_datetime( $string = '' )
+function string_to_datetime($string = '')
 {
-    return bdate( 'Y-m-d H:i:s', $string);
+    return bdate('Y-m-d H:i:s', $string);
 }
 
 // -----------------------------------------------------------------------------
 
-function bdate( $format = '', $strdate = '' )
+function bdate($format = '', $strdate = '')
 {
     setlocale(LC_ALL, 'id');
 
-    $strdate = $strdate != '' ? strtotime( $strdate ) : time();
+    $strdate = $strdate != '' ? strtotime($strdate) : time();
     $format || $format = 'Y-m-d H:i:s';
 
-    return date( $format, $strdate );
+    return date($format, $strdate);
 }
 
 // -----------------------------------------------------------------------------
 
-function baka_get_umur( $lahir, $sampai = '' )
+function baka_get_umur($lahir, $sampai = '')
 {
     $tgllahir = strtotime($lahir);
     $sekarang = ($sampai == '') ? time() : strtotime($sampai) ;
 
-    $umur = ($tgllahir < 0) ? ( $sekarang + ($tgllahir * -1) ) : $sekarang - $tgllahir; 
+    $umur = ($tgllahir < 0) ? ($sekarang + ($tgllahir * -1)) : $sekarang - $tgllahir; 
 
     $tahun = 60 * 60 * 24 * 365;
 
@@ -155,7 +158,7 @@ function baka_get_umur( $lahir, $sampai = '' )
 
 // -----------------------------------------------------------------------------
 
-function second_to_day( $second )
+function second_to_day($second)
 {
     return $second / 60 / 60 / 24;
 }
@@ -166,17 +169,17 @@ function get_month_assoc()
 {
     $CI =& get_instance();
 
-    if ( !in_array('calendar_lang.php', $CI->lang->is_loaded, TRUE))
+    if (!in_array('calendar_lang.php', $CI->lang->is_loaded, TRUE))
     {
         $CI->lang->load('calendar');
     }
     
     $output = array();
 
-    for ( $i=1; $i<=12; $i++ )
+    for ($i=1; $i<=12; $i++)
     {
         $month = date('F', mktime(0, 0, 0, $i, 1));
-        $output[$i] = _x( 'cal_'.strtolower($month) );
+        $output[$i] = _x('cal_'.strtolower($month));
     }
 
     return $output;
@@ -184,11 +187,11 @@ function get_month_assoc()
 
 // -----------------------------------------------------------------------------
 
-function get_year_assoc( $interfal = 10 )
+function get_year_assoc($interfal = 10)
 {
     $output = array();
 
-    for ( $i=0; $i<=$interfal; $i++ )
+    for ($i=0; $i<=$interfal; $i++)
     {
         $year = $i === 0 ? date('Y') : date('Y', mktime(0, 0, 0, $i, 1, date('Y')-$i));
         $output[$year] = $year;
@@ -207,9 +210,9 @@ function get_year_assoc( $interfal = 10 )
  *
  * @return  string
  */
-function format_roman( $num )
+function format_roman($num)
 {
-    $n = intval( $num );
+    $n = intval($num);
     $res = '';
   
     // roman_numerals array
@@ -259,7 +262,7 @@ function format_roman( $num )
  * 
  * @return  string
  */
-function twb_label( $text, $class = 'default', $tag = 'span' )
+function twb_label($text, $class = 'default', $tag = 'span')
 {
     return '<'.$tag.' class="label label-'.$class.'">'.$text.'</'.$tag.'>';
 }
@@ -274,7 +277,7 @@ function twb_label( $text, $class = 'default', $tag = 'span' )
  * 
  * @return  string
  */
-function twb_badge( $text, $tag = 'span' )
+function twb_badge($text, $tag = 'span')
 {
     return '<'.$tag.' class="badge">'.$text.'</'.$tag.'>';
 }
@@ -290,21 +293,21 @@ function twb_badge( $text, $tag = 'span' )
  * 
  * @return  string
  */
-function twb_text( $text, $class = '', $tag = 'span' )
+function twb_text($text, $class = '', $tag = 'span')
 {
     return '<'.$tag.' class="text-'.$class.'">'.$text.'</'.$tag.'>';
 }
 
 // -----------------------------------------------------------------------------
 
-function make_tag( $texts, $limit = 10 )
+function make_tag($texts, $limit = 10)
 {
     $out = '';
     $i   = 0;
 
-    foreach ( explode(',', $texts) as $text )
+    foreach (explode(',', $texts) as $text)
     {
-        $out .= twb_label( $text, 'info' ).' ';
+        $out .= twb_label($text, 'info').' ';
 
         if (++$i == $limit) break;
     }
@@ -321,9 +324,9 @@ function make_tag( $texts, $limit = 10 )
  *
  * @return  mixed
  */
-function get_conf( $name )
+function get_conf($name)
 {
-    return config_item( 'baka_'.$name );
+    return config_item('baka_'.$name);
 }
 
 /* End of file common_helper.php */
