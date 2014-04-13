@@ -132,7 +132,8 @@ class Layanan extends BAKA_Controller
             'data/status/pending'   => 'Pending',
             'data/status/approved'  => 'Disetujui',
             'data/status/done'      => 'Selesai',
-            'data/status/deleted'   => 'Dihapus' );
+            'data/status/deleted'   => 'Dihapus'
+            );
 
         $this->data['panel_title'] = $this->themee->set_title( 'Semua data ' . $this->bpmppt->get_label( $data_type ) );
 
@@ -182,7 +183,6 @@ class Layanan extends BAKA_Controller
         $data_obj   = ( $data_id ? $this->bpmppt->get_fulldata_by_id( $data_id ) : FALSE );
 
         $this->data['panel_title']  = $this->themee->set_title( 'Input data ' . $this->bpmppt->get_label( $data_type ) );
-
         $this->data['tool_buttons']['data'] = 'Kembali|default';
 
         $fields = array();
