@@ -1,6 +1,6 @@
-# BPMPPT App (beta)
+# BPMPPT App 0.1.3
 
-Aplikasi ini ditujukan untuk Badan Penanaman Modal dan Pelayanan Perijinan Terbadu Kabupaten Pekalongan
+Aplikasi ini ditujukan untuk Badan Penanaman Modal dan Pelayanan Perijinan Terbadu Kabupaten Pekalongan.
 
 ## Authors
 
@@ -10,16 +10,19 @@ Aplikasi ini ditujukan untuk Badan Penanaman Modal dan Pelayanan Perijinan Terba
 
 + [Codeigniter](http://ellislab.com/codeigniter)
 + [CI Tank Auth Enchance (modified)](http://github.com/TankAuth/Tank-Auth/tree/enchance)
-+ [Twitter Bootstrap](http:getbootstrap.com)
-+ [Google](http://google.com/)
++ [jQuery](http://jquery.com)
++ [jQuery UI](http://jqueryui.com)
++ [jQuery Autosize](http://www.jacklmoore.com/autosize)
++ [FineUploader](http://fineuploader.com)
++ [Select2](http://ivaynberg.github.io/select2/)
++ [Twitter Bootstrap](http://getbootstrap.com)
++ [Bootstrap Datepicker](http://www.eyecon.ro/bootstrap-datepicker)
++ [Bootstrap Switch](http://www.bootstrap-switch.org)
++ [Google ReCaptcha](http://recaptcha.net/plugins/php/)
 
 ## Installation
 
-1. Tempatkan direktori ini didalam server.
-1. Buat database MySQL baru (Nama database bebas)
-1. Import file `.sql` yang ada dalam folder `asset/sql/database.sql` kedalam database yang baru anda buat
-1. Sesuaikan konfigurasi file `config.php` dan `database.php` yang ada didalam folder `application/config`
-1. enjoy ;)
+# Aplikasi ini masih dalam tahap pengembangan dan belum siap untuk digunakan!!
 
 ## Copyright and license
 

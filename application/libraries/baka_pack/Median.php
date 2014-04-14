@@ -87,7 +87,7 @@ class Median
             return $this->do_upload();
         }
 
-        log_message('debug', "#Baka_pack: Media Class Initialized");
+        log_message('debug', "#Baka_pack: Median Class Initialized");
     }
 
     /**

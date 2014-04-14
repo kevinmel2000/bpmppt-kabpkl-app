@@ -329,5 +329,18 @@ function get_conf($name)
     return config_item('baka_'.$name);
 }
 
+// -----------------------------------------------------------------------------
+
+/**
+ * Get file extension from path
+ *
+ * @param   string  $path  Full file path
+ * @return  string
+ */
+function get_ext($path)
+{
+    return pathinfo($path, PATHINFO_EXTENSION);
+}
+
 /* End of file common_helper.php */
 /* Location: ./application/helpers/baka_pack/common_helper.php */
