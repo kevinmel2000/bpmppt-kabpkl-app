@@ -6,6 +6,10 @@ Aplikasi ini ditujukan untuk Badan Penanaman Modal dan Pelayanan Perijinan Terba
 
 **[Fery Wardiyanto](http://github.com/feryardiant)**
 
+## CAUTION!
+
+# THIS APP IS UNDER INTERNAL DEVELOPMENT ONLY AND NOT READY TO USE ON PUBLIC (YET)!!
+
 ## Credits
 
 + [Codeigniter](http://ellislab.com/codeigniter)
@@ -19,10 +23,6 @@ Aplikasi ini ditujukan untuk Badan Penanaman Modal dan Pelayanan Perijinan Terba
 + [Bootstrap Datepicker](http://www.eyecon.ro/bootstrap-datepicker)
 + [Bootstrap Switch](http://www.bootstrap-switch.org)
 + [Google ReCaptcha](http://recaptcha.net/plugins/php/)
-
-## Installation
-
-# Aplikasi ini masih dalam tahap pengembangan dan belum siap untuk digunakan!!
 
 ## Copyright and license
 
