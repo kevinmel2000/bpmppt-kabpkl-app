@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
+<?php if (! defined('BASEPATH')) exit('No direct script access allowed'); 
 
 /**
  * Baka_pack Archive Drivers
@@ -85,7 +85,7 @@ class Archive extends CI_Driver_Library
     {
         self::$_ci =& get_instance();
 
-        foreach ( $this->valid_drivers as $supported )
+        foreach ($this->valid_drivers as $supported)
         {
             $this->_formats[] = str_replace('archive_', '', $supported);
         }
@@ -100,60 +100,59 @@ class Archive extends CI_Driver_Library
      *
      * @return  bool
      */
-    public function init( $file_path )
+    public function init($file_path)
     {
         $this->_type = get_ext($file_path);
 
-        if ( !in_array( $this->_type, $this->_formats ) )
+        if (!in_array($this->_type, $this->_formats))
         {
-            $this->_errors[] = 'Sorry, but this format is unsupported currently.';
+            Messg::set('error', 'Sorry, but this format is unsupported currently.');
             return FALSE;
         }
 
-        if ( !is_file( $file_path ) AND !file_exists( $file_path ) )
+        if (!is_file($file_path) AND !file_exists($file_path))
         {
-            $this->_errors[] = 'File '.$file_path.' is not on your server.';
+            Messg::set('error', 'File '.$file_path.' is not on your server.');
             return FALSE;
         }
 
-        if ( !is_readable( $file_path ) )
+        if (!is_readable($file_path))
         {
-            $this->_errors[] = 'File '.$file_path.' is not readble.';
+            Messg::set('error', 'File '.$file_path.' is not readble.');
             return FALSE;
         }
 
-        $this->_archive = $this->{$this->_type}->_open( $file_path );
-
-        $this->_path_info = pathinfo( $file_path );
+        $this->_archive     = $this->{$this->_type}->_open($file_path);
+        $this->_path_info   = pathinfo($file_path);
 
         return $this;
     }
 
-    public function create( $file_path )
+    public function create($file_path)
     {
-        $this->_type = get_ext( $file_path );
+        $this->_type = get_ext($file_path);
 
-        if ( !in_array( $this->_type, $this->_formats ) )
+        if (!in_array($this->_type, $this->_formats))
         {
-            $this->_errors[] = 'Sorry, but this format is unsupported currently.';
+            Messg::set('error', 'Sorry, but this format is unsupported currently.');
             return FALSE;
         }
 
-        if ( is_file( $file_path ) AND file_exists( $file_path ) )
+        if (is_file($file_path) AND file_exists($file_path))
         {
-            $this->_errors[] = 'File '.$file_path.' is already exists.';
+            Messg::set('error', 'File '.$file_path.' is already exists.');
             return FALSE;
         }
 
-        $dirname = dirname( $file_path );
+        $dirname = dirname($file_path);
 
-        if ( !is_really_writable( $dirname ) )
+        if (!is_really_writable($dirname))
         {
-            $this->_errors[] = 'Directory '.$dirname.' is not writable.';
+            Messg::set('error', 'Directory '.$dirname.' is not writable.');
             return FALSE;
         }
 
-        $this->_archive = $this->{$this->_type}->_create( $file_path );
+        $this->_archive = $this->{$this->_type}->_create($file_path);
 
         return $this;
     }
@@ -165,7 +164,7 @@ class Archive extends CI_Driver_Library
      */
     public function read()
     {
-        if ( $this->_archive )
+        if ($this->_archive)
         {
             return $this->{$this->_type}->_read();
         }
@@ -185,24 +184,24 @@ class Archive extends CI_Driver_Library
      */
     public function extract($target_dir = '', $file_names = array())
     {
-        if ( $target_dir == '' )
+        if ($target_dir == '')
         {
             $target_dir = $this->_path_info['dirname'].'/'.$this->_path_info['filename'];
         }
 
-        if ( is_dir( $target_dir ) )
+        if (is_dir($target_dir))
         {
-            $this->_errors[] = 'Target '.$target_dir.' is already exists.';
+            Messg::set('error', 'Target '.$target_dir.' is already exists.');
             return FALSE;
         }
 
-        if ( !is_really_writable( dirname( $target_dir ) ) )
+        if (!is_really_writable(dirname($target_dir)))
         {
-            $this->_errors[] = 'Target '.$target_dir.' is not writable.';
+            Messg::set('error', 'Target '.$target_dir.' is not writable.');
             return FALSE;
         }
 
-        if ( $this->_archive )
+        if ($this->_archive)
         {
             $this->{$this->_type}->_extract($target_dir, $file_names);
             $this->close();
@@ -227,7 +226,7 @@ class Archive extends CI_Driver_Library
      */
     public function errors()
     {
-        if ( !empty($this->_errors) )
+        if (!empty($this->_errors))
         {
             return $this->_errors;
         }

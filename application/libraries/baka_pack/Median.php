@@ -245,7 +245,6 @@ class Median
             }
             else
             {
-                Messg::set('error', $this->allowed_types);
                 Messg::set('error', $this->_ci->upload->display_errors());
                 return FALSE;
             }
