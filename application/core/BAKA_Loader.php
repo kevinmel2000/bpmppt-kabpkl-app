@@ -39,6 +39,8 @@ class BAKA_Loader extends CI_Loader
     function __construct()
     {
         parent::__construct();
+
+        log_message('debug', "#Baka_pack: Core Loader Class Initialized");
     }
 
     // -------------------------------------------------------------------------
@@ -47,13 +49,22 @@ class BAKA_Loader extends CI_Loader
     {
         $file || $file = 'index';
 
-        // if (IS_AJAX)
-        // {
-        //     log_message('debug', "#Baka_pack: Loader->theme File \"$file\" loaded as view via ajax.");
+        if (IS_AJAX)
+        {
+            log_message('debug', "#Baka_pack: Core Loader->theme File \"$file\" loaded as view via ajax.");
 
-        //     return $this->view($view, $vars, FALSE);
-        // }
-        // else
+            return $this->view($view, $vars, FALSE);
+        }
+        else
+        {
+            $data['contents'] = $this->view($view, $vars, TRUE);
+
+            log_message('debug', "#Baka_pack: Core Loader->theme File \"$file\" loaded as view.");
+
+            return $this->view($file, $data, $return);
+        }
+
+        // if (!IS_AJAX)
         // {
         //     $data['contents'] = $this->view($view, $vars, TRUE);
 
@@ -61,15 +72,6 @@ class BAKA_Loader extends CI_Loader
 
         //     return $this->view($file, $data, $return);
         // }
-
-        if (!IS_AJAX)
-        {
-            $data['contents'] = $this->view($view, $vars, TRUE);
-
-            log_message('debug', "#Baka_pack: Loader->theme File \"$file\" loaded as view.");
-
-            return $this->view($file, $data, $return);
-        }
     }
 }
 
