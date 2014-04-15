@@ -67,7 +67,7 @@ class Gridr
             $this->initialize($db_query);
         }
 
-        log_message('debug', "#Baka_pack: Grid Library Class Initialized");
+        log_message('debug', "#Baka_pack: Gridr Library Class Initialized");
     }
 
     /** --------------------------------------------------------------------------------

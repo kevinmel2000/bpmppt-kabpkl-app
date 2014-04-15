@@ -70,7 +70,7 @@ class Setting
 
         self::init();
 
-        log_message('debug', "#Baka_pack: Settings Library Class Initialized");
+        log_message('debug', "#Baka_pack: Setting] Class Initialized");
     }
 
     // -------------------------------------------------------------------------

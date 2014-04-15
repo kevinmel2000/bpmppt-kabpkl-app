@@ -90,7 +90,7 @@ class Archive extends CI_Driver_Library
             $this->_formats[] = str_replace('archive_', '', $supported);
         }
 
-        log_message('debug', "#Baka Archive Driver Initialized");
+        log_message('debug', "#Archive: Driver Initialized");
     }
 
     /**

@@ -47,7 +47,7 @@ class Messg
      */
     public function __construct()
     {
-        log_message('debug', "#Baka_pack: Main Library Class Initialized");
+        log_message('debug', "#Baka_pack: Messg Class Initialized");
     }
 
     /**

@@ -64,7 +64,7 @@ class Themee
         Asssets::set_script('bootstrap', 'lib/bootstrap.min.js', 'jquery', '3.0.0' );
         Asssets::set_style('baka_pack', 'style.min.css');
 
-        log_message('debug', "#Baka_pack: Theme Class Initialized");
+        log_message('debug', "#Baka_pack: Themee Class Initialized");
     }
 
     // -------------------------------------------------------------------------
