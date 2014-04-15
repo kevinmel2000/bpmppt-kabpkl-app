@@ -210,7 +210,7 @@ class Asssets
 
     // -------------------------------------------------------------------------
 
-    public function get_styles()
+    public static function get_styles()
     {
         if (isset(self::$_styles))
             return self::$_styles;

@@ -197,37 +197,51 @@ class Former
         foreach (array('action', 'name', 'id', 'class', 'method', 'extras') as $attr_key)
         {
             if (isset($attrs[$attr_key]))
+            {
                 $this->_attrs[$attr_key] = $attrs[$attr_key];
+            }
         }
 
         if (!isset($attrs['id']))
+        {
             $this->_attrs['id'] = 'form-'.$this->_attrs['name'];
+        }
 
         // Is 'is_hform' already declarated? if not make it true
         $this->is_hform = isset($attrs['is_hform']) ? $attrs['is_hform'] : TRUE;
 
         // make it horizontal form by default
         if ($this->is_hform == TRUE)
+        {
             $this->_attrs['class'] .= ' form-horizontal';
+        }
 
         // set-up HTML5 role attribute
         $this->_attrs['role'] = 'form';
 
         // if fields is already declarated in the config, just make it happen ;)
         if (isset($attrs['fields']) and is_array($attrs['fields']) and !empty($attrs['fields']))
+        {
             $this->set_fields($attrs['fields']);
+        }
 
         // if buttons is already declarated in the config, just make it happen ;)
         if (isset($attrs['buttons']) and is_array($attrs['buttons']) and !empty($attrs['buttons']))
+        {
             $this->set_buttons($attrs['buttons']);
+        }
 
         // set this up and you'll lose your buttons :P
         if (isset($attrs['no_buttons']))
+        {
             $this->no_buttons = $attrs['no_buttons'];
+        }
 
         // set this up and you'll lose your buttons :P
         if (isset($attrs['template']))
+        {
             $this->set_template($attrs['template']);
+        }
 
         return $this;
     }
@@ -451,7 +465,9 @@ class Former
         $field_attrs['attr'] = '';
 
         if ($is_sub and isset($field_attrs['label']))
+        {
             $field_attrs['attr'] .= 'placeholder="'.$field_attrs['label'].'"';
+        }
 
         $attributes  = $this->_set_defaults($field_attrs);
         extract($attributes);
@@ -509,7 +525,9 @@ class Former
                     if (isset($field['validation']) AND $field['validation'] != '')
                     {
                         if (strpos('required', $field['validation']) !== FALSE)
+                        {
                             $field['label'] .= ' *';
+                        }
 
                         $field_attrs['validation'] = $field['validation'];
                     }
@@ -918,7 +936,9 @@ class Former
             }
 
             if ($is_error != '')
+            {
                 $group_class .= ' has-error';
+            }
 
             // var_dump($is_error);
         }
@@ -929,7 +949,9 @@ class Former
         $group_attr = 'id="group-'.str_replace('_', '-', $attrs['name']).'"';
 
         if (isset($attrs['fold']) and !empty($attrs['fold']))
+        {
             $group_attr .= ' data-fold="1" data-fold-key="'.$attrs['fold']['key'].'" data-fold-value="'.$attrs['fold']['value'].'"';
+        }
 
         $html = sprintf($group_open, $group_class, $group_attr);
 
@@ -966,24 +988,24 @@ class Former
         // 2. Reset button as Bootstrap btn-default on the right side
         if (count($this->_buttons) == 0)
         {
-            $this->_buttons = array(
-                array(
-                    'name'  => 'submit',
-                    'type'  => 'submit',
-                    'label' => 'lang:submit_btn',
-                    'class' => 'pull-left btn-primary'),
-                array(
-                    'name'  => 'reset',
-                    'type'  => 'reset',
-                    'label' => 'lang:reset_btn',
-                    'class' => 'pull-right btn-default')
+            $this->_buttons[] = array(
+                'name'  => 'submit',
+                'type'  => 'submit',
+                'label' => 'lang:submit_btn',
+                'class' => 'pull-left btn-primary'
+                );
+            $this->_buttons[] = array(
+                'name'  => 'reset',
+                'type'  => 'reset',
+                'label' => 'lang:reset_btn',
+                'class' => 'pull-right btn-default'
                 );
         }
 
         // If you were use Bootstrap form-horizontal class in your form,
         // You'll need to specify Bootstrap grids class.
-        $group_col = $this->is_hform ? 'col-lg-12 col-md-12 ' : '';
-        $output = '<div class="form-group form-action"><div class="'.$group_col.'clearfix">';
+        $group_col  = $this->is_hform ? 'col-lg-12 col-md-12 ' : '';
+        $output     = '<div class="form-group form-action"><div class="'.$group_col.'clearfix">';
 
         // Let's reset your button attributes.
         $button_attr = array();
@@ -1108,16 +1130,22 @@ class Former
         $rules      = ($field_arr ? 'xss_clean' : 'trim|xss_clean');
 
         if (strlen($validation) > 0)
+        {
             $rules .= '|'.$validation;
+        }
 
         $this->_ci->form_validation->set_rules($name, $label, $rules);
 
         $method = $this->_attrs['method'];
 
         if (strlen($callback) > 0 and is_callable($callback))
+        {
             $this->form_data[$name] = call_user_func($callback, $this->_ci->input->$method($name));
+        }
         else
+        {
             $this->form_data[$name] = $this->_ci->input->$method($name);
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -1162,7 +1190,9 @@ class Former
             $descs = isset($desc['err']) ? $desc['err'] : $desc;
 
             foreach ($descs as $ket)
+            {
                 $ret .= $ket;
+            }
         }
 
         return $ret;
@@ -1192,7 +1222,9 @@ class Former
         foreach ($array_keys as $key => $val)
         {
             if (!array_key_exists($key, $field) AND !isset($field[$key]))
+            {
                 $field[$key] = $val;
+            }
         }
 
         return $field;
@@ -1213,7 +1245,8 @@ class Former
             'action'  => '',
             'name'    => '',
             'class'   => '',
-            'method'  => 'post' );
+            'method'  => 'post'
+            );
 
         $this->is_hform     = FALSE;
         $this->is_multipart = FALSE;
