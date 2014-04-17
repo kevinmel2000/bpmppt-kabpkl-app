@@ -61,7 +61,7 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
         font-size: 1px;
         text-decoration: none;
         border: 0;
-        background: url('../img/select2.png') right top no-repeat;
+        background: url('@{img-path}select2.png') right top no-repeat;
         cursor: pointer;
         outline: 0;
 
@@ -202,19 +202,19 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
       border-radius: @border-radius-base;
       -webkit-box-shadow: none;
               box-shadow: none;
-      // background: @body-bg url('../img/select2.png') no-repeat 100% -22px;
-      // background: url('../img/select2.png') no-repeat 100% -22px, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, @body-bg), color-stop(0.99, @gray-lighter));
-      // background: url('../img/select2.png') no-repeat 100% -22px, -webkit-linear-gradient(center bottom, @body-bg 85%, @gray-lighter 99%);
-      // background: url('../img/select2.png') no-repeat 100% -22px, -moz-linear-gradient(center bottom, @body-bg 85%, @gray-lighter 99%);
-      // background: url('../img/select2.png') no-repeat 100% -22px, linear-gradient(top, @body-bg 85%, @gray-lighter 99%);
+      // background: @body-bg url('@{img-path}select2.png') no-repeat 100% -22px;
+      // background: url('@{img-path}select2.png') no-repeat 100% -22px, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, @body-bg), color-stop(0.99, @gray-lighter));
+      // background: url('@{img-path}select2.png') no-repeat 100% -22px, -webkit-linear-gradient(center bottom, @body-bg 85%, @gray-lighter 99%);
+      // background: url('@{img-path}select2.png') no-repeat 100% -22px, -moz-linear-gradient(center bottom, @body-bg 85%, @gray-lighter 99%);
+      // background: url('@{img-path}select2.png') no-repeat 100% -22px, linear-gradient(top, @body-bg 85%, @gray-lighter 99%);
       min-height: @input-height-select2;
 
       &.select2-active {
-        background: @body-bg url('../img/select2-spinner.gif') no-repeat 100%;
-        // background: url('../img/select2-spinner.gif') no-repeat 100%, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, @body-bg), color-stop(0.99, @gray-lighter));
-        // background: url('../img/select2-spinner.gif') no-repeat 100%, -webkit-linear-gradient(center bottom, @body-bg 85%, @gray-lighter 99%);
-        // background: url('../img/select2-spinner.gif') no-repeat 100%, -moz-linear-gradient(center bottom, @body-bg 85%, @gray-lighter 99%);
-        // background: url('../img/select2-spinner.gif') no-repeat 100%, linear-gradient(top, @body-bg 85%, @gray-lighter 99%);
+        background: @body-bg url('@{img-path}select2-spinner.gif') no-repeat 100%;
+        // background: url('@{img-path}select2-spinner.gif') no-repeat 100%, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, @body-bg), color-stop(0.99, @gray-lighter));
+        // background: url('@{img-path}select2-spinner.gif') no-repeat 100%, -webkit-linear-gradient(center bottom, @body-bg 85%, @gray-lighter 99%);
+        // background: url('@{img-path}select2-spinner.gif') no-repeat 100%, -moz-linear-gradient(center bottom, @body-bg 85%, @gray-lighter 99%);
+        // background: url('@{img-path}select2-spinner.gif') no-repeat 100%, linear-gradient(top, @body-bg 85%, @gray-lighter 99%);
       }
     }
   }
@@ -368,7 +368,7 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
     display: list-item;
     
     &.select2-active {
-      background: @gray-light url('../img/select2-spinner.gif') no-repeat 100%;
+      background: @gray-light url('@{img-path}select2-spinner.gif') no-repeat 100%;
     }
   }
 
@@ -450,7 +450,7 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
             .box-shadow(none);
 
             &.select2-active {
-              background: @body-bg url('../img/select2-spinner.gif') no-repeat 100% !important;
+              background: @body-bg url('@{img-path}select2-spinner.gif') no-repeat 100% !important;
             }
           }
         }
@@ -560,13 +560,19 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
   }
 }
 
-@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (-webkit-min-device-pixel-ratio: 1.5) {
+@media
+  only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (   min--moz-device-pixel-ratio: 2),
+  only screen and (     -o-min-device-pixel-ratio: 2/1),
+  only screen and (        min-device-pixel-ratio: 2),
+  only screen and (                min-resolution: 192dpi),
+  only screen and (                min-resolution: 2dppx) {
     .select2 {
       &-search input,
       &-search-choice-close,
       &-container .select2-choice abbr,
       &-container .select2-choice .select2-arrow b {
-        background-image: url('../img/select2x2.png') !important;
+        background-image: url('@{img-path}select2x2.png') !important;
         background-repeat: no-repeat !important;
         background-size: 60px 40px !important;
       }

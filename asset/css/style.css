@@ -256,8 +256,8 @@ table {
  * -------------------------- */
 @font-face {
   font-family: 'FontAwesome';
-  src: url('../fonts/fontawesome//fontawesome-webfont.eot?v=4.0.3');
-  src: url('../fonts/fontawesome//fontawesome-webfont.eot?#iefix?v=4.0.3') format('embedded-opentype'), url('../fonts/fontawesome//fontawesome-webfont.woff?v=4.0.3') format('woff'), url('../fonts/fontawesome//fontawesome-webfont.ttf?v=4.0.3') format('truetype'), url('../fonts/fontawesome//fontawesome-webfont.svg?v=4.0.3#fontawesome-webfont') format('svg');
+  src: url('../fonts/fontawesome/fontawesome-webfont.eot?v=4.0.3');
+  src: url('../fonts/fontawesome/fontawesome-webfont.eot?#iefix?v=4.0.3') format('embedded-opentype'), url('../fonts/fontawesome/fontawesome-webfont.woff?v=4.0.3') format('woff'), url('../fonts/fontawesome/fontawesome-webfont.ttf?v=4.0.3') format('truetype'), url('../fonts/fontawesome/fontawesome-webfont.svg?v=4.0.3#fontawesome-webfont') format('svg');
 }
 .fa {
   font-family: FontAwesome;
@@ -6642,10 +6642,10 @@ button.close {
   color: #222222;
 }
 .ui-widget-content {
-  background: #ffffff url(../img/ui-bg_flat_75_ffffff_40x100.png) 50% 50% repeat-x;
+  background: #ffffff url("../img/ui-bg_flat_75_ffffff_40x100.png") 50% 50% repeat-x;
 }
 .ui-widget-header {
-  background: #cccccc url(../img/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
+  background: #cccccc url("../img/ui-bg_highlight-soft_75_cccccc_1x100.png") 50% 50% repeat-x;
   font-weight: bold;
 }
 .ui-widget-overlay,
@@ -6659,12 +6659,12 @@ button.close {
   left: 0;
   width: 100%;
   height: 100%;
-  background: #aaaaaa url(../img/ui-bg_flat_0_aaaaaa_40x100.png) 50% 50% repeat-x;
+  background: #aaaaaa url("../img/ui-bg_flat_0_aaaaaa_40x100.png") 50% 50% repeat-x;
 }
 .ui-widget-shadow {
   margin: -8px 0 0 -8px;
   padding: 8px;
-  background: #aaaaaa url(../img/ui-bg_flat_0_aaaaaa_40x100.png) 50% 50% repeat-x;
+  background: #aaaaaa url("../img/ui-bg_flat_0_aaaaaa_40x100.png") 50% 50% repeat-x;
   border-radius: 8px;
 }
 .ui-state {
@@ -6679,13 +6679,13 @@ button.close {
 }
 .ui-state-default {
   border: 1px solid #cccccc;
-  background: #e6e6e6 url(../img/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
+  background: #e6e6e6 url("../img/ui-bg_glass_75_e6e6e6_1x400.png") 50% 50% repeat-x;
   color: #333333;
 }
 .ui-state-hover,
 .ui-state-focus {
   border: 1px solid #66afe9;
-  background: #dadada url(../img/ui-bg_glass_75_dadada_1x400.png) 50% 50% repeat-x;
+  background: #dadada url("../img/ui-bg_glass_75_dadada_1x400.png") 50% 50% repeat-x;
   color: #212121;
   cursor: pointer;
 }
@@ -6701,7 +6701,7 @@ button.close {
 }
 .ui-state-active {
   border: 1px solid #cccccc;
-  background: #ffffff url(../img/ui-bg_glass_65_ffffff_1x400.png) 50% 50% repeat-x;
+  background: #ffffff url("../img/ui-bg_glass_65_ffffff_1x400.png") 50% 50% repeat-x;
   color: #212121;
 }
 .ui-state-active a,
@@ -6713,7 +6713,7 @@ button.close {
 }
 .ui-state-highlight {
   border: 1px solid #fcefa1;
-  background: #ffffff url(../img/ui-bg_glass_55_fbf9ee_1x400.png) 50% 50% repeat-x;
+  background: #ffffff url("../img/ui-bg_glass_55_fbf9ee_1x400.png") 50% 50% repeat-x;
   color: #363636;
 }
 .ui-state-highlight a {
@@ -6721,7 +6721,7 @@ button.close {
 }
 .ui-state-error {
   border: 1px solid #cd0a0a;
-  background: #ffffff url(../img/ui-bg_glass_55_fbf9ee_1x400.png) 50% 50% repeat-x;
+  background: #ffffff url("../img/ui-bg_glass_55_fbf9ee_1x400.png") 50% 50% repeat-x;
   color: #cd0a0a;
 }
 .ui-state-error a,
@@ -7381,22 +7381,22 @@ button.close {
 .ui-icon,
 .ui-widget-content .ui-icon,
 .ui-widget-header .ui-icon {
-  background-image: url(../img/ui-icons_222222_256x240.png);
+  background-image: url("../img/ui-icons_222222_256x240.png");
 }
 .ui-state-default .ui-icon {
-  background-image: url(../img/ui-icons_888888_256x240.png);
+  background-image: url("../img/ui-icons_888888_256x240.png");
 }
 .ui-state-hover .ui-icon,
 .ui-state-focus .ui-icon,
 .ui-state-active .ui-icon {
-  background-image: url(../img/ui-icons_454545_256x240.png);
+  background-image: url("../img/ui-icons_454545_256x240.png");
 }
 .ui-state-highlight .ui-icon {
-  background-image: url(../img/ui-icons_2e83ff_256x240.png);
+  background-image: url("../img/ui-icons_2e83ff_256x240.png");
 }
 .ui-state-error .ui-icon,
 .ui-state-error-text .ui-icon {
-  background-image: url(../img/ui-icons_cd0a0a_256x240.png);
+  background-image: url("../img/ui-icons_cd0a0a_256x240.png");
 }
 /*
 Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
@@ -7880,7 +7880,7 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
   height: 100px;
   overflow: scroll;
 }
-@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (-webkit-min-device-pixel-ratio: 1.5) {
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
   .select2-search input,
   .select2-search-choice-close,
   .select2-container .select2-choice abbr,
@@ -7964,9 +7964,9 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
 .datepicker > div {
   display: none;
 }
-.datepicker.days div.datepicker-days,
-.datepicker.months div.datepicker-months,
-.datepicker.years div.datepicker-years {
+.datepicker.days .datepicker-days,
+.datepicker.months .datepicker-months,
+.datepicker.years .datepicker-years {
   display: block;
 }
 .datepicker table.table-condensed {
@@ -8381,7 +8381,7 @@ a.datepicker table.table-condensed tr td span.active.disabled:hover:hover {
 }
 .qq-upload-selector .qq-drop-processing-spinner-selector {
   display: inline-block;
-  background: url(../img/processing.gif);
+  background: url("../img/processing.gif");
   width: 24px;
   height: 24px;
   vertical-align: text-bottom;
@@ -8410,7 +8410,7 @@ a.datepicker table.table-condensed tr td span.active.disabled:hover:hover {
 }
 .qq-upload-selector .qq-upload-list-selector li span.qq-upload-spinner-selector {
   display: inline-block;
-  background: url(../img/loading.gif);
+  background: url("../img/loading.gif");
   width: 15px;
   height: 15px;
   vertical-align: text-bottom;
@@ -8501,7 +8501,7 @@ a.datepicker table.table-condensed tr td span.active.disabled:hover:hover {
 }
 .qq-upload-selector .qq-edit-filename-icon-selector {
   display: none;
-  background: url(../img/edit.gif);
+  background: url("../img/edit.gif");
   width: 15px;
   height: 15px;
   vertical-align: text-bottom;
