@@ -260,21 +260,7 @@ class Former
      */
     public function set_template(array $template)
     {
-        $valid_tmpl = array(
-            'group_open',
-            'group_close',
-            'group_class',
-            'label_open',
-            'label_close',
-            'label_class',
-            'field_open',
-            'field_close',
-            'field_class',
-            'buttons_class',
-            'required_attr',
-            'desc_open',
-            'desc_close',
-            );
+        $valid_tmpl = array_keys($this->_template);
 
         foreach ($valid_tmpl as $option)
         {

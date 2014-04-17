@@ -187,12 +187,11 @@ class Themee
 
     public function get_navbar()
     {
-        $output  = '<header id="top" class="navbar navbar-default navbar-app navbar-static-top" role="banner">'
-                 . '    <div class="container">'
-                 . '        <div class="navbar-header">'
-                 . '            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>'
-                 . '            '.anchor(base_url(), get_conf('app_name'), 'class="navbar-brand"')
-                 . '        </div>';
+        $output  = '<header id="top" class="navbar navbar-default navbar-app navbar-static-top" role="banner"><div class="container">'
+                 . '    <div class="navbar-header">'
+                 . '        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>'
+                 . '        '.anchor(base_url(), get_conf('app_name'), 'class="navbar-brand"')
+                 . '    </div>';
 
         if ( !self::verify_browser() AND Authen::is_logged_in() )
             $output .= '<div class="navbar-collapse collapse">'.$this->get_nav('top').'</div> <!--/.nav-collapse -->';

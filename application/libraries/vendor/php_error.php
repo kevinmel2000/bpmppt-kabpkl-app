@@ -92,7 +92,6 @@ namespace php_error;
 
 use \php_error\FileLinesSet,
     \php_error\ErrorHandler,
-
     \php_error\JSMin,
     \php_error\JSMinException;
 
@@ -3937,10 +3936,10 @@ if ( empty($_php_error_already_setup) ) {
             #error-editor-ace.ace_editor .ace_constant.ace_other {
                 color:#cF5d33;
             }
-            #error-editor-ace.ace_editor .ace_constant.ace_character,  {
+            #error-editor-ace.ace_editor .ace_constant.ace_character {
                 color:#CF6A4C;
             }
-            #error-editor-ace.ace_editor .ace_constant.ace_character.ace_escape,  {
+            #error-editor-ace.ace_editor .ace_constant.ace_character.ace_escape {
                 color:#CF6A4C;
             }
             #error-editor-ace.ace_editor .ace_invalid.ace_illegal {

@@ -58,10 +58,8 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
         position: absolute;
         right: 24px;
         top: 8px;
-
         font-size: 1px;
         text-decoration: none;
-
         border: 0;
         background: url('../img/select2.png') right top no-repeat;
         cursor: pointer;
@@ -103,7 +101,7 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
     &.select2-drop-above .select2-choice {
       border-bottom-color: @input-border;
       .border-left-radius(@border-radius-base);
-      #gradient .vertical(@gray-lighter; @body-bg);
+      #gradient .vertical(@gray-lighter, @body-bg);
     }
 
     &.select2-allowclear .select2-choice .select2-chosen {
@@ -135,11 +133,10 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
       min-width: 100%;
       height: auto;
       width: auto;
-      opacity: 0;
       z-index: 9998;
       /* styles required for IE to work */
       background-color: @input-bg;
-      filter: alpha(opacity=0);
+      .opacity(0);
     }
 
     width: 100%;
@@ -147,12 +144,10 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
     position: absolute;
     z-index: 9999;
     top: 100%;
-
     background: @input-bg;
     color: @input-color;
     border: 1px solid @input-border;
     border-top: 0;
-
     .border-bottom-radius(@border-radius-base);
     .box-shadow(0 4px 5px rgba(0, 0, 0, .15));
 
@@ -216,10 +211,10 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
 
       &.select2-active {
         background: @body-bg url('../img/select2-spinner.gif') no-repeat 100%;
-        background: url('../img/select2-spinner.gif') no-repeat 100%, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, @body-bg), color-stop(0.99, @gray-lighter));
-        background: url('../img/select2-spinner.gif') no-repeat 100%, -webkit-linear-gradient(center bottom, @body-bg 85%, @gray-lighter 99%);
-        background: url('../img/select2-spinner.gif') no-repeat 100%, -moz-linear-gradient(center bottom, @body-bg 85%, @gray-lighter 99%);
-        background: url('../img/select2-spinner.gif') no-repeat 100%, linear-gradient(top, @body-bg 85%, @gray-lighter 99%);
+        // background: url('../img/select2-spinner.gif') no-repeat 100%, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, @body-bg), color-stop(0.99, @gray-lighter));
+        // background: url('../img/select2-spinner.gif') no-repeat 100%, -webkit-linear-gradient(center bottom, @body-bg 85%, @gray-lighter 99%);
+        // background: url('../img/select2-spinner.gif') no-repeat 100%, -moz-linear-gradient(center bottom, @body-bg 85%, @gray-lighter 99%);
+        // background: url('../img/select2-spinner.gif') no-repeat 100%, linear-gradient(top, @body-bg 85%, @gray-lighter 99%);
       }
     }
   }
@@ -231,11 +226,7 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
         .select2-choices {
           // border: 1px solid @input-border;
           border-top-color: transparent;
-          background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, @body-bg), color-stop(0.5, @gray-lighter));
-          background-image: -webkit-linear-gradient(center top, @body-bg 0%, @gray-lighter 50%);
-          background-image: -moz-linear-gradient(center top, @body-bg 0%, @gray-lighter 50%);
-          filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@gray-lighter', endColorstr='@body-bg', GradientType=0);
-          background-image: linear-gradient(bottom, @body-bg 0%, @gray-lighter 50%);
+          #gradient .vertical(@body-bg; @gray-lighter);
         }
       }
 
@@ -243,10 +234,7 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
         border-bottom-color: transparent;
         -webkit-box-shadow: 0 1px 0 @body-bg inset;
                 box-shadow: 0 1px 0 @body-bg inset;
-
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-
+        .border-bottom-radius(0);
         // background-color: @gray-lighter;
         // background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, @body-bg), color-stop(0.5, @gray-lighter));
         // background-image: -webkit-linear-gradient(center bottom, @body-bg 0%, @gray-lighter 50%);
@@ -572,9 +560,7 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
   }
 }
 
-@media only {
-  screen and (-webkit-min-device-pixel-ratio: 1.5),
-  screen and (min-resolution: 144dpi)  {
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (-webkit-min-device-pixel-ratio: 1.5) {
     .select2 {
       &-search input,
       &-search-choice-close,
@@ -589,5 +575,4 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
         background-position: 100% -21px !important;
       }
     }
-  }
 }

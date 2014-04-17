@@ -161,7 +161,7 @@ class Pengguna extends BAKA_Controller
 
     public function profile()
     {
-        $this->_user_form( Authen::get_user_id() );
+        $this->_user_form( $this->authen->get_user_id() );
     }
 
     private function _user_form( $user_id = '' )

@@ -101,7 +101,7 @@ class Errror
     public function reload()
     {
         if (class_exists('\php_error\ErrorHandler'))
-        {
+		{
             $handler = new \php_error\ErrorHandler($this->_config);
 
             switch (ENVIRONMENT)

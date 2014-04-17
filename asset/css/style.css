@@ -280,8 +280,8 @@ table {
   line-height: 1;
 }
 .fa-lg {
-  font-size: 1.33333333em;
-  line-height: 0.75em;
+  font-size: 1em;
+  line-height: 0em;
   vertical-align: -15%;
 }
 .fa-2x {
@@ -297,12 +297,12 @@ table {
   font-size: 5em;
 }
 .fa-fw {
-  width: 1.28571429em;
+  width: 1em;
   text-align: center;
 }
 .fa-ul {
   padding-left: 0;
-  margin-left: 2.14285714em;
+  margin-left: 2em;
   list-style-type: none;
 }
 .fa-ul > li {
@@ -310,13 +310,13 @@ table {
 }
 .fa-li {
   position: absolute;
-  left: -2.14285714em;
-  width: 2.14285714em;
-  top: 0.14285714em;
+  left: -2em;
+  width: 2em;
+  top: 0em;
   text-align: center;
 }
 .fa-li.fa-li-lg {
-  left: -2.14285714em + (4em / 14);
+  left: -2em;
 }
 .fa-border {
   padding: .2em .25em .15em;
@@ -7540,10 +7540,10 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
   min-width: 100%;
   height: auto;
   width: auto;
-  opacity: 0;
   z-index: 9998;
   /* styles required for IE to work */
   background-color: #ffffff;
+  opacity: 0;
   filter: alpha(opacity=0);
 }
 .select2-drop-auto-width {
@@ -7596,26 +7596,21 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
 }
 .select2-search input.select2-active {
   background: #ffffff url('../img/select2-spinner.gif') no-repeat 100%;
-  background: url('../img/select2-spinner.gif') no-repeat 100%, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, #ffffff), color-stop(0.99, #eeeeee));
-  background: url('../img/select2-spinner.gif') no-repeat 100%, -webkit-linear-gradient(center bottom, #ffffff 85%, #eeeeee 99%);
-  background: url('../img/select2-spinner.gif') no-repeat 100%, -moz-linear-gradient(center bottom, #ffffff 85%, #eeeeee 99%);
-  background: url('../img/select2-spinner.gif') no-repeat 100%, linear-gradient(top, #ffffff 85%, #eeeeee 99%);
 }
 .select2-dropdown-open.select2-drop-above .select2-choice,
 .select2-dropdown-open.select2-drop-above .select2-choices {
   border-top-color: transparent;
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ffffff), color-stop(0.5, #eeeeee));
-  background-image: -webkit-linear-gradient(center top, #ffffff 0%, #eeeeee 50%);
-  background-image: -moz-linear-gradient(center top, #ffffff 0%, #eeeeee 50%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@gray-lighter', endColorstr='@body-bg', GradientType=0);
-  background-image: linear-gradient(bottom, #ffffff 0%, #eeeeee 50%);
+  background-image: -webkit-linear-gradient(top, #ffffff 0%, #eeeeee 100%);
+  background-image: linear-gradient(to bottom, #ffffff 0%, #eeeeee 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffeeeeee', GradientType=0);
 }
 .select2-dropdown-open .select2-choice {
   border-bottom-color: transparent;
   -webkit-box-shadow: 0 1px 0 #ffffff inset;
   box-shadow: 0 1px 0 #ffffff inset;
-  border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
 }
 .select2-dropdown-open .select2-choice .select2-arrow {
   background: transparent;
@@ -7885,21 +7880,16 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
   height: 100px;
   overflow: scroll;
 }
-@media only {
-  screen and (-webkit-min-device-pixel-ratio: 1.5) .select2-search input,
-  screen and (min-resolution: 144dpi) .select2-search input,
-  screen and (-webkit-min-device-pixel-ratio: 1.5) .select2-search-choice-close,
-  screen and (min-resolution: 144dpi) .select2-search-choice-close,
-  screen and (-webkit-min-device-pixel-ratio: 1.5) .select2-container .select2-choice abbr,
-  screen and (min-resolution: 144dpi) .select2-container .select2-choice abbr,
-  screen and (-webkit-min-device-pixel-ratio: 1.5) .select2-container .select2-choice .select2-arrow b,
-  screen and (min-resolution: 144dpi) .select2-container .select2-choice .select2-arrow b {
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (-webkit-min-device-pixel-ratio: 1.5) {
+  .select2-search input,
+  .select2-search-choice-close,
+  .select2-container .select2-choice abbr,
+  .select2-container .select2-choice .select2-arrow b {
     background-image: url('../img/select2x2.png') !important;
     background-repeat: no-repeat !important;
     background-size: 60px 40px !important;
   }
-  screen and (-webkit-min-device-pixel-ratio: 1.5) .select2-search input,
-  screen and (min-resolution: 144dpi) .select2-search input {
+  .select2-search input {
     background-position: 100% -21px !important;
   }
 }

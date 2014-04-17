@@ -70,7 +70,7 @@ class Setting
 
         self::init();
 
-        log_message('debug', "#Baka_pack: Setting] Class Initialized");
+        log_message('debug', "#Baka_pack: Setting Class Initialized");
     }
 
     // -------------------------------------------------------------------------
@@ -88,7 +88,7 @@ class Setting
 
         if ($query->num_rows() == 0)
         {
-            log_message('error', "#Baka Setting lib: Settings table is empty");
+            log_message('error', "#Baka_pack: Setting table is empty");
             return FALSE;
         }
 
@@ -143,7 +143,7 @@ class Setting
     {
         if (!self::is_exists($key))
         {
-            log_message('error', "#Baka Setting lib: Settings key '{$key}' is not exists");
+            log_message('error', "#Baka_pack: Setting->get key '{$key}' is not exists");
             return FALSE;
         }
 
@@ -167,6 +167,8 @@ class Setting
 
         if ($old != $val and $old !== FALSE)
         {
+            log_message('debug', "#Baka_pack: Setting->edit key {$key} has been updated to {$val}.");
+
             return self::$_ci->db->update(
                 self::$_table_name,
                 array('opt_value' => $val),
@@ -196,7 +198,7 @@ class Setting
                 );
         }
 
-        log_message('error', "#Baka Setting lib: Can not create new setting, key {$key} is still exists.");
+        log_message('error', "#Baka_pack: Setting->set can not create new setting, key {$key} is still exists.");
         return FALSE;
     }
 }

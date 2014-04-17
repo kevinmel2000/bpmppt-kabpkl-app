@@ -180,7 +180,7 @@ if (defined('ENVIRONMENT'))
 	// The path to the "application" folder
 	if (is_dir($application_folder))
 	{
-		define('APPPATH', $application_folder.'/');
+		$apppath = $application_folder.'/';
 	}
 	else
 	{
@@ -188,9 +188,11 @@ if (defined('ENVIRONMENT'))
 		{
 			exit("Your application folder path does not appear to be set correctly. Please open the following file and correct this: ".SELF);
 		}
-
-		define('APPPATH', BASEPATH.$application_folder.'/');
+                
+                $apppath = BASEPATH.$application_folder.'/';
 	}
+        
+        define('APPPATH', $apppath);
 
 /*
  * --------------------------------------------------------------------

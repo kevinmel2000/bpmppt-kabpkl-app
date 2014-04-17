@@ -168,10 +168,8 @@ class Archive extends CI_Driver_Library
         {
             return $this->{$this->_type}->_read();
         }
-        else
-        {
-            return FALSE;
-        }
+        
+        return FALSE;
     }
 
     /**
@@ -214,9 +212,14 @@ class Archive extends CI_Driver_Library
         }
     }
 
+    /**
+     * Close the archive file
+     *
+     * @return  void
+     */
     public function close()
     {
-        return $this->{$this->_type}->_close();
+        $this->{$this->_type}->_close();
     }
 
     /**
