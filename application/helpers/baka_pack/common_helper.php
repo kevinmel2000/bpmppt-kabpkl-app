@@ -134,10 +134,42 @@ function bdate($format = '', $strdate = '')
 {
     setlocale(LC_ALL, 'id');
 
-    $strdate = $strdate != '' ? strtotime($strdate) : time();
+    $strdate = strlen($strdate) > 0 ? strtotime($strdate) : time();
     $format || $format = 'Y-m-d H:i:s';
 
-    return date($format, $strdate);
+    $CI =& get_instance();
+
+    if (!in_array('calendar_lang.php', $CI->lang->is_loaded, TRUE))
+    {
+        $CI->lang->load('calendar');
+    }
+
+    $ret = date($format, $strdate);
+
+    if ($lang = _x('cal_'.strtolower($ret)))
+    {
+        $ret = $lang;
+    }
+    else if (strpos($ret, ' ') !== FALSE)
+    {
+        $langs = array();
+
+        foreach (explode(' ', $ret) as $ted)
+        {
+            if ($lang = _x('cal_'.strtolower($ted)))
+            {
+                $langs[] = $lang;
+            }
+            else
+            {
+                $langs[] = $ted;;
+            }
+        }
+
+        $ret = implode(' ', $langs);
+    }
+
+    return $ret;
 }
 
 // -----------------------------------------------------------------------------
@@ -327,6 +359,19 @@ function make_tag($texts, $limit = 10)
 function get_conf($name)
 {
     return config_item('baka_'.$name);
+}
+
+// -----------------------------------------------------------------------------
+
+/**
+ * Get file extension from path
+ *
+ * @param   string  $path  Full file path
+ * @return  string
+ */
+function get_ext($path)
+{
+    return pathinfo($path, PATHINFO_EXTENSION);
 }
 
 /* End of file common_helper.php */

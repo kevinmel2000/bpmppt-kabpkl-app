@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
+<?php if (! defined('BASEPATH')) exit('No direct script access allowed'); 
 
 /**
  * Baka_pack Archive Drivers
@@ -40,8 +40,10 @@ class Archive_zip extends CI_Driver
      */
     public function __construct()
     {
-        if ( class_exists('ZipArchive') )
+        if (class_exists('ZipArchive'))
+        {
             self::$_zip = new ZipArchive;
+        }
 
         self::$_flags = array(
             'overwrite' => ZipArchive::OVERWRITE,
@@ -50,13 +52,15 @@ class Archive_zip extends CI_Driver
             'checkcons' => ZipArchive::CHECKCONS
             );
 
-        log_message('debug', "Archive Zip Driver Initialized");
+        log_message('debug', "#Archive_driver: Zip Class Initialized");
     }
 
     public function _open($file_path, $flag = null)
     {
-        if ( !is_null( $flag ) and isset( self::$_flags[$flag] ) )
+        if (!is_null($flag) and isset(self::$_flags[$flag]))
+        {
             $flag = self::$_flags[$flag];
+        }
 
         return self::$_zip->open($file_path, $flag);
     }
@@ -70,8 +74,8 @@ class Archive_zip extends CI_Driver
             $content = self::$_zip->statIndex($i);
             
             $ret[$i]['name']    = $content['name'];
-            $ret[$i]['type']    = get_ext( $content['name'] );
-            $ret[$i]['size']    = format_size( $content['size'] );
+            $ret[$i]['type']    = get_ext($content['name']);
+            $ret[$i]['size']    = format_size($content['size']);
             $ret[$i]['crc']     = $content['crc'];
             $ret[$i]['csize']   = $content['comp_size'];
             $ret[$i]['mtime']   = $content['mtime'];
@@ -83,19 +87,19 @@ class Archive_zip extends CI_Driver
 
     public function _extract($dir_path, $file_names = array())
     {
-        if ( !empty($file_names) )
+        if (!empty($file_names))
         {
-            self::$_zip->extractTo( $dir_path, $file_names );
+            self::$_zip->extractTo($dir_path, $file_names);
         }
         else
         {
-            self::$_zip->extractTo( $dir_path );
+            self::$_zip->extractTo($dir_path);
         }
     }
 
-    public function _create( $file_path )
+    public function _create($file_path)
     {
-        return $this->_open( $file_path, 'create' );
+        return $this->_open($file_path, 'create');
     }
 
     public function _close()

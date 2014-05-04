@@ -64,7 +64,7 @@ class Themee
         Asssets::set_script('bootstrap', 'lib/bootstrap.min.js', 'jquery', '3.0.0' );
         Asssets::set_style('baka_pack', 'style.min.css');
 
-        log_message('debug', "#Baka_pack: Theme Class Initialized");
+        log_message('debug', "#Baka_pack: Themee Class Initialized");
     }
 
     // -------------------------------------------------------------------------
@@ -77,7 +77,7 @@ class Themee
         $current_browser = self::$_ci->agent->browser();
         $current_version = explode('.', self::$_ci->agent->version());
 
-        if ($current_browser == 'MSIE' and $current_version < 9)
+        if ($current_browser == 'MSIE' and $current_version[0] < 9)
         {
             Asssets::set_script('html5shiv', 'lib/html5shiv.js', '', '3.6.2', FALSE);
             Asssets::set_script('respond', 'lib/respond.min.js', '', '1.3.0', FALSE);
@@ -187,12 +187,11 @@ class Themee
 
     public function get_navbar()
     {
-        $output  = '<header id="top" class="navbar navbar-default navbar-app navbar-static-top" role="banner">'
-                 . '    <div class="container">'
-                 . '        <div class="navbar-header">'
-                 . '            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>'
-                 . '            '.anchor(base_url(), get_conf('app_name'), 'class="navbar-brand"')
-                 . '        </div>';
+        $output  = '<header id="top" class="navbar navbar-default navbar-app navbar-static-top" role="banner"><div class="container">'
+                 . '    <div class="navbar-header">'
+                 . '        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>'
+                 . '        '.anchor(base_url(), get_conf('app_name'), 'class="navbar-brand"')
+                 . '    </div>';
 
         if ( !self::verify_browser() AND Authen::is_logged_in() )
             $output .= '<div class="navbar-collapse collapse">'.$this->get_nav('top').'</div> <!--/.nav-collapse -->';

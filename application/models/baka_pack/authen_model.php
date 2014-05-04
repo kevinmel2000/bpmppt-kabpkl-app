@@ -234,9 +234,29 @@ class Authen_model extends CI_Model
     public function edit_user( $user_id, $user_data = array() )
     {
         if ( count( $user_data ) == 0 )
+        {
             return FALSE;
+        }
 
-        return $this->db->update( $this->table['users'], $user_data, array( 'id' => $user_id ) );
+        $roles = array();
+
+        if (isset($user_data['roles']))
+        {
+            $roles = $user_data['roles'];
+            unset($user_data['roles']);
+        }
+
+        if ($this->db->update( $this->table['users'], $user_data, array( 'id' => $user_id ) ))
+        {
+            if (!empty($roles))
+            {
+                return $this->edit_user_roles($user_id, $roles);
+            }
+
+            return TRUE;
+        }
+
+        return FALSE;
     }
 
     // -------------------------------------------------------------------------
@@ -814,7 +834,16 @@ class Authen_model extends CI_Model
     }
 
     // -------------------------------------------------------------------------
-    
+
+    /**
+     * Edit a user's roles
+     *
+     * @todo    done it!
+     *
+     * @param   [type]  $user_id    [description]
+     * @param   [type]  $new_roles  [description]
+     * @return  [type]
+     */
     public function edit_user_roles( $user_id, $new_roles )
     {
         if ( count( $new_roles ) == 0 )
@@ -823,6 +852,17 @@ class Authen_model extends CI_Model
         }
 
         $old_roles = array_keys( $this->get_user_roles( $user_id ) );
+
+        foreach ($new_roles as $role)
+        {
+            if (!in_array($role, $old_roles))
+            {
+                $this->db->insert( $this->table['user_role'],
+                                   array('user_id' => $user_id, 'role_id' => $role_id));
+            }
+        }
+
+        return TRUE;
     }
 
     // -------------------------------------------------------------------------

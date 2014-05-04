@@ -57,7 +57,7 @@ class Utily
 
         $this->_temp_path   = get_conf('temp_path');
 
-        log_message('debug', "#Baka_pack: Database Utility Class Initialized");
+        log_message('debug', "#Baka_pack: Utily Class Initialized");
     }
 
     // -------------------------------------------------------------------------

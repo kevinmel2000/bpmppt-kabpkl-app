@@ -66,7 +66,7 @@
         <p><?php echo $pemohon_nama ?></p>
         <p><?php echo $pemohon_jabatan ?></p>
         <p><?php echo $pemohon_alamat ?></p>
-        <p><?php echo $lokasi_tujuan.'<br>'.$lokasi_alamat ?></p>
+        <p><?php echo $lokasi_tujuan ?></p>
     </td>
 </tr>
 <tr>
@@ -96,7 +96,7 @@
     <td colspan="6" style="width:60%">&nbsp;</td>
     <td style="width:40%">
         <p>Ditetapkan di : Kajen</p>
-        <p>Pada Tanggal : <?php echo bdate('F', $created_on).' '.bdate('Y') ?></p>
+        <p>Pada Tanggal :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo bdate('F', $created_on).' '.bdate('Y') ?></p>
     </td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
