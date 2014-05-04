@@ -74,69 +74,6 @@ class Pengguna extends BAKA_Controller
         }
     }
 
-    private function _user_del( $user_id )
-    {
-        if ( $this->authen->delete_user( $user_id ) )
-        {
-            $this->session->set_flashdata('success', 'Berhasil menghapus keseluruhan data pengguna');
-            redirect( $this->data['page_link'] );
-        }
-        else
-        {
-            $this->session->set_flashdata('error', 'Terjadi kesalahan penghapusan data pengguna');
-            redirect( current_url() );
-        }
-    }
-
-    private function _user_ban( $user_id )
-    {
-        $username = $this->authen->get_user( $user_id )->username;
-
-        $this->data['panel_title']  = $this->themee->set_title('Cekal pengguna: '.$username);
-
-        $fields[]   = array(
-            'name'  => 'ban-user',
-            'type'  => 'text',
-            'label' => 'Nama Pengguna',
-            'attr'  => 'disabled',
-            'std'   => $username );
-
-        $fields[]   = array(
-            'name'  => 'ban-reason',
-            'type'  => 'textarea',
-            'label' => 'Alasan pencekalan',
-            'desc'  => 'Mohon tuliskan secara lengkap alasan pencekalan pengguna "'.$username.'".',
-            'validation'=> 'required' );
-
-        $this->load->library('baka_pack/former');
-
-        $form = $this->former->init( array(
-            'name' => 'user-ban',
-            'action' => current_url(),
-            'fields' => $fields,
-            ));
-
-        if ( $form_data = $form->validate_submition() )
-        {
-            $result     = $this->authen->ban_user( $user_id, $form_data['ban-reason'] );
-
-            if ( $result )
-            {
-                $this->session->set_flashdata('success', $this->authen->messages('success'));
-                redirect( $this->data['page_link'] );
-            }
-            else
-            {
-                $this->session->set_flashdata('error', $this->authen->messages('error'));
-                redirect( current_url() );
-            }
-        }
-
-        $this->data['panel_body'] = $form->generate();
-
-        $this->load->theme('pages/panel_form', $this->data);
-    }
-
     private function _user_table()
     {
         if ( !is_permited('users_manage') )
@@ -150,8 +87,9 @@ class Pengguna extends BAKA_Controller
                             ->set_baseurl($this->data['page_link'])
                             ->set_column('Pengguna', 'username, email', '45%', FALSE, '<strong>%s</strong><br><small class="text-muted">%s</small>')
                             ->set_column('Kelompok', 'callback_make_tag:role_fullname', '40%', FALSE, '%s')
-                            ->set_buttons('form/', 'eye-open', 'primary', 'Lihat data')
-                            ->set_buttons('delete/', 'trash', 'danger', 'Hapus data');
+                            ->set_buttons('form/', 'eye-open', 'primary', 'Lihat pengguna')
+                            ->set_buttons('cekal/', 'eye-open', 'primary', 'Cekal pengguna')
+                            ->set_buttons('hapus/', 'trash', 'danger', 'Hapus pengguna');
 
         $this->data['panel_title'] = $this->themee->set_title('Semua data pengguna');
         $this->data['panel_body'] = $grid->make_table( $this->authen->get_users() );
@@ -311,7 +249,9 @@ class Pengguna extends BAKA_Controller
 
             $roles = array();
             if ( isset( $form_data['user-roles'] ) )
+            {
                 $roles = $form_data['user-roles'];
+            }
 
             if ( !$user )
             {
@@ -324,12 +264,75 @@ class Pengguna extends BAKA_Controller
                 $result = $this->authen->update_user( $user_id, $username, $email, $old_pass, $password, $roles );
             }
 
-            foreach ( $this->authen->messages() as $level => $message )
+            foreach ( Messg::get() as $level => $message )
             {
                 $this->session->set_flashdata( $level, $message );
             }
 
-            redirect( $result ? $this->data['page_link'] : current_url() );
+            // redirect( $result ? $this->data['page_link'] : current_url() );
+        }
+
+        $this->data['panel_body'] = $form->generate();
+
+        $this->load->theme('pages/panel_form', $this->data);
+    }
+
+    private function _user_del( $user_id )
+    {
+        if ( $this->authen->remove_user( $user_id ) )
+        {
+            $this->session->set_flashdata('success', Messg::get('success'));
+            redirect( $this->data['page_link'] );
+        }
+        else
+        {
+            $this->session->set_flashdata('error', Messg::get('error'));
+            redirect( current_url() );
+        }
+    }
+
+    private function _user_ban( $user_id )
+    {
+        $username = $this->authen->get_user( $user_id )->username;
+
+        $this->data['panel_title']  = $this->themee->set_title('Cekal pengguna: '.$username);
+
+        $fields[]   = array(
+            'name'  => 'ban-user',
+            'type'  => 'text',
+            'label' => 'Nama Pengguna',
+            'attr'  => 'disabled',
+            'std'   => $username );
+
+        $fields[]   = array(
+            'name'  => 'ban-reason',
+            'type'  => 'textarea',
+            'label' => 'Alasan pencekalan',
+            'desc'  => 'Mohon tuliskan secara lengkap alasan pencekalan pengguna "'.$username.'".',
+            'validation'=> 'required' );
+
+        $this->load->library('baka_pack/former');
+
+        $form = $this->former->init( array(
+            'name' => 'user-ban',
+            'action' => current_url(),
+            'fields' => $fields,
+            ));
+
+        if ( $form_data = $form->validate_submition() )
+        {
+            $result     = $this->authen->ban_user( $user_id, $form_data['ban-reason'] );
+
+            if ( $result )
+            {
+                $this->session->set_flashdata('success', $this->authen->messages('success'));
+                redirect( $this->data['page_link'] );
+            }
+            else
+            {
+                $this->session->set_flashdata('error', $this->authen->messages('error'));
+                redirect( current_url() );
+            }
         }
 
         $this->data['panel_body'] = $form->generate();

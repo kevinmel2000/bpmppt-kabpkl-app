@@ -312,21 +312,19 @@ class Authen
         if ($email_activation)
         {
             $user_data['new_email_key'] = $this->generate_random_key();
-        }
-
-        if (!($user_id = $this->add_user($user_data, !$email_activation, $roles)))
-        {
-            return FALSE;
-        }
-
-        if ($email_activation)
-        {
-            $user_data['user_id']    = $user_id;
-            $user_data['password']   = $password;
+            $user_data['user_id']       = $user_id;
+            $user_data['password']      = $password;
 
             emailer_send($email, 'activate', $user_data);
         }
 
+        if (!($user_id = $this->add_user($user_data, !$email_activation, $roles)))
+        {
+            Messg::set('error', 'ERROR! Tidak dapat menambahkan '.$username.' sebagai pengguna baru.');
+            return FALSE;
+        }
+
+        Messg::set('success', $username.' berhasil ditambahkan sebagai pengguna baru.');
         return TRUE;
     }
 
@@ -347,29 +345,22 @@ class Authen
     public function update_user($user_id, $username, $email, $old_pass, $new_pass, $roles = array())
     {
         $user = $this->get_user($user_id);
-        $data = array();
-
-        if (strtolower($user->username) != strtolower($username) and $this->check_username($username) === FALSE)
-        {
-            $data['username'] = $username;
-        }
-
-        if (strtolower($user->email) != strtolower($email) and $this->check_email($email) === FALSE)
-        {
-            $data['email'] = $email;
-        }
+        $data = array(
+            'username' => $username,
+            'email'    => $email,
+            );
 
         if (strlen($old_pass) > 0 and strlen($new_pass) > 0)
         {
             if (!$this->validate($old_pass, $user->password))
             {
                 Messg::set('error', _x('auth_incorrect_password'));
-                return FALSE;
+                $return = FALSE;
             }
             else if ($this->validate($new_pass, $user->password))
             {
                 Messg::set('error', _x('auth_current_password'));
-                return FALSE;
+                $return = FALSE;
             }
             else
             {
@@ -377,17 +368,16 @@ class Authen
             }
         }
 
-        if (count($data) > 0 and ($return = $this->edit_user($user_id, $data)))
+        if (count($roles) > 0)
         {
-            Messg::set('success', 'Selamat');
+            $data['roles'] = $roles;
         }
 
-        // if (count($roles) > 0)
-        // {
-        //     $return = TRUE;
-        //     foreach ($roles as $role)
-        //         Messg::set('success', $role);
-        // }
+        if ($this->edit_user($user_id, $data))
+        {
+            Messg::set('success', 'Berhasil mengubah data pengguna '.$username);
+            $return = TRUE;
+        }
 
         return $return;
     }
@@ -597,6 +587,27 @@ class Authen
             Messg::set('error', _x('auth_email_in_use'));
             return FALSE;
         }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Delete user from the site (only when user is logged in)
+     *
+     * @param   string
+     * @return  bool
+     */
+    public function remove_user($user_id, $purge = FALSE)
+    {
+        if (!$this->delete_user($user_id))
+        {
+            Messg::set('error', 'Gagal menghapus pengguna');
+            return FALSE;
+        }
+
+        // success
+        Messg::set('success', 'Berhasil menghapus pengguna');
+        return TRUE;
     }
 
     // -------------------------------------------------------------------------

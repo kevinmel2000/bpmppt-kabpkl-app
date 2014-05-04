@@ -3505,7 +3505,6 @@ fieldset[disabled] .ui-spinner-button {
   box-shadow: none;
 }
 .btn-default,
-.ui-slider-handle,
 .ui-spinner-button {
   color: #333333;
   background-color: #ffffff;
@@ -3516,11 +3515,6 @@ fieldset[disabled] .ui-spinner-button {
 .btn-default:active,
 .btn-default.active,
 .open .dropdown-toggle.btn-default,
-.ui-slider-handle:hover,
-.ui-slider-handle:focus,
-.ui-slider-handle:active,
-.ui-slider-handle.active,
-.open .dropdown-toggle.ui-slider-handle,
 .ui-spinner-button:hover,
 .ui-spinner-button:focus,
 .ui-spinner-button:active,
@@ -3533,9 +3527,6 @@ fieldset[disabled] .ui-spinner-button {
 .btn-default:active,
 .btn-default.active,
 .open .dropdown-toggle.btn-default,
-.ui-slider-handle:active,
-.ui-slider-handle.active,
-.open .dropdown-toggle.ui-slider-handle,
 .ui-spinner-button:active,
 .ui-spinner-button.active,
 .open .dropdown-toggle.ui-spinner-button {
@@ -3556,21 +3547,6 @@ fieldset[disabled] .btn-default:active,
 .btn-default.disabled.active,
 .btn-default[disabled].active,
 fieldset[disabled] .btn-default.active,
-.ui-slider-handle.disabled,
-.ui-slider-handle[disabled],
-fieldset[disabled] .ui-slider-handle,
-.ui-slider-handle.disabled:hover,
-.ui-slider-handle[disabled]:hover,
-fieldset[disabled] .ui-slider-handle:hover,
-.ui-slider-handle.disabled:focus,
-.ui-slider-handle[disabled]:focus,
-fieldset[disabled] .ui-slider-handle:focus,
-.ui-slider-handle.disabled:active,
-.ui-slider-handle[disabled]:active,
-fieldset[disabled] .ui-slider-handle:active,
-.ui-slider-handle.disabled.active,
-.ui-slider-handle[disabled].active,
-fieldset[disabled] .ui-slider-handle.active,
 .ui-spinner-button.disabled,
 .ui-spinner-button[disabled],
 fieldset[disabled] .ui-spinner-button,
@@ -3590,7 +3566,6 @@ fieldset[disabled] .ui-spinner-button.active {
   border-color: #cccccc;
 }
 .btn-default .badge,
-.ui-slider-handle .badge,
 .ui-spinner-button .badge {
   color: #ffffff;
   background-color: #333333;
@@ -7360,12 +7335,47 @@ button.close {
   position: relative;
   text-align: left;
   margin: 9px 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
 }
 .ui-slider-handle {
+  background: #ffffff;
+  border: 1px solid #cccccc;
   position: absolute;
   z-index: 2;
   width: 18px;
   height: 18px;
+  -o-user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+  -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+.ui-slider-handle:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px #66afe9;
+  -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px #66afe9;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px #66afe9;
+}
+.ui-slider-handle:hover,
+.ui-slider-handle:focus {
+  outline: thin solid rgba(255, 255, 255, 0.4);
+  outline-offset: -2px;
+  color: #333333;
+  text-decoration: none;
+}
+.ui-slider-handle:active,
+.ui-slider-handle.active {
+  outline: 0;
+  background-image: none;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  -moz-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
 .ui-slider-range {
   position: absolute;
@@ -7420,6 +7430,7 @@ button.close {
   border-radius: 0;
 }
 .ui-spinner-button {
+  margin-left: -1px;
   padding: 4px 10px;
   border-radius: 0;
 }
@@ -8656,7 +8667,11 @@ a.datepicker table.table-condensed tr td span.active.disabled:hover:hover {
   -o-transition: all margin-left 0.5s ease-out;
   transition: all margin-left 0.5s ease-out;
 }
+.bootstrap-switch.bootstrap-switch-on {
+  border-color: #357ebd;
+}
 .bootstrap-switch.bootstrap-switch-on .bootstrap-switch-container {
+  background: #428bca;
   margin-left: 0%;
 }
 .bootstrap-switch.bootstrap-switch-on .bootstrap-switch-label {
@@ -8664,6 +8679,7 @@ a.datepicker table.table-condensed tr td span.active.disabled:hover:hover {
   border-top-right-radius: 3px - 1;
 }
 .bootstrap-switch.bootstrap-switch-off .bootstrap-switch-container {
+  background: #eeeeee;
   margin-left: -50%;
 }
 .bootstrap-switch.bootstrap-switch-off .bootstrap-switch-label {
@@ -8719,6 +8735,9 @@ a.datepicker table.table-condensed tr td span.active.disabled:hover:hover {
   text-align: center;
   z-index: 1;
   width: 33.333333333%;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
 }
 .bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-primary,
 .bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-primary {
@@ -8767,6 +8786,9 @@ a.datepicker table.table-condensed tr td span.active.disabled:hover:hover {
   color: #333333;
   background: #ffffff;
   border-radius: 2px;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+  -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
 }
 .bootstrap-switch input[type='radio'],
 .bootstrap-switch input[type='checkbox'] {
