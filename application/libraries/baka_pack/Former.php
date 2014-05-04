@@ -863,6 +863,9 @@ class Former
                 // Summernote editor
                 case 'editor':
                     Asssets::set_script('summernote', 'lib/summernote.min.js', 'bootstrap', '0.5.2');
+                    Asssets::set_script('summernote-id', 'lib/summernote.id-ID.js', 'summernote', '0.5.2');
+                    Asssets::set_script('codemirror', 'lib/codemirror.js', 'jquery', '4.1');
+                    Asssets::set_script('codemirror.xml', 'lib/codemirror.mode.xml.js', 'codemirror', '4.1');
 
                     if (!isset($height))
                     {
@@ -874,12 +877,16 @@ class Former
                             . "        Hsnel = snel.data('edtr-height'),\n"
                             . "        Vsnel = snel.code();\n"
                             . "    snel.summernote({\n"
+                            . "        lang: 'id-ID',\n"
                             . "        height: Hsnel,\n"
+                            . "        codemirror: {\n"
+                            . "            theme: 'monokai'\n"
+                            . "        },\n"
                             . "        toolbar: [\n"
                             . "            ['style', ['bold', 'italic', 'underline', 'clear']],\n"
                             . "            ['para', ['ul', 'ol', 'paragraph']],\n"
                             . "            ['table', ['table']],\n"
-                            . "            ['view', ['codeview', 'help']]\n"
+                            . "            ['view', ['fullscreen', 'codeview', 'help']]\n"
                             . "        ]\n"
                             . "    });\n"
                             . "});\n"

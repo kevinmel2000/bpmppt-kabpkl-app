@@ -3,8 +3,8 @@
     <td colspan="7" style="width:100%">
         <p>KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN</p>
         <p>PELAYANAN PERIZINAN TERPADU KABUPATEN PEKALONGAN</p>
-        <p>NOMOR : 660.3 /<?php echo $surat_nomor ?>/ BPMPPT / B3 / <!--?php echo strtoupper(format_roman(bdate('m', $created_on)).' / '.bdate('Y')) ?></p-->
-    </p></td>
+        <p>NOMOR : 660.3 /<?php echo $surat_nomor ?>/ BPMPPT / B3 / <?php echo strtoupper(format_roman(bdate('m', $created_on)).' / '.bdate('Y')) ?></p>
+    </td>
 </tr>
 <tr><td colspan="7" style="width:100%"> </td></tr>
 <tr class="align-center bold">
@@ -15,8 +15,8 @@
     <td colspan="7" style="width:100%">
         <p>PEMBERIAN IZIN PENYIMPANAN SEMENTARA</p>
         <p>LIMBAH BAHAN BERBAHAYA DAN BERACUN</p>
-        <p><!--?php echo strtoupper($usaha_nama) ?></p-->
-    </p></td>
+        <p><?php echo strtoupper($usaha_nama) ?></p>
+    </td>
 </tr>
 <tr><td colspan="7" style="width:100%"> </td></tr>
 <tr class="align-center bold">
@@ -81,8 +81,8 @@
 <tr>
     <td style="width:20%">Menetapkan</td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%">KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN PELAYANAN PERIZINAN TERPADU KABUPATEN PEKALONGAN TENTANG IZIN PENYIMPANAN SEMENTARA LIMBAH BAHAN BERBAHAYA DAN BERACUN <!--?php echo strtoupper($usaha_nama) ?></td-->
-</td></tr>
+    <td colspan="5" style="width:78%">KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN PELAYANAN PERIZINAN TERPADU KABUPATEN PEKALONGAN TENTANG IZIN PENYIMPANAN SEMENTARA LIMBAH BAHAN BERBAHAYA DAN BERACUN <?php echo strtoupper($usaha_nama) ?></td>
+</tr>
 <tr>
     <td style="width:20%">PERTAMA</td>
     <td style="width:2%">:</td>
@@ -103,8 +103,8 @@
         <p><?php echo $usaha_bidang ?></p>
         <p><?php echo $usaha_alamat ?></p>
         <p><?php echo $usaha_lokasi ?></p>
-        <p><!--?php echo ($usaha_kontak_telp ? $usaha_kontak_telp : '').($usaha_kontak_fax ? ' / '.$usaha_kontak_fax : '') ?></p-->
-    </p></td>
+        <p><?php echo ($usaha_kontak_telp ? $usaha_kontak_telp : '').($usaha_kontak_fax ? ' / '.$usaha_kontak_fax : '') ?></p>
+    </td>
 </tr>
 <tr><td colspan="7" style="width:100%"> </td></tr>
 <tr>
@@ -201,22 +201,22 @@
     <td colspan="6" style="width:60%"> </td>
     <td style="width:40%">
         <p>Ditetapkan di : Kajen</p>
-        <p>Pada Tanggal : <!--?php echo bdate('F', $created_on).' '.bdate('Y') ?></p-->
-    </p></td>
+        <p>Pada Tanggal : <?php echo bdate('F', $created_on).' '.bdate('Y') ?></p>
+    </td>
 </tr>
 <tr><td colspan="7" style="width:100%"> </td></tr>
 <tr class="align-center bold">
     <td colspan="5" style="width:60%"> </td>
     <td colspan="2" style="width:40%">
         <p>An. BUPATI PEKALONGAN</p>
-        <p>KEPALA <!--?php echo strtoupper($skpd_name) ?></p-->
-        </p><p><!--?php echo strtoupper($skpd_city) ?></p-->
-        </p><p> </p>
+        <p>KEPALA <?php echo strtoupper($skpd_name) ?></p>
+        <p><?php echo strtoupper($skpd_city) ?></p>
         <p> </p>
         <p> </p>
-        <p><!--?php echo strtoupper($skpd_lead_name) ?></p-->
-        </p><p>NIP. <!--?php echo strtoupper($skpd_lead_nip) ?></p-->
-    </p></td>
+        <p> </p>
+        <p><?php echo strtoupper($skpd_lead_name) ?></p>
+        <p>NIP. <?php echo strtoupper($skpd_lead_nip) ?></p>
+    </td>
 </tr>
 <tr>
     <td colspan="7">
@@ -229,8 +229,7 @@
             <li>Inspektur Kabupaten Pekalongan;</li>
             <li>Kepala Dinas PSDA ESDM Kabupaten Pekalongan;</li>
             <li>Kepala Kantor Lingkungan Hidup Kabupaten Pekalongan;</li>
-            <li>Kepala Bagian Hukum Setda Kabupaten Pekalongan;</li><li>kepada anggota ...;</li>
+            <li>Kepala Bagian Hukum Setda Kabupaten Pekalongan;</li>
         </ol>
     </td>
 </tr>
-

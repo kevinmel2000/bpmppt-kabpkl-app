@@ -123,15 +123,16 @@ class Layanan extends BAKA_Controller
     public function template( $data_type )
     {
         $modul_slug = $this->bpmppt->get_alias( $data_type );
+        $data_label = $this->bpmppt->get_label( $data_type );
 
-        $this->data['panel_title']  = $this->themee->set_title( 'Editing template output ' . $this->bpmppt->get_label( $data_type ) );
+        $this->data['panel_title']  = $this->themee->set_title( 'Editing template output ' . $data_label );
         $this->data['tool_buttons']['data'] = 'Kembali|default';
 
         $this->load->helper('file');
 
         $file_path      = APPPATH.'views/prints/products/'.$data_type.'.php';
         $file_content   = read_file($file_path);
-        $file_content   = str_replace('<?php echo $', '{', $file_content);
+        $file_content   = str_replace('<?php echo ', '{', $file_content);
         $file_content   = str_replace(' ?>', '}', $file_content);
 
         $fields[]   = array(
@@ -153,14 +154,14 @@ class Layanan extends BAKA_Controller
 
         if ( $form_data = $form->validate_submition() )
         {
-            $form_data['tmpl-editor'] = str_replace('{', '<?php echo $', $form_data['tmpl-editor']);
+            $form_data['tmpl-editor'] = str_replace('{', '<?php echo ', $form_data['tmpl-editor']);
             $form_data['tmpl-editor'] = str_replace('}', ' ?>', $form_data['tmpl-editor']);
 
             // var_dump($form_data);
 
             if (write_file($file_path.'', html_entity_decode($form_data['tmpl-editor'])))
             {
-                $this->session->set_flashdata( 'success', 'Template berhasil diperbarui' );
+                $this->session->set_flashdata( 'success', 'Template '.$data_label.' berhasil diperbarui' );
             }
             else
             {
