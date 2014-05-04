@@ -566,7 +566,7 @@ class Former
                 case 'number':
                 case 'spinner':
                     $jqui_load = TRUE;
-                    Asssets::set_script('jqui-spinner', $jqui_path.'jquery.ui.spinner.js', 'jqui-core', '1.10.4');
+                    Asssets::set_script('jqui-spinner', $jqui_path.'jquery.ui.spinner.min.js', 'jqui-core', '1.10.4');
 
                     if (!isset($min)) $min = 0;
                     if (!isset($max)) $max = 10;
@@ -600,7 +600,7 @@ class Former
                 case 'slider':
                 case 'rangeslider':
                     $jqui_load = TRUE;
-                    Asssets::set_script('jqui-slider', $jqui_path.'jquery.ui.slider.js', 'jqui-core', '1.10.4');
+                    Asssets::set_script('jqui-slider', $jqui_path.'jquery.ui.slider.min.js', 'jqui-core', '1.10.4');
 
                     if (!isset($min)) $min = 0;
                     if (!isset($max)) $max = 10;
@@ -683,7 +683,7 @@ class Former
                 // Using CI form_textarea() function.
                 // adding jquery-autosize.js to make it more useful
                 case 'textarea':
-                    Asssets::set_script('jquery-autosize', 'lib/jquery.autosize.js', 'jquery', '1.18.0');
+                    Asssets::set_script('jquery-autosize', 'lib/jquery.autosize.min.js', 'jquery', '1.18.0');
                     Asssets::set_script('autosize-trigger', "$('textarea').autosize();\n", 'jquery-autosize');
 
                     $input = form_textarea(array(
@@ -922,11 +922,11 @@ class Former
 
             if ($jqui_load)
             {
-                Asssets::set_script('jqui-core', $jqui_path.'jquery.ui.core.js', 'jquery', '1.10.4');
-                Asssets::set_script('jqui-widget', $jqui_path.'jquery.ui.widget.js', 'jqui-core', '1.10.4');
-                Asssets::set_script('jqui-button', $jqui_path.'jquery.ui.button.js', 'jqui-widget', '1.10.4');
-                Asssets::set_script('jqui-mouse', $jqui_path.'jquery.ui.mouse.js', 'jqui-widget', '1.10.4');
-                Asssets::set_script('jqui-position', $jqui_path.'jquery.ui.position.js', 'jqui-widget', '1.10.4');
+                Asssets::set_script('jqui-core', $jqui_path.'jquery.ui.core.min.js', 'jquery', '1.10.4');
+                Asssets::set_script('jqui-widget', $jqui_path.'jquery.ui.widget.min.js', 'jqui-core', '1.10.4');
+                Asssets::set_script('jqui-button', $jqui_path.'jquery.ui.button.min.js', 'jqui-widget', '1.10.4');
+                Asssets::set_script('jqui-mouse', $jqui_path.'jquery.ui.mouse.min.js', 'jqui-widget', '1.10.4');
+                Asssets::set_script('jqui-position', $jqui_path.'jquery.ui.position.min.js', 'jqui-widget', '1.10.4');
                 Asssets::set_script('jquery-mousewheel', 'lib/jquery.mousewheel.js', 'jqui-core', '3.1.0');
             }
 

@@ -250,11 +250,14 @@ class Bpmppt extends CI_Driver_Library
      */
     public function get_form( $driver, $data_obj )
     {
-        foreach ($this->$driver->fields as $key => $value)
+        if (is_object($data_obj))
         {
-            if(!isset($data_obj->$key))
+            foreach ($this->$driver->fields as $key => $value)
             {
-                $data_obj->$key = $value;
+                if(!isset($data_obj->$key))
+                {
+                    $data_obj->$key = $value;
+                }
             }
         }
 
