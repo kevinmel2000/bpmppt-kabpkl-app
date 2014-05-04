@@ -124,7 +124,7 @@ class Layanan extends BAKA_Controller
     {
         $modul_slug = $this->bpmppt->get_alias( $data_type );
 
-        $this->data['panel_title']  = $this->themee->set_title( 'Input data ' . $this->bpmppt->get_label( $data_type ) );
+        $this->data['panel_title']  = $this->themee->set_title( 'Editing template output ' . $this->bpmppt->get_label( $data_type ) );
         $this->data['tool_buttons']['data'] = 'Kembali|default';
 
         $this->load->helper('file');

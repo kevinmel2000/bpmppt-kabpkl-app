@@ -229,7 +229,7 @@
             <li>Inspektur Kabupaten Pekalongan;</li>
             <li>Kepala Dinas PSDA ESDM Kabupaten Pekalongan;</li>
             <li>Kepala Kantor Lingkungan Hidup Kabupaten Pekalongan;</li>
-            <li>Kepala Bagian Hukum Setda Kabupaten Pekalongan;</li>
+            <li>Kepala Bagian Hukum Setda Kabupaten Pekalongan;</li><li>kepada anggota ...;</li>
         </ol>
     </td>
 </tr>
