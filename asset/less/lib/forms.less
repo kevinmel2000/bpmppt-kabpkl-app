@@ -358,6 +358,11 @@ input[type="checkbox"],
     height: @input-height-base;
     line-height: @input-height-base;
     text-align: center;
+    padding: 2px 0 0;
+
+    &:before {
+      font-size: 18px;
+    }
   }
 }
 
@@ -507,7 +512,8 @@ input[type="checkbox"],
   // `position: relative;` on them. Also accounts for the grid gutter padding.
   .has-feedback .form-control-feedback {
     top: 0;
-    right: (@grid-gutter-width / 2);
+    right: 4px;
+    // right: (@grid-gutter-width / 2);
   }
 }
 

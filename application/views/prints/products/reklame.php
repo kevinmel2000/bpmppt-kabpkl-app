@@ -56,7 +56,7 @@
             <li><?php echo $reklame_tema ?></li>
             <li><?php echo $reklame_ukuran_panjang.' m x '.$reklame_ukuran_lebar.' m' ?></li>
             <li><?php echo $reklame_juml.' Unit' ?></li>
-            <li><?php echo '1 (satu) Bulan '.$reklame_range_tgl_mulai.' '.$reklame_range_tgl_selesai ?></li>
+            <li><?php echo $reklame_range_tgl_text.' '.bdate('d F Y', $reklame_range_tgl_mulai).' - '.bdate('d F Y', $reklame_range_tgl_selesai) ?></li>
         </ol>
     </td>
 </tr>
@@ -84,7 +84,7 @@
     <td colspan="4" style="width:60%">&nbsp;</td>
     <td colspan="1" style="width:40%">
         <p>Ditetapkan di : Kajen</p>
-        <p>Pada Tanggal : <?php echo bdate('F', $created_on).' '.bdate('Y') ?></p>
+        <p>Pada Tanggal : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo bdate('F', $created_on).' '.bdate('Y') ?></p>
     </td>
 </tr>
 <tr><td colspan="5" style="width:100%">&nbsp;</td></tr>

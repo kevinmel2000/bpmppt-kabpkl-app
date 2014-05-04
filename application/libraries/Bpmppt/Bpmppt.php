@@ -250,8 +250,18 @@ class Bpmppt extends CI_Driver_Library
      */
     public function get_form( $driver, $data_obj )
     {
+        foreach ($this->$driver->fields as $key => $value)
+        {
+            if(!isset($data_obj->$key))
+            {
+                $data_obj->$key = $value;
+            }
+        }
+
         if ( method_exists( $this->$driver, 'form') )
+        {
             return $this->$driver->form( $data_obj );
+        }
 
         return FALSE;
     }
@@ -265,12 +275,22 @@ class Bpmppt extends CI_Driver_Library
      *
      * @return  array|false
      */
-    public function get_print( $driver )
+    public function get_print( $driver, $data_id )
     {
-        if ( method_exists( $this->$driver, 'produk') )
-            return $this->$driver->produk();
+        $data = array_merge(
+                    (array) $this->skpd_properties(),
+                    (array) $this->get_fulldata_by_id($data_id)
+                    );
 
-        return FALSE;
+        foreach ($this->$driver->fields as $key => $value)
+        {
+            if(!isset($data[$key]))
+            {
+                $data[$key] = $value;
+            }
+        }
+
+        return $data;
     }
 
     // -------------------------------------------------------------------------

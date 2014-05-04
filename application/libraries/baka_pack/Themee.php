@@ -77,7 +77,7 @@ class Themee
         $current_browser = self::$_ci->agent->browser();
         $current_version = explode('.', self::$_ci->agent->version());
 
-        if ($current_browser == 'MSIE' and $current_version < 9)
+        if ($current_browser == 'MSIE' and $current_version[0] < 9)
         {
             Asssets::set_script('html5shiv', 'lib/html5shiv.js', '', '3.6.2', FALSE);
             Asssets::set_script('respond', 'lib/respond.min.js', '', '1.3.0', FALSE);

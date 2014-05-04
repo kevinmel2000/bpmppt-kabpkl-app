@@ -1,38 +1,38 @@
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"> </td></tr>
 <tr class="align-center bold">
     <td colspan="7" style="width:100%">
-        <p>KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN</p>
+        <p>KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN</p>
         <p>PELAYANAN PERIZINAN TERPADU KABUPATEN PEKALONGAN</p>
-        <p>NOMOR : 660.3 /<?php echo $surat_nomor ?>/ BPMPPT / B3 / <?php echo strtoupper(format_roman(bdate('m', $created_on)).' / '.bdate('Y')) ?></p>
-    </td>
+        <p>NOMOR : 660.3 /<?php echo $surat_nomor ?>/ BPMPPT / B3 / <!--?php echo strtoupper(format_roman(bdate('m', $created_on)).' / '.bdate('Y')) ?></p-->
+    </p></td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"> </td></tr>
 <tr class="align-center bold">
     <td colspan="7" style="width:100%"><p>TENTANG</p></td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"> </td></tr>
 <tr class="align-center bold">
     <td colspan="7" style="width:100%">
         <p>PEMBERIAN IZIN PENYIMPANAN SEMENTARA</p>
         <p>LIMBAH BAHAN BERBAHAYA DAN BERACUN</p>
-        <p><?php echo strtoupper($usaha_nama) ?></p>
-    </td>
+        <p><!--?php echo strtoupper($usaha_nama) ?></p-->
+    </p></td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"> </td></tr>
 <tr class="align-center bold">
     <td colspan="7" style="width:100%">
         <p>KEPALA BADAN PENANAMAN MODAL DAN PELAYANAN PERIZINAN TERPADU</p>
         <p>KABUPATEN PEKALONGAN</p>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"> </td></tr>
 <tr>
     <td style="width:20%"><p>Menimbang</p></td>
     <td style="width:2%"><p>:</p></td>
     <td colspan="5" style="width:78%">
         <ol class="lower-alpha">
             <li>Permohonan Isin Penyimpanan Sementara Limbah Bahan Berbahaya dan Beracun yang termuat dalam daftar penerimaan permohonan :
-            <table><tr>
+            <table><tbody><tr>
                 <td width="10%">Nomor</td>
                 <td width="2%">:</td>
                 <td width="35%"><?php echo $daftar_nomor ?></td>
@@ -49,7 +49,7 @@
                 <td>Alamat</td>
                 <td>:</td>
                 <td colspan="4"><?php echo $pemohon_alamat ?></td>
-            </tr></table></li>
+            </tr></tbody></table></li>
             <li>Persyaratan teknis dan administratif yang diperlukan berdasarkan Peraturan Perundang-undangan yang berlaku dan hasil pemeriksaan petugas lapangan dimuat dalam Berita Acara enelitian Lapangan telah terpenuhi,m maka perlu ditetapkan dengan Keputusan Kepala Badan Penanaman Modal dan Pelayanan Perzinan Terpadu.</li>
         </ol>
     </td>
@@ -73,23 +73,23 @@
         </ol>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"> </td></tr>
 <tr>
     <td colspan="7" style="width:100%"><p style="text-align:center"><strong>M E M U T U S K A N :</strong></p></td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"> </td></tr>
 <tr>
     <td style="width:20%">Menetapkan</td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%">KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN PELAYANAN PERIZINAN TERPADU KABUPATEN PEKALONGAN TENTANG IZIN PENYIMPANAN SEMENTARA LIMBAH BAHAN BERBAHAYA DAN BERACUN <?php echo strtoupper($usaha_nama) ?></td>
-</tr>
+    <td colspan="5" style="width:78%">KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN PELAYANAN PERIZINAN TERPADU KABUPATEN PEKALONGAN TENTANG IZIN PENYIMPANAN SEMENTARA LIMBAH BAHAN BERBAHAYA DAN BERACUN <!--?php echo strtoupper($usaha_nama) ?></td-->
+</td></tr>
 <tr>
     <td style="width:20%">PERTAMA</td>
     <td style="width:2%">:</td>
     <td colspan="5" style="width:78%">Memberikan Izin Penyimpanan Sementara Limbah Bahan Berbahaya dan Beracun (B3) kepada Penanggungjawab Kegiatan :</td>
 </tr>
 <tr>
-    <td colspan="2">&nbsp;</td>
+    <td colspan="2"> </td>
     <td colspan="2" style="width:30%">
         <p>a. Nama Perusahaan</p>
         <p>b. Lokasi Kegiatan</p>
@@ -103,10 +103,10 @@
         <p><?php echo $usaha_bidang ?></p>
         <p><?php echo $usaha_alamat ?></p>
         <p><?php echo $usaha_lokasi ?></p>
-        <p><?php echo ($usaha_kontak_telp ? $usaha_kontak_telp : '').($usaha_kontak_fax ? ' / '.$usaha_kontak_fax : '') ?></p>
-    </td>
+        <p><!--?php echo ($usaha_kontak_telp ? $usaha_kontak_telp : '').($usaha_kontak_fax ? ' / '.$usaha_kontak_fax : '') ?></p-->
+    </p></td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"> </td></tr>
 <tr>
     <td style="width:20%"><p>KEDUA</p></td>
     <td style="width:2%"><p>:</p></td>
@@ -158,7 +158,7 @@
         </ol>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"> </td></tr>
 <tr>
     <td style="width:20%">KETIGA</td>
     <td style="width:2%">:</td>
@@ -172,7 +172,7 @@
         </ol>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"> </td></tr>
 <tr>
     <td style="width:20%">KEEMPAT</td>
     <td style="width:2%">:</td>
@@ -184,7 +184,7 @@
         </ol>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"> </td></tr>
 <tr>
     <td style="width:20%">KELIMA</td>
     <td style="width:2%">:</td>
@@ -196,27 +196,27 @@
         </ol>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"> </td></tr>
 <tr>
-    <td colspan="6" style="width:60%">&nbsp;</td>
+    <td colspan="6" style="width:60%"> </td>
     <td style="width:40%">
         <p>Ditetapkan di : Kajen</p>
-        <p>Pada Tanggal : <?php echo bdate('F', $created_on).' '.bdate('Y') ?></p>
-    </td>
+        <p>Pada Tanggal : <!--?php echo bdate('F', $created_on).' '.bdate('Y') ?></p-->
+    </p></td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"> </td></tr>
 <tr class="align-center bold">
-    <td colspan="5" style="width:60%">&nbsp;</td>
+    <td colspan="5" style="width:60%"> </td>
     <td colspan="2" style="width:40%">
         <p>An. BUPATI PEKALONGAN</p>
-        <p>KEPALA <?php echo strtoupper($skpd_name) ?></p>
-        <p><?php echo strtoupper($skpd_city) ?></p>
-        <p>&nbsp;</p>
-        <p>&nbsp;</p>
-        <p>&nbsp;</p>
-        <p><?php echo strtoupper($skpd_lead_name) ?></p>
-        <p>NIP. <?php echo strtoupper($skpd_lead_nip) ?></p>
-    </td>
+        <p>KEPALA <!--?php echo strtoupper($skpd_name) ?></p-->
+        </p><p><!--?php echo strtoupper($skpd_city) ?></p-->
+        </p><p> </p>
+        <p> </p>
+        <p> </p>
+        <p><!--?php echo strtoupper($skpd_lead_name) ?></p-->
+        </p><p>NIP. <!--?php echo strtoupper($skpd_lead_nip) ?></p-->
+    </p></td>
 </tr>
 <tr>
     <td colspan="7">

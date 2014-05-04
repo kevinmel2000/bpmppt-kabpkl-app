@@ -658,7 +658,7 @@ class Former
                 case 'datepicker':
                     Asssets::set_script('bt-datepicker', 'lib/bootstrap.datepicker.js', 'bootstrap', '1.1.1');
                     Asssets::set_script('bt-datepicker-id', 'lib/bootstrap.datepicker.id.js', 'bt-datepicker', '1.1.1');
-                    
+
                     $script = "$('.bs-datepicker').datepicker({\n"
                             . "    format: 'dd-mm-yyyy',\n"
                             . "    language: 'id',\n"
@@ -668,11 +668,15 @@ class Former
 
                     Asssets::set_script('dp-trigger', $script, 'bt-datepicker');
 
-                    $input = form_input(array(
+                    $input = '<div class="has-feedback">';
+                    $input .= form_input(array(
                         'name'  => $name,
                         'type'  => 'text',
                         'id'    => $id,
                         'class' => $input_class.' bs-datepicker'), set_value($name, $std), $attr);
+
+                    $input .= '<span class="glyphicon glyphicon-calendar form-control-feedback"></span>';
+                    $input .= '</div>';
                     break;
 
                 // Textarea field
@@ -697,10 +701,14 @@ class Former
                 case 'upload':
                 case 'fineupload':
                     if (!isset($allowed_types))
+                    {
                         $allowed_types = get_conf('allowed_types');
+                    }
 
                     if (!isset($file_limit))
+                    {
                         $file_limit = 5;
+                    }
 
                     if (is_array($allowed_types))
                     {
@@ -850,6 +858,44 @@ class Former
                         'type'  => 'text',
                         'id'    => $input_id,
                         'class' => $input_class), set_value($name, ''), $attr);
+                    break;
+
+                // Summernote editor
+                case 'editor':
+                    Asssets::set_script('summernote', 'lib/summernote.min.js', 'bootstrap', '0.5.2');
+
+                    if (!isset($height))
+                    {
+                        $height = 200;
+                    }
+                    
+                    $script = "$('.summernote').each(function (e){\n"
+                            . "    var snel = $(this),\n"
+                            . "        Hsnel = snel.data('edtr-height'),\n"
+                            . "        Vsnel = snel.code();\n"
+                            . "    snel.summernote({\n"
+                            . "        height: Hsnel,\n"
+                            . "        toolbar: [\n"
+                            . "            ['style', ['bold', 'italic', 'underline', 'clear']],\n"
+                            . "            ['para', ['ul', 'ol', 'paragraph']],\n"
+                            . "            ['table', ['table']],\n"
+                            . "            ['view', ['codeview', 'help']]\n"
+                            . "        ]\n"
+                            . "    });\n"
+                            . "});\n"
+                            . "$('.summernote').parents('form').on('submit', function (e) {\n"
+                            . "    $('.summernote').val($('.summernote').code());\n"
+                            . "});";
+
+                    Asssets::set_script('summernote-trigger', $script, 'summernote');
+
+                    $input = form_textarea(array(
+                            'name'  => $name,
+                            'rows'  => '',
+                            'cols'  => '',
+                            'id'    => $id,
+                            'class' => $input_class.' summernote',
+                            'data-edtr-height' => $height), set_value($name, $std), $attr);
                     break;
 
                 // Static field

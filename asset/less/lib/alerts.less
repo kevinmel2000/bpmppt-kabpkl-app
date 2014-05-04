@@ -24,9 +24,14 @@
 
   // Improve alignment and spacing of inner content
   > p,
+  > ol,
   > ul {
     margin-bottom: 0;
   }
+  > p {
+    line-height: 1.8em;
+  }
+  > ol,
   > ul {
     padding-left: 20px;
   }
@@ -66,4 +71,10 @@
 }
 .alert-danger {
   .alert-variant(@alert-danger-bg; @alert-danger-border; @alert-danger-text);
+}
+
+#contents > .container > .alert {
+  .border-top-radius(0);
+  border-top: 0;
+  margin-bottom: 0;
 }

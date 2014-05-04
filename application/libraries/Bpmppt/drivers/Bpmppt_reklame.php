@@ -53,6 +53,7 @@ class Bpmppt_reklame extends CI_Driver
         'reklame_lokasi'            => '',
         'reklame_ukuran_panjang'    => '',
         'reklame_ukuran_lebar'      => '',
+        'reklame_range_tgl_text'    => '',
         'reklame_range_tgl_mulai'   => '',
         'reklame_range_tgl_selesai' => '',
         'reklame_tema'              => '',
@@ -172,14 +173,21 @@ class Bpmppt_reklame extends CI_Driver
             'type'  => 'subfield',
             'fields'=> array(
                 array(
-                    'col'   => '6',
+                    'col'   => '4',
+                    'name'  => 'tgl_text',
+                    'label' => 'Terbilang',
+                    'type'  => 'text',
+                    'std'   => ( $data_obj ? $data_obj->reklame_range_tgl_text : ''),
+                    'validation'=> 'required' ),
+                array(
+                    'col'   => '4',
                     'name'  => 'tgl_mulai',
                     'label' => 'Mulai Tanggal',
                     'type'  => 'datepicker',
                     'std'   => ( $data_obj ? $data_obj->reklame_range_tgl_mulai : ''),
                     'validation'=> 'required|numerik' ),
                 array(
-                    'col'   => '6',
+                    'col'   => '4',
                     'name'  => 'tgl_selesai',
                     'label' => 'Sampai Tanggal',
                     'type'  => 'datepicker',

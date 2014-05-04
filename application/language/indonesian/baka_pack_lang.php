@@ -118,6 +118,34 @@ $lang['email_subject_activate']             = 'Email Aktifasi: Selamat bergabung
 $lang['email_subject_reset_password']       = 'Email Konfirmasi: Password baru anda telah siap';
 $lang['email_subject_change_email']         = 'Email Aktifasi: Email baru anda telah siap diaktifkan';
 
+// -----------------------------------------------------------------------------
+// Median Library
+// -----------------------------------------------------------------------------
+$lang['median_upload_policy']                     = '. Batas jumlah upload adalah: <i class="bold">%s</i> berkas dan hanya berkas dengan extensi: %s yang diijinkan.';
+$lang['median_drop_area_selector_text']           = 'Drop files here to upload';
+$lang['median_drop_processing_selector_text']     = 'Processing dropped files...';
+$lang['median_upload_button_selector_text']       = 'Upload files';
+$lang['median_file_type_not_allowed_text']        = 'Tipe berkas tidak diijinkan';
+$lang['median_file_size_too_large_text']          = 'Ukuran berkas terlalu besar';
+$lang['median_directory_not_writable_text']       = 'Uploads directory isn\'t writable';
+$lang['median_text_auto_retry_note']              = 'Mencoba kembali {retryNum}/{maxAuto} ...';
+$lang['median_text_fail_upload']                  = 'Upload gagal';
+$lang['median_text_format_progress']              = '{percent}% dari {total_size}';
+$lang['median_text_paused']                       = 'Tertunda';
+$lang['median_text_waiting_response']             = 'Dalam proses...';
+$lang['median_error_empty']                       = '{file} is empty, please select files again without it.';
+$lang['median_error_max_height_image']            = 'Image is too tall.';
+$lang['median_error_max_width_image']             = 'Image is too wide.';
+$lang['median_error_min_height_image']            = 'Image is not tall enough.';
+$lang['median_error_min_width_image']             = 'Image is not wide enough.';
+$lang['median_error_min_size']                    = '{file} is too small, minimum file size is {minSizeLimit}.';
+$lang['median_error_no_files']                    = 'No files to upload.';
+$lang['median_error_on_leave']                    = 'The files are being uploaded, if you leave now the upload will be canceled.';
+$lang['median_error_retry_fail_too_many_items']   = 'Retry failed - you have reached your file limit.';
+$lang['median_error_size']                        = '{file} terlalu besar, ukuran maksimum adalah {sizeLimit}.';
+$lang['median_error_too_many_items']              = 'Too many items ({netItems}) would be uploaded. Item limit is {itemLimit}.';
+$lang['median_error_type']                        = '{file} has an invalid extension. Valid extension(s): {extensions}.';
+
 
 /* End of file baka_pack_lang.php */
 /* Location: ./application/language/indonesian/baka_pack_lang.php */

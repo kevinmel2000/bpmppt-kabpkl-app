@@ -54,15 +54,6 @@ class Median
 
     protected $field_name = 'userfile';
 
-    protected $_template = array(
-        'drop-area-selector-text'       => 'Drop files here to upload',
-        'drop-processing-selector-text' => 'Processing dropped files...',
-        'upload-button-selector-text'   => 'Upload files',
-        'file-type-not-allowed-text'    => 'Tipe berkas tidak diijinkan',
-        'file-size-too-large-text'      => 'Ukuran berkas terlalu besar',
-        'directory-not-writable-text'   => 'Uploads directory isn\'t writable',
-        );
-
     protected $_data = array();
 
     /**
@@ -80,11 +71,6 @@ class Median
         if (!empty($configs))
         {
             $this->init($configs);
-        }
-
-        if ($this->_ci->input->get('do-upload'))
-        {
-            return $this->do_upload();
         }
 
         log_message('debug', "#Baka_pack: Median Class Initialized");
@@ -138,29 +124,30 @@ class Median
                 . "            sizeLimit: fu.data('size-limit')\n"
                 . "        },\n"
                 . "        retry: {\n"
+                . "            autoRetryNote: '"._x('median_text_auto_retry_note')."',\n"
                 . "            enableAuto: true,\n"
                 . "            showButton: true,\n"
-                . "            maxAutoAttempts: 3\n"
+                . "            maxAutoAttempts: 5\n"
                 . "        },\n"
                 . "        text: {\n"
-                . "            failUpload: 'Upload gagal',\n"
-                . "            formatProgress: '{percent}% dari {total_size}',\n"
-                . "            paused: 'Tertunda',\n"
-                . "            waitingForResponse: 'Dalam proses...',\n"
+                . "            failUpload: '"._x('median_text_fail_upload')."',\n"
+                . "            formatProgress: '"._x('median_text_format_progress')."',\n"
+                . "            paused: '"._x('median_text_paused')."',\n"
+                . "            waitingForResponse: '"._x('median_text_waiting_response')."',\n"
                 . "        },\n"
                 . "        messages: {\n"
-                . "            emptyError: '{file} is empty, please select files again without it.',\n"
-                . "            maxHeightImageError: 'Image is too tall.',\n"
-                . "            maxWidthImageError: 'Image is too wide.',\n"
-                . "            minHeightImageError: 'Image is not tall enough.',\n"
-                . "            minWidthImageError: 'Image is not wide enough.',\n"
-                . "            minSizeError: '{file} is too small, minimum file size is {minSizeLimit}.',\n"
-                . "            noFilesError: 'No files to upload.',\n"
-                . "            onLeave: 'The files are being uploaded, if you leave now the upload will be canceled.',\n"
-                . "            retryFailTooManyItemsError: 'Retry failed - you have reached your file limit.',\n"
-                . "            sizeError: '{file} terlalu besar, ukuran maksimum adalah {sizeLimit}.',\n"
-                . "            tooManyItemsError: 'Too many items ({netItems}) would be uploaded. Item limit is {itemLimit}.',\n"
-                . "            typeError: '{file} has an invalid extension. Valid extension(s): {extensions}.'\n"
+                . "            emptyError: '"._x('median_error_empty')."',\n"
+                . "            maxHeightImageError: '"._x('median_error_max_height_image')."',\n"
+                . "            maxWidthImageError: '"._x('median_error_max_width_image')."',\n"
+                . "            minHeightImageError: '"._x('median_error_min_height_image')."',\n"
+                . "            minWidthImageError: '"._x('median_error_min_width_image')."',\n"
+                . "            minSizeError: '"._x('median_error_min_size')."',\n"
+                . "            noFilesError: '"._x('median_error_no_files')."',\n"
+                . "            onLeave: '"._x('median_error_on_leave')."',\n"
+                . "            retryFailTooManyItemsError: '"._x('median_error_retry_fail_too_many_items')."',\n"
+                . "            sizeError: '"._x('median_error_size')."',\n"
+                . "            tooManyItemsError: '"._x('median_error_too_many_items')."',\n"
+                . "            typeError: '"._x('median_error_type')."'\n"
                 . "        }\n"
                 . "    });\n"
                 . "});";
@@ -170,14 +157,14 @@ class Median
         $out = '<script type="text/template" id="qq-template">'
              . '<div class="col-md-12"><div class="qq-upload-selector">'
              . '    <div class="qq-upload-drop-area-selector" qq-hide-dropzone>'
-             . '        <span>'.$this->_template['drop-area-selector-text'].'</span>'
+             . '        <span>'._x('median_drop_area_selector_text').'</span>'
              . '    </div>'
              . '    <div class="qq-upload-button-selector btn btn-default">'
-             . '        <span>'.$this->_template['upload-button-selector-text'].'</span>'
+             . '        <span>'._x('median_upload_button_selector_text').'</span>'
              . '    </div>'
              . '    <span class="qq-drop-processing-selector qq-hide">'
              . '        <span class="qq-drop-processing-spinner-selector"></span>'
-             . '        <span>'.$this->_template['drop-processing-selector-text'].'</span>'
+             . '        <span>'._x('median_drop_processing_selector_text').'</span>'
              . '    </span>'
              . '    <ul class="qq-upload-list-selector row">'
              . '        <li class="col-md-12">'
@@ -225,7 +212,7 @@ class Median
             $_file_types .= ($i == ($_c_types-2) ? ' dan ' : '; ');
         }
 
-        return '. Batas jumlah upload adalah: <i class="bold">'.$this->file_limit.'</i> berkas dan hanya berkas dengan extensi: '.$_file_types.' yang diijinkan.';
+        return _x('median_upload_policy', array($this->file_limit, $_file_types));
     }
 
     public function do_upload()
@@ -245,7 +232,7 @@ class Median
             }
             else
             {
-                Messg::set('error', $this->_ci->upload->display_errors());
+                Messg::set('error', $this->_ci->upload->display_errors('', ''));
                 return FALSE;
             }
         }

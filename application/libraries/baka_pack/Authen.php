@@ -258,7 +258,7 @@ class Authen
      *
      * @return  int
      */
-    public function get_user_id()
+    public static function get_user_id()
     {
         return self::$_ci->session->userdata('user_id');
     }
