@@ -730,6 +730,7 @@ class Former
                 case 'dropdown':
                 case 'select2':
                     Asssets::set_script('select2', 'lib/select2.min.js', 'jquery', '3.4.5');
+                    Asssets::set_script('select2', 'lib/select2.id.js', 'jquery', '3.4.5');
                     Asssets::set_script('select2-trigger', "$('.form-control-select2').select2();\n", 'select2');
 
                     $attr = 'class="form-control-select2 '.$input_class.'" id="'.$id.'" '.$attr;
