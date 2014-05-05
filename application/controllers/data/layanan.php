@@ -141,7 +141,10 @@ class Layanan extends BAKA_Controller
             'height'=> 300,
             'label' => 'Template Editor',
             'std'   => $file_content,
-            'desc'  => 'Pilih berkas yang akan digunakan untuk me-restore database',
+            'left-desc'=> TRUE,
+            'desc'  => 'Ubah dan sesuaikan template Print out dokumen '.$data_label.' sesuai dengan keinginan anda.<br>'
+                    .  '<b>CATATAN: jangan mengubah isi dari text yang diapit oleh kurung kurawal "{...}" karna itu merupakan variabel data untuk output dokumen ini.</b><br>'
+                    .  'Jika anda hendak memindahkan posisi, cut dan paste keseluruhan text termasuk kurung kurawalnya <i>misal: {text}</i> ke posisi baru yang anda inginkan.',
             );
 
         $this->load->library('baka_pack/former');

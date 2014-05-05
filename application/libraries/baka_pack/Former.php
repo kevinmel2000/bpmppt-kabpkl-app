@@ -886,6 +886,8 @@ class Former
                     Asssets::set_script('summernote-id', 'lib/summernote.id-ID.js', 'summernote', '0.5.2');
                     Asssets::set_script('codemirror', 'lib/codemirror.js', 'jquery', '4.1');
                     Asssets::set_script('codemirror.xml', 'lib/codemirror.mode.xml.js', 'codemirror', '4.1');
+                    // Asssets::set_script('jquery-mousewheel', 'lib/jquery.mousewheel.min.js', 'jquery', '3.1.0');
+                    // Asssets::set_script('perfectscrollbar', 'lib/perfect-scrollbar.js', 'jquery', '0.4.10');
 
                     if (!isset($height))
                     {
@@ -947,7 +949,7 @@ class Former
                 Asssets::set_script('jqui-button', $jqui_path.'jquery.ui.button.min.js', 'jqui-widget', '1.10.4');
                 Asssets::set_script('jqui-mouse', $jqui_path.'jquery.ui.mouse.min.js', 'jqui-widget', '1.10.4');
                 Asssets::set_script('jqui-position', $jqui_path.'jquery.ui.position.min.js', 'jqui-widget', '1.10.4');
-                Asssets::set_script('jquery-mousewheel', 'lib/jquery.mousewheel.min.js', 'jqui-core', '3.1.0');
+                Asssets::set_script('jquery-mousewheel', 'lib/jquery.mousewheel.min.js', 'jquery', '3.1.0');
             }
 
             if (isset($input))
@@ -1013,20 +1015,33 @@ class Former
         }
 
         $html = sprintf($group_open, $group_class, $group_attr);
+        $left_desc = isset($attrs['left-desc']) and $attrs['left-desc'] == TRUE;
+        $errors = ($is_error != '' and !is_array($attrs['desc'])) ? $is_error : $attrs['desc'];
 
         if ($attrs['label'] != '' OR $this->is_hform)
         {
-            $label_class .= $label_col;
+            // $label_class .= $label_col;
             $label_target = (isset($attrs['for']) ? $attrs['for'] : $attrs['id']);
-            $html .= form_label($attrs['label'], $label_target, array('class'=> $label_class));
-        }
 
-        $errors = ($is_error != '' and !is_array($attrs['desc'])) ? $is_error : $attrs['desc'];
+            $html .= '<div class="'.$label_col.'">';
+            $html .= form_label($attrs['label'], $label_target, array('class'=> $label_class));
+
+            if ($left_desc)
+            {
+                $html .= $this->_form_desc($errors);
+            }
+
+            $html .= '</div>';
+        }
     
         $html .= sprintf($field_open, $input_col, '')
-              . $input
-              . $this->_form_desc($errors)
-              . $field_close.$group_close;
+              .  $input;
+        if (!$left_desc)
+        {
+            $html .= $this->_form_desc($errors);
+        }
+
+        $html .= $field_close.$group_close;
 
         return $html;
     }
