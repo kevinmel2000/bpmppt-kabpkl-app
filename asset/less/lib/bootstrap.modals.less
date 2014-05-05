@@ -76,32 +76,42 @@
 // Modal header
 // Top section of the modal w/ title and dismiss
 .modal-header {
-  padding: @modal-title-padding;
+  position: relative;
   border-bottom: 1px solid @modal-header-border-color;
   min-height: (@modal-title-padding + @modal-title-line-height);
-}
-// Close icon
-.modal-header .close {
-  margin-top: -2px;
-}
+  .border-top-radius((@border-radius-large - 1));
+  #gradient .vertical(#fff;  #eee);
 
-// Title text within header
-.modal-title {
-  margin: 0;
-  line-height: @modal-title-line-height;
+  // Title text within header
+  h4,
+  .modal-title {
+    margin: 0;
+    padding: 6px 40px 6px @modal-title-padding;
+    line-height: @modal-title-line-height;
+  }
+  
+  // Close icon
+  .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 100%;
+    // margin-top: -2px;
+  }
 }
 
 // Modal body
 // Where all modal content resides (sibling of .modal-header and .modal-footer)
 .modal-body {
   position: relative;
-  padding: @modal-inner-padding;
+  padding: (@modal-inner-padding / 2) @modal-inner-padding;
 }
 
 // Footer (for actions)
 .modal-footer {
-  margin-top: 15px;
-  padding: (@modal-inner-padding - 1) @modal-inner-padding @modal-inner-padding;
+  // margin-top: 15px;
+  padding: (@modal-inner-padding / 2) @modal-inner-padding;
   text-align: right; // right align buttons
   border-top: 1px solid @modal-footer-border-color;
   &:extend(.clearfix all); // clear it in case folks use .pull-* classes on buttons

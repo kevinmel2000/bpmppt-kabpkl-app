@@ -30,7 +30,7 @@ function set_toolbar( $tool_buttons, $page_link )
 	if ( count($tool_buttons) == 0 )
 		return FALSE;
 
-	$btn_class	= 'btn btn-sm '; 
+	$btn_class	= 'btn '; 
 	$output		= '<div class="btn-toolbar">';
 
 	foreach ( $tool_buttons as $url => $label )

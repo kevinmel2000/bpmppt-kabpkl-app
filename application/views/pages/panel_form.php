@@ -2,15 +2,15 @@
 	<div class="col-md-9">
 
 <?php load_view('toolbar') ?>
-<div class="panel panel-default">
+<section class="panel panel-default">
 	<div class="panel-heading">
-		<h3 class="panel-title"><?php echo $panel_title ?></h3>
+		<h3 class="panel-title">Test Panel</h3>
 	</div>
 	<div class="panel-body"><?php baka_echo( $panel_body ) ?></div>
-</div>
+</section>
 
 	</div>
-	<div class="col-md-3">
+	<aside class="col-md-3">
 		<?php echo get_nav('side') ?>
-	</div>
+	</aside>
 </div>

@@ -10,6 +10,7 @@
 .note-editor {
   border-radius: @border-radius-base;
   border: 1px solid @input-border;
+  .transition-transform(~"linier 0.3s ease-out");
 
   .fa {
     width: 14px;
@@ -20,7 +21,7 @@
     }
   }
 
-  /* dropzone */
+  // dropzone 
   @dropzone-color: lightskyblue;
   @dropzone-active-color: darken(@dropzone-color, 30);
   .note-dropzone {
@@ -51,13 +52,13 @@
     display: table;
   }
 
-  /* fullscreen mode */
+  // fullscreen mode 
   &.fullscreen {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 1050; /* bs3 modal-backdrop: 1030, bs2: 1040 */
+    z-index: 1050; // bs3 modal-backdrop: 1030, bs2: 1040 
     border: 0;
 
     .note-editable {
@@ -69,7 +70,7 @@
     }
   }
 
-  /* codeview mode */
+  // codeview mode 
   &.codeview {
     .note-editable {
       display: none;
@@ -80,7 +81,7 @@
     }
   }
 
-  /* toolbar */
+  // toolbar 
   .note-toolbar {
     padding-left: 5px;
     padding-bottom: 5px;
@@ -226,9 +227,9 @@
     }
   }
 
-  /* note handle */
+  // note handle 
   .note-handle {
-    /* control selection */
+    // control selection 
     .note-control-selection {
       position: absolute;
       display: none;
@@ -296,16 +297,20 @@
     }
   }
 
-  /* dialog */
+  // dialog 
   .note-dialog {
-    &>div {
-      display: none; /* BS2's hide pacth. */
+    > div {
+      display: none; // BS2's hide pacth. 
+    }
+    .form-group {
+      margin-left: 0;
+      margin-right: 0;
     }
     .note-image-dialog {
       .note-dropzone {
         min-height: 100px;
         font-size: 30px;
-        line-height: 4; /* vertical-align */
+        line-height: 4; // vertical-align 
         color: lightgray;
         text-align: center;
         border: 4px dashed lightgray;
@@ -325,7 +330,7 @@
         .rounded(5px);
       }
 
-      /* BS2's background pacth. */
+      // BS2's background pacth. 
       background: transparent;
       border: none;
 
@@ -333,7 +338,6 @@
         font-size: 12px;
         color: white;
       }
-
       .title {
         color: white;
         font-size: 14px;
@@ -370,7 +374,7 @@
     }
   }
 
-  /* editable */
+  // editable 
   .note-editable {
     padding: 10px;
     overflow: auto;
@@ -380,7 +384,7 @@
     background-color: #e5e5e5;
   }
 
-  /* codeable */
+  // codeable 
   .note-codable {
     display: none;
     width: 100%;
@@ -393,18 +397,18 @@
     background-color: #222;
     resize: none;
 
-    /* override BS2 default style */
+    // override BS2 default style 
     .box-sizing(border-box);
     .rounded(0);
     margin-bottom: 0;
   }
 
-  /* dropdown-menu for toolbar and popover */
+  // dropdown-menu for toolbar and popover 
   .dropdown-menu {
     min-width: 90px;
 
-    /* dropdown-menu right position */
-    /* http://forrst.com/posts/Bootstrap_right_positioned_dropdown-2KB */
+    // dropdown-menu right position 
+    // http://forrst.com/posts/Bootstrap_right_positioned_dropdown-2KB 
     &.right {
       right: 0;
       left: auto;
@@ -412,7 +416,7 @@
       &::after { right: 10px; left: auto !important;  }
     }
 
-    /* dropdown-menu for selectbox */
+    // dropdown-menu for selectbox 
     li a {
       cursor: pointer;
 
@@ -431,7 +435,7 @@
     font-size: 10px;
   }
 
-  /* color palette for toolbar and popover */
+  // color palette for toolbar and popover 
   .note-color-palette {
     line-height: 1;
     div {

@@ -88,6 +88,13 @@ class Former
     private $has_fieldset = FALSE;
 
     /**
+     * Is it has any s?
+     *
+     * @var  bool
+     */
+    private $has_tab = FALSE;
+
+    /**
      * Is it has any tabsets?
      *
      * @var  bool
@@ -405,9 +412,15 @@ class Former
         }
 
         // Close the fieldset before you close your form
-        if($this->has_fieldset === TRUE)
+        if($this->has_fieldset)
         {
             $html .= form_fieldset_close();
+        }
+
+        // Close the tab before you close your form
+        if($this->has_tab)
+        {
+            $html .= '</div>';
         }
 
         // Let them see your form has an action button(s)
@@ -466,6 +479,12 @@ class Former
         }
         else if ($type == 'fieldset')
         {
+            if($this->has_tab)
+            {
+                $html .= '</div>';
+                $this->has_tab = FALSE;
+            }
+
             // Fieldset counter. If you have more that one fieldset in
             // you form, be sure to close it befor call the new one.
             if ($this->_counts['feildsets'] >= 1)
@@ -882,13 +901,13 @@ class Former
                             . "        height: Hsnel,\n"
                             . "        codemirror: {\n"
                             . "            theme: 'monokai'\n"
-                            . "        },\n"
-                            . "        toolbar: [\n"
-                            . "            ['style', ['bold', 'italic', 'underline', 'clear']],\n"
-                            . "            ['para', ['ul', 'ol', 'paragraph']],\n"
-                            . "            ['table', ['table']],\n"
-                            . "            ['view', ['fullscreen', 'codeview', 'help']]\n"
-                            . "        ]\n"
+                            . "        }\n"
+                            // . "        toolbar: [\n"
+                            // . "            ['style', ['bold', 'italic', 'underline', 'clear']],\n"
+                            // . "            ['para', ['ul', 'ol', 'paragraph']],\n"
+                            // . "            ['table', ['table']],\n"
+                            // . "            ['view', ['fullscreen', 'codeview', 'help']]\n"
+                            // . "        ]\n"
                             . "    });\n"
                             . "});\n"
                             . "$('.summernote').parents('form').on('submit', function (e) {\n"
@@ -928,7 +947,7 @@ class Former
                 Asssets::set_script('jqui-button', $jqui_path.'jquery.ui.button.min.js', 'jqui-widget', '1.10.4');
                 Asssets::set_script('jqui-mouse', $jqui_path.'jquery.ui.mouse.min.js', 'jqui-widget', '1.10.4');
                 Asssets::set_script('jqui-position', $jqui_path.'jquery.ui.position.min.js', 'jqui-widget', '1.10.4');
-                Asssets::set_script('jquery-mousewheel', 'lib/jquery.mousewheel.js', 'jqui-core', '3.1.0');
+                Asssets::set_script('jquery-mousewheel', 'lib/jquery.mousewheel.min.js', 'jqui-core', '3.1.0');
             }
 
             if (isset($input))

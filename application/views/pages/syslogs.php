@@ -17,7 +17,7 @@
 </div>
 
 	</div>
-	<div class="col-md-3">
+	<aside class="col-md-3">
 		<?php echo get_nav('side') ?>
-	</div>
+	</aside>
 </div>
