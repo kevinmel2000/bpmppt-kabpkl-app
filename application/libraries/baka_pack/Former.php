@@ -789,7 +789,9 @@ class Former
                             ));
 
                     if (count($option) > 2)
+                    {
                         $input = '<span class="form-control form-control-static">Pilihan tidak boleh lebih dari 2 (dua)!!</span>';
+                    }
                     break;
 
                 // Radiocheckbox field
@@ -867,17 +869,28 @@ class Former
                         'rel'   => 'cool-captcha'));
 
                     $input .= anchor(current_url().'#', 'Ganti teks', array(
-                        'class'   => 'small change-image',
-                        'onclick' => '$(function() {'
-                                        .'$(\'#'.$image_id.'\').attr(\'src\', \''.$captcha_url.'?\'+Math.random());'
-                                        .'$(\'#'.$input_id.'\').focus();'
-                                    .'return false; });'));
+                        'class'   => 'small change-image btn btn-default',
+                        ));
 
                     $input .= form_input(array(
                         'name'  => $name,
                         'type'  => 'text',
                         'id'    => $input_id,
-                        'class' => $input_class), set_value($name, ''), $attr);
+                        'class' => $input_class ), set_value($name, ''), $attr);
+                    
+                    $script = "$('.change-image').on('click', function (e){\n"
+                            . "     $('#".$image_id."').attr('src', '".$captcha_url."?'+Math.random());\n"
+                            . "     $('#".$input_id."').focus();\n"
+                            . "     e.preventDefault();\n"
+                            . "});";
+
+                    Asssets::set_script('collcaptha-trigger', $script);
+
+                    if (!extension_loaded('gd'))
+                    {
+                        $field_attrs['class'] = ' has-error';
+                        $input = '<p class="form-control form-control-static">Maaf! tampaknya server anda tidak dilengkapi dengan Extensi GD, silahkan hubungi administrator.</p>';
+                    }
                     break;
 
                 // Summernote editor
@@ -893,7 +906,7 @@ class Former
                     {
                         $height = 200;
                     }
-                    
+
                     $script = "$('.summernote').each(function (e){\n"
                             . "    var snel = $(this),\n"
                             . "        Hsnel = snel.data('edtr-height'),\n"
@@ -1004,6 +1017,11 @@ class Former
             // var_dump($is_error);
         }
 
+        if (isset($attrs['class']))
+        {
+            $group_class .= ' '.$attrs['class'];
+        }
+
         $label_col = $this->is_hform ? ' col-lg-3 col-md-3 ' : '';
         $input_col = $this->is_hform ? ' col-lg-9 col-md-9 ' : '';
 
@@ -1023,7 +1041,7 @@ class Former
             // $label_class .= $label_col;
             $label_target = (isset($attrs['for']) ? $attrs['for'] : $attrs['id']);
 
-            $html .= '<div class="'.$label_col.'">';
+            $html .= '<div class="form-label'.$label_col.'">';
             $html .= form_label($attrs['label'], $label_target, array('class'=> $label_class));
 
             if ($left_desc)
@@ -1034,7 +1052,7 @@ class Former
             $html .= '</div>';
         }
     
-        $html .= sprintf($field_open, $input_col, '')
+        $html .= sprintf($field_open, 'form-input'.$input_col, '')
               .  $input;
         if (!$left_desc)
         {

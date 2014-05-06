@@ -3512,6 +3512,8 @@ textarea.input-lg {
   margin-bottom: 0;
   padding: 5px 0;
   border: 0;
+  height: auto;
+  min-height: 28px;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
@@ -8774,7 +8776,7 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
 .datepicker.years .datepicker-years {
   display: block;
 }
-.datepicker table.table-condensed {
+.datepicker .table-condensed {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -8787,9 +8789,9 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
       border-top: 1px solid #ddd !important;
     }*/
 }
-.datepicker table.table-condensed tr > th,
-.datepicker table.table-condensed tr > td,
-.datepicker table.table-condensed tr > th {
+.datepicker .table-condensed tr > th,
+.datepicker .table-condensed tr > td,
+.datepicker .table-condensed tr > th {
   font-size: 13px;
   padding-left: 5px;
   line-height: 1.2em;
@@ -8800,88 +8802,88 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
   border: none;
   background-color: transparent;
 }
-.datepicker table.table-condensed tr td.day:hover {
+.datepicker .table-condensed tr td.day:hover {
   background: #eeeeee;
   cursor: pointer;
 }
-.datepicker table.table-condensed tr td.old,
-.datepicker table.table-condensed tr td.new,
-.datepicker table.table-condensed tr td.disabled,
-.datepicker table.table-condensed tr td.old:hover,
-.datepicker table.table-condensed tr td.new:hover,
-.datepicker table.table-condensed tr td.disabled:hover {
+.datepicker .table-condensed tr td.old,
+.datepicker .table-condensed tr td.new,
+.datepicker .table-condensed tr td.disabled,
+.datepicker .table-condensed tr td.old:hover,
+.datepicker .table-condensed tr td.new:hover,
+.datepicker .table-condensed tr td.disabled:hover {
   background: none;
   color: #999999;
   cursor: default;
 }
-.datepicker table.table-condensed tr td.today,
-.datepicker table.table-condensed tr td.today:hover,
-.datepicker table.table-condensed tr td.today.disabled,
-.datepicker table.table-condensed tr td.today.disabled:hover {
+.datepicker .table-condensed tr td.today,
+.datepicker .table-condensed tr td.today:hover,
+.datepicker .table-condensed tr td.today.disabled,
+.datepicker .table-condensed tr td.today.disabled:hover {
   background-color: #fceedb;
   color: #000;
 }
-a.datepicker table.table-condensed tr td.today:hover,
-a.datepicker table.table-condensed tr td.today:hover:hover,
-a.datepicker table.table-condensed tr td.today.disabled:hover,
-a.datepicker table.table-condensed tr td.today.disabled:hover:hover {
+a.datepicker .table-condensed tr td.today:hover,
+a.datepicker .table-condensed tr td.today:hover:hover,
+a.datepicker .table-condensed tr td.today.disabled:hover,
+a.datepicker .table-condensed tr td.today.disabled:hover:hover {
   background-color: #f8d9ac;
 }
-.datepicker table.table-condensed tr td.today:hover:hover {
+.datepicker .table-condensed tr td.today:hover:hover {
   color: #000;
 }
-.datepicker table.table-condensed tr td.today.active:hover {
+.datepicker .table-condensed tr td.today.active:hover {
   color: #fff;
 }
-.datepicker table.table-condensed tr td.range,
-.datepicker table.table-condensed tr td.range:hover,
-.datepicker table.table-condensed tr td.range.disabled,
-.datepicker table.table-condensed tr td.range.disabled:hover {
+.datepicker .table-condensed tr td.range,
+.datepicker .table-condensed tr td.range:hover,
+.datepicker .table-condensed tr td.range.disabled,
+.datepicker .table-condensed tr td.range.disabled:hover {
   background: #eeeeee;
   border-radius: 0;
 }
-.datepicker table.table-condensed tr td.range.today,
-.datepicker table.table-condensed tr td.range.today:hover,
-.datepicker table.table-condensed tr td.range.today.disabled,
-.datepicker table.table-condensed tr td.range.today.disabled:hover {
+.datepicker .table-condensed tr td.range.today,
+.datepicker .table-condensed tr td.range.today:hover,
+.datepicker .table-condensed tr td.range.today.disabled,
+.datepicker .table-condensed tr td.range.today.disabled:hover {
   background-color: #efce9e;
   border-radius: 0;
 }
-a.datepicker table.table-condensed tr td.range.today:hover,
-a.datepicker table.table-condensed tr td.range.today:hover:hover,
-a.datepicker table.table-condensed tr td.range.today.disabled:hover,
-a.datepicker table.table-condensed tr td.range.today.disabled:hover:hover {
+a.datepicker .table-condensed tr td.range.today:hover,
+a.datepicker .table-condensed tr td.range.today:hover:hover,
+a.datepicker .table-condensed tr td.range.today.disabled:hover,
+a.datepicker .table-condensed tr td.range.today.disabled:hover:hover {
   background-color: #e8b772;
 }
-.datepicker table.table-condensed tr td.selected,
-.datepicker table.table-condensed tr td.selected:hover,
-.datepicker table.table-condensed tr td.selected.disabled,
-.datepicker table.table-condensed tr td.selected.disabled:hover {
+.datepicker .table-condensed tr td.selected,
+.datepicker .table-condensed tr td.selected:hover,
+.datepicker .table-condensed tr td.selected.disabled,
+.datepicker .table-condensed tr td.selected.disabled:hover {
   background-color: #b3b3b3;
   color: #fff;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 }
-a.datepicker table.table-condensed tr td.selected:hover,
-a.datepicker table.table-condensed tr td.selected:hover:hover,
-a.datepicker table.table-condensed tr td.selected.disabled:hover,
-a.datepicker table.table-condensed tr td.selected.disabled:hover:hover {
+a.datepicker .table-condensed tr td.selected:hover,
+a.datepicker .table-condensed tr td.selected:hover:hover,
+a.datepicker .table-condensed tr td.selected.disabled:hover,
+a.datepicker .table-condensed tr td.selected.disabled:hover:hover {
   background-color: #999999;
 }
-.datepicker table.table-condensed tr td.active,
-.datepicker table.table-condensed tr td.active:hover,
-.datepicker table.table-condensed tr td.active.disabled,
-.datepicker table.table-condensed tr td.active.disabled:hover {
+.datepicker .table-condensed tr td.active,
+.datepicker .table-condensed tr td.active:hover,
+.datepicker .table-condensed tr td.active.disabled,
+.datepicker .table-condensed tr td.active.disabled:hover {
   background-color: #428bca;
   color: #fff;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 }
-a.datepicker table.table-condensed tr td.active:hover,
-a.datepicker table.table-condensed tr td.active:hover:hover,
-a.datepicker table.table-condensed tr td.active.disabled:hover,
-a.datepicker table.table-condensed tr td.active.disabled:hover:hover {
+a.datepicker .table-condensed tr td.active:hover,
+a.datepicker .table-condensed tr td.active:hover:hover,
+a.datepicker .table-condensed tr td.active.disabled:hover,
+a.datepicker .table-condensed tr td.active.disabled:hover:hover {
   background-color: #3071a9;
 }
-.datepicker table.table-condensed tr td span {
+.datepicker .table-condensed tr td span {
   display: block;
   width: 23%;
   height: auto;
@@ -8891,51 +8893,51 @@ a.datepicker table.table-condensed tr td.active.disabled:hover:hover {
   cursor: pointer;
   border-radius: 3px;
 }
-.datepicker table.table-condensed tr td span:hover {
+.datepicker .table-condensed tr td span:hover {
   background: #eeeeee;
 }
-.datepicker table.table-condensed tr td span.disabled,
-.datepicker table.table-condensed tr td span.disabled:hover {
+.datepicker .table-condensed tr td span.disabled,
+.datepicker .table-condensed tr td span.disabled:hover {
   background: none;
   color: #999999;
   cursor: default;
 }
-.datepicker table.table-condensed tr td span.active,
-.datepicker table.table-condensed tr td span.active:hover,
-.datepicker table.table-condensed tr td span.active.disabled,
-.datepicker table.table-condensed tr td span.active.disabled:hover {
+.datepicker .table-condensed tr td span.active,
+.datepicker .table-condensed tr td span.active:hover,
+.datepicker .table-condensed tr td span.active.disabled,
+.datepicker .table-condensed tr td span.active.disabled:hover {
   background-color: #428bca;
   color: #fff;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 }
-a.datepicker table.table-condensed tr td span.active:hover,
-a.datepicker table.table-condensed tr td span.active:hover:hover,
-a.datepicker table.table-condensed tr td span.active.disabled:hover,
-a.datepicker table.table-condensed tr td span.active.disabled:hover:hover {
+a.datepicker .table-condensed tr td span.active:hover,
+a.datepicker .table-condensed tr td span.active:hover:hover,
+a.datepicker .table-condensed tr td span.active.disabled:hover,
+a.datepicker .table-condensed tr td span.active.disabled:hover:hover {
   background-color: #3071a9;
 }
-.datepicker table.table-condensed tr td span.old,
-.datepicker table.table-condensed tr td span.new {
+.datepicker .table-condensed tr td span.old,
+.datepicker .table-condensed tr td span.new {
   color: #999999;
 }
-.datepicker table.table-condensed tr th.datepicker-switch {
+.datepicker .table-condensed tr th.datepicker-switch {
   width: 145px;
 }
-.datepicker table.table-condensed thead tr:first-child th,
-.datepicker table.table-condensed tfoot tr th {
+.datepicker .table-condensed thead tr:first-child th,
+.datepicker .table-condensed tfoot tr th {
   cursor: pointer;
 }
-.datepicker table.table-condensed thead tr:first-child th:hover,
-.datepicker table.table-condensed tfoot tr th:hover {
+.datepicker .table-condensed thead tr:first-child th:hover,
+.datepicker .table-condensed tfoot tr th:hover {
   background: #eeeeee;
 }
-.datepicker table.table-condensed .cw {
+.datepicker .table-condensed .cw {
   font-size: 10px;
   width: 12px;
   padding: 0 2px 0 5px;
   vertical-align: middle;
 }
-.datepicker table.table-condensed thead tr:first-child th.cw {
+.datepicker .table-condensed thead tr:first-child th.cw {
   cursor: default;
   background-color: transparent;
 }
@@ -9261,17 +9263,17 @@ a.datepicker table.table-condensed tr td span.active.disabled:hover:hover {
   font-size: 13px;
   font-weight: normal;
 }
-.qq-upload-selector .qq-upload-list-selector li span.qq-upload-size-selector {
+.qq-upload-selector .qq-upload-list-selector li .qq-upload-size-selector {
   color: #ddd;
 }
-.qq-upload-selector .qq-upload-list-selector li span.qq-upload-spinner-selector {
+.qq-upload-selector .qq-upload-list-selector li .qq-upload-spinner-selector {
   display: inline-block;
   background: url("../img/loading.gif");
   width: 15px;
   height: 15px;
   vertical-align: text-bottom;
 }
-.qq-upload-selector .qq-upload-list-selector li span.qq-editable {
+.qq-upload-selector .qq-upload-list-selector li .qq-editable {
   cursor: pointer;
 }
 .qq-upload-selector .qq-upload-list-selector li .qq-upload-retry {
@@ -9363,13 +9365,13 @@ a.datepicker table.table-condensed tr td span.active.disabled:hover:hover {
   vertical-align: text-bottom;
   margin-right: 5px;
 }
-.qq-upload-selector input.qq-edit-filename-selector {
+.qq-upload-selector .qq-edit-filename-selector {
   position: absolute;
   z-index: -1;
   opacity: 0;
   filter: alpha(opacity=0);
 }
-.qq-upload-selector input.qq-edit-filename-selector.qq-editing {
+.qq-upload-selector .qq-edit-filename-selector.qq-editing {
   position: static;
   margin-top: -5px;
   margin-right: 10px;
@@ -9377,7 +9379,7 @@ a.datepicker table.table-condensed tr td span.active.disabled:hover:hover {
   opacity: 100;
   filter: alpha(opacity=10000);
 }
-.qq-upload-selector input.qq-edit-filename-selector.qq-editing ~ .qq-upload-cancel {
+.qq-upload-selector .qq-edit-filename-selector.qq-editing ~ .qq-upload-cancel {
   display: none;
 }
 .qq-upload-selector .qq-hide {
@@ -9815,13 +9817,13 @@ a.datepicker table.table-condensed tr td span.active.disabled:hover:hover {
   -moz-box-sizing: content-box;
   box-sizing: content-box;
 }
-.CodeMirror div.CodeMirror-cursor {
+.CodeMirror .CodeMirror-cursor {
   border-left: 1px solid black;
 }
-.CodeMirror div.CodeMirror-secondarycursor {
+.CodeMirror .CodeMirror-secondarycursor {
   border-left: 1px solid silver;
 }
-.CodeMirror.cm-keymap-fat-cursor div.CodeMirror-cursor {
+.CodeMirror.cm-keymap-fat-cursor .CodeMirror-cursor {
   width: auto;
   border: 0;
   background: #7e7;
@@ -9977,10 +9979,10 @@ a.datepicker table.table-condensed tr td span.active.disabled:hover:hover {
 .cm-invalidchar {
   color: #f00;
 }
-div.CodeMirror span.CodeMirror-matchingbracket {
+.CodeMirror .CodeMirror-matchingbracket {
   color: #0f0;
 }
-div.CodeMirror span.CodeMirror-nonmatchingbracket {
+.CodeMirror .CodeMirror-nonmatchingbracket {
   color: #f22;
 }
 .CodeMirror-activeline-background {
@@ -10111,17 +10113,17 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
 .CodeMirror-measure pre {
   position: static;
 }
-.CodeMirror div.CodeMirror-cursor {
+.CodeMirror .CodeMirror-cursor {
   position: absolute;
   border-right: none;
   width: 0;
 }
-div.CodeMirror-cursors {
+.CodeMirror-cursors {
   visibility: hidden;
   position: relative;
   z-index: 1;
 }
-.CodeMirror-focused div.CodeMirror-cursors {
+.CodeMirror-focused .CodeMirror-cursors {
   visibility: visible;
 }
 .CodeMirror-selected {
@@ -10258,6 +10260,15 @@ div.CodeMirror-cursors {
 #page-register-pengguna section > .container > .row > .col-md-4,
 #page-lupa-login section > .container > .row > .col-md-4 {
   padding-top: 20px;
+}
+.form-label {
+  height: 28px;
+}
+.form-label .control-label {
+  width: 100%;
+  padding-top: 0;
+  vertical-align: middle;
+  vertical-align: -webkit-baseline-middle;
 }
 footer {
   height: 34px;
