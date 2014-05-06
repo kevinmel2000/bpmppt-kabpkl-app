@@ -7,8 +7,8 @@
   // .box-shadow(inset 0 1px 1px rgba(0,0,0,.05));
   // width: 100%;
 
-  .qq-upload-button-selector {
-    &-selector {
+  // .qq-upload-button-selector {
+  //   &-selector {
       // display: block;
       // width: 105px;
       // padding: 7px 0;
@@ -16,16 +16,16 @@
       // background: #880000;
       // border-bottom: 1px solid #ddd;
       // color: #fff;
-    }
+    // }
 
-    &-hover {
+    // &-hover {
       // background: #cc0000;
-    }
+    // }
 
-    &-focus {
+    // &-focus {
       // outline: 1px dotted #000000;
-    }
-  }
+  //   }
+  // }
 
   .qq-upload-drop-area-selector,
   .qq-upload-extra-drop-area-selector {
@@ -102,22 +102,22 @@
         font-size: @font-size-base;
         font-weight: normal;
         // display: inline;
+      }
 
-        &.qq-upload-size-selector {
-          color: #ddd;
-        }
+      .qq-upload-size-selector {
+        color: #ddd;
+      }
 
-        &.qq-upload-spinner-selector {
-          display: inline-block;
-          background: url("@{img-path}loading.gif");
-          width: 15px;
-          height: 15px;
-          vertical-align: text-bottom;
-        }
+      .qq-upload-spinner-selector {
+        display: inline-block;
+        background: url("@{img-path}loading.gif");
+        width: 15px;
+        height: 15px;
+        vertical-align: text-bottom;
+      }
 
-        &.qq-editable {
-          cursor: pointer;
-        }
+      .qq-editable {
+        cursor: pointer;
       }
 
       .qq-upload-retry {
@@ -232,13 +232,13 @@
     margin-right: 5px;
   }
 
-  input.qq-edit-filename-selector {
+  .qq-edit-filename-selector {
     position: absolute;
     z-index: -1;
     .opacity(0);
   }
 
-  input.qq-edit-filename-selector.qq-editing {
+  .qq-edit-filename-selector.qq-editing {
     position: static;
     margin-top: -5px;
     margin-right: 10px;
@@ -246,7 +246,7 @@
     .opacity(100);
   }
 
-  input.qq-edit-filename-selector.qq-editing ~ .qq-upload-cancel {
+  .qq-edit-filename-selector.qq-editing ~ .qq-upload-cancel {
     display: none;
   }
 

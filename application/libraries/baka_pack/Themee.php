@@ -175,10 +175,10 @@ class Themee
 
     // -------------------------------------------------------------------------
 
-    public function get_nav( $position )
+    public function get_nav( $position, $responsivable = FALSE )
     {
         if ( isset($this->_theme_data['navbar'][$position]) )
-            return $this->make_menu( $this->_theme_data['navbar'][$position] );
+            return $this->make_menu( $this->_theme_data['navbar'][$position], $responsivable );
         else
             log_message('error', '#Themee: '.$position." navbar doesn't exists.");
     }
@@ -211,13 +211,13 @@ class Themee
      * @param  string $class menu class
      * @return mixed
      */
-    public function make_menu( $menu_array, $list_class = '' )
+    public function make_menu( $menu_array, $responsivable = FALSE )
     {
         $output = '';
 
         foreach ($menu_array as $list_id => $list_item)
         {
-            $class = isset($list_item['class']) ? $list_item['class'] : $list_class;
+            $class = isset($list_item['class']) ? $list_item['class'] : '';
 
             $output .= '<ul id="'.$list_id.'" role="menu" class="'.$class.'">';
 
@@ -251,7 +251,15 @@ class Themee
                             $menu_item['attr']  = array_merge($menu_item['attr'], array('class'=>'dropdown-toggle', 'data-toggle'=>'dropdown'));
                         }
 
-                        $output .= anchor($menu_item['url'], '<span class="menu-text">'.$menu_item['label'].'</span>', $menu_item['attr']);
+                        $anchor_pre = '<span class="menu-text">';
+
+                        if ($responsivable)
+                        {
+                            $anchor_pre = '<i class="fa fa-file visible-sm"></i><span class="menu-text hidden-sm">';
+                            $menu_item['attr'] = array_merge($menu_item['attr'], array('class'=>'twbs-tooltip', 'data-toggle'=>'tooltip', 'data-placement'=>'left', 'title'=>$menu_item['label']));
+                        }
+
+                        $output .= anchor($menu_item['url'], $anchor_pre.$menu_item['label'].'</span>', $menu_item['attr']);
 
                         if ($has_child === TRUE)
                             $output .= $this->make_menu( $menu_item['child'], 'dropdown-menu' );

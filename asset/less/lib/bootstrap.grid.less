@@ -48,6 +48,7 @@
 .make-grid-columns();
 
 
+
 // Extra small grid
 //
 // Columns, offsets, pushes, and pulls for extra small devices like
@@ -59,6 +60,19 @@
 .make-grid(@grid-columns, xs, push);
 .make-grid(@grid-columns, xs, offset);
 
+
+// Extra Extra small grid
+//
+// Columns, offsets, pushes, and pulls for extra small devices like
+// smartphones.
+
+@media (max-width: @screen-xs-min) {
+  .make-grid-columns-float(xxs);
+  .make-grid(@grid-columns, xxs, width);
+  .make-grid(@grid-columns, xxs, pull);
+  .make-grid(@grid-columns, xxs, push);
+  .make-grid(@grid-columns, xxs, offset);
+}
 
 // Small grid
 //

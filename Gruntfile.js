@@ -1,9 +1,5 @@
 module.exports = function(grunt) {
-  // 'use strict';
-
-  grunt.loadNpmTasks('grunt-php');
-  grunt.loadNpmTasks('grunt-contrib-less');
-  grunt.loadNpmTasks('grunt-contrib-watch');
+  'use strict';
 
   grunt.initConfig({
     // Metadata.
@@ -28,21 +24,27 @@ module.exports = function(grunt) {
         files: {
           "asset/css/style.css": "asset/less/style.less"
         }
+      }
+    },
+    csslint: {
+      options: {
+        csslintrc: '.csslintrc'
       },
+      src: ['asset/css/style.css']
+    },
+    cssmin: {
       minify: {
-        options: {
-          cleancss: true,
-          report: 'min'
-        },
-        files: {
-          'asset/css/style.min.css': 'asset/css/style.css',
-        }
+        expand: true,
+        cwd: 'asset/css/',
+        src: ['style.css'],
+        dest: 'asset/css/',
+        ext: '.min.css'
       }
     },
     watch: {
       less:{
         files: 'asset/less/lib/*.less',
-        tasks: 'less',
+        tasks: 'build',
         options: {
           nospawn: true
         }
@@ -50,6 +52,15 @@ module.exports = function(grunt) {
     },
   });
 
+  grunt.loadNpmTasks('grunt-php');
+  grunt.loadNpmTasks('grunt-contrib-less');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-csslint');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
+
   // grunt.registerTask('watch', ['watch']);
+  grunt.registerTask('lint', ['csslint']);
+  grunt.registerTask('build', ['less', 'cssmin']);
   grunt.registerTask('default', ['php']);
 }

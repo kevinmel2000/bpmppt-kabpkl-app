@@ -15,6 +15,8 @@ var Baka = {
 
 $(document).ready( function () {
 
+    $('.twbs-tooltip').tooltip();
+
     $('#toolbar-btn-cetak').on('click', function(e) {
         var url = $(this).attr('href')
             title = $(this).attr('title');

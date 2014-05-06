@@ -91,11 +91,11 @@ function get_navbar()
 
 // -------------------------------------------------------------------------
 
-function get_nav($position )
+function get_nav($position, $responsivable = FALSE)
 {
     $themee =& get_instance()->themee;
 
-    return $themee->get_nav($position );
+    return $themee->get_nav($position, $responsivable);
 }
 
 // -------------------------------------------------------------------------

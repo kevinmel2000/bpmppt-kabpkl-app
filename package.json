@@ -13,7 +13,10 @@
   "dependencies": {
     "grunt": "*",
     "grunt-php": "*",
-    "grunt-contrib-less": "*"
+    "grunt-contrib-less": "*",
+    "grunt-contrib-cssmin": "*",
+    "grunt-contrib-csslint": "*",
+    "grunt-contrib-clean": "*"
   },
   "devDependencies": {
     "grunt-contrib-watch": "~0.4.4"

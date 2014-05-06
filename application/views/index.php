@@ -12,7 +12,7 @@
 </head>
 <body <?php echo get_body_class() ?>>
 
-<div id="wrapper">
+<div class="wrapper">
     <?php echo get_navbar() ?>
     <section id="contents">
         <div class="container"><?php echo form_alert() . $contents ?></div>
