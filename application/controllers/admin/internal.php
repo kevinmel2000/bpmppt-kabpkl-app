@@ -54,7 +54,7 @@ class Internal extends BAKA_Controller
 
     public function skpd()
     {
-        if ( !is_permited('internal_skpd_manage') )
+        if ( !$this->authr->is_permited('internal_skpd_manage') )
             $this->_notice( 'access-denied' );
 
         $this->data['panel_title'] = $this->themee->set_title('Properti data SKPD');
@@ -160,7 +160,7 @@ class Internal extends BAKA_Controller
 
     public function app()
     {
-        if ( !is_permited('internal_application_manage') )
+        if ( !$this->authr->is_permited('internal_application_manage') )
             $this->_notice( 'access-denied' );
 
         $this->data['panel_title'] = $this->themee->set_title('Pengaturan Aplikasi');
@@ -586,7 +586,7 @@ class Internal extends BAKA_Controller
 
         $query = $this->db->select()
                           ->from( get_conf('system_env_table') )
-                          ->where('user_id', $this->authen->get_user_id())
+                          ->where('user_id', $this->authr->get_user_id())
                           ->or_where('user_id', 0);
 
         $grid = $this->gridr->identifier('id')
@@ -642,7 +642,7 @@ class Internal extends BAKA_Controller
             }
             else
             {
-                $return = $this->db->insert(get_conf('system_env_table'), array('user_id'   => $this->authen->get_user_id(),
+                $return = $this->db->insert(get_conf('system_env_table'), array('user_id'   => $this->authr->get_user_id(),
                                                                     'env_key'   => $form_data['app_env_value'],
                                                                     'env_value' => $form_data['app_env_value'] ));
             }

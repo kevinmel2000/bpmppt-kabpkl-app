@@ -87,7 +87,7 @@ class Bpmppt extends CI_Driver_Library
 
         foreach ( $this->available_drivers as $module )
         {
-            if ( is_permited( 'doc_'.$module.'_manage' ) )
+            if ( $this->_ci->authr->is_permited( 'doc_'.$module.'_manage' ) )
             {
                 $this->valid_drivers[] = $self.'_'.$module;
 
@@ -327,7 +327,7 @@ class Bpmppt extends CI_Driver_Library
 
         $data['no_agenda']  = $form_data[$driver_alias.'_surat_nomor'];
         $data['created_on'] = string_to_datetime();
-        $data['created_by'] = Authen::get_user_id();
+        $data['created_by'] = $this->authr->get_user_id();
         $data['type']       = $driver_alias;
         $data['label']      = '-';
         $data['petitioner'] = $form_data[$driver_alias.'_pemohon_nama'];

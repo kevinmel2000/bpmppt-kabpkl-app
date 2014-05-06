@@ -1,4 +1,4 @@
-<?php if (! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
  * CodeIgniter Baka Pack
@@ -16,100 +16,116 @@
  *
  * 0. You just DO WHAT THE FUCK YOU WANT TO.
  *
- * @package     Baka_pack
+ * @package     Authr
  * @author      Fery Wardiyanto
  * @copyright   Copyright (c) Fery Wardiyanto. (ferywardiyanto@gmail.com)
  * @license     http://www.wtfpl.net
- * @since       Version 0.1.3
+ * @since       Version 0.1
  */
 
 // -----------------------------------------------------------------------------
 
 /**
- * BAKA Auth Class
+ * Authr Driver
  *
- * @subpackage  Libraries
+ * @subpackage  Drivers
  * @category    Security
  */
-class Authen
+class Authr extends CI_Driver_Library 
 {
     /**
      * Codeigniter superobject
      * 
      * @var  mixed
      */
-    protected static $_ci;
+    public $_ci;
 
     /**
-     * User permissions
+     * CI database object
      *
      * @var  array
      */
-    protected static $user_perms = array();
+    public $db;
 
     /**
-     * Message wrapper
+     * Tables definition
      *
      * @var  array
      */
-    public $messages = array();
+    public $table = array();
+
+    /**
+     * Valid drivers that will be loaded
+     *
+     * @var  array
+     */
+    public $valid_drivers = array(
+        'authr_autologin',
+        'authr_user_log',
+        'authr_login_attempt',
+        'authr_permissions',
+        'authr_role_perms',
+        'authr_roles',
+        'authr_user_meta',
+        'authr_user_perms',
+        'authr_user_roles',
+        'authr_users',
+        );
+
+    /**
+     * User permissions wrapper
+     *
+     * @var  array
+     */
+    protected $_user_perms;
 
     /**
      * Default class constructor
      */
     public function __construct()
     {
-        self::$_ci =& get_instance();
+        $this->_ci =& get_instance();
 
-        self::$_ci->load->helper('cookie');
-        self::$_ci->load->library('session');
-        self::$_ci->load->helper('baka_pack/authen');
-        self::$_ci->load->model('baka_pack/authen_model');
+        $this->_ci->load->helper('cookie');
+        $this->_ci->load->library('session');
+        $this->_ci->load->helper('authr');
+        
+        $this->db = $this->_ci->db;
+
+        $tables = array(
+            'users',
+            'user_meta',
+            'user_role',
+            'roles',
+            'permissions',
+            'role_perms',
+            'overrides',
+            'user_autologin',
+            'login_attempts',
+            );
+
+        foreach ( $tables as $table)
+        {
+            $this->table[$table] = get_conf( $table.'_table' );
+        }
 
         $this->_autologin();
 
-        log_message('debug', "#Baka_pack: Authen Class Initialized");
+        log_message('debug', "#Authr: Driver Class Initialized");
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Acts as a simple way to call model methods without loads of stupid alias'
-     *
-     * @param   string  $method  Method name
-     * @param   mixed   $args    Method Arguments
-     *
-     * @return  mixed
-     */
-    public function __call($method, $args)
-    {
-        if (!method_exists(self::$_ci->authen_model, $method))
-        {
-            show_error('Undefined method Authen::'.$method.'() called', 500, 'An Error Eas Encountered');
-        }
-
-        return call_user_func_array(array(self::$_ci->authen_model, $method), $args);
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * phpass-0.3 hashing
-     *
-     * @param   string      $pass  Password to be hashed
+     * Instanciate phpass-0.3 Class
      *
      * @return  obj|string
      */
-    protected function do_hash($pass = '')
+    protected function hash()
     {
-        require_once(APPPATH.'libraries/vendor/PasswordHash.php');
+        require_once(dirname(__FILE__).'/vendor/PasswordHash.php');
 
         $phpass = new PasswordHash(get_conf('phpass_hash_strength'), get_conf('phpass_hash_portable'));
-
-        if ($pass != '')
-        {
-            return $phpass->HashPassword($pass);
-        }
 
         return $phpass;
     }
@@ -117,16 +133,30 @@ class Authen
     // -------------------------------------------------------------------------
 
     /**
-     * phpass-0.3 check hash
+     * Hashing password using phpass-0.3
      *
-     * @param   string  $new_pass  New Password
-     * @param   string  $old_pass  Old Password
+     * @param   string  $password  The password that need to be hashed
+     *
+     * @return  string
+     */
+    protected function do_hash($password)
+    {
+        return $this->hash()->HashPassword($password);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Validating password hash using phpass-0.3
+     *
+     * @param   string  $new_pass  New Password that need to be check
+     * @param   string  $old_pass  Old Password as refrence
      *
      * @return  bool
      */
     protected function validate($new_pass, $old_pass)
     {
-        return $this->do_hash()->CheckPassword($new_pass, $old_pass);
+        return $this->hash()->CheckPassword($new_pass, $old_pass);
     }
 
     // -------------------------------------------------------------------------
@@ -143,30 +173,30 @@ class Authen
      */
     public function login($login, $password, $remember)
     {
-        // fail - wrong login
-        if (!($user = $this->get_user($login, login_by())))
+        // Fail - wrong login
+        if (!($user = $this->users->get($login, login_by())))
         {
-            $this->increase_login_attempt($login);
+            $this->login_attempt->increase($login);
             Messg::set('error', _x('auth_incorrect_login'));
             return FALSE;
         }
 
-        // fail - wrong password
+        // Fail - wrong password
         if (!$this->validate($password, $user->password))
         {
-            $this->increase_login_attempt($login);
+            $this->login_attempt->increase($login);
             Messg::set('error', _x('auth_incorrect_password'));
             return FALSE;
         }
 
-        // fail - banned
+        // Fail - banned
         if ($user->banned == 1)
         {
             Messg::set('error', _x('auth_banned_account', $user->ban_reason));
             return FALSE;
         }
 
-        // fail - deleted
+        // Fail - deleted
         if ($user->deleted == 1)
         {
             Messg::set('error', _x('auth_deleted_account'));
@@ -174,34 +204,32 @@ class Authen
         }
 
         // Save to session
-        self::$_ci->session->set_userdata(array(
+        $this->_ci->session->set_userdata(array(
             'user_id'   => $user->id,
             'username'  => $user->username,
             'status'    => (int) $user->activated
             ));
 
-        // fail - not activated
+        // Fail - not activated
         if ($user->activated == 0)
         {
             Messg::set('error', _x('auth_inactivated_account'));
             return FALSE;
         }
+        else
+        {
+            // grab all permissions
+            if ($this->_user_perms = $this->user_perms->fetch($user->id))
+            {
+                // place it in session
+                $this->_ci->session->set_userdata('user_perms', $this->_user_perms);
+            }
+        }
 
         // success
         // $user_profile = '';
         // $this->get_user_profile($user->id);
-        // self::$_ci->session->set_userdata('user_profile', $user_profile);
-
-        // if is active user
-        if ($user->activated == 1)
-        {
-            // grab all permissions
-            if (self::$user_perms = $this->get_user_perms($user->id))
-            {
-                // place it in session
-                self::$_ci->session->set_userdata('user_perms', self::$user_perms);
-            }
-        }
+        // $this->_ci->session->set_userdata('user_profile', $user_profile);
 
         // is auto login
         if ((bool) $remember)
@@ -211,10 +239,10 @@ class Authen
         }
 
         // clean login attempts
-        $this->clear_login_attempts($user->username);
+        $this->login_attempt->clear($user->username);
 
         // update login info
-        $this->update_login_info($user->id);
+        $this->users->update_login_info($user->id);
 
         Messg::set('success', _x('auth_login_success'));
         return TRUE;
@@ -229,11 +257,11 @@ class Authen
      */
     public function logout()
     {
-        $this->delete_autologin();
+        $this->autologin->delete();
         
         // See http://codeigniter.com/forums/viewreply/662369/ as the reason for the next line
-        self::$_ci->session->set_userdata(array('user_id' => '', 'username' => '', 'status' => NULL));
-        self::$_ci->session->sess_destroy();
+        $this->_ci->session->set_userdata(array('user_id' => '', 'username' => '', 'status' => NULL));
+        $this->_ci->session->sess_destroy();
     }
 
     // -------------------------------------------------------------------------
@@ -246,9 +274,9 @@ class Authen
      *
      * @return  bool
      */
-    public static function is_logged_in($activated = TRUE)
+    public function is_logged_in($activated = TRUE)
     {
-        return self::$_ci->session->userdata('status') === bool_to_int($activated);
+        return $this->_ci->session->userdata('status') === bool_to_int($activated);
     }
 
     // -------------------------------------------------------------------------
@@ -258,9 +286,9 @@ class Authen
      *
      * @return  int
      */
-    public static function get_user_id()
+    public function get_user_id()
     {
-        return self::$_ci->session->userdata('user_id');
+        return $this->_ci->session->userdata('user_id');
     }
 
     // -------------------------------------------------------------------------
@@ -272,7 +300,7 @@ class Authen
      */
     public function get_username()
     {
-        return self::$_ci->session->userdata('username');
+        return $this->_ci->session->userdata('username');
     }
 
     // -------------------------------------------------------------------------
@@ -284,7 +312,7 @@ class Authen
      */
     public function get_current_user()
     {
-        return self::$_ci->session->all_userdata();
+        return $this->_ci->session->all_userdata();
     }
 
     // -------------------------------------------------------------------------
@@ -344,7 +372,7 @@ class Authen
      */
     public function update_user($user_id, $username, $email, $old_pass, $new_pass, $roles = array())
     {
-        $user = $this->get_user($user_id);
+        $user = $this->users->get($user_id);
         $data = array(
             'username' => $username,
             'email'    => $email,
@@ -397,7 +425,7 @@ class Authen
     {
         $user_id = $this->get_user_id();
 
-        if (!($user = $this->get_user($user_id)))
+        if (!($user = $this->users->get($user_id)))
             return FALSE;
 
         $data = array(
@@ -660,26 +688,26 @@ class Authen
 
             if (isset($data['key']) AND isset($data['user_id']))
             {
-                if ($user = $this->get_autologin($data['user_id'], md5($data['key'])))
+                if ($user = $this->autologin->get($data['user_id'], md5($data['key'])))
                 {
                     $activated = $user->activated;
 
                     // Login user
-                    self::$_ci->session->set_userdata(array(
+                    $this->_ci->session->set_userdata(array(
                         'user_id'   => $user->id,
                         'username'  => $user->username,
                         'status'    => (int) $activated,
                         ));
 
-                    if ($activated == 1 and ($user_perms = $this->get_user_perms($user->id)))
+                    if ($activated == 1 and ($user_perms = $this->user_perms->fetch($user->id)))
                     {
-                        self::$_ci->session->set_userdata('user_perms', $user_perms);
+                        $this->_ci->session->set_userdata('user_perms', $user_perms);
                     }
 
                     // Renew users cookie to prevent it from expiring
                     $this->set_cookie($cookie);
 
-                    $this->update_login_info($user->id);
+                    $this->users->update_login_info($user->id);
                 }
             }
         }
@@ -697,9 +725,9 @@ class Authen
     {
         $key = substr(md5(uniqid(mt_rand().get_cookie(config_item('sess_cookie_name')))), 0, 16);
 
-        $this->purge_autologin($user_id);
+        $this->autologin->purge($user_id);
 
-        if ($this->set_autologin($user_id, md5($key)))
+        if ($this->autologin->set($user_id, md5($key)))
         {
             $this->set_cookie(serialize(array('user_id' => $user_id, 'key' => $key)));
             return TRUE;
@@ -739,14 +767,14 @@ class Authen
      * @param string $permission: The permission you want to check for from the `permissions.permission` table.
      * @return bool
      */
-    public function permit($permission)
+    public function is_permited($permission)
     {
         // if (!$this->perm_exists($permission))
             // $this->new_permission($permission, '-');
 
         $allow  = FALSE;
 
-        if ($user_perms = self::$_ci->session->userdata('user_perms'))
+        if ($user_perms = $this->_ci->session->userdata('user_perms'))
         {
             // Check role permissions
             foreach($user_perms as $p_key => $p_val)
@@ -807,29 +835,9 @@ class Authen
      */
     public function is_max_attempts_exceeded($login)
     {
-        return $this->get_attempts_num($login) >= Setting::get('auth_login_max_attempts');
-    }
-
-    // -------------------------------------------------------------------------
-
-    protected function set_message($level, $msg_item)
-    {
-        $this->messages[$level][] = $msg_item;
-        log_message('debug', '#Baka_pack: Authen `'.$level.'` > '.$msg_item.'.');
-    }
-
-    // -------------------------------------------------------------------------
-
-    public function messages($level = '')
-    {
-        if ($level != '')
-        {
-            return $this->messages[$level];
-        }
-
-        return $this->messages;
+        return $this->login_attempt->get_num($login) >= Setting::get('auth_login_max_attempts');
     }
 }
 
 /* End of file Authen.php */
-/* Location: ./application/libraries/baka_pack/Authen.php */
+/* Location: ./application/libraries/Authen/Authen.php */

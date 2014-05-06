@@ -164,7 +164,7 @@ class BAKA_Form_validation extends CI_Form_validation
      */
     function is_username_available( $username )
     {
-        if ( $this->CI->authen->check_username( $username ) )
+        if ( $this->CI->authr->check_username( $username ) )
         {
             $this->set_message( 'is_username_available', _x('auth_username_in_use') );
             return FALSE;
@@ -184,7 +184,7 @@ class BAKA_Form_validation extends CI_Form_validation
      */
     function is_email_available( $email )
     {
-        if ( $this->CI->authen->check_email( $email ) )
+        if ( $this->CI->authr->check_email( $email ) )
         {
             $this->set_message( 'is_email_available', _x('auth_email_in_use') );
             return FALSE;
@@ -204,7 +204,7 @@ class BAKA_Form_validation extends CI_Form_validation
      */
     function is_username_exists( $username )
     {
-        if ( !$this->CI->authen->check_username( $username ) )
+        if ( !$this->CI->authr->check_username( $username ) )
         {
             $this->set_message( 'is_username_available', _x('auth_username_not_exists') );
             return FALSE;
@@ -224,7 +224,7 @@ class BAKA_Form_validation extends CI_Form_validation
      */
     function is_email_exists( $email )
     {
-        if ( !$this->CI->authen->check_email( $email ) )
+        if ( !$this->CI->authr->check_email( $email ) )
         {
             $this->set_message( 'is_email_available', _x('auth_email_not_exists') );
             return FALSE;

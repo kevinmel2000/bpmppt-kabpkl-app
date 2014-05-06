@@ -25,12 +25,12 @@
 
 // -----------------------------------------------------------------------------
 
-function is_permited( $permission )
-{
-	$authen =& get_instance()->authen;
+// function is_permited( $permission )
+// {
+// 	$authen =& get_instance()->authen;
 
-	return $authen->permit( $permission );
-}
+// 	return $authen->permit( $permission );
+// }
 
 // -----------------------------------------------------------------------------
 
@@ -45,11 +45,17 @@ function login_by()
     $login_by_email     = (bool) Setting::get('auth_login_by_email');
 
     if ( $login_by_username AND $login_by_email )
+    {
         return 'login';
+    }
     else if ( $login_by_username )
+    {
         return 'username';
-    else 
+    }
+    else
+    {
         return 'email';
+    }
 }
 
 /* End of file authen_helper.php */

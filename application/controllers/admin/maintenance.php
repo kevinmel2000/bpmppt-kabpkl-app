@@ -38,7 +38,7 @@ class Maintenance extends BAKA_Controller
 
         $this->verify_login();
 
-        if ( !is_permited('sys_manage') )
+        if ( !$this->authr->is_permited('sys_manage') )
             $this->_notice( 'access-denied' );
 
         $this->themee->add_navbar( 'admin_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
@@ -54,7 +54,7 @@ class Maintenance extends BAKA_Controller
 
     public function dbbackup()
     {
-        if ( !is_permited('sys_backstore_manage') )
+        if ( !$this->authr->is_permited('sys_backstore_manage') )
             $this->_notice( 'access-denied' );
 
         $this->data['panel_title'] = $this->themee->set_title('Backup Database');
@@ -122,7 +122,7 @@ class Maintenance extends BAKA_Controller
 
     public function dbrestore()
     {
-        if ( !is_permited('sys_backstore_manage') )
+        if ( !$this->authr->is_permited('sys_backstore_manage') )
             $this->_notice( 'access-denied' );
 
         $this->data['panel_title']  = $this->themee->set_title('Restore Database');
@@ -173,7 +173,7 @@ class Maintenance extends BAKA_Controller
 
     public function syslogs( $file = '' )
     {
-        if ( !is_permited('sys_logs_manage') )
+        if ( !$this->authr->is_permited('sys_logs_manage') )
             $this->_notice( 'access-denied' );
 
         $this->load->helper('directory');

@@ -50,9 +50,9 @@ class BAKA_Controller extends CI_Controller
             show_error(array('Peramban yang anda gunakan tidak memenuhi syarat minimal penggunaan aplikasi ini.','Silahkan gunakan '.anchor('http://www.mozilla.org/id/', 'Mozilla Firefox', 'target="_blank"').' atau '.anchor('https://www.google.com/intl/id/chrome/browser/', 'Google Chrome', 'target="_blank"').' biar lebih GREGET!'), 500, 'error_browser_jadul');
         }
 
-        if (Authen::is_logged_in())
+        if ($this->authr->is_logged_in())
         {
-            $this->current_user = $this->authen->get_current_user();
+            $this->current_user = $this->authr->get_current_user();
             // Adding sub of main and user navbar
             $this->navbar();
         }
@@ -95,11 +95,15 @@ class BAKA_Controller extends CI_Controller
      */
     protected function verify_login()
     {
-        if (!Authen::is_logged_in() AND !Authen::is_logged_in(FALSE))
+        if (!$this->authr->is_logged_in() AND !$this->authr->is_logged_in(FALSE))
+        {
             redirect('login');
+        }
         
-        if (Authen::is_logged_in(FALSE))
+        if ($this->authr->is_logged_in(FALSE))
+        {
             redirect('resend');
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -111,10 +115,14 @@ class BAKA_Controller extends CI_Controller
      */
     protected function verify_status()
     {
-        if (Authen::is_logged_in())
+        if ($this->authr->is_logged_in())
+        {
             redirect('data');
-        else if (Authen::is_logged_in(FALSE))
-           redirect('resend');
+        }
+        else if ($this->authr->is_logged_in(FALSE))
+        {
+            redirect('resend');
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -126,15 +134,15 @@ class BAKA_Controller extends CI_Controller
         // Adding user navbar
         $this->themee->add_navbar('user_navbar', 'navbar-nav navbar-right');
 
-        if (is_permited('doc_manage'))
+        if ($this->authr->is_permited('doc_manage'))
         {
             // Adding dashboard menu to main navbar
             $this->themee->add_navmenu('main_navbar', 'dashboard', 'link', 'data', 'Data Layanan');
             // Adding submenu to main_navbar-data
             // $this->data_navbar('main_navbar-master', 'top');
 
-            $this->load->driver('bpmppt');
         }
+            $this->load->driver('bpmppt');
 
         // Adding admin menu to main navbar
         $this->themee->add_navmenu('main_navbar', 'admin', 'link', 'admin/', 'Administrasi');
@@ -155,7 +163,7 @@ class BAKA_Controller extends CI_Controller
 
         $modules = $this->bpmppt->get_modules();
 
-        if (count($modules ) > 0)
+        if (count($modules) > 0)
         {
             // Overview
             $this->themee->add_navmenu($parent, 'overview', 'link', 'data/utama', 'Overview', array(), $position);
@@ -189,15 +197,15 @@ class BAKA_Controller extends CI_Controller
         // Internal settings sub-menu
         // =====================================================================
         // Adding skpd sub-menu (if permited)
-        if (is_permited('internal_skpd_manage'))
+        if ($this->authr->is_permited('internal_skpd_manage'))
             $this->themee->add_navmenu($parent, 'ai_skpd', 'link', 'admin/internal/skpd', 'SKPD', array(), $position);
 
         // Adding application sub-menu (if permited)
-        if (is_permited('internal_application_manage'))
+        if ($this->authr->is_permited('internal_application_manage'))
             $this->themee->add_navmenu($parent, 'ai_application', 'link', 'admin/internal/app', 'Pengaturan Aplikasi', array(), $position);
 
         // Adding security sub-menu (if permited)
-        // if (is_permited('internal_security_manage'))
+        // if ($this->authr->is_permited('internal_security_manage'))
         //     $this->themee->add_navmenu($parent, 'ai_security', 'link', 'admin/internal/keamanan', 'Keamanan', array(), $position);
 
         // $this->themee->add_navmenu(
@@ -215,27 +223,27 @@ class BAKA_Controller extends CI_Controller
             $parent, 'au_me', 'link', 'profile', 'Profil Saya', array(), $position);
 
         // Adding Users sub-menu (if permited)
-        if (is_permited('users_manage'))
+        if ($this->authr->is_permited('users_manage'))
             $this->themee->add_navmenu($parent, 'au_users', 'link', 'admin/pengguna/data', 'Semua Pengguna', array(), $position);
 
         // Adding Groups sub-menu (if permited)
-        if (is_permited('roles_manage'))
+        if ($this->authr->is_permited('roles_manage'))
             $this->themee->add_navmenu($parent, 'au_groups', 'link', 'admin/pengguna/groups', 'Kelompok', array(), $position);
 
         // Adding Perms sub-menu (if permited)
-        if (is_permited('perms_manage'))
+        if ($this->authr->is_permited('perms_manage'))
             $this->themee->add_navmenu($parent, 'a_permission', 'link', 'admin/pengguna/permission', 'Hak akses', array(), $position);
 
         // Application Mantenances sub-menu
         // =====================================================================
-        if (is_permited('sys_manage'))
+        if ($this->authr->is_permited('sys_manage'))
         {
             // Adding System sub-menu (if permited)
             $this->themee->add_navmenu($parent, 'ad_def', 'devider', '', '', array(), $position);
             $this->themee->add_navmenu($parent, 'ad_head', 'header', '', 'Perbaikan', array(), $position);
 
             // Adding Backup & Restore sub-menu (if permited)
-            if (is_permited('sys_backstore_manage'))
+            if ($this->authr->is_permited('sys_backstore_manage'))
             {
                 // Backup sub-menu
                 $this->themee->add_navmenu(
@@ -246,7 +254,7 @@ class BAKA_Controller extends CI_Controller
             }
 
             // Adding System Log sub-menu (if permited)
-            if (is_permited('sys_logs_manage'))
+            if ($this->authr->is_permited('sys_logs_manage'))
                 $this->themee->add_navmenu(
                     $parent, 'ad_syslogs', 'link', 'admin/maintenance/syslogs', 'Aktifitas sistem', array(), $position);
         }
