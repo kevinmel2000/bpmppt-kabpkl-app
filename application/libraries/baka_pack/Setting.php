@@ -68,6 +68,9 @@ class Setting
 
         self::$_table_name = get_conf('system_opt_table');
 
+        // Loading Authentication Driver
+        self::$_ci->load->driver('authr');
+
         self::init();
 
         log_message('debug', "#Baka_pack: Setting Class Initialized");
