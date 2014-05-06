@@ -38,7 +38,7 @@ class Authr extends CI_Driver_Library
      * 
      * @var  mixed
      */
-    public static $_ci;
+    public $_ci;
 
     /**
      * CI database object
@@ -52,53 +52,66 @@ class Authr extends CI_Driver_Library
      *
      * @var  array
      */
-    public $_table = array();
+    public $table = array();
 
     /**
      * Valid drivers that will be loaded
      *
      * @var  array
      */
-    public $valid_drivers = array();
+    public $valid_drivers = array(
+        'authr_autologin',
+        'authr_user_log',
+        'authr_login_attempt',
+        'authr_permissions',
+        'authr_role_perms',
+        'authr_roles',
+        'authr_user_meta',
+        'authr_user_perms',
+        'authr_user_roles',
+        'authr_users',
+        );
+
+    /**
+     * User permissions wrapper
+     *
+     * @var  array
+     */
+    protected $_user_perms;
 
     /**
      * Default class constructor
      */
     public function __construct()
     {
-        self::$_ci =& get_instance();
+        $this->_ci =& get_instance();
 
-        self::$_ci->load->helper('cookie');
-        self::$_ci->load->library('session');
-        // self::$_ci->load->helper('baka_pack/authen');
+        $this->_ci->load->helper('cookie');
+        $this->_ci->load->library('session');
+        $this->_ci->load->helper('authr');
         
-        $this->db = self::$_ci->db;
+        $this->db = $this->_ci->db;
 
         $tables = array(
-            'users'          => TRUE,
-            'user_meta'      => TRUE,
-            'user_role'      => TRUE,
-            'roles'          => TRUE,
-            'permissions'    => TRUE,
-            'role_perms'     => TRUE,
-            'overrides'      => FALSE,
-            'autologin'      => TRUE,
-            'login_attempts' => TRUE,
+            'users',
+            'user_meta',
+            'user_role',
+            'roles',
+            'permissions',
+            'role_perms',
+            'overrides',
+            'user_autologin',
+            'login_attempts',
             );
 
-        foreach ( $tables as $table => $driver )
+        foreach ( $tables as $table)
         {
-            $this->_table[$table] = get_conf( $table.'_table' );
-
-            if ($driver)
-            {
-                $this->valid_drivers[] = $table;
-            }
+            $this->table[$table] = get_conf( $table.'_table' );
         }
 
         $this->_autologin();
 
-        log_message('debug', "#Authen: Driver Class Initialized");
+        log_message('debug', "#Authr: Driver Class Initialized");
     }
 
     // -------------------------------------------------------------------------
@@ -110,7 +123,7 @@ class Authr extends CI_Driver_Library
      */
     protected function hash()
     {
-        require_once(dirname(__FILE__).'vendor/PasswordHash.php');
+        require_once(dirname(__FILE__).'/vendor/PasswordHash.php');
 
         $phpass = new PasswordHash(get_conf('phpass_hash_strength'), get_conf('phpass_hash_portable'));
 
@@ -161,9 +174,9 @@ class Authr extends CI_Driver_Library
     public function login($login, $password, $remember)
     {
         // Fail - wrong login
-        if (!($user = $this->get_user($login, login_by())))
+        if (!($user = $this->users->get($login, login_by())))
         {
-            $this->increase_login_attempt($login);
+            $this->login_attempt->increase($login);
             Messg::set('error', _x('auth_incorrect_login'));
             return FALSE;
         }
@@ -171,7 +184,7 @@ class Authr extends CI_Driver_Library
         // Fail - wrong password
         if (!$this->validate($password, $user->password))
         {
-            $this->increase_login_attempt($login);
+            $this->login_attempt->increase($login);
             Messg::set('error', _x('auth_incorrect_password'));
             return FALSE;
         }
@@ -191,7 +204,7 @@ class Authr extends CI_Driver_Library
         }
 
         // Save to session
-        self::$_ci->session->set_userdata(array(
+        $this->_ci->session->set_userdata(array(
             'user_id'   => $user->id,
             'username'  => $user->username,
             'status'    => (int) $user->activated
@@ -206,17 +219,17 @@ class Authr extends CI_Driver_Library
         else
         {
             // grab all permissions
-            if (self::$user_perms = $this->get_user_perms($user->id))
+            if ($this->_user_perms = $this->user_perms->fetch($user->id))
             {
                 // place it in session
-                self::$_ci->session->set_userdata('user_perms', self::$user_perms);
+                $this->_ci->session->set_userdata('user_perms', $this->_user_perms);
             }
         }
 
         // success
         // $user_profile = '';
         // $this->get_user_profile($user->id);
-        // self::$_ci->session->set_userdata('user_profile', $user_profile);
+        // $this->_ci->session->set_userdata('user_profile', $user_profile);
 
         // is auto login
         if ((bool) $remember)
@@ -226,10 +239,10 @@ class Authr extends CI_Driver_Library
         }
 
         // clean login attempts
-        $this->clear_login_attempts($user->username);
+        $this->login_attempt->clear($user->username);
 
         // update login info
-        $this->update_login_info($user->id);
+        $this->users->update_login_info($user->id);
 
         Messg::set('success', _x('auth_login_success'));
         return TRUE;
@@ -244,11 +257,11 @@ class Authr extends CI_Driver_Library
      */
     public function logout()
     {
-        $this->delete_autologin();
+        $this->autologin->delete();
         
         // See http://codeigniter.com/forums/viewreply/662369/ as the reason for the next line
-        self::$_ci->session->set_userdata(array('user_id' => '', 'username' => '', 'status' => NULL));
-        self::$_ci->session->sess_destroy();
+        $this->_ci->session->set_userdata(array('user_id' => '', 'username' => '', 'status' => NULL));
+        $this->_ci->session->sess_destroy();
     }
 
     // -------------------------------------------------------------------------
@@ -261,9 +274,9 @@ class Authr extends CI_Driver_Library
      *
      * @return  bool
      */
-    public static function is_logged_in($activated = TRUE)
+    public function is_logged_in($activated = TRUE)
     {
-        return self::$_ci->session->userdata('status') === bool_to_int($activated);
+        return $this->_ci->session->userdata('status') === bool_to_int($activated);
     }
 
     // -------------------------------------------------------------------------
@@ -273,9 +286,9 @@ class Authr extends CI_Driver_Library
      *
      * @return  int
      */
-    public static function get_user_id()
+    public function get_user_id()
     {
-        return self::$_ci->session->userdata('user_id');
+        return $this->_ci->session->userdata('user_id');
     }
 
     // -------------------------------------------------------------------------
@@ -287,7 +300,7 @@ class Authr extends CI_Driver_Library
      */
     public function get_username()
     {
-        return self::$_ci->session->userdata('username');
+        return $this->_ci->session->userdata('username');
     }
 
     // -------------------------------------------------------------------------
@@ -299,7 +312,7 @@ class Authr extends CI_Driver_Library
      */
     public function get_current_user()
     {
-        return self::$_ci->session->all_userdata();
+        return $this->_ci->session->all_userdata();
     }
 
     // -------------------------------------------------------------------------
@@ -359,7 +372,7 @@ class Authr extends CI_Driver_Library
      */
     public function update_user($user_id, $username, $email, $old_pass, $new_pass, $roles = array())
     {
-        $user = $this->get_user($user_id);
+        $user = $this->users->get($user_id);
         $data = array(
             'username' => $username,
             'email'    => $email,
@@ -412,7 +425,7 @@ class Authr extends CI_Driver_Library
     {
         $user_id = $this->get_user_id();
 
-        if (!($user = $this->get_user($user_id)))
+        if (!($user = $this->users->get($user_id)))
             return FALSE;
 
         $data = array(
@@ -675,26 +688,26 @@ class Authr extends CI_Driver_Library
 
             if (isset($data['key']) AND isset($data['user_id']))
             {
-                if ($user = $this->get_autologin($data['user_id'], md5($data['key'])))
+                if ($user = $this->autologin->get($data['user_id'], md5($data['key'])))
                 {
                     $activated = $user->activated;
 
                     // Login user
-                    self::$_ci->session->set_userdata(array(
+                    $this->_ci->session->set_userdata(array(
                         'user_id'   => $user->id,
                         'username'  => $user->username,
                         'status'    => (int) $activated,
                         ));
 
-                    if ($activated == 1 and ($user_perms = $this->get_user_perms($user->id)))
+                    if ($activated == 1 and ($user_perms = $this->user_perms->fetch($user->id)))
                     {
-                        self::$_ci->session->set_userdata('user_perms', $user_perms);
+                        $this->_ci->session->set_userdata('user_perms', $user_perms);
                     }
 
                     // Renew users cookie to prevent it from expiring
                     $this->set_cookie($cookie);
 
-                    $this->update_login_info($user->id);
+                    $this->users->update_login_info($user->id);
                 }
             }
         }
@@ -712,9 +725,9 @@ class Authr extends CI_Driver_Library
     {
         $key = substr(md5(uniqid(mt_rand().get_cookie(config_item('sess_cookie_name')))), 0, 16);
 
-        $this->purge_autologin($user_id);
+        $this->autologin->purge($user_id);
 
-        if ($this->set_autologin($user_id, md5($key)))
+        if ($this->autologin->set($user_id, md5($key)))
         {
             $this->set_cookie(serialize(array('user_id' => $user_id, 'key' => $key)));
             return TRUE;
@@ -754,14 +767,14 @@ class Authr extends CI_Driver_Library
      * @param string $permission: The permission you want to check for from the `permissions.permission` table.
      * @return bool
      */
-    public function permit($permission)
+    public function is_permited($permission)
     {
         // if (!$this->perm_exists($permission))
             // $this->new_permission($permission, '-');
 
         $allow  = FALSE;
 
-        if ($user_perms = self::$_ci->session->userdata('user_perms'))
+        if ($user_perms = $this->_ci->session->userdata('user_perms'))
         {
             // Check role permissions
             foreach($user_perms as $p_key => $p_val)
@@ -822,27 +835,7 @@ class Authr extends CI_Driver_Library
      */
     public function is_max_attempts_exceeded($login)
     {
-        return $this->get_attempts_num($login) >= Setting::get('auth_login_max_attempts');
-    }
-
-    // -------------------------------------------------------------------------
-
-    protected function set_message($level, $msg_item)
-    {
-        $this->messages[$level][] = $msg_item;
-        log_message('debug', '#Baka_pack: Authen `'.$level.'` > '.$msg_item.'.');
-    }
-
-    // -------------------------------------------------------------------------
-
-    public function messages($level = '')
-    {
-        if ($level != '')
-        {
-            return $this->messages[$level];
-        }
-
-        return $this->messages;
+        return $this->login_attempt->get_num($login) >= Setting::get('auth_login_max_attempts');
     }
 }
 

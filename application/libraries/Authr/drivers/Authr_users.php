@@ -105,7 +105,7 @@ class Authr_users extends CI_Driver
                 break;
 
             case 'id':
-                $this->db->where( 'id', $val );
+                $this->db->where( 'id', $term );
                 break;
         }
 
@@ -520,6 +520,32 @@ class Authr_users extends CI_Driver
     public function unban( $user_id )
     {
         return $this->change_status( $user_id, 'banned', TRUE, array('ban_reason' => NULL) );
+    }
+
+    // -------------------------------------------------------------------------
+    // Login
+    // -------------------------------------------------------------------------
+
+    /**
+     * Update user login info, such as IP-address or login time, and
+     * clear previously generated (but not activated) passwords.
+     *
+     * @param   int   $user_id  User ID
+     *
+     * @return  bool
+     */
+    public function update_login_info( $user_id )
+    {
+        $user_data['new_password_key']       = NULL;
+        $user_data['new_password_requested'] = NULL;
+        $user_data['last_login']             = date('Y-m-d H:i:s');
+
+        if ( Setting::get('auth_login_record_ip') )
+        {
+            $user_data['last_ip'] = $this->_ci->input->ip_address();
+        }
+
+        return $this->edit( $user_id, $user_data );
     }
 }
 

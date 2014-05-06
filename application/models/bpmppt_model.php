@@ -398,7 +398,7 @@ class Bpmppt_model extends CI_Model
         $data = $this->db->get_where( $this->_table['data'], array('id' => $data_id) )->row();
 
         $log[] = array(
-            'user_id'   => Authen::get_user_id(),
+            'user_id'   => $this->authr->get_user_id(),
             'date'      => string_to_datetime(),
             'message'   => $log_message,
             );

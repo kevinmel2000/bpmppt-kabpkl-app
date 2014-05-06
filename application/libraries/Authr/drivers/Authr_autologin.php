@@ -82,8 +82,8 @@ class Authr_autologin extends CI_Driver
         return $this->db->insert( $this->table['user_autologin'], array(
             'user_id'       => $user_id,
             'key_id'        => $key,
-            'user_agent'    => substr($this->input->user_agent(), 0, 149),
-            'last_ip'       => $this->input->ip_address() ));
+            'user_agent'    => substr($this->_ci->input->user_agent(), 0, 149),
+            'last_ip'       => $this->_ci->input->ip_address() ));
     }
 
     // -------------------------------------------------------------------------
@@ -98,8 +98,8 @@ class Authr_autologin extends CI_Driver
     {
         $this->db->delete($this->table['user_autologin'], array(
             'user_id'   => $user_id,
-            'user_agent'=> substr($this->input->user_agent(), 0, 149),
-            'last_ip'   => $this->input->ip_address() ));
+            'user_agent'=> substr($this->_ci->input->user_agent(), 0, 149),
+            'last_ip'   => $this->_ci->input->ip_address() ));
     }
 
     // -------------------------------------------------------------------------

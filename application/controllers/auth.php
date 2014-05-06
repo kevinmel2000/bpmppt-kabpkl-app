@@ -73,7 +73,7 @@ class Auth extends BAKA_Controller
             'label' => '',
             'option'=> array( 1 => 'Ingat saya dikomputer ini.' ) );
 
-        if ( $this->authen->is_max_attempts_exceeded( $login ) )
+        if ( $this->authr->is_max_attempts_exceeded( $login ) )
         {
             if ( (bool) Setting::get('auth_use_recaptcha') )
             {
@@ -125,9 +125,9 @@ class Auth extends BAKA_Controller
 
         if ( $input = $form->validate_submition() )
         {
-            $goto = $this->authen->login( $input['username'], $input['password'], $input['remember'] ) ? 'data/utama' : current_url();
+            $goto = $this->authr->login( $input['username'], $input['password'], $input['remember'] ) ? 'data/utama' : current_url();
 
-            foreach ( $this->authen->messages() as $level => $item )
+            foreach ( Messg::get() as $level => $item )
             {
                 $this->session->set_flashdata( $level, $item );
             }
@@ -219,9 +219,9 @@ class Auth extends BAKA_Controller
 
         if ( $form_data = $form->validate_submition() )
         {
-            $goto = $this->authen->create_user( $form_data['username'], $form_data['email'], $form_data['password'] ) ? 'notice/registration-success' : current_url();
+            $goto = $this->authr->create_user( $form_data['username'], $form_data['email'], $form_data['password'] ) ? 'notice/registration-success' : current_url();
 
-            foreach ( $this->authen->messages() as $level => $item )
+            foreach ( Messg::get() as $level => $item )
             {
                 $this->session->set_flashdata( $level, $item );
             }
@@ -236,13 +236,13 @@ class Auth extends BAKA_Controller
 
     public function resend()
     {
-        if ( Authen::is_logged_in() )
+        if ( $this->authr->is_logged_in() )
             redirect('data/utama');
 
         $this->data['panel_title'] = $this->themee->set_title('Kirim ulang aktivasi');
 
         // not logged in or activated
-        if ( !Authen::is_logged_in(FALSE) )
+        if ( !$this->authr->is_logged_in(FALSE) )
             redirect('login');
 
         $fields[]   = array(
@@ -275,7 +275,7 @@ class Auth extends BAKA_Controller
 
         if ( $form_data = $form->validate_submition() )
         {
-            if ( $data = $this->authen->change_email( $user_data['email'] ) )
+            if ( $data = $this->authr->change_email( $user_data['email'] ) )
             {
                 // success
                 $data['activation_period'] = Setting::get('auth_email_activation_expire') / 3600;
@@ -285,7 +285,7 @@ class Auth extends BAKA_Controller
             }
             else
             {
-                $this->session->set_flashdata( 'error', $this->authen->errors() );
+                $this->session->set_flashdata( 'error', $this->authr->errors() );
 
                 redirect( current_url() );
             }
@@ -298,7 +298,7 @@ class Auth extends BAKA_Controller
 
     public function forgot()
     {
-        if ( Authen::is_logged_in() )
+        if ( $this->authr->is_logged_in() )
             redirect('data/utama');
 
         $this->data['panel_title'] = $this->themee->set_title('Lupa login');
@@ -334,7 +334,7 @@ class Auth extends BAKA_Controller
         if ( $form_data = $form->validate_submition() )
         {
 
-            if ( $data = $this->authen->forgot_password( $user_data['forgot_login']) )
+            if ( $data = $this->authr->forgot_password( $user_data['forgot_login']) )
             {
                 // Send email with password activation link
                 $this->send_email( $data['email'], 'forgot_password', $data );
@@ -343,7 +343,7 @@ class Auth extends BAKA_Controller
             }
             else
             {
-                $this->session->set_flashdata('error', $this->authen->errors());
+                $this->session->set_flashdata('error', $this->authr->errors());
 
                 redirect( current_url() );
             }
@@ -360,10 +360,10 @@ class Auth extends BAKA_Controller
             redirect('login');
 
         // Activate user
-        if ( $this->authen->activate( $user_id, $email_key ) )
+        if ( $this->authr->activate( $user_id, $email_key ) )
         {
             // success
-            $this->authen->logout();
+            $this->authr->logout();
             $this->_notice('activation-complete');
         }
         else
@@ -416,7 +416,7 @@ class Auth extends BAKA_Controller
 
         if ( $form_data = $form->validate_submition() )
         {
-            if ( $data = $this->authen->reset_password( $user_id, $email_key, $user_data['reset_password'] ) )
+            if ( $data = $this->authr->reset_password( $user_id, $email_key, $user_data['reset_password'] ) )
             {
                 // success
                 $this->send_email( $data['email'], 'activate', $data );
@@ -424,7 +424,7 @@ class Auth extends BAKA_Controller
             }
             else
             {
-                $this->session->set_flashdata('error', $this->authen->errors());
+                $this->session->set_flashdata('error', $this->authr->errors());
                 redirect( current_url() );
             }
         }
@@ -436,7 +436,7 @@ class Auth extends BAKA_Controller
 
     public function logout()
     {
-        $this->authen->logout();
+        $this->authr->logout();
         
         redirect('login');
     }

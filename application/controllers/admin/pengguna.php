@@ -76,7 +76,7 @@ class Pengguna extends BAKA_Controller
 
     private function _user_table()
     {
-        if ( !is_permited('users_manage') )
+        if ( !$this->authr->is_permited('users_manage') )
             $this->_notice( 'access-denied' );
 
         $this->data['tool_buttons']['form'] = 'Baru|primary';
@@ -92,14 +92,14 @@ class Pengguna extends BAKA_Controller
                             ->set_buttons('hapus/', 'trash', 'danger', 'Hapus pengguna');
 
         $this->data['panel_title'] = $this->themee->set_title('Semua data pengguna');
-        $this->data['panel_body'] = $grid->make_table( $this->authen->get_users() );
+        $this->data['panel_body'] = $grid->make_table( $this->authr->users->fetch() );
 
         $this->load->theme('pages/panel_data', $this->data);
     }
 
     public function profile()
     {
-        $this->_user_form( $this->authen->get_user_id() );
+        $this->_user_form( $this->authr->get_user_id() );
     }
 
     private function _user_form( $user_id = '' )
@@ -107,7 +107,7 @@ class Pengguna extends BAKA_Controller
         if ( $user_id == $this->current_user['user_id'] AND strpos( current_url(), 'profile' ) === FALSE )
             redirect('profile');
 
-        $user   = ( $user_id != '' ? $this->authen->get_user( $user_id ) : FALSE );
+        $user   = ( $user_id != '' ? $this->authr->users->get( $user_id ) : FALSE );
         $judul  = ( $user_id == $this->current_user['user_id'] ? 'Profile anda: ' : 'Data pengguna: ');
 
         $this->data['panel_title'] = $this->themee->set_title( ( $user ? $judul.$user->username : 'Buat pengguna baru' ));
@@ -116,7 +116,7 @@ class Pengguna extends BAKA_Controller
 
         if ( $user )
         {
-            if ( $user_id != $this->current_user['user_id'] and is_permited('users_manage') )
+            if ( $user_id != $this->current_user['user_id'] and $this->authr->is_permited('users_manage') )
             {
                 $this->data['tool_buttons']['aksi|danger']  = array(
                     'cekal/'.$user_id => 'Cekal',
@@ -176,7 +176,7 @@ class Pengguna extends BAKA_Controller
             'desc'  => ( !$user ? 'Ulangi penulisan password diatas.' : '' ),
             'validation'=> ( !$user ? 'required|' : '' ).'matches[user-new-password]');
 
-        if ( $user_id != $this->current_user['user_id'] and is_permited('roles_manage') )
+        if ( $user_id != $this->current_user['user_id'] and $this->authr->is_permited('roles_manage') )
         {
             $fields[]   = array(
                 'name'  => 'app-fieldset-roles',
@@ -187,8 +187,8 @@ class Pengguna extends BAKA_Controller
                 'name'  => 'user-roles',
                 'type'  => 'checkbox',
                 'label' => 'Kelompok pengguna',
-                'option'=> $this->authen->get_roles_assoc(),
-                'std'   => ( $user ? $this->authen->get_user_roles( $user->id ) : '' ),
+                'option'=> $this->authr->roles->fetch_assoc(),
+                'std'   => ( $user ? $this->authr->user_roles->get( $user->id ) : '' ),
                 'validation'=> ( !$user ? 'required' : '' ) );
         }
 
@@ -255,13 +255,13 @@ class Pengguna extends BAKA_Controller
 
             if ( !$user )
             {
-                $result = $this->authen->create_user( $username, $email, $password, $roles );
+                $result = $this->authr->create_user( $username, $email, $password, $roles );
             }
             else
             {
                 $old_pass = $form_data['user-old-password'];
 
-                $result = $this->authen->update_user( $user_id, $username, $email, $old_pass, $password, $roles );
+                $result = $this->authr->update_user( $user_id, $username, $email, $old_pass, $password, $roles );
             }
 
             foreach ( Messg::get() as $level => $message )
@@ -279,7 +279,7 @@ class Pengguna extends BAKA_Controller
 
     private function _user_del( $user_id )
     {
-        if ( $this->authen->remove_user( $user_id ) )
+        if ( $this->authr->remove_user( $user_id ) )
         {
             $this->session->set_flashdata('success', Messg::get('success'));
             redirect( $this->data['page_link'] );
@@ -293,7 +293,7 @@ class Pengguna extends BAKA_Controller
 
     private function _user_ban( $user_id )
     {
-        $username = $this->authen->get_user( $user_id )->username;
+        $username = $this->authr->users->get( $user_id )->username;
 
         $this->data['panel_title']  = $this->themee->set_title('Cekal pengguna: '.$username);
 
@@ -321,16 +321,16 @@ class Pengguna extends BAKA_Controller
 
         if ( $form_data = $form->validate_submition() )
         {
-            $result     = $this->authen->ban_user( $user_id, $form_data['ban-reason'] );
+            $result     = $this->authr->ban_user( $user_id, $form_data['ban-reason'] );
 
             if ( $result )
             {
-                $this->session->set_flashdata('success', $this->authen->messages('success'));
+                $this->session->set_flashdata('success', $this->authr->messages('success'));
                 redirect( $this->data['page_link'] );
             }
             else
             {
-                $this->session->set_flashdata('error', $this->authen->messages('error'));
+                $this->session->set_flashdata('error', $this->authr->messages('error'));
                 redirect( current_url() );
             }
         }
@@ -367,7 +367,7 @@ class Pengguna extends BAKA_Controller
 
     private function _group_form( $group_id = NULL )
     {
-        $group  = ( !is_null( $group_id ) ? $this->authen->get_role( $group_id ) : FALSE );
+        $group  = ( !is_null( $group_id ) ? $this->authr->roles->get( $group_id ) : FALSE );
 
         $this->data['panel_title'] = $this->themee->set_title( $group ? 'Ubah data Kelompok pengguna '.$group->full : 'Buat kelompok pengguna baru' );
         
@@ -405,7 +405,7 @@ class Pengguna extends BAKA_Controller
             'type'  => 'fieldset',
             'label' => 'Wewenang Kelompok' );
 
-        $permissions = $this->authen->get_grouped_perms();
+        $permissions = $this->authr->permissions->fetch_grouped();
 
         foreach ( $permissions as $perms )
         {
@@ -457,9 +457,9 @@ class Pengguna extends BAKA_Controller
                 }
             }
 
-            $result = $this->authen->update_role( $role_data, $group_id, $perm_data );
+            $result = $this->authr->roles->update( $role_data, $group_id, $perm_data );
 
-            foreach ( $this->authen->messages() as $level => $message )
+            foreach ( $this->authr->messages() as $level => $message )
             {
                 $this->session->set_flashdata( $level, $message );
             }
@@ -492,7 +492,7 @@ class Pengguna extends BAKA_Controller
                             ->set_buttons('form/', 'eye-open', 'primary', 'Lihat data')
                             ->set_buttons('delete/', 'trash', 'danger', 'Hapus data');
 
-        $this->data['panel_body'] = $grid->make_table( $this->authen->get_roles() );
+        $this->data['panel_body'] = $grid->make_table( $this->authr->roles->fetch() );
 
         $this->load->theme('pages/panel_data', $this->data);
     }
@@ -523,7 +523,7 @@ class Pengguna extends BAKA_Controller
 
     private function _perm_form( $perm_id = '' )
     {
-        $perm   = ( $perm_id != '' ? $this->authen->get_perm( $perm_id ) : FALSE );
+        $perm = ( $perm_id != '' ? $this->authr->permissions->get( $perm_id ) : FALSE );
 
         $this->data['panel_title'] = $this->themee->set_title( $perm ? 'Ubah data Hak akses pengguna '.$perm->permission : 'Buat Hak akses pengguna baru' );
         
@@ -549,7 +549,7 @@ class Pengguna extends BAKA_Controller
             'name'  => 'perm-parent',
             'type'  => 'dropdown',
             'label' => 'Difisi',
-            'option'=> $this->authen->get_parent_perms(),
+            'option'=> $this->authr->permissions->fetch_parents(),
             'std'   => ( $perm ? $perm->parent : 0 ),
             'desc'  => 'Pilih <em>Ya</em> untuk menjadikna perm ini sebagai perm bawaan setiap mendambahkan pengguna baru, atau pilih <em>Tidak</em> untuk sebaliknya.',
             'validation'=> ( !$perm ? 'required' : '' ) );
@@ -572,14 +572,14 @@ class Pengguna extends BAKA_Controller
                 $user_data['full']      = $form_data['perm-full'];
                 $user_data['default']   = $form_data['perm-default'];
 
-                $result = $this->authen->create_user( $user_data, $use_username );
+                $result = $this->authr->create_user( $user_data, $use_username );
             }
             else
             {
-                $result = $this->authen->update_user( $perm_id, $form->submited_data(), $use_username );
+                $result = $this->authr->update_user( $perm_id, $form->submited_data(), $use_username );
             }
 
-            foreach ( $this->authen->messages() as $level => $message )
+            foreach ( $this->authr->messages() as $level => $message )
             {
                 $this->session->set_flashdata( $level, $message );
             }
@@ -607,7 +607,7 @@ class Pengguna extends BAKA_Controller
                             ->set_buttons('form/', 'eye-open', 'primary', 'Lihat data')
                             ->set_buttons('delete/', 'trash', 'danger', 'Hapus data');
 
-        $this->data['panel_body'] = $grid->make_table( $this->authen->get_perms() );
+        $this->data['panel_body'] = $grid->make_table( $this->authr->permissions->fetch() );
 
         $this->load->theme('pages/panel_data', $this->data);
     }

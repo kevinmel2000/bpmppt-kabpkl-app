@@ -53,7 +53,7 @@ class Authr_user_roles extends CI_Driver
      *
      * @return  array
      */
-    public function fetch( $user_id )
+    public function get( $user_id )
     {
         $query = $this->db->select("b.role_id, b.role, b.full, b.default")
                           ->from($this->table['user_role'].' a')
@@ -81,7 +81,7 @@ class Authr_user_roles extends CI_Driver
      *
      * @return  bool
      */
-    public function set_user_roles( $user_id, $roles_id = array() )
+    public function set( $user_id, $roles_id = array() )
     {
         $cr = count( $roles_id );
 
@@ -119,36 +119,6 @@ class Authr_user_roles extends CI_Driver
     // -------------------------------------------------------------------------
 
     /**
-     * Remove role from user. Cannot remove role if user only has 1 role
-     *
-     * @param   int    $user_id  User ID
-     * @param   int    $role     User Role
-     *
-     * @return  mixed
-     */
-    public function remove_user_role( $user_id, $role )
-    {
-        if ( $this->has_role( $user_id, $role ) )
-            return TRUE;
-        
-        // If there's only 1 role then removal is denied
-        $this->db->get_where( $this->table['user_role'],
-                              array('user_id' => $user_id) );
-
-        if ( $this->db->count_all_results() <= 1 )
-            return FALSE;
-
-        // Do nothing if $role is int
-        if ( is_string( $role ) )
-            $role = $this->get_role_id(trim($role));
-        
-        return $this->db->delete( $this->table['user_role'],
-                                  array('user_id' => $user_id, 'role_id' => $role_id));
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
      * Edit a user's roles
      *
      * @todo    done it!
@@ -157,14 +127,14 @@ class Authr_user_roles extends CI_Driver
      * @param   [type]  $new_roles  [description]
      * @return  [type]
      */
-    public function edit_user_roles( $user_id, $new_roles )
+    public function edit( $user_id, $new_roles )
     {
         if ( count( $new_roles ) == 0 )
         {
             return FALSE;
         }
 
-        $old_roles = array_keys( $this->get_user_roles( $user_id ) );
+        $old_roles = array_keys( $this->get( $user_id ) );
 
         foreach ($new_roles as $role)
         {
@@ -189,7 +159,7 @@ class Authr_user_roles extends CI_Driver
      *
      * @return  [type]
      */
-    public function change_user_role( $user_id, $old, $new )
+    public function change( $user_id, $old, $new )
     {
         // Do nothing if $role is int
         if (is_string($old))
@@ -201,6 +171,36 @@ class Authr_user_roles extends CI_Driver
         return $this->db->update( $this->table['user_role'],
                                   array('role_id' => $new),
                                   array('role_id' => $old, 'user_id' => $user_id) );
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Remove role from user. Cannot remove role if user only has 1 role
+     *
+     * @param   int    $user_id  User ID
+     * @param   int    $role     User Role
+     *
+     * @return  mixed
+     */
+    public function remove( $user_id, $role )
+    {
+        if ( $this->has_role( $user_id, $role ) )
+            return TRUE;
+        
+        // If there's only 1 role then removal is denied
+        $this->db->get_where( $this->table['user_role'],
+                              array('user_id' => $user_id) );
+
+        if ( $this->db->count_all_results() <= 1 )
+            return FALSE;
+
+        // Do nothing if $role is int
+        if ( is_string( $role ) )
+            $role = $this->get_role_id(trim($role));
+        
+        return $this->db->delete( $this->table['user_role'],
+                                  array('user_id' => $user_id, 'role_id' => $role_id));
     }
 }
 

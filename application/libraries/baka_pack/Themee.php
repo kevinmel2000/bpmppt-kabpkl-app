@@ -193,7 +193,7 @@ class Themee
                  . '        '.anchor(base_url(), get_conf('app_name'), 'class="navbar-brand"')
                  . '    </div>';
 
-        if ( !self::verify_browser() AND Authen::is_logged_in() )
+        if ( !self::verify_browser() AND self::$_ci->authr->is_logged_in() )
             $output .= '<div class="navbar-collapse collapse">'.$this->get_nav('top').'</div> <!--/.nav-collapse -->';
 
         $output .=  '</div></header>';
