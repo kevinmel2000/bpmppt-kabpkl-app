@@ -1022,8 +1022,8 @@ class Former
             $group_class .= ' '.$attrs['class'];
         }
 
-        $label_col = $this->is_hform ? ' col-lg-3 col-md-3 ' : '';
-        $input_col = $this->is_hform ? ' col-lg-9 col-md-9 ' : '';
+        $label_col = $this->is_hform ? ' col-lg-3 col-md-3 col-sm-3 ' : '';
+        $input_col = $this->is_hform ? ' col-lg-9 col-md-9 col-sm-9 ' : '';
 
         $group_attr = 'id="group-'.str_replace('_', '-', $attrs['name']).'"';
 
