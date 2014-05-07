@@ -40,20 +40,63 @@ class Median
      */
     protected $_ci;
 
+    /**
+     * File type yang diijinkan
+     *
+     * @var  string
+     */
     protected $allowed_types = 'gif|jpg|jpeg|png';
 
+    /**
+     * Ukuran file maksimum yang diijinkan
+     *
+     * @var  string
+     */
     protected $post_max_size;
 
+    /**
+     * Ukuran file maksimum yang diijinkan
+     *
+     * @var  string
+     */
     protected $upload_max_size;
 
+    /**
+     * Batas jumlah file dalam 1x proses upload
+     *
+     * @var  int
+     */
     protected $file_limit = 5;
 
+    /**
+     * Path target upload
+     *
+     * @var  string
+     */
     protected $destination;
 
+    /**
+     * File name encriptions
+     *
+     * @var  bool
+     */
     protected $encript_name = TRUE;
 
+    /**
+     * Nama field yang dipakai untuk upload.
+     * Default menggunakan nama bawaan CI
+     *
+     * @var  string
+     */
     protected $field_name = 'userfile';
 
+    /**
+     * Upload data
+     * 
+     * @deprecated
+     *
+     * @var  array
+     */
     protected $_data = array();
 
     /**
@@ -95,6 +138,11 @@ class Median
         return $this;
     }
 
+    /**
+     * Get the HTML format that will be shown in Former library.
+     *
+     * @return  string
+     */
     public function get_html()
     {
         $attr  = 'data-allowed-ext="'.$this->allowed_types.'" ';
@@ -104,12 +152,20 @@ class Median
         return '<div class="fine-uploader row" '.$attr.'></div>';
     }
 
+    /**
+     * Uploader template.
+     * Default FineUploader template
+     *
+     * @return  string
+     */
     public function template()
     {
+        // Load the JS
         Asssets::set_script('jq-fineuploader', 'lib/jquery.fineuploader.min.js', 'bootstrap', '4.4.0');
 
         $upload_path = str_replace(FCPATH, '', $this->destination);
 
+        // Uploader trigger
         $script = "$('.fine-uploader').each(function() {\n"
                 . "    var fu = $(this),\n"
                 . "        fuLimit = fu.data('item-limit'),\n"
@@ -184,6 +240,7 @@ class Median
 
         Asssets::set_script('jq-fineuploader-trigger', $script, 'jq-fineuploader');
 
+        // Default qq-template
         $out = '<script type="text/template" id="qq-template">'
              . '<div class="col-md-12"><div class="qq-upload-selector">'
              . '    <div class="qq-upload-drop-area-selector" qq-hide-dropzone>'
@@ -220,17 +277,13 @@ class Median
              . '</div></div>'
              . '</script>';
 
-        if ($this->_ci->input->get('do'))
-        {
-            $this->fine_handler();
-            echo 'something';
-        }
-
         return $out;
     }
 
     /**
      * Get uploaded datas
+     *
+     * @deprecated
      *
      * @return  array
      */
@@ -239,6 +292,11 @@ class Median
         return $this->_data;
     }
 
+    /**
+     * Let your user know your upload configurations
+     *
+     * @return  [type]
+     */
     public function upload_policy()
     {
         $_types         = explode('|', $this->allowed_types);
@@ -254,6 +312,12 @@ class Median
         return _x('median_upload_policy', array($this->file_limit, $_file_types));
     }
 
+    /**
+     * Let's do the job
+     *
+     * @return  bool|array  Will return FALSE if got error.
+     *                      Will return Array of file data.
+     */
     public function do_upload()
     {
         if (isset($_FILES[$this->field_name]))
@@ -315,7 +379,7 @@ class Median
      *
      * @return  bool
      */
-    public function is_image($file_type)
+    protected function is_image($file_type)
     {
         // IE will sometimes return odd mime-types during upload, so here we just standardize all
         // jpegs or pngs to the same file type.
