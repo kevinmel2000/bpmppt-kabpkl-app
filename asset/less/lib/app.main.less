@@ -41,6 +41,43 @@
   }
 }
 
+.upload-file {
+  .square(100px);
+  margin: 0;
+  float: left;
+}
+
+.upload-desc {
+  margin-left: 110px;
+  float: none;
+
+  dt {
+    color: #999;
+  }
+}
+
+.upload-preview {
+  margin: 0 auto;
+  max-height: 200px;
+}
+
+.upload-icon {
+  position: relative;
+  text-align: center;
+
+  &:before {
+    font-size: 80px;
+    line-height: 100px;
+  }
+
+  .upload-ext {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    color: #fff !important;
+  }
+}
+
 footer {
   height: 34px;
   background-color: #f5f5f5;

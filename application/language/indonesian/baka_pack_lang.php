@@ -145,6 +145,11 @@ $lang['median_error_retry_fail_too_many_items']   = 'Retry failed - you have rea
 $lang['median_error_size']                        = '{file} terlalu besar, ukuran maksimum adalah {sizeLimit}.';
 $lang['median_error_too_many_items']              = 'Too many items ({netItems}) would be uploaded. Item limit is {itemLimit}.';
 $lang['median_error_type']                        = '{file} has an invalid extension. Valid extension(s): {extensions}.';
+$lang['median_client_name']                       = 'Original File Name:';
+$lang['median_file_name']                         = 'Uploaded File Name:';
+$lang['median_file_size']                         = 'File Size:';
+$lang['median_file_type']                         = 'File Type:';
+$lang['median_file_path']                         = 'Upload Destination:';
 
 
 /* End of file baka_pack_lang.php */

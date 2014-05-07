@@ -7,28 +7,28 @@
 |--------------------------------------------------------------------------
 */
 // BAKA Application Name
-$config['baka_app_name']			= 'BPMPPT App';
+$config['baka_app_name']            = 'BPMPPT App';
 // BAKA Application Version
-$config['baka_app_version']			= '0.1.3';
+$config['baka_app_version']         = '0.1.3';
 // BAKA Application Author
-$config['baka_app_author']			= 'Fery Wardiyanto';
+$config['baka_app_author']          = 'Fery Wardiyanto';
 // BAKA Application Author Email
-$config['baka_app_author_email']	= 'ferywardiyanto@gmail.com';
+$config['baka_app_author_email']    = 'ferywardiyanto@gmail.com';
 // BAKA Application Author Url
-$config['baka_app_author_url']		= 'http://github.com/feryardiant';
+$config['baka_app_author_url']      = 'http://github.com/feryardiant';
 // BAKA Application Documentation
-$config['baka_app_doc_url']			= '';
+$config['baka_app_doc_url']         = '';
 // BAKA Application Description
-$config['baka_app_desc']			= 'Aplikasi pengelolaan data perijinan di BPMPPT Kab. Pekalongan';
+$config['baka_app_desc']            = 'Aplikasi pengelolaan data perijinan di BPMPPT Kab. Pekalongan';
 // BAKA Application Description
-$config['baka_app_client']			= 'BPMPPT Kab. Pekalongan';
+$config['baka_app_client']          = 'BPMPPT Kab. Pekalongan';
 
 // BAKA Minimal Web Browser Version
-$config['baka_app_min_browser']		= array(
-	'Firefox'			=> 4,
-	'Chrome'			=> 8,
-	'Internet Explorer'	=> 8,
-	);
+$config['baka_app_min_browser']     = array(
+    'Firefox'           => 4,
+    'Chrome'            => 8,
+    'Internet Explorer' => 8,
+    );
 
 /*
 |--------------------------------------------------------------------------
@@ -69,12 +69,12 @@ $config['baka_login_attempts_table']    = 'auth_login_attempts';
 | Table name configurations
 |--------------------------------------------------------------------------
 */
-$config['baka_default_meta_fields']	= array(
-	'firstname'	=> '',
-	'lastname'	=> '',
-	'phone'		=> '',
-	'address'	=> ''
-	);
+$config['baka_default_meta_fields'] = array(
+    'firstname' => '',
+    'lastname'  => '',
+    'phone'     => '',
+    'address'   => ''
+    );
 
 
 /*
@@ -83,11 +83,13 @@ $config['baka_default_meta_fields']	= array(
 |--------------------------------------------------------------------------
 */
 // BAKA temporary folder name
-$config['baka_temp_path']		= APPPATH.'storage'.DS.'tmp'.DS;
+$config['baka_temp_path']           = APPPATH.'storage'.DS.'tmp'.DS;
 // BAKA upload folder name
-$config['baka_upload_path']		= APPPATH.'storage'.DS.'upload'.DS;
+$config['baka_upload_path']         = APPPATH.'storage'.DS.'upload'.DS;
 // BAKA allowed file types
-$config['baka_allowed_types']	= 'gif|jpg|jpeg|png';
+$config['baka_allowed_types']       = 'gif|jpg|jpeg|png';
+$config['baka_thumb_height']        = 100;
+$config['baka_thumb_width']         = 100;
 
 /*
 |--------------------------------------------------------------------------
@@ -135,15 +137,15 @@ $config['baka_phpass_hash_strength'] = 8;
 | 'password_max_length' = Max length of user's password.
 |--------------------------------------------------------------------------
 */
-$config['baka_allow_registration']		= TRUE;
-$config['baka_captcha_registration']	= TRUE;
-$config['baka_email_activation']		= FALSE;
-$config['baka_email_activation_expire']	= 60*60*24*2;
-$config['baka_email_account_details']	= FALSE;
-$config['baka_use_username']			= TRUE;
+$config['baka_allow_registration']      = TRUE;
+$config['baka_captcha_registration']    = TRUE;
+$config['baka_email_activation']        = FALSE;
+$config['baka_email_activation_expire'] = 60*60*24*2;
+$config['baka_email_account_details']   = FALSE;
+$config['baka_use_username']            = TRUE;
 
 // To manually approve accounts, set this to FALSE
-$config['baka_acct_approval']			= TRUE;
+$config['baka_acct_approval']           = TRUE;
 
 /*
 |--------------------------------------------------------------------------
@@ -162,13 +164,13 @@ $config['baka_acct_approval']			= TRUE;
 | 'login_attempt_expire' = Time to live for every attempt to login. Default is 24 hours (60*60*24).
 |--------------------------------------------------------------------------
 */
-$config['baka_login_by_username']		= TRUE;
-$config['baka_login_by_email']			= TRUE;
-$config['baka_login_record_ip']			= TRUE;
-$config['baka_login_record_time']		= TRUE;
-$config['baka_login_count_attempts']	= TRUE;
-$config['baka_login_max_attempts']		= 5;
-$config['baka_login_attempt_expire']	= 60*60*24;
+$config['baka_login_by_username']       = TRUE;
+$config['baka_login_by_email']          = TRUE;
+$config['baka_login_record_ip']         = TRUE;
+$config['baka_login_record_time']       = TRUE;
+$config['baka_login_count_attempts']    = TRUE;
+$config['baka_login_max_attempts']      = 5;
+$config['baka_login_attempt_expire']    = 60*60*24;
 
 /*
 |--------------------------------------------------------------------------
@@ -178,8 +180,8 @@ $config['baka_login_attempt_expire']	= 60*60*24;
 | 'autologin_cookie_life' = Auto login cookie life before expired. Default is 2 months (60*60*24*31*2).
 |--------------------------------------------------------------------------
 */
-$config['baka_autologin_cookie_name']	= 'autologin';
-$config['baka_autologin_cookie_life']	= 60*60*24*31*2;
+$config['baka_autologin_cookie_name']   = 'autologin';
+$config['baka_autologin_cookie_life']   = 60*60*24*31*2;
 
 /*
 |--------------------------------------------------------------------------
@@ -188,7 +190,7 @@ $config['baka_autologin_cookie_life']	= 60*60*24*31*2;
 | 'forgot_password_expire' = Time before forgot password key become invalid. Default is 15 minutes (60*15).
 |--------------------------------------------------------------------------
 */
-$config['baka_forgot_password_expire']	= 60*15;
+$config['baka_forgot_password_expire']  = 60*15;
 
 
 /* End of file baka_pack.php */

@@ -86,7 +86,7 @@
     li {
       position: relative;
       border-radius: @alert-border-radius;
-      padding: 0 0 6px 10px;
+      padding: 0;
       margin: 0 0 4px;
       // margin: 0;
       // padding: 9px;
@@ -96,7 +96,7 @@
 
       span {
         display: inline-block;
-        line-height: 30px;
+        // line-height: 30px;
         margin-right: 6px;
         color: #000000;
         font-size: @font-size-base;
@@ -177,18 +177,20 @@
       }
 
       &.qq-upload-success {
-        background-color: @state-success-bg;
+        // background-color: @state-success-bg;
+        .panel-variant(@panel-success-border; @panel-success-text; @panel-success-heading-bg; @panel-success-border);
 
         span {
-          color: @state-success-text;
+          // color: @state-success-text;
         }
       }
 
       &.qq-upload-fail {
-        background-color: @state-danger-bg;
+        // background-color: @state-danger-bg;
+        .panel-variant(@panel-danger-border; @panel-danger-text; @panel-danger-heading-bg; @panel-danger-border);
 
         span {
-          color: @state-danger-text;
+          // color: @state-danger-text;
         }
       }
     }

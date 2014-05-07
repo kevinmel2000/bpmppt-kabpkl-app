@@ -131,8 +131,8 @@ class Maintenance extends BAKA_Controller
             'name'  => 'restore-from-file',
             'type'  => 'upload',
             'label' => 'Restore dari berkas',
-            'file_limit' => 1,
-            'allowed_types' => 'zip|sql',
+            'file_limit' => 3,
+            'allowed_types' => 'zip|sql|png|jpg',
             'desc'  => 'Pilih berkas yang akan digunakan untuk me-restore database' );
 
         $buttons[]= array(

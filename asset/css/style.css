@@ -6528,12 +6528,6 @@ a.list-group-item.active > .badge,
 .panel .dl-horizontal dd {
   line-height: 1.7em;
 }
-.panel .dl-horizontal dt {
-  width: 40px;
-}
-.panel .dl-horizontal dd {
-  margin-left: 60px;
-}
 .panel-heading {
   position: relative;
   border-bottom: 1px solid #DDD;
@@ -6636,6 +6630,10 @@ a.list-group-item.active > .badge,
 .panel-default > .panel-heading {
   color: #333333;
   background-color: #f5f5f5;
+  background-image: -webkit-linear-gradient(top, #ffffff 0%, #f5f5f5 100%);
+  background-image: linear-gradient(to bottom, #ffffff 0%, #f5f5f5 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#fff5f5f5', GradientType=0);
   border-color: #dddddd;
 }
 .panel-default > .panel-heading + .panel-collapse .panel-body {
@@ -6650,6 +6648,10 @@ a.list-group-item.active > .badge,
 .panel-primary > .panel-heading {
   color: #ffffff;
   background-color: #428bca;
+  background-image: -webkit-linear-gradient(top, #6aa3d5 0%, #428bca 100%);
+  background-image: linear-gradient(to bottom, #6aa3d5 0%, #428bca 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff6aa3d5', endColorstr='#ff428bca', GradientType=0);
   border-color: #428bca;
 }
 .panel-primary > .panel-heading + .panel-collapse .panel-body {
@@ -6664,6 +6666,10 @@ a.list-group-item.active > .badge,
 .panel-success > .panel-heading {
   color: #3c763d;
   background-color: #dff0d8;
+  background-image: -webkit-linear-gradient(top, #fdfefd 0%, #dff0d8 100%);
+  background-image: linear-gradient(to bottom, #fdfefd 0%, #dff0d8 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fffdfefd', endColorstr='#ffdff0d8', GradientType=0);
   border-color: #d6e9c6;
 }
 .panel-success > .panel-heading + .panel-collapse .panel-body {
@@ -6678,6 +6684,10 @@ a.list-group-item.active > .badge,
 .panel-info > .panel-heading {
   color: #31708f;
   background-color: #d9edf7;
+  background-image: -webkit-linear-gradient(top, #ffffff 0%, #d9edf7 100%);
+  background-image: linear-gradient(to bottom, #ffffff 0%, #d9edf7 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffd9edf7', GradientType=0);
   border-color: #bce8f1;
 }
 .panel-info > .panel-heading + .panel-collapse .panel-body {
@@ -6692,6 +6702,10 @@ a.list-group-item.active > .badge,
 .panel-warning > .panel-heading {
   color: #8a6d3b;
   background-color: #fcf8e3;
+  background-image: -webkit-linear-gradient(top, #ffffff 0%, #fcf8e3 100%);
+  background-image: linear-gradient(to bottom, #ffffff 0%, #fcf8e3 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#fffcf8e3', GradientType=0);
   border-color: #faebcc;
 }
 .panel-warning > .panel-heading + .panel-collapse .panel-body {
@@ -6706,6 +6720,10 @@ a.list-group-item.active > .badge,
 .panel-danger > .panel-heading {
   color: #a94442;
   background-color: #f2dede;
+  background-image: -webkit-linear-gradient(top, #ffffff 0%, #f2dede 100%);
+  background-image: linear-gradient(to bottom, #ffffff 0%, #f2dede 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#fff2dede', GradientType=0);
   border-color: #ebccd1;
 }
 .panel-danger > .panel-heading + .panel-collapse .panel-body {
@@ -9252,12 +9270,11 @@ a.datepicker .table-condensed tr td span.active.disabled:hover:hover {
 .qq-upload-selector .qq-upload-list-selector li {
   position: relative;
   border-radius: 3px;
-  padding: 0 0 6px 10px;
+  padding: 0;
   margin: 0 0 4px;
 }
 .qq-upload-selector .qq-upload-list-selector li span {
   display: inline-block;
-  line-height: 30px;
   margin-right: 6px;
   color: #000000;
   font-size: 13px;
@@ -9323,16 +9340,40 @@ a.datepicker .table-condensed tr td span.active.disabled:hover:hover {
   color: #31708f;
 }
 .qq-upload-selector .qq-upload-list-selector li.qq-upload-success {
-  background-color: #dff0d8;
+  border-color: #d6e9c6;
 }
-.qq-upload-selector .qq-upload-list-selector li.qq-upload-success span {
+.qq-upload-selector .qq-upload-list-selector li.qq-upload-success > .panel-heading {
   color: #3c763d;
+  background-color: #dff0d8;
+  background-image: -webkit-linear-gradient(top, #fdfefd 0%, #dff0d8 100%);
+  background-image: linear-gradient(to bottom, #fdfefd 0%, #dff0d8 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fffdfefd', endColorstr='#ffdff0d8', GradientType=0);
+  border-color: #d6e9c6;
+}
+.qq-upload-selector .qq-upload-list-selector li.qq-upload-success > .panel-heading + .panel-collapse .panel-body {
+  border-top-color: #d6e9c6;
+}
+.qq-upload-selector .qq-upload-list-selector li.qq-upload-success > .panel-footer + .panel-collapse .panel-body {
+  border-bottom-color: #d6e9c6;
 }
 .qq-upload-selector .qq-upload-list-selector li.qq-upload-fail {
-  background-color: #f2dede;
+  border-color: #ebccd1;
 }
-.qq-upload-selector .qq-upload-list-selector li.qq-upload-fail span {
+.qq-upload-selector .qq-upload-list-selector li.qq-upload-fail > .panel-heading {
   color: #a94442;
+  background-color: #f2dede;
+  background-image: -webkit-linear-gradient(top, #ffffff 0%, #f2dede 100%);
+  background-image: linear-gradient(to bottom, #ffffff 0%, #f2dede 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#fff2dede', GradientType=0);
+  border-color: #ebccd1;
+}
+.qq-upload-selector .qq-upload-list-selector li.qq-upload-fail > .panel-heading + .panel-collapse .panel-body {
+  border-top-color: #ebccd1;
+}
+.qq-upload-selector .qq-upload-list-selector li.qq-upload-fail > .panel-footer + .panel-collapse .panel-body {
+  border-bottom-color: #ebccd1;
 }
 .qq-upload-selector .qq-upload-delete-selector,
 .qq-upload-selector .qq-upload-pause-selector,
@@ -10277,6 +10318,37 @@ a.datepicker .table-condensed tr td span.active.disabled:hover:hover {
   .form-input > .row > div:first-child {
     padding-top: 0;
   }
+}
+.upload-file {
+  width: 100px;
+  height: 100px;
+  margin: 0;
+  float: left;
+}
+.upload-desc {
+  margin-left: 110px;
+  float: none;
+}
+.upload-desc dt {
+  color: #999;
+}
+.upload-preview {
+  margin: 0 auto;
+  max-height: 200px;
+}
+.upload-icon {
+  position: relative;
+  text-align: center;
+}
+.upload-icon:before {
+  font-size: 80px;
+  line-height: 100px;
+}
+.upload-icon .upload-ext {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  color: #fff !important;
 }
 footer {
   height: 34px;

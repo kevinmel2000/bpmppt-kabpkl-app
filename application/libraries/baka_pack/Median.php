@@ -108,6 +108,8 @@ class Median
     {
         Asssets::set_script('jq-fineuploader', 'lib/jquery.fineuploader.min.js', 'bootstrap', '4.4.0');
 
+        $upload_path = str_replace(FCPATH, '', $this->destination);
+
         $script = "$('.fine-uploader').each(function() {\n"
                 . "    var fu = $(this),\n"
                 . "        fuLimit = fu.data('item-limit'),\n"
@@ -115,6 +117,7 @@ class Median
                 . "    fu.fineUploader({\n"
                 . "        template: 'qq-template',\n"
                 . "        request: {\n"
+                // . "            endpoint: '".current_url()."?do=fineupload',\n"
                 . "            endpoint: '".base_url('ajaks/upload')."?limit='+fuLimit+'&types='+fuTypes,\n"
                 . "            inputName: '".$this->field_name."'\n"
                 . "        },\n"
@@ -149,6 +152,33 @@ class Median
                 . "            tooManyItemsError: '"._x('median_error_too_many_items')."',\n"
                 . "            typeError: '"._x('median_error_type')."'\n"
                 . "        }\n"
+                . "    }).on('error', function (event, id, name, reason) {\n"
+                . "        console.log(event);\n"
+                . "        console.log(id);\n"
+                . "        console.log(name);\n"
+                . "        console.log(reason);\n"
+                . "    }).on('complete', function (event, id, name, responseJSON) {\n"
+                . "        console.log(responseJSON.data);\n"
+                . "        var uploadId = $('[qq-file-id='+id+']'),\n"
+                . "            uploadedObj = responseJSON.data,\n"
+                . "            uploadedFile = '<input type=\"hidden\" name=\"uploaded-name\" value=\"'+responseJSON.data.file_name+'\" />',\n"
+                . "            fileDetail = '<dl class=\"upload-desc\">'\n"
+                . "                       + '<dt>"._x('median_client_name')."</dt><dd>'+uploadedObj.client_name+'</dd>'\n"
+                . "                       + '<dt>"._x('median_file_name')."</dt><dd>'+uploadedObj.file_name+'</dd>'\n"
+                . "                       + '<dt>"._x('median_file_size')."</dt><dd>'+uploadedObj.file_size+'</dd>'\n"
+                . "                       + '<dt>"._x('median_file_type')."</dt><dd>'+uploadedObj.file_type+'</dd>'\n"
+                . "                       + '<dt>"._x('median_file_path')."</dt><dd>".$upload_path."</dd>'\n"
+                . "                       + '</dl>';\n"
+                . "        if(uploadedObj.image_thumbnail !== undefined) {\n"
+                . "            uploadId.find('.panel-body').append('<img src=\"".base_url($upload_path)."/'+uploadedObj.image_thumbnail+'\" alt=\"'+uploadedObj.client_name+'\" class=\"upload-file upload-preview img img-responsive\">')\n"
+                . "        }\n"
+                . "        else {\n"
+                . "            uploadId.find('.panel-body').append('<span class=\"upload-file upload-icon fa fa-file\"><span class=\"upload-ext\">'+uploadedObj.file_ext+'</span>')\n"
+                . "        }\n"
+                . "        uploadId.append(uploadedFile)\n"
+                . "        uploadId.find('.qq-upload-file-selector').attr('href', '#collapse'+id)\n"
+                . "        uploadId.find('.panel-body').append(fileDetail)\n"
+                . "        uploadId.children('.panel-collapse').attr('id', 'collapse'+id)\n"
                 . "    });\n"
                 . "});";
 
@@ -162,14 +192,15 @@ class Median
              . '    <div class="qq-upload-button-selector btn btn-default">'
              . '        <span>'._x('median_upload_button_selector_text').'</span>'
              . '    </div>'
-             . '    <span class="qq-drop-processing-selector qq-hide">'
+             . '    <div class="qq-drop-processing-selector qq-hide">'
              . '        <span class="qq-drop-processing-spinner-selector"></span>'
              . '        <span>'._x('median_drop_processing_selector_text').'</span>'
-             . '    </span>'
-             . '    <ul class="qq-upload-list-selector row">'
-             . '        <li class="col-md-12">'
+             . '    </div>'
+             . '    <ul class="qq-upload-list-selector row panel-group" id="accordion">'
+             . '        <li class="panel panel-default col-md-12">'
+             . '        <div class="panel-heading">'
              . '            <span class="qq-upload-spinner-selector"></span>'
-             . '            <span class="qq-upload-file-selector"></span>'
+             . '            <a class="qq-upload-file-selector" data-toggle="collapse" data-parent="#accordion" href="#"></a>'
              // . '            <span class="qq-edit-filename-icon-selector"></span>'
              // . '            <input class="qq-edit-filename-selector" tabindex="0" type="text">'
              . '            <span class="qq-upload-size-selector"></span>'
@@ -182,10 +213,18 @@ class Median
              . '            <div class="qq-progress-bar-container-selector">'
              . '                <div class="qq-progress-bar-selector"></div>'
              . '            </div>'
+             . '        </div>'
+             . '        <div id="" class="panel-collapse collapse"><div class="panel-body"></div></div>'
              . '        </li>'
              . '    </ul>'
              . '</div></div>'
              . '</script>';
+
+        if ($this->_ci->input->get('do'))
+        {
+            $this->fine_handler();
+            echo 'something';
+        }
 
         return $out;
     }
@@ -228,11 +267,37 @@ class Median
 
             if ($this->_ci->upload->do_upload($this->field_name))
             {
-                return $this->_ci->upload->data();
+                $uploaded_data = $this->_ci->upload->data();
+                log_message('debug', '#Baka_pack: Media->do_upload file "'.$uploaded_data['orig_name'].'" uploaded successfuly.');
+
+                if ($this->is_image($uploaded_data['file_type']))
+                {
+                    $uploaded_thumb = 'thumbs'.DS.$uploaded_data['file_name'];
+                    $this->_ci->load->library('image_lib', array(
+                        'source_image'  => $uploaded_data['full_path'],
+                        'new_image'     => $uploaded_data['file_path'].$uploaded_thumb,
+                        'width'         => get_conf('thumb_width'),
+                        'height'        => get_conf('thumb_height'),
+                        ));
+
+                    if ($this->_ci->image_lib->resize())
+                    {
+                        $uploaded_data['image_thumbnail'] = $uploaded_thumb;
+                        log_message('debug', '#Baka_pack: Media->do_upload file "'.$uploaded_data['orig_name'].'" has been resized.');
+                    }
+                }
+
+                return $uploaded_data;
             }
             else
             {
-                Messg::set('error', $this->_ci->upload->display_errors('', ''));
+                // Grab the error(s)
+                $error_message = $this->_ci->upload->display_errors('', '');
+                // Log it
+                log_message('debug', '#Baka_pack: Media->do_upload file "'.$uploaded_data['orig_name'].'" not uploaded due to this error(s): '.$error_message.'.');
+                // Set error message
+                Messg::set('error', $error_message);
+                // Return it
                 return FALSE;
             }
         }
@@ -241,6 +306,40 @@ class Median
             Messg::set('error', $_FILES[$this->field_name]);
             return FALSE;
         }
+    }
+
+    // --------------------------------------------------------------------
+
+    /**
+     * Validate the image
+     *
+     * @return  bool
+     */
+    public function is_image($file_type)
+    {
+        // IE will sometimes return odd mime-types during upload, so here we just standardize all
+        // jpegs or pngs to the same file type.
+
+        $png_mimes  = array('image/x-png');
+        $jpeg_mimes = array('image/jpg', 'image/jpe', 'image/jpeg', 'image/pjpeg');
+
+        if (in_array($file_type, $png_mimes))
+        {
+            $file_type = 'image/png';
+        }
+
+        if (in_array($file_type, $jpeg_mimes))
+        {
+            $file_type = 'image/jpeg';
+        }
+
+        $img_mimes = array(
+            'image/gif',
+            'image/jpeg',
+            'image/png',
+            );
+
+        return (in_array($file_type, $img_mimes, TRUE)) ? TRUE : FALSE;
     }
 }
 
