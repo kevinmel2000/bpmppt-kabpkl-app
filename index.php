@@ -20,6 +20,17 @@
 
 define('ENVIRONMENT', 'development');
 
+if ($vcap_services = getenv("VCAP_SERVICES"))
+{
+	define('VCAP_SERVICES', $vcap_services);
+}
+else
+{
+	define('VCAP_SERVICES', FALSE);
+}
+
+// var_dump(VCAP_SERVICES);
+
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING

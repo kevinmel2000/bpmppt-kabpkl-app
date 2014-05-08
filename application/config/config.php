@@ -14,8 +14,15 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://devel.local/bpmppt/';
-// $config['base_url']	= 'http://localhost:8088/';
+if (VCAP_SERVICES)
+{
+	$config['base_url']	= 'http://mimin-pg.ap01.aws.af.cm/';
+}
+else
+{
+	$config['base_url']	= 'http://bpmppt.local/';
+	// $config['base_url']	= 'http://localhost:8088/';
+}
 
 /*
 |--------------------------------------------------------------------------

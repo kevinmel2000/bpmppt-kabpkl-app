@@ -5,13 +5,19 @@
 | -------------------------------------------------------------------
 */
 
+if (VCAP_SERVICES)
+{
+	$service_json = json_decode(VCAP_SERVICES, true);
+	$vcap_config = $service_json['mysql-5.1'][0]['credentials'];
+}
+
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'localhost';
-$db['default']['username'] = 'root';
-$db['default']['password'] = 'password';
-$db['default']['database'] = 'bpmppt_db';
+$db['default']['hostname'] = (isset($vcap_config['hostname']) ? $vcap_config['hostname'] : 'localhost');
+$db['default']['username'] = (isset($vcap_config['username']) ? $vcap_config['username'] : 'root');
+$db['default']['password'] = (isset($vcap_config['password']) ? $vcap_config['password'] : 'password');
+$db['default']['database'] = (isset($vcap_config['name']) ? $vcap_config['name'] : 'bpmppt_db');
 $db['default']['dbdriver'] = 'mysqli';
 $db['default']['dbprefix'] = 'baka_';
 $db['default']['pconnect'] = TRUE;
