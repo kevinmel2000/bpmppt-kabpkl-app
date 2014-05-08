@@ -16,7 +16,7 @@
 */
 if (VCAP_SERVICES)
 {
-	$config['base_url']	= 'http://mimin-pg.ap01.aws.af.cm/';
+	$config['base_url']	= 'http://bpmppt.ap01.aws.af.cm/';
 }
 else
 {
