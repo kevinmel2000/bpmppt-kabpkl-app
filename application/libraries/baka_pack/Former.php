@@ -716,9 +716,7 @@ class Former
                 // Upload field
                 // Using CI form_upload() function
                 // Ajax Upload using FineUploader.JS
-                case 'file':
                 case 'upload':
-                case 'fineupload':
                     if (!isset($allowed_types))
                     {
                         $allowed_types = get_conf('allowed_types');
@@ -741,7 +739,7 @@ class Former
 
                     $field_attrs['desc'] .= $this->_ci->median->upload_policy();
 
-                    $input = $this->_ci->median->get_html();
+                    $input = $this->_ci->median->get_html($name);
                     break;
 
                 // Selectbox field
@@ -1218,7 +1216,7 @@ class Former
      */
     protected function set_field_rules($name, $label, $type, $validation = '', $callback = '')
     {
-        $field_arr  = ($type == 'checkbox' OR $type == 'multiselect' ? TRUE : FALSE);
+        $field_arr  = ($type == 'checkbox' OR $type == 'multiselect' OR $type == 'upload' ? TRUE : FALSE);
         $rules      = ($field_arr ? 'xss_clean' : 'trim|xss_clean');
 
         if (strlen($validation) > 0)
@@ -1237,6 +1235,16 @@ class Former
         else
         {
             $this->form_data[$name] = $this->_ci->input->$method($name);
+        }
+
+        if ($type == 'upload')
+        {
+            $files = $this->form_data[$name];
+
+            if (count($files) == 1)
+            {
+                $this->form_data[$name] = $files[0];
+            }
         }
     }
 

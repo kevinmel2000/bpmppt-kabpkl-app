@@ -141,13 +141,15 @@ class Median
     /**
      * Get the HTML format that will be shown in Former library.
      *
+     * @param   string  $identifier  File identifier
      * @return  string
      */
-    public function get_html()
+    public function get_html($identifier)
     {
         $attr  = 'data-allowed-ext="'.$this->allowed_types.'" ';
         $attr .= 'data-item-limit="'.$this->file_limit.'" ';
         $attr .= 'data-size-limit="'.$this->post_max_size.'" ';
+        $attr .= 'data-field-name="'.$identifier.'" ';
 
         return '<div class="fine-uploader row" '.$attr.'></div>';
     }
@@ -170,6 +172,7 @@ class Median
                 . "    var fu = $(this),\n"
                 . "        fuLimit = fu.data('item-limit'),\n"
                 . "        fuTypes = fu.data('allowed-ext')\n\n"
+                . "        fuField = fu.data('field-name')\n\n"
                 . "    fu.fineUploader({\n"
                 . "        template: 'qq-template',\n"
                 . "        request: {\n"
@@ -217,7 +220,7 @@ class Median
                 . "        console.log(responseJSON.data);\n"
                 . "        var uploadId = $('[qq-file-id='+id+']'),\n"
                 . "            uploadedObj = responseJSON.data,\n"
-                . "            uploadedFile = '<input type=\"hidden\" name=\"uploaded-name\" value=\"'+responseJSON.data.file_name+'\" />',\n"
+                . "            uploadedFile = '<input type=\"hidden\" name=\"'+fuField+'[]\" value=\"'+responseJSON.data.file_name+'\" />',\n"
                 . "            fileDetail = '<dl class=\"upload-desc\">'\n"
                 . "                       + '<dt>"._x('median_client_name')."</dt><dd>'+uploadedObj.client_name+'</dd>'\n"
                 . "                       + '<dt>"._x('median_file_name')."</dt><dd>'+uploadedObj.file_name+'</dd>'\n"

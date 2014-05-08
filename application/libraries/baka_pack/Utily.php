@@ -40,12 +40,40 @@ class Utily
      */
     protected static $_ci;
 
+    /**
+     * Output filename from backup
+     *
+     * @var  string
+     */
     protected $_file_name;
 
-    protected $_temp_path;
+    /**
+     * Backup destination path
+     *
+     * @var  string
+     */
+    protected $_destination;
 
+    /**
+     * Backup file path
+     *
+     * @var  [type]
+     */
     protected $_file_path;
 
+    /**
+     * Tables that not allowed to be backed up.
+     *
+     * @var  array
+     */
+    protected $_restricted_tables = array('ci_sessions', 'auth_overrides', 'auth_user_autologin', 'auth_login_attempts');
+
+    /**
+     * Tables that allowed to be backed up.
+     *
+     * @var  array
+     */
+    protected $_allowed_tables = array();
     /**
      * Default class constructor
      */
@@ -53,135 +81,224 @@ class Utily
     {
         self::$_ci =& get_instance();
 
-        $this->_file_name   = 'backup_'.str_replace(' ', '_', strtolower(get_conf('app_name')));
-
-        $this->_temp_path   = get_conf('temp_path');
+        $this->_file_name   = 'backup_'.str_replace(' ', '_', strtolower(get_conf('app_name').'_'.time()));
+        $this->_destination   = APPPATH.'storage/backup/';
 
         log_message('debug', "#Baka_pack: Utily Class Initialized");
     }
 
     // -------------------------------------------------------------------------
 
-    public function backup( $tables = array(), $ignores = array(), $file_name = '', $download = TRUE )
+    /**
+     * Get tables list in associative array
+     *
+     * @return  array
+     */
+    public function list_tables()
     {
-        if ( !is_dir( $this->_temp_path ) )
+        foreach (self::$_ci->db->list_tables() as $table)
         {
-            $this->set_error('dbutil_backup_folder_not_exists', 'Direktori '.$this->_temp_path.' belum ada pada server anda.', $this->_temp_path);
+            $table_name = $table;
+            $table_label = str_replace(self::$_ci->db->dbprefix, '', $table);
+
+            if (!in_array($table_label, $this->_restricted_tables))
+            {
+                $table_label = str_replace('_', ' ', $table_label);
+                $table_label = ucfirst($table_label);
+
+                $tables[$table_name] = $table_label;
+
+                $this->_allowed_tables[] = $table_name;
+            }
+        }
+
+        return $tables;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Get all backups list
+     *
+     * @return  array
+     */
+    public function list_backups()
+    {
+        self::$_ci->load->helpers('directory', 'date');
+
+        $dir = array();
+        $prefix = 'backup_'.str_replace(' ', '_', strtolower(get_conf('app_name'))).'_';
+
+        foreach (directory_map($this->_destination) as $key => $value)
+        {
+            if (is_array($value))
+            {
+                $time = str_replace($prefix, '', $key);
+                // $dir[$key]['date'] = $time;
+                $dir[$key]['date'] = mdate('%d-%m-%Y %h:%i', $time);
+                $dir[$key]['tables'] = $value;
+            }
+        }
+
+        return $dir;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Do the backup job
+     *
+     * @param   array   $tables    Tables that want to backup
+     * @param   bool    $download  Option to directly download when backup was done
+     * @return  bool
+     */
+    public function backup( $tables = array(), $download = TRUE )
+    {
+        if ( !is_dir( $this->_destination ) )
+        {
+            Messg::set('error', _x('utily_backup_folder_not_exists', $this->_destination));
             return FALSE;
         }
 
-        if ( !is_writable( $this->_temp_path ) )
+        if ( !is_writable( $this->_destination ) )
         {
-            $this->set_error('dbutil_backup_folder_not_writable', 'Anda tidak memiliki ijin untuk menulis pada direktori '.$this->_temp_path.'.', $this->_temp_path);
+            Messg::set('error', _x('utily_backup_folder_not_writable', $this->_destination));
             return FALSE;
         }
 
-        // Setup file name
-        $file_name || $file_name = $this->_file_name;
         // Setup file fullpath
-        $this->_file_path = $this->_temp_path . $file_name . '.sql';
+        $this->_file_path = $this->_destination.$this->_file_name.'.sql';
 
-        if ( ! $this->_backup_command( $this->_file_path ) )
+        if (empty($tables))
         {
-            $this->set_error('dbutil_backup_process_failed', 'Proses backup database gagal.');
-            return FALSE;
+            $tables = $this->_allowed_tables;
+        }
+
+        if ( strlen( self::$_ci->db->password ) > 0 )
+        {
+            $password = " -p".self::$_ci->db->password;
+        }
+
+        $database    = ' '.self::$_ci->db->database;
+        $destination = $this->_destination.$this->_file_name;
+
+        if (!is_dir($destination))
+        {
+            mkdir($destination, DIR_WRITE_MODE);
+        }
+
+        foreach ($tables as $table)
+        {
+            shell_exec( 'mysqldump -u'.self::$_ci->db->username.$password.$database.' '.$table.">".$destination.'/'.$table.'.sql' );
         }
         
         // Load the zip helper
         self::$_ci->load->library('zip');
 
         // Reading backed up database
-        $this->zip->read_file( $this->_file_path );
+        self::$_ci->zip->read_dir( $destination.'/', FALSE );
+        self::$_ci->zip->archive( $destination.'.zip' );
 
         if ($download === TRUE)
-            $this->zip->download( $file_name.'.zip' );
+        {
+            self::$_ci->zip->download( $this->_file_name.'.zip' );
+        }
+
+        if (file_exists($destination.'.zip'))
+        {
+            Messg::set('success', _x('utily_backup_process_success'));
+            return TRUE;
+        }
         else
-            $this->zip->archive( $this->_file_path );
-            
-        $this->zip->clear_data();
+        {
+            Messg::set('error', _x('utily_backup_process_failed'));
+            return FALSE;
+        }
+    }
 
-        $this->clear( $this->_file_path );
+    // -------------------------------------------------------------------------
 
-        $this->set_message('dbutil_backup_process_success', 'Proses backup database berhasil.');
+    /**
+     * Do the restore job
+     *
+     * @param   string  $file_name  File name that to restore from
+     * @param   bool    $upload     Is from Upload or not
+     * @return  bool
+     */
+    public function restore( $file_name, $upload = FALSE )
+    {
+        if ($upload == TRUE)
+        {
+            $this->_destination = get_conf('upload_path');
+
+            // Load the zip helper
+            self::$_ci->load->driver('archive');
+
+            if (!($file_path = self::$_ci->archive->init($this->_destination.$file_name)->extract()))
+            {
+                Messg::set('error', 'Extract gagal');
+                return FALSE;
+            }
+
+            $file_path .= '/';
+        }
+        else
+        {
+            $file_path = $this->_destination.$file_name.'/';
+        }
+
+        if ( strlen( self::$_ci->db->password ) > 0 )
+        {
+            $password = " -p".self::$_ci->db->password;
+        }
+
+        self::$_ci->load->helpers('directory', 'date');
+
+        // $this->clear( $file_name );
+
+        return $this->_do_restore($file_path);
+    }
+
+    /**
+     * Restore helper
+     *
+     * @param   string  $file_path  Full file path.
+     * @return  bool
+     */
+    protected function _do_restore($file_path)
+    {
+        $map = directory_map($file_path);
+
+        foreach ($map as $key => $value)
+        {
+            // Messg::set('success', $file_path.$key);
+            if (get_ext($value) == 'sql')
+            {
+                shell_exec( 'mysql -u'.self::$_ci->db->username.$password.' '.self::$_ci->db->database.' <'.$file_path.$value );
+
+                $value = str_replace(self::$_ci->db->dbprefix, '', $table);
+                $value = str_replace('_', ' ', $value);
+                $value = ucfirst($value);
+
+                Messg::set('success', 'Berhasil memulihkan tabel '.$value);
+            }
+            else if (is_array($value))
+            {
+                $this->_do_restore($file_path.$key.'/');
+            }
+        }
+
         return TRUE;
     }
 
     // -------------------------------------------------------------------------
 
-    public function restore_upload( $field_name )
-    {
-        $config['upload_path']  = $this->_temp_path;
-        $config['allowed_types']= 'zip';
-        $config['file_name']    = $this->_file_name;
-
-        self::$_ci->load->library('upload', $config);
-
-        if ( self::$_ci->upload->do_upload( $field_name ) )
-        {
-            $upload_data = self::$_ci->upload->data();
-
-            // Restore to database
-            return $this->_restore_files( $this->_temp_path . $this->_file_name . '.zip' );
-        }
-        else
-        {
-            $this->set_error('dbutil_upload_failed', 'Proses upload database gagal. '.self::$_ci->upload->display_errors());
-            return FALSE;
-        }
-    }
-
-    // -------------------------------------------------------------------------
-
-    protected function _restore_files( $file_path )
-    {
-        self::$_ci->load->library('baka_pack/Baka_archive');
-
-        if ( ! file_exists( $file_path ) )
-        {
-            $this->set_error('file_not_found', 'Berkas %s tidak ada. ', $file_path);
-            return FALSE;
-        }
-
-        // Extract uploaded file
-        if ( ! $this->baka_archive->extract_all( $file_path, $this->_temp_path ) )
-            return FALSE;
-
-        $this->clear( $file_path );
-
-        // Restore to database
-        if ( file_exists( $this->_temp_path . $this->_file_name ) )
-            $this->_restore_command( $this->_temp_path . $this->_file_name );
-
-        $this->set_message('dbutil_restore_success', 'Restorasi database berhasil');
-        return TRUE;
-    }
-
-    // -------------------------------------------------------------------------
-
-    protected function _backup_command( $file_name )
-    {
-        if ( strlen( self::$_ci->db->password ) > 0 )
-            $password = " -p" . self::$_ci->db->password;
-
-        shell_exec( "mysqldump -u" . self::$_ci->db->username . $password . " --databases " . self::$_ci->db->database . " >" . $file_name );
-        
-        return ( file_exists( $file_name ) ? TRUE : FALSE );
-    }
-
-    // -------------------------------------------------------------------------
-
-    protected function _restore_command( $file_name )
-    {
-        if ( strlen( self::$_ci->db->password ) > 0 )
-            $password = " -p" . self::$_ci->db->password;
-        
-        shell_exec( "mysql -u" . self::$_ci->db->username . $password . " <" . $file_name );
-
-        $this->clear( $file_name );
-    }
-
-    // -------------------------------------------------------------------------
-
+    /**
+     * Clean up the files. Currently it's unused just yet
+     *
+     * @param   string  $file_path  Full file path to clean
+     * @return  void
+     */
     public function clear( $file_path )
     {
         // Hapus sampah!

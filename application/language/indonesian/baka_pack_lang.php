@@ -102,12 +102,12 @@ $lang['auth_login_by_email']        = 'Email';
 // -----------------------------------------------------------------------------
 // Database Utility
 // -----------------------------------------------------------------------------
-$lang['dbutil_backup_folder_not_exists']    = 'Direktori %s belum ada pada server anda.';
-$lang['dbutil_backup_folder_not_writable']  = 'Anda tidak memiliki ijin untuk menulis pada direktori %s.';
-$lang['dbutil_backup_process_failed']       = 'Proses backup database gagal.';
-$lang['dbutil_backup_process_success']      = 'Proses backup database berhasil.';
-$lang['dbutil_restore_success']             = 'Proses restorasi database berhasil.';
-$lang['dbutil_upload_failed']               = 'Proses upload gagal.';
+$lang['utily_backup_folder_not_exists']    = 'Direktori %s belum ada pada server anda.';
+$lang['utily_backup_folder_not_writable']  = 'Anda tidak memiliki ijin untuk menulis pada direktori %s.';
+$lang['utily_backup_process_failed']       = 'Proses backup database gagal.';
+$lang['utily_backup_process_success']      = 'Proses backup database berhasil.';
+$lang['utily_restore_success']             = 'Proses restorasi database berhasil.';
+$lang['utily_upload_failed']               = 'Proses upload gagal.';
 
 // -----------------------------------------------------------------------------
 // Email Subjects

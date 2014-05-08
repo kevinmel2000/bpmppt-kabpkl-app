@@ -36,7 +36,7 @@ class Archive extends CI_Driver_Library
      *
      * @var  mixed
      */
-    private static $_ci;
+    public $_ci;
 
     /**
      * valid drivers
@@ -83,7 +83,7 @@ class Archive extends CI_Driver_Library
      */
     public function __construct()
     {
-        self::$_ci =& get_instance();
+        $this->_ci =& get_instance();
 
         foreach ($this->valid_drivers as $supported)
         {
@@ -103,27 +103,31 @@ class Archive extends CI_Driver_Library
     public function init($file_path)
     {
         $this->_type = get_ext($file_path);
+        $error = FALSE;
 
         if (!in_array($this->_type, $this->_formats))
         {
-            Messg::set('error', 'Sorry, but this format is unsupported currently.');
-            return FALSE;
+            Messg::set('error', 'Sorry, but this File type is unsupported currently.');
+            $error = TRUE;
         }
 
         if (!is_file($file_path) AND !file_exists($file_path))
         {
             Messg::set('error', 'File '.$file_path.' is not on your server.');
-            return FALSE;
+            $error = TRUE;
         }
 
         if (!is_readable($file_path))
         {
             Messg::set('error', 'File '.$file_path.' is not readble.');
-            return FALSE;
+            $error = TRUE;
         }
 
-        $this->_archive     = $this->{$this->_type}->_open($file_path);
-        $this->_path_info   = pathinfo($file_path);
+        if (!$error)
+        {
+            $this->_archive     = $this->{$this->_type}->_open($file_path);
+            $this->_path_info   = pathinfo($file_path);
+        }
 
         return $this;
     }
@@ -134,7 +138,7 @@ class Archive extends CI_Driver_Library
 
         if (!in_array($this->_type, $this->_formats))
         {
-            Messg::set('error', 'Sorry, but this format is unsupported currently.');
+            Messg::set('error', 'Sorry, but '.$this->_type.' format is unsupported currently.');
             return FALSE;
         }
 
@@ -180,14 +184,14 @@ class Archive extends CI_Driver_Library
      *
      * @return  bool
      */
-    public function extract($target_dir = '', $file_names = array())
+    public function extract($target_dir = '', $file_names = array(), $overwrite = FALSE)
     {
         if ($target_dir == '')
         {
             $target_dir = $this->_path_info['dirname'].'/'.$this->_path_info['filename'];
         }
 
-        if (is_dir($target_dir))
+        if ($overwrite === FALSE and is_dir($target_dir))
         {
             Messg::set('error', 'Target '.$target_dir.' is already exists.');
             return FALSE;
@@ -204,7 +208,7 @@ class Archive extends CI_Driver_Library
             $this->{$this->_type}->_extract($target_dir, $file_names);
             $this->close();
 
-            return TRUE;
+            return $target_dir;
         }
         else
         {

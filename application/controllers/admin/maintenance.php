@@ -59,6 +59,8 @@ class Maintenance extends BAKA_Controller
 
         $this->data['panel_title'] = $this->themee->set_title('Backup Database');
 
+        $this->load->library('baka_pack/utily');
+
         $fields[]   = array(
             'name'  => 'db-driver',
             'type'  => 'static',
@@ -79,10 +81,49 @@ class Maintenance extends BAKA_Controller
 
         $fields[]   = array(
             'name'  => 'backup-all',
-            'type'  => 'checkbox',
+            'type'  => 'switch',
             'label' => 'Backup semua tabel',
-            'option'=> array('semua' => 'Semua'),
-            'validation'=>'required' );
+            'std'   => 1
+            );
+
+        $fields[]   = array(
+            'name'  => 'backup-table',
+            'type'  => 'checkbox',
+            'label' => 'Backup beberapa tabel',
+            'option'=> $this->utily->list_tables(),
+            'fold'  => array(
+                'key' => 'backup-all',
+                'value' => 0 ),
+            'validation'=> '' );
+
+        $fields[]   = array(
+            'name'  => 'backup-dl',
+            'type'  => 'switch',
+            'label' => 'Download backup',
+            'std'   => 0
+            );
+
+        $backup_list = '<ol>';
+
+        if (!empty($this->utily->list_backups()))
+        {
+            foreach ($this->utily->list_backups() as $key => $value)
+            {
+                $backup_list .= '<li class="form-control-static">'.anchor('application/storage/backup/'.$key.'.zip', $value['date']).'</li>';
+            }
+        }
+        else
+        {
+            $backup_list .= '<li class="form-control-static">Belum ada backup</li>';
+        }
+
+        $backup_list .= '</ol>';
+
+        $fields[]   = array(
+            'name'  => 'backup-list',
+            'type'  => 'custom',
+            'label' => 'Daftar backup',
+            'value' => $backup_list );
 
         $buttons[]= array(
             'name'  => 'do-backup',
@@ -101,17 +142,29 @@ class Maintenance extends BAKA_Controller
 
         if ( $form_data = $form->validate_submition() )
         {
-            $this->load->library('baka_pack/baka_dbutil');
+            $tables = array();
 
-            if ( $this->baka_dbutil->backup() )
+            if ($form_data['backup-all'] != 1)
             {
-                $this->session->set_flashdata('success', $this->baka_lib->messages());
+                $tables = $form_data['backup-table'];
+            }
+
+            $download = FALSE;
+
+            if ($form_data['backup-dl'] == 1)
+            {
+                $download = TRUE;
+            }
+
+            if ( $this->utily->backup($tables, $download) )
+            {
+                $this->session->set_flashdata('success', Messg::get('success'));
             }
             else
             {
-                $this->session->set_flashdata('error', $this->baka_lib->errors());
+                $this->session->set_flashdata('error', Messg::get('error'));
             }
-            
+
             redirect( current_url() );
         }
 
@@ -127,13 +180,53 @@ class Maintenance extends BAKA_Controller
 
         $this->data['panel_title']  = $this->themee->set_title('Restore Database');
 
+        $this->load->library('baka_pack/utily');
+
         $fields[]   = array(
-            'name'  => 'restore-from-file',
+            'name'  => 'restore-from-backup',
+            'type'  => 'switch',
+            'label' => 'Restor dari backup sebelumnya',
+            'std'   => 1
+            );
+
+        $fields[]   = array(
+            'name'  => 'restore-file-upload',
             'type'  => 'upload',
             'label' => 'Restore dari berkas',
-            'file_limit' => 3,
-            'allowed_types' => 'zip|sql|png|jpg',
+            'fold'  => array(
+                'key' => 'restore-from-backup',
+                'value' => 0 ),
+            'file_limit' => 1,
+            'allowed_types' => 'zip|sql',
             'desc'  => 'Pilih berkas yang akan digunakan untuk me-restore database' );
+
+        if (!empty($this->utily->list_backups()))
+        {
+            foreach ($this->utily->list_backups() as $key => $value)
+            {
+                $backup_list[$key] = $value['date'];
+            }
+
+            $fields[]   = array(
+                'name'  => 'restore-backups-list',
+                'type'  => 'radio',
+                'label' => 'Daftar backup',
+                'fold'  => array(
+                    'key' => 'restore-from-backup',
+                    'value' => 1 ),
+                'option' => $backup_list );
+        }
+        else
+        {
+            $fields[]   = array(
+                'name'  => 'restore-backups-list',
+                'type'  => 'static',
+                'label' => 'Daftar backup',
+                'fold'  => array(
+                    'key' => 'restore-from-backup',
+                    'value' => 1 ),
+                'std' => 'Belum ada backup' );
+        }
 
         $buttons[]= array(
             'name'  => 'do-restore',
@@ -152,16 +245,26 @@ class Maintenance extends BAKA_Controller
 
         if ( $form_data = $form->validate_submition() )
         {
-            // $this->load->library('baka_pack/baka_dbutil');
+            // print_pre($form_data);
+            $upload = FALSE;
+            $file_name = $form_data['restore-backups-list'];
 
-            // if ( $this->baka_dbutil->restore_upload('restore-from-file') )
-            // {
-            //     $this->session->set_flashdata('success', $this->baka_lib->messages());
-            // }
-            // else
-            // {
-            //     $this->session->set_flashdata('error', $this->baka_lib->errors());
-            // }
+            if ($form_data['restore-from-backup'] != 1)
+            {
+                $upload = TRUE;
+                $file_name = $form_data['restore-file-upload'];
+            }
+
+            // var_dump($file_name);
+
+            if ( $this->utily->restore($file_name, $upload) )
+            {
+                $this->session->set_flashdata('success', Messg::get('success'));
+            }
+            else
+            {
+                $this->session->set_flashdata('error', Messg::get('error'));
+            }
 
             redirect( current_url() );
         }

@@ -64,15 +64,17 @@ $(document).ready( function () {
                 val = el.data('fold-value'),
                 tgt = '[name="'+key+'"]';
 
-            $(this).addClass('hide fade');
+            if ($(tgt).val() != val) {
+                $(this).addClass('hide');
+            }
 
             if ($(tgt).hasClass('bs-switch')) {
                 $(tgt).on('switchChange.bootstrapSwitch', function(event, state) {
-                    showHide(el, state)
+                    showHide(el, (val == state))
                 });
             } else {
                 $(tgt).change(function () {
-                    showHide(el, ($(this).val() === val))
+                    showHide(el, ($(tgt).val() === val))
                 })
             }
         }
