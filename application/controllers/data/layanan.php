@@ -41,7 +41,7 @@ class Layanan extends BAKA_Controller
         $this->themee->add_navbar( 'data_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
         $this->data_navbar( 'data_sidebar', 'side' );
 
-        $this->themee->set_title('Administrasi data');
+        $this->themee->set_title('Administrasi data')
 
         $this->data['page_link'] = 'data/layanan/';
     }
