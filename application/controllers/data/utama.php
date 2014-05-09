@@ -41,7 +41,7 @@ class Utama extends BAKA_Controller
         $this->themee->add_navbar( 'data_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
         $this->data_navbar( 'data_sidebar', 'side' );
 
-        $this->themee->set_title('Dashboard');
+        $this->set_panel_title('Dashboard');
 
         $this->data['page_link'] = 'data/utama/';
 
@@ -51,7 +51,7 @@ class Utama extends BAKA_Controller
 
     public function index()
     {
-        $this->data['panel_title']  = $this->themee->set_title('Semua data perijinan');
+        $this->set_panel_title('Semua data perijinan');
         $modules = $this->bpmppt->get_modules();
 
         if ( !empty($modules) )
@@ -62,13 +62,13 @@ class Utama extends BAKA_Controller
             foreach($modules as $link => $layanan)
             {
                 $this->data['panel_body'][$link] = array(
-                    'label' => $layanan['label'],
-                    'alias' => $layanan['alias'],
-                    'total' => $this->bpmppt->count_data($layanan['alias']),
-                    'pending' => $this->bpmppt->count_data($layanan['alias'], array('status' => 'pending')),
+                    'label'    => $layanan['label'],
+                    'alias'    => $layanan['alias'],
+                    'total'    => $this->bpmppt->count_data($layanan['alias']),
+                    'pending'  => $this->bpmppt->count_data($layanan['alias'], array('status' => 'pending')),
                     'approved' => $this->bpmppt->count_data($layanan['alias'], array('status' => 'approved')),
-                    'deleted' => $this->bpmppt->count_data($layanan['alias'], array('status' => 'deleted')),
-                    'done' => $this->bpmppt->count_data($layanan['alias'], array('status' => 'done')),
+                    'deleted'  => $this->bpmppt->count_data($layanan['alias'], array('status' => 'deleted')),
+                    'done'     => $this->bpmppt->count_data($layanan['alias'], array('status' => 'done')),
                     );
             }
             

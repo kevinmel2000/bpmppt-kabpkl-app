@@ -62,6 +62,13 @@ class Utily
     protected $_file_path;
 
     /**
+     * Database info wrapper
+     *
+     * @var  array
+     */
+    protected $db_info = array();
+
+    /**
      * Tables that not allowed to be backed up.
      *
      * @var  array
@@ -74,6 +81,7 @@ class Utily
      * @var  array
      */
     protected $_allowed_tables = array();
+
     /**
      * Default class constructor
      */
@@ -82,9 +90,32 @@ class Utily
         self::$_ci =& get_instance();
 
         $this->_file_name   = 'backup_'.str_replace(' ', '_', strtolower(get_conf('app_name').'_'.time()));
-        $this->_destination   = APPPATH.'storage/backup/';
+        $this->_destination = APPPATH.'storage/backup/';
+
+        $this->db_info['driver']         = self::$_ci->db->dbdriver;
+        $this->db_info['host_info']      = self::$_ci->db->conn_id->host_info;
+        $this->db_info['server_info']    = self::$_ci->db->conn_id->server_info;
+        $this->db_info['server_version'] = self::$_ci->db->conn_id->server_version;
 
         log_message('debug', "#Baka_pack: Utily Class Initialized");
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Get current database info
+     *
+     * @param   string  $name  DB Key information
+     * @return  string|bool
+     */
+    public function get_info($name)
+    {
+        if (isset($this->db_info[$name]))
+        {
+            return $this->db_info[$name];
+        }
+
+        return FALSE;
     }
 
     // -------------------------------------------------------------------------
@@ -184,7 +215,7 @@ class Utily
 
         if (!is_dir($destination))
         {
-            mkdir($destination, DIR_WRITE_MODE);
+            @mkdir($destination, DIR_WRITE_MODE);
         }
 
         foreach ($tables as $table)

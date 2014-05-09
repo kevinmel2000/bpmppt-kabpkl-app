@@ -41,14 +41,14 @@ class Laporan extends BAKA_Controller
         $this->themee->add_navbar( 'data_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
         $this->data_navbar( 'data_sidebar', 'side' );
 
-        $this->themee->set_title('Laporan');
+        $this->set_panel_title('Laporan');
 
         $this->data['page_link'] = 'data/laporan/';
     }
 
     public function index()
     {
-        $this->data['panel_title'] = $this->themee->set_title('Laporan data');
+        $this->set_panel_title('Laporan data');
 
         foreach ( $this->bpmppt->get_modules(TRUE) as $module => $prop )
         {

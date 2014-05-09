@@ -38,7 +38,7 @@ class Auth extends BAKA_Controller
 
         $this->load->library('baka_pack/former');
 
-        $this->themee->set_title('User Authentication');
+        $this->set_panel_title('User Authentication');
     }
 
     public function index()
@@ -50,10 +50,9 @@ class Auth extends BAKA_Controller
     {
         $this->verify_status();
 
-        $this->data['panel_title'] = $this->themee->set_title('Login Pengguna');
+        $this->set_panel_title('Login Pengguna');
 
-        $login = ( Setting::get('auth_login_count_attempts') AND ($login = $this->input->post('username'))) ?
-                $this->security->xss_clean($login) : '';
+        $login = ( Setting::get('auth_login_count_attempts') AND ($login = $this->input->post('username'))) ? $this->security->xss_clean($login) : '';
 
         $fields[]   = array(
             'name'  => 'username',
@@ -144,7 +143,7 @@ class Auth extends BAKA_Controller
     {
         $this->verify_status();
 
-        $this->data['panel_title'] = $this->themee->set_title('Register Pengguna');
+        $this->set_panel_title('Register Pengguna');
 
         if ( !Setting::get('auth_allow_registration') )
             $this->_notice('registration-disabled');
@@ -239,7 +238,7 @@ class Auth extends BAKA_Controller
         if ( $this->authr->is_logged_in() )
             redirect('data/utama');
 
-        $this->data['panel_title'] = $this->themee->set_title('Kirim ulang aktivasi');
+        $this->set_panel_title('Kirim ulang aktivasi');
 
         // not logged in or activated
         if ( !$this->authr->is_logged_in(FALSE) )
@@ -301,7 +300,7 @@ class Auth extends BAKA_Controller
         if ( $this->authr->is_logged_in() )
             redirect('data/utama');
 
-        $this->data['panel_title'] = $this->themee->set_title('Lupa login');
+        $this->set_panel_title('Lupa login');
 
         $fields[]   = array(
             'name'  => 'forgot_login',
@@ -375,7 +374,7 @@ class Auth extends BAKA_Controller
 
     public function reset_password( $user_id = NULL, $email_key = NULL )
     {
-        $this->data['panel_title'] = $this->themee->set_title('Kirim ulang aktivasi');
+        $this->set_panel_title('Kirim ulang aktivasi');
 
         // not logged in or activated
         if ( is_null($user_id) AND is_null($email_key) )

@@ -152,8 +152,8 @@ class Error extends BAKA_Controller
                 break;
         }
 
-        $this->data['panel_title']  = $this->themee->set_title( $page_title );
-        $this->data['panel_body']   = $page_message;
+        $this->set_panel_title( $page_title );
+        $this->set_panel_body( $page_message );
 
         $this->load->theme('pages/notice', $this->data);
     }

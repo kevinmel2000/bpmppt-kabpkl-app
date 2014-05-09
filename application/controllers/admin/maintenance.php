@@ -65,19 +65,19 @@ class Maintenance extends BAKA_Controller
             'name'  => 'db-driver',
             'type'  => 'static',
             'label' => 'Database driver',
-            'std'   => $this->db->dbdriver );
+            'std'   => $this->utily->get_info('driver') );
 
         $fields[]   = array(
             'name'  => 'host-info',
             'type'  => 'static',
             'label' => 'Host info',
-            'std'   => $this->db->conn_id->host_info );
+            'std'   => $this->utily->get_info('host_info') );
 
         $fields[]   = array(
             'name'  => 'server-info',
             'type'  => 'static',
             'label' => 'Server info',
-            'std'   => $this->db->conn_id->server_info.' Version. '.$this->db->conn_id->server_version );
+            'std'   => $this->utily->get_info('server_info').' Version. '.$this->utily->get_info('server_version') );
 
         $fields[]   = array(
             'name'  => 'backup-all',
@@ -293,10 +293,10 @@ class Maintenance extends BAKA_Controller
 
         foreach ( $scan_dir as $log )
         {
-            if ( $log != 'index.html')
+            if ( $log != 'index.html' and $log != 'view.php' )
             {
                 $log    = strtolower(str_replace(EXT, '', $log));
-                $label  = 'Tanggal '.format_date(str_replace('log-', '', $log));
+                $label  = format_date(str_replace('log-', '', $log));
                 $link   = 'admin/maintenance/syslogs/';
 
                 $this->themee->add_navmenu( 'log_sidebar', $log, 'link', $link.$log, $label, array(), 'panel' );
@@ -306,7 +306,9 @@ class Maintenance extends BAKA_Controller
         if ( $file != '' )
         {
             if ( !$this->load->is_loaded('file') )
+            {
                 $this->load->helper('file');
+            }
             
             $this->data['panel_title'] .= ' Tanggal '.format_date(str_replace('log-', '', $file));
 
@@ -339,8 +341,14 @@ class Maintenance extends BAKA_Controller
 
             arsort( $line );
 
-            $this->data['panel_body'] = $this->table->generate( $line );
+            $panel_body = $this->table->generate( $line );
         }
+        else
+        {
+            $panel_body = 'Pilih tanggal.';
+        }
+
+        $this->data['panel_body'] = $panel_body;
 
         $this->load->theme('pages/syslogs', $this->data);
     }

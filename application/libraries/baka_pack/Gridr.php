@@ -317,12 +317,12 @@ class Gridr
 
     public function make_table($query = FALSE)
     {
-        $db_query = $query
-            ? $query
-            : $this->db_query;
+        $db_query = $query ? $query : $this->db_query;
 
         if (is_array($db_query))
+        {
             array_to_object($db_query);
+        }
 
         if (method_exists($db_query, 'get'))
         {
@@ -348,10 +348,11 @@ class Gridr
         }
 
         if (!self::$_ci->load->is_loaded('table'))
+        {
             self::$_ci->load->library('table');
+        }
 
-        self::$_ci->table->set_template(array(
-            'table_open' => '<table class="table table-striped table-hover table-condensed">'));
+        self::$_ci->table->set_template(array('table_open' => '<table class="table table-striped table-hover table-condensed">'));
 
         foreach ($this->table_cols as $head_key => $head_val)
         {
@@ -413,10 +414,14 @@ class Gridr
 
                     // Clean up class name
                     if (strpos($field, 'callback_') !== FALSE)
+                    {
                         $row_class = str_replace('callback_', '', $field);
+                    }
 
                     if (strpos($field, ',') !== FALSE)
+                    {
                         list($row_class) = array_map('trim', explode(",", $field));
+                    }
 
                     // nerapin di cell
                     $cell[$table_id][] = array(

@@ -127,6 +127,30 @@ class BAKA_Controller extends CI_Controller
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Setup panel and page title
+     *
+     * @param  string  $panel_title  Title of the Panel
+     */
+    protected function set_panel_title($panel_title)
+    {
+        $this->data['panel_title'] = $this->themee->set_title($panel_title);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Setup panel body content
+     *
+     * @param  string  $panel_body  Content of panel body
+     */
+    protected function set_panel_body($panel_body)
+    {
+        $this->data['panel_body'] = $panel_body;
+    }
+
+    // -------------------------------------------------------------------------
+
     protected function navbar()
     {
         // Adding main navbar
