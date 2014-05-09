@@ -56,6 +56,8 @@ class Info extends BAKA_Controller
             $this->_notice( 'access-denied' );
         }
 
+        $this->load->library('baka_pack/utily');
+
         $this->set_panel_title('Semua data pengguna');
 
         $this->load->library('table');
@@ -76,7 +78,9 @@ class Info extends BAKA_Controller
         $this->table->add_row('Versi PHP', phpversion());
 
         $extensions = '<dl class="dl-horizontal">';
-        foreach (get_loaded_extensions() as $i => $ext)
+        $loaded_extensions = array_map('strtolower', get_loaded_extensions());
+        asort( $loaded_extensions );
+        foreach ($loaded_extensions as $i => $ext)
         {
             $extensions .= '<dt>'.$ext.'</dt><dd>'.phpversion($ext).'</dd>';
         }

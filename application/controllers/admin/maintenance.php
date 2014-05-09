@@ -39,7 +39,9 @@ class Maintenance extends BAKA_Controller
         $this->verify_login();
 
         if ( !$this->authr->is_permited('sys_manage') )
+        {
             $this->_notice( 'access-denied' );
+        }
 
         $this->themee->add_navbar( 'admin_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
         $this->admin_navbar( 'admin_sidebar', 'side' );
@@ -49,7 +51,49 @@ class Maintenance extends BAKA_Controller
 
     public function index()
     {
-        $this->dbbackup();
+        $this->sysinfo();
+    }
+
+    public function sysinfo()
+    {
+        if ( !$this->authr->is_permited('users_manage') )
+        {
+            $this->_notice( 'access-denied' );
+        }
+
+        $this->set_panel_title('Semua data pengguna');
+
+        $this->load->library('table');
+
+        $this->table->set_heading(array(
+            array(
+                'data' => 'Nama',
+                'width' => '30%',
+                ),
+            array(
+                'data' => 'Nilai',
+                'width' => '70%',
+                ),
+            ));
+
+        $this->table->set_template( array('table_open' => '<table class="table table-striped table-bordered table-hover table-condensed">' ) );
+
+        $this->table->add_row('Versi PHP', phpversion());
+
+        $extensions = '<dl class="dl-horizontal">';
+        $loaded_extensions = array_map('strtolower', get_loaded_extensions());
+        asort( $loaded_extensions );
+        foreach ($loaded_extensions as $i => $ext)
+        {
+            $extensions .= '<dt>'.$ext.'</dt><dd>'.phpversion($ext).'</dd>';
+        }
+        $extensions .= '</dl>';
+
+        $this->table->add_row('Extensi PHP', $extensions);
+
+        $this->set_panel_body($this->table->generate());
+
+        $this->load->theme('pages/panel_data', $this->data);
     }
 
     public function dbbackup()
@@ -57,7 +101,7 @@ class Maintenance extends BAKA_Controller
         if ( !$this->authr->is_permited('sys_backstore_manage') )
             $this->_notice( 'access-denied' );
 
-        $this->data['panel_title'] = $this->themee->set_title('Backup Database');
+        $this->set_panel_title('Backup Database');
 
         $this->load->library('baka_pack/utily');
 
@@ -178,7 +222,7 @@ class Maintenance extends BAKA_Controller
         if ( !$this->authr->is_permited('sys_backstore_manage') )
             $this->_notice( 'access-denied' );
 
-        $this->data['panel_title']  = $this->themee->set_title('Restore Database');
+        $this->set_panel_title('Restore Database');
 
         $this->load->library('baka_pack/utily');
 
@@ -281,7 +325,7 @@ class Maintenance extends BAKA_Controller
 
         $this->load->helper('directory');
 
-        $this->data['panel_title'] = $this->themee->set_title('Aktifitas sistem');
+        $this->set_panel_title('Aktifitas sistem');
 
         $this->themee->add_navbar( 'log_sidebar', 'nav-tabs nav-stacked nav-tabs-left', 'panel' );
 

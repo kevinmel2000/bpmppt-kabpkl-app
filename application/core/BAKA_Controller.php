@@ -266,6 +266,11 @@ class BAKA_Controller extends CI_Controller
             $this->themee->add_navmenu($parent, 'ad_def', 'devider', '', '', array(), $position);
             $this->themee->add_navmenu($parent, 'ad_head', 'header', '', 'Perbaikan', array(), $position);
 
+            // Adding System Log sub-menu (if permited)
+            if ($this->authr->is_permited('sys_logs_manage'))
+                $this->themee->add_navmenu(
+                    $parent, 'ad_sysinfo', 'link', 'admin/maintenance/sysinfo', 'Informasi Sistem', array(), $position);
+
             // Adding Backup & Restore sub-menu (if permited)
             if ($this->authr->is_permited('sys_backstore_manage'))
             {
@@ -274,7 +279,7 @@ class BAKA_Controller extends CI_Controller
                     $parent, 'ad_backup', 'link', 'admin/maintenance/dbbackup', 'Backup Database', array(), $position);
                 // Restore sub-menu
                 $this->themee->add_navmenu(
-                    $parent, 'ad_restore', 'link', 'admin/maintenance/dbrestore', 'Restore Restore', array(), $position);
+                    $parent, 'ad_restore', 'link', 'admin/maintenance/dbrestore', 'Restore Database', array(), $position);
             }
 
             // Adding System Log sub-menu (if permited)
