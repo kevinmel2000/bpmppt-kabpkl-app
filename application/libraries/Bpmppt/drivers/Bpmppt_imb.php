@@ -15,7 +15,7 @@
  * @package     BPMPPT
  * @author      Fery Wardiyanto
  * @copyright   Copyright (c) Fery Wardiyanto. (ferywardiyanto@gmail.com)
- * @license     http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ * @license     http://opensource.org/licenses/OSL-3.0
  * @since       Version 1.0
  * @filesource
  */

@@ -1,25 +1,19 @@
 <?php if ( ! defined('BASEPATH')) exit ('No direct script access allowed');
 
 /**
- * CodeIgniter Baka Pack
- *
- * My very own Codeigniter Boilerplate Library that used on all of my projects
- *
  * NOTICE OF LICENSE
- *
- * Everyone is permitted to copy and distribute verbatim or modified 
- * copies of this license document, and changing it is allowed as long 
- * as the name is changed.
- *
- *            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE 
- *  TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION 
- *
- * 0. You just DO WHAT THE FUCK YOU WANT TO.
+ * 
+ * Licensed under the Open Software License version 3.0
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0) that is
+ * bundled with this package in the files license.txt / license.rst.  It is
+ * also available through the world wide web at this URL:
+ * http://opensource.org/licenses/OSL-3.0
  *
  * @package     Baka_pack
  * @author      Fery Wardiyanto
  * @copyright   Copyright (c) Fery Wardiyanto. (ferywardiyanto@gmail.com)
- * @license     http://www.wtfpl.net
+ * @license     http://opensource.org/licenses/OSL-3.0
  * @since       Version 0.1.3
  */
 

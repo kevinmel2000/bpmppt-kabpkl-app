@@ -22,7 +22,11 @@ Aplikasi ini ditujukan untuk Badan Penanaman Modal dan Pelayanan Perijinan Terba
 + [Twitter Bootstrap](http://getbootstrap.com)
 + [Bootstrap Datepicker](http://www.eyecon.ro/bootstrap-datepicker)
 + [Bootstrap Switch](http://www.bootstrap-switch.org)
-+ [Google ReCaptcha](http://recaptcha.net/plugins/php/)
++ [Summernote](http://hackerwins.github.io/summernote/)
++ [CodeMirror](http://codemirror.net)
++ [Font Awesome](http://fortawesome.github.io/Font-Awesome/)
++ [Cool PHP Captcha](https://code.google.com/p/cool-php-captcha/)
++ [Google ReCaptcha (optional)](http://recaptcha.net/plugins/php/)
 
 ## Copyright and license
 
