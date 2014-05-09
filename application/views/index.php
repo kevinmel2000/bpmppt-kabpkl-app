@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="author" content="<?php echo get_conf('app_author') ?>">
+    <meta name="blitz" content="mu-0fe58ea5-804ccb30-8bf9eaa3-606e579a">
     <?php echo load_scripts('head').load_styles() ?>
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="<?php echo base_url('asset/img/favicon/icon-144.png') ?>">
     <link rel="shortcut icon" href="<?php echo base_url('asset/img/favicon/favicon.png') ?>">

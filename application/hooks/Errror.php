@@ -85,7 +85,7 @@ class Errror
         $this->_config['application_folders']   = APPPATH;
         $this->_config['ignore_folders']        = BASEPATH;
 
-        var_dump(APPPATH);
+        // var_dump(APPPATH);
         if (!class_exists('\php_error\ErrorHandler'))
         {
             require_once(APPPATH.'libraries/vendor/php_error'.EXT);
