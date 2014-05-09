@@ -18,7 +18,8 @@
  * @author      Fery Wardiyanto
  * @copyright   Copyright (c) Fery Wardiyanto. (ferywardiyanto@gmail.com)
  * @license     http://opensource.org/licenses/OSL-3.0
- * @since       Version 0.1.3
+ * @version     Version 0.1.4
+ * @since       Version 0.1.0
  */
 
 // -----------------------------------------------------------------------------
