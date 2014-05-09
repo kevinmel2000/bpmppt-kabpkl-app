@@ -9,7 +9,7 @@
 // BAKA Application Name
 $config['baka_app_name']            = 'BPMPPT App';
 // BAKA Application Version
-$config['baka_app_version']         = '0.1.3';
+$config['baka_app_version']         = '0.1.4';
 // BAKA Application Author
 $config['baka_app_author']          = 'Fery Wardiyanto';
 // BAKA Application Author Email
