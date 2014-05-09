@@ -26,11 +26,11 @@
 // -----------------------------------------------------------------------------
 
 /**
- * Maintenance Class
+ * System Class
  *
  * @subpackage  Controller
  */
-class Maintenance extends BAKA_Controller
+class System extends BAKA_Controller
 {
     public function __construct()
     {
@@ -46,7 +46,7 @@ class Maintenance extends BAKA_Controller
         $this->themee->add_navbar( 'admin_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
         $this->admin_navbar( 'admin_sidebar', 'side' );
 
-        $this->themee->set_title('System Maintenance');
+        $this->themee->set_title('System System');
     }
 
     public function index()
@@ -398,5 +398,5 @@ class Maintenance extends BAKA_Controller
     }
 }
 
-/* End of file maintenance.php */
-/* Location: ./application/controllers/admin/maintenance.php */
+/* End of file system.php */
+/* Location: ./application/controllers/admin/system.php */

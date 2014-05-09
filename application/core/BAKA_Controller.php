@@ -269,23 +269,23 @@ class BAKA_Controller extends CI_Controller
             // Adding System Log sub-menu (if permited)
             if ($this->authr->is_permited('sys_logs_manage'))
                 $this->themee->add_navmenu(
-                    $parent, 'ad_sysinfo', 'link', 'admin/maintenance/sysinfo', 'Informasi Sistem', array(), $position);
+                    $parent, 'ad_sysinfo', 'link', 'admin/system/sysinfo', 'Informasi Sistem', array(), $position);
 
             // Adding Backup & Restore sub-menu (if permited)
             if ($this->authr->is_permited('sys_backstore_manage'))
             {
                 // Backup sub-menu
                 $this->themee->add_navmenu(
-                    $parent, 'ad_backup', 'link', 'admin/maintenance/dbbackup', 'Backup Database', array(), $position);
+                    $parent, 'ad_backup', 'link', 'admin/system/dbbackup', 'Backup Database', array(), $position);
                 // Restore sub-menu
                 $this->themee->add_navmenu(
-                    $parent, 'ad_restore', 'link', 'admin/maintenance/dbrestore', 'Restore Database', array(), $position);
+                    $parent, 'ad_restore', 'link', 'admin/system/dbrestore', 'Restore Database', array(), $position);
             }
 
             // Adding System Log sub-menu (if permited)
             if ($this->authr->is_permited('sys_logs_manage'))
                 $this->themee->add_navmenu(
-                    $parent, 'ad_syslogs', 'link', 'admin/maintenance/syslogs', 'Aktifitas sistem', array(), $position);
+                    $parent, 'ad_syslogs', 'link', 'admin/system/syslogs', 'Aktifitas sistem', array(), $position);
         }
     }
 
