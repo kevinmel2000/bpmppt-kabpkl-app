@@ -73,8 +73,8 @@ $(document).ready( function () {
                     showHide(el, (val == state))
                 });
             } else {
-                $(tgt).change(function () {
-                    showHide(el, ($(tgt).val() === val))
+                $(tgt).change(function (e) {
+                    showHide(el, ($(this).val() == val))
                 })
             }
         }
