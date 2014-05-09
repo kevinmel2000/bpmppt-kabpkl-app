@@ -49,6 +49,7 @@ function add_placeholder( $array, $placeholder = '---', $langify = FALSE )
  */
 function bool_to_str( $bool, $uc = FALSE )
 {
+	$bool = (bool) $bool;
 	$ret = $bool ? 'ya' : 'tidak';
 
 	return $uc ? strtoupper( $ret ) : $ret;

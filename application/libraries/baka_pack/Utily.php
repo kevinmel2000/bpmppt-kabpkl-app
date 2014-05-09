@@ -118,6 +118,100 @@ class Utily
         return FALSE;
     }
 
+    public function get_server_info($key = '')
+    {
+        $out['php_version'] = phpversion();
+        
+        $out['server']['osname']       = php_uname('s');
+        $out['server']['hostname']     = php_uname('n');
+        $out['server']['codename']     = php_uname('r');
+        $out['server']['version']      = php_uname('v');
+        $out['server']['architecture'] = php_uname('m');
+
+        $out['db']['driver']         = self::$_ci->db->dbdriver;
+        $out['db']['host_info']      = self::$_ci->db->conn_id->host_info;
+        $out['db']['server_info']    = self::$_ci->db->conn_id->server_info;
+        $out['db']['server_version'] = self::$_ci->db->conn_id->server_version;
+        $out['db']['client_info']    = self::$_ci->db->conn_id->client_info;
+        $out['db']['client_version'] = self::$_ci->db->conn_id->client_version;
+        $out['db']['stat']           = self::$_ci->db->conn_id->stat;
+        $out['db']['cache_on']       = self::$_ci->db->cache_on;
+        $out['db']['cachedir']       = self::$_ci->db->cachedir;
+
+        foreach ($out['db'] as $db_k => $db_v)
+        {
+            $db_v = strlen($db_v) > 0 ? $db_v : '-';
+            $out['db'][$db_k] = $db_v;
+        }
+
+        $loaded_extensions = array_map('strtolower', get_loaded_extensions());
+        asort( $loaded_extensions );
+        foreach ($loaded_extensions as $i => $ext)
+        {
+            $version = phpversion($ext);
+            $out['php_extensions'][$ext] = (strlen($version) > 0 ? $version : '-');
+        }
+
+        $alloed_ini = array(
+            'allow_url_fopen',
+            'allow_url_fopen',
+            );
+
+        foreach (ini_get_all(NULL, FALSE) as $ini_key => $ini_value)
+        {
+            $name = str_replace('_', ' ', $ini_key);
+            $name = str_replace('.', ' ', $name);
+            $name = ucfirst($name);
+
+            $out['php_configs'][$ini_key]['name']   = $name;
+            $out['php_configs'][$ini_key]['value']  = $this->server_info_helper($ini_value);
+        }
+
+        $a2mods = apache_get_modules();
+        asort($a2mods);
+
+        foreach ($a2mods as $mod)
+        {
+            $out['apache_mods'][] = $mod;
+        }
+
+        if (strlen($key) > 0 and isset($out[$key]))
+        {
+            return $out[$key];
+        }
+
+        return $out;
+    }
+
+    protected function server_info_helper($value)
+    {
+        $value = htmlentities(trim($value));
+
+        if (is_numeric($value))
+        {
+            if ($value == 1)
+                $return = 'Ya';
+            else if ($value == 0)
+                $return = 'Tidak';
+            else
+                $return = $value;
+        }
+        else if (is_bool($value))
+        {
+            $return = bool_to_str($value);
+        }
+        else if (strlen($value) > 0)
+        {
+            $return = '<pre>'.$value.'</pre>';
+        }
+        else
+        {
+            $return = '-';
+        }
+
+        return $return;
+    }
+
     // -------------------------------------------------------------------------
 
     /**
@@ -171,7 +265,12 @@ class Utily
             }
         }
 
-        return $dir;
+        if (!empty($dir))
+        {
+            return $dir;
+        }
+
+        return FALSE;
     }
 
     // -------------------------------------------------------------------------
@@ -278,11 +377,6 @@ class Utily
             $file_path = $this->_destination.$file_name.'/';
         }
 
-        if ( strlen( self::$_ci->db->password ) > 0 )
-        {
-            $password = " -p".self::$_ci->db->password;
-        }
-
         self::$_ci->load->helpers('directory', 'date');
 
         // $this->clear( $file_name );
@@ -299,6 +393,13 @@ class Utily
     protected function _do_restore($file_path)
     {
         $map = directory_map($file_path);
+
+        $password = '';
+
+        if ( strlen( self::$_ci->db->password ) > 0 )
+        {
+            $password = " -p".self::$_ci->db->password;
+        }
 
         foreach ($map as $key => $value)
         {

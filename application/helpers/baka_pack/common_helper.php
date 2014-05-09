@@ -337,9 +337,9 @@ function make_tag($texts, $limit = 10)
     $out = '';
     $i   = 0;
 
-    foreach (explode(',', $texts) as $text)
+    foreach (explode(',', trim($texts)) as $text)
     {
-        $out .= twb_label($text, 'info').' ';
+        $out .= twb_label(trim($text), 'info').' ';
 
         if (++$i == $limit) break;
     }

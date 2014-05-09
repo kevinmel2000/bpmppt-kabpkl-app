@@ -2923,6 +2923,11 @@ th {
 .table > tbody + tbody {
   border-top: 2px solid #dddddd;
 }
+.table pre {
+  margin: 0 0 1px;
+  padding: 4px 8.5px 1px;
+  line-height: 1.2;
+}
 .table .table {
   background-color: #ffffff;
 }
@@ -6148,12 +6153,15 @@ textarea.input-group-sm > .input-group-btn > .ui-spinner-button {
 .label-approved[href]:focus {
   background-color: #449d44;
 }
+.label-debug,
 .label-warning,
 .label-pending {
   background-color: #f0ad4e;
 }
+.label-debug[href]:hover,
 .label-warning[href]:hover,
 .label-pending[href]:hover,
+.label-debug[href]:focus,
 .label-warning[href]:focus,
 .label-pending[href]:focus {
   background-color: #ec971f;
