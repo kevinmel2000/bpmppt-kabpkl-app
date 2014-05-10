@@ -97,11 +97,15 @@ class Layanan extends BAKA_Controller
                     break;
 
                 case 'data':
-                    $this->data( $data_type );
+                    $this->data( $data_type, $data_id );
                     break;
 
-                case 'template':
-                    $this->template( $data_type );
+                case 'data-out':
+                    $this->data_out( $data_type );
+                    break;
+
+                case 'print-out':
+                    $this->print_out( $data_type );
                     break;
 
                 default:
@@ -114,127 +118,72 @@ class Layanan extends BAKA_Controller
         }
     }
 
-    public function template( $data_type )
-    {
-        $modul_slug = $this->bpmppt->get_alias( $data_type );
-        $data_label = $this->bpmppt->get_label( $data_type );
-
-        $this->set_panel_title( 'Editing template output ' . $data_label );
-        $this->data['tool_buttons']['data'] = 'Kembali|default';
-
-        $this->load->helper('file');
-
-        $file_path      = APPPATH.'views/prints/products/'.$data_type.'.php';
-        $file_content   = read_file($file_path);
-        $file_content   = str_replace('<?php echo ', '{', $file_content);
-        $file_content   = str_replace(' ?>', '}', $file_content);
-
-        $fields[]   = array(
-            'name'  => 'tmpl-editor',
-            'type'  => 'editor',
-            'height'=> 300,
-            'label' => 'Template Editor',
-            'std'   => $file_content,
-            'left-desc'=> TRUE,
-            'desc'  => 'Ubah dan sesuaikan template Print out dokumen '.$data_label.' sesuai dengan keinginan anda.<br>'
-                    .  '<b>CATATAN: jangan mengubah isi dari text yang diapit oleh kurung kurawal "{...}" karna itu merupakan variabel data untuk output dokumen ini.</b><br>'
-                    .  'Jika anda hendak memindahkan posisi, cut dan paste keseluruhan text termasuk kurung kurawalnya <i>misal: {text}</i> ke posisi baru yang anda inginkan.',
-            );
-
-        $this->load->library('baka_pack/former');
-
-        $form = $this->former->init( array(
-            'name'      => 'template-'.$modul_slug,
-            'action'    => current_url(),
-            'fields'    => $fields,
-            ));
-
-        if ( $form_data = $form->validate_submition() )
-        {
-            $form_data['tmpl-editor'] = str_replace('{', '<?php echo ', $form_data['tmpl-editor']);
-            $form_data['tmpl-editor'] = str_replace('}', ' ?>', $form_data['tmpl-editor']);
-
-            // var_dump($form_data);
-
-            if (write_file($file_path.'', html_entity_decode($form_data['tmpl-editor'])))
-            {
-                $this->session->set_flashdata( 'success', 'Template '.$data_label.' berhasil diperbarui' );
-            }
-            else
-            {
-                $this->session->set_flashdata( 'error', 'Template gagal diperbarui' );
-            }
-
-            redirect(current_url());
-        }
-        else
-        {
-            $this->data['panel_body'] = $form->generate();
-
-            $this->load->theme('pages/panel_form', $this->data);
-        }
-    }
-
     public function data( $data_type, $id = FALSE )
     {
         // $this->data['search_form']   = TRUE;
         
-        if ($id)
+        if ($id == 'setting')
         {
-            redirect($this->data['page_link'].'form/'.$id);
+            $this->data_out( $data_type );
+            // redirect($this->data['page_link'].'form/'.$id);
         }
-
-        $this->data['tool_buttons']['form']              = 'Baru|primary';
-        $this->data['tool_buttons']['cetak']             = 'Laporan|info';
-        $this->data['tool_buttons']['Status:dd|default'] = array(
-            'data/status/semua'     => 'Semua',
-            'data/status/pending'   => 'Pending',
-            'data/status/approved'  => 'Disetujui',
-            'data/status/done'      => 'Selesai',
-            'data/status/deleted'   => 'Dihapus'
-            );
-        $this->data['tool_buttons']['template']             = 'Setting|info';
-
-        $this->set_panel_title( 'Semua data ' . $this->bpmppt->get_label( $data_type ) );
-
-        $slug = $this->bpmppt->get_alias( $data_type );
-        $stat  = FALSE;
-
-        switch ( $this->uri->segment(6) )
-        {
-            case 'status':
-                $stat   = $this->uri->segment(7);
-                $query  = $this->bpmppt->get_data_by_status( $stat, $slug );
-                break;
-            
-            case 'page':
-            default:
-                $query = $this->bpmppt->get_data_by_type( $slug );
-                break;
-        }
-
-        $this->load->library('baka_pack/gridr');
-
-        $grid = $this->gridr->identifier('id')
-                            ->set_baseurl($this->data['page_link'])
-                            ->set_column('Pengajuan',
-                                'callback_anchor:id|no_agenda, callback_format_datetime:created_on',
-                                '30%',
-                                FALSE,
-                                '<strong>%s</strong><br><small class="text-muted">Diajukan pada: %s</small>')
-                            ->set_column('Pemohon', 'petitioner', '40%', FALSE, '<strong>%s</strong>')
-                            ->set_column('Status', 'status, callback__x:status', '10%', FALSE, '<span class="label label-%s">%s</span>');
-
-        $grid->set_buttons('form/', 'eye-open', 'primary', 'Lihat data');
-
-        if ( $stat == 'deleted' )
-            $grid->set_buttons('delete/', 'trash', 'danger', 'Hapus data secara permanen');
         else
-            $grid->set_buttons('hapus/', 'trash', 'danger', 'Hapus data');
+        {
+            $this->data['tool_buttons']['form']              = 'Baru|primary';
+            $this->data['tool_buttons']['cetak']             = 'Laporan|info';
+            $this->data['tool_buttons']['Status:dd|default'] = array(
+                'data/status/semua'     => 'Semua',
+                'data/status/pending'   => 'Pending',
+                'data/status/approved'  => 'Disetujui',
+                'data/status/done'      => 'Selesai',
+                'data/status/deleted'   => 'Dihapus'
+                );
+            $this->data['tool_buttons']['Template:dd|default'] = array(
+                'data/setting'  => 'Data',
+                'cetak/setting' => 'Laporan',
+                );
 
-        $this->data['panel_body']    = $grid->make_table( $query );
+            $this->set_panel_title( 'Semua data ' . $this->bpmppt->get_label( $data_type ) );
 
-        $this->load->theme('pages/panel_data', $this->data);
+            $slug = $this->bpmppt->get_alias( $data_type );
+            $stat  = FALSE;
+
+            switch ( $this->uri->segment(6) )
+            {
+                case 'status':
+                    $stat   = $this->uri->segment(7);
+                    $query  = $this->bpmppt->get_data_by_status( $stat, $slug );
+                    break;
+                
+                case 'page':
+                default:
+                    $query = $this->bpmppt->get_data_by_type( $slug );
+                    break;
+            }
+
+            $this->load->library('baka_pack/gridr');
+
+            $grid = $this->gridr->identifier('id')
+                                ->set_baseurl($this->data['page_link'])
+                                ->set_column('Pengajuan',
+                                    'callback_anchor:id|no_agenda, callback_format_datetime:created_on',
+                                    '30%',
+                                    FALSE,
+                                    '<strong>%s</strong><br><small class="text-muted">Diajukan pada: %s</small>')
+                                ->set_column('Pemohon', 'petitioner', '40%', FALSE, '<strong>%s</strong>')
+                                ->set_column('Status', 'status, callback__x:status', '10%', FALSE, '<span class="label label-%s">%s</span>');
+
+            $grid->set_buttons('form/', 'eye-open', 'primary', 'Lihat data');
+
+            if ( $stat == 'deleted' )
+                $grid->set_buttons('delete/', 'trash', 'danger', 'Hapus data secara permanen');
+            else
+                $grid->set_buttons('hapus/', 'trash', 'danger', 'Hapus data');
+
+            $this->data['panel_body']    = $grid->make_table( $query );
+
+            $this->load->theme('pages/panel_data', $this->data);
+        }
     }
 
     public function form( $data_type, $data_id = FALSE )
@@ -373,11 +322,15 @@ class Layanan extends BAKA_Controller
 
     public function cetak( $data_type, $data_id = FALSE )
     {
-        if ( $data_id )
+        if ( is_numeric($data_id) )
         {
             $data = $this->bpmppt->get_print($data_type, $data_id);
 
             $this->load->theme('prints/products/'.$data_type, $data, 'print');
+        }
+        else if ( $data_id == 'setting' )
+        {
+            $this->print_out($data_type);
         }
         else
         {
@@ -483,6 +436,141 @@ class Layanan extends BAKA_Controller
         }
 
         redirect( $this->data['page_link'] );
+    }
+
+    public function data_out( $data_type )
+    {
+        $modul_slug = $this->bpmppt->get_alias( $data_type );
+        $data_label = $this->bpmppt->get_label( $data_type );
+
+        $this->set_panel_title( 'Editing template output ' . $data_label );
+        $this->data['tool_buttons']['data'] = 'Kembali|default';
+
+        $this->load->helper('file');
+
+        $file_path      = APPPATH.'views/prints/products/'.$data_type.'.php';
+        $file_content   = read_file($file_path);
+        $file_content   = str_replace('<?php echo ', '{', $file_content);
+        $file_content   = str_replace(' ?>', '}', $file_content);
+
+        $fields[]   = array(
+            'name'  => 'tmpl-editor',
+            'type'  => 'editor',
+            'height'=> 300,
+            'label' => 'Template Editor',
+            'std'   => $file_content,
+            'left-desc'=> TRUE,
+            'desc'  => 'Ubah dan sesuaikan template Print out dokumen '.$data_label.' sesuai dengan keinginan anda.<br>'
+                    .  '<b>CATATAN: jangan mengubah isi dari text yang diapit oleh kurung kurawal "{...}" karna itu merupakan variabel data untuk output dokumen ini.</b><br>'
+                    .  'Jika anda hendak memindahkan posisi, cut dan paste keseluruhan text termasuk kurung kurawalnya <i>misal: {text}</i> ke posisi baru yang anda inginkan.',
+            );
+
+        $this->load->library('baka_pack/former');
+
+        $form = $this->former->init( array(
+            'name'      => 'template-'.$modul_slug,
+            'action'    => current_url(),
+            'fields'    => $fields,
+            ));
+
+        if ( $form_data = $form->validate_submition() )
+        {
+            $form_data['tmpl-editor'] = str_replace('{', '<?php echo ', $form_data['tmpl-editor']);
+            $form_data['tmpl-editor'] = str_replace('}', ' ?>', $form_data['tmpl-editor']);
+
+            // var_dump($form_data);
+
+            if (write_file($file_path.'', html_entity_decode($form_data['tmpl-editor'])))
+            {
+                $this->session->set_flashdata( 'success', 'Template '.$data_label.' berhasil diperbarui' );
+            }
+            else
+            {
+                $this->session->set_flashdata( 'error', 'Template gagal diperbarui' );
+            }
+
+            redirect(current_url());
+        }
+        else
+        {
+            $this->data['panel_body'] = $form->generate();
+
+            $this->load->theme('pages/panel_form', $this->data);
+        }
+    }
+
+    public function print_out( $data_type )
+    {
+        $modul_slug = $this->bpmppt->get_alias( $data_type );
+        $data_label = $this->bpmppt->get_label( $data_type );
+
+        $this->set_panel_title( 'Editing template output ' . $data_label );
+        $this->data['tool_buttons']['data'] = 'Kembali|default';
+
+        $this->load->helper('file');
+
+        $file_path      = APPPATH.'views/prints/reports/'.$data_type.'.php';
+        $file_content   = read_file($file_path);
+
+        $file_content   = str_replace('<?php if ( $results ) : $i = 1; foreach( $results as $row ) : ?>', '<!-- start loop -->', $file_content);
+        $file_content   = str_replace('<?php $i++; endforeach; else : ?>', '<!-- conditional loop -->', $file_content);
+        $file_content   = str_replace('<?php endif ?>', '<!-- end loop -->', $file_content);
+
+        $file_content   = str_replace('$row->', '%', $file_content);
+
+        $file_content   = str_replace('<?php echo ', '{', $file_content);
+        $file_content   = str_replace(' ?>', '}', $file_content);
+
+        $fields[]   = array(
+            'name'  => 'tmpl-editor',
+            'type'  => 'editor',
+            'height'=> 300,
+            'label' => 'Template Editor',
+            'std'   => $file_content,
+            'left-desc'=> TRUE,
+            'desc'  => 'Ubah dan sesuaikan template Print out dokumen '.$data_label.' sesuai dengan keinginan anda.<br>'
+                    .  '<b>CATATAN: jangan mengubah isi dari text yang diapit oleh kurung kurawal "{...}" karna itu merupakan variabel data untuk output dokumen ini.</b><br>'
+                    .  'Jika anda hendak memindahkan posisi, cut dan paste keseluruhan text termasuk kurung kurawalnya <i>misal: {text}</i> ke posisi baru yang anda inginkan.',
+            );
+
+        $this->load->library('baka_pack/former');
+
+        $form = $this->former->init( array(
+            'name'      => 'template-'.$modul_slug,
+            'action'    => current_url(),
+            'fields'    => $fields,
+            ));
+
+        if ( $form_data = $form->validate_submition() )
+        {
+            $form_data['tmpl-editor'] = str_replace('%', '$row->', $form_data['tmpl-editor']);
+
+            $form_data['tmpl-editor'] = str_replace('{', '<?php echo ', $form_data['tmpl-editor']);
+            $form_data['tmpl-editor'] = str_replace('}', ' ?>', $form_data['tmpl-editor']);
+
+            $form_data['tmpl-editor'] = str_replace('<!-- start loop -->', '<?php if ( $results ) : $i = 1; foreach( $results as $row ) : ?>', $form_data['tmpl-editor']);
+            $form_data['tmpl-editor'] = str_replace('<!-- conditional loop -->', '<?php $i++; endforeach; else : ?>', $form_data['tmpl-editor']);
+            $form_data['tmpl-editor'] = str_replace('<!-- end loop -->', '<?php endif ?>', $form_data['tmpl-editor']);
+
+            // var_dump($form_data);
+
+            if (write_file($file_path.'', html_entity_decode($form_data['tmpl-editor'])))
+            {
+                $this->session->set_flashdata( 'success', 'Template '.$data_label.' berhasil diperbarui' );
+            }
+            else
+            {
+                $this->session->set_flashdata( 'error', 'Template gagal diperbarui' );
+            }
+
+            redirect(current_url());
+        }
+        else
+        {
+            $this->data['panel_body'] = $form->generate();
+
+            $this->load->theme('pages/panel_form', $this->data);
+        }
     }
 }
 
