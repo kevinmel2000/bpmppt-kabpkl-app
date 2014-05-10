@@ -59,9 +59,13 @@ class Themee
         $this->_theme_data['body_class'] = 'page';
 
         Asssets::set_script('jquery', 'lib/jquery.min.js', '', '2.0.3');
-        Asssets::set_script('baka_pack', 'script.js', 'jquery' );
+        Asssets::set_script('baka-pack', 'script.js', 'jquery' );
         Asssets::set_script('bootstrap', 'lib/bootstrap.min.js', 'jquery', '3.0.0' );
-        Asssets::set_style('baka_pack', 'style.min.css');
+        Asssets::set_style('baka-pack', 'style.min.css');
+
+        $script = "$('.twbs-tooltip').tooltip();";
+
+        Asssets::set_script('bootstrap-tooltip-trigger', $script, 'bootstrap');
 
         log_message('debug', "#Baka_pack: Themee Class Initialized");
     }

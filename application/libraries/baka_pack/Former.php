@@ -249,6 +249,36 @@ class Former
             $this->set_template($attrs['template']);
         }
 
+        $script = "function showHide(el, state) {\n"
+                . "    if (state) {\n"
+                . "        el.removeClass('hide')\n"
+                . "    } else {\n"
+                . "        el.addClass('hide')\n"
+                . "    }\n"
+                . "}\n"
+                . "$('.form-group').each(function () {\n"
+                . "    if ($(this).data('fold') === 1) {\n"
+                . "        var el  = $(this),\n"
+                . "            key = el.data('fold-key'),\n"
+                . "            val = el.data('fold-value'),\n"
+                . "            tgt = '[name=\"'+key+'\"]';\n"
+                . "        if ($(tgt).val() != val) {\n"
+                . "            $(this).addClass('hide');\n"
+                . "        }\n"
+                . "        if ($(tgt).hasClass('bs-switch')) {\n"
+                . "            $(tgt).on('switchChange.bootstrapSwitch', function(event, state) {\n"
+                . "                showHide(el, (val == state))\n"
+                . "            });\n"
+                . "        } else {\n"
+                . "            $(tgt).change(function (e) {\n"
+                . "                showHide(el, ($(this).val() == val))\n"
+                . "            })\n"
+                . "        }\n"
+                . "    }\n"
+                . "})";
+
+        Asssets::set_script('former-script', $script, 'baka-pack');
+
         return $this;
     }
 

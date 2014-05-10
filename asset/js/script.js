@@ -15,8 +15,6 @@ var Baka = {
 
 $(document).ready( function () {
 
-    $('.twbs-tooltip').tooltip();
-
     $('#toolbar-btn-cetak').on('click', function(e) {
         var url = $(this).attr('href')
             title = $(this).attr('title');
@@ -29,7 +27,9 @@ $(document).ready( function () {
     $('#toolbar-btn-hapus*').on('click', function(e) {
         var message = $(this).data('message');
 
-        return new Baka.confrm(message);
+        new Baka.confrm(message);
+
+        e.preventDefault();
     })
 
     if ($('.table-exp tbody tr').length === 1) {
@@ -48,35 +48,4 @@ $(document).ready( function () {
                 $('.remove-btn').addClass('disabled')
             }
         })
-
-    function showHide(el, state) {
-        if (state) {
-            el.removeClass('hide')
-        } else {
-            el.addClass('hide')
-        }
-    }
-
-    $('.form-group').each(function () {
-        if ($(this).data('fold') === 1) {
-            var el  = $(this),
-                key = el.data('fold-key'),
-                val = el.data('fold-value'),
-                tgt = '[name="'+key+'"]';
-
-            if ($(tgt).val() != val) {
-                $(this).addClass('hide');
-            }
-
-            if ($(tgt).hasClass('bs-switch')) {
-                $(tgt).on('switchChange.bootstrapSwitch', function(event, state) {
-                    showHide(el, (val == state))
-                });
-            } else {
-                $(tgt).change(function (e) {
-                    showHide(el, ($(this).val() == val))
-                })
-            }
-        }
-    })
 });
