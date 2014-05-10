@@ -91,7 +91,7 @@ class Bpmppt_ho extends CI_Driver
         $fields[]   = array(
             'name'  => $this->alias.'_surat_jenis_pengajuan',
             'label' => 'Jenis Pengajuan',
-            'type'  => 'dropdown',
+            'type'  => 'radio',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
             'std'   => ( $data_obj ? $data_obj->surat_jenis_pengajuan : ''),
             'option'=> array(

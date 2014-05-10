@@ -125,7 +125,10 @@ class Layanan extends BAKA_Controller
         if ($id == 'setting')
         {
             $this->data_out( $data_type );
-            // redirect($this->data['page_link'].'form/'.$id);
+        }
+        else if (is_numeric($id))
+        {
+            redirect($this->data['page_link'].'form/'.$id);
         }
         else
         {
@@ -176,11 +179,15 @@ class Layanan extends BAKA_Controller
             $grid->set_buttons('form/', 'eye-open', 'primary', 'Lihat data');
 
             if ( $stat == 'deleted' )
+            {
                 $grid->set_buttons('delete/', 'trash', 'danger', 'Hapus data secara permanen');
+            }
             else
+            {
                 $grid->set_buttons('hapus/', 'trash', 'danger', 'Hapus data');
+            }
 
-            $this->data['panel_body']    = $grid->make_table( $query );
+            $this->data['panel_body'] = $grid->make_table( $query );
 
             $this->load->theme('pages/panel_data', $this->data);
         }
@@ -227,10 +234,14 @@ class Layanan extends BAKA_Controller
             $data_label = 'Permohonan';
 
             if ($data_type == 'tdp')
+            {
                 $data_label = 'Agenda';
+            }
             
             if ($data_type == 'siup')
+            {
                 $data_label = 'SIUP';
+            }
 
             $fields[]   = array(
                 'name'  => $modul_slug.'_surat',
@@ -295,19 +306,11 @@ class Layanan extends BAKA_Controller
                 $form_data[$modul_slug.'_tambang_koor'] = serialize($koordinat);
             }
 
-            foreach ($this->bpmppt->$data_type->fields as $field)
-            {
-                if (!isset($form_data[$modul_slug.$field]))
-                    $form_data[$modul_slug.$field] = '';
-            }
-
             unset($form_data[$modul_slug]);
-
-            // var_dump($form_data);
 
             $data_id = $this->bpmppt->simpan( $modul_slug, $form_data );
             
-            foreach ( $this->bpmppt->messages() as $level => $message )
+            foreach ( Messg::get() as $level => $message )
             {
                 $this->session->set_flashdata( $level, $message );
             }

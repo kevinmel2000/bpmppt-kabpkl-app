@@ -35,7 +35,7 @@ class Bpmppt extends CI_Driver_Library
      *
      * @var  string
      */
-    protected $_ci = '';
+    public $_ci = '';
 
     /**
      * Valid drivers that will be loaded
@@ -71,8 +71,6 @@ class Bpmppt extends CI_Driver_Library
      * @var  array
      */
     private $modules = array();
-
-    private $messages = array();
 
     /**
      * Default class constructor
@@ -314,7 +312,9 @@ class Bpmppt extends CI_Driver_Library
             );
 
         if ( $where['data_status'] != 'all' )
+        {
             $wheres['status'] = $where['data_status'];
+        }
 
         return $this->q_report( $wheres );
     }
@@ -335,25 +335,18 @@ class Bpmppt extends CI_Driver_Library
 
         if ( $result = $this->create_data( $driver_alias, $data, $form_data ) )
         {
-            $this->messages['success'] = array(
+            Messg::set('success', array(
                 'Permohonan dari saudara/i '.$data['petitioner'].' berhasil disimpan.',
-                'Klik cetak jika anda ingin langsung mencetaknya.');
+                'Klik cetak jika anda ingin langsung mencetaknya.'));
 
             return $result;
         }
         else
         {
-            $this->messages['error'] =  'Terjadi kegagalan penginputan data.' ;
+            Messg::set('error', 'Terjadi kegagalan penginputan data.');
 
             return FALSE;
         }
-    }
-
-    // -------------------------------------------------------------------------
-
-    public function messages()
-    {
-        return $this->messages;
     }
 }
 

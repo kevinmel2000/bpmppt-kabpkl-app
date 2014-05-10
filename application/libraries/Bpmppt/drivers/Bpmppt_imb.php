@@ -85,7 +85,7 @@ class Bpmppt_imb extends CI_Driver
         $fields[]   = array(
             'name'  => $this->alias.'_bangunan_maksud',
             'label' => 'Maksud Permohonan',
-            'type'  => 'dropdown',
+            'type'  => 'radio',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
             'option'=> array(
                 'baru'  => 'Mendirikan Bangunan Baru',
@@ -96,7 +96,7 @@ class Bpmppt_imb extends CI_Driver
         $fields[]   = array(
             'name'  => $this->alias.'_bangunan_guna',
             'label' => 'Penggunaan bangunan',
-            'type'  => 'dropdown',
+            'type'  => 'radio',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
             'option'=> array(
                 'Rumah Tinggal' => 'Rumah Tinggal',

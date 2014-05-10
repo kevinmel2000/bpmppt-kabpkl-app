@@ -96,13 +96,13 @@ class Bpmppt_iui extends CI_Driver
         $fields[]   = array(
             'name'  => $this->alias.'_permohonan_jenis',
             'label' => 'Jenis Pengajuan',
-            'type'  => 'dropdown',
+            'type'  => 'radio',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
             'std'   => ( $data_obj ? $data_obj->permohonan_jenis : ''),
             'option'=> array(
-                'br' => 'Pendaftaran Baru',
-                'bn' => 'Balik Nama',
-                'du' => 'Daftar Ulang' ),
+                'Pendaftaran Baru' => 'Pendaftaran Baru',
+                'Balik Nama'       => 'Balik Nama',
+                'Daftar Ulang'     => 'Daftar Ulang' ),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
         $fields[]   = array(
@@ -121,10 +121,8 @@ class Bpmppt_iui extends CI_Driver
         $fields[]   = array(
             'name'  => $this->alias.'_pemohon_kerja',
             'label' => 'Pekerjaan',
-            'type'  => 'dropdown',
+            'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->pemohon_kerja : ''),
-            'option'=> array(
-                'kerja'=> 'Pekerjaan' ),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
         $fields[]   = array(

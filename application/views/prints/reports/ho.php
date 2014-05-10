@@ -1,4 +1,4 @@
-<table width="100%" class="bordered">
+<table width="100$row->" class="bordered">
     <thead>
         <tr>
             <th>No.</th>
@@ -7,6 +7,7 @@
             <th>Nama Pemohon</th>
             <th>Nomor IUI</th>
             <th>Berlaku Mulai</th>
+            <th>Berlaku Mulai dari</th>
             <th>Berlaku Sp. Dengan</th>
             <th>Komoditi</th>
             <th>Total Investasi</th>
@@ -32,6 +33,7 @@
             <th>13</th>
             <th>14</th>
             <th>15</th>
+            <th>16</th>
         </tr>
     </thead>
     <tbody>
@@ -44,6 +46,7 @@
             <td class="align-left"><?php echo $row->usaha_nama ?></td>
             <td class="align-left"><?php echo $row->usaha_alamat ?></td>
             <td class="align-left"><?php echo $row->pemohon_nama ?></td>
+            <td class="align-left"><?php echo $row->pemohon_nama ?></td>
             <td class="align-left"><?php echo $row->usaha_status ?></td>
             <td class="align-left"><?php echo $row->usaha_kegiatan_pokok ?></td>
             <td class="align-center"><?php echo $row->usaha_kegiatan_kbli ?></td>
@@ -54,7 +57,7 @@
         </tr>
     <?php $i++; endforeach; else : ?>
         <tr>
-            <td colspan="15"><h1 style="text-align: center;">NIHIL</h1></td>
+            <td colspan="16"><h1 style="text-align: center;">NIHIL</h1></td>
         </tr>
     <?php endif ?>
     </tbody>

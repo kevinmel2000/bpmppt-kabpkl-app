@@ -107,11 +107,10 @@ class Bpmppt_siup extends CI_Driver
         $fields[]   = array(
             'name'  => $this->alias.'_pengajuan_jenis',
             'label' => 'Jenis Pengajuan',
-            'type'  => 'dropdown',
+            'type'  => 'radio',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
             'std'   => ( $data_obj ? $data_obj->pengajuan_jenis : ''),
             'option'=> array(
-                '' => '---',
                 'Pendaftaran Baru' => 'Pendaftaran Baru',
                 'Perubahan'        => 'Perubahan',
                 'Daftar Ulang'     => 'Daftar Ulang' ) );
@@ -120,6 +119,10 @@ class Bpmppt_siup extends CI_Driver
             'name'  => $this->alias.'_pembaruan_ke',
             'label' => 'Daftar ulang Ke',
             'type'  => 'text',
+            'fold'  => array(
+                'key' => $this->alias.'_pengajuan_jenis',
+                'value' => 'Daftar Ulang'
+                ),
             'std'   => ( $data_obj ? $data_obj->pembaruan_ke : '') );
 
         $fields[]   = array(
@@ -217,19 +220,18 @@ class Bpmppt_siup extends CI_Driver
         $fields[]   = array(
             'name'  => $this->alias.'_usaha_jenis',
             'label' => 'Jenis Perusahaan',
-            'type'  => 'dropdown',
+            'type'  => 'radio',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
             'std'   => ( $data_obj ? $data_obj->usaha_jenis : ''),
-            'option'=> add_placeholder( $jns_opt ) );
+            'option'=> $jns_opt );
 
         $fields[]   = array(
             'name'  => $this->alias.'_usaha_skala',
             'label' => 'Skala Perusahaan',
-            'type'  => 'dropdown',
+            'type'  => 'radio',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
             'std'   => ( $data_obj ? $data_obj->usaha_skala : ''),
             'option'=> array(
-                '' => '---',
                 'MK' => 'Mikro',
                 'PK' => 'Perusahaan Kecil',
                 'PM' => 'Menengah',

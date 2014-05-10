@@ -135,11 +135,10 @@ class Bpmppt_tdp extends CI_Driver
         $fields[]   = array(
             'name'  => $this->alias.'_pengajuan_jenis',
             'label' => 'Jenis Pengajuan',
-            'type'  => 'dropdown',
+            'type'  => 'radio',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
             'std'   => ( $data_obj ? $data_obj->pengajuan_jenis : ''),
             'option'=> array(
-                '' => '---',
                 'daftar baru'   => 'Pendaftaran Baru',
                 'balik nama'    => 'Balik Nama',
                 'daftar ulang'  => 'Daftar Ulang' ));
@@ -180,10 +179,9 @@ class Bpmppt_tdp extends CI_Driver
         $fields[]   = array(
             'name'  => $this->alias.'_pemilik_kwn',
             'label' => 'Kewarganegaraan',
-            'type'  => 'dropdown',
+            'type'  => 'radio',
             'std'   => ( $data_obj ? $data_obj->pemilik_kwn : ''),
             'option'=> array(
-                '' => '---',
                 'wni' => 'Warga Negara Indonesia',
                 'wna' => 'Warga Negara Asing' ));
 
@@ -249,24 +247,25 @@ class Bpmppt_tdp extends CI_Driver
             );
 
         foreach ( $u_jenis as $jenis )
+        {
             $jns_opt[$jenis] = $jenis;
+        }
 
         $fields[]   = array(
             'name'  => $this->alias.'_usaha_jenis',
             'label' => 'Jenis Perusahaan',
-            'type'  => 'dropdown',
+            'type'  => 'radio',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
             'std'   => ( $data_obj ? $data_obj->usaha_jenis : ''),
-            'option'=> add_placeholder( $jns_opt ));
+            'option'=> $jns_opt );
 
         $fields[]   = array(
             'name'  => $this->alias.'_usaha_skala',
             'label' => 'Skala Perusahaan',
-            'type'  => 'dropdown',
+            'type'  => 'radio',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
             'std'   => ( $data_obj ? $data_obj->usaha_skala : ''),
             'option'=> array(
-                '' => '---',
                 'PK' => 'Perusahaan Kecil',
                 'PM' => 'Menengah',
                 'PB' => 'Besar' ));
@@ -274,11 +273,10 @@ class Bpmppt_tdp extends CI_Driver
         $fields[]   = array(
             'name'  => $this->alias.'_usaha_status',
             'label' => 'Status Perusahaan',
-            'type'  => 'dropdown',
+            'type'  => 'radio',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
             'std'   => ( $data_obj ? $data_obj->usaha_status : ''),
             'option'=> array(
-                '' => '---',
                 'tunggal' => 'Kantor Tunggal',
                 'pusat' => 'Kantor Pusat',
                 'cabang' => 'Kantor Cabang',
