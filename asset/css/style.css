@@ -10366,11 +10366,13 @@ a.datepicker .table-condensed tr td span.active.disabled:hover:hover {
   vertical-align: middle;
   vertical-align: -webkit-baseline-middle;
 }
-@media (max-width: 991px) {
-  .form-input > .row > div {
+@media (max-width: 768px) {
+  .form-input > .row > .col-sm-12,
+  .form-input > .row > .col-xs-12 {
     padding-top: 10px;
   }
-  .form-input > .row > div:first-child {
+  .form-input > .row > .col-sm-12:first-child,
+  .form-input > .row > .col-xs-12:first-child {
     padding-top: 0;
   }
 }

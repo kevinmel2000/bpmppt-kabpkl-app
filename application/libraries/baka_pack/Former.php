@@ -155,9 +155,17 @@ class Former
         'label_open'    => "<label class='%s' %s>",
         'label_close'   => "</label>",
         'label_class'   => "control-label",
+        'label_col_lg'  => 3,
+        'label_col_md'  => 3,
+        'label_col_sm'  => 3,
+        'label_col_xs'  => 12,
         'field_open'    => "<div class='%s' %s>",
         'field_close'   => "</div>",
         'field_class'   => "form-control input",
+        'field_col_lg'  => 9,
+        'field_col_md'  => 9,
+        'field_col_sm'  => 9,
+        'field_col_xs'  => 12,
         'buttons_class' => "btn",
         'required_attr' => " <abbr title='Field ini harus diisi'>*</abbr>",
         'desc_open'     => "<span class='help-block'>",
@@ -257,19 +265,28 @@ class Former
                 . "    }\n"
                 . "}\n"
                 . "$('.form-group').each(function () {\n"
-                . "    if ($(this).data('fold') === 1) {\n"
+                . "    if ($(this).data('fold') == 1) {\n"
                 . "        var el  = $(this),\n"
                 . "            key = el.data('fold-key'),\n"
                 . "            val = el.data('fold-value'),\n"
                 . "            tgt = '[name=\"'+key+'\"]';\n"
-                . "        if ($(tgt).val() != val) {\n"
-                . "            $(this).addClass('hide');\n"
+                
+                . "        if ($(tgt).is(':radio')) {\n"
+                . "            showHide(el, ($(tgt).filter(':checked').val() == val))\n"
                 . "        }\n"
+                . "        else if ($(tgt).is(':checkbox')) {\n"
+                . "            showHide(el, ($(tgt).is(':checked') == val))\n"
+                . "        }\n"
+                . "        else {\n"
+                . "            showHide(el, ($(tgt).val() == val))\n"
+                . "        }\n"
+
                 . "        if ($(tgt).hasClass('bs-switch')) {\n"
                 . "            $(tgt).on('switchChange.bootstrapSwitch', function(event, state) {\n"
                 . "                showHide(el, (val == state))\n"
                 . "            });\n"
-                . "        } else {\n"
+                . "        }\n"
+                . "        else {\n"
                 . "            $(tgt).change(function (e) {\n"
                 . "                showHide(el, ($(this).val() == val))\n"
                 . "            })\n"
@@ -301,7 +318,9 @@ class Former
         foreach ($valid_tmpl as $option)
         {
             if (isset($template[$option]))
+            {
                 $this->_template[$option] = $template[$option];
+            }
         }
 
         return $this;
@@ -553,7 +572,7 @@ class Former
                         $field['col'] = floor(12/$c_fields);
                     }
 
-                    $input .= '<div class="col-md-'.$field['col'].'">';
+                    $input .= '<div class="'.$this->set_columns($field['col'], $field['col'], $field['col'], 12).'">';
                     $field_attrs['validation'] = '';
 
                     if (isset($field['validation']) AND $field['validation'] != '')
@@ -584,7 +603,9 @@ class Former
             $input .= '</div>';
 
             if (count($errors) > 0)
+            {
                 $field_attrs['desc']['err'] = $errors;
+            }
 
             $html .= $this->_form_common($field_attrs, $input);
         }
@@ -644,7 +665,7 @@ class Former
                 case 'number':
                 case 'spinner':
                     $jqui_load = TRUE;
-                    Asssets::set_script('jqui-spinner', $jqui_path.'jquery.ui.spinner.min.js', 'jqui-core', '1.10.4');
+                    Asssets::set_script('jqui-spinner', $jqui_path.'spinner.min.js', 'jqui-core', '1.10.4');
 
                     if (!isset($min)) $min = 0;
                     if (!isset($max)) $max = 10;
@@ -678,7 +699,7 @@ class Former
                 case 'slider':
                 case 'rangeslider':
                     $jqui_load = TRUE;
-                    Asssets::set_script('jqui-slider', $jqui_path.'jquery.ui.slider.min.js', 'jqui-core', '1.10.4');
+                    Asssets::set_script('jqui-slider', $jqui_path.'slider.min.js', 'jqui-core', '1.10.4');
 
                     if (!isset($min)) $min = 0;
                     if (!isset($max)) $max = 10;
@@ -720,13 +741,13 @@ class Former
 
                     Asssets::set_script('jqui-slider-trigger', $script, 'jqui-slider');
 
-                    $input  = '<div class="row"><div class="col-lg-2">'
+                    $input  = '<div class="row"><div class="'.$this->set_columns(2, 2, 2, 3).'">'
                             . form_input(array(
                                 'name'  => $name,
                                 'id'    => $id,
                                 'type'  => 'number',
                                 'class' => $input_class), set_value($name, $std), $attr)
-                            . '</div><div class="col-lg-10">'
+                            . '</div><div class="'.$this->set_columns(10, 10, 10, 9).'">'
                             . '<div class="jqui-slider" data-slider-input-target="'.$id.'" data-slider-step="'.$step.'" data-slider-min="'.$min.'" data-slider-max="'.$max.'"></div>'
                             . '</div></div>';
                     break;
@@ -775,6 +796,7 @@ class Former
                 // Upload field
                 // Using CI form_upload() function
                 // Ajax Upload using FineUploader.JS
+                case 'file':
                 case 'upload':
                     if (!isset($allowed_types))
                     {
@@ -833,6 +855,7 @@ class Former
                     Asssets::set_script('bs-switch-trigger', "$('.bs-switch').bootstrapSwitch();", 'bs-switch');
 
                     $_id = str_replace('-', '-', $name);
+                    $std = (int) $std;
                     $checked = ($std == 1 ? TRUE : FALSE);
 
                     $input = form_checkbox(array(
@@ -890,7 +913,7 @@ class Former
                                     . '<label for="'.$_id.'"> '.$opt.'</label>'
                                     . '</div>';
 
-                            $rc .= ($devide ? '<div class="col-md-6">'.$check.'</div>' : $check);
+                            $rc .= ($devide ? '<div class="'.$this->set_columns(6, 6, 6).'">'.$check.'</div>' : $check);
 
                             if ($devide AND $count % 2 == 0)
                             {
@@ -1014,11 +1037,11 @@ class Former
 
             if ($jqui_load)
             {
-                Asssets::set_script('jqui-core', $jqui_path.'jquery.ui.core.min.js', 'jquery', '1.10.4');
-                Asssets::set_script('jqui-widget', $jqui_path.'jquery.ui.widget.min.js', 'jqui-core', '1.10.4');
-                Asssets::set_script('jqui-button', $jqui_path.'jquery.ui.button.min.js', 'jqui-widget', '1.10.4');
-                Asssets::set_script('jqui-mouse', $jqui_path.'jquery.ui.mouse.min.js', 'jqui-widget', '1.10.4');
-                Asssets::set_script('jqui-position', $jqui_path.'jquery.ui.position.min.js', 'jqui-widget', '1.10.4');
+                Asssets::set_script('jqui-core', $jqui_path.'core.min.js', 'jquery', '1.10.4');
+                Asssets::set_script('jqui-widget', $jqui_path.'widget.min.js', 'jqui-core', '1.10.4');
+                Asssets::set_script('jqui-button', $jqui_path.'button.min.js', 'jqui-widget', '1.10.4');
+                Asssets::set_script('jqui-mouse', $jqui_path.'mouse.min.js', 'jqui-widget', '1.10.4');
+                Asssets::set_script('jqui-position', $jqui_path.'position.min.js', 'jqui-widget', '1.10.4');
                 Asssets::set_script('jquery-mousewheel', 'lib/jquery.mousewheel.min.js', 'jquery', '3.1.0');
             }
 
@@ -1079,8 +1102,8 @@ class Former
             $group_class .= ' '.$attrs['class'];
         }
 
-        $label_col = $this->is_hform ? ' col-lg-3 col-md-3 col-sm-3 ' : '';
-        $input_col = $this->is_hform ? ' col-lg-9 col-md-9 col-sm-9 ' : '';
+        $label_col = $this->is_hform ? $this->set_columns($label_col_lg, $label_col_md, $label_col_sm, $label_col_xs) : '';
+        $input_col = $this->is_hform ? $this->set_columns($field_col_lg, $field_col_md, $field_col_sm, $field_col_xs) : '';
 
         $group_attr = 'id="group-'.str_replace('_', '-', $attrs['name']).'"';
 
@@ -1153,8 +1176,8 @@ class Former
 
         // If you were use Bootstrap form-horizontal class in your form,
         // You'll need to specify Bootstrap grids class.
-        $group_col  = $this->is_hform ? 'col-lg-12 col-md-12 ' : '';
-        $output     = '<div class="form-group form-action"><div class="'.$group_col.'clearfix">';
+        $group_col  = $this->is_hform ? $this->set_columns(12, 12) : '';
+        $output     = '<div class="form-group form-action"><div class="clearfix'.$group_col.'">';
 
         // Let's reset your button attributes.
         $button_attr = array();
@@ -1387,6 +1410,55 @@ class Former
         }
 
         return $field;
+    }
+
+    // -------------------------------------------------------------------------
+
+    protected function set_columns($lg = NULL, $md = NULL, $sm = NULL, $xs = NULL, $xxs = NULL)
+    {
+        if (is_array($lg))
+        {
+            $lg = $this->_set_defaults($lg, array(
+                'lg'  => NULL,
+                'md'  => NULL,
+                'sm'  => NULL,
+                'xs'  => NULL,
+                'xxs' => NULL,
+                ));
+
+            return $this->set_columns($lg['lg'], $lg['md'], $lg['sm'], $lg['xs'], $lg['xxs']);
+        }
+        else
+        {
+            $out = '';
+
+            if (!is_null($lg))
+            {
+                $out .= ' col-lg-'.$lg;
+            }
+
+            if (!is_null($md))
+            {
+                $out .= ' col-md-'.$md;
+            }
+
+            if (!is_null($sm))
+            {
+                $out .= ' col-sm-'.$sm;
+            }
+
+            if (!is_null($xs))
+            {
+                $out .= ' col-xs-'.$xs;
+            }
+
+            if (!is_null($xxs))
+            {
+                $out .= ' col-xxs-'.$xxs;
+            }
+
+            return $out;
+        }
     }
 
     // -------------------------------------------------------------------------

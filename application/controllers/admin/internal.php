@@ -441,42 +441,35 @@ class Internal extends BAKA_Controller
             'type'  => 'switch',
             'label' => 'Gunakan reCaptcha',
             'fold'  => array(
+<<<<<<< HEAD
                 'key' => 'auth_captcha_registration',
+=======
+                'key'   => 'auth_captcha_registration',
+>>>>>>> devel
                 'value' => 1
                 ),
             'std'   => Setting::get('auth_use_recaptcha'),
             'desc'  => 'Gunakan '.anchor('https://www.google.com/recaptcha', 'google reCaptcha', 'target="_blank"').' untuk validasi.' );
 
-        $key_attr = '';
-        $key_validation = 'required';
-
-        if ( Setting::get('auth_use_recaptcha') == 0 )
-        {
-            $key_attr = 'disabled';
-            $key_validation = '';
-        }
-
         $fields[]   = array(
             'name'  => 'auth_recaptcha_public_key',
             'type'  => 'text',
-            'attr'  => $key_attr,
             'label' => 'reCaptcha public key',
             'fold'  => array(
                 'key'   => 'auth_use_recaptcha',
-                'value' => 1),
-            'std'   => Setting::get('auth_recaptcha_public_key'),
-            'validation'=> $key_validation );
+                'value' => 1
+                ),
+            'std'   => Setting::get('auth_recaptcha_public_key') );
 
         $fields[]   = array(
             'name'  => 'auth_recaptcha_private_key',
             'type'  => 'text',
-            'attr'  => $key_attr,
             'label' => 'reCaptcha private key',
             'fold'  => array(
                 'key'   => 'auth_use_recaptcha',
-                'value' => 1),
-            'std'   => Setting::get('auth_recaptcha_private_key'),
-            'validation'=> $key_validation );
+                'value' => 1
+                ),
+            'std'   => Setting::get('auth_recaptcha_private_key') );
 
         $fields[]   = array(
             'name'  => 'auth_fieldset_blacklist',
