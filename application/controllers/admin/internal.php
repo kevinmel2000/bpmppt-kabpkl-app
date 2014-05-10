@@ -441,11 +441,7 @@ class Internal extends BAKA_Controller
             'type'  => 'switch',
             'label' => 'Gunakan reCaptcha',
             'fold'  => array(
-<<<<<<< HEAD
                 'key' => 'auth_captcha_registration',
-=======
-                'key'   => 'auth_captcha_registration',
->>>>>>> devel
                 'value' => 1
                 ),
             'std'   => Setting::get('auth_use_recaptcha'),
