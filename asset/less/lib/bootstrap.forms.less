@@ -189,6 +189,58 @@ input[type="file"] {
   margin-bottom: 10px;
 }
 
+// Form info
+
+.form-info {
+  &:extend(.clearfix all);
+  &:extend(.alert all);
+
+  .info-heading {
+    font-size: 18px;
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid transparent;
+  }
+
+  .info-content {
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &.info-danger {
+    &:extend(.alert-danger all);
+
+    .info-heading {
+      border-bottom-color: @alert-danger-border;
+    }
+  }
+
+  &.info-success {
+    &:extend(.alert-success all);
+
+    .info-heading {
+      border-bottom-color: @alert-success-border;
+    }
+  }
+
+  &.info-default {
+    &:extend(.alert-info all);
+
+    .info-heading {
+      border-bottom-color: @alert-info-border;
+    }
+  }
+
+  &.info-warning {
+    &:extend(.alert-warning all);
+
+    .info-heading {
+      border-bottom-color: @alert-warning-border;
+    }
+  }
+}
+
 
 // Checkboxes and radios
 //

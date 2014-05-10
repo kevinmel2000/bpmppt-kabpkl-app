@@ -558,6 +558,36 @@ class Former
 
             $html .= $this->_form_common($field_attrs, $input);
         }
+        else if ($type == 'info')
+        {
+            if (!isset($class))
+            {
+                $class = 'default';
+            }
+
+            if (in_array($class, array('default', 'danger', 'warning', 'success')))
+            {
+                $class = 'info-'.$class;
+            }
+
+            $html .= '<div class="form-info '.$class.'" id="'.$id.'">'
+                  .  '<h3 class="info-heading">'.$label.'</h3>'
+                  .  '<div class="info-content">';
+
+            if (is_array($value))
+            {
+                foreach ($value as $val)
+                {
+                    $html .= '<p>'.$val.'</p>';
+                }
+            }
+            else
+            {
+                $html .= $value;
+            }
+
+            $html .= '</div></div>';
+        }
         else
         {
             $jqui_load = FALSE;
