@@ -656,7 +656,7 @@ class Former
                 case 'number':
                 case 'spinner':
                     $jqui_load = TRUE;
-                    Asssets::set_script('jqui-spinner', $jqui_path.'jquery.ui.spinner.min.js', 'jqui-core', '1.10.4');
+                    Asssets::set_script('jqui-spinner', $jqui_path.'spinner.min.js', 'jqui-core', '1.10.4');
 
                     if (!isset($min)) $min = 0;
                     if (!isset($max)) $max = 10;
@@ -690,7 +690,7 @@ class Former
                 case 'slider':
                 case 'rangeslider':
                     $jqui_load = TRUE;
-                    Asssets::set_script('jqui-slider', $jqui_path.'jquery.ui.slider.min.js', 'jqui-core', '1.10.4');
+                    Asssets::set_script('jqui-slider', $jqui_path.'slider.min.js', 'jqui-core', '1.10.4');
 
                     if (!isset($min)) $min = 0;
                     if (!isset($max)) $max = 10;
@@ -1027,11 +1027,11 @@ class Former
 
             if ($jqui_load)
             {
-                Asssets::set_script('jqui-core', $jqui_path.'jquery.ui.core.min.js', 'jquery', '1.10.4');
-                Asssets::set_script('jqui-widget', $jqui_path.'jquery.ui.widget.min.js', 'jqui-core', '1.10.4');
-                Asssets::set_script('jqui-button', $jqui_path.'jquery.ui.button.min.js', 'jqui-widget', '1.10.4');
-                Asssets::set_script('jqui-mouse', $jqui_path.'jquery.ui.mouse.min.js', 'jqui-widget', '1.10.4');
-                Asssets::set_script('jqui-position', $jqui_path.'jquery.ui.position.min.js', 'jqui-widget', '1.10.4');
+                Asssets::set_script('jqui-core', $jqui_path.'core.min.js', 'jquery', '1.10.4');
+                Asssets::set_script('jqui-widget', $jqui_path.'widget.min.js', 'jqui-core', '1.10.4');
+                Asssets::set_script('jqui-button', $jqui_path.'button.min.js', 'jqui-widget', '1.10.4');
+                Asssets::set_script('jqui-mouse', $jqui_path.'mouse.min.js', 'jqui-widget', '1.10.4');
+                Asssets::set_script('jqui-position', $jqui_path.'position.min.js', 'jqui-widget', '1.10.4');
                 Asssets::set_script('jquery-mousewheel', 'lib/jquery.mousewheel.min.js', 'jquery', '3.1.0');
             }
 
