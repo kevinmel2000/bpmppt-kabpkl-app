@@ -265,19 +265,28 @@ class Former
                 . "    }\n"
                 . "}\n"
                 . "$('.form-group').each(function () {\n"
-                . "    if ($(this).data('fold') === 1) {\n"
+                . "    if ($(this).data('fold') == 1) {\n"
                 . "        var el  = $(this),\n"
                 . "            key = el.data('fold-key'),\n"
                 . "            val = el.data('fold-value'),\n"
                 . "            tgt = '[name=\"'+key+'\"]';\n"
-                . "        if ($(tgt).val() != val) {\n"
-                . "            $(this).addClass('hide');\n"
+                
+                . "        if ($(tgt).is(':radio')) {\n"
+                . "            showHide(el, ($(tgt).filter(':checked').val() == val))\n"
                 . "        }\n"
+                . "        else if ($(tgt).is(':checkbox')) {\n"
+                . "            showHide(el, ($(tgt).is(':checked') == val))\n"
+                . "        }\n"
+                . "        else {\n"
+                . "            showHide(el, ($(tgt).val() == val))\n"
+                . "        }\n"
+
                 . "        if ($(tgt).hasClass('bs-switch')) {\n"
                 . "            $(tgt).on('switchChange.bootstrapSwitch', function(event, state) {\n"
                 . "                showHide(el, (val == state))\n"
                 . "            });\n"
-                . "        } else {\n"
+                . "        }\n"
+                . "        else {\n"
                 . "            $(tgt).change(function (e) {\n"
                 . "                showHide(el, ($(this).val() == val))\n"
                 . "            })\n"
@@ -846,6 +855,7 @@ class Former
                     Asssets::set_script('bs-switch-trigger', "$('.bs-switch').bootstrapSwitch();", 'bs-switch');
 
                     $_id = str_replace('-', '-', $name);
+                    $std = (int) $std;
                     $checked = ($std == 1 ? TRUE : FALSE);
 
                     $input = form_checkbox(array(
