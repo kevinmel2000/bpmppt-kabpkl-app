@@ -440,6 +440,10 @@ class Internal extends BAKA_Controller
             'name'  => 'auth_use_recaptcha',
             'type'  => 'switch',
             'label' => 'Gunakan reCaptcha',
+            'fold'  => array(
+                'key' => 'auth_captcha_registration',
+                'value' => 1
+                ),
             'std'   => Setting::get('auth_use_recaptcha'),
             'desc'  => 'Gunakan '.anchor('https://www.google.com/recaptcha', 'google reCaptcha', 'target="_blank"').' untuk validasi.' );
 
