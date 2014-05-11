@@ -1,28 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <phpunit
-    bootstrap="./bootstrap.php"
-    colors="true"
-    convertNoticesToExceptions="true"
-    convertWarningsToExceptions="true"
-    stopOnError="false"
-    stopOnFailure="false"
-    stopOnIncomplete="false"
-    stopOnSkipped="false">
-    <php>
-        <const name="PHPUNIT_TEST" value="1" />
-        <const name="PHPUNIT_CHARSET" value="UTF-8" />
-        <server name="REMOTE_ADDR" value="0.0.0.0" />
-    </php>
+    bootstrap="tests/bootstrap.php">
     <testsuites>
         <testsuite name="Baka_Pack_Test_Suite">
-            <directory surfix="Test.php">./helpers</directory>
-            <directory surfix="Test.php">./libraries</directory>
-            <file>./BakaControllerTest.php</file>
+            <directory surfix="Test.php">tests/helpers</directory>
+            <directory surfix="Test.php">tests/libraries</directory>
+            <file>tests/BakaControllerTest.php</file>
         </testsuite>
     </testsuites>
     <filter>
         <blacklist>
-            <directory suffix=".php">../system</directory>
+            <directory suffix=".php">system</directory>
         </blacklist>
     </filter>
 </phpunit>
