@@ -3,11 +3,7 @@
     bootstrap="./tests/bootstrap.php"
     colors="true"
     convertNoticesToExceptions="true"
-    convertWarningsToExceptions="true"
-    stopOnError="false"
-    stopOnFailure="false"
-    stopOnIncomplete="false"
-    stopOnSkipped="false">
+    convertWarningsToExceptions="true">
     <php>
         <const name="PHPUNIT_TEST" value="1" />
         <const name="PHPUNIT_CHARSET" value="UTF-8" />

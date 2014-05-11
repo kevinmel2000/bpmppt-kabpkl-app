@@ -1,8 +1,8 @@
 <?php
-echo "\n Error was encountered\n";
-echo " =====================\n";
-echo " Severity    : $severity\n";
-echo " Message     : $message\n";
-echo " Filename    : $filepath\n";
-echo " Line Number : $line\n\n";
+"\n Error was encountered\n";
+" =====================\n";
+" Severity    : $severity\n";
+" Message     : $message\n";
+" Filename    : $filepath\n";
+" Line Number : $line\n\n";
 ?>
