@@ -1,0 +1,13 @@
+language: php
+php:
+- '5.5'
+- '5.4'
+- '5.3'
+deploy:
+  provider: appfog
+  email: ferywardiyanto@gmail.com
+  password:
+    secure: aMy9J5xKm7iO6E8yA1FKZM7V2InEHoGyiezCQWrAiqVvgpmwELg/pMIWKULjQxWeMXgK0uHkwlSdHG51etU6TmhY8VTjockepnx8K3O95NGvstqIVJYSfRAbOYd85fD7NR+CQi+zx+sSiJkEveOmDwr/TxNF0aNe0PMs5a0bBfs=
+  app: bpmppt
+  on:
+    repo: feryardiant/bpmppt
