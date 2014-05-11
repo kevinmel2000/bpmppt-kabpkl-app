@@ -41,7 +41,6 @@ class BAKAControllerTest extends PHPUnit_Framework_TestCase
     public function testObject()
     {
         $this->assertFalse(FALSE);
-        // throw new InvalidArgumentException('Some Message', 10);
     }
 }
 

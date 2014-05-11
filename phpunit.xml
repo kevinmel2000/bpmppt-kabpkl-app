@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-
 <phpunit
     bootstrap="./tests/bootstrap.php"
     colors="true"
@@ -9,6 +8,11 @@
     stopOnFailure="false"
     stopOnIncomplete="false"
     stopOnSkipped="false">
+    <php>
+        <const name="PHPUNIT_TEST" value="1" />
+        <const name="PHPUNIT_CHARSET" value="UTF-8" />
+        <server name="REMOTE_ADDR" value="0.0.0.0" />
+    </php>
     <testsuites>
         <testsuite name="Baka Pack Test Suite">
             <directory suffix="Test.php">./tests/helpers</directory>
@@ -16,11 +20,6 @@
             <directory suffix="Test.php">./tests/models</directory>
         </testsuite>
     </testsuites>
-    <php>
-        <const name="PHPUNIT_TEST" value="1" />
-        <const name="PHPUNIT_CHARSET" value="UTF-8" />
-        <server name="REMOTE_ADDR" value="0.0.0.0" />
-    </php>
     <filter>
         <blacklist>
             <directory suffix=".php">./system</directory>

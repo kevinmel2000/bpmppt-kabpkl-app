@@ -69,19 +69,25 @@ class BAKA_Exceptions extends CI_Exceptions
         $alt = ( $this->_is_cli ) ? '-cli' : '' ;
 
         if (defined('PHPUNIT_TEST'))
+        {
             throw new PHPUnit_Framework_Exception($message, $status_code);
+        }
+        else
+        {
+            set_status_header( $status_code );
 
-        set_status_header( $status_code );
-
-        if ( ob_get_level() > $this->ob_level + 1 )
-            ob_end_flush();
-        
-        ob_start();
-        include( $this->_template_path.$template.$alt.EXT );
-        $buffer = ob_get_contents();
-        ob_end_clean();
-        
-        return $buffer;
+            if ( ob_get_level() > $this->ob_level + 1 )
+            {
+                ob_end_flush();
+            }
+            
+            ob_start();
+            include( $this->_template_path.$template.$alt.EXT );
+            $buffer = ob_get_contents();
+            ob_end_clean();
+            
+            return $buffer;
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -110,17 +116,26 @@ class BAKA_Exceptions extends CI_Exceptions
             $filepath = $x[count($x)-2].'/'.end($x);
         }
 
-        $alt = ( $this->_is_cli ? '_cli' : '_php' );
+        if (defined('PHPUNIT_TEST'))
+        {
+            throw new PHPUnit_Framework_Exception($message, $status_code);
+        }
+        else
+        {
+            $alt = ( $this->_is_cli ? '_cli' : '_php' );
 
-        if ( ob_get_level() > $this->ob_level + 1 )
-            ob_end_flush();
+            if ( ob_get_level() > $this->ob_level + 1 )
+            {
+                ob_end_flush();
+            }
 
-        ob_start();
-        include( $this->_template_path.'error'.$alt.EXT );
-        $buffer = ob_get_contents();
-        ob_end_clean();
+            ob_start();
+            include( $this->_template_path.'error'.$alt.EXT );
+            $buffer = ob_get_contents();
+            ob_end_clean();
 
-        echo $buffer;
+            echo $buffer;
+        }
     }
 
     // -------------------------------------------------------------------------
