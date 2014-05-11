@@ -19,16 +19,6 @@ function show_404($page = '', $log_error = TRUE)
 	throw new PHPUnit_Framework_Exception($page, 404);
 }
 
-function log_message($level = 'debug', $message, $php_error = FALSE)
-{
-	$status_code = 200;
-
-	if ($level == 'error')
-		$status_code = 500;
-
-	throw new PHPUnit_Framework_Exception($message, $status_code);
-}
-
 /*
  *---------------------------------------------------------------
  * BOOTSTRAP
