@@ -289,7 +289,7 @@ if ( ! function_exists('highlight_code'))
 		// Replace any existing PHP tags to temporary markers so they don't accidentally
 		// break the string out of PHP, and thus, thwart the highlighting.
 
-		$str = str_replace( array('<?', '?>', '<%', '%>', '\\', '</script>'),
+		$str = str_replace(array('<?', '?>', '<%', '%>', '\\', '</script>'),
 							array('phptagopen', 'phptagclose', 'asptagopen', 'asptagclose', 'backslashtmp', 'scriptclose'), $str);
 
 		// The highlight_string function requires that the text be surrounded
