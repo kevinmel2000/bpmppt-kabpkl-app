@@ -136,7 +136,7 @@ if (defined('ENVIRONMENT'))
  * Un-comment the $assign_to_config array below to use this feature
  *
  */
-	// $assign_to_config['name_of_config_item'] = 'value of config item';
+// $assign_to_config['name_of_config_item'] = 'value of config item';
 
 
 
@@ -204,10 +204,10 @@ if (defined('ENVIRONMENT'))
 			exit("Your application folder path does not appear to be set correctly. Please open the following file and correct this: ".SELF);
 		}
                 
-                $apppath = BASEPATH.$application_folder.'/';
+        $apppath = BASEPATH.$application_folder.'/';
 	}
         
-        define('APPPATH', $apppath);
+    define('APPPATH', $apppath);
 
 /*
  * --------------------------------------------------------------------

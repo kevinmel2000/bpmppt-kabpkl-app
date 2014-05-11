@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
 
 /**
  * CodeIgniter Baka Pack
@@ -14,7 +14,7 @@
  * also available through the world wide web at this URL:
  * http://opensource.org/licenses/OSL-3.0
  *
- * @package     Baka_pack
+ * @package     Baka_test_pack
  * @author      Fery Wardiyanto
  * @copyright   Copyright (c) Fery Wardiyanto. (ferywardiyanto@gmail.com)
  * @license     http://opensource.org/licenses/OSL-3.0
@@ -86,10 +86,7 @@ class Themee
             Asssets::set_script('respond', 'lib/respond.min.js', '', '1.3.0', FALSE);
         }
 
-        if (isset($min_browser[$current_browser]))
-        {
-            return ( $current_version[0] <= $min_browser[$current_browser] ? TRUE : FALSE  );
-        }
+        return ( $current_version[0] <= $min_browser[$current_browser] ? TRUE : FALSE  );
     }
 
     // -------------------------------------------------------------------------
