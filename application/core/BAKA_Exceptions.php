@@ -116,26 +116,19 @@ class BAKA_Exceptions extends CI_Exceptions
             $filepath = $x[count($x)-2].'/'.end($x);
         }
 
-        if (defined('PHPUNIT_TEST'))
+        $alt = ( $this->_is_cli ? '_cli' : '_php' );
+
+        if ( ob_get_level() > $this->ob_level + 1 )
         {
-            throw new PHPUnit_Framework_Exception($message, $status_code);
+            ob_end_flush();
         }
-        else
-        {
-            $alt = ( $this->_is_cli ? '_cli' : '_php' );
 
-            if ( ob_get_level() > $this->ob_level + 1 )
-            {
-                ob_end_flush();
-            }
+        ob_start();
+        include( $this->_template_path.'error'.$alt.EXT );
+        $buffer = ob_get_contents();
+        ob_end_clean();
 
-            ob_start();
-            include( $this->_template_path.'error'.$alt.EXT );
-            $buffer = ob_get_contents();
-            ob_end_clean();
-
-            echo $buffer;
-        }
+        echo $buffer;
     }
 
     // -------------------------------------------------------------------------
