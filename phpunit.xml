@@ -15,12 +15,12 @@
     </php>
     <testsuites>
         <testsuite name="Baka_Pack_Test_Suite">
-            <directory suffix="Test.php">tests</directory>
+            <directory>tests</directory>
         </testsuite>
     </testsuites>
     <filter>
-        <whitelist>
+        <blacklist>
             <directory suffix=".php">system</directory>
-        </whitelist>
+        </blacklist>
     </filter>
 </phpunit>
