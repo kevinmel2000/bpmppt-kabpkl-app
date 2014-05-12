@@ -57,6 +57,8 @@ vendor/
 !.gitignore
 !.editorconfig
 !.afignore
+!.csslintrc
+!.csscomb.json
 !index.html
 !/application/storage/dbs/index.html
 !/application/storage/tmp/index.html
