@@ -8,7 +8,8 @@ before_install:
   - time npm install
   - if [ "$BAKA_TEST" = php ]; then composer install; fi
 install:
-  - grunt test
+  - if [ "$BAKA_TEST" = php ]; then grunt phptest; fi
+  - if [ "$BAKA_TEST" = css ]; then grunt csstest; fi
 env:
   - BAKA_TEST=php
   - BAKA_TEST=css
