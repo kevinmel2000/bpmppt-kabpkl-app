@@ -18,7 +18,19 @@
  *
  */
 
-define('ENVIRONMENT', 'development');
+
+if (defined('PHPUNIT_TEST'))
+{
+	define('ENVIRONMENT', 'testing');
+	ini_set('display_errors', 0);
+	ini_set('display_startup_errors', 0);
+	ini_set('html_errors', 0);
+	ini_set('track_errors', 0);
+}
+else
+{
+	define('ENVIRONMENT', 'development');
+}
 
 if ($vcap_services = getenv("VCAP_SERVICES"))
 {
@@ -48,13 +60,13 @@ if (defined('ENVIRONMENT'))
 			error_reporting(E_ALL);
 			ini_set('display_errors', 1);
 			ini_set('display_startup_errors', 1);
-			// ini_set('html_errors', 1);
+			ini_set('html_errors', 1);
 			ini_set('track_errors', 1);
 		break;
 	
 		case 'testing':
 		case 'production':
-			error_reporting(0);
+			error_reporting(-1);
 		break;
 
 		default:

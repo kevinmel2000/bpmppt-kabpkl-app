@@ -41,7 +41,14 @@ class BAKA_Exceptions extends CI_Exceptions
 
         $this->_template_path = APPPATH.'views/errors/';
 
-        $this->_is_cli = (php_sapi_name() === 'cli' OR defined('STDIN'));
+        if (defined('PHPUNIT_TEST'))
+        {
+            $this->_is_cli = FALSE;
+        }
+        else
+        {
+            $this->_is_cli = (php_sapi_name() === 'cli' OR defined('STDIN'));
+        }
 
         // $this->load =& load_class('Loader', 'core');
 
@@ -68,26 +75,19 @@ class BAKA_Exceptions extends CI_Exceptions
 
         $alt = ( $this->_is_cli ) ? '-cli' : '' ;
 
-        if (defined('PHPUNIT_TEST'))
-        {
-            throw new PHPUnit_Framework_Exception($message, $status_code);
-        }
-        else
-        {
-            set_status_header( $status_code );
+        set_status_header( $status_code );
 
-            if ( ob_get_level() > $this->ob_level + 1 )
-            {
-                ob_end_flush();
-            }
-            
-            ob_start();
-            include( $this->_template_path.$template.$alt.EXT );
-            $buffer = ob_get_contents();
-            ob_end_clean();
-            
-            return $buffer;
+        if ( ob_get_level() > $this->ob_level + 1 )
+        {
+            ob_end_flush();
         }
+        
+        ob_start();
+        include( $this->_template_path.$template.$alt.EXT );
+        $buffer = ob_get_contents();
+        ob_end_clean();
+        
+        return $buffer;
     }
 
     // -------------------------------------------------------------------------

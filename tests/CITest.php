@@ -12,7 +12,7 @@
  * 
  * @property-read resource	$db		Reference to database
  */
-abstract class CITestCase extends PHPUnit_Extensions_Database_TestCase
+abstract class CITest extends PHPUnit_Extensions_Database_TestCase
 {
 	/**
 	 * Reference to CodeIgniter
@@ -42,11 +42,16 @@ abstract class CITestCase extends PHPUnit_Extensions_Database_TestCase
 	 * 
 	 * @internal
 	 */
-	public function __construct($name = NULL, array $data = array(), $dataName = '')
+
+    public static function setUp()
     {
-        parent::__construct($name, $data, $dataName);
-		$this->CI =& get_instance();	
+        $this->CI =& get_instance();
     }
+	// public function __construct($name = NULL, array $data = array(), $dataName = '')
+	// {
+	//     parent::__construct($name, $data, $dataName);
+	// 	$this->CI =& get_instance();	
+	// }
 	
     /**
 	 * Initialize database connection (same one used by CodeIgniter)
@@ -55,11 +60,14 @@ abstract class CITestCase extends PHPUnit_Extensions_Database_TestCase
      */
     final public function getConnection()
     {
-        if ($this->conn === null) {
-            if (self::$pdo == null) {
+        if ($this->conn === null)
+        {
+            if (self::$pdo == null)
+            {
             	$dsn = $this->CI->db->dbdriver.':dbname='.$this->CI->db->database.';host='.$this->CI->db->hostname;
                 self::$pdo = new PDO($dsn,$this->CI->db->username, $this->CI->db->password);
             }
+
             $this->conn = $this->createDefaultDBConnection(self::$pdo, $this->CI->db->database);
         }
 
