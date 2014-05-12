@@ -3,6 +3,16 @@ php:
   - '5.5'
   - '5.4'
   - '5.3'
+before_install:
+  - time npm install -g grunt-cli
+  - time npm install
+  - if [ "$BAKA_TEST" = php ]; then composer install; fi
+install:
+  - if [ "$BAKA_TEST" = php ]; grunt phptest; fi
+env:
+  - BAKA_TEST=php
+  - BAKA_TEST=css
+  - BAKA_TEST=js
 deploy:
   provider: appfog
   email: ferywardiyanto@gmail.com
@@ -11,3 +21,4 @@ deploy:
   app: bpmppt
   on:
     repo: feryardiant/bpmppt
+    php: '5.3'
