@@ -6,13 +6,9 @@ php:
 before_install:
   - time npm install -g grunt-cli
   - time npm install
-  - if [ "$BAKA_TEST" = php ]; then composer install; fi
+  - time composer install
 install:
-  - if [ "$BAKA_TEST" = php ]; then grunt phptest; fi
-  - if [ "$BAKA_TEST" = css ]; then grunt csstest; fi
-env:
-  - BAKA_TEST=php
-  - BAKA_TEST=css
+  - grunt testdist
 deploy:
   provider: appfog
   email: ferywardiyanto@gmail.com

@@ -159,7 +159,7 @@ module.exports = function(grunt) {
   }
 
   // grunt.registerTask('watch', ['watch']);
-  grunt.registerTask('test', testSubtasks);
+  grunt.registerTask('testdist', ['csstest', 'phptest']);
 
   grunt.registerTask('phptest', ['phplint', 'phpunit']);
   grunt.registerTask('csstest', ['less', 'autoprefixer', 'csscomb', 'csslint', 'cssmin']);

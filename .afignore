@@ -7,8 +7,17 @@ Icon?
 _*
 .*
 *.bak
+*.lock
 *.tmproj
 *.tmproject
+*.diff
+*.err
+*.orig
+*.log
+*.rej
+*.swo
+*.swp
+*.vi
 *~
 dvccas
 *.zip
@@ -20,25 +29,34 @@ nbactions.xml
 .project
 .metadata
 .properties
+.tmproj
+*.esproj
+.codeintel
 *.sublime-*
-.codeintel/
+*.komodoproject
+.komodotools
+.idea
 
-# Node Modules
+# Dependencies Folder
 node_modules/
+bower_components/
+vendor/
 
 # Ignore Application Specifics
-application/storage/dbs/
-application/storage/tmp/
-application/storage/logs/
-application/storage/cache/
-application/storage/upload/
-application/storage/backup/
+/application/storage/dbs/*
+/application/storage/tmp/*
+/application/storage/logs/*
+/application/storage/cache/*
+/application/storage/upload/*
+/application/storage/backup/*
+/asset/sql/
 
 # but leave there Application Specifics
 !.htaccess
-!application/storage/dbs/index.html
-!application/storage/tmp/index.html
-!application/storage/logs/index.html
-!application/storage/cache/index.html
-!application/storage/uploads/index.html
-!application/storage/backups/index.html
+!index.html
+!/application/storage/dbs/index.html
+!/application/storage/tmp/index.html
+!/application/storage/logs/index.html
+!/application/storage/cache/index.html
+!/application/storage/uploads/index.html
+!/application/storage/backups/index.html
