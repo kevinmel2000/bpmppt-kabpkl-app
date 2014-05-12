@@ -9,8 +9,11 @@ before_install:
   - time composer install
   - mysql -e 'drop database if exists bpmppt_test;'
   - mysql -e 'create database bpmppt_test;'
+  - mysql -e '\. ./tests/backup.sql;'
 install:
   - grunt testdist
+after_script:
+  - mysql -e 'drop database if exists bpmppt_test;'
 deploy:
   provider: appfog
   email: ferywardiyanto@gmail.com
