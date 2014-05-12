@@ -1,4 +1,4 @@
-# BPMPPT App 0.1.4
+# BPMPPT App 0.1.4 [![Build Status](https://travis-ci.org/feryardiant/bpmppt.svg?branch=master)](https://travis-ci.org/feryardiant/bpmppt)
 
 Aplikasi ini ditujukan untuk Badan Penanaman Modal dan Pelayanan Perijinan Terbadu Kabupaten Pekalongan.
 
@@ -8,7 +8,7 @@ Aplikasi ini ditujukan untuk Badan Penanaman Modal dan Pelayanan Perijinan Terba
 
 ## CAUTION!
 
-# THIS APP IS UNDER INTERNAL DEVELOPMENT ONLY AND NOT READY TO USE ON PUBLIC (YET)!!
+### THIS APP IS UNDER INTERNAL DEVELOPMENT ONLY AND NOT READY TO USE ON PUBLIC (YET)!!
 
 ## Credits
 
