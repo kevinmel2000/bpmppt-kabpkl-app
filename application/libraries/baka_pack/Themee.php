@@ -61,6 +61,7 @@ class Themee
         Asssets::set_script('jquery', 'lib/jquery.min.js', '', '2.0.3');
         Asssets::set_script('baka-pack', 'script.js', 'jquery' );
         Asssets::set_script('bootstrap', 'lib/bootstrap.min.js', 'jquery', '3.0.0' );
+        Asssets::set_style('lato-font', '//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic');
         Asssets::set_style('baka-pack', 'style.min.css');
 
         $script = "$('.twbs-tooltip').tooltip();";

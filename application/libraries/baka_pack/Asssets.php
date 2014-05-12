@@ -280,13 +280,15 @@ class Asssets
         $path   = 'asset/'.$type.'/';
         $output = '';
 
-        if (file_exists(FCPATH.$path.$source_path))
+        $version = (strpos($source_path, '?') !== FALSE ? '&' :  '?').'ver='.$version;
+
+        if (self::valid_url($source_path))
         {
-            $output = base_url($path.$source_path).'?ver='.$version;
+            $output = $source_path.$version;
         }
-        else if (self::valid_url($source_path))
+        else if (file_exists(FCPATH.$path.$source_path))
         {
-            $output = $source_path.'?ver='.$version;
+            $output = base_url($path.$source_path).$version;
         }
         else
         {

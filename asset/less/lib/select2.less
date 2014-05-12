@@ -16,10 +16,10 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
     margin: 0;
     position: relative;
     display: inline-block;
-    /* inline-block for ie7 */
-    zoom: 1;
-    *display: inline;
     vertical-align: middle;
+    // inline-block for ie7 
+    // zoom: 1;
+    // *display: inline;
 
     .select2-choice {
       display: block;
@@ -516,8 +516,8 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
     &.form-control {
       .select2-choices {
         border: 0;
-        min-height: @input-height-base - 2;
-        border-radius: @border-radius-base - 1;
+        min-height: (@input-height-base - 2);
+        border-radius: (@border-radius-base - 1);
         background-color: transparent;
         background-image: none;
       }

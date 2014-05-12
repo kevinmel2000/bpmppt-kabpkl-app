@@ -29,7 +29,7 @@
  * @subpackage  Core
  * @category    Controller
  */
-class Baka_ControllerTest extends PHPUnit_Extensions_Database_TestCase
+class BakaControllerTest extends PHPUnit_Framework_TestCase
 {
     private $_ci;
     private $_bc;

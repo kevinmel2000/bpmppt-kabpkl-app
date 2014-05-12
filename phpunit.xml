@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <phpunit
-    bootstrap="./application/tests/bootstrap.php"
+    bootstrap="tests/bootstrap.php"
     colors="true"
     convertNoticesToExceptions="true"
     convertWarningsToExceptions="true"
@@ -16,12 +16,12 @@
     </php>
     <testsuites>
         <testsuite name="Baka_Pack_Test_Suite">
-            <directory surfix="Test.php">./tests</directory>
+            <directory surfix="Test.php">tests</directory>
         </testsuite>
     </testsuites>
     <filter>
         <blacklist>
-            <directory suffix=".php">./system</directory>
+            <directory suffix=".php">system</directory>
         </blacklist>
     </filter>
     <logging>
