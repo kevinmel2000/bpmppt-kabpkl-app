@@ -12,6 +12,13 @@ module.exports = function(grunt) {
         }
       }
     },
+
+    phpunit: {
+      options: {
+        configuration: 'phpunit.xml'
+      }
+    },
+
     less: {
       compileCore: {
         options: {
@@ -26,12 +33,14 @@ module.exports = function(grunt) {
         }
       }
     },
+
     csslint: {
       options: {
         csslintrc: '.csslintrc'
       },
       src: ['asset/css/style.css']
     },
+
     cssmin: {
       minify: {
         expand: true,
@@ -41,6 +50,7 @@ module.exports = function(grunt) {
         ext: '.min.css'
       }
     },
+
     watch: {
       less:{
         files: 'asset/less/lib/*.less',
@@ -50,9 +60,11 @@ module.exports = function(grunt) {
         }
       }
     },
+
   });
 
   grunt.loadNpmTasks('grunt-php');
+  grunt.loadNpmTasks('grunt-phpunit');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-clean');

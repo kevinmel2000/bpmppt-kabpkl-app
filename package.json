@@ -19,6 +19,7 @@
     "grunt-contrib-clean": "*"
   },
   "devDependencies": {
-    "grunt-contrib-watch": "~0.4.4"
+    "grunt-contrib-watch": "~0.4.4",
+    "grunt-phpunit": "^0.3.3"
   }
 }
