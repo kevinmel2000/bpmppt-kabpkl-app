@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <phpunit
-    bootstrap="./tests/bootstrap.php"
+    bootstrap="./application/tests/bootstrap.php"
     colors="true"
     convertNoticesToExceptions="true"
     convertWarningsToExceptions="true"
@@ -22,7 +22,6 @@
     <filter>
         <blacklist>
             <directory suffix=".php">./system</directory>
-            <directory suffix=".php">./application</directory>
         </blacklist>
     </filter>
     <logging>

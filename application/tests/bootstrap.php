@@ -9,7 +9,7 @@
  * in core\Common.php, so they throw erros instead of output strings
  */
 
-$dir = realpath(dirname(__FILE__).'/../').'/';
+$dir = realpath(dirname(__FILE__).'/../../').'/';
 
 define('PROJECT_DIR', $dir);
  

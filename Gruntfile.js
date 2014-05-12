@@ -47,10 +47,10 @@ module.exports = function(grunt) {
 
     phpunit: {
       classes: {
-        dir: 'tests/'
+        dir: './application/tests/'
       },
       options: {
-        bootstrap: './tests/bootstrap.php',
+        bootstrap: './application/tests/bootstrap.php',
         colors: true,
         testdox: true,
         stopOnError: false,
@@ -60,7 +60,9 @@ module.exports = function(grunt) {
         strict: true,
         verbose: true,
         debug: true,
-        logJson: 'phpunit.log.json'
+        convertErrorsToExceptions: true,
+        convertNoticesToExceptions: true,
+        convertWarningsToExceptions: true
       } 
     },
 
