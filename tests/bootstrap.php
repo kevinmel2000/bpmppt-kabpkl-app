@@ -15,7 +15,7 @@ define('PROJECT_DIR', $dir);
  
 function show_error($message, $status_code = 500, $heading = 'An Error Was Encountereds')
 {
-	throw new PHPUnit_Framework_Exception('CI Error'.$message, 500);
+	throw new PHPUnit_Framework_Exception('CI Error: '.$message, 500);
 }
 
 function show_404($page = '', $log_error = TRUE)

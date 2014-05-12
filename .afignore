@@ -1,0 +1,44 @@
+# Ignore OS Related/Generic
+Thumbs.db
+Desktop.ini
+Icon?
+.DS_Store
+._*
+_*
+.*
+*.bak
+*.tmproj
+*.tmproject
+*~
+dvccas
+*.zip
+
+# IDEs project files/settings
+nbproject/
+nbactions.xml
+.settings/
+.project
+.metadata
+.properties
+*.sublime-*
+.codeintel/
+
+# Node Modules
+node_modules/
+
+# Ignore Application Specifics
+application/storage/dbs/
+application/storage/tmp/
+application/storage/logs/
+application/storage/cache/
+application/storage/upload/
+application/storage/backup/
+
+# but leave there Application Specifics
+!.htaccess
+!application/storage/dbs/index.html
+!application/storage/tmp/index.html
+!application/storage/logs/index.html
+!application/storage/cache/index.html
+!application/storage/uploads/index.html
+!application/storage/backups/index.html
