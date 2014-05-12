@@ -47,6 +47,9 @@ function set_status_header($code = 200, $text = '')
  * Bootstrap CodeIgniter from index.php as usual
  */
 
-require_once $dir.'vendor/autoload.php';
+if (file_exists($dir.'vendor/autoload.php'))
+{
+	require_once $dir.'vendor/autoload.php';
+}
  
 require_once $dir.'index.php';
