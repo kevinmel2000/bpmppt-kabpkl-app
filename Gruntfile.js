@@ -148,14 +148,14 @@ module.exports = function(grunt) {
   var testSubtasks = [];
   // Skip core tests if running a different subset of the test suite
   if (!process.env.BAKA_TEST || process.env.BAKA_TEST === 'php') {
-    testSubtasks.push('phptest');
+    testSubtasks = testSubtasks.concat(['phptest']);
   }
   // Skip HTML validation if running a different subset of the test suite
   else if (!process.env.BAKA_TEST || process.env.BAKA_TEST === 'css') {
-    testSubtasks.push('csstest');
+    testSubtasks = testSubtasks.concat(['csstest']);
   }
   else if (typeof process.env.BAKA_TEST !== 'undefined') {
-    testSubtasks.push(['csstest', 'phptest']);
+    testSubtasks = testSubtasks.concat(['csstest', 'phptest']);
   }
 
   // grunt.registerTask('watch', ['watch']);
