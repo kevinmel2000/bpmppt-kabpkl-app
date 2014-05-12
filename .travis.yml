@@ -7,6 +7,8 @@ before_install:
   - time npm install -g grunt-cli
   - time npm install
   - time composer install
+  - mysql -e 'drop database if exists bpmppt_test;'
+  - mysql -e 'create database bpmppt_test;'
 install:
   - grunt testdist
 deploy:
