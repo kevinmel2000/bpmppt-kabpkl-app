@@ -5,8 +5,9 @@ php:
   - '5.3'
 before_install:
   - npm install -g grunt-cli
-  - npm install
   - composer install --dev --no-progress
+install:
+  - npm install
 before_script:
   - mysql -e 'drop database if exists bpmppt_test;'
   - mysql -e 'create database bpmppt_test;'
@@ -28,4 +29,8 @@ matrix:
   fast_finish: true
 notifications:
   email:
-    - feryardiant@gmail.com
+    recipients:
+      - feryardiant@gmail.com
+      - ferywardiyanto@gmail.com
+    on_success: always
+    on_failure: always

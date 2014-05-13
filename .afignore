@@ -1,63 +1,12 @@
 # Ignore OS Related/Generic
 Thumbs.db
 Desktop.ini
-Icon?
 .DS_Store
 ._*
 _*
 .*
-*.bak
-*.lock
-*.tmproj
-*.tmproject
-*.diff
-*.err
-*.orig
-*.log
-*.rej
-*.swo
-*.swp
-*.vi
 *~
-dvccas
 *.zip
 
-# IDEs project files/settings
-nbproject/
-nbactions.xml
-.settings/
-.project
-.metadata
-.properties
-.tmproj
-*.esproj
-.codeintel
-*.sublime-*
-*.komodoproject
-.komodotools
-.idea
-
-# Dependencies Folder
-node_modules/
-bower_components/
-vendor/
-
 # Ignore Application Specifics
-/application/storage/dbs/*
-/application/storage/tmp/*
-/application/storage/logs/*
-/application/storage/cache/*
-/application/storage/upload/*
-/application/storage/backup/*
-/asset/sql/
-/tests/
-
-# but leave there Application Specifics
-!.htaccess
-!index.html
-!/application/storage/dbs/index.html
-!/application/storage/tmp/index.html
-!/application/storage/logs/index.html
-!/application/storage/cache/index.html
-!/application/storage/uploads/index.html
-!/application/storage/backups/index.html
+/tests/*
