@@ -10,7 +10,7 @@
 |
 */
 
-if (!defined('PHPUNIT_TEST'))
+if (!defined('PROJECT_DIR'))
 {
     $hook['pre_controller'] = array(
         'class'    => 'Errror',

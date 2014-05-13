@@ -43,7 +43,7 @@ abstract class CITest extends PHPUnit_Extensions_Database_TestCase
 	 * @internal
 	 */
 
-    public static function setUp()
+    public function setUp()
     {
         $this->CI =& get_instance();
     }

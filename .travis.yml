@@ -7,9 +7,11 @@ before_install:
   - npm install -g grunt-cli
   - npm install
   - composer install --dev --no-progress
+before_script:
   - mysql -e 'drop database if exists bpmppt_test;'
   - mysql -e 'create database bpmppt_test;'
   - mysql -utravis bpmppt_test < tests/backup.sql
+script:
   - grunt testdist
 after_script:
   - mysql -e 'drop database if exists bpmppt_test;'

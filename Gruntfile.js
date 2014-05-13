@@ -47,23 +47,20 @@ module.exports = function(grunt) {
 
     phpunit: {
       options: {
-        configuration: 'phpunit.xml'
-        // bootstrap: '<%= phpunit.base.dir %>/bootstrap.php',
-        // colors: true,
-        // testdox: true,
-        // stopOnError: false,
-        // stopOnFailure: false,
-        // stopOnSkipped: false,
-        // stopOnIncomplete: false,
+        bootstrap: '<%= phpunit.base.dir %>/bootstrap.php',
+        colors: true,
+        stopOnError: false,
+        stopOnFailure: false,
+        stopOnSkipped: false,
+        stopOnIncomplete: false,
         // strict: true,
-        // verbose: true,
-        // debug: true,
-        // convertErrorsToExceptions: true,
-        // convertNoticesToExceptions: true,
-        // convertWarningsToExceptions: true
+        verbose: true,
+        convertErrorsToExceptions: true,
+        convertNoticesToExceptions: true,
+        convertWarningsToExceptions: true
       },
       base: {
-        dir: './tests/'
+        dir: './tests'
       }
     },
 
@@ -159,7 +156,7 @@ module.exports = function(grunt) {
   }
 
   // grunt.registerTask('watch', ['watch']);
-  grunt.registerTask('testdist', ['csstest', 'phplint']);
+  grunt.registerTask('testdist', ['csstest', 'phptest']);
 
   grunt.registerTask('phptest', ['phplint', 'phpunit']);
   grunt.registerTask('csstest', ['less', 'autoprefixer', 'csscomb', 'csslint', 'cssmin']);

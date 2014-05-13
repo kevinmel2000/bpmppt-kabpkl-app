@@ -51,7 +51,7 @@ class BAKA_Controller extends CI_Controller
         $script = "$('.twbs-tooltip').tooltip();";
         Asssets::set_script('bootstrap-tooltip-trigger', $script, 'bootstrap');
 
-        if (Themee::verify_browser() AND !(php_sapi_name() === 'cli' OR defined('STDIN')))
+        if (Themee::verify_browser() AND !is_cli())
         {
             log_message('error', lang("error_browser_jadul"));
             show_error(array('Peramban yang anda gunakan tidak memenuhi syarat minimal penggunaan aplikasi ini.','Silahkan gunakan '.anchor('http://www.mozilla.org/id/', 'Mozilla Firefox', 'target="_blank"').' atau '.anchor('https://www.google.com/intl/id/chrome/browser/', 'Google Chrome', 'target="_blank"').' biar lebih GREGET!'), 500, 'error_browser_jadul');
@@ -102,12 +102,12 @@ class BAKA_Controller extends CI_Controller
      */
     protected function verify_login()
     {
-        if (!$this->authr->is_logged_in() AND !$this->authr->is_logged_in(FALSE))
+        if (!$this->authr->is_logged_in() AND !$this->authr->is_logged_in(FALSE) AND !is_cli())
         {
             redirect('login');
         }
         
-        if ($this->authr->is_logged_in(FALSE))
+        if ($this->authr->is_logged_in(FALSE) AND !is_cli())
         {
             redirect('resend');
         }
@@ -122,11 +122,11 @@ class BAKA_Controller extends CI_Controller
      */
     protected function verify_status()
     {
-        if ($this->authr->is_logged_in())
+        if ($this->authr->is_logged_in() AND !is_cli())
         {
             redirect('data');
         }
-        else if ($this->authr->is_logged_in(FALSE))
+        else if ($this->authr->is_logged_in(FALSE) AND !is_cli())
         {
             redirect('resend');
         }

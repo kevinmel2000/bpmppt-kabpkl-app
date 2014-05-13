@@ -535,6 +535,12 @@ if ( ! function_exists('redirect'))
 			$uri = site_url($uri);
 		}
 
+		if ( php_sapi_name() === 'cli' OR defined('STDIN') )
+		{
+			echo $uri;
+			exit;
+		}
+
 		switch($method)
 		{
 			case 'refresh'	: header("Refresh:0;url=".$uri);

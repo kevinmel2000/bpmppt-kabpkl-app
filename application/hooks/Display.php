@@ -53,9 +53,9 @@ class Display
         $this->_ci =& get_instance();
         $output = $this->_ci->output->get_output();
 
-        if (defined('PHPUNIT_TEST'))
+        if (!defined('PROJECT_DIR'))
         {
-            // echo $output;
+            echo $output;
         }
     }
 }

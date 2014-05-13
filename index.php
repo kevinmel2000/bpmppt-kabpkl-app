@@ -19,7 +19,7 @@
  */
 
 
-if (defined('PHPUNIT_TEST'))
+if (defined('PROJECT_DIR'))
 {
 	define('ENVIRONMENT', 'testing');
 }

@@ -33,9 +33,13 @@ class BAKA_Exceptions extends CI_Exceptions
 {
     private $_template_path;
 
+    protected $_is_cli;
+
     function __construct()
     {
         parent::__construct();
+
+        $this->_is_cli = php_sapi_name() === 'cli' OR defined('STDIN');
 
         $this->_template_path = APPPATH.'views/errors/';
 
@@ -62,7 +66,7 @@ class BAKA_Exceptions extends CI_Exceptions
         $heading = $heading;
         $message = '<p>'.implode('</p><p>', ( ! is_array($message)) ? array($message) : $message).'</p>';
 
-        $alt = ( is_cli() ) ? '-cli' : '' ;
+        $alt = ( $this->_is_cli ) ? '-cli' : '' ;
 
         set_status_header( $status_code );
 
@@ -105,7 +109,7 @@ class BAKA_Exceptions extends CI_Exceptions
             $filepath = $x[count($x)-2].'/'.end($x);
         }
 
-        $alt = ( is_cli() ? '_cli' : '_php' );
+        $alt = ( $this->_is_cli ? '_cli' : '_php' );
 
         if ( ob_get_level() > $this->ob_level + 1 )
         {

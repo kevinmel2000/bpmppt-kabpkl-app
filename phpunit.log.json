@@ -1,6 +1,6 @@
 {
     "event": "suiteStart",
-    "suite": "Baka Pack Test Suite",
+    "suite": "tests",
     "tests": 20
 }{
     "event": "suiteStart",
@@ -15,7 +15,7 @@
     "suite": "BakaControllerTest",
     "test": "BakaControllerTest::testIndexRoute",
     "status": "pass",
-    "time": 0.08361291885376,
+    "time": 0.076244831085205,
     "trace": [
 
     ],
@@ -34,7 +34,7 @@
     "suite": "AuthrHelperTest",
     "test": "AuthrHelperTest::testLogin",
     "status": "pass",
-    "time": 0.0034430027008057,
+    "time": 0.0042448043823242,
     "trace": [
 
     ],
@@ -53,7 +53,7 @@
     "suite": "BakaPackArrayHelperTest",
     "test": "BakaPackArrayHelperTest::testLogin",
     "status": "pass",
-    "time": 0.0025110244750977,
+    "time": 0.0026638507843018,
     "trace": [
 
     ],
@@ -72,7 +72,7 @@
     "suite": "BakaPackDataHelperTest",
     "test": "BakaPackDataHelperTest::testLogin",
     "status": "pass",
-    "time": 0.0037391185760498,
+    "time": 0.0037939548492432,
     "trace": [
 
     ],
@@ -91,7 +91,7 @@
     "suite": "BakaPackEmailHelperTest",
     "test": "BakaPackEmailHelperTest::testLogin",
     "status": "pass",
-    "time": 0.0026938915252686,
+    "time": 0.0027871131896973,
     "trace": [
 
     ],
@@ -110,7 +110,7 @@
     "suite": "BakaPackFormerHelperTest",
     "test": "BakaPackFormerHelperTest::testLogin",
     "status": "pass",
-    "time": 0.0024900436401367,
+    "time": 0.003849983215332,
     "trace": [
 
     ],
@@ -129,7 +129,7 @@
     "suite": "BakaPackHtmlHelperTest",
     "test": "BakaPackHtmlHelperTest::testLogin",
     "status": "pass",
-    "time": 0.0025219917297363,
+    "time": 0.0041530132293701,
     "trace": [
 
     ],
@@ -148,7 +148,7 @@
     "suite": "BakaPackCommonHelperTest",
     "test": "BakaPackCommonHelperTest::testLogin",
     "status": "pass",
-    "time": 0.0027740001678467,
+    "time": 0.0037989616394043,
     "trace": [
 
     ],
@@ -167,7 +167,7 @@
     "suite": "ArchiveDriverTest",
     "test": "ArchiveDriverTest::testLogin",
     "status": "pass",
-    "time": 0.0025341510772705,
+    "time": 0.0037741661071777,
     "trace": [
 
     ],
@@ -186,7 +186,7 @@
     "suite": "AuthrDriverTest",
     "test": "AuthrDriverTest::testLogin",
     "status": "pass",
-    "time": 0.0026049613952637,
+    "time": 0.0032880306243896,
     "trace": [
 
     ],
@@ -205,7 +205,7 @@
     "suite": "BAKAFormvalidationTest",
     "test": "BAKAFormvalidationTest::testLogin",
     "status": "pass",
-    "time": 0.0025291442871094,
+    "time": 0.0034799575805664,
     "trace": [
 
     ],
@@ -224,7 +224,7 @@
     "suite": "BakaPackAsssetsTest",
     "test": "BakaPackAsssetsTest::testLogin",
     "status": "pass",
-    "time": 0.0028879642486572,
+    "time": 0.0044670104980469,
     "trace": [
 
     ],
@@ -243,7 +243,7 @@
     "suite": "BakaPackFormerTest",
     "test": "BakaPackFormerTest::testLogin",
     "status": "pass",
-    "time": 0.0026571750640869,
+    "time": 0.0031239986419678,
     "trace": [
 
     ],
@@ -262,7 +262,7 @@
     "suite": "BakaPackGridrTest",
     "test": "BakaPackGridrTest::testLogin",
     "status": "pass",
-    "time": 0.0025300979614258,
+    "time": 0.0031771659851074,
     "trace": [
 
     ],
@@ -281,7 +281,7 @@
     "suite": "BakaPackMedianTest",
     "test": "BakaPackMedianTest::testLogin",
     "status": "pass",
-    "time": 0.0025498867034912,
+    "time": 0.0042221546173096,
     "trace": [
 
     ],
@@ -300,7 +300,7 @@
     "suite": "BakaPackMessgTest",
     "test": "BakaPackMessgTest::testLogin",
     "status": "pass",
-    "time": 0.0028781890869141,
+    "time": 0.0031630992889404,
     "trace": [
 
     ],
@@ -319,7 +319,7 @@
     "suite": "BakaPackSettingTest",
     "test": "BakaPackSettingTest::testLogin",
     "status": "pass",
-    "time": 0.0025489330291748,
+    "time": 0.0041158199310303,
     "trace": [
 
     ],
@@ -338,7 +338,7 @@
     "suite": "BakaPackThemeeTest",
     "test": "BakaPackThemeeTest::testLogin",
     "status": "pass",
-    "time": 0.0025780200958252,
+    "time": 0.0032889842987061,
     "trace": [
 
     ],
@@ -357,7 +357,7 @@
     "suite": "BakaPackUtilyTest",
     "test": "BakaPackUtilyTest::testLogin",
     "status": "pass",
-    "time": 0.0026299953460693,
+    "time": 0.0030829906463623,
     "trace": [
 
     ],
@@ -376,7 +376,7 @@
     "suite": "BpmpptDriverTest",
     "test": "BpmpptDriverTest::testLogin",
     "status": "pass",
-    "time": 0.0034899711608887,
+    "time": 0.0039050579071045,
     "trace": [
 
     ],
