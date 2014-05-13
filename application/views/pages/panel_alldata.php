@@ -17,7 +17,18 @@
 						<div class="row">
 							<div class="<?php echo twbs_set_columns(4, 4, 4) ?>">
 								<p>Total Data</p>
-								<h1 style="font-size: 60px; font-weight: bold; margin: 0; text-align: right;"><?php echo $izin['total'] ?></h1>
+								<?php $chart_attr = array(
+									'id'             => $link.'-chart',
+									'class'          => 'charts',
+									'width'          => '100px',
+									'height'         => '100px',
+									'data-pending'   => $izin['pending'],
+									'data-approved'  => $izin['approved'],
+									'data-done'      => $izin['done'],
+									'data-deleted'   => $izin['deleted'],
+								); ?>
+								<canvas <?php echo parse_attrs($chart_attr) ?>></canvas>
+								<h1 class="total-layanan"><?php echo $izin['total'] ?></h1>
 							</div>
 							<div class="<?php echo twbs_set_columns(8, 8, 8) ?>">
 								<p class="text-warning"><?php echo $izin['pending'] ?> Tertunda</p>
