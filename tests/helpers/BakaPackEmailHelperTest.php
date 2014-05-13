@@ -15,22 +15,17 @@
  * http://opensource.org/licenses/OSL-3.0
  *
  * @package     Baka_test_pack
+ * @subpackage  Email
+ * @category    Helper
  * @author      Fery Wardiyanto
  * @copyright   Copyright (c) Fery Wardiyanto. (ferywardiyanto@gmail.com)
  * @license     http://opensource.org/licenses/OSL-3.0
- * @version     Version 0.1.4
- * @since       Version 0.1.0
+ * @since       Version 0.1.3
  */
 
 // -----------------------------------------------------------------------------
 
-/**
- * BAKA Asssets Class
- *
- * @subpackage  Libraries
- * @category    Assets
- */
-class BakaPackAsssetsTest extends PHPUnit_Framework_TestCase
+class BakaPackEmailHelperTest extends PHPUnit_Framework_TestCase
 {
     private $ci;
 
@@ -45,5 +40,5 @@ class BakaPackAsssetsTest extends PHPUnit_Framework_TestCase
     }
 }
 
-/* End of file Asssets.php */
-/* Location: ./application/libraries/baka_pack/Asssets.php */
+/* End of file emailer_helper.php */
+/* Location: ./application/helpers/baka_pack/emailer_helper.php */

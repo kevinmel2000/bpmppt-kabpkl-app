@@ -4,13 +4,12 @@ php:
   - '5.4'
   - '5.3'
 before_install:
-  - time npm install -g grunt-cli
-  - time npm install
-  - time composer install
+  - npm install -g grunt-cli
+  - npm install
+  - composer install --dev --no-progress
   - mysql -e 'drop database if exists bpmppt_test;'
   - mysql -e 'create database bpmppt_test;'
   - mysql -utravis bpmppt_test < tests/backup.sql
-install:
   - grunt testdist
 after_script:
   - mysql -e 'drop database if exists bpmppt_test;'
@@ -23,3 +22,6 @@ deploy:
   on:
     repo: feryardiant/bpmppt
     php: '5.3'
+notifications:
+  email:
+    - feryardiant@gmail.com

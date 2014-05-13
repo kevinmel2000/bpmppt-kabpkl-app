@@ -4,7 +4,7 @@
 			<header class="panel-heading">
 				<h3 class="panel-title">Test Panel</h3>
 			</header>
-			<div class="panel-body"><?php baka_echo( $panel_body ) ?></div>
+			<div class="panel-body"><?php echo $panel_body ?></div>
 		</section>
 	</div>
 </div>

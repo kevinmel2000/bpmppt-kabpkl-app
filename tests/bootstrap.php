@@ -20,14 +20,7 @@ function show_error($message, $status_code = 500, $heading = 'An Error Was Encou
 
 function show_404($page = '', $log_error = TRUE)
 {
-	throw new PHPUnit_Framework_Exception('CI Error: 404', 500);
-}
-
-function _exception_handler($severity, $message, $filepath, $line)
-{
-	$filepath = str_replace(PROJECT_DIR, '', $filepath);
-
-	throw new PHPUnit_Framework_Exception('CI Exception: '.$message.' | '.$filepath.' | '.$line, 500);
+	throw new PHPUnit_Framework_Exception('CI Error: 404 Page '.$page.' not found.', 500);
 }
 
 function log_message($level, $message)
@@ -39,6 +32,17 @@ function set_status_header($code = 200, $text = '')
 {
 	return TRUE;
 }
+
+function redirect($uri = '', $method = 'location', $http_response_code = 302)
+{
+	if ( ! preg_match('#^https?://#i', $uri))
+	{
+		$uri = site_url($uri);
+	}
+
+	echo "Redirected to $uri\n";
+}
+
 /*
  *---------------------------------------------------------------
  * BOOTSTRAP

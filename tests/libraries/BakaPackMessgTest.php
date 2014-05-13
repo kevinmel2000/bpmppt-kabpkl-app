@@ -30,82 +30,18 @@
  * @subpackage  Libraries
  * @category    Messages
  */
-class Messg
+class BakaPackMessgTest extends PHPUnit_Framework_TestCase
 {
-    /**
-     * Messages wrapper
-     *
-     * @var  array
-     */
-    protected static $messages = array();
+    private $ci;
 
-    protected static $levels   = array('success', 'info', 'warning', 'error');
-
-    /**
-     * Default class constructor
-     */
-    public function __construct()
+    public function setUp()
     {
-        log_message('debug', "#Baka_pack: Messg Class Initialized");
+        $this->ci =& get_instance();
     }
 
-    /**
-     * Setup messages
-     *
-     * @param   string        $level     Message Level
-     * @param   string|array  $msg_item  Message Items
-     *
-     * @return  void
-     */
-    public static function set($level, $msg_item)
+    public function testLogin()
     {
-        if (!in_array($level, self::$levels))
-        {
-            log_message('error', '#Baka_pack: Messg->set Unkown message level "'.$level.'"');
-            return FALSE;
-        }
-
-        if (is_array($msg_item) and count($msg_item) > 0)
-        {
-            foreach ($msg_item as $item)
-            {
-                self::set($level, $item);
-            }
-        }
-        else
-        {
-            self::$messages[$level][] = $msg_item;
-        }
-    }
-
-    /**
-     * Get all messages
-     *
-     * @param   string  $level Message Level
-     *
-     * @return  array
-     */
-    public static function get($level = FALSE)
-    {
-        if (!empty(self::$messages))
-        {
-            if ($level)
-            {
-                return self::$messages[$level];
-            }
-
-            return self::$messages;
-        }
-    }
-
-    /**
-     * Clean up
-     *
-     * @return  void
-     */
-    public static function clear()
-    {
-        self::$messages = array();
+        $this->assertFalse(FALSE);
     }
 }
 

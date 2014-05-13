@@ -173,7 +173,6 @@ class BAKA_Controller extends CI_Controller
             // $this->data_navbar('main_navbar-master', 'top');
 
         }
-            $this->load->driver('bpmppt');
 
         // Adding admin menu to main navbar
         $this->themee->add_navmenu('main_navbar', 'admin', 'link', 'admin/', 'Administrasi');
@@ -191,6 +190,8 @@ class BAKA_Controller extends CI_Controller
     {
         $link   = 'data/layanan/';
         $nama   = str_replace('/', '_', $link);
+
+        $this->load->driver('bpmppt');
 
         $modules = $this->bpmppt->get_modules();
 

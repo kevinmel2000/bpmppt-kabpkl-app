@@ -34,7 +34,7 @@ class BakaControllerTest extends PHPUnit_Framework_TestCase
     private $_ci;
     private $_bc;
 
-    public static function setUp()
+    public function setUp()
     {
         $this->_ci =& get_instance();
         $this->_bc = new BAKA_Controller;
@@ -43,8 +43,6 @@ class BakaControllerTest extends PHPUnit_Framework_TestCase
     public function testIndexRoute()
     {
     	$bool = 0;
-        $this->assertFalse($bool);
-
         $this->assertEquals(0, $bool);
     }
 }

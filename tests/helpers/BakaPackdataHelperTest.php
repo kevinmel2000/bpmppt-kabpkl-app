@@ -25,48 +25,19 @@
 
 // -----------------------------------------------------------------------------
 
-function add_placeholder( $array, $placeholder = '---', $langify = FALSE )
+class BakaPackDataHelperTest extends PHPUnit_Framework_TestCase
 {
-	$output[''] = $placeholder;
+    private $ci;
 
-	foreach( $array as $key => $value )
-	{
-		$output[$key] = ( $langify ? _x( $value ) : $value );
-	}
+    public function setUp()
+    {
+        $this->ci =& get_instance();
+    }
 
-	return $output;
-}
-
-// -----------------------------------------------------------------------------
-
-/**
- * Convert Boolean to String
- *
- * @param   bool    $bool  Variable that you want to convert
- * @param   bool    $uc    Are you want return it uppercased
- *
- * @return  string
- */
-function bool_to_str( $bool, $uc = FALSE )
-{
-	$bool = (bool) $bool;
-	$ret = $bool ? 'ya' : 'tidak';
-
-	return $uc ? strtoupper( $ret ) : $ret;
-}
-
-// -----------------------------------------------------------------------------
-
-/**
- * Convert Boolean to Integer
- *
- * @param   bool    $bool  Variable that you want to convert
- *
- * @return  string
- */
-function bool_to_int( $bool )
-{
-	return $bool ? 1 : 0;
+    public function testLogin()
+    {
+        $this->assertFalse(FALSE);
+    }
 }
 
 /* End of file data_helper.php */

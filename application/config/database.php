@@ -8,7 +8,7 @@
 if (VCAP_SERVICES)
 {
 	$service_json = json_decode(VCAP_SERVICES, true);
-	$env_config = $service_json['mysql-5.1'][0]['credentials'];
+	$env_config   = $service_json['mysql-5.1'][0]['credentials'];
 }
 elseif (getenv("TRAVIS") == true)
 {

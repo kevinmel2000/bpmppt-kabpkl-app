@@ -34,10 +34,9 @@ class AuthrHelperTest extends PHPUnit_Framework_TestCase
 {
     private $ci;
 
-    public static function setUpBeforeClass()
+    public function setUp()
     {
         $this->ci =& get_instance();
-        $this->ci->load->helper('authr');
     }
 
     public function testLogin()

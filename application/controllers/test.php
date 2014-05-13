@@ -30,18 +30,23 @@ class Test extends BAKA_Controller
     {
         parent::__construct();
 
-        $this->verify_login();
+        if (!$this->authr->is_logged_in() AND !$this->authr->is_logged_in(FALSE))
+        {
+            // redirect('login');
+            echo 'not allowed';
+        }
+        
+        // if ($this->authr->is_logged_in(FALSE))
+        // {
+        //     redirect('resend');
+        // }
     }
 
-    private function index()
-    {
-        return;
-    }
-
-    public function modal()
+    public function index()
     {
         $this->data['panel_body'] = '<button type="button" class="btn btn-default">test</button>';
 
+        // $this->load->view('pages/panel_test', $this->data);
         $this->load->theme('pages/panel_test', $this->data);
     }
 }

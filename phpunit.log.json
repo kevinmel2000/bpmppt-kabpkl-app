@@ -1,0 +1,385 @@
+{
+    "event": "suiteStart",
+    "suite": "Baka Pack Test Suite",
+    "tests": 20
+}{
+    "event": "suiteStart",
+    "suite": "BakaControllerTest",
+    "tests": 1
+}{
+    "event": "testStart",
+    "suite": "BakaControllerTest",
+    "test": "BakaControllerTest::testIndexRoute"
+}{
+    "event": "test",
+    "suite": "BakaControllerTest",
+    "test": "BakaControllerTest::testIndexRoute",
+    "status": "pass",
+    "time": 0.08361291885376,
+    "trace": [
+
+    ],
+    "message": "",
+    "output": ""
+}{
+    "event": "suiteStart",
+    "suite": "AuthrHelperTest",
+    "tests": 1
+}{
+    "event": "testStart",
+    "suite": "AuthrHelperTest",
+    "test": "AuthrHelperTest::testLogin"
+}{
+    "event": "test",
+    "suite": "AuthrHelperTest",
+    "test": "AuthrHelperTest::testLogin",
+    "status": "pass",
+    "time": 0.0034430027008057,
+    "trace": [
+
+    ],
+    "message": "",
+    "output": ""
+}{
+    "event": "suiteStart",
+    "suite": "BakaPackArrayHelperTest",
+    "tests": 1
+}{
+    "event": "testStart",
+    "suite": "BakaPackArrayHelperTest",
+    "test": "BakaPackArrayHelperTest::testLogin"
+}{
+    "event": "test",
+    "suite": "BakaPackArrayHelperTest",
+    "test": "BakaPackArrayHelperTest::testLogin",
+    "status": "pass",
+    "time": 0.0025110244750977,
+    "trace": [
+
+    ],
+    "message": "",
+    "output": ""
+}{
+    "event": "suiteStart",
+    "suite": "BakaPackDataHelperTest",
+    "tests": 1
+}{
+    "event": "testStart",
+    "suite": "BakaPackDataHelperTest",
+    "test": "BakaPackDataHelperTest::testLogin"
+}{
+    "event": "test",
+    "suite": "BakaPackDataHelperTest",
+    "test": "BakaPackDataHelperTest::testLogin",
+    "status": "pass",
+    "time": 0.0037391185760498,
+    "trace": [
+
+    ],
+    "message": "",
+    "output": ""
+}{
+    "event": "suiteStart",
+    "suite": "BakaPackEmailHelperTest",
+    "tests": 1
+}{
+    "event": "testStart",
+    "suite": "BakaPackEmailHelperTest",
+    "test": "BakaPackEmailHelperTest::testLogin"
+}{
+    "event": "test",
+    "suite": "BakaPackEmailHelperTest",
+    "test": "BakaPackEmailHelperTest::testLogin",
+    "status": "pass",
+    "time": 0.0026938915252686,
+    "trace": [
+
+    ],
+    "message": "",
+    "output": ""
+}{
+    "event": "suiteStart",
+    "suite": "BakaPackFormerHelperTest",
+    "tests": 1
+}{
+    "event": "testStart",
+    "suite": "BakaPackFormerHelperTest",
+    "test": "BakaPackFormerHelperTest::testLogin"
+}{
+    "event": "test",
+    "suite": "BakaPackFormerHelperTest",
+    "test": "BakaPackFormerHelperTest::testLogin",
+    "status": "pass",
+    "time": 0.0024900436401367,
+    "trace": [
+
+    ],
+    "message": "",
+    "output": ""
+}{
+    "event": "suiteStart",
+    "suite": "BakaPackHtmlHelperTest",
+    "tests": 1
+}{
+    "event": "testStart",
+    "suite": "BakaPackHtmlHelperTest",
+    "test": "BakaPackHtmlHelperTest::testLogin"
+}{
+    "event": "test",
+    "suite": "BakaPackHtmlHelperTest",
+    "test": "BakaPackHtmlHelperTest::testLogin",
+    "status": "pass",
+    "time": 0.0025219917297363,
+    "trace": [
+
+    ],
+    "message": "",
+    "output": ""
+}{
+    "event": "suiteStart",
+    "suite": "BakaPackCommonHelperTest",
+    "tests": 1
+}{
+    "event": "testStart",
+    "suite": "BakaPackCommonHelperTest",
+    "test": "BakaPackCommonHelperTest::testLogin"
+}{
+    "event": "test",
+    "suite": "BakaPackCommonHelperTest",
+    "test": "BakaPackCommonHelperTest::testLogin",
+    "status": "pass",
+    "time": 0.0027740001678467,
+    "trace": [
+
+    ],
+    "message": "",
+    "output": ""
+}{
+    "event": "suiteStart",
+    "suite": "ArchiveDriverTest",
+    "tests": 1
+}{
+    "event": "testStart",
+    "suite": "ArchiveDriverTest",
+    "test": "ArchiveDriverTest::testLogin"
+}{
+    "event": "test",
+    "suite": "ArchiveDriverTest",
+    "test": "ArchiveDriverTest::testLogin",
+    "status": "pass",
+    "time": 0.0025341510772705,
+    "trace": [
+
+    ],
+    "message": "",
+    "output": ""
+}{
+    "event": "suiteStart",
+    "suite": "AuthrDriverTest",
+    "tests": 1
+}{
+    "event": "testStart",
+    "suite": "AuthrDriverTest",
+    "test": "AuthrDriverTest::testLogin"
+}{
+    "event": "test",
+    "suite": "AuthrDriverTest",
+    "test": "AuthrDriverTest::testLogin",
+    "status": "pass",
+    "time": 0.0026049613952637,
+    "trace": [
+
+    ],
+    "message": "",
+    "output": ""
+}{
+    "event": "suiteStart",
+    "suite": "BAKAFormvalidationTest",
+    "tests": 1
+}{
+    "event": "testStart",
+    "suite": "BAKAFormvalidationTest",
+    "test": "BAKAFormvalidationTest::testLogin"
+}{
+    "event": "test",
+    "suite": "BAKAFormvalidationTest",
+    "test": "BAKAFormvalidationTest::testLogin",
+    "status": "pass",
+    "time": 0.0025291442871094,
+    "trace": [
+
+    ],
+    "message": "",
+    "output": ""
+}{
+    "event": "suiteStart",
+    "suite": "BakaPackAsssetsTest",
+    "tests": 1
+}{
+    "event": "testStart",
+    "suite": "BakaPackAsssetsTest",
+    "test": "BakaPackAsssetsTest::testLogin"
+}{
+    "event": "test",
+    "suite": "BakaPackAsssetsTest",
+    "test": "BakaPackAsssetsTest::testLogin",
+    "status": "pass",
+    "time": 0.0028879642486572,
+    "trace": [
+
+    ],
+    "message": "",
+    "output": ""
+}{
+    "event": "suiteStart",
+    "suite": "BakaPackFormerTest",
+    "tests": 1
+}{
+    "event": "testStart",
+    "suite": "BakaPackFormerTest",
+    "test": "BakaPackFormerTest::testLogin"
+}{
+    "event": "test",
+    "suite": "BakaPackFormerTest",
+    "test": "BakaPackFormerTest::testLogin",
+    "status": "pass",
+    "time": 0.0026571750640869,
+    "trace": [
+
+    ],
+    "message": "",
+    "output": ""
+}{
+    "event": "suiteStart",
+    "suite": "BakaPackGridrTest",
+    "tests": 1
+}{
+    "event": "testStart",
+    "suite": "BakaPackGridrTest",
+    "test": "BakaPackGridrTest::testLogin"
+}{
+    "event": "test",
+    "suite": "BakaPackGridrTest",
+    "test": "BakaPackGridrTest::testLogin",
+    "status": "pass",
+    "time": 0.0025300979614258,
+    "trace": [
+
+    ],
+    "message": "",
+    "output": ""
+}{
+    "event": "suiteStart",
+    "suite": "BakaPackMedianTest",
+    "tests": 1
+}{
+    "event": "testStart",
+    "suite": "BakaPackMedianTest",
+    "test": "BakaPackMedianTest::testLogin"
+}{
+    "event": "test",
+    "suite": "BakaPackMedianTest",
+    "test": "BakaPackMedianTest::testLogin",
+    "status": "pass",
+    "time": 0.0025498867034912,
+    "trace": [
+
+    ],
+    "message": "",
+    "output": ""
+}{
+    "event": "suiteStart",
+    "suite": "BakaPackMessgTest",
+    "tests": 1
+}{
+    "event": "testStart",
+    "suite": "BakaPackMessgTest",
+    "test": "BakaPackMessgTest::testLogin"
+}{
+    "event": "test",
+    "suite": "BakaPackMessgTest",
+    "test": "BakaPackMessgTest::testLogin",
+    "status": "pass",
+    "time": 0.0028781890869141,
+    "trace": [
+
+    ],
+    "message": "",
+    "output": ""
+}{
+    "event": "suiteStart",
+    "suite": "BakaPackSettingTest",
+    "tests": 1
+}{
+    "event": "testStart",
+    "suite": "BakaPackSettingTest",
+    "test": "BakaPackSettingTest::testLogin"
+}{
+    "event": "test",
+    "suite": "BakaPackSettingTest",
+    "test": "BakaPackSettingTest::testLogin",
+    "status": "pass",
+    "time": 0.0025489330291748,
+    "trace": [
+
+    ],
+    "message": "",
+    "output": ""
+}{
+    "event": "suiteStart",
+    "suite": "BakaPackThemeeTest",
+    "tests": 1
+}{
+    "event": "testStart",
+    "suite": "BakaPackThemeeTest",
+    "test": "BakaPackThemeeTest::testLogin"
+}{
+    "event": "test",
+    "suite": "BakaPackThemeeTest",
+    "test": "BakaPackThemeeTest::testLogin",
+    "status": "pass",
+    "time": 0.0025780200958252,
+    "trace": [
+
+    ],
+    "message": "",
+    "output": ""
+}{
+    "event": "suiteStart",
+    "suite": "BakaPackUtilyTest",
+    "tests": 1
+}{
+    "event": "testStart",
+    "suite": "BakaPackUtilyTest",
+    "test": "BakaPackUtilyTest::testLogin"
+}{
+    "event": "test",
+    "suite": "BakaPackUtilyTest",
+    "test": "BakaPackUtilyTest::testLogin",
+    "status": "pass",
+    "time": 0.0026299953460693,
+    "trace": [
+
+    ],
+    "message": "",
+    "output": ""
+}{
+    "event": "suiteStart",
+    "suite": "BpmpptDriverTest",
+    "tests": 1
+}{
+    "event": "testStart",
+    "suite": "BpmpptDriverTest",
+    "test": "BpmpptDriverTest::testLogin"
+}{
+    "event": "test",
+    "suite": "BpmpptDriverTest",
+    "test": "BpmpptDriverTest::testLogin",
+    "status": "pass",
+    "time": 0.0034899711608887,
+    "trace": [
+
+    ],
+    "message": "",
+    "output": ""
+}

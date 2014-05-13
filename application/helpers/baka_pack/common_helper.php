@@ -327,5 +327,14 @@ function get_ext($path)
     return pathinfo($path, PATHINFO_EXTENSION);
 }
 
+
+if (!function_exists('is_cli'))
+{
+    function is_cli()
+    {
+        return php_sapi_name() === 'cli' OR defined('STDIN');
+    }
+}
+
 /* End of file common_helper.php */
 /* Location: ./application/helpers/baka_pack/common_helper.php */
