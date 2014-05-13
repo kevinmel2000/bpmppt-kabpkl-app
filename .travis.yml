@@ -22,6 +22,8 @@ deploy:
   on:
     repo: feryardiant/bpmppt
     php: '5.3'
+matrix:
+  fast_finish: true
 notifications:
   email:
     - feryardiant@gmail.com
