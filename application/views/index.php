@@ -11,7 +11,7 @@
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="<?php echo base_url('asset/img/favicon/icon-144.png') ?>">
     <link rel="shortcut icon" href="<?php echo base_url('asset/img/favicon/favicon.png') ?>">
 </head>
-<body <?php echo get_body_class() ?>>
+<body <?php echo get_body_attrs() ?>>
 
 <div class="wrapper">
     <?php echo get_navbar() ?>

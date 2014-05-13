@@ -516,7 +516,7 @@ class Former
             $field_attrs['attr'] .= 'placeholder="'.$field_attrs['label'].'"';
         }
 
-        $attributes  = $this->_set_defaults($field_attrs);
+        $attributes  = array_set_defaults($field_attrs, $this->_default_attr);
         extract($attributes);
 
         if ($type == 'hidden')
@@ -572,7 +572,7 @@ class Former
                         $field['col'] = floor(12/$c_fields);
                     }
 
-                    $input .= '<div class="'.$this->set_columns($field['col'], $field['col'], $field['col'], 12).'">';
+                    $input .= '<div class="'.twbs_set_columns($field['col'], $field['col'], $field['col'], 12).'">';
                     $field_attrs['validation'] = '';
 
                     if (isset($field['validation']) AND $field['validation'] != '')
@@ -741,13 +741,13 @@ class Former
 
                     Asssets::set_script('jqui-slider-trigger', $script, 'jqui-slider');
 
-                    $input  = '<div class="row"><div class="'.$this->set_columns(2, 2, 2, 3).'">'
+                    $input  = '<div class="row"><div class="'.twbs_set_columns(2, 2, 2, 3).'">'
                             . form_input(array(
                                 'name'  => $name,
                                 'id'    => $id,
                                 'type'  => 'number',
                                 'class' => $input_class), set_value($name, $std), $attr)
-                            . '</div><div class="'.$this->set_columns(10, 10, 10, 9).'">'
+                            . '</div><div class="'.twbs_set_columns(10, 10, 10, 9).'">'
                             . '<div class="jqui-slider" data-slider-input-target="'.$id.'" data-slider-step="'.$step.'" data-slider-min="'.$min.'" data-slider-max="'.$max.'"></div>'
                             . '</div></div>';
                     break;
@@ -913,7 +913,7 @@ class Former
                                     . '<label for="'.$_id.'"> '.$opt.'</label>'
                                     . '</div>';
 
-                            $rc .= ($devide ? '<div class="'.$this->set_columns(6, 6, 6).'">'.$check.'</div>' : $check);
+                            $rc .= ($devide ? '<div class="'.twbs_set_columns(6, 6, 6).'">'.$check.'</div>' : $check);
 
                             if ($devide AND $count % 2 == 0)
                             {
@@ -1069,7 +1069,7 @@ class Former
     {
         extract($this->_template);
 
-        $attrs = $this->_set_defaults($attrs);
+        $attrs = array_set_defaults($attrs, $this->_default_attr);
         $is_error = '';
 
         if (!is_array($attrs['desc']))
@@ -1102,8 +1102,8 @@ class Former
             $group_class .= ' '.$attrs['class'];
         }
 
-        $label_col = $this->is_hform ? $this->set_columns($label_col_lg, $label_col_md, $label_col_sm, $label_col_xs) : '';
-        $input_col = $this->is_hform ? $this->set_columns($field_col_lg, $field_col_md, $field_col_sm, $field_col_xs) : '';
+        $label_col = $this->is_hform ? twbs_set_columns($label_col_lg, $label_col_md, $label_col_sm, $label_col_xs) : '';
+        $input_col = $this->is_hform ? twbs_set_columns($field_col_lg, $field_col_md, $field_col_sm, $field_col_xs) : '';
 
         $group_attr = 'id="group-'.str_replace('_', '-', $attrs['name']).'"';
 
@@ -1176,7 +1176,7 @@ class Former
 
         // If you were use Bootstrap form-horizontal class in your form,
         // You'll need to specify Bootstrap grids class.
-        $group_col  = $this->is_hform ? $this->set_columns(12, 12) : '';
+        $group_col  = $this->is_hform ? twbs_set_columns(12, 12) : '';
         $output     = '<div class="form-group form-action"><div class="clearfix'.$group_col.'">';
 
         // Let's reset your button attributes.
@@ -1378,87 +1378,6 @@ class Former
         }
 
         return $ret;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Set default keys in an array, it's useful to prevent un setup array keys
-     * but you'd use that in next code.
-     *
-     * @param   array  $field       An array that will recieve default key
-     * @param   array  $array_keys  Array of keys which be default key of $field
-     *                              Array must be associative array, which have
-     *                              key and value. Key used as default key and
-     *                              Value used as default value for $field param
-     *
-     * @return  array
-     */
-    private function _set_defaults(array $field, $array_keys = array())
-    {
-        if (empty($array_keys))
-        {
-            $array_keys = $this->_default_attr;
-        }
-
-        foreach ($array_keys as $key => $val)
-        {
-            if (!array_key_exists($key, $field) AND !isset($field[$key]))
-            {
-                $field[$key] = $val;
-            }
-        }
-
-        return $field;
-    }
-
-    // -------------------------------------------------------------------------
-
-    protected function set_columns($lg = NULL, $md = NULL, $sm = NULL, $xs = NULL, $xxs = NULL)
-    {
-        if (is_array($lg))
-        {
-            $lg = $this->_set_defaults($lg, array(
-                'lg'  => NULL,
-                'md'  => NULL,
-                'sm'  => NULL,
-                'xs'  => NULL,
-                'xxs' => NULL,
-                ));
-
-            return $this->set_columns($lg['lg'], $lg['md'], $lg['sm'], $lg['xs'], $lg['xxs']);
-        }
-        else
-        {
-            $out = '';
-
-            if (!is_null($lg))
-            {
-                $out .= ' col-lg-'.$lg;
-            }
-
-            if (!is_null($md))
-            {
-                $out .= ' col-md-'.$md;
-            }
-
-            if (!is_null($sm))
-            {
-                $out .= ' col-sm-'.$sm;
-            }
-
-            if (!is_null($xs))
-            {
-                $out .= ' col-xs-'.$xs;
-            }
-
-            if (!is_null($xxs))
-            {
-                $out .= ' col-xxs-'.$xxs;
-            }
-
-            return $out;
-        }
     }
 
     // -------------------------------------------------------------------------
