@@ -44,11 +44,11 @@
             </tr><tr>
                 <td>Saudara</td>
                 <td>:</td>
-                <td colspan="4"><?php echo $pemohon_nama<span style="background-color: transparent; line-height: 1.42857143;"> ?></span><br></td>
+                <td colspan="4"><?php echo $pemohon_nama ?></span><br></td>
             </tr><tr>
                 <td>Alamat</td>
                 <td>:</td>
-                <td colspan="4"><?php echo $pemohon_alamat<span style="background-color: transparent; line-height: 1.42857143;"> ?></span><br></td>
+                <td colspan="4"><?php echo $pemohon_alamat ?></span><br></td>
             </tr></tbody></table></li>
             <li>Persyaratan teknis dan administratif yang diperlukan berdasarkan Peraturan Perundang-undangan yang berlaku dan hasil pemeriksaan petugas lapangan dimuat dalam Berita Acara enelitian Lapangan telah terpenuhi,m maka perlu ditetapkan dengan Keputusan Kepala Badan Penanaman Modal dan Pelayanan Perzinan Terpadu.</li>
         </ol>

@@ -15,33 +15,23 @@ module.exports = function(grunt) {
 
     phplint: {
       cores: [
-        'application/core/*.php', 
+        'application/core/*.php',
+        'application/controllers/*.php',
+        'application/controllers/admin/*.php',
+        'application/helpers/*.php',
+        'application/helpers/baka_pack/*.php',
+        'application/libraries/*.php',
+        'application/libraries/baka_pack/*.php',
+        'application/libraries/Archive/**/*.php',
+        'application/libraries/Authr/**/*.php',
       ],
-      controllers: [
-        'application/controllers/*.php', 
-        'application/controllers/admin/*.php', 
-        'application/controllers/data/*.php', 
-      ],
-      helpers: [
-        'application/helpers/*.php', 
-        'application/helpers/baka_pack/*.php', 
-      ],
-      libraries: [
-        'application/libraries/*.php', 
-        'application/libraries/baka_pack/*.php', 
-        'application/libraries/Archive/*.php', 
-        'application/libraries/Authr/*.php', 
-        'application/libraries/Bpmppt/*.php', 
-      ],
-      models: [
-        'application/models/*.php', 
-        'application/models/baka_pack/*.php', 
-      ],
-      views: [
-        'application/views/*.php', 
-        'application/views/email/*.php', 
-        'application/views/pages/*.php', 
-        'application/views/prints/*.php', 
+      products: [
+        'application/controllers/data/*.php',
+        'application/libraries/Bpmppt/*.php',
+        'application/libraries/Bpmppt/**/*.php',
+        'application/views/*.php',
+        'application/views/**/*.php',
+        'application/views/**/**/*.php',
       ]
     },
 
@@ -127,19 +117,35 @@ module.exports = function(grunt) {
     },
 
     watch: {
-      less: {
-        files: 'asset/less/lib/*.less',
-        tasks: 'csstest',
-        options: {
-          nospawn: true
-        }
+      options: {
+        nospawn: true
       },
-      php: {
-        files: ['tests/**/*Test.php', 'tests/*Test.php'],
-        tasks: 'phpunit',
-        options: {
-          nospawn: true
-        }
+      less: {
+        files: [
+          'asset/less/**/*.less',
+          'asset/less/*.less'
+        ],
+        tasks: [
+          'less',
+          'autoprefixer',
+          'csscomb',
+          'csslint'
+        ]
+      },
+      phpTest: {
+        files: [
+          'tests/**/*Test.php',
+          'tests/*Test.php'
+        ],
+        tasks: 'phpunit'
+      },
+      phpCore: {
+        files: [
+          'application/**/**/*.php',
+          'application/**/*.php',
+          'application/*.php'
+        ],
+        tasks: 'phplint'
       }
     }
 
