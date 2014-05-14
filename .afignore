@@ -2,11 +2,9 @@
 Thumbs.db
 Desktop.ini
 .DS_Store
-._*
 _*
 .*
 *~
-*.zip
 
 # Ignore Application Specifics
 /tests/*

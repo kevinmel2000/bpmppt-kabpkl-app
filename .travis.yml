@@ -14,8 +14,6 @@ before_script:
   - mysql -utravis bpmppt_test < tests/backup.sql
 script:
   - grunt testdist
-after_script:
-  - mysql -e 'drop database if exists bpmppt_test;'
 deploy:
   provider: appfog
   email: ferywardiyanto@gmail.com
@@ -27,6 +25,9 @@ deploy:
     php: '5.3'
 matrix:
   fast_finish: true
+branches:
+  only:
+    - master
 notifications:
   email:
     recipients:
