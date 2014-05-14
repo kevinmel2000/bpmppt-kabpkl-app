@@ -30,13 +30,13 @@
  *
  * @return  string
  */
-class AuthrHelperTest extends PHPUnit_Framework_TestCase
+class AuthrHelperTest extends BakaPack_TestCase
 {
-    private $ci;
-
     public function setUp()
     {
-        $this->ci =& get_instance();
+    	parent::setUp();
+
+        $this->ci->load->helper('authr');
     }
 
     public function testLogin()

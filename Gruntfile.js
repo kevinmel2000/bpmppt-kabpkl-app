@@ -127,9 +127,16 @@ module.exports = function(grunt) {
     },
 
     watch: {
-      less:{
+      less: {
         files: 'asset/less/lib/*.less',
         tasks: 'csstest',
+        options: {
+          nospawn: true
+        }
+      },
+      php: {
+        files: ['tests/**/*Test.php', 'tests/*Test.php'],
+        tasks: 'phpunit',
         options: {
           nospawn: true
         }

@@ -25,13 +25,42 @@
 
 // -----------------------------------------------------------------------------
 
-class BakaPackEmailHelperTest extends PHPUnit_Framework_TestCase
+class BakaPackHelpersTest extends BakaPack_TestCase
 {
-    private $ci;
+    private $_helpers = array(
+        'array',
+        'asssets',
+        'common',
+        'data',
+        'emailer',
+        'former',
+        'twbs',
+        );
+
+    private $_count = 0;
 
     public function setUp()
     {
-        $this->ci =& get_instance();
+        parent::setUp();
+
+        foreach ($this->_helpers as $helper)
+        {
+            if (!$this->ci->load->is_loaded('baka_pack/'.$helper))
+            {
+                $this->ci->load->helper('baka_pack/'.$helper);
+            }
+
+            $this->_count++;
+        }
+    }
+
+    public function testLoadedHelpers()
+    {
+        $this->assertNotCount(0, $this->_helpers);
+
+        $this->assertCount($this->_count, $this->_helpers);
+
+        $this->assertEquals($this->_count, count($this->_helpers));
     }
 
     public function testLogin()

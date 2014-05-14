@@ -74,7 +74,9 @@ function array_edit_val( array $array1, array $array2 )
         $array[$key] = $val;
 
         if ( isset($array2[$key]) AND $array[$key] != $array2[$key] )
+        {
             $array[$key] = $array2[$key];
+        }
     }
 
     return $array;
@@ -85,7 +87,10 @@ function array_edit_val( array $array1, array $array2 )
 // Some array helper
 function baka_get_value_from_key( $value , $array )
 {
-    if ( isset( $array[$value] ) ) { return $array[$value]; }
+    if ( isset( $array[$value] ) )
+    {
+        return $array[$value];
+    }
 }
 
 // -----------------------------------------------------------------------------

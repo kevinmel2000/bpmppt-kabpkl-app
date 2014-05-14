@@ -32,18 +32,34 @@
 class BakaControllerTest extends PHPUnit_Framework_TestCase
 {
     private $_ci;
-    private $_bc;
+    private $_bc = FALSE;
 
     public function setUp()
     {
         $this->_ci =& get_instance();
-        $this->_bc = new BAKA_Controller;
+
+        if (class_exists('BAKA_Controller'))
+        {
+            $this->_bc = new BAKA_Controller;
+        }
     }
 
-    public function testIndexRoute()
+    public function testInstance()
     {
-    	$bool = 0;
-        $this->assertEquals(0, $bool);
+        $this->assertNotFalse($this->_bc);
+
+        $this->assertContainsOnlyInstancesOf('BAKA_Controller', array($this->_bc));
+
+        $this->assertContainsOnlyInstancesOf('CI_Controller', array($this->_bc));
+
+        $this->assertNotCount(0, $this->_bc->data);
+    }
+
+    public function testPanelContent()
+    {
+        $this->assertContains('panel_title', $this->_bc->data);
+
+        $this->assertContains('panel_body', $this->_bc->data);
     }
 }
 
