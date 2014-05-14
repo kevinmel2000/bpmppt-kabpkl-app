@@ -74,74 +74,7 @@ class Asssets
     {
         self::$_ci =& get_instance();
 
-        // self::$_scripts['head'] = array();
-        // self::$_scripts['foot'] = array();
-
-        $this->set_body_attr('id', self::$_ci->router->fetch_class() );
-
-        // print_pre(self::$_scripts);
-
         log_message('debug', "#Baka_pack: Asssets Class Initialized");
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Set Page Title
-     *
-     * @param   string  $page_title  Page Title
-     * @return  void
-     */
-    public function set_title($page_title)
-    {
-        $this->set_body_attr('class', url_title($page_title, '-', TRUE) );
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Set Body Class and ID
-     *
-     * @param   string  $key  Attribute key (id|class)
-     * @param   string  $val  Attribute Value
-     * @return  mixed
-     */
-    private function set_body_attr($key, $val)
-    {
-        if (!in_array($key, array('id', 'class')))
-        {
-            log_message('error', 'Asssets lib: '.$key.' body attribute is not supported.');
-            return FALSE;
-        }
-
-        if ($key == 'id')
-        {
-            self::$_data['body']['id']      = 'page-'.$val;
-            self::$_data['body']['class']   = 'page '.$val;
-        }
-        else if ($key == 'class')
-        {
-            self::$_data['body']['class'] .= ' '.$val;
-        }
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Get the body Attributes
-     *
-     * @return  string
-     */
-    public static function get_body_attrs()
-    {
-        $attrs = '';
-
-        foreach (self::$_data['body'] as $key => $val)
-        {
-            $attrs .= $key.'="'.$val.'" ';
-        }
-
-        echo $attrs;
     }
 
     // -------------------------------------------------------------------------
@@ -200,7 +133,9 @@ class Asssets
     public static function get_script($pos)
     {
         if (isset(self::$_scripts[$pos]))
+        {
             return self::$_scripts[$pos];
+        }
 
         return FALSE;
     }
@@ -258,7 +193,9 @@ class Asssets
     public static function get_styles()
     {
         if (isset(self::$_styles))
+        {
             return self::$_styles;
+        }
 
         return FALSE;
     }
@@ -280,13 +217,15 @@ class Asssets
         $path   = 'asset/'.$type.'/';
         $output = '';
 
+        $version = (strpos($source_path, '?') !== FALSE ? '&' :  '?').'ver='.$version;
+
         if (file_exists(FCPATH.$path.$source_path))
         {
-            $output = base_url($path.$source_path).'?ver='.$version;
+            $output = base_url($path.$source_path).$version;
         }
         else if (self::valid_url($source_path))
         {
-            $output = $source_path.'?ver='.$version;
+            $output = $source_path.$version;
         }
         else
         {
@@ -302,7 +241,7 @@ class Asssets
     {
         $url_pattern = "/^(http(s?):\/\/|(\/\/?))/";
 
-        return preg_match($url_pattern, $url);
+        return preg_match($url_pattern, $url) ? TRUE : FALSE;
     }
 }
 

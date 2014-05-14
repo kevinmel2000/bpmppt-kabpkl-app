@@ -84,11 +84,6 @@ class CI_URI {
 	 */
 	function _fetch_uri_string()
 	{
-		if (defined('PHPUNIT_TEST'))
-		{
-			return;
-		}
-
 		if (strtoupper($this->config->item('uri_protocol')) == 'AUTO')
 		{
 			// Is the request coming from the command line?
@@ -261,7 +256,7 @@ class CI_URI {
 			// compatibility as many are unaware of how characters in the permitted_uri_chars will be parsed as a regex pattern
 			if ( ! preg_match("|^[".str_replace(array('\\-', '\-'), '-', preg_quote($this->config->item('permitted_uri_chars'), '-'))."]+$|i", $str))
 			{
-				show_error('The URI you submitted has disallowed characters.', 400);
+				show_error('The URI you submitted "'.$str.'" has disallowed characters.', 400);
 			}
 		}
 

@@ -117,6 +117,8 @@ class Utily
         return FALSE;
     }
 
+    // -------------------------------------------------------------------------
+
     public function get_server_info($key = '')
     {
         $out['php_version'] = phpversion();
@@ -182,6 +184,8 @@ class Utily
         return $out;
     }
 
+    // -------------------------------------------------------------------------
+
     protected function server_info_helper($value)
     {
         $value = htmlentities(trim($value));
@@ -189,11 +193,17 @@ class Utily
         if (is_numeric($value))
         {
             if ($value == 1)
+            {
                 $return = 'Ya';
+            }
             else if ($value == 0)
+            {
                 $return = 'Tidak';
+            }
             else
+            {
                 $return = $value;
+            }
         }
         else if (is_bool($value))
         {
@@ -222,7 +232,7 @@ class Utily
     {
         foreach (self::$_ci->db->list_tables() as $table)
         {
-            $table_name = $table;
+            $table_name  = $table;
             $table_label = str_replace(self::$_ci->db->dbprefix, '', $table);
 
             if (!in_array($table_label, $this->_restricted_tables))
@@ -250,7 +260,7 @@ class Utily
     {
         self::$_ci->load->helpers('directory', 'date');
 
-        $dir = array();
+        $dir    = array();
         $prefix = 'backup_'.str_replace(' ', '_', strtolower(get_conf('app_name'))).'_';
 
         foreach (directory_map($this->_destination) as $key => $value)
@@ -318,7 +328,7 @@ class Utily
 
         foreach ($tables as $table)
         {
-            shell_exec( 'mysqldump -u'.self::$_ci->db->username.$password.$database.' '.$table.">".$destination.'/'.$table.'.sql' );
+            @shell_exec( 'mysqldump -u'.self::$_ci->db->username.$password.$database.' '.$table.">".$destination.'/'.$table.'.sql' );
         }
         
         // Load the zip helper
@@ -405,7 +415,7 @@ class Utily
             // Messg::set('success', $file_path.$key);
             if (get_ext($value) == 'sql')
             {
-                shell_exec( 'mysql -u'.self::$_ci->db->username.$password.' '.self::$_ci->db->database.' <'.$file_path.$value );
+                @shell_exec( 'mysql -u'.self::$_ci->db->username.$password.' '.self::$_ci->db->database.' <'.$file_path.$value );
 
                 $value = str_replace(self::$_ci->db->dbprefix, '', $table);
                 $value = str_replace('_', ' ', $value);

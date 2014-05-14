@@ -20,6 +20,7 @@ _*
 *.vi
 *~
 dvccas
+phpunit.log.json
 *.zip
 
 # IDEs project files/settings
@@ -49,6 +50,7 @@ vendor/
 /application/storage/cache/*
 /application/storage/upload/*
 /application/storage/backup/*
+/asset/sql/
 
 # but leave there Application Specifics
 !.htaccess
@@ -57,6 +59,8 @@ vendor/
 !.gitignore
 !.editorconfig
 !.afignore
+!.csslintrc
+!.csscomb.json
 !index.html
 !/application/storage/dbs/index.html
 !/application/storage/tmp/index.html

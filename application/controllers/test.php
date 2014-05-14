@@ -29,20 +29,46 @@ class Test extends BAKA_Controller
     public function __construct()
     {
         parent::__construct();
-
-        $this->verify_login();
     }
 
-    private function index()
-    {
-        return;
-    }
-
-    public function modal()
+    public function index()
     {
         $this->data['panel_body'] = '<button type="button" class="btn btn-default">test</button>';
 
+        // $this->load->view('pages/panel_test', $this->data);
         $this->load->theme('pages/panel_test', $this->data);
+    }
+
+    public function cli($param)
+    {
+        print "Type your message. Type '.' on a line by itself when you're done";
+
+        $fp        = fopen('php://stdin', 'r');
+        $last_line = false;
+        $message   = '';
+
+        while (!$last_line)
+        {
+            // read the special file to get the user input from keyboard
+            $next_line = fgets($fp, 1024);
+
+            if (".\n" === $next_line) // ORA NGARUH NANG WINDOWS :v
+            {
+              $last_line = true;
+            }
+            else
+            {
+              $message .= $next_line;
+            }
+        }
+
+        if ($last_line == true)
+        {
+            print $message;
+            exit(1);
+        }
+
+        echo $param;
     }
 }
 

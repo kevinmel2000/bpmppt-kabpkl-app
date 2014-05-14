@@ -40,10 +40,7 @@ class CI_Utf8 {
 
 		global $CFG;
 
-		if (!is_object($CFG))
-		{
-			$CFG =& load_class('Config', 'core');
-		}
+		$CFG =& load_class('Config', 'core');
 
 		if (
 			preg_match('/./u', 'é') === 1					// PCRE must support UTF-8

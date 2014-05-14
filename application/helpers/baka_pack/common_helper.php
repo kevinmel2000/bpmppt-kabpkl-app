@@ -86,9 +86,13 @@ function format_size($size)
 function baka_echo($anu)
 {
     if (is_array($anu) OR is_object($anu))
+    {
         var_dump($anu);
+    }
     else
+    {
         echo $anu;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -280,57 +284,6 @@ function format_roman($num)
 }
 
 // -----------------------------------------------------------------------------
-// Twitter Bootstrap helper
-//
-// Just another simplify to use twbs
-// -----------------------------------------------------------------------------
-
-/**
- * TWBS Label
- * 
- * @param   string
- * @param   string
- * @param   string
- * 
- * @return  string
- */
-function twb_label($text, $class = 'default', $tag = 'span')
-{
-    return '<'.$tag.' class="label label-'.$class.'">'.$text.'</'.$tag.'>';
-}
-
-// -----------------------------------------------------------------------------
-
-/**
- * TWBS Badge
- * 
- * @param   string
- * @param   string
- * 
- * @return  string
- */
-function twb_badge($text, $tag = 'span')
-{
-    return '<'.$tag.' class="badge">'.$text.'</'.$tag.'>';
-}
-
-// -----------------------------------------------------------------------------
-
-/**
- * TWBS Text
- * 
- * @param   string
- * @param   string
- * @param   string
- * 
- * @return  string
- */
-function twb_text($text, $class = '', $tag = 'span')
-{
-    return '<'.$tag.' class="text-'.$class.'">'.$text.'</'.$tag.'>';
-}
-
-// -----------------------------------------------------------------------------
 
 function make_tag($texts, $limit = 10)
 {
@@ -372,6 +325,15 @@ function get_conf($name)
 function get_ext($path)
 {
     return pathinfo($path, PATHINFO_EXTENSION);
+}
+
+
+if (!function_exists('is_cli'))
+{
+    function is_cli()
+    {
+        return php_sapi_name() === 'cli' OR defined('STDIN');
+    }
 }
 
 /* End of file common_helper.php */

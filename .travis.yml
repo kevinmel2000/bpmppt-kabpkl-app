@@ -3,6 +3,19 @@ php:
   - '5.5'
   - '5.4'
   - '5.3'
+before_install:
+  - npm install -g grunt-cli
+  - composer install --dev --no-progress
+install:
+  - npm install
+before_script:
+  - mysql -e 'drop database if exists bpmppt_test;'
+  - mysql -e 'create database bpmppt_test;'
+  - mysql -utravis bpmppt_test < tests/backup.sql
+script:
+  - grunt testdist
+after_script:
+  - mysql -e 'drop database if exists bpmppt_test;'
 deploy:
   provider: appfog
   email: ferywardiyanto@gmail.com
@@ -11,3 +24,13 @@ deploy:
   app: bpmppt
   on:
     repo: feryardiant/bpmppt
+    php: '5.3'
+matrix:
+  fast_finish: true
+notifications:
+  email:
+    recipients:
+      - binabars@gmail.com
+      - ferywardiyanto@gmail.com
+    on_success: always
+    on_failure: always

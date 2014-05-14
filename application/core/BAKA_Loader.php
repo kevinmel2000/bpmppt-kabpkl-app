@@ -47,7 +47,11 @@ class BAKA_Loader extends CI_Loader
     {
         $file || $file = 'index';
 
-        if (IS_AJAX)
+        if (php_sapi_name() === 'cli' OR defined('STDIN'))
+        {
+            echo json_encode($var);
+        }
+        else if (IS_AJAX)
         {
             log_message('debug', "#Baka_pack: Core Loader->theme File \"$file\" loaded as view via ajax.");
 

@@ -42,7 +42,16 @@ class BAKA_Controller extends CI_Controller
     {
         parent::__construct();
 
-        if (Themee::verify_browser() AND !(php_sapi_name() === 'cli' OR defined('STDIN')))
+        Asssets::set_script('jquery', 'lib/jquery.min.js', '', '2.0.3');
+        Asssets::set_script('baka-pack', 'script.js', 'jquery' );
+        Asssets::set_script('bootstrap', 'lib/bootstrap.min.js', 'jquery', '3.0.0' );
+        Asssets::set_style('lato-font', '//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic');
+        Asssets::set_style('baka-pack', 'style.min.css');
+
+        $script = "$('.twbs-tooltip').tooltip();";
+        Asssets::set_script('bootstrap-tooltip-trigger', $script, 'bootstrap');
+
+        if (Themee::verify_browser() AND !is_cli())
         {
             log_message('error', lang("error_browser_jadul"));
             show_error(array('Peramban yang anda gunakan tidak memenuhi syarat minimal penggunaan aplikasi ini.','Silahkan gunakan '.anchor('http://www.mozilla.org/id/', 'Mozilla Firefox', 'target="_blank"').' atau '.anchor('https://www.google.com/intl/id/chrome/browser/', 'Google Chrome', 'target="_blank"').' biar lebih GREGET!'), 500, 'error_browser_jadul');
@@ -93,12 +102,12 @@ class BAKA_Controller extends CI_Controller
      */
     protected function verify_login()
     {
-        if (!$this->authr->is_logged_in() AND !$this->authr->is_logged_in(FALSE))
+        if (!$this->authr->is_logged_in() AND !$this->authr->is_logged_in(FALSE) AND !is_cli())
         {
             redirect('login');
         }
         
-        if ($this->authr->is_logged_in(FALSE))
+        if ($this->authr->is_logged_in(FALSE) AND !is_cli())
         {
             redirect('resend');
         }
@@ -113,11 +122,11 @@ class BAKA_Controller extends CI_Controller
      */
     protected function verify_status()
     {
-        if ($this->authr->is_logged_in())
+        if ($this->authr->is_logged_in() AND !is_cli())
         {
             redirect('data');
         }
-        else if ($this->authr->is_logged_in(FALSE))
+        else if ($this->authr->is_logged_in(FALSE) AND !is_cli())
         {
             redirect('resend');
         }
@@ -164,7 +173,6 @@ class BAKA_Controller extends CI_Controller
             // $this->data_navbar('main_navbar-master', 'top');
 
         }
-            $this->load->driver('bpmppt');
 
         // Adding admin menu to main navbar
         $this->themee->add_navmenu('main_navbar', 'admin', 'link', 'admin/', 'Administrasi');
@@ -182,6 +190,8 @@ class BAKA_Controller extends CI_Controller
     {
         $link   = 'data/layanan/';
         $nama   = str_replace('/', '_', $link);
+
+        $this->load->driver('bpmppt');
 
         $modules = $this->bpmppt->get_modules();
 

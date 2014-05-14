@@ -46,28 +46,26 @@ module.exports = function(grunt) {
     },
 
     phpunit: {
-      classes: {
-        dir: './application/tests/'
-      },
       options: {
-        bootstrap: './application/tests/bootstrap.php',
+        bootstrap: '<%= phpunit.base.dir %>/bootstrap.php',
         colors: true,
-        testdox: true,
         stopOnError: false,
         stopOnFailure: false,
         stopOnSkipped: false,
         stopOnIncomplete: false,
-        strict: true,
+        // strict: true,
         verbose: true,
-        debug: true,
         convertErrorsToExceptions: true,
         convertNoticesToExceptions: true,
         convertWarningsToExceptions: true
-      } 
+      },
+      base: {
+        dir: './tests'
+      }
     },
 
     less: {
-      compileCore: {
+      core: {
         options: {
           strictMath: true,
           sourceMap: true,
@@ -89,34 +87,40 @@ module.exports = function(grunt) {
         options: {
           map: true
         },
-        src: 'asset/css/style.css'
+        src: 'asset/css/style.css',
+        dest: 'asset/css/style.css'
       }
-    },
-
-    csslint: {
-      options: {
-        csslintrc: 'asset/less/.csslintrc'
-      },
-      src: ['asset/css/style.css']
     },
 
     csscomb: {
       options: {
         config: 'asset/less/.csscomb.json'
       },
-      dist: {
+      core: {
         expand: true,
         cwd: 'asset/css/',
-        src: ['*.css', '!*.min.css'],
+        src: [
+          '*.css',
+          '!*.min.css'
+        ],
         dest: 'asset/css/'
       },
     },
 
+    csslint: {
+      options: grunt.file.readJSON('asset/less/.csslintrc'),
+      core: [
+        'asset/css/*.css',
+        '!asset/css/*.min.css',
+        '!asset/css/install.css'
+      ]
+    },
+
     cssmin: {
-      minify: {
+      core: {
         expand: true,
         cwd: 'asset/css/',
-        src: ['style.css'],
+        src: ['style.css', 'print.css'],
         dest: 'asset/css/',
         ext: '.min.css'
       }
@@ -125,7 +129,7 @@ module.exports = function(grunt) {
     watch: {
       less:{
         files: 'asset/less/lib/*.less',
-        tasks: 'build',
+        tasks: 'csstest',
         options: {
           nospawn: true
         }
@@ -137,9 +141,27 @@ module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt, {scope: 'devDependencies'});
   require('time-grunt')(grunt);
 
+  // Test task.
+  var testSubtasks = [];
+  // Skip core tests if running a different subset of the test suite
+  if (!process.env.BAKA_TEST || process.env.BAKA_TEST === 'php') {
+    testSubtasks = testSubtasks.concat(['phptest']);
+  }
+  // Skip HTML validation if running a different subset of the test suite
+  else if (!process.env.BAKA_TEST || process.env.BAKA_TEST === 'css') {
+    testSubtasks = testSubtasks.concat(['csstest']);
+  }
+  else if (typeof process.env.BAKA_TEST !== 'undefined') {
+    testSubtasks = testSubtasks.concat(['csstest', 'phptest']);
+  }
+
   // grunt.registerTask('watch', ['watch']);
+  grunt.registerTask('testdist', ['csstest', 'phptest']);
+
   grunt.registerTask('phptest', ['phplint', 'phpunit']);
-  grunt.registerTask('lint', ['csslint']);
-  grunt.registerTask('build', ['less', 'cssmin']);
+  grunt.registerTask('csstest', ['less', 'autoprefixer', 'csscomb', 'csslint', 'cssmin']);
+  // grunt.registerTask('csstest', ['less:compileStyle', 'csslint']);
+  // grunt.registerTask('lint', ['csslint']);
+  // grunt.registerTask('build', ['less', 'cssmin']);
   grunt.registerTask('default', ['php']);
 }

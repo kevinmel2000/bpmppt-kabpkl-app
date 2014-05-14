@@ -10,12 +10,24 @@
 |
 */
 
-$hook['pre_controller'] = array(
-    'class'    => 'Errror',
-    'function' => 'reload',
-    'filename' => 'Errror.php',
-    'filepath' => 'hooks'
-    );
+if (!defined('PROJECT_DIR'))
+{
+    $hook['pre_controller'] = array(
+        'class'    => 'Errror',
+        'function' => 'reload',
+        'filename' => 'Errror.php',
+        'filepath' => 'hooks'
+        );
+}
+else
+{
+    $hook['display_override'] = array(
+        'class'    => 'Display',
+        'function' => 'get_output',
+        'filename' => 'Display.php',
+        'filepath' => 'hooks'
+        );
+}
 
 /* End of file hooks.php */
 /* Location: ./application/config/hooks.php */

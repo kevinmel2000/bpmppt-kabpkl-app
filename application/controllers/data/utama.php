@@ -40,7 +40,9 @@ class Utama extends BAKA_Controller
         $this->data['page_link'] = 'data/utama/';
 
         if ($this->data['page_link'] != $this->uri->uri_string().'/')
+        {
             redirect($this->data['page_link']);
+        }
     }
 
     public function index()
@@ -66,6 +68,24 @@ class Utama extends BAKA_Controller
                     );
             }
             
+            Asssets::set_script('chartjs', 'lib/chart.min.js', '', 'master');
+
+            $script = "$('.charts').each(function () {\n"
+                    . "    var el = $(this),\n"
+                    . "        ctx = el.get(0).getContext('2d'),\n"
+                    . "        data = [\n"
+                    . "            { value: el.data('pending'),  color: '#f0ad4e'},\n"
+                    . "            { value: el.data('approved'), color: '#428bca'},\n"
+                    . "            { value: el.data('deleted'),  color: '#d9534f'},\n"
+                    . "            { value: el.data('done'),     color: '#5cb85c'},\n"
+                    . "        ],\n"
+                    . "        options = {\n"
+                    . "            segmentShowStroke : false\n"
+                    . "        },\n"
+                    . "        myNewChart = new Chart(ctx).Doughnut(data, options);\n"
+                    . "});";
+
+            Asssets::set_script('chartjs-trigger', $script, 'chartjs');
 
             $this->load->theme('pages/panel_alldata', $this->data);
         }

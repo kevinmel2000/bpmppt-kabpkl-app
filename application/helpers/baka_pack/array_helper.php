@@ -136,5 +136,32 @@ function array_insert_after_node( $array, $after_key, $index, $value)
     return $result;
 }
 
+// -------------------------------------------------------------------------
+
+/**
+ * Set default keys in an array, it's useful to prevent un setup array keys
+ * but you'd use that in next code.
+ *
+ * @param   array  $field       An array that will recieve default key
+ * @param   array  $defaults    Array of keys which be default key of $field
+ *                              Array must be associative array, which have
+ *                              key and value. Key used as default key and
+ *                              Value used as default value for $field param
+ *
+ * @return  array
+ */
+function array_set_defaults(array $array,array $defaults)
+{
+    foreach ($defaults as $key => $val)
+    {
+        if (!array_key_exists($key, $array) AND !isset($array[$key]))
+        {
+            $array[$key] = $val;
+        }
+    }
+
+    return $array;
+}
+
 /* End of file assets_helper.php */
 /* Location: ./application/helpers/baka_pack/assets_helper.php */

@@ -19,13 +19,9 @@
  */
 
 
-if (defined('PHPUNIT_TEST'))
+if (defined('PROJECT_DIR'))
 {
 	define('ENVIRONMENT', 'testing');
-	ini_set('display_errors', 0);
-	ini_set('display_startup_errors', 0);
-	ini_set('html_errors', 0);
-	ini_set('track_errors', 0);
 }
 else
 {
@@ -60,8 +56,6 @@ if (defined('ENVIRONMENT'))
 			error_reporting(E_ALL);
 			ini_set('display_errors', 1);
 			ini_set('display_startup_errors', 1);
-			ini_set('html_errors', 1);
-			ini_set('track_errors', 1);
 		break;
 	
 		case 'testing':

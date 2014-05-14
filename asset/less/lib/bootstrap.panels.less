@@ -9,7 +9,7 @@
   background-color: @panel-bg;
   border: 1px solid transparent;
   border-radius: @panel-border-radius;
-  .box-shadow(0 1px 1px rgba(0,0,0,.05));
+  .box-shadow(~"0 1px 1px rgba(0,0,0,.05)");
 }
 
 // Panel contents
@@ -174,7 +174,7 @@
   min-height: 34px;
   background-color: #F8F8F8;
   #gradient .vertical(#fff;  #eee);
-  .box-shadow(0 1px 1px #fff inset);
+  .box-shadow(~"0 1px 1px #fff inset");
   text-shadow: 0 1px 0 #fff;
 
   .border-top-radius((@panel-border-radius - 1));
@@ -193,15 +193,15 @@
       border-top-color: transparent;
       border-right-color: transparent;
       border-bottom-color: transparent;
-      border-left-color: rgba(0,0,0,0.1);
+      border-left-color: @panel-heding-btn-border;
       padding: 5px 12px 7px;
       border-radius: 0;
       text-shadow: 0 1px 0 #fff;
-    }
 
-    > .btn:hover,
-    > .btn:focus {
-      background-color: rgba(0,0,0,0.07);
+      &:hover,
+      &:focus {
+        background-color: @panel-heding-btn-bg-hover;
+      }
     }
   }
 }

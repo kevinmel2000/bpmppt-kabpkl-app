@@ -89,7 +89,7 @@ class Messg
     {
         if (!empty(self::$messages))
         {
-            if ($level)
+            if ($level and isset(self::$messages[$level]))
             {
                 return self::$messages[$level];
             }

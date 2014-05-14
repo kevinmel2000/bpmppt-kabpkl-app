@@ -33,22 +33,15 @@ class BAKA_Exceptions extends CI_Exceptions
 {
     private $_template_path;
 
-    private $_is_cli;
+    protected $_is_cli;
 
     function __construct()
     {
         parent::__construct();
 
-        $this->_template_path = APPPATH.'views/errors/';
+        $this->_is_cli = php_sapi_name() === 'cli' OR defined('STDIN');
 
-        if (defined('PHPUNIT_TEST'))
-        {
-            $this->_is_cli = FALSE;
-        }
-        else
-        {
-            $this->_is_cli = (php_sapi_name() === 'cli' OR defined('STDIN'));
-        }
+        $this->_template_path = APPPATH.'views/errors/';
 
         // $this->load =& load_class('Loader', 'core');
 
