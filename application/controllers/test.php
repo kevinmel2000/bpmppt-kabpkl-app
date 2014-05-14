@@ -41,7 +41,7 @@ class Test extends BAKA_Controller
 
     public function cli($param)
     {
-        print "Type your message. Type '.' on a line by itself when you're done :";
+        print "Type your message. Type '.' on a line by itself when you're done";
 
         $fp        = fopen('php://stdin', 'r');
         $last_line = false;
@@ -52,7 +52,7 @@ class Test extends BAKA_Controller
             // read the special file to get the user input from keyboard
             $next_line = fgets($fp, 1024);
 
-            if ("\n" === $next_line or '\r\n' === $next_line)
+            if (".\n" === $next_line) // ORA NGARUH NANG WINDOWS :v
             {
               $last_line = true;
             }
