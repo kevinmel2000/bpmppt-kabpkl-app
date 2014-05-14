@@ -30,7 +30,7 @@ matrix:
 notifications:
   email:
     recipients:
-      - feryardiant@gmail.com
+      - crezybaka@facebook.com
       - ferywardiyanto@gmail.com
     on_success: always
     on_failure: always
