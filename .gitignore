@@ -20,6 +20,7 @@ _*
 *.vi
 *~
 dvccas
+phpunit.log.json
 *.zip
 
 # IDEs project files/settings
