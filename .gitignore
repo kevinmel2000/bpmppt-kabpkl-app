@@ -50,7 +50,7 @@ vendor/
 /application/storage/upload/*
 /application/storage/backup/*
 /asset/sql/
-/asset/css/*.css
+/asset/css/*
 
 # but leave there Application Specifics
 !.htaccess

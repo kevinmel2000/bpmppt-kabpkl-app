@@ -55,30 +55,30 @@ module.exports = function(grunt) {
     },
 
     less: {
+      options: {
+        strictMath: true,
+        outputSourceFiles: true
+      },
       core: {
-        options: {
-          strictMath: true,
-          sourceMap: true,
-          outputSourceFiles: true,
-          sourceMapURL: 'style.css.map',
-          sourceMapFilename: 'asset/css/style.css.map'
-        },
         files: {
-          "asset/css/style.css": "asset/less/style.less"
+          "asset/css/style.css": "asset/less/style.less",
+          "asset/css/print.css": "asset/less/print.less"
         }
       }
     },
 
     autoprefixer: {
       options: {
-        browsers: ['last 2 versions', 'ie 8', 'ie 9', 'android 2.3', 'android 4', 'opera 12']
+        browsers: ['last 2 versions', 'ie 8', 'ie 9', 'android 2.3', 'android 4', 'opera 12'],
+        map: true
       },
-      core: {
-        options: {
-          map: true
-        },
+      style: {
         src: 'asset/css/style.css',
         dest: 'asset/css/style.css'
+      },
+      print: {
+        src: 'asset/css/print.css',
+        dest: 'asset/css/print.css'
       }
     },
 
@@ -89,12 +89,12 @@ module.exports = function(grunt) {
       core: {
         expand: true,
         cwd: 'asset/css/',
+        dest: 'asset/css/',
         src: [
           '*.css',
           '!*.min.css'
-        ],
-        dest: 'asset/css/'
-      },
+        ]
+      }
     },
 
     csslint: {
@@ -109,6 +109,7 @@ module.exports = function(grunt) {
     cssmin: {
       core: {
         expand: true,
+        report: 'gzip',
         cwd: 'asset/css/',
         src: ['style.css', 'print.css'],
         dest: 'asset/css/',
