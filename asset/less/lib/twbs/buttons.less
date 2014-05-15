@@ -19,13 +19,17 @@
   .button-size(@padding-base-vertical; @padding-base-horizontal; @font-size-base; @line-height-base; @border-radius-base);
   .user-select(none);
 
-  &:focus {
-    .tab-focus();
+  &,
+  &:hover,
+  &:active,
+  &.active {
+    // .button-hover (@color);
+    outline: 0;
+    // .box-shadow(~"0 0 8px @{color-rgba}");
   }
 
   &:hover,
   &:focus {
-    .tab-focus();
     color: @btn-default-color;
     text-decoration: none;
   }
@@ -92,18 +96,21 @@
     background-color: transparent;
     .box-shadow(none);
   }
+
   &,
   &:hover,
   &:focus,
   &:active {
     border-color: transparent;
   }
+
   &:hover,
   &:focus {
     color: @link-hover-color;
     text-decoration: underline;
     background-color: transparent;
   }
+
   &[disabled],
   fieldset[disabled] & {
     &:hover,

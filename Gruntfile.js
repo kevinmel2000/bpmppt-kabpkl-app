@@ -127,10 +127,8 @@ module.exports = function(grunt) {
           'asset/less/*.less'
         ],
         tasks: [
-          'less',
-          'autoprefixer',
-          'csscomb',
-          'csslint'
+          'cssdist',
+          'csstest'
         ]
       },
       phpTest: {
@@ -144,7 +142,8 @@ module.exports = function(grunt) {
         files: [
           'application/**/**/*.php',
           'application/**/*.php',
-          'application/*.php'
+          'application/*.php',
+          '!application/storage/**/*.php'
         ],
         tasks: 'phplint'
       }
