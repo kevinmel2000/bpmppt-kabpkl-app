@@ -257,6 +257,15 @@ class Former
             $this->set_template($attrs['template']);
         }
 
+        Asssets::set_script('former-script', $this->_scripts(), 'baka-pack');
+
+        return $this;
+    }
+
+    // -------------------------------------------------------------------------
+
+    protected function _scripts()
+    {
         $script = "function showHide(el, state) {\n"
                 . "    if (state) {\n"
                 . "        el.removeClass('hide')\n"
@@ -293,10 +302,8 @@ class Former
                 . "        }\n"
                 . "    }\n"
                 . "})";
-
-        Asssets::set_script('former-script', $script, 'baka-pack');
-
-        return $this;
+        
+        return $script;
     }
 
     // -------------------------------------------------------------------------
