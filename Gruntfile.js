@@ -119,7 +119,8 @@ module.exports = function(grunt) {
 
     watch: {
       options: {
-        nospawn: true
+        nospawn: true,
+        livereload: true
       },
       less: {
         files: [
@@ -129,10 +130,7 @@ module.exports = function(grunt) {
         tasks: [
           'cssdist',
           'csstest'
-        ],
-        options: {
-          livereload: true
-        }
+        ]
       },
       phpTest: {
         files: [
