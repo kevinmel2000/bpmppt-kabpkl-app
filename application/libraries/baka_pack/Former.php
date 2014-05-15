@@ -901,7 +901,7 @@ class Former
                     $count  = 1;
                     $input  = '';
                     $field  = ($type == 'checkbox' ? $name.'[]' : $name);
-                    $devide = (count($option) > 8 ? TRUE : FALSE);
+                    $devide = (count($option) >= 6 ? TRUE : FALSE);
 
                     if (!empty($option))
                     {
