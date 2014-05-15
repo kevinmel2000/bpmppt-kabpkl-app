@@ -155,27 +155,13 @@ module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt, {scope: 'devDependencies'});
   require('time-grunt')(grunt);
 
-  // Test task.
-  var testSubtasks = [];
-  // Skip core tests if running a different subset of the test suite
-  if (!process.env.BAKA_TEST || process.env.BAKA_TEST === 'php') {
-    testSubtasks = testSubtasks.concat(['phptest']);
-  }
-  // Skip HTML validation if running a different subset of the test suite
-  else if (!process.env.BAKA_TEST || process.env.BAKA_TEST === 'css') {
-    testSubtasks = testSubtasks.concat(['csstest']);
-  }
-  else if (typeof process.env.BAKA_TEST !== 'undefined') {
-    testSubtasks = testSubtasks.concat(['csstest', 'phptest']);
-  }
-
-  // grunt.registerTask('watch', ['watch']);
-  grunt.registerTask('testdist', ['csstest', 'phptest']);
+  grunt.registerTask('build', ['cssdist', 'csstest', 'phptest']);
 
   grunt.registerTask('phptest', ['phplint', 'phpunit']);
-  grunt.registerTask('csstest', ['less', 'autoprefixer', 'csscomb', 'csslint', 'cssmin']);
-  // grunt.registerTask('csstest', ['less:compileStyle', 'csslint']);
-  // grunt.registerTask('lint', ['csslint']);
-  // grunt.registerTask('build', ['less', 'cssmin']);
-  grunt.registerTask('default', ['php']);
+
+  grunt.registerTask('cssdist', ['less', 'autoprefixer', 'csscomb']);
+
+  grunt.registerTask('csstest', ['csslint', 'cssmin']);
+
+  grunt.registerTask('default', ['php', 'watch']);
 }
