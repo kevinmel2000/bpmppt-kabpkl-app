@@ -4,11 +4,11 @@ module.exports = function(grunt) {
   grunt.initConfig({
     // Metadata.
     php: {
-      test: {
+      dist: {
         options: {
           keepalive: true,
           open: true,
-          port: 8088
+          port: 8086,
         }
       }
     },
@@ -129,7 +129,10 @@ module.exports = function(grunt) {
         tasks: [
           'cssdist',
           'csstest'
-        ]
+        ],
+        options: {
+          livereload: true
+        }
       },
       phpTest: {
         files: [
