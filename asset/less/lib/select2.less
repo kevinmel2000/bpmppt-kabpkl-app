@@ -1,6 +1,10 @@
-/*
-Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
-*/
+// Select2 is a jQuery based replacement for select boxes.
+// It supports searching, remote data sets, and infinite scrolling of results. 
+// 
+// @License    GPL License V2 (http://www.apache.org/licenses/LICENSE-2.0 http://www.gnu.org/licenses/gpl-2.0.html)
+// @link       http://ivaynberg.github.com/select2/
+// @Version    3.4.5
+// @timestamp  Mon Nov  4 08:22:42 PST 2013
 
 .select2 {
   @input-height-select2: ((@input-height-base - 2));
@@ -105,12 +109,14 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
       #gradient .vertical(@gray-lighter, @body-bg);
     }
 
-    &.select2-allowclear .select2-choice .select2-chosen {
-      margin-right: 42px;
-    }
+    &.select2-allowclear .select2-choice {
+      .select2-chosen {
+        margin-right: 42px;
+      }
 
-    &.select2-allowclear .select2-choice abbr {
-      display: inline-block;
+      abbr {
+        display: inline-block;
+      }
     }
 
     &.form-control {
@@ -219,7 +225,7 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
               background: #d4d4d4;
             }
 
-            .select2-search-choice-close {
+            &-close {
               top: 0;
               left: 0;
               display: inline-block;
@@ -276,7 +282,7 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
       height: auto;
       width: auto;
       z-index: 9998;
-      /* styles required for IE to work */
+      // styles required for IE to work 
       background-color: @input-bg;
       .opacity(0);
     }
@@ -363,10 +369,14 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
 
   &-dropdown {
     &-open {
+      .box-shadow(none);
+      border-color: @input-border;
+      // box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+
       &.select2-drop-above {
         .select2-choice,
         .select2-choices {
-          // border: 1px solid @input-border;
+          border: 1px solid @input-border;
           border-top-color: transparent;
           #gradient .vertical(@body-bg; @gray-lighter);
         }
@@ -374,7 +384,7 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
 
       .select2-choice {
         border-bottom-color: transparent;
-        .box-shadow(~"0 1px 0 @{body-bg} inset");
+        // .box-shadow(none);
         .border-bottom-radius(0);
         // background-color: @gray-lighter;
         // background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, @body-bg), color-stop(0.5, @gray-lighter));
@@ -487,9 +497,8 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
       line-height: inherit;
     }
 
-    /*
-    disabled look for disabled choices in the results dropdown
-    */
+    
+    // disabled look for disabled choices in the results dropdown
     .select2-disabled {
       &,
       &.select2-highlighted {

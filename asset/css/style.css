@@ -8468,9 +8468,6 @@ button.close {
 .note-editor .note-color-palette div .note-color-btn:hover {
   border: 1px solid #000;
 }
-/*
-Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
-*/
 .select2-container,
 .select2-drop,
 .select2-search,
@@ -8694,7 +8691,7 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
 .select2-container-multi .select2-choices .select2-search-choice-focus {
   background: #d4d4d4;
 }
-.select2-container-multi .select2-choices .select2-search-choice .select2-search-choice-close {
+.select2-container-multi .select2-choices .select2-search-choice-close {
   position: absolute;
   top: 0;
   left: 0;
@@ -8715,10 +8712,10 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
   border-right: 1px solid #ccc;
   outline: none;
 }
-.select2-container-multi .select2-choices .select2-search-choice .select2-search-choice-close:before {
+.select2-container-multi .select2-choices .select2-search-choice-close:before {
   content: "\e014";
 }
-.select2-container-multi .select2-choices .select2-search-choice .select2-search-choice-close:hover {
+.select2-container-multi .select2-choices .select2-search-choice-close:hover {
   background-image: -webkit-linear-gradient(top, #eee 0%, #999 100%);
   background-image:      -o-linear-gradient(top, #eee 0%, #999 100%);
   background-image: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#999));
@@ -8763,7 +8760,6 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
   min-height: 100%;
   padding: 0;
   margin: 0;
-  /* styles required for IE to work */
   background-color: #fff;
   filter: alpha(opacity=0);
   border: 0;
@@ -8810,6 +8806,11 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
 .select2-search .select2-input.select2-active {
   background: #fff url('../img/select2-spinner.gif') no-repeat 100%;
 }
+.select2-dropdown-open {
+  border-color: #ccc;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
 .select2-dropdown-open.select2-drop-above .select2-choice,
 .select2-dropdown-open.select2-drop-above .select2-choices {
   background-image: -webkit-linear-gradient(top, #fff 0%, #eee 100%);
@@ -8818,14 +8819,13 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
   background-image:         linear-gradient(to bottom, #fff 0%, #eee 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffeeeeee', GradientType=0);
   background-repeat: repeat-x;
+  border: 1px solid #ccc;
   border-top-color: transparent;
 }
 .select2-dropdown-open .select2-choice {
   border-bottom-color: transparent;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
-  -webkit-box-shadow: 0 1px 0 #fff inset;
-          box-shadow: 0 1px 0 #fff inset;
 }
 .select2-dropdown-open .select2-choice .select2-arrow {
   background: transparent;
@@ -8846,9 +8846,6 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
   overflow-y: auto;
 
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  /*
-    disabled look for disabled choices in the results dropdown
-    */
 }
 .select2-results ul.select2-result-sub {
   padding-left: 0;
