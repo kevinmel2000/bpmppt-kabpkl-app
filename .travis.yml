@@ -13,7 +13,7 @@ before_script:
   - mysql -e 'create database bpmppt_test;'
   - mysql -utravis bpmppt_test < tests/backup.sql
 script:
-  - grunt testdist
+  - grunt build
 deploy:
   provider: appfog
   email: ferywardiyanto@gmail.com
