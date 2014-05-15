@@ -257,14 +257,14 @@ class Former
             $this->set_template($attrs['template']);
         }
 
-        Asssets::set_script('former-script', $this->_scripts(), 'baka-pack');
+        Asssets::set_script('former-script', $this->_scripts($attrs['fields']), 'baka-pack');
 
         return $this;
     }
 
     // -------------------------------------------------------------------------
 
-    protected function _scripts()
+    protected function _scripts($fields = '')
     {
         $script = "function showHide(el, state) {\n"
                 . "    if (state) {\n"
@@ -301,8 +301,22 @@ class Former
                 . "            })\n"
                 . "        }\n"
                 . "    }\n"
-                . "})";
-        
+                . "})\n";
+
+        switch ($fields[0]['type']) {
+            case 'subfield':
+                $first_field = 'sub'.str_replace('_', '-', 'input-'.$fields[0]['name'].'-'.$fields[0]['fields'][0]['name']);
+                break;
+
+            default:
+                $first_field = $fields[0]['name'];
+                break;
+        }
+
+        $first_field = 'field-'.str_replace('_', '-', $first_field);
+
+        $script .= "$('#".$first_field."').focus();\n";
+
         return $script;
     }
 
