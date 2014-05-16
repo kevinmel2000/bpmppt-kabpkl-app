@@ -35,7 +35,7 @@ class Asssets
     /**
      * Codeigniter superobject
      *
-     * @var  mixed
+     * @var  resource
      */
     protected static $_ci;
 
