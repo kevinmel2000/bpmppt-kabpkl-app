@@ -119,25 +119,42 @@ class Utily
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Ger server informations
+     *
+     * @todo    need more filter, especialy for PHP.ini configurations
+     * @param   string  $key  Information key
+     * @return  array
+     */
     public function get_server_info($key = '')
     {
         $out['php_version'] = phpversion();
-        
-        $out['server']['osname']       = php_uname('s');
-        $out['server']['hostname']     = php_uname('n');
-        $out['server']['codename']     = php_uname('r');
-        $out['server']['version']      = php_uname('v');
-        $out['server']['architecture'] = php_uname('m');
 
-        $out['db']['driver']         = self::$_ci->db->dbdriver;
-        $out['db']['host_info']      = self::$_ci->db->conn_id->host_info;
-        $out['db']['server_info']    = self::$_ci->db->conn_id->server_info;
-        $out['db']['server_version'] = self::$_ci->db->conn_id->server_version;
-        $out['db']['client_info']    = self::$_ci->db->conn_id->client_info;
-        $out['db']['client_version'] = self::$_ci->db->conn_id->client_version;
-        $out['db']['stat']           = self::$_ci->db->conn_id->stat;
-        $out['db']['cache_on']       = self::$_ci->db->cache_on;
-        $out['db']['cachedir']       = self::$_ci->db->cachedir;
+        $server = array(
+            's' => 'OS Type',
+            'n' => 'Hostname',
+            'r' => 'Kernel',
+            'v' => 'Build',
+            'm' => 'Arch',
+            );
+
+        foreach ($server as $s_key => $s_label)
+        {
+            $out['server'][$s_label] = php_uname($s_key);
+        }
+
+        $out['db'] = array(
+            'driver'         => self::$_ci->db->dbdriver,
+            'host_info'      => self::$_ci->db->conn_id->host_info,
+            'server_info'    => self::$_ci->db->conn_id->server_info,
+            'server_version' => self::$_ci->db->conn_id->server_version,
+            'client_info'    => self::$_ci->db->conn_id->client_info,
+            'client_version' => self::$_ci->db->conn_id->client_version,
+            'stat'           => self::$_ci->db->conn_id->stat,
+            'cache_on'       => self::$_ci->db->cache_on,
+            'cachedir'       => self::$_ci->db->cachedir,
+            );
+
 
         foreach ($out['db'] as $db_k => $db_v)
         {
@@ -145,16 +162,39 @@ class Utily
             $out['db'][$db_k] = $db_v;
         }
 
-        $loaded_extensions = array_map('strtolower', get_loaded_extensions());
-        asort( $loaded_extensions );
-        foreach ($loaded_extensions as $i => $ext)
+        if (function_exists('get_loaded_extensions'))
         {
-            $version = phpversion($ext);
-            $out['php_extensions'][$ext] = (strlen($version) > 0 ? $version : '-');
+            $loaded_extensions = array_map('strtolower', get_loaded_extensions());
+            asort( $loaded_extensions );
+
+            $required_exts = array(
+                'gd',
+                'imagick',
+                'json',
+                'mbstring',
+                'mcrypt',
+                'mysql',
+                'mysqli',
+                'zip',
+                'zlib',
+                );
+
+            foreach ($loaded_extensions as $i => $ext)
+            {
+                if (in_array($ext, $required_exts))
+                {
+                    $version = phpversion($ext);
+                    $out['php_extensions'][$ext] = (strlen($version) > 0 ? $version : '-');
+                }
+            }
+        }
+        else
+        {
+            $out['php_extensions']['-'] = '-';
         }
 
         $alloed_ini = array(
-            'allow_url_fopen',
+            'date.timezone' => 'Zona waktu',
             'allow_url_fopen',
             );
 
@@ -168,12 +208,19 @@ class Utily
             $out['php_configs'][$ini_key]['value']  = $this->server_info_helper($ini_value);
         }
 
-        $a2mods = apache_get_modules();
-        asort($a2mods);
-
-        foreach ($a2mods as $mod)
+        if (function_exists('apache_get_modules'))
         {
-            $out['apache_mods'][] = $mod;
+            $a2mods = apache_get_modules();
+            asort($a2mods);
+
+            foreach ($a2mods as $mod)
+            {
+                $out['apache_mods'][] = $mod;
+            }
+        }
+        else
+        {
+            $out['apache_mods'][] = 'Kosong';
         }
 
         if (strlen($key) > 0 and isset($out[$key]))

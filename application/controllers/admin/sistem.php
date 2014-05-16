@@ -90,7 +90,7 @@ class Sistem extends BAKA_Controller
         $fields[]   = array(
             'name'  => 'server-info',
             'type'  => 'custom',
-            'label' => 'Informasi Server',
+            'label' => 'Mesin Server',
             'value' => $this->table->generate() );
 
         $this->table->set_heading(array(
@@ -112,7 +112,7 @@ class Sistem extends BAKA_Controller
         $fields[]   = array(
             'name'  => 'db-info',
             'type'  => 'custom',
-            'label' => 'Informasi Server',
+            'label' => 'Database',
             'value' => $this->table->generate() );
 
         $this->table->set_heading(array(
@@ -134,7 +134,7 @@ class Sistem extends BAKA_Controller
         $fields[]   = array(
             'name'  => 'php-extensions',
             'type'  => 'custom',
-            'label' => 'Extensi Terinstall',
+            'label' => 'Extensi Dibutuhkan',
             'value' => $this->table->generate() );
 
         $this->table->set_heading(array(
