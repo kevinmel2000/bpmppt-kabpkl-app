@@ -15,7 +15,7 @@
 					</header>
 					<div class="panel-body">
 						<div class="row">
-							<div class="<?php echo twbs_set_columns(4, 4, 4, 4, 12) ?>">
+							<div class="<?php echo twbs_set_columns(4, 4, 4, 6, 4) ?>">
 								<p>Total Data</p>
 								<?php $chart_attr = array(
 									'id'             => $link.'-chart',
@@ -30,7 +30,7 @@
 								<canvas <?php echo parse_attrs($chart_attr) ?>></canvas>
 								<h1 class="total-layanan"><?php echo $izin['total'] ?></h1>
 							</div>
-							<div class="<?php echo twbs_set_columns(8, 8, 8, 8, 12) ?>">
+							<div class="<?php echo twbs_set_columns(8, 8, 8, 6, 8) ?>">
 								<p class="text-warning"><?php echo $izin['pending'] ?> Tertunda</p>
 								<p class="text-primary"><?php echo $izin['approved'] ?> Disetujui</p>
 								<p class="text-success"><?php echo $izin['done'] ?> Selesai</p>
