@@ -59,6 +59,7 @@ class Themee
         self::$_ci->load->library('user_agent');
         self::$_ci->load->library('baka_pack/asssets');
         self::$_ci->load->helper('baka_pack/asssets');
+        self::$_ci->load->helper('baka_pack/themee');
         self::$_ci->load->helper('baka_pack/twbs');
 
         // Setup body classes & id

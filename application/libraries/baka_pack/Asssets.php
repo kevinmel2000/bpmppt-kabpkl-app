@@ -91,7 +91,6 @@ class Asssets
      */
     public static function set_script($id, $source_path, $depend = '', $version = '', $in_foot = TRUE)
     {
-        $version || $version = get_conf('app_version');
         $pos = (!$in_foot ? 'head' : 'foot');
 
         $source_file = self::get_asset('js', $id, $source_path, $version);
@@ -153,7 +152,6 @@ class Asssets
      */
     public static function set_style($id, $source_path, $depend = '', $version = NULL)
     {
-        $version || $version = get_conf('app_version');
         $source_file = self::get_asset('css', $id, $source_path, $version);
 
         if (self::valid_url($source_file))
@@ -221,11 +219,13 @@ class Asssets
 
         if (file_exists(FCPATH.$path.$source_path))
         {
-            $output = base_url($path.$source_path).$version;
+            $output = base_url($path.$source_path);
+            // $output = base_url($path.$source_path).$version;
         }
         else if (self::valid_url($source_path))
         {
-            $output = $source_path.$version;
+            $output = $source_path;
+            // $output = $source_path.$version;
         }
         else
         {
