@@ -20,8 +20,8 @@ if (VCAP_SERVICES)
 }
 else
 {
-	$config['base_url']	= 'http://bpmppt.local/';
-	// $config['base_url']	= 'http://localhost:8088/';
+//	$config['base_url']	= 'http://bpmppt.local/';
+    $config['base_url']	= 'http://localhost:8088/';
 }
 
 /*

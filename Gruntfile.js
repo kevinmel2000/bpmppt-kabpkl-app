@@ -4,11 +4,11 @@ module.exports = function(grunt) {
   grunt.initConfig({
     // Metadata.
     php: {
-      test: {
+      dist: {
         options: {
           keepalive: true,
           open: true,
-          port: 8088
+          port: 8086,
         }
       }
     },
@@ -119,7 +119,8 @@ module.exports = function(grunt) {
 
     watch: {
       options: {
-        nospawn: true
+        nospawn: true,
+        livereload: true
       },
       less: {
         files: [

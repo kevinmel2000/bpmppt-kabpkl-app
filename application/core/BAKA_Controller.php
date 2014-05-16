@@ -64,6 +64,10 @@ class BAKA_Controller extends CI_Controller
             $this->navbar();
         }
 
+        $app_name = get_conf('app_name');
+
+        $this->data['brand_link']  = anchor(base_url(), $app_name, 'class="navbar-brand"');
+
         $this->data['load_toolbar'] = FALSE;
         $this->data['search_form']  = FALSE;
         $this->data['single_page']  = TRUE;
@@ -75,6 +79,9 @@ class BAKA_Controller extends CI_Controller
 
         $this->data['panel_title']  = '';
         $this->data['panel_body']   = '';
+
+        $this->data['footer_left']  = '&copy; '.Setting::get('skpd_name').' '.Setting::get('skpd_city');
+        $this->data['footer_right'] = $app_name.' Ver. '.get_conf('app_version');
 
         log_message('debug', "#Baka_pack: Core Controller Class Initialized");
     }

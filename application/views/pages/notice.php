@@ -1,6 +1,3 @@
-<div class="row">
-	<div class="col-md-12">
-
 <div class="jumbotron">
 
 	<h3><?php echo $panel_title ?></h3>
@@ -19,7 +16,4 @@
 
 	<?php endif ?>
 
-</div>
-
-	</div>
 </div>

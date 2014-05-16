@@ -14,18 +14,40 @@
 <body <?php echo get_body_attrs() ?>>
 
 <div class="wrapper">
-    <?php echo get_navbar() ?>
+    <header id="top" class="navbar navbar-default navbar-app navbar-static-top" role="banner">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                </button> <!-- .navbar-toggle -->
+                <?php echo $brand_link ?>
+            </div> <!-- .navbar-header -->
+            <div class="navbar-collapse collapse">
+                <?php echo get_navbar() ?>
+            </div> <!-- .nav-collapse -->
+        </div> <!-- .container -->
+    </header> <!-- #top -->
     <section id="contents">
-        <div class="container"><?php echo form_alert() . $contents ?></div>
-    </section>
-</div>
+        <div class="container">
+            <?php echo form_alert()?>
+            <div class="row">
+                <section id="main-content" class="<?php echo twbs_set_columns(9, 9, 11) ?>">
+                    <?php echo $contents ?>
+                </section> <!-- #main-content -->
+                <aside id="sidebar" class="<?php echo twbs_set_columns(3, 3, 1) ?>">
+                    <?php echo get_nav('side', TRUE) ?>
+                </aside> <!-- #sidebar -->
+            </div> <!-- .row -->
+        </div> <!-- .container-->
+    </section> <!-- #contents -->
+</div> <!-- .wrapper -->
 
 <footer id="foots">
     <div class="container">
-        <p class="text-muted pull-left">&copy; <?php echo Setting::get('skpd_name').' '.Setting::get('skpd_city') ?></p>
-        <p class="text-muted pull-right"><?php echo get_conf('app_name') ?> Ver. <?php echo get_conf('app_version') ?></p>
-    </div>
-</footer>
+        <p class="text-muted pull-left"><?php echo $footer_left ?></p>
+        <p class="text-muted pull-right"><?php echo $footer_right ?></p>
+    </div> <!-- .container-->
+</footer> <!-- #foots-->
 
 <?php if ( $need_print ) : ?>
 <applet id="qz" name="QZ Print Plugin" code="qz.PrintApplet.class" width="55" height="55">
