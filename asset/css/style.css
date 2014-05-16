@@ -10039,12 +10039,7 @@ a.datepicker .table-condensed tr td span.active.disabled:hover:hover {
   padding: 0 0 34px;
   margin: 0 auto -34px;
 }
-.wrapper > section > .container > .row > div:first-child {
-  padding-top: 20px;
-}
-#page-login-pengguna section > .container > .row > .col-md-4,
-#page-register-pengguna section > .container > .row > .col-md-4,
-#page-lupa-login section > .container > .row > .col-md-4 {
+#main-content {
   padding-top: 20px;
 }
 .form-label {

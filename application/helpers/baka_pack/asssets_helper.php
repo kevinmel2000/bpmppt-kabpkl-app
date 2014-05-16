@@ -91,22 +91,10 @@ function get_navbar()
 {
     $themee =& get_instance()->themee;
 
-    $output  = '<header id="top" class="navbar navbar-default navbar-app navbar-static-top" role="banner"><div class="container">'
-             . '    <div class="navbar-header">'
-             . '        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">'
-             . '             <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>'
-             . '        </button>'
-             . '        '.anchor(base_url(), get_conf('app_name'), 'class="navbar-brand"')
-             . '    </div>';
-
     if ( $themee->get('authenticated') )
     {
-        $output .= '<div class="navbar-collapse collapse">'.get_nav('top').'</div> <!--/.nav-collapse -->';
+        return get_nav('top');
     }
-
-    $output .= '</div></header>';
-
-    return $output;
 }
 
 // -----------------------------------------------------------------------------
@@ -158,15 +146,18 @@ function make_menu($menu_array, $responsivable = FALSE)
         foreach ($list_item['items'] as $menu_id => $menu_item)
         {
             $list_attr = array(
-                'role'  => 'presentation',
-                'id'    => str_replace('_', '-', $menu_id),
-                'class' => '',
+                'role'           => 'presentation',
+                'id'             => str_replace('_', '-', $menu_id),
+                'class'          => 'twbs-tooltip ',
+                'data-toggle'    => 'tooltip',
+                'data-placement' => 'left',
                 );
             
             switch ($menu_item['type'])
             {
                 case 'header':
                     $list_attr['class'] .= 'dropdown-header';
+                    $list_attr['title'] = $menu_item['label'];
 
                     $output .= '<li '.parse_attrs($list_attr).'>'.$menu_item['label'];
                     break;
@@ -205,14 +196,14 @@ function make_menu($menu_array, $responsivable = FALSE)
                     if ($responsivable)
                     {
                         $anchor_pre = '<i class="fa fa-file visible-sm"></i><span class="menu-text hidden-sm">';
-                        $additional_attrs = array(
-                            'class'          => 'twbs-tooltip',
-                            'data-toggle'    => 'tooltip',
-                            'data-placement' => 'left',
-                            'title'          => $menu_item['label']
-                            );
+                        // $additional_attrs = array(
+                        //     'class'          => 'twbs-tooltip',
+                        //     'data-toggle'    => 'tooltip',
+                        //     'data-placement' => 'left',
+                        //     'title'          => $menu_item['label']
+                        //     );
 
-                        $menu_item['attr'] = array_merge($menu_item['attr'], $additional_attrs);
+                        // $menu_item['attr'] = array_merge($menu_item['attr'], $additional_attrs);
                     }
 
                     $output .= anchor($menu_item['url'], $anchor_pre.$menu_item['label'].'</span>', $menu_item['attr']);
