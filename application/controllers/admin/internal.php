@@ -580,8 +580,8 @@ class Internal extends BAKA_Controller
                             ->set_baseurl($this->data['page_link'])
                             ->set_column('Key', 'env_key', '45%', FALSE, '<strong>%s</strong>')
                             ->set_column('Value', 'env_value', '40%', FALSE, '%s')
-                            ->set_buttons('form/', 'eye-open', 'primary', 'Lihat data')
-                            ->set_buttons('hapus/', 'trash', 'danger', 'Hapus data');
+                            ->set_buttons('form', 'Lihat data')
+                            ->set_buttons('hapus', 'Hapus data');
                           
         $this->data['panel_body'] = $grid->make_table( $query );
 
@@ -623,15 +623,22 @@ class Internal extends BAKA_Controller
 
             if ( $prop )
             {
-                $return = $this->db->update(get_conf('system_env_table'), array('env_key'   => $form_data['app_env_value'],
-                                                                    'env_value' => $form_data['app_env_value'] ),
-                                                              array('id'        => $prop_id ));
+                $return = $this->db->update(
+                    get_conf('system_env_table'),
+                    array('env_key' => $form_data['app_env_value'], 'env_value' => $form_data['app_env_value'] ),
+                    array('id'      => $prop_id )
+                    );
             }
             else
             {
-                $return = $this->db->insert(get_conf('system_env_table'), array('user_id'   => $this->authr->get_user_id(),
-                                                                    'env_key'   => $form_data['app_env_value'],
-                                                                    'env_value' => $form_data['app_env_value'] ));
+                $return = $this->db->insert(
+                    get_conf('system_env_table'),
+                    array(
+                        'user_id'   => $this->authr->get_user_id(),
+                        'env_key'   => $form_data['app_env_value'],
+                        'env_value' => $form_data['app_env_value']
+                        )
+                    );
             }
 
             if ( $return === FALSE )

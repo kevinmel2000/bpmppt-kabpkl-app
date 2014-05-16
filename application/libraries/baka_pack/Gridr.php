@@ -163,47 +163,21 @@ class Gridr
         return $this;
     }
 
-    public function set_buttons($page_link, $icon_class = '', $btn_class = '', $btn_title = '')
+    public function set_buttons($page_link, $btn_title = '')
     {
         if (is_array($page_link))
         {
-            foreach ($page_link as $data)
+            foreach ($page_link as $link => $title)
             {
-                extract($data);
-                $this->set_buttons($link, $icon, $class, $title);
+                $this->set_buttons($link, $title);
             }
         }
         else
         {
-            $this->action_buttons[] = array(
-                'link'  => $page_link,
-                'icon'  => $icon_class,
-                'class' => $btn_class,
-                'title' => $btn_title
-                );
+            $this->action_buttons[$page_link] = $btn_title;
         }
 
         return $this;
-    }
-
-    protected function _act_btn($data_id, $action_buttons)
-    {
-        $output = '<div class="btn-group btn-justified">'
-                . '<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">'
-                . '<span class="glyphicon glyphicon-cog"></span> <span class="caret"></span>'
-                . '</button>'
-                . '<ul class="dropdown-menu dropdown-menu-right" role="menu">';
-
-        foreach ($action_buttons as $btn_key => $btn_val)
-        {
-            extract($btn_val);
-            // '<span class="glyphicon glyphicon-'.$icon.'"></span> '
-            $output .= '<li class="text-left">'.anchor($this->page_link.$link.$data_id, $title).'</li>';
-        }
-
-        $output .= '</ul></div>';
-
-        return $output;
     }
 
     public function set_segment($segment = 0)
@@ -431,8 +405,29 @@ class Gridr
 
                 if (count($this->action_buttons) > 0)
                 {
+                    $actions = array();
+
+                    foreach ($this->action_buttons as $link => $title)
+                    {
+                        if (substr($link, -1) != '/')
+                        {
+                            $link .= '/';
+                        }
+
+                        $actions[$link.$table_id] = $title;
+                    }
+
                     $cell[$table_id][] = array(
-                        'data'  => $this->_act_btn($table_id, $this->action_buttons),
+                        // 'data'  => $this->_act_btn($table_id, $this->action_buttons),
+                        'data'  => twbs_button_dropdown(
+                            $actions,
+                            $this->page_link,
+                            array(
+                                'group-class' => 'btn-justified',
+                                'btn-type'    => 'default',
+                                'btn-text'    => '<span class="glyphicon glyphicon-cog"></span>',
+                                )
+                            ),
                         'class' => 'field-action text-center',
                         'width' => '5%');
                 }
