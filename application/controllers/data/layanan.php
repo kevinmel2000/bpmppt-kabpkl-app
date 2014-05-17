@@ -179,7 +179,7 @@ class Layanan extends BAKA_Controller
                 $grid->set_buttons('hapus', 'Hapus data');
             }
 
-            $this->data['panel_body'] = $grid->make_table( $query );
+            $this->data['panel_body'] = $grid->generate( $query );
 
             $this->load->theme('pages/panel_data', $this->data);
         }

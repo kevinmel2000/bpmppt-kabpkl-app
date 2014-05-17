@@ -583,7 +583,7 @@ class Internal extends BAKA_Controller
                             ->set_buttons('form', 'Lihat data')
                             ->set_buttons('hapus', 'Hapus data');
                           
-        $this->data['panel_body'] = $grid->make_table( $query );
+        $this->data['panel_body'] = $grid->generate( $query );
 
         $this->load->theme('pages/panel_data', $this->data);
     }

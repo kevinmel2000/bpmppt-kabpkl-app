@@ -86,7 +86,7 @@ class Pengguna extends BAKA_Controller
                             ->set_buttons('hapus', 'Hapus pengguna');
 
         $this->data['panel_title'] = $this->themee->set_title('Semua data pengguna');
-        $this->data['panel_body'] = $grid->make_table( $this->authr->users->fetch() );
+        $this->data['panel_body'] = $grid->generate( $this->authr->users->fetch() );
 
         $this->load->theme('pages/panel_data', $this->data);
     }
@@ -486,7 +486,7 @@ class Pengguna extends BAKA_Controller
                             ->set_buttons('form', 'Lihat data')
                             ->set_buttons('delete', 'Hapus data');
 
-        $this->data['panel_body'] = $grid->make_table( $this->authr->roles->fetch() );
+        $this->data['panel_body'] = $grid->generate( $this->authr->roles->fetch() );
 
         $this->load->theme('pages/panel_data', $this->data);
     }
@@ -601,7 +601,7 @@ class Pengguna extends BAKA_Controller
                             ->set_buttons('form', 'Lihat data')
                             ->set_buttons('delete', 'Hapus data');
 
-        $this->data['panel_body'] = $grid->make_table( $this->authr->permissions->fetch() );
+        $this->data['panel_body'] = $grid->generate( $this->authr->permissions->fetch() );
 
         $this->load->theme('pages/panel_data', $this->data);
     }
