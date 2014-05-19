@@ -30,8 +30,12 @@ class Auth extends BAKA_Controller
     {
         parent::__construct();
 
-        $this->load->library('baka_pack/former');
+        $this->data['desc_title'] = 'Selamat Datang di '.$this->data['footer_right'];
+        $this->data['desc_body']  = array(
+            'Aplikasi ini sepenuhnya adalah milik dari '.$this->data['footer_left'].' dan url ini sepenuhnya hanya untuk tujuan Demo dan Testing semata.',
+            );
 
+        $this->load->library('baka_pack/former');
         $this->set_panel_title('User Authentication');
     }
 
@@ -43,10 +47,9 @@ class Auth extends BAKA_Controller
     public function login()
     {
         $this->verify_status();
-
         $this->set_panel_title('Login Pengguna');
 
-        $login = ( Setting::get('auth_login_count_attempts') AND ($login = $this->input->post('username'))) ? $this->security->xss_clean($login) : '';
+        $attempts = ( Setting::get('auth_login_count_attempts') AND ($attempts = $this->input->post('username'))) ? $this->security->xss_clean($attempts) : '';
 
         $fields[]   = array(
             'name'  => 'username',
@@ -66,7 +69,7 @@ class Auth extends BAKA_Controller
             'label' => '',
             'option'=> array( 1 => 'Ingat saya dikomputer ini.' ) );
 
-        if ( $this->authr->is_max_attempts_exceeded( $login ) )
+        if ( $this->authr->is_max_attempts_exceeded( $attempts ) )
         {
             if ( (bool) Setting::get('auth_use_recaptcha') )
             {
@@ -128,9 +131,22 @@ class Auth extends BAKA_Controller
             redirect( $goto );
         }
 
-        $this->data['panel_body'] = $form->generate();
+        $this->data['desc_body'] = array_merge($this->data['desc_body'], array(
+            'Untul login sebagai Administrator silahkan gunakan',
+            array(
+                'Username: <b>admin</b>',
+                'password: <b>password</b>',
+                ),
+            'Untul login sebagai Pengguna silahkan gunakan',
+            array(
+                'Username: <b>pengguna1</b>',
+                'password: <b>1234</b>',
+                ),
+            ));
 
-        $this->load->theme('pages/auth', $this->data);
+        $this->set_panel_body($form->generate());
+
+        $this->load->theme('pages/auth', $this->data, 'auth');
     }
 
     public function register()
@@ -140,7 +156,9 @@ class Auth extends BAKA_Controller
         $this->set_panel_title('Register Pengguna');
 
         if ( !Setting::get('auth_allow_registration') )
+        {
             $this->_notice('registration-disabled');
+        }
 
         if ( (bool) Setting::get('auth_use_username') )
         {
@@ -196,6 +214,13 @@ class Auth extends BAKA_Controller
             'class' => 'btn-primary pull-left' );
 
         $buttons[]  = array(
+            'name'  => 'login',
+            'type'  => 'anchor',
+            'label' => 'Login',
+            'url'   => 'login',
+            'class' => 'btn-default pull-right' );
+
+        $buttons[]  = array(
             'name'  => 'forgot',
             'type'  => 'anchor',
             'label' => 'Lupa Login',
@@ -221,22 +246,30 @@ class Auth extends BAKA_Controller
 
             redirect( $goto );
         }
-        
-        $this->data['panel_body'] = $form->generate();
 
-        $this->load->theme('pages/auth', $this->data);
+        $this->data['desc_body'] = array_merge($this->data['desc_body'], array(
+            'Silahkan daftarkan diri anda dengan mengisi formulir disamping.',
+            ));
+        
+        $this->set_panel_body($form->generate());
+
+        $this->load->theme('pages/auth', $this->data, 'auth');
     }
 
     public function resend()
     {
         if ( $this->authr->is_logged_in() )
+        {
             redirect('data/utama');
+        }
 
         $this->set_panel_title('Kirim ulang aktivasi');
 
         // not logged in or activated
         if ( !$this->authr->is_logged_in(FALSE) )
+        {
             redirect('login');
+        }
 
         $fields[]   = array(
             'name'  => 'resend',
@@ -283,16 +316,23 @@ class Auth extends BAKA_Controller
                 redirect( current_url() );
             }
         }
-        
-        $this->data['panel_body'] = $form->generate();
 
-        $this->load->theme('pages/auth', $this->data);
+        $this->data['desc_body'] = array_merge($this->data['desc_body'], array(
+            'Nampaknya akun anda belum diaktifkan, mungkin karena anda belum mengkonfirmasi email aktifasi yang kami kirimkan?. Silahkan coba kirim ulang aktifasi agar anda dapat segera menggunakan aplikasi ini.',
+            'Dengan cara isikan alamat email (aktif) anda ke formulir disamping lalu tekan "Kirim". Maka kami akan mengirimkan aktifasi yang baru.',
+            ));
+        
+        $this->set_panel_body($form->generate());
+
+        $this->load->theme('pages/auth', $this->data, 'auth');
     }
 
     public function forgot()
     {
         if ( $this->authr->is_logged_in() )
+        {
             redirect('data/utama');
+        }
 
         $this->set_panel_title('Lupa login');
 
@@ -341,16 +381,22 @@ class Auth extends BAKA_Controller
                 redirect( current_url() );
             }
         }
-        
-        $this->data['panel_body'] = $form->generate();
 
-        $this->load->theme('pages/auth', $this->data);
+        $this->data['desc_body'] = array_merge($this->data['desc_body'], array(
+            'Jika anda lupa Username atau Password login, silahkan isi form disamping dengan email anda. Maka kami akan segera mengirim sebuah url untuk mengatur ulang password dan username anda.',
+            ));
+        
+        $this->set_panel_body($form->generate());
+
+        $this->load->theme('pages/auth', $this->data, 'auth');
     }
 
     public function activate( $user_id = NULL, $email_key = NULL )
     {
         if ( is_null($user_id) AND is_null($email_key) )
+        {
             redirect('login');
+        }
 
         // Activate user
         if ( $this->authr->activate( $user_id, $email_key ) )
@@ -372,7 +418,9 @@ class Auth extends BAKA_Controller
 
         // not logged in or activated
         if ( is_null($user_id) AND is_null($email_key) )
+        {
             redirect('login');
+        }
 
         $fields[]   = array(
             'name'  => 'reset_password',
@@ -421,10 +469,16 @@ class Auth extends BAKA_Controller
                 redirect( current_url() );
             }
         }
-        
-        $this->data['panel_body'] = $form->generate();
 
-        $this->load->theme('pages/auth', $this->data);
+        $this->data['desc_body'] = array_merge($this->data['desc_body'], array(
+            'Untul login sebagai Administrator silahkan gunakan',
+            'Username: admin',
+            'password: password',
+            ));
+        
+        $this->set_panel_body($form->generate());
+
+        $this->load->theme('pages/auth', $this->data, 'auth');
     }
 
     public function logout()

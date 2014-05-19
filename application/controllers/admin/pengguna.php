@@ -71,19 +71,21 @@ class Pengguna extends BAKA_Controller
     private function _user_table()
     {
         if ( !$this->authr->is_permited('users_manage') )
+        {
             $this->_notice( 'access-denied' );
+        }
 
         $this->data['tool_buttons']['form'] = 'Baru|primary';
 
-        $this->load->library('baka_pack/gridr');
+        $this->load->library('baka_pack/gridr', array(
+            'base_url'   => $this->data['page_link'],
+            ));
 
-        $grid = $this->gridr->identifier('id')
-                            ->set_baseurl($this->data['page_link'])
-                            ->set_column('Pengguna', 'username, email', '45%', FALSE, '<strong>%s</strong><br><small class="text-muted">%s</small>')
-                            ->set_column('Kelompok', 'callback_make_tag:role_fullname', '40%', FALSE, '%s')
-                            ->set_buttons('form', 'Lihat pengguna')
-                            ->set_buttons('cekal', 'Cekal pengguna')
-                            ->set_buttons('hapus', 'Hapus pengguna');
+        $grid = $this->gridr->set_column('Pengguna', 'username, email', '45%', '<strong>%s</strong><br><small class="text-muted">%s</small>')
+                            ->set_column('Kelompok', 'callback_make_tag:role_fullname', '40%', '%s')
+                            ->set_button('form', 'Lihat pengguna')
+                            ->set_button('cekal', 'Cekal pengguna')
+                            ->set_button('hapus', 'Hapus pengguna');
 
         $this->data['panel_title'] = $this->themee->set_title('Semua data pengguna');
         $this->data['panel_body'] = $grid->generate( $this->authr->users->fetch() );
@@ -99,13 +101,14 @@ class Pengguna extends BAKA_Controller
     private function _user_form( $user_id = '' )
     {
         if ( $user_id == $this->current_user['user_id'] AND strpos( current_url(), 'profile' ) === FALSE )
+        {
             redirect('profile');
+        }
 
         $user   = ( $user_id != '' ? $this->authr->users->get( $user_id ) : FALSE );
         $judul  = ( $user_id == $this->current_user['user_id'] ? 'Profile anda: ' : 'Data pengguna: ');
 
         $this->data['panel_title'] = $this->themee->set_title( ( $user ? $judul.$user->username : 'Buat pengguna baru' ));
-        
         $this->data['tool_buttons']['data'] = 'Kembali|default';
 
         if ( $user )
@@ -254,8 +257,7 @@ class Pengguna extends BAKA_Controller
             else
             {
                 $old_pass = $form_data['user-old-password'];
-
-                $result = $this->authr->update_user( $user_id, $username, $email, $old_pass, $password, $roles );
+                $result   = $this->authr->update_user( $user_id, $username, $email, $old_pass, $password, $roles );
             }
 
             foreach ( Messg::get() as $level => $message )
@@ -263,7 +265,7 @@ class Pengguna extends BAKA_Controller
                 $this->session->set_flashdata( $level, $message );
             }
 
-            // redirect( $result ? $this->data['page_link'] : current_url() );
+            redirect( $result ? $this->data['page_link'] : current_url() );
         }
 
         $this->data['panel_body'] = $form->generate();
@@ -315,16 +317,14 @@ class Pengguna extends BAKA_Controller
 
         if ( $form_data = $form->validate_submition() )
         {
-            $result     = $this->authr->ban_user( $user_id, $form_data['ban-reason'] );
-
-            if ( $result )
+            if ( $this->authr->ban_user( $user_id, $form_data['ban-reason'] ) )
             {
-                $this->session->set_flashdata('success', $this->authr->messages('success'));
+                $this->session->set_flashdata('success', Messg::get('success'));
                 redirect( $this->data['page_link'] );
             }
             else
             {
-                $this->session->set_flashdata('error', $this->authr->messages('error'));
+                $this->session->set_flashdata('error', Messg::get('error'));
                 redirect( current_url() );
             }
         }
@@ -364,7 +364,6 @@ class Pengguna extends BAKA_Controller
         $group  = ( !is_null( $group_id ) ? $this->authr->roles->get( $group_id ) : FALSE );
 
         $this->data['panel_title'] = $this->themee->set_title( $group ? 'Ubah data Kelompok pengguna '.$group->full : 'Buat kelompok pengguna baru' );
-        
         $this->data['tool_buttons']['data'] = 'Kembali|default';
 
         $fields[]   = array(
@@ -403,9 +402,9 @@ class Pengguna extends BAKA_Controller
 
         foreach ( $permissions as $perms )
         {
-            $child_id   = strpos($perms->perm_id, ',') !== FALSE    ? explode(',', $perms->perm_id)     : array($perms->perm_id) ;
-            $child_name = strpos($perms->perm_name, ',') !== FALSE  ? explode(',', $perms->perm_name)   : array($perms->perm_name) ;
-            $child_desc = strpos($perms->perm_desc, ',') !== FALSE  ? explode(',', $perms->perm_desc)   : array($perms->perm_desc) ;
+            $child_id   = strpos($perms->perm_id, ',') !== FALSE   ? explode(',', $perms->perm_id)   : array($perms->perm_id) ;
+            $child_name = strpos($perms->perm_name, ',') !== FALSE ? explode(',', $perms->perm_name) : array($perms->perm_name) ;
+            $child_desc = strpos($perms->perm_desc, ',') !== FALSE ? explode(',', $perms->perm_desc) : array($perms->perm_desc) ;
 
             $permission = array();
 
@@ -426,17 +425,17 @@ class Pengguna extends BAKA_Controller
         $this->load->library('baka_pack/former');
 
         $form = $this->former->init( array(
-            'name' => 'user-roles',
+            'name'   => 'user-roles',
             'action' => current_url(),
             'fields' => $fields,
             ));
 
         if ( $form_data = $form->validate_submition() )
         {
-            $role_data['role']      = $form_data['group-role'];
-            $role_data['full']      = $form_data['group-full'];
-            $role_data['default']   = $form_data['group-default'];
-            $perm_data              = array();
+            $role_data['role']    = $form_data['group-role'];
+            $role_data['full']    = $form_data['group-full'];
+            $role_data['default'] = $form_data['group-default'];
+            $perm_data            = array();
 
             foreach ( $permissions as $permission )
             {
@@ -453,7 +452,7 @@ class Pengguna extends BAKA_Controller
 
             $result = $this->authr->roles->update( $role_data, $group_id, $perm_data );
 
-            foreach ( $this->authr->messages() as $level => $message )
+            foreach ( Messg::get() as $level => $message )
             {
                 $this->session->set_flashdata( $level, $message );
             }
@@ -477,14 +476,14 @@ class Pengguna extends BAKA_Controller
         $this->data['panel_title'] = $this->themee->set_title('Semua data kelompok pengguna');
         $this->data['tool_buttons']['form'] = 'Baru|primary';
 
-        $this->load->library('baka_pack/gridr');
+        $this->load->library('baka_pack/gridr', array(
+            'base_url'   => $this->data['page_link'],
+            ));
 
-        $grid = $this->gridr->identifier('id')
-                            ->set_baseurl($this->data['page_link'])
-                            ->set_column('Kelompok', 'full, perm_count, callback_make_tag:perm_desc', '65%', FALSE, '<strong>%s</strong> <small class="text-muted">Dengan %s wewenang, antara lain:</small><br>%s')
-                            ->set_column('Default', 'callback_bool_to_str:default', '20%', FALSE, '<span class="badge">%s</span>')
-                            ->set_buttons('form', 'Lihat data')
-                            ->set_buttons('delete', 'Hapus data');
+        $grid = $this->gridr->set_column('Kelompok', 'full, perm_count, callback_make_tag:perm_desc', '65%', '<strong>%s</strong> <small class="text-muted">Dengan %s wewenang, antara lain:</small><br>%s')
+                            ->set_column('Default', 'callback_bool_to_str:default', '20%', '<span class="badge">%s</span>')
+                            ->set_button('form', 'Lihat data')
+                            ->set_button('delete', 'Hapus data');
 
         $this->data['panel_body'] = $grid->generate( $this->authr->roles->fetch() );
 
@@ -497,11 +496,11 @@ class Pengguna extends BAKA_Controller
             case 'form':
                 $this->_perm_form( $perm_id );
                 break;
-            
+
             case 'hapus':
                 $this->_perm_del( $perm_id );
                 break;
-            
+
             case 'data':
             case 'page':
             default:
@@ -560,11 +559,11 @@ class Pengguna extends BAKA_Controller
         {
             if ( $perm_id == '' )
             {
-                $form_data  =  $form->submited_data();
+                $form_data =  $form->submited_data();
 
-                $user_data['role']      = $form_data['perm-role'];
-                $user_data['full']      = $form_data['perm-full'];
-                $user_data['default']   = $form_data['perm-default'];
+                $user_data['role']    = $form_data['perm-role'];
+                $user_data['full']    = $form_data['perm-full'];
+                $user_data['default'] = $form_data['perm-default'];
 
                 $result = $this->authr->create_user( $user_data, $use_username );
             }
@@ -592,14 +591,15 @@ class Pengguna extends BAKA_Controller
         $this->data['panel_title']  = $this->themee->set_title('Semua data hak akses pengguna');
         $this->data['tool_buttons']['form'] = 'Baru|primary';
 
-        $this->load->library('baka_pack/gridr');
+        $this->load->library('baka_pack/gridr', array(
+            'identifier' => 'permission_id',
+            'base_url'   => $this->data['page_link'],
+            ));
 
-        $grid = $this->gridr->identifier('permission_id')
-                            ->set_baseurl($this->data['page_link'])
-                            ->set_column('Hak akses', 'description, permission', '45%', TRUE, '<strong>%s</strong><br><small>%s</small>')
+        $grid = $this->gridr->set_column('Hak akses', 'description, permission', '45%', '<strong>%s</strong><br><small>%s</small>')
                             ->set_column('Difisi', 'parent', '40%')
-                            ->set_buttons('form', 'Lihat data')
-                            ->set_buttons('delete', 'Hapus data');
+                            ->set_button('form', 'Lihat data')
+                            ->set_button('delete', 'Hapus data');
 
         $this->data['panel_body'] = $grid->generate( $this->authr->permissions->fetch() );
 

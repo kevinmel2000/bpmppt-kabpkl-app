@@ -79,6 +79,28 @@
   text-align: center;
 }
 
+.dt-header,
+.dt-footer {
+  label {
+    margin-bottom: 0;
+  }
+}
+
+.dt-header {
+  &:extend(.clearfix all);
+  background: @gray-lighter;
+  padding: 8px 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.dt-footer {
+  &:extend(.panel-footer all);
+}
+
+#auth-desc {
+  // margin: 30px 0;
+}
+
 footer {
   height: 34px;
   background-color: #f5f5f5;

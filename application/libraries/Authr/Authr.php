@@ -376,6 +376,8 @@ class Authr extends CI_Driver_Library
             'email'    => $email,
             );
 
+        $return = FALSE;
+
         if (strlen($old_pass) > 0 and strlen($new_pass) > 0)
         {
             if (!$this->validate($old_pass, $user->password))
@@ -399,7 +401,7 @@ class Authr extends CI_Driver_Library
             $data['roles'] = $roles;
         }
 
-        if ($this->edit_user($user_id, $data))
+        if ($this->users->edit($user_id, $data))
         {
             Messg::set('success', 'Berhasil mengubah data pengguna '.$username);
             $return = TRUE;
@@ -419,12 +421,17 @@ class Authr extends CI_Driver_Library
      *
      * @return  bool|array
      */
-    public function change_email($email)
+    public function change_email($email, $user_id = NULL)
     {
-        $user_id = $this->get_user_id();
+        if (is_null($user_id))
+        {
+            $user_id = $this->get_user_id();
+        }
 
         if (!($user = $this->users->get($user_id)))
+        {
             return FALSE;
+        }
 
         $data = array(
             'user_id'   => $user_id,
@@ -438,7 +445,7 @@ class Authr extends CI_Driver_Library
             $data['new_email_key'] = $user->new_email_key;
             return $data;
         }
-        elseif ($this->is_email_available($email))
+        elseif ($this->users->check_email($email))
         {
             $data['new_email_key'] = $this->generate_random_key();
             $this->set_new_email($user_id, $email, $data['new_email_key'], FALSE);
@@ -602,7 +609,7 @@ class Authr extends CI_Driver_Library
             $data['new_email_key'] = $user->new_email_key;
             return $data;
         }
-        elseif ($this->is_email_available($new_email))
+        elseif ($this->users->check_email($new_email))
         {
             $data['new_email_key'] = $this->generate_random_key();
             $this->set_new_email($user_id, $new_email, $data['new_email_key'], TRUE);
@@ -625,7 +632,7 @@ class Authr extends CI_Driver_Library
      */
     public function remove_user($user_id, $purge = FALSE)
     {
-        if (!$this->delete_user($user_id))
+        if (!$this->users->delete($user_id))
         {
             Messg::set('error', 'Gagal menghapus pengguna');
             return FALSE;
@@ -660,7 +667,7 @@ class Authr extends CI_Driver_Library
         }
 
         // success
-        $this->delete_user($user_id);
+        $this->users->delete($user_id);
         $this->logout();
         return TRUE;
     }

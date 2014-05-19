@@ -73,11 +73,11 @@ class Sistem extends BAKA_Controller
         $this->table->set_template(array('table_open' => '<table class="table table-striped table-bordered table-hover table-condensed">' ));
         $this->table->set_heading(array(
             array(
-                'data' => 'Nama',
+                'data'  => 'Nama',
                 'width' => '26%',
                 ),
             array(
-                'data' => 'Nilai',
+                'data'  => 'Nilai',
                 'width' => '74%',
                 )
             ));
@@ -95,11 +95,11 @@ class Sistem extends BAKA_Controller
 
         $this->table->set_heading(array(
             array(
-                'data' => 'Nama',
+                'data'  => 'Nama',
                 'width' => '26%',
                 ),
             array(
-                'data' => 'Nilai',
+                'data'  => 'Nilai',
                 'width' => '74%',
                 )
             ));
@@ -117,11 +117,11 @@ class Sistem extends BAKA_Controller
 
         $this->table->set_heading(array(
             array(
-                'data' => 'Nama',
+                'data'  => 'Nama',
                 'width' => '26%',
                 ),
             array(
-                'data' => 'Versi',
+                'data'  => 'Versi',
                 'width' => '74%',
                 )
             ));
@@ -199,10 +199,11 @@ class Sistem extends BAKA_Controller
     public function backup()
     {
         if ( !$this->authr->is_permited('sys_backstore_manage') )
+        {
             $this->_notice( 'access-denied' );
+        }
 
         $this->set_panel_title('Cadangkan Basis Data');
-
         $this->load->library('baka_pack/utily');
 
         $fields[]   = array(
@@ -320,10 +321,11 @@ class Sistem extends BAKA_Controller
     public function restore()
     {
         if ( !$this->authr->is_permited('sys_backstore_manage') )
+        {
             $this->_notice( 'access-denied' );
+        }
 
         $this->set_panel_title('Pemulihan Basis Data');
-
         $this->load->library('baka_pack/utily');
 
         $fields[]   = array(
@@ -338,9 +340,9 @@ class Sistem extends BAKA_Controller
             'type'  => 'upload',
             'label' => 'Restore dari berkas',
             'fold'  => array(
-                'key' => 'restore-from-backup',
+                'key'   => 'restore-from-backup',
                 'value' => 0 ),
-            'file_limit' => 1,
+            'file_limit'    => 1,
             'allowed_types' => 'zip|sql',
             'desc'  => 'Pilih berkas yang akan digunakan untuk me-restore database' );
 
@@ -356,7 +358,7 @@ class Sistem extends BAKA_Controller
                 'type'  => 'radio',
                 'label' => 'Daftar backup',
                 'fold'  => array(
-                    'key' => 'restore-from-backup',
+                    'key'   => 'restore-from-backup',
                     'value' => 1 ),
                 'option' => $backup_list );
         }
@@ -367,7 +369,7 @@ class Sistem extends BAKA_Controller
                 'type'  => 'static',
                 'label' => 'Daftar backup',
                 'fold'  => array(
-                    'key' => 'restore-from-backup',
+                    'key'   => 'restore-from-backup',
                     'value' => 1 ),
                 'std' => 'Belum ada backup' );
         }
@@ -381,21 +383,21 @@ class Sistem extends BAKA_Controller
         $this->load->library('baka_pack/former');
 
         $form = $this->former->init( array(
-            'name'      => 'restore',
-            'action'    => current_url(),
-            'fields'    => $fields,
-            'buttons'   => $buttons,
+            'name'    => 'restore',
+            'action'  => current_url(),
+            'fields'  => $fields,
+            'buttons' => $buttons,
             ));
 
         if ( $form_data = $form->validate_submition() )
         {
             // print_pre($form_data);
-            $upload = FALSE;
+            $upload    = FALSE;
             $file_name = $form_data['restore-backups-list'];
 
             if ($form_data['restore-from-backup'] != 1)
             {
-                $upload = TRUE;
+                $upload    = TRUE;
                 $file_name = $form_data['restore-file-upload'];
             }
 
@@ -421,12 +423,12 @@ class Sistem extends BAKA_Controller
     public function logs( $file = '' )
     {
         if ( !$this->authr->is_permited('sys_logs_manage') )
+        {
             $this->_notice( 'access-denied' );
+        }
 
         $this->load->helper('directory');
-
         $this->set_panel_title('Aktifitas Sistem');
-
         $this->themee->add_navbar( 'log_sidebar', 'nav-tabs nav-stacked nav-tabs-left', 'panel' );
 
         $latest   = '';
@@ -439,9 +441,9 @@ class Sistem extends BAKA_Controller
         {
             if ( $log != 'index.html' and $log != 'view.php' )
             {
-                $log    = strtolower(str_replace(EXT, '', $log));
-                $label  = format_date(str_replace('log-', '', $log));
-                $link   = 'admin/sistem/logs/';
+                $log   = strtolower(str_replace(EXT, '', $log));
+                $label = format_date(str_replace('log-', '', $log));
+                $link  = 'admin/sistem/logs/';
 
                 $this->themee->add_navmenu( 'log_sidebar', $log, 'link', $link.$log, $label, array(), 'panel' );
             }

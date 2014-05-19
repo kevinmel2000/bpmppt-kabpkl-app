@@ -49,7 +49,9 @@ class Internal extends BAKA_Controller
     public function skpd()
     {
         if ( !$this->authr->is_permited('internal_skpd_manage') )
+        {
             $this->_notice( 'access-denied' );
+        }
 
         $this->data['panel_title'] = $this->themee->set_title('Properti data SKPD');
 
@@ -155,7 +157,9 @@ class Internal extends BAKA_Controller
     public function app()
     {
         if ( !$this->authr->is_permited('internal_application_manage') )
+        {
             $this->_notice( 'access-denied' );
+        }
 
         $this->data['panel_title'] = $this->themee->set_title('Pengaturan Aplikasi');
 
@@ -569,19 +573,19 @@ class Internal extends BAKA_Controller
 
         $this->data['tool_buttons']['form'] = 'Baru|primary';
 
-        $this->load->library('baka_pack/gridr');
+        $this->load->library('baka_pack/gridr', array(
+            'base_url'   => $this->data['page_link'],
+            ));
 
         $query = $this->db->select()
                           ->from( get_conf('system_env_table') )
                           ->where('user_id', $this->authr->get_user_id())
                           ->or_where('user_id', 0);
 
-        $grid = $this->gridr->identifier('id')
-                            ->set_baseurl($this->data['page_link'])
-                            ->set_column('Key', 'env_key', '45%', FALSE, '<strong>%s</strong>')
-                            ->set_column('Value', 'env_value', '40%', FALSE, '%s')
-                            ->set_buttons('form', 'Lihat data')
-                            ->set_buttons('hapus', 'Hapus data');
+        $grid = $this->gridr->set_column('Key', 'env_key', '45%', '<strong>%s</strong>')
+                            ->set_column('Value', 'env_value', '40%', '%s')
+                            ->set_button('form', 'Lihat data')
+                            ->set_button('hapus', 'Hapus data');
                           
         $this->data['panel_body'] = $grid->generate( $query );
 
@@ -596,22 +600,24 @@ class Internal extends BAKA_Controller
 
         $prop = (! is_null($prop_id) ? $this->db->get_where(get_conf('system_env_table'), array('id' => $prop_id) ) : FALSE );
 
-        $fields[]   = array('name'  => 'app_env_key',
-                            'type'  => 'text',
-                            'label' => 'Nama Properti',
-                            'std'   => ( $prop ? $prop->env_key : '' ),
-                            'validation'=> ( !$prop ? 'required' : '' ) );
+        $fields[]   = array(
+            'name'  => 'app_env_key',
+            'type'  => 'text',
+            'label' => 'Nama Properti',
+            'std'   => ( $prop ? $prop->env_key : '' ),
+            'validation'=> ( !$prop ? 'required' : '' ) );
 
-        $fields[]   = array('name'  => 'app_env_value',
-                            'type'  => 'text',
-                            'label' => 'Nilai Properti',
-                            'std'   => ( $prop ? $prop->env_value : '' ),
-                            'validation'=> ( !$prop ? 'required' : '' ) );
+        $fields[]   = array(
+            'name'  => 'app_env_value',
+            'type'  => 'text',
+            'label' => 'Nilai Properti',
+            'std'   => ( $prop ? $prop->env_value : '' ),
+            'validation'=> ( !$prop ? 'required' : '' ) );
 
         $this->load->library('baka_pack/former');
 
         $form = $this->former->init( array(
-            'name' => 'internal-prop',
+            'name'   => 'internal-prop',
             'action' => current_url(),
             'fields' => $fields,
             ));

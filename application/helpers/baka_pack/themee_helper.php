@@ -111,13 +111,13 @@ function get_nav($position, $responsivable = FALSE)
     $themee =& get_instance()->themee;
     $navbar = $themee->get('navbar');
 
-    if (!isset($navbar[$position]))
+    if (isset($navbar[$position]))
     {
-        log_message('error', '#Baka_pack: Themee->navbar '.$position.' doesn\'t exists.');
-        return FALSE;
+        return make_menu( $navbar[$position], $responsivable);
     }
 
-    return make_menu( $navbar[$position], $responsivable);
+    log_message('error', '#Baka_pack: Themee->navbar '.$position.' doesn\'t exists.');
+    return FALSE;
 }
 
 
