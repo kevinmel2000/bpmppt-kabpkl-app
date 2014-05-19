@@ -156,27 +156,26 @@ class Layanan extends BAKA_Controller
                     break;
             }
 
-            $this->load->library('baka_pack/gridr');
+            $this->load->library('baka_pack/gridr', array(
+                'base_url'   => $this->data['page_link'],
+                ));
 
-            $grid = $this->gridr->identifier('id')
-                                ->set_baseurl($this->data['page_link'])
-                                ->set_column('Pengajuan',
+            $grid = $this->gridr->set_column('Pengajuan',
                                     'callback_anchor:id|no_agenda, callback_format_datetime:created_on',
                                     '30%',
-                                    FALSE,
                                     '<strong>%s</strong><br><small class="text-muted">Diajukan pada: %s</small>')
-                                ->set_column('Pemohon', 'petitioner', '40%', FALSE, '<strong>%s</strong>')
-                                ->set_column('Status', 'status, callback__x:status', '10%', FALSE, '<span class="label label-%s">%s</span>');
+                                ->set_column('Pemohon', 'petitioner', '40%', '<strong>%s</strong>')
+                                ->set_column('Status', 'status, callback__x:status', '10%', '<span class="label label-%s">%s</span>');
 
-            $grid->set_buttons('form', 'Lihat data');
+            $grid->set_button('form', 'Lihat data');
 
             if ( $stat == 'deleted' )
             {
-                $grid->set_buttons('delete', 'Hapus data secara permanen');
+                $grid->set_button('delete', 'Hapus data secara permanen');
             }
             else
             {
-                $grid->set_buttons('hapus', 'Hapus data');
+                $grid->set_button('hapus', 'Hapus data');
             }
 
             $this->data['panel_body'] = $grid->generate( $query );
@@ -203,9 +202,13 @@ class Layanan extends BAKA_Controller
             $this->data['tool_buttons']['aksi|default']['cetak/'.$data_id] = 'Cetak';
 
             if ( $data_obj->status !== 'deleted' )
+            {
                 $this->data['tool_buttons']['aksi|default']['hapus/'.$data_id] = 'Hapus&message="Anda yakin ingin menghapus data nomor '.$data_obj->surat_nomor.'"';
+            }
             else
+            {
                 $this->data['tool_buttons']['aksi|default']['delete/'.$data_id] = 'Hapus Permanen&message="Anda yakin ingin menghapus data nomor '.$data_obj->surat_nomor.'"';
+            }
 
             $this->data['tool_buttons']['Ubah status:dd|default']   = array(
                 'ubah-status/'.$data_id.'/pending/'     => 'Pending',
@@ -504,17 +507,17 @@ class Layanan extends BAKA_Controller
 
         $this->load->helper('file');
 
-        $file_path      = APPPATH.'views/prints/reports/'.$data_type.'.php';
-        $file_content   = read_file($file_path);
+        $file_path    = APPPATH.'views/prints/reports/'.$data_type.'.php';
+        $file_content = read_file($file_path);
 
-        $file_content   = str_replace('<?php if ( $results ) : $i = 1; foreach( $results as $row ) : ?>', '<!-- start loop -->', $file_content);
-        $file_content   = str_replace('<?php $i++; endforeach; else : ?>', '<!-- conditional loop -->', $file_content);
-        $file_content   = str_replace('<?php endif ?>', '<!-- end loop -->', $file_content);
+        $file_content = str_replace('<?php if ( $results ) : $i = 1; foreach( $results as $row ) : ?>', '<!-- start loop -->', $file_content);
+        $file_content = str_replace('<?php $i++; endforeach; else : ?>', '<!-- conditional loop -->', $file_content);
+        $file_content = str_replace('<?php endif ?>', '<!-- end loop -->', $file_content);
 
-        $file_content   = str_replace('$row->', '%', $file_content);
+        $file_content = str_replace('$row->', '%', $file_content);
 
-        $file_content   = str_replace('<?php echo ', '{', $file_content);
-        $file_content   = str_replace(' ?>', '}', $file_content);
+        $file_content = str_replace('<?php echo ', '{', $file_content);
+        $file_content = str_replace(' ?>', '}', $file_content);
 
         $fields[]   = array(
             'name'  => 'tmpl-editor',

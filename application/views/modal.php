@@ -72,8 +72,8 @@ if (strlen($id)>0) {
     }
 }
 
-    echo form_submit($input_submit);
-    echo form_reset(array('name'=>'reset','value'=>'Batal','class'=>'btn','data-dismiss'=>'modal','aria-hidden'=>'true'));
+echo form_submit($input_submit);
+echo form_reset(array('name'=>'reset','value'=>'Batal','class'=>'btn','data-dismiss'=>'modal','aria-hidden'=>'true'));
 ?>
 </div>
 

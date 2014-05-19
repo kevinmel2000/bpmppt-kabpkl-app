@@ -43,10 +43,9 @@ class Auth extends BAKA_Controller
     public function login()
     {
         $this->verify_status();
-
         $this->set_panel_title('Login Pengguna');
 
-        $login = ( Setting::get('auth_login_count_attempts') AND ($login = $this->input->post('username'))) ? $this->security->xss_clean($login) : '';
+        $attempts = ( Setting::get('auth_login_count_attempts') AND ($attempts = $this->input->post('username'))) ? $this->security->xss_clean($attempts) : '';
 
         $fields[]   = array(
             'name'  => 'username',
@@ -66,7 +65,7 @@ class Auth extends BAKA_Controller
             'label' => '',
             'option'=> array( 1 => 'Ingat saya dikomputer ini.' ) );
 
-        if ( $this->authr->is_max_attempts_exceeded( $login ) )
+        if ( $this->authr->is_max_attempts_exceeded( $attempts ) )
         {
             if ( (bool) Setting::get('auth_use_recaptcha') )
             {
@@ -128,9 +127,9 @@ class Auth extends BAKA_Controller
             redirect( $goto );
         }
 
-        $this->data['panel_body'] = $form->generate();
+        $this->set_panel_body($form->generate());
 
-        $this->load->theme('pages/auth', $this->data);
+        $this->load->theme('pages/auth', $this->data, 'auth');
     }
 
     public function register()
@@ -140,7 +139,9 @@ class Auth extends BAKA_Controller
         $this->set_panel_title('Register Pengguna');
 
         if ( !Setting::get('auth_allow_registration') )
+        {
             $this->_notice('registration-disabled');
+        }
 
         if ( (bool) Setting::get('auth_use_username') )
         {
@@ -196,6 +197,13 @@ class Auth extends BAKA_Controller
             'class' => 'btn-primary pull-left' );
 
         $buttons[]  = array(
+            'name'  => 'login',
+            'type'  => 'anchor',
+            'label' => 'Login',
+            'url'   => 'login',
+            'class' => 'btn-default pull-right' );
+
+        $buttons[]  = array(
             'name'  => 'forgot',
             'type'  => 'anchor',
             'label' => 'Lupa Login',
@@ -222,21 +230,25 @@ class Auth extends BAKA_Controller
             redirect( $goto );
         }
         
-        $this->data['panel_body'] = $form->generate();
+        $this->set_panel_body($form->generate());
 
-        $this->load->theme('pages/auth', $this->data);
+        $this->load->theme('pages/auth', $this->data, 'auth');
     }
 
     public function resend()
     {
         if ( $this->authr->is_logged_in() )
+        {
             redirect('data/utama');
+        }
 
         $this->set_panel_title('Kirim ulang aktivasi');
 
         // not logged in or activated
         if ( !$this->authr->is_logged_in(FALSE) )
+        {
             redirect('login');
+        }
 
         $fields[]   = array(
             'name'  => 'resend',
@@ -284,15 +296,17 @@ class Auth extends BAKA_Controller
             }
         }
         
-        $this->data['panel_body'] = $form->generate();
+        $this->set_panel_body($form->generate());
 
-        $this->load->theme('pages/auth', $this->data);
+        $this->load->theme('pages/auth', $this->data, 'auth');
     }
 
     public function forgot()
     {
         if ( $this->authr->is_logged_in() )
+        {
             redirect('data/utama');
+        }
 
         $this->set_panel_title('Lupa login');
 
@@ -342,15 +356,17 @@ class Auth extends BAKA_Controller
             }
         }
         
-        $this->data['panel_body'] = $form->generate();
+        $this->set_panel_body($form->generate());
 
-        $this->load->theme('pages/auth', $this->data);
+        $this->load->theme('pages/auth', $this->data, 'auth');
     }
 
     public function activate( $user_id = NULL, $email_key = NULL )
     {
         if ( is_null($user_id) AND is_null($email_key) )
+        {
             redirect('login');
+        }
 
         // Activate user
         if ( $this->authr->activate( $user_id, $email_key ) )
@@ -372,7 +388,9 @@ class Auth extends BAKA_Controller
 
         // not logged in or activated
         if ( is_null($user_id) AND is_null($email_key) )
+        {
             redirect('login');
+        }
 
         $fields[]   = array(
             'name'  => 'reset_password',
@@ -422,9 +440,9 @@ class Auth extends BAKA_Controller
             }
         }
         
-        $this->data['panel_body'] = $form->generate();
+        $this->set_panel_body($form->generate());
 
-        $this->load->theme('pages/auth', $this->data);
+        $this->load->theme('pages/auth', $this->data, 'auth');
     }
 
     public function logout()
