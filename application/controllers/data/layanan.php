@@ -100,14 +100,6 @@ class Layanan extends BAKA_Controller
                     $this->data( $data_type, $data_id );
                     break;
 
-                case 'data-out':
-                    $this->data_out( $data_type );
-                    break;
-
-                case 'print-out':
-                    $this->print_out( $data_type );
-                    break;
-
                 default:
                     if (is_numeric($page))
                     {
@@ -176,18 +168,18 @@ class Layanan extends BAKA_Controller
                                 ->set_column('Pemohon', 'petitioner', '40%', FALSE, '<strong>%s</strong>')
                                 ->set_column('Status', 'status, callback__x:status', '10%', FALSE, '<span class="label label-%s">%s</span>');
 
-            $grid->set_buttons('form/', 'eye-open', 'primary', 'Lihat data');
+            $grid->set_buttons('form', 'Lihat data');
 
             if ( $stat == 'deleted' )
             {
-                $grid->set_buttons('delete/', 'trash', 'danger', 'Hapus data secara permanen');
+                $grid->set_buttons('delete', 'Hapus data secara permanen');
             }
             else
             {
-                $grid->set_buttons('hapus/', 'trash', 'danger', 'Hapus data');
+                $grid->set_buttons('hapus', 'Hapus data');
             }
 
-            $this->data['panel_body'] = $grid->make_table( $query );
+            $this->data['panel_body'] = $grid->generate( $query );
 
             $this->load->theme('pages/panel_data', $this->data);
         }

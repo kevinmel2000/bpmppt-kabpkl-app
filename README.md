@@ -27,6 +27,7 @@ Aplikasi ini ditujukan untuk Badan Penanaman Modal dan Pelayanan Perijinan Terba
 + [Font Awesome](http://fortawesome.github.io/Font-Awesome/)
 + [Cool PHP Captcha](https://code.google.com/p/cool-php-captcha/)
 + [Google ReCaptcha (optional)](http://recaptcha.net/plugins/php/)
++ [Datatables](http://datatables.net/)
 
 ## Copyright and license
 

@@ -133,3 +133,41 @@ function twbs_set_columns($lg = NULL, $md = NULL, $sm = NULL, $xs = NULL, $xxs =
         return $out;
     }
 }
+
+// -------------------------------------------------------------------------
+
+
+function twbs_button_dropdown($menu_list, $base_link = '', $attributes = array())
+{
+    $attributes = array_set_defaults($attributes, array(
+        'group-class' => '',
+        'btn-type'    => '',
+        'btn-text'    => '',
+        ));
+
+    $base_link || $base_link = base_url();
+
+    if (substr($base_link, -1) != '/')
+    {
+        $base_link .= '/';
+    }
+
+    $output = '<div class="btn-group '.$attributes['group-class'].'">'
+            . '<button type="button" class="btn btn-'.$attributes['btn-type'].' dropdown-toggle" data-toggle="dropdown">'
+            . $attributes['btn-text'].' <span class="caret"></span>'
+            . '</button>'
+            . '<ul class="dropdown-menu dropdown-menu-right" role="menu">';
+
+    foreach ($menu_list as $link => $title)
+    {
+        $output .= twb_text(anchor($base_link.$link, $title), 'left', 'li');
+    }
+
+    $output .= '</ul>'
+            .  '</div>';
+
+    return $output;
+}
+
+/* End of file assets_helper.php */
+/* Location: ./application/helpers/baka_pack/assets_helper.php */

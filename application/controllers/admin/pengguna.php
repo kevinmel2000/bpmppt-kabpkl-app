@@ -81,12 +81,12 @@ class Pengguna extends BAKA_Controller
                             ->set_baseurl($this->data['page_link'])
                             ->set_column('Pengguna', 'username, email', '45%', FALSE, '<strong>%s</strong><br><small class="text-muted">%s</small>')
                             ->set_column('Kelompok', 'callback_make_tag:role_fullname', '40%', FALSE, '%s')
-                            ->set_buttons('form/', 'eye-open', 'primary', 'Lihat pengguna')
-                            ->set_buttons('cekal/', 'eye-open', 'primary', 'Cekal pengguna')
-                            ->set_buttons('hapus/', 'trash', 'danger', 'Hapus pengguna');
+                            ->set_buttons('form', 'Lihat pengguna')
+                            ->set_buttons('cekal', 'Cekal pengguna')
+                            ->set_buttons('hapus', 'Hapus pengguna');
 
         $this->data['panel_title'] = $this->themee->set_title('Semua data pengguna');
-        $this->data['panel_body'] = $grid->make_table( $this->authr->users->fetch() );
+        $this->data['panel_body'] = $grid->generate( $this->authr->users->fetch() );
 
         $this->load->theme('pages/panel_data', $this->data);
     }
@@ -483,10 +483,10 @@ class Pengguna extends BAKA_Controller
                             ->set_baseurl($this->data['page_link'])
                             ->set_column('Kelompok', 'full, perm_count, callback_make_tag:perm_desc', '65%', FALSE, '<strong>%s</strong> <small class="text-muted">Dengan %s wewenang, antara lain:</small><br>%s')
                             ->set_column('Default', 'callback_bool_to_str:default', '20%', FALSE, '<span class="badge">%s</span>')
-                            ->set_buttons('form/', 'eye-open', 'primary', 'Lihat data')
-                            ->set_buttons('delete/', 'trash', 'danger', 'Hapus data');
+                            ->set_buttons('form', 'Lihat data')
+                            ->set_buttons('delete', 'Hapus data');
 
-        $this->data['panel_body'] = $grid->make_table( $this->authr->roles->fetch() );
+        $this->data['panel_body'] = $grid->generate( $this->authr->roles->fetch() );
 
         $this->load->theme('pages/panel_data', $this->data);
     }
@@ -598,10 +598,10 @@ class Pengguna extends BAKA_Controller
                             ->set_baseurl($this->data['page_link'])
                             ->set_column('Hak akses', 'description, permission', '45%', TRUE, '<strong>%s</strong><br><small>%s</small>')
                             ->set_column('Difisi', 'parent', '40%')
-                            ->set_buttons('form/', 'eye-open', 'primary', 'Lihat data')
-                            ->set_buttons('delete/', 'trash', 'danger', 'Hapus data');
+                            ->set_buttons('form', 'Lihat data')
+                            ->set_buttons('delete', 'Hapus data');
 
-        $this->data['panel_body'] = $grid->make_table( $this->authr->permissions->fetch() );
+        $this->data['panel_body'] = $grid->generate( $this->authr->permissions->fetch() );
 
         $this->load->theme('pages/panel_data', $this->data);
     }
