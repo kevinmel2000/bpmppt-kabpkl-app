@@ -87,15 +87,12 @@ class Messg
      */
     public static function get($level = FALSE)
     {
-        if (!empty(self::$messages))
+        if ($level and isset(self::$messages[$level]))
         {
-            if ($level and isset(self::$messages[$level]))
-            {
-                return self::$messages[$level];
-            }
-
-            return self::$messages;
+            return self::$messages[$level];
         }
+
+        return self::$messages;
     }
 
     /**

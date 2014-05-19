@@ -265,7 +265,7 @@ class Pengguna extends BAKA_Controller
                 $this->session->set_flashdata( $level, $message );
             }
 
-            // redirect( $result ? $this->data['page_link'] : current_url() );
+            redirect( $result ? $this->data['page_link'] : current_url() );
         }
 
         $this->data['panel_body'] = $form->generate();
@@ -317,16 +317,14 @@ class Pengguna extends BAKA_Controller
 
         if ( $form_data = $form->validate_submition() )
         {
-            $result     = $this->authr->ban_user( $user_id, $form_data['ban-reason'] );
-
-            if ( $result )
+            if ( $this->authr->ban_user( $user_id, $form_data['ban-reason'] ) )
             {
-                $this->session->set_flashdata('success', $this->authr->messages('success'));
+                $this->session->set_flashdata('success', Messg::get('success'));
                 redirect( $this->data['page_link'] );
             }
             else
             {
-                $this->session->set_flashdata('error', $this->authr->messages('error'));
+                $this->session->set_flashdata('error', Messg::get('error'));
                 redirect( current_url() );
             }
         }
@@ -366,7 +364,6 @@ class Pengguna extends BAKA_Controller
         $group  = ( !is_null( $group_id ) ? $this->authr->roles->get( $group_id ) : FALSE );
 
         $this->data['panel_title'] = $this->themee->set_title( $group ? 'Ubah data Kelompok pengguna '.$group->full : 'Buat kelompok pengguna baru' );
-        
         $this->data['tool_buttons']['data'] = 'Kembali|default';
 
         $fields[]   = array(
@@ -405,9 +402,9 @@ class Pengguna extends BAKA_Controller
 
         foreach ( $permissions as $perms )
         {
-            $child_id   = strpos($perms->perm_id, ',') !== FALSE    ? explode(',', $perms->perm_id)     : array($perms->perm_id) ;
-            $child_name = strpos($perms->perm_name, ',') !== FALSE  ? explode(',', $perms->perm_name)   : array($perms->perm_name) ;
-            $child_desc = strpos($perms->perm_desc, ',') !== FALSE  ? explode(',', $perms->perm_desc)   : array($perms->perm_desc) ;
+            $child_id   = strpos($perms->perm_id, ',') !== FALSE   ? explode(',', $perms->perm_id)   : array($perms->perm_id) ;
+            $child_name = strpos($perms->perm_name, ',') !== FALSE ? explode(',', $perms->perm_name) : array($perms->perm_name) ;
+            $child_desc = strpos($perms->perm_desc, ',') !== FALSE ? explode(',', $perms->perm_desc) : array($perms->perm_desc) ;
 
             $permission = array();
 
@@ -455,7 +452,7 @@ class Pengguna extends BAKA_Controller
 
             $result = $this->authr->roles->update( $role_data, $group_id, $perm_data );
 
-            foreach ( $this->authr->messages() as $level => $message )
+            foreach ( Messg::get() as $level => $message )
             {
                 $this->session->set_flashdata( $level, $message );
             }
@@ -562,11 +559,11 @@ class Pengguna extends BAKA_Controller
         {
             if ( $perm_id == '' )
             {
-                $form_data  =  $form->submited_data();
+                $form_data =  $form->submited_data();
 
-                $user_data['role']      = $form_data['perm-role'];
-                $user_data['full']      = $form_data['perm-full'];
-                $user_data['default']   = $form_data['perm-default'];
+                $user_data['role']    = $form_data['perm-role'];
+                $user_data['full']    = $form_data['perm-full'];
+                $user_data['default'] = $form_data['perm-default'];
 
                 $result = $this->authr->create_user( $user_data, $use_username );
             }

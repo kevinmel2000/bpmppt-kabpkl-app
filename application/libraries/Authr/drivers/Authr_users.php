@@ -226,7 +226,7 @@ class Authr_users extends CI_Driver
         }
         else
         {
-            return $this->change_user_status( $user_id, 'deleted' );
+            return $this->change_status( $user_id, 'deleted' );
         }
     }
 
@@ -272,7 +272,7 @@ class Authr_users extends CI_Driver
             }
         }
 
-        return $this->edit_user( $user_id, $data );
+        return $this->edit( $user_id, $data );
     }
 
     // -------------------------------------------------------------------------
@@ -305,7 +305,7 @@ class Authr_users extends CI_Driver
             return FALSE;
         }
 
-        return $this->change_user_status( $user_id, 'activated', FALSE, array($key => NULL) );
+        return $this->change_status( $user_id, 'activated', FALSE, array($key => NULL) );
     }
 
     // -------------------------------------------------------------------------
@@ -319,7 +319,7 @@ class Authr_users extends CI_Driver
      */
     public function deactivate( $user_id )
     {
-        return $this->change_user_status( $user_id, 'activated', TRUE );
+        return $this->change_status( $user_id, 'activated', TRUE );
     }
 
     // -------------------------------------------------------------------------
@@ -357,7 +357,7 @@ class Authr_users extends CI_Driver
             'new_password_requested' => date('Y-m-d H:i:s')
             );
 
-        return $this->edit_user( $user_id, $data );
+        return $this->edit( $user_id, $data );
     }
 
     // -------------------------------------------------------------------------
@@ -404,7 +404,7 @@ class Authr_users extends CI_Driver
             'new_password_requested' => NULL
             );
 
-        return $this->edit_user( $user_id, $data );
+        return $this->edit( $user_id, $data );
     }
 
     // -------------------------------------------------------------------------
@@ -425,7 +425,7 @@ class Authr_users extends CI_Driver
             'new_password_requested' => NULL
             );
 
-        return $this->edit_user( $user_id, $data );
+        return $this->edit( $user_id, $data );
     }
 
     // -------------------------------------------------------------------------
@@ -445,7 +445,7 @@ class Authr_users extends CI_Driver
      */
     public function set_new_email( $user_id, $new_email, $new_email_key )
     {
-        return $this->edit_user( $user_id,
+        return $this->edit( $user_id,
             array( 'new_email' => $new_email, 'new_email_key' => $new_email_key )
             );
     }

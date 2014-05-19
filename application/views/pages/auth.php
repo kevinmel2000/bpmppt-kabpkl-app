@@ -12,11 +12,16 @@
 <div id="auth-desc" class="<?php echo twbs_set_columns(8, 8) ?>">
 
 	<div class="page-header">
-		<h1>Selamat datang di BPMPPT App</h1>
+		<h1><?php echo $desc_title ?></h1>
 	</div>
-	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, sunt, dignissimos, temporibus iusto id dolor commodi suscipit nobis voluptatum vel recusandae beatae quis ducimus nesciunt nulla sit ex ad alias.</p>
-	<p>Et, earum, in tenetur ab vel odio nam id pariatur quo non rem necessitatibus sequi officiis quia amet! Delectus, eius explicabo nihil dolore hic libero perferendis soluta eos unde ullam.</p>
-	<p>Exercitationem, labore, assumenda a esse ipsam eum dolorem laboriosam laborum itaque? Ratione, excepturi, repellendus, fuga ducimus aliquid nesciunt iste voluptatibus quisquam autem voluptas inventore dolores earum harum rerum minima ab.</p>
-	<p>Consequatur, provident, dolores velit saepe dolor minima assumenda blanditiis. Adipisci, hic, aperiam sit iusto tenetur consequatur nostrum molestiae consequuntur ad ipsa dolorum laboriosam rerum itaque? Facere vitae provident quaerat obcaecati!</p>
+	<?php foreach ($desc_body as $k => $body): if (!is_array($body)) : ?>
+		<p><?php echo $body ?></p>
+	<?php else: ?>
+		<ul>
+			<?php foreach ($body as $list): ?>
+				<li><?php echo $list ?></li>
+			<?php endforeach ?>
+		</ul>
+	<?php endif; endforeach; ?>
 
 </div>
