@@ -1,23 +1,40 @@
 <?php if (! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * CodeIgniter Baka Pack
+ * DON'T BE A DICK PUBLIC LICENSE <http://dbad-license.org>
+ * 
+ * Version 0.1.4, May 2014
+ * Copyright (C) 2014 Fery Wardiyanto <ferywardiyanto@gmail.com>
+ *  
+ * Everyone is permitted to copy and distribute verbatim or modified copies of
+ * this license document, and changing it is allowed as long as the name is
+ * changed.
+ * 
+ * DON'T BE A DICK PUBLIC LICENSE
+ * TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+ * 
+ * 1. Do whatever you like with the original work, just don't be a dick.
+ * 
+ *    Being a dick includes - but is not limited to - the following instances:
+ * 
+ *    1a. Outright copyright infringement - Don't just copy this and change the name.  
+ *    1b. Selling the unmodified original with no work done what-so-ever,
+ *        that's REALLY being a dick.  
+ *    1c. Modifying the original work to contain hidden harmful content.
+ *        That would make you a PROPER dick.  
+ * 
+ * 2. If you become rich through modifications, related works/services, or
+ *    supporting the original work, share the love. Only a dick would make loads
+ *    off this work and not buy the original work's creator(s) a pint.
+ * 
+ * 3. Code is provided with no warranty. Using somebody else's code and bitching
+ *    when it goes wrong makes you a DONKEY dick. Fix the problem yourself.
+ *    A non-dick would submit the fix back.
  *
- * My very own Codeigniter Boilerplate Library that used on all of my projects
- * 
- * NOTICE OF LICENSE
- * 
- * Licensed under the Open Software License version 3.0
- * 
- * This source file is subject to the Open Software License (OSL 3.0) that is
- * bundled with this package in the files license.txt / license.rst.  It is
- * also available through the world wide web at this URL:
- * http://opensource.org/licenses/OSL-3.0
- *
- * @package     Baka_pack
+ * @package     CodeIgniter Baka Pack
  * @author      Fery Wardiyanto
- * @copyright   Copyright (c) Fery Wardiyanto. (ferywardiyanto@gmail.com)
- * @license     http://opensource.org/licenses/OSL-3.0
+ * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
+ * @license     http://dbad-license.org
  * @since       Version 0.1.3
  */
 
@@ -181,8 +198,15 @@ class BAKA_Controller extends CI_Controller
 
         }
 
-        // Adding admin menu to main navbar
-        $this->themee->add_navmenu('main_navbar', 'admin', 'link', 'admin/', 'Administrasi');
+        if ( $this->authr->is_permited('internal_skpd_manage') )
+        {
+            // Adding admin menu to main navbar
+            $this->themee->add_navmenu('main_navbar', 'admin', 'link', 'admin/', 'Administrasi');
+        }
+        else
+        {
+            $this->themee->add_navmenu('main_navbar', 'admin', 'link', 'profile/', 'Profil Saya');
+        }
         // Adding account menu to user navbar
         $this->themee->add_navmenu('user_navbar', 'account', 'link', 'profile', $this->current_user['username']);
         // Adding submenu to main_navbar-admin
@@ -237,15 +261,21 @@ class BAKA_Controller extends CI_Controller
         // =====================================================================
         // Adding skpd sub-menu (if permited)
         if ($this->authr->is_permited('internal_skpd_manage'))
+        {
             $this->themee->add_navmenu($parent, 'ai_skpd', 'link', 'admin/internal/skpd', 'SKPD', array(), $position);
+        }
 
         // Adding application sub-menu (if permited)
         if ($this->authr->is_permited('internal_application_manage'))
+        {
             $this->themee->add_navmenu($parent, 'ai_application', 'link', 'admin/internal/app', 'Pengaturan Aplikasi', array(), $position);
+        }
 
         // Adding security sub-menu (if permited)
         // if ($this->authr->is_permited('internal_security_manage'))
+        // {
         //     $this->themee->add_navmenu($parent, 'ai_security', 'link', 'admin/internal/keamanan', 'Keamanan', array(), $position);
+        // }
 
         // $this->themee->add_navmenu(
         // $parent, 'ai_property', 'link', 'admin/internal/prop', 'Properti', array(), $position);
@@ -254,24 +284,28 @@ class BAKA_Controller extends CI_Controller
         // =====================================================================
         // Adding Users menu header
         $this->themee->add_navmenu($parent, 'au_def', 'devider', '', '', array(), $position);
-        $this->themee->add_navmenu(
-            $parent, 'au_head', 'header', '', 'Pengguna', array(), $position);
+        $this->themee->add_navmenu($parent, 'au_head', 'header', '', 'Pengguna', array(), $position);
         
         // Adding Self Profile sub-menu
-        $this->themee->add_navmenu(
-            $parent, 'au_me', 'link', 'profile', 'Profil Saya', array(), $position);
+        $this->themee->add_navmenu($parent, 'au_me', 'link', 'profile', 'Profil Saya', array(), $position);
 
         // Adding Users sub-menu (if permited)
         if ($this->authr->is_permited('users_manage'))
+        {
             $this->themee->add_navmenu($parent, 'au_users', 'link', 'admin/pengguna/data', 'Semua Pengguna', array(), $position);
+        }
 
         // Adding Groups sub-menu (if permited)
         if ($this->authr->is_permited('roles_manage'))
+        {
             $this->themee->add_navmenu($parent, 'au_groups', 'link', 'admin/pengguna/groups', 'Kelompok', array(), $position);
+        }
 
         // Adding Perms sub-menu (if permited)
         if ($this->authr->is_permited('perms_manage'))
+        {
             $this->themee->add_navmenu($parent, 'a_permission', 'link', 'admin/pengguna/permission', 'Hak akses', array(), $position);
+        }
 
         // Application Mantenances sub-menu
         // =====================================================================
@@ -283,24 +317,24 @@ class BAKA_Controller extends CI_Controller
 
             // Adding System Log sub-menu (if permited)
             if ($this->authr->is_permited('sys_logs_manage'))
-                $this->themee->add_navmenu(
-                    $parent, 'ad_sysinfo', 'link', 'admin/sistem/info', 'Informasi Sistem', array(), $position);
+            {
+                $this->themee->add_navmenu($parent, 'ad_sysinfo', 'link', 'admin/sistem/info', 'Informasi Sistem', array(), $position);
+            }
 
             // Adding Backup & Restore sub-menu (if permited)
             if ($this->authr->is_permited('sys_backstore_manage'))
             {
                 // Backup sub-menu
-                $this->themee->add_navmenu(
-                    $parent, 'ad_backup', 'link', 'admin/sistem/backup', 'Backup Database', array(), $position);
+                $this->themee->add_navmenu($parent, 'ad_backup', 'link', 'admin/sistem/backup', 'Backup Database', array(), $position);
                 // Restore sub-menu
-                $this->themee->add_navmenu(
-                    $parent, 'ad_restore', 'link', 'admin/sistem/restore', 'Restore Database', array(), $position);
+                $this->themee->add_navmenu($parent, 'ad_restore', 'link', 'admin/sistem/restore', 'Restore Database', array(), $position);
             }
 
             // Adding System Log sub-menu (if permited)
             if ($this->authr->is_permited('sys_logs_manage'))
-                $this->themee->add_navmenu(
-                    $parent, 'ad_syslogs', 'link', 'admin/sistem/logs', 'Aktifitas sistem', array(), $position);
+            {
+                $this->themee->add_navmenu($parent, 'ad_syslogs', 'link', 'admin/sistem/logs', 'Aktifitas sistem', array(), $position);
+            }
         }
     }
 
