@@ -198,8 +198,15 @@ class BAKA_Controller extends CI_Controller
 
         }
 
-        // Adding admin menu to main navbar
-        $this->themee->add_navmenu('main_navbar', 'admin', 'link', 'admin/', 'Administrasi');
+        if ( $this->authr->is_permited('internal_skpd_manage') )
+        {
+            // Adding admin menu to main navbar
+            $this->themee->add_navmenu('main_navbar', 'admin', 'link', 'admin/', 'Administrasi');
+        }
+        else
+        {
+            $this->themee->add_navmenu('main_navbar', 'admin', 'link', 'profile/', 'Profil Saya');
+        }
         // Adding account menu to user navbar
         $this->themee->add_navmenu('user_navbar', 'account', 'link', 'profile', $this->current_user['username']);
         // Adding submenu to main_navbar-admin
@@ -254,15 +261,21 @@ class BAKA_Controller extends CI_Controller
         // =====================================================================
         // Adding skpd sub-menu (if permited)
         if ($this->authr->is_permited('internal_skpd_manage'))
+        {
             $this->themee->add_navmenu($parent, 'ai_skpd', 'link', 'admin/internal/skpd', 'SKPD', array(), $position);
+        }
 
         // Adding application sub-menu (if permited)
         if ($this->authr->is_permited('internal_application_manage'))
+        {
             $this->themee->add_navmenu($parent, 'ai_application', 'link', 'admin/internal/app', 'Pengaturan Aplikasi', array(), $position);
+        }
 
         // Adding security sub-menu (if permited)
         // if ($this->authr->is_permited('internal_security_manage'))
+        // {
         //     $this->themee->add_navmenu($parent, 'ai_security', 'link', 'admin/internal/keamanan', 'Keamanan', array(), $position);
+        // }
 
         // $this->themee->add_navmenu(
         // $parent, 'ai_property', 'link', 'admin/internal/prop', 'Properti', array(), $position);
@@ -271,24 +284,28 @@ class BAKA_Controller extends CI_Controller
         // =====================================================================
         // Adding Users menu header
         $this->themee->add_navmenu($parent, 'au_def', 'devider', '', '', array(), $position);
-        $this->themee->add_navmenu(
-            $parent, 'au_head', 'header', '', 'Pengguna', array(), $position);
+        $this->themee->add_navmenu($parent, 'au_head', 'header', '', 'Pengguna', array(), $position);
         
         // Adding Self Profile sub-menu
-        $this->themee->add_navmenu(
-            $parent, 'au_me', 'link', 'profile', 'Profil Saya', array(), $position);
+        $this->themee->add_navmenu($parent, 'au_me', 'link', 'profile', 'Profil Saya', array(), $position);
 
         // Adding Users sub-menu (if permited)
         if ($this->authr->is_permited('users_manage'))
+        {
             $this->themee->add_navmenu($parent, 'au_users', 'link', 'admin/pengguna/data', 'Semua Pengguna', array(), $position);
+        }
 
         // Adding Groups sub-menu (if permited)
         if ($this->authr->is_permited('roles_manage'))
+        {
             $this->themee->add_navmenu($parent, 'au_groups', 'link', 'admin/pengguna/groups', 'Kelompok', array(), $position);
+        }
 
         // Adding Perms sub-menu (if permited)
         if ($this->authr->is_permited('perms_manage'))
+        {
             $this->themee->add_navmenu($parent, 'a_permission', 'link', 'admin/pengguna/permission', 'Hak akses', array(), $position);
+        }
 
         // Application Mantenances sub-menu
         // =====================================================================
@@ -300,24 +317,24 @@ class BAKA_Controller extends CI_Controller
 
             // Adding System Log sub-menu (if permited)
             if ($this->authr->is_permited('sys_logs_manage'))
-                $this->themee->add_navmenu(
-                    $parent, 'ad_sysinfo', 'link', 'admin/sistem/info', 'Informasi Sistem', array(), $position);
+            {
+                $this->themee->add_navmenu($parent, 'ad_sysinfo', 'link', 'admin/sistem/info', 'Informasi Sistem', array(), $position);
+            }
 
             // Adding Backup & Restore sub-menu (if permited)
             if ($this->authr->is_permited('sys_backstore_manage'))
             {
                 // Backup sub-menu
-                $this->themee->add_navmenu(
-                    $parent, 'ad_backup', 'link', 'admin/sistem/backup', 'Backup Database', array(), $position);
+                $this->themee->add_navmenu($parent, 'ad_backup', 'link', 'admin/sistem/backup', 'Backup Database', array(), $position);
                 // Restore sub-menu
-                $this->themee->add_navmenu(
-                    $parent, 'ad_restore', 'link', 'admin/sistem/restore', 'Restore Database', array(), $position);
+                $this->themee->add_navmenu($parent, 'ad_restore', 'link', 'admin/sistem/restore', 'Restore Database', array(), $position);
             }
 
             // Adding System Log sub-menu (if permited)
             if ($this->authr->is_permited('sys_logs_manage'))
-                $this->themee->add_navmenu(
-                    $parent, 'ad_syslogs', 'link', 'admin/sistem/logs', 'Aktifitas sistem', array(), $position);
+            {
+                $this->themee->add_navmenu($parent, 'ad_syslogs', 'link', 'admin/sistem/logs', 'Aktifitas sistem', array(), $position);
+            }
         }
     }
 
