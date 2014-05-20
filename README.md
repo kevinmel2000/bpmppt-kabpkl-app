@@ -31,7 +31,7 @@ Aplikasi ini ditujukan untuk Badan Penanaman Modal dan Pelayanan Perijinan Terba
 
 ## Copyright and license
 
-NOTICE OF LICENSE
+NOTICE OF LICENSE .
 
 Licensed under the Open Software License version 3.0
 
