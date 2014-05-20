@@ -541,10 +541,9 @@ class Former
      */
     protected function _compile(array $field_attrs, $is_sub = FALSE)
     {
-        $html        = '';
-        $input_class = $this->_template['field_class'];
-
-        $field_id   = isset($field_attrs['id']) ? $field_attrs['id'] : $field_attrs['name'];
+        $html              = '';
+        $input_class       = $this->_template['field_class'];
+        $field_id          = isset($field_attrs['id']) ? $field_attrs['id'] : $field_attrs['name'];
         $field_attrs['id'] = 'field-'.str_replace('_', '-', $field_id);
 
         $field_attrs['attr'] = '';
@@ -594,9 +593,9 @@ class Former
         }
         else if ($type == 'subfield')
         {
-            $id = 'sub'.$id;
-            $errors = array();
-            $input = '<div id="'.$id.'" class="row">';
+            $id                 = 'sub'.$id;
+            $errors             = array();
+            $input              = '<div id="'.$id.'" class="row">';
             $field_attrs['for'] = 'field-sub'.str_replace('_', '-', 'input-'.$name.'-'.$fields[0]['name']);
             
             if (isset($fields) and !empty($fields))
@@ -872,7 +871,14 @@ class Former
                     $attr = 'class="form-control-select2 '.$input_class.'" id="'.$id.'" '.$attr;
 
                     if ($type == 'multiselect')
+                    {
                         $name = $name.'[]';
+                    }
+
+                    if ($type == 'select2')
+                    {
+                        $type = 'dropdown';
+                    }
 
                     $form_func = 'form_'.$type;
                     $input = $form_func($name, $option, set_value($name, $std), $attr);
@@ -1013,9 +1019,9 @@ class Former
 
                 // Summernote editor
                 case 'editor':
-                    Asssets::set_script('summernote', 'lib/summernote.min.js', 'bootstrap', '0.5.2');
-                    Asssets::set_script('summernote-id', 'lib/summernote.id-ID.js', 'summernote', '0.5.2');
-                    Asssets::set_script('codemirror', 'lib/codemirror.js', 'jquery', '4.1');
+                    Asssets::set_script('summernote',     'lib/summernote.min.js', 'bootstrap', '0.5.2');
+                    Asssets::set_script('summernote-id',  'lib/summernote.id-ID.js', 'summernote', '0.5.2');
+                    Asssets::set_script('codemirror',     'lib/codemirror.js', 'jquery', '4.1');
                     Asssets::set_script('codemirror.xml', 'lib/codemirror.mode.xml.js', 'codemirror', '4.1');
                     // Asssets::set_script('jquery-mousewheel', 'lib/jquery.mousewheel.min.js', 'jquery', '3.1.0');
                     // Asssets::set_script('perfectscrollbar', 'lib/perfect-scrollbar.js', 'jquery', '0.4.10');
@@ -1075,11 +1081,11 @@ class Former
 
             if ($jqui_load)
             {
-                Asssets::set_script('jqui-core', $jqui_path.'core.min.js', 'jquery', '1.10.4');
-                Asssets::set_script('jqui-widget', $jqui_path.'widget.min.js', 'jqui-core', '1.10.4');
-                Asssets::set_script('jqui-button', $jqui_path.'button.min.js', 'jqui-widget', '1.10.4');
-                Asssets::set_script('jqui-mouse', $jqui_path.'mouse.min.js', 'jqui-widget', '1.10.4');
-                Asssets::set_script('jqui-position', $jqui_path.'position.min.js', 'jqui-widget', '1.10.4');
+                Asssets::set_script('jqui-core',         $jqui_path.'core.min.js', 'jquery', '1.10.4');
+                Asssets::set_script('jqui-widget',       $jqui_path.'widget.min.js', 'jqui-core', '1.10.4');
+                Asssets::set_script('jqui-button',       $jqui_path.'button.min.js', 'jqui-widget', '1.10.4');
+                Asssets::set_script('jqui-mouse',        $jqui_path.'mouse.min.js', 'jqui-widget', '1.10.4');
+                Asssets::set_script('jqui-position',     $jqui_path.'position.min.js', 'jqui-widget', '1.10.4');
                 Asssets::set_script('jquery-mousewheel', 'lib/jquery.mousewheel.min.js', 'jquery', '3.1.0');
             }
 
@@ -1097,9 +1103,9 @@ class Former
     /**
      * Form field which commonly used by all field types
      *
-     * @since   version 0.1.3
-     * @param   array   $attrs  Field Attributes
-     * @param   string  $input  Field input html
+     * @since   version  0.1.3
+     * @param   array    $attrs  Field Attributes
+     * @param   string   $input  Field input html
      *
      * @return  string
      */
@@ -1107,7 +1113,7 @@ class Former
     {
         extract($this->_template);
 
-        $attrs = array_set_defaults($attrs, $this->_default_attr);
+        $attrs    = array_set_defaults($attrs, $this->_default_attr);
         $is_error = '';
 
         if (!is_array($attrs['desc']))
@@ -1119,12 +1125,12 @@ class Former
             $is_error = $attrs['desc'];
         }
         
-        if ($attrs['validation'] != '')
+        if (strlen(trim($attrs['validation'])) != 0)
         {
             if (FALSE !== strpos($attrs['validation'], 'required'))
             {
                 $attrs['label'] .= $required_attr;
-                $group_class .= ' form-required';
+                $group_class    .= ' form-required';
             }
 
             if ($is_error != '')
@@ -1150,16 +1156,16 @@ class Former
             $group_attr .= ' data-fold="1" data-fold-key="'.$attrs['fold']['key'].'" data-fold-value="'.$attrs['fold']['value'].'"';
         }
 
-        $html = sprintf($group_open, $group_class, $group_attr);
+        $html      = sprintf($group_open, $group_class, $group_attr);
         $left_desc = isset($attrs['left-desc']) and $attrs['left-desc'] == TRUE;
-        $errors = ($is_error != '' and !is_array($attrs['desc'])) ? $is_error : $attrs['desc'];
+        $errors    = ($is_error != '' and !is_array($attrs['desc'])) ? $is_error : $attrs['desc'];
 
         if ($attrs['label'] != '' OR $this->is_hform)
         {
             // $label_class .= $label_col;
             $label_target = (isset($attrs['for']) ? $attrs['for'] : $attrs['id']);
 
-            $html .= '<div class="form-label'.$label_col.'">';
+            $html .= '<div class="form-label '.$label_col.'">';
             $html .= form_label($attrs['label'], $label_target, array('class'=> $label_class));
 
             if ($left_desc)
@@ -1170,8 +1176,9 @@ class Former
             $html .= '</div>';
         }
     
-        $html .= sprintf($field_open, 'form-input'.$input_col, '')
+        $html .= sprintf($field_open, 'form-input '.$input_col, '')
               .  $input;
+
         if (!$left_desc)
         {
             $html .= $this->_form_desc($errors);
@@ -1215,7 +1222,7 @@ class Former
         // If you were use Bootstrap form-horizontal class in your form,
         // You'll need to specify Bootstrap grids class.
         $group_col  = $this->is_hform ? twbs_set_columns(12, 12) : '';
-        $output     = '<div class="form-group form-action"><div class="clearfix'.$group_col.'">';
+        $output     = '<div class="form-group form-action"><div class="clearfix '.$group_col.'">';
 
         // Let's reset your button attributes.
         $button_attr = array();
@@ -1223,16 +1230,19 @@ class Former
         foreach ($this->_buttons as $attr)
         {
             // Button name is inheritance with form ID.
-            $button_attr['name']    = $this->_attrs['name'].'-'.$attr['name'];
+            $button_attr['name']  = $this->_attrs['name'].'-'.$attr['name'];
             // If you not specify your Button ID, you'll get it from Button name with '-btn' as surfix.
-            $button_attr['id']      = (isset($attr['id']) ? $attr['id'] : $button_attr['name']).'-btn';
+            $button_attr['id']    = (isset($attr['id']) ? $attr['id'] : $button_attr['name']).'-btn';
             // I prefer to use Bootstrap btn-sm as default.
-            $button_attr['class']   = $this->_template['buttons_class'].(isset($attr['class']) ? ' '.$attr['class'] : '');
+            $button_attr['class'] = $this->_template['buttons_class'].(isset($attr['class']) ? ' '.$attr['class'] : '');
 
             if (substr($attr['label'], 0, 5) == 'lang:')
             {
                 $attr['label'] = _x(str_replace('lang:', '', $attr['label']));
             }
+
+            // $button_attr['data-loading-text']  = 'Loading...';
+            // $button_attr['data-complete-text'] = 'Finished!';
 
             switch ($attr['type'])
             {
@@ -1240,9 +1250,6 @@ class Former
                 case 'reset':
                     $func = 'form_'.$attr['type'];
                     $button_attr['value'] = $attr['label'];
-
-                    $button_attr['data-loading-text'] = 'Loading...';
-                    $button_attr['data-complete-text'] = 'Finished!';
 
                     $output .= $func($button_attr);
                     break;
@@ -1304,7 +1311,9 @@ class Former
 
         // if is valid submissions
         if ($this->_ci->form_validation->run() )
+        {
             return $this->submited_data();
+        }
 
         // otherwise
         return false;
@@ -1348,7 +1357,7 @@ class Former
 
         $method = $this->_attrs['method'];
 
-        if (strlen($callback) > 0 and is_callable($callback))
+        if (strlen($callback) > 0 and function_exists($callback) and is_callable($callback))
         {
             $this->form_data[$name] = call_user_func($callback, $this->_ci->input->$method($name));
         }
