@@ -74,14 +74,14 @@ class Laporan extends BAKA_Controller
             'name'  => 'data_type',
             'label' => 'Pilih data perijinan',
             'type'  => 'dropdown',
-            'option'=> add_placeholder( $modules ),
+            'option'=> $modules,
             'validation'=> 'required',
             'desc'  => 'Pilih jenis dokumen yang ingin dicetak. Terdapat '.count( $this->_modules_arr ).' yang dapat anda cetak.' );
 
         $fields[]   = array(
             'name'  => 'data_status',
             'label' => 'Status Pengajuan',
-            'type'  => 'dropdown',
+            'type'  => 'radio',
             'option'=> array(
                 'all'       => 'Semua',
                 'pending'   => 'Tertunda',
@@ -127,9 +127,8 @@ class Laporan extends BAKA_Controller
 
         if ( $form->validate_submition() )
         {
-            $submited_data = $form->submited_data();
-
-            $data = $this->bpmppt->skpd_properties();
+            $submited_data   = $form->submited_data();
+            $data            = $this->bpmppt->skpd_properties();
             $data['layanan'] = $this->bpmppt->get_label($submited_data['data_type']);
             $data['results'] = array();
 
