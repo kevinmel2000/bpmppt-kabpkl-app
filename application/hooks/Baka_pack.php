@@ -117,8 +117,8 @@ class Baka_pack
          *
          * @var   array
          */
-        $this->error_conf['application_folders']   = APPPATH;
-        $this->error_conf['ignore_folders']        = BASEPATH;
+        $this->error_conf['application_folders'] = APPPATH;
+        $this->error_conf['ignore_folders']      = BASEPATH;
 
         // var_dump(APPPATH);
         if (!class_exists('\php_error\ErrorHandler'))
@@ -126,21 +126,18 @@ class Baka_pack
             require_once(APPPATH.'libraries/vendor/php_error'.EXT);
         }
 
-        if (class_exists('\php_error\ErrorHandler'))
-        {
-            $handler = new \php_error\ErrorHandler($this->error_conf);
+        $handler = new \php_error\ErrorHandler($this->error_conf);
 
-            switch (ENVIRONMENT)
-            {
-                case 'development':
-                    $handler->turnOn();
-                    break;
-            
-                case 'testing':
-                case 'production':
-                    $handler->turnOff();
-                    break;
-            }
+        switch (ENVIRONMENT)
+        {
+            case 'development':
+                $handler->turnOn();
+                break;
+        
+            case 'testing':
+            case 'production':
+                $handler->turnOff();
+                break;
         }
     }
 }

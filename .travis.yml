@@ -31,7 +31,7 @@ branches:
 notifications:
   email:
     recipients:
-      # - binabars@gmail.com
+      - binabars@gmail.com
       - ferywardiyanto@gmail.com
     on_success: always
     on_failure: always

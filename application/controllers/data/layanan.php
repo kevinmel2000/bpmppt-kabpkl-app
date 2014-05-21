@@ -114,7 +114,7 @@ class Layanan extends BAKA_Controller
                     break;
 
                 case 'ubah-status':
-                    $this->ubah_status( $this->uri->segment(7) , $data_id, $this->data['page_link'] );
+                    $this->ubah_status( $this->uri->segment(6) , $data_id, $this->data['page_link'] );
                     break;
 
                 case 'data':
