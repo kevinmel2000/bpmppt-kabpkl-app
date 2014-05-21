@@ -321,7 +321,7 @@ class Bpmppt extends CI_Driver_Library
 
         $data['no_agenda']  = $form_data[$driver_alias.'_surat_nomor'];
         $data['created_on'] = string_to_datetime();
-        $data['created_by'] = $this->authr->get_user_id();
+        $data['created_by'] = $this->_ci->authr->get_user_id();
         $data['type']       = $driver_alias;
         $data['label']      = '-';
         $data['petitioner'] = $form_data[$driver_alias.'_pemohon_nama'];
