@@ -13,18 +13,18 @@
 if (!defined('PROJECT_DIR'))
 {
     $hook['pre_controller'] = array(
-        'class'    => 'Errror',
+        'class'    => 'Baka_pack',
         'function' => 'reload',
-        'filename' => 'Errror.php',
+        'filename' => 'Baka_pack.php',
         'filepath' => 'hooks'
         );
 }
 else
 {
     $hook['display_override'] = array(
-        'class'    => 'Display',
+        'class'    => 'Baka_pack',
         'function' => 'get_output',
-        'filename' => 'Display.php',
+        'filename' => 'Baka_pack.php',
         'filepath' => 'hooks'
         );
 }
