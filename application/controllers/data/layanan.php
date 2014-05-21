@@ -164,10 +164,10 @@ class Layanan extends BAKA_Controller
             $slug = $this->bpmppt->get_alias( $data_type );
             $stat  = FALSE;
 
-            switch ( $this->uri->segment(6) )
+            switch ( $this->uri->segment(5) )
             {
                 case 'status':
-                    $stat   = $this->uri->segment(7);
+                    $stat   = $this->uri->segment(6);
                     $query  = $this->bpmppt->get_data_by_status( $stat, $slug );
                     break;
                 
@@ -238,7 +238,7 @@ class Layanan extends BAKA_Controller
 
             $date   = ( $status != 'pending' ? ' pada: '.format_datetime( $data_obj->{$status.'_on'} ) : '' );
 
-            // $fields[]   = array(
+            // $fields[] = array(
             //     'name'  => $modul_slug.'_pemohon_jabatan',
             //     'label' => 'Status Pengajuan',
             //     'type'  => 'static',
@@ -259,7 +259,7 @@ class Layanan extends BAKA_Controller
                 $data_label = 'SIUP';
             }
 
-            $fields[]   = array(
+            $fields[] = array(
                 'name'  => $modul_slug.'_surat',
                 'label' => 'No. &amp; Tgl. '.$data_label,
                 'type'  => 'subfield',
@@ -357,7 +357,7 @@ class Layanan extends BAKA_Controller
 
             $this->set_panel_title('Laporan data '.$this->bpmppt->get_label( $data_type ));
 
-            $fields[]   = array(
+            $fields[] = array(
                 'name'  => 'data_status',
                 'label' => 'Status Pengajuan',
                 'type'  => 'dropdown',
@@ -368,7 +368,7 @@ class Layanan extends BAKA_Controller
                     'done'      => 'Selesai' ),
                 'desc'  => 'tentukan status dokumennya, pilih <em>Semua</em> untuk mencetak semua dokumen dengan jenis dokumen diatas, atau anda dapat sesuaikan dengan kebutuhan.' );
 
-            $fields[]   = array(
+            $fields[] = array(
                 'name'  => 'data_date',
                 'label' => 'Bulan &amp; Tahun',
                 'type'  => 'subfield',
@@ -388,7 +388,7 @@ class Layanan extends BAKA_Controller
                     ),
                 'desc'  => 'Tentukan tanggal dan bulan dokumen.' );
 
-            $buttons[]= array(
+            $buttons[] = array(
                 'name'  => 'do-print',
                 'type'  => 'submit',
                 'label' => 'Cetak sekarang',
@@ -408,9 +408,26 @@ class Layanan extends BAKA_Controller
             {
                 $data = $this->bpmppt->skpd_properties();
 
+                $wheres['type'] = $this->bpmppt->get_alias($data_type);
+
+                if ( $form_data['data_date_month'] )
+                {
+                    $wheres['month'] = $form_data['data_date_month'];
+                }
+
+                if ( $form_data['data_date_year'] )
+                {
+                    $wheres['year'] = $form_data['data_date_year'];
+                }
+
+                if ( $form_data['data_status'] != 'all' )
+                {
+                    $wheres['status'] = $form_data['data_status'];
+                }
+
                 $data['submited'] = $form_data;
                 $data['layanan']  = $this->bpmppt->get_label( $data_type );
-                $data['results']  = $this->bpmppt->get_report( $data_type, $form->submited_data() );
+                $data['results']  = $this->bpmppt->get_report( $wheres );
 
                 $this->load->theme('prints/reports/'.$data_type, $data, 'laporan');
             }
@@ -472,7 +489,7 @@ class Layanan extends BAKA_Controller
         $file_content   = str_replace('<?php echo ', '{', $file_content);
         $file_content   = str_replace(' ?>', '}', $file_content);
 
-        $fields[]   = array(
+        $fields[] = array(
             'name'  => 'tmpl-editor',
             'type'  => 'editor',
             'height'=> 300,
@@ -540,7 +557,7 @@ class Layanan extends BAKA_Controller
         $file_content = str_replace('<?php echo ', '{', $file_content);
         $file_content = str_replace(' ?>', '}', $file_content);
 
-        $fields[]   = array(
+        $fields[] = array(
             'name'  => 'tmpl-editor',
             'type'  => 'editor',
             'height'=> 300,

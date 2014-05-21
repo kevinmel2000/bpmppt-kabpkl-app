@@ -315,31 +315,6 @@ class Bpmppt extends CI_Driver_Library
 
     // -------------------------------------------------------------------------
 
-    /**
-     * Get Reports properties from child driver (if available)
-     *
-     * @param   string  $driver  Driver name
-     *
-     * @return  array|false
-     */
-    public function get_report( $driver, $where = array() )
-    {
-        $wheres = array(
-            'type'                => $this->$driver->alias,
-            'month(created_on)'   => (int) ( !empty($where['data_date_month']) ? $where['data_date_month'] : bdate('m') ),
-            'year(created_on)'    => (int) ( !empty($where['data_date_year']) ? $where['data_date_year'] : bdate('Y') ),
-            );
-
-        if ( $where['data_status'] != 'all' )
-        {
-            $wheres['status'] = $where['data_status'];
-        }
-
-        return $this->q_report( $wheres );
-    }
-
-    // -------------------------------------------------------------------------
-
     public function simpan( $driver_alias, $form_data, $data_id = NULL )
     {
         // $driver_alias = $this->get_alias( $driver );

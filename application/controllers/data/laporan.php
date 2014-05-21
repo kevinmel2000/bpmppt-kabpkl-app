@@ -95,13 +95,13 @@ class Laporan extends BAKA_Controller
             'type'  => 'subfield',
             'fields'=> array(
                 array(
-                    'name' => 'data_month',
+                    'name' => 'month',
                     'col'   => 6,
                     'label' => 'Bulan',
                     'type'  => 'dropdown',
                     'option'=> add_placeholder( get_month_assoc(), 'Pilih Bulan') ),
                 array(
-                    'name' => 'data_year',
+                    'name' => 'year',
                     'col'   => 6,
                     'label' => 'Tahun',
                     'type'  => 'dropdown',
@@ -125,14 +125,33 @@ class Laporan extends BAKA_Controller
             'buttons'   => $buttons,
             ));
 
-        if ( $form->validate_submition() )
+        if ( $filter_data = $form->validate_submition() )
         {
-            $submited_data   = $form->submited_data();
-            $data            = $this->bpmppt->skpd_properties();
-            $data['layanan'] = $this->bpmppt->get_label($submited_data['data_type']);
-            $data['results'] = array();
+            $type = $filter_data['data_type'];
+            unset($filter_data['data_type']);
 
-            $this->load->theme('prints/reports/'.$submited_data['data_type'], $data, 'laporan');
+            $wheres['type'] = $this->bpmppt->get_alias($type);
+
+            if ( $filter_data['data_date_month'] )
+            {
+                $wheres['month'] = $filter_data['data_date_month'];
+            }
+
+            if ( $filter_data['data_date_year'] )
+            {
+                $wheres['year'] = $filter_data['data_date_year'];
+            }
+
+            if ( $filter_data['data_status'] != 'all' )
+            {
+                $wheres['status'] = $filter_data['data_status'];
+            }
+
+            $data            = $this->bpmppt->skpd_properties();
+            $data['layanan'] = $this->bpmppt->get_label($type);
+            $data['results'] = $this->bpmppt->get_report($wheres);
+
+            $this->load->theme('prints/reports/'.$type, $data, 'laporan');
         }
         else
         {

@@ -205,14 +205,14 @@ class Bpmppt_model extends CI_Model
         // If filtered by created month
         if ( isset($wheres['month']) )
         {
-            $wheres['month(created_on)'] = $wheres['month'];
+            $wheres['MONTH(created_on)'] = (int) $wheres['month'];
             unset($wheres['month']);
         }
 
         // If filtered by created year
         if ( isset($wheres['year']) )
         {
-            $wheres['year(created_on)'] = $wheres['year'];
+            $wheres['YEAR(created_on)'] = (int) $wheres['year'];
             unset($wheres['year']);
         }
 
@@ -223,7 +223,7 @@ class Bpmppt_model extends CI_Model
         if ( !isset( $wheres['status'] ) and $is_single == FALSE )
         {
             $query->where( 'status !=', 'deleted' );
-            unset($wheres['status']);
+            // unset($wheres['status']);
         }
 
         // Loop the filter
@@ -240,9 +240,9 @@ class Bpmppt_model extends CI_Model
         }
         else
         {
+            // var_dump($wheres);
             return $query;
         }
-
     }
 
     // -------------------------------------------------------------------------
@@ -423,16 +423,26 @@ class Bpmppt_model extends CI_Model
             $log = array_merge( unserialize( $data->logs ), $log );
         }
 
-        $this->db->update( $this->_table['data'],
+        $this->db->update(
+            $this->_table['data'],
             array( 'logs' => serialize( $log ) ),
-            array( 'id' => $data_id ) );
+            array( 'id' => $data_id )
+            );
     }
 
     // -------------------------------------------------------------------------
 
-    public function q_report( $where = array() )
+    /**
+     * Get Reports properties from child driver (if available)
+     *
+     * @param   string  $driver  Driver name
+     *
+     * @return  array|false
+     */
+
+    public function get_report( $where = array() )
     {
-        $query = $this->db->get_where( $this->_table['data'], $where );
+        $query = $this->get_where( $where )->get();
 
         if ( $query->num_rows() > 0 )
         {
@@ -446,6 +456,8 @@ class Bpmppt_model extends CI_Model
 
             return $result;
         }
+
+        // var_dump($query->last_query());
         
         return FALSE;
     }

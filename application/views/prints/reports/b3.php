@@ -22,7 +22,7 @@
         </tr>
     </thead>
     <tbody>
-    <?php if ( $results ) : $i = 1; foreach( $results as $row ) : ?>
+    <?php if ($results) : $i = 1; foreach( $results as $row ) : ?>
         <tr id="baris-<?php echo $row->id ?>" style="text-transform: uppercase;">
             <td class="align-center"><?php echo $i ?></td>
             <td class="align-left"><?php echo $row->pemohon_nama ?></td>
