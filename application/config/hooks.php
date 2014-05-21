@@ -14,7 +14,7 @@ if (!defined('PROJECT_DIR'))
 {
     $hook['pre_controller'] = array(
         'class'    => 'Baka_pack',
-        'function' => 'reload',
+        'function' => 'error_handler',
         'filename' => 'Baka_pack.php',
         'filepath' => 'hooks'
         );
