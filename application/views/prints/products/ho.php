@@ -27,7 +27,7 @@
 <tr>
     <td style="width:20%"><p>Membaca</p></td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%"><p>Surat Permohonan Saudara <?php echo $pemohon_nama ?> selaku <?php echo $pemohon_kerja.' '.$usaha_nama ?>, Alamat Kantor di <?php echo $usaha_alamat ?>, tanggal <?php echo $surat_tanggal ?> untuk Izin tempat usaha <?php echo $usaha_jenis ?>, yang terletak di <?php echo $usaha_lokasi ?>.</p></td>
+    <td colspan="5" style="width:78%"><p>Surat Permohonan Saudara <?php echo $pemohon_nama ?> selaku <?php echo $pemohon_kerja.' '.$usaha_nama ?>, Alamat Kantor di <?php echo $usaha_alamat ?>, tanggal <?php echo bdate('d F Y', $surat_tanggal) ?> untuk Izin tempat usaha <?php echo $usaha_jenis ?>, yang terletak di <?php echo $usaha_lokasi ?>.</p></td>
 </tr>
 <tr>
     <td style="width:20%"><p>Menimbang</p></td>
@@ -75,21 +75,27 @@
 </tr>
 <tr>
     <td colspan="2">&nbsp;</td>
-    <td colspan="2" style="width:35%">
-        <ol>
-            <li>Sebelah Utara</li>
-            <li>Sebelah Timur</li>
-            <li>Sebelah Selatan</li>
-            <li>Sebelah Barat</li>
-        </ol>
-    </td>
-    <td style="width:2%"><p>:</p><p>:</p><p>:</p><p>:</p></td>
-    <td colspan="2" style="width:42%">
-        <p><?php echo $usaha_tetangga_utara ?></p>
-        <p><?php echo $usaha_tetangga_timur ?></p>
-        <p><?php echo $usaha_tetangga_selatan ?></p>
-        <p><?php echo $usaha_tetangga_barat ?></p>
-    </td>
+    <td colspan="2" style="width:35%">Sebelah Utara</td>
+    <td style="width:2%">:</td>
+    <td colspan="2" style="width:42%"><?php echo $usaha_tetangga_utara ?></td>
+</tr>
+<tr>
+    <td colspan="2">&nbsp;</td>
+    <td colspan="2" style="width:35%">Sebelah Timur</td>
+    <td style="width:2%">:</td>
+    <td colspan="2" style="width:42%"><?php echo $usaha_tetangga_timur ?></td>
+</tr>
+<tr>
+    <td colspan="2">&nbsp;</td>
+    <td colspan="2" style="width:35%">Sebelah Selatan</td>
+    <td style="width:2%">:</td>
+    <td colspan="2" style="width:42%"><?php echo $usaha_tetangga_selatan ?></td>
+</tr>
+<tr>
+    <td colspan="2">&nbsp;</td>
+    <td colspan="2" style="width:35%">Sebelah Barat</td>
+    <td style="width:2%">:</td>
+    <td colspan="2" style="width:42%"><?php echo $usaha_tetangga_barat ?></td>
 </tr>
 <tr>
     <td colspan="2">&nbsp;</td>
@@ -139,7 +145,7 @@
     <td colspan="6" style="width:60%">&nbsp;</td>
     <td style="width:40%">
         <p>Ditetapkan di : Kajen</p>
-        <p>Pada Tanggal : <?php echo bdate('F', $created_on).' '.bdate('Y') ?></p>
+        <p class="underline">Pada Tanggal :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo bdate('F', $created_on).' '.bdate('Y') ?></p>
     </td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
@@ -152,7 +158,8 @@
         <p>&nbsp;</p>
         <p>&nbsp;</p>
         <p>&nbsp;</p>
-        <p><?php echo strtoupper($skpd_lead_name) ?></p>
+        <p class="underline"><?php echo strtoupper($skpd_lead_name) ?></p>
+        <p>Pembina Tingkat I</p>
         <p>NIP. <?php echo strtoupper($skpd_lead_nip) ?></p>
     </td>
 </tr>

@@ -82,7 +82,7 @@
     <td colspan="4" style="width:60%">&nbsp;</td>
     <td colspan="1" style="width:40%">
         <p>Ditetapkan di : Kajen</p>
-        <p>Pada Tanggal : <?php echo bdate('F', $created_on).' '.bdate('Y') ?></p>
+        <p class="underline">Pada Tanggal :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo bdate('F', $created_on).' '.bdate('Y') ?></p>
     </td>
 </tr>
 <tr><td colspan="5" style="width:100%">&nbsp;</td></tr>
@@ -95,7 +95,8 @@
         <p>&nbsp;</p>
         <p>&nbsp;</p>
         <p>&nbsp;</p>
-        <p><?php echo strtoupper($skpd_lead_name) ?></p>
+        <p class="underline"><?php echo strtoupper($skpd_lead_name) ?></p>
+        <p>Pembina Tingkat I</p>
         <p>NIP. <?php echo strtoupper($skpd_lead_nip) ?></p>
     </td>
 </tr>

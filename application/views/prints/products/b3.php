@@ -201,7 +201,7 @@
     <td colspan="6" style="width:60%"> </td>
     <td style="width:40%">
         <p>Ditetapkan di : Kajen</p>
-        <p>Pada Tanggal : <?php echo bdate('F', $created_on).' '.bdate('Y') ?></p>
+        <p class="underline">Pada Tanggal :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo bdate('F', $created_on).' '.bdate('Y') ?></p>
     </td>
 </tr>
 <tr><td colspan="7" style="width:100%"> </td></tr>

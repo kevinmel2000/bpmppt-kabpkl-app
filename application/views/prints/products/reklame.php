@@ -97,7 +97,8 @@
         <p>&nbsp;</p>
         <p>&nbsp;</p>
         <p>&nbsp;</p>
-        <p><?php echo strtoupper($skpd_lead_name) ?></p>
+        <p class="underline"><?php echo strtoupper($skpd_lead_name) ?></p>
+        <p>Pembina Tingkat I</p>
         <p>NIP. <?php echo strtoupper($skpd_lead_nip) ?></p>
     </td>
 </tr>
