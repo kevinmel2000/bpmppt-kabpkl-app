@@ -215,6 +215,14 @@ class Bpmppt_imb extends CI_Driver
             'type'  => 'number',
             'std'   => ( $data_obj ? $data_obj->bangunan_luas : ''),
             'validation'=> 'required|numeric' );
+
+        $fields[]   = array(
+            'name'  => $this->alias.'_fieldset_tembusan',
+            'label' => 'Tembusan Dokumen',
+            'attr'  => ( $data_obj ? array('disabled'=>'') : '' ),
+            'type'  => 'fieldset' );
+
+        $fields[] = $this->field_tembusan($data_obj, $this->alias);
         
         return $fields;
     }

@@ -265,7 +265,9 @@ class Bpmppt_siup extends CI_Driver
         $lembs = array( 'Pengecer', 'Penyalur', 'Pengumpul', 'Produsen', 'Sub Distributor', 'Distributor', 'Distributor' );
 
         foreach ( $lembs as $lemb )
+        {
             $lemb_opt[$lemb] = $lemb;
+        }
 
         $fields[]   = array(
             'name'  => $this->alias.'_usaha_lembaga',
@@ -352,6 +354,14 @@ class Bpmppt_siup extends CI_Driver
                     'std'   => ( $data_obj ? $data_obj->usaha_saham_nilai_tgl : ''),
                     'validation'=> ( !$data_obj ? 'required|numeric' : '' ) ),
                 ));
+
+        $fields[]   = array(
+            'name'  => $this->alias.'_fieldset_tembusan',
+            'label' => 'Tembusan Dokumen',
+            'attr'  => ( $data_obj ? array('disabled'=>'') : '' ),
+            'type'  => 'fieldset' );
+
+        $fields[] = $this->field_tembusan($data_obj, $this->alias);
 
         return $fields;
     }

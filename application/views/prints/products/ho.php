@@ -27,12 +27,12 @@
 <tr>
     <td style="width:20%"><p>Membaca</p></td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%"><p>Surat Permohonan Saudara <?php echo $pemohon_nama ?> selaku <?php echo $pemohon_kerja.' '.$usaha_nama ?>, Alamat Kantor di <?php echo $usaha_alamat ?>, tanggal <?php echo bdate('d F Y', $surat_tanggal) ?> untuk Izin tempat usaha <?php echo $usaha_jenis ?>, yang terletak di <?php echo $usaha_lokasi ?>.</p></td>
+    <td colspan="5" style="width:78%" class="align-justify"><p>Surat Permohonan Saudara <?php echo $pemohon_nama ?> selaku <?php echo $pemohon_kerja.' '.$usaha_nama ?>, Alamat Kantor di <?php echo $usaha_alamat ?>, tanggal <?php echo bdate('d F Y', $surat_tanggal) ?> untuk Izin tempat usaha <?php echo $usaha_jenis ?>, yang terletak di <?php echo $usaha_lokasi ?>.</p></td>
 </tr>
 <tr>
     <td style="width:20%"><p>Menimbang</p></td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%">
+    <td colspan="5" style="width:78%" class="align-justify">
         <ol>
             <li>Bahwa permohonan tersebut telah diumumkan menurut cara - cara tersebut dalam pasal 5 Undang-undang Gangguan ( HO )</li>
             <li>Bahwa dalam satu bulan tidak diterima keberatan dari pemilik, pengusaha atau persil-persil yang berbatasan dengan persil tersebut.</li>
@@ -43,7 +43,7 @@
 <tr>
     <td style="width:20%"><p>Mengingat</p></td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%">
+    <td colspan="5" style="width:78%" class="align-justify">
         <ol>
             <li>Undang-undang Gangguan (HO) Stbl Tahun 1926 yang telah beberapa kali diubah dan terakhir ditambah dengan Ordinantie Stbl Tahun 1940 Nomor 450;</li>
             <li>Undang-undang Nomor 13 Tahun 1950 tentang Pembentukan Daerah-daerah  Kabupaten dalam lingkungan Propinsi Jawa Tengah;</li>
@@ -66,12 +66,12 @@
 <tr>
     <td style="width:20%"><p>Menetapkan</p></td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%">&nbsp;</td>
+    <td colspan="5" style="width:78%" class="align-justify">&nbsp;</td>
 </tr>
 <tr>
     <td style="width:20%"><p>KESATU</p></td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%"><p>Memberi Izin Gangguan ( HO ) kepada Saudara <strong><?php echo $pemohon_nama ?></strong> selaku <?php echo $pemohon_kerja ?> <strong><?php echo $usaha_nama ?></strong>, Alamat Kantor di <?php echo $usaha_alamat ?>, untuk Izin tempat usaha <?php echo $usaha_jenis ?> yang terletak <?php echo $usaha_lokasi ?> di atas tanah milik <?php echo $usaha_tanah_milik ?> dengan luas tempat usaha ± <?php echo $usaha_luas ?> M<sup>2</sup>.Adapun persil tersebut berbatasan :</p></td>
+    <td colspan="5" style="width:78%" class="align-justify"><p>Memberi Izin Gangguan ( HO ) kepada Saudara <strong><?php echo $pemohon_nama ?></strong> selaku <?php echo $pemohon_kerja ?> <strong><?php echo $usaha_nama ?></strong>, Alamat Kantor di <?php echo $usaha_alamat ?>, untuk Izin tempat usaha <?php echo $usaha_jenis ?> yang terletak <?php echo $usaha_lokasi ?> di atas tanah milik <?php echo $usaha_tanah_milik ?> dengan luas tempat usaha ± <?php echo $usaha_luas ?> M<sup>2</sup>.Adapun persil tersebut berbatasan :</p></td>
 </tr>
 <tr>
     <td colspan="2">&nbsp;</td>
@@ -99,7 +99,7 @@
 </tr>
 <tr>
     <td colspan="2">&nbsp;</td>
-    <td colspan="5" style="width:78%">
+    <td colspan="5" style="width:78%" class="align-justify">
         <p>Dengan ketentuan bahwa selambat-lambatnya dalam waktu 3 (tiga) bulan sesudah tanggal Keputusan ini, pendirian perusahaan yang dimaksudkan harus sudah selesai dikerjakan dan mulai dijalankan dengan syarat-syarat sebagai berikut :</p>
         <ol>
             <li>Perusahaan harus diatur sedemikian rupa sehingga tidak menganggu tetangga.</li>
@@ -121,7 +121,7 @@
 <tr>
     <td style="width:20%"><p>KEDUA</p></td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%">
+    <td colspan="5" style="width:78%" class="align-justify">
         <p>Surat Keputusan ini berlaku sejak ditetapkan dengan ketentuan :</p>
         <ul>
             <li>Izin sewaktu-waktu dapat dicabut apabila dikemudian hari ternyata menurut situasi perkembangan perusahaan maupun lingkungan masyarakat ternyata izin tersebut sudah tidak memenuhi ketentuan lagi.</li>
@@ -138,7 +138,7 @@
 <tr>
     <td style="width:20%"><p>KETIGA</p></td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%">Keputusan ini mulai berlaku pada tanggal ditetapkan.</td>
+    <td colspan="5" style="width:78%" class="align-justify">Keputusan ini mulai berlaku pada tanggal ditetapkan.</td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
@@ -163,26 +163,16 @@
         <p>NIP. <?php echo strtoupper($skpd_lead_nip) ?></p>
     </td>
 </tr>
+<?php if (strlen($data_tembusan) > 0): ?>
 <tr>
     <td colspan="7">
         <p>Tembusan :</p>
-        <ul>
-            <li>Bupati Pekalongan.</li>
-            <li>Inspektur Kabupaten Pekalongan.</li>
-            <li>Kepala DPPKD Kabupaten Pekalongan.</li>
-            <li>Kepala BAPPEDA Kabupaten Pekalongan.</li>
-            <li>Kepala DPU Kabupaten Pekalongan.</li>
-            <li>Kepala DPPK Kabupaten Pekalongan.</li>
-            <li>Kepala DINSOS NAKERTRANS Kabupaten Pekalongan.</li>
-            <li>Kepala DINPERINDAGKOP Kabupaten Pekalongan.</li>
-            <li>Kepala Kantor LH Kabupaten Pekalongan.</li>
-            <li>Kepala Satpol PP Kabuaten Pekalongan.</li>
-            <li>Kepala Bagian Hukum Setda Kabupaten Pekalongan.</li>
-            <li>Camat Kajen Kabupaten Pekalongan.</li>
-            <li>Camat Karanganyar Kabupaten Pekalongan.</li>
-            <li>Kepala Desa Tanjung Kulon.</li>
-            <li>Kepala Desa Kulu.</li>
-        </ul>
+        <ol>
+        <?php foreach (unserialize($data_tembusan) as $tembusan) : ?>
+            <li><?php echo $tembusan ?>;</li>
+        <?php endforeach ?>
+        </ol>
     </td>
 </tr>
+<?php endif ?>
 

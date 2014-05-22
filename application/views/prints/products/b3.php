@@ -29,7 +29,7 @@
 <tr>
     <td style="width:20%"><p>Menimbang</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%">
+    <td colspan="5" style="width:78%" class="align-justify">
         <ol class="lower-alpha">
             <li>Permohonan Isin Penyimpanan Sementara Limbah Bahan Berbahaya dan Beracun yang termuat dalam daftar penerimaan permohonan :
             <table><tbody><tr>
@@ -58,7 +58,7 @@
     <td style="width:20%"><p>Mengingat</p></td>
     <td style="width:2%"><p>:</p></td>
     <td colspan="5" style="width:78%">
-        <ol>
+        <ol class="align-justify">
             <li>Undang – Undang Nomor 13 Tahun 1950 tentang Pembentukan Daerah-daerah Kabupaten dalam Lingkungan Provinsi Jawa Tengah (Lembaran Negara Republik Indonesia Tahun 1950 Nomor 24);</li>
             <li>Undang – Undang Nomor 32 Tahun 2004 tentang Pemerintahan Daerah sebagaimana telah diubah beberapa kali terakhir dengan Undang – Undang Nomor 12 Tahun 2008 tentang Perubahan Kedua Undang – Undang Nomor 32 Tahun 2004 tentang Pemerintahan Daerah;</li>
             <li>Undang – Undang Nomor 32 Tahun 2009 tentang Perlindungan dan Pengelolaan Lingkungan Hidup;</li>
@@ -86,7 +86,7 @@
 <tr>
     <td style="width:20%">PERTAMA</td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%">Memberikan Izin Penyimpanan Sementara Limbah Bahan Berbahaya dan Beracun (B3) kepada Penanggungjawab Kegiatan :</td>
+    <td colspan="5" style="width:78%" class="align-justify">Memberikan Izin Penyimpanan Sementara Limbah Bahan Berbahaya dan Beracun (B3) kepada Penanggungjawab Kegiatan :</td>
 </tr>
 <tr>
     <td colspan="2"> </td>
@@ -100,9 +100,9 @@
     <td style="width:2%"><p>:</p><p>:</p><p>:</p><p>:</p><p>:</p></td>
     <td colspan="2" style="width:47%">
         <p><?php echo $usaha_nama ?></p>
-        <p><?php echo $usaha_bidang ?></p>
-        <p><?php echo $usaha_alamat ?></p>
         <p><?php echo $usaha_lokasi ?></p>
+        <p><?php echo $pemohon_nama ?></p>
+        <p><?php echo $pemohon_jabatan ?></p>
         <p><?php echo ($usaha_kontak_telp ? $usaha_kontak_telp : '').($usaha_kontak_fax ? ' / '.$usaha_kontak_fax : '') ?></p>
     </td>
 </tr>
@@ -110,7 +110,7 @@
 <tr>
     <td style="width:20%"><p>KEDUA</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%">
+    <td colspan="5" style="width:78%" class="align-justify">
         <p>Dalam melaksanakan kegiatan penyimpanan limbah B3, Penanggungjawab Kegiatan harus memenuhi ketentuan teknis dan kewajiban sebagai berikut :</p>
         <ol class="lower-alpha">
             <li>
@@ -162,7 +162,7 @@
 <tr>
     <td style="width:20%">KETIGA</td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%">
+    <td colspan="5" style="width:78%" class="align-justify">
         <p>Penanggung Jawab Kegiatan wajib melaporkan realisasi kegiatan penyimpanan limbah B3, sebagaimana dimaksud dalam Diktum KEDUA sekurang – kurangnya 1 (satu) kali dalam 3 (tiga) bulan dan ditujukan kepada</p>
         <ol>
             <li>Kepala Kantor Lingkungan Hidup Kabupaten Pekalongan;</li>
@@ -176,7 +176,7 @@
 <tr>
     <td style="width:20%">KEEMPAT</td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%">
+    <td colspan="5" style="width:78%" class="align-justify">
         <p>Perizinan limbah bahan berbahaya dan beracun merupakan alat pengawasan bagi</p>
         <ol>
             <li>Kantor Lingkungan Hidup Kabupaten Pekalongan sebagaimana Diktum KETIGA, dapat melakukan pengawasan terhadap pelaksanaan kewajiban-kewajiban yang dilakukan oleh Penanggung Jawab Kegiatan, sekurang-kurangnya 1 (satu) tahun sekali;</li>
@@ -188,7 +188,7 @@
 <tr>
     <td style="width:20%">KELIMA</td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%">
+    <td colspan="5" style="width:78%" class="align-justify" >
         <ol>
             <li>Permohonan perpanjangan terhadap izin ini diajukan selambat-lambatnya 3 (tiga) bulan sebelum masa berlaku izin ini berakhir;</li>
             <li>Keputusan ini berlaku selama 5 (lima) tahun sejak tanggal ditetapkan;</li>
@@ -218,18 +218,15 @@
         <p>NIP. <?php echo strtoupper($skpd_lead_nip) ?></p>
     </td>
 </tr>
+<?php if (strlen($data_tembusan) > 0): ?>
 <tr>
     <td colspan="7">
         <p>Tembusan :</p>
         <ol>
-            <li>Kepala Bappeda Propinsi Jawa Tengah;</li>
-            <li>Bupati Pekalongan;</li>
-            <li>Ketua DPRD Kabupaten Pekalongan;</li>
-            <li>Asisten Ekonomi, Pembangunan dan Kesejahteraan Rakyat Setda Kabupaten Pekalongan;</li>
-            <li>Inspektur Kabupaten Pekalongan;</li>
-            <li>Kepala Dinas PSDA ESDM Kabupaten Pekalongan;</li>
-            <li>Kepala Kantor Lingkungan Hidup Kabupaten Pekalongan;</li>
-            <li>Kepala Bagian Hukum Setda Kabupaten Pekalongan;</li>
+        <?php foreach (unserialize($data_tembusan) as $tembusan) : ?>
+            <li><?php echo $tembusan ?>;</li>
+        <?php endforeach ?>
         </ol>
     </td>
 </tr>
+<?php endif ?>

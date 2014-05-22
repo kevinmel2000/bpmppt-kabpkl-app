@@ -203,6 +203,14 @@ class Bpmppt_iup extends CI_Driver
             'value' => $this->custom_field($data_obj, 'tambang_koor'),
             'validation'=> ( !$data_obj ? '' : '' ) );
 
+        $fields[]   = array(
+            'name'  => $this->alias.'_fieldset_tembusan',
+            'label' => 'Tembusan Dokumen',
+            'attr'  => ( $data_obj ? array('disabled'=>'') : '' ),
+            'type'  => 'fieldset' );
+
+        $fields[] = $this->field_tembusan($data_obj, $this->alias);
+
         return $fields;
     }
 
@@ -211,9 +219,12 @@ class Bpmppt_iup extends CI_Driver
     private function custom_field( $data = FALSE, $field_name )
     {
         // if ( ! $this->load->is_loaded('table'))
-        $ci =& get_instance();
-        $ci->load->library('table');
-        $ci->table->set_template( array('table_open' => '<table id="table-koordinat" class="table table-exp table-striped table-hover table-condensed">' ) );
+        if (!$this->_ci->load->is_loaded('table'))
+        {
+            $this->_ci->load->library('table');
+        }
+
+        $this->_ci->table->set_template( $this->table_templ );
 
         $data_mode = $data and !empty($data->$field_name);
 
@@ -249,9 +260,9 @@ class Bpmppt_iup extends CI_Driver
                 'width' => '10%' );
         }
 
-        $ci->table->set_heading( $head );
+        $this->_ci->table->set_heading( $head );
 
-        if ( $data and !empty($data->$field_name) )
+        if ( $data_mode )
         {
             $i = 0;
             foreach ( unserialize($data->$field_name) as $row )
@@ -296,7 +307,7 @@ class Bpmppt_iup extends CI_Driver
                     'class' => 'data-id',
                     'width' => '10%' );
 
-                $ci->table->add_row( $cols[$i] );
+                $this->_ci->table->add_row( $cols[$i] );
                 $i++;
             }
         }
@@ -396,10 +407,10 @@ class Bpmppt_iup extends CI_Driver
                     'width' => '10%' );
             }
 
-            $ci->table->add_row( $cols );
+            $this->_ci->table->add_row( $cols );
         }
 
-        return $ci->table->generate();
+        return $this->_ci->table->generate();
     }
 
     // -------------------------------------------------------------------------

@@ -28,7 +28,7 @@
 <tr>
     <td style="width:20%"><p>Menimbang</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%">
+    <td colspan="5" style="width:78%" class="align-justify">
         <ol class="lower-alpha">
             <li>Bahwa berdasarkan hasil penelitian dan evaluasi administrasi terhadap permohonan <?php echo $pemohon_usaha ?> untuk melakukan pembuangan limbah cair ke perairan umum, <?php echo $pemohon_usaha ?> telah membuat Surat Kesanggupan Memenuhi Persyaratan Limbah Cair, Gas, dan Padat sehingga memenuhi baku mutu yang dipersyaratkan serta tidak mengganggu lingkungan;</li>
             <li>Bahwa berdasarkan Pasal 40 ayat (1) Peraturan Pemerintah Nomor 82 Tahun 2001 tentang Pengelolaan Kualitas Air, Setiap usaha dan kegiatan yang akan membuang limbah ke air atau sumber air wajib mendapat izin tertulis, maka guna memenuhi persyaratan dan pengendalian pencemaran air, perlu menerbitkan izin pembuangan air limbah.</li>
@@ -38,7 +38,7 @@
 <tr>
     <td style="width:20%"><p>Mengingat</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%">
+    <td colspan="5" style="width:78%" class="align-justify">
         <ol>
             <li>Undang-Undang Nomor 13 Tahun 1950 tentang Pembentukan Daerah-daerah Kabupaten dalam Lingkungan Propinsi Jawa Tengah;</li>
             <li>Undang-Undang Nomor 9 Tahun 1965 tentang Pembentukan Kabupaten Daerah Tingkat II Batang dengan mengubah Undang-Undang Nomor 13 Tahun 1950 tentang Pembentukan Daerah-daerah Kabupaten dalam Lingkungan Propinsi Jawa Tengah (Lembaran Negara Republik Indonesia Tahun 1965 Nomor 52, Tambahan Lembaran Negara Republik Indonesia Nomor 2750);</li>
@@ -66,34 +66,42 @@
 <tr>
     <td style="width:20%"><p>Menetapkan</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%">&nbsp;</td>
+    <td colspan="5" style="width:78%" class="align-justify">&nbsp;</td>
 </tr>
 <tr>
     <td style="width:20%"><p>KESATU</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%"><p>Memberikan Izin Pembuangan Air Limbah ke Air Atau Sumber Air kepada :</p></td>
+    <td colspan="5" style="width:78%" class="align-justify"><p>Memberikan Izin Pembuangan Air Limbah ke Air Atau Sumber Air kepada :</p></td>
 </tr>
 <tr>
     <td colspan="2">&nbsp;</td>
-    <td colspan="2" style="width:30%">
-        <p>Nama Perusahaan</p>
-        <p>Lokasi Kegiatan</p>
-        <p>Nama Penanggungjawab</p>
-        <p>Jabatan</p>
-    </td>
-    <td style="width:2%"><p>:</p><p>:</p><p>:</p><p>:</p></td>
-    <td colspan="2" style="width:47%">
-        <p><?php echo $pemohon_usaha ?></p>
-        <p><?php echo $pemohon_alamat ?></p>
-        <p><?php echo $pemohon_nama ?></p>
-        <p><?php echo $pemohon_jabatan ?></p>
-    </td>
+    <td colspan="2" style="width:25%">Nama Perusahaan</td>
+    <td style="width:2%">:</td>
+    <td colspan="2" style="width:52%"><?php echo $pemohon_usaha ?></td>
+</tr>
+<tr>
+    <td colspan="2">&nbsp;</td>
+    <td colspan="2" style="width:25%">Lokasi Kegiatan</td>
+    <td style="width:2%">:</td>
+    <td colspan="2" style="width:52%"><?php echo $pemohon_alamat ?></td>
+</tr>
+<tr>
+    <td colspan="2">&nbsp;</td>
+    <td colspan="2" style="width:25%">Nama Penanggungjawab</td>
+    <td style="width:2%">:</td>
+    <td colspan="2" style="width:52%"><?php echo $pemohon_nama ?></td>
+</tr>
+<tr>
+    <td colspan="2">&nbsp;</td>
+    <td colspan="2" style="width:25%">Jabatan</td>
+    <td style="width:2%">:</td>
+    <td colspan="2" style="width:52%"><?php echo $pemohon_jabatan ?></td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
     <td style="width:20%"><p>KEDUA</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%">
+    <td colspan="5" style="width:78%" class="align-justify">
         <p>Kepada pemegang izin sebagaimana dimaksud dalam Diktum KESATU, wajib memenuhi ketentuan sebagai berikut :</p>
         <ol class="lower-alpha">
             <li>
@@ -193,25 +201,25 @@
 <tr>
     <td style="width:20%"><p>KETIGA</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%">Pemegang izin sebagaimana dimaksud dalam Diktum KESATU, apabila melanggar ketentuan sebagaimana dimaksud dalam Diktum KEDUA dikenakan sanksi dan atau diancam dengan pidana sesuai dengan ketentuan peraturan perundang-undangan yang berlaku</td>
+    <td colspan="5" style="width:78%" class="align-justify">Pemegang izin sebagaimana dimaksud dalam Diktum KESATU, apabila melanggar ketentuan sebagaimana dimaksud dalam Diktum KEDUA dikenakan sanksi dan atau diancam dengan pidana sesuai dengan ketentuan peraturan perundang-undangan yang berlaku</td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
     <td style="width:20%"><p>KEEMPAT</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%">Apabila pemegang izin diketahui melakukan pelanggaran terhadap ketentuan sebagaimana dimaksud dalam Diktum KEDUA, maka Pemerintah Kabupaten Pekalongan berhak mencabut izin yang telah diberikan.</td>
+    <td colspan="5" style="width:78%" class="align-justify">Apabila pemegang izin diketahui melakukan pelanggaran terhadap ketentuan sebagaimana dimaksud dalam Diktum KEDUA, maka Pemerintah Kabupaten Pekalongan berhak mencabut izin yang telah diberikan.</td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
     <td style="width:20%"><p>KELIMA</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%">Masa berlakunya izin sebagaimana dimaksud dalam Diktum KESATU adalah 3 (tiga) tahun sejak ditetapkannya keputusan ini</td>
+    <td colspan="5" style="width:78%" class="align-justify">Masa berlakunya izin sebagaimana dimaksud dalam Diktum KESATU adalah 3 (tiga) tahun sejak ditetapkannya keputusan ini</td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
     <td style="width:20%"><p>KEENAM</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%">Keputusan ini mulai berlaku sejak tanggal ditetapkan ( <?php echo bdate('F', $created_on).' / '.bdate('Y') ?> s/d <?php echo bdate('F', $created_on).' / '.(bdate('Y') + 5) ?> )</td>
+    <td colspan="5" style="width:78%" class="align-justify">Keputusan ini mulai berlaku sejak tanggal ditetapkan ( <?php echo bdate('F', $created_on).' / '.bdate('Y') ?> s/d <?php echo bdate('F', $created_on).' / '.(bdate('Y') + 5) ?> )</td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
@@ -236,19 +244,16 @@
         <p>NIP. <?php echo strtoupper($skpd_lead_nip) ?></p>
     </td>
 </tr>
+<?php if (strlen($data_tembusan) > 0): ?>
 <tr>
     <td colspan="7">
         <p>Tembusan :</p>
         <ol>
-            <li>Kepala Bappeda Propinsi Jawa Tengah;</li>
-            <li>Bupati Pekalongan;</li>
-            <li>Inspektur Kabupaten Pekalongan;</li>
-            <li>Kepala DPU Kabupaten Pekalongan;</li>
-            <li>Kepala Dinas PSDA ESDM Kabupaten Pekalongan;</li>
-            <li>Kepala DPPKD Kabupaten Pekalongan.</li>
-            <li>Kepala Kantor Lingkungan Hidup Kabupaten Pekalongan.</li>
-            <li>Kepala Satpol PP Kabuaten Pekalongan.</li>
+        <?php foreach (unserialize($data_tembusan) as $tembusan) : ?>
+            <li><?php echo $tembusan ?>;</li>
+        <?php endforeach ?>
         </ol>
     </td>
 </tr>
+<?php endif ?>
 

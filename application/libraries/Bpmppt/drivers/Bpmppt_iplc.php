@@ -197,6 +197,14 @@ class Bpmppt_iplc extends CI_Driver
             'std'   => ( $data_obj ? $data_obj->limbah_target_buang : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
+        $fields[]   = array(
+            'name'  => $this->alias.'_fieldset_tembusan',
+            'label' => 'Tembusan Dokumen',
+            'attr'  => ( $data_obj ? array('disabled'=>'') : '' ),
+            'type'  => 'fieldset' );
+
+        $fields[] = $this->field_tembusan($data_obj, $this->alias);
+
         return $fields;
     }
 

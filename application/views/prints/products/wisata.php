@@ -82,7 +82,7 @@
 </tr>
 <tr>
     <td colspan="2">&nbsp;</td>
-    <td colspan="5" style="width:78%">
+    <td colspan="5" style="width:78%" class="align-justify">
         <ol>
             <li>Memasang surat izin ditempat usahanya yang mudah dibaca dan dilihat umum;</li>
             <li>Mencegah penggunaan kegiatan penyelenggaraan jasa impresariat dari hal – hal yang dapat mengganggu keamanan, ketertiban umum dan melanggar kesusilaan;</li>
@@ -97,11 +97,11 @@
 <tr>
     <td style="width:20%"><p>KETIGA</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%">Pemegang Izin sebagaimana dimaksud pada Diktum PERTAMA dilarang :</td>
+    <td colspan="5" style="width:78%" class="align-justify">Pemegang Izin sebagaimana dimaksud pada Diktum PERTAMA dilarang :</td>
 </tr>
 <tr>
     <td colspan="2">&nbsp;</td>
-    <td colspan="5" style="width:78%">
+    <td colspan="5" style="width:78%" class="align-justify">
         <ol>
             <li>Memperluas dan memindahkan serta mengalihkan tempat usaha dan atau kepemilikan tanpa Izin Bupati;</li>
             <li>Menjalankan usaha lain selain yang ditetapkan dalam izin;</li>
@@ -114,13 +114,13 @@
 <tr>
     <td style="width:20%"><p>KEEMPAT</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%"><p>Pelanggaran terhadap ketentuan – ketentuan sebagaimana dimaksud dalam diktum KEDUA dan KETIGA dikenakan sanksi sesuai peraturan perundang-undangan yang berlaku dan atau dapat dicabutnya Izin Usaha Pariwisata sebagaimana dalam diktum PERTAMA.</p></td>
+    <td colspan="5" style="width:78%" class="align-justify"><p>Pelanggaran terhadap ketentuan – ketentuan sebagaimana dimaksud dalam diktum KEDUA dan KETIGA dikenakan sanksi sesuai peraturan perundang-undangan yang berlaku dan atau dapat dicabutnya Izin Usaha Pariwisata sebagaimana dalam diktum PERTAMA.</p></td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
     <td style="width:20%"><p>KELIMA</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%"><p>Keputusan ini mulai berlaku pada tanggal ditetapkan.</p></td>
+    <td colspan="5" style="width:78%" class="align-justify"><p>Keputusan ini mulai berlaku pada tanggal ditetapkan.</p></td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>

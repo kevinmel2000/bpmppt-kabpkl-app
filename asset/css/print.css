@@ -188,6 +188,9 @@ ul {
 .align-right {
   text-align: right;
 }
+.align-justify {
+  text-align: justify;
+}
 .bold {
   font-weight: bold;
 }

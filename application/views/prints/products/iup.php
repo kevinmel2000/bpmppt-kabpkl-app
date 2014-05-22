@@ -28,10 +28,10 @@
 <tr>
     <td style="width:20%"><p>Membaca</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%">
+    <td colspan="5" style="width:78%" class="align-justify">
         <ol class="lower-alpha">
-            <li>Surat Permohonan Izin Usaha Pertambangan (IUP) Operasi Produksi Bantuan (<?php echo $tambang_jns_galian ?>) A.n <?php echo $pemohon_nama ?> tanggal <?php echo $surat_tanggal ?>.</li>
-            <li>Rekomendasi Kepala Dinas Pengelolaan Sumber Daya Air, Energi dan SUmberdaya Mineral Kabupaten Pekalongan Nomor <?php echo $rekomendasi_nomor ?> tanggal <?php echo $rekomendasi_tanggal ?> tentang Izin Usaha Pertambangan (IUP) Operasi Produksi Bantuan (<?php echo $tambang_jns_galian ?>) A.n <?php echo $pemohon_nama ?>.</li>
+            <li>Surat Permohonan Izin Usaha Pertambangan (IUP) Operasi Produksi Bantuan (<?php echo $tambang_jns_galian ?>) A.n <?php echo $pemohon_nama ?> tanggal <?php echo bdate('d F Y', $surat_tanggal) ?>.</li>
+            <li>Rekomendasi Kepala Dinas Pengelolaan Sumber Daya Air, Energi dan SUmberdaya Mineral Kabupaten Pekalongan Nomor <?php echo $rekomendasi_nomor ?> tanggal <?php echo bdate('d F Y', $rekomendasi_tanggal) ?> tentang Izin Usaha Pertambangan (IUP) Operasi Produksi Bantuan (<?php echo $tambang_jns_galian ?>) A.n <?php echo $pemohon_nama ?>.</li>
         </ol>
     </td>
 </tr>
@@ -39,13 +39,13 @@
 <tr>
     <td style="width:20%"><p>Menimbang</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%">Bahwa segala persyaratan dalam rangka permohonan Izin Usaha Pertambangan (IUP) telah dipenuhi pemohon.</td>
+    <td colspan="5" style="width:78%" class="align-justify">Bahwa segala persyaratan dalam rangka permohonan Izin Usaha Pertambangan (IUP) telah dipenuhi pemohon.</td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
     <td style="width:20%"><p>Mengingat</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%">
+    <td colspan="5" style="width:78%" class="align-justify">
         <ol>
             <li>Undang-undang Nomor 13 Tahun 1950 tentang Pembentukan Daerah-daerah Kabupaten Dalam Lingkungan Provinsi Jawa Tengah;</li>
             <li>Undang-undang Nomor 9 Tahun 1965 tentang Pembentukan Daerah Tingkat II Batang dengan mengubah Undang-Undang Nomor 13 Tahun 1950 tentang Pembentukan Daerah-daerah Kabupaten dalam Lingkungan Provinsi Jawa Tengah (Lembaran Negara Republik Indonesia Tahun 1965 Nomor 52, Tambahan Lembaran Republik Indonesia Nomor 2757);</li>
@@ -76,51 +76,54 @@
 <tr>
     <td style="width:20%">Menetapkan</td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%">&nbsp;</td>
+    <td colspan="5" style="width:78%" class="align-justify">&nbsp;</td>
 </tr>
 <tr>
     <td style="width:20%">PERTAMA</td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%">Memberikan Izin Usaha Pertambangan kepada :</td>
+    <td colspan="5" style="width:78%" class="align-justify">Memberikan Izin Usaha Pertambangan kepada :</td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
-    <td colspan="3">N A M A</td>
+    <td colspan="2">&nbsp;</td>
+    <td colspan="5">N A M A</td>
+</tr>
+<tr>
+    <td colspan="2">&nbsp;</td>
+    <td>Untuk dan Atas Nama</td>
     <td style="width:2%">:</td>
     <td colspan="3" style="width:37%"><?php echo $pemohon_nama ?></td>
 </tr>
 <tr>
-    <td colspan="3">Untuk dan Atas Nama</td>
+    <td colspan="2">&nbsp;</td>
+    <td>A l a m a t</td>
     <td style="width:2%">:</td>
     <td colspan="3" style="width:37%"><?php echo $pemohon_nama ?></td>
 </tr>
 <tr>
-    <td colspan="3">A l a m a t</td>
-    <td style="width:2%">:</td>
-    <td colspan="3" style="width:37%">Perorangan</td>
+    <td colspan="2">&nbsp;</td>
+    <td colspan="5">Dengan Ketentuan sebagai berikut</td>
 </tr>
 <tr>
-    <td colspan="3">Dengan Ketentuan sebagai berikut</td>
-    <td style="width:2%">:</td>
-    <td colspan="3" style="width:37%">&nbsp;</td>
-</tr>
-<tr>
-    <td colspan="3">a. Jangka Waktu IUP</td>
+    <td colspan="2">&nbsp;</td>
+    <td>a. Jangka Waktu IUP</td>
     <td style="width:2%">:</td>
     <td colspan="3" style="width:37%"><?php echo $tambang_waktu_mulai.' s/d '.$tambang_waktu_selesai ?></td>
 </tr>
 <tr>
-    <td colspan="3">b. Jenis Bahan Galian</td>
+    <td colspan="2">&nbsp;</td>
+    <td>b. Jenis Bahan Galian</td>
     <td style="width:2%">:</td>
     <td colspan="3" style="width:37%"><?php echo $tambang_jns_galian ?></td>
 </tr>
 <tr>
-    <td colspan="3">c. Luas Wilayah</td>
+    <td colspan="2">&nbsp;</td>
+    <td>c. Luas Wilayah</td>
     <td style="width:2%">:</td>
     <td colspan="3" style="width:37%"><?php echo $tambang_luas ?></td>
 </tr>
 <tr>
-    <td colspan="3">d. Lokasi Penambangan</td>
+    <td colspan="2">&nbsp;</td>
+    <td>d. Lokasi Penambangan</td>
     <td style="width:2%">:</td>
     <td colspan="3" style="width:37%"><?php echo $tambang_alamat ?></td>
 </tr>
@@ -131,37 +134,32 @@
 <tr>
     <td style="width:20%"><p>KEDUA</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%">Mewajibkan kepada pemegang IUP dimaksud diktum PERTAMA untuk melaksanakan kegiatan sesuai haknya dan memenuhi kewajiban - kewajiban sebagaimana tersebut dalam Lampiran III Keputusan ini;</td>
+    <td colspan="5" style="width:78%" class="align-justify">Mewajibkan kepada pemegang IUP dimaksud diktum PERTAMA untuk melaksanakan kegiatan sesuai haknya dan memenuhi kewajiban - kewajiban sebagaimana tersebut dalam Lampiran III Keputusan ini;</td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
     <td style="width:20%">KETIGA</td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%">IUP dimaksud diktum PERTAMA ini dilarang dipindah tangankan kepada pihak lain tanpa persetujuan Bupati Pekalongan;</td>
+    <td colspan="5" style="width:78%" class="align-justify">IUP dimaksud diktum PERTAMA ini dilarang dipindah tangankan kepada pihak lain tanpa persetujuan Bupati Pekalongan;</td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
     <td style="width:20%">KEEMPAT</td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%">Terhitung sejak 90 (sembilan puluh) hari kerja sejak persetujuan RKAB sebagaimana dimaksud dalam diktum KEEMPAT Pemegang IUP sudah harus memulai aktivitas di lapangan;</td>
+    <td colspan="5" style="width:78%" class="align-justify">Terhitung sejak 90 (sembilan puluh) hari kerja sejak persetujuan RKAB sebagaimana dimaksud dalam diktum KEEMPAT Pemegang IUP sudah harus memulai aktivitas di lapangan;</td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
     <td style="width:20%">KELIMA</td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%">Segala tuntutan, gugatan, keuntungan dan/atau kerugian yang mungkin timbul sebagai akibat dikeluarkannya IUP ini sepenuhnya menjadi tanggung jawab pemegang IUP dimaksud diktum PERTAMA;</td>
+    <td colspan="5" style="width:78%" class="align-justify">Segala tuntutan, gugatan, keuntungan dan/atau kerugian yang mungkin timbul sebagai akibat dikeluarkannya IUP ini sepenuhnya menjadi tanggung jawab pemegang IUP dimaksud diktum PERTAMA;</td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
     <td style="width:20%">KEENAM</td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%">Tanpa mengurangi ketentuan perundang-undangan maka IUP ini dapat diberhentikan sementara, dicabut, atau dibatalkan, apabila pemegang IUP tidak memenuhi kewajiban dan larangan sebagaimana dimaksud dalam diktum KEDUA, KETIGA dan KEEMPAT dalam keputusan ini;</td>
+    <td colspan="5" style="width:78%" class="align-justify">Tanpa mengurangi ketentuan perundang-undangan maka IUP ini dapat diberhentikan sementara, dicabut, atau dibatalkan, apabila pemegang IUP tidak memenuhi kewajiban dan larangan sebagaimana dimaksud dalam diktum KEDUA, KETIGA dan KEEMPAT dalam keputusan ini;</td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
     <td style="width:20%">KETUJUH</td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%">Keputusan ini mulai berlaku sejak tanggal ditetapkan dan dapat diperpanjang bila dipandang perlu menurut kebutuhan atas permintaan pemegang izin.</td>
+    <td colspan="5" style="width:78%" class="align-justify">Keputusan ini mulai berlaku sejak tanggal ditetapkan dan dapat diperpanjang bila dipandang perlu menurut kebutuhan atas permintaan pemegang izin.</td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
@@ -186,25 +184,18 @@
         <p>NIP. <?php echo strtoupper($skpd_lead_nip) ?></p>
     </td>
 </tr>
+<?php if (strlen($data_tembusan) > 0): ?>
 <tr>
     <td colspan="7">
         <p>Tembusan :</p>
         <ol>
-            <li>Gubernur Jawa Tengah</li>
-            <li>Bupati Pekalongan  </li>
-            <li>Kepala Dinas Energi Sumber Daya Mineral Provinsi Jawa Tengah</li>
-            <li>Kepala Balai ESDM Wilayah Serayu Utara Dinas ESDM Provinsi Jawa Tengah</li>
-            <li>Sekretaris Daerah Kabupaten Pekalongan</li>
-            <li>Kepala Dinas Pengelolaan Sumber Daya Air, Energi dan Sumber Daya Mineral Kab. Pekalongan</li>
-            <li>Kepala BAPPEDA Kabupaten Pekalongan</li>
-            <li>Kepala Kantor Lingkungan Hidup Kabupaten Pekalongan</li>
-            <li>Kepala Dinas Pendapatan Pengelolaan Keuangan Daerah Kab. Pekalongan</li>
-            <li>Camat Karangdadap Kab. Pekalongan</li>
-            <li>Kepala Desa Kaligawe</li>
-            <li>Ketua Tim Pertambangan</li>
+        <?php foreach (unserialize($data_tembusan) as $tembusan) : ?>
+            <li><?php echo $tembusan ?>;</li>
+        <?php endforeach ?>
         </ol>
     </td>
 </tr>
+<?php endif ?>
 </table><table class="pagebreak">
 <tr>
     <td>LAMPIRAN I</td>

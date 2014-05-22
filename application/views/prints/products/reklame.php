@@ -26,46 +26,46 @@
     <td colspan="5" style="width:100%"><p>Kepada :</p></td>
 </tr>
 <tr>
-    <td colspan="2" style="width:30%">
-        <ol>
-            <li>Nama</li>
-            <li>Alamat</li>
-            <li>Tempat/Lok. Pemasangan</li>
-            <li>Tema Pemasangan</li>
-            <li>Ukuran</li>
-            <li>Jumlah</li>
-            <li>Jangka Waktu Pemasangan</li>
-        </ol>
-    </td>
-    <td style="width:2%">
-        <ol class="none">
-            <li>:</li>
-            <li>:</li>
-            <li>:</li>
-            <li>:</li>
-            <li>:</li>
-            <li>:</li>
-            <li>:</li>
-        </ol>
-    </td>
-    <td colspan="3" style="width:68%">
-        <ol class="none">
-            <li><?php echo $pemohon_nama ?></li>
-            <li><?php echo $pemohon_alamat ?></li>
-            <li><?php echo $reklame_lokasi ?></li>
-            <li><?php echo $reklame_tema ?></li>
-            <li><?php echo $reklame_ukuran_panjang.' m x '.$reklame_ukuran_lebar.' m' ?></li>
-            <li><?php echo $reklame_juml.' Unit' ?></li>
-            <li><?php echo $reklame_range_tgl_text.' '.bdate('d F Y', $reklame_range_tgl_mulai).' - '.bdate('d F Y', $reklame_range_tgl_selesai) ?></li>
-        </ol>
-    </td>
+    <td colspan="2" style="width:30%">1. Nama</td>
+    <td style="width:2%">:</td>
+    <td colspan="2" style="width:30%"><?php echo $pemohon_nama ?></td>
+</tr>
+<tr>
+    <td colspan="2" style="width:30%">2. Alamat</td>
+    <td style="width:2%">:</td>
+    <td colspan="2" style="width:30%"><?php echo $pemohon_alamat ?></td>
+</tr>
+<tr>
+    <td colspan="2" style="width:30%">3. Tempat/Lok. Pemasangan</td>
+    <td style="width:2%">:</td>
+    <td colspan="2" style="width:30%"><?php echo $reklame_lokasi ?></td>
+</tr>
+<tr>
+    <td colspan="2" style="width:30%">4. Tema Pemasangan</td>
+    <td style="width:2%">:</td>
+    <td colspan="2" style="width:30%"><?php echo $reklame_tema ?></td>
+</tr>
+<tr>
+    <td colspan="2" style="width:30%">5. Ukuran</td>
+    <td style="width:2%">:</td>
+    <td colspan="2" style="width:30%"><?php echo $reklame_ukuran_panjang.' m x '.$reklame_ukuran_lebar.' m' ?></td>
+</tr>
+<tr>
+    <td colspan="2" style="width:30%">6. Jumlah</td>
+    <td style="width:2%">:</td>
+    <td colspan="2" style="width:30%"><?php echo $reklame_juml.' Unit' ?></td>
+</tr>
+<tr>
+    <td colspan="2" style="width:30%">7. Jangka Waktu Pemasangan</td>
+    <td style="width:2%">:</td>
+    <td colspan="2" style="width:30%"><?php echo $reklame_range_tgl_text.' '.bdate('d F Y', $reklame_range_tgl_mulai).' - '.bdate('d F Y', $reklame_range_tgl_selesai) ?></td>
 </tr>
 <tr><td colspan="5" style="width:100%">&nbsp;</td></tr>
 <tr>
     <td colspan="5" style="width:100%"><p>Dengan Ketentuan :</p></td>
 </tr>
 <tr>
-    <td colspan="5" style="width:100%">
+    <td colspan="5" style="width:100%" class="align-justify">
         <ol>
             <li>Menaati Peraturan Daerah Kabupaten Peklaongan No. 1 Tahun 2012 tentang Retribusi Daerah</li>
             <li>Membayar pajak reklame di Dinas Pendapatan dan pengelolaan Keuangan Daerah Kabupaten Pekalongan</li>
@@ -103,19 +103,15 @@
     </td>
 </tr>
 <tr><td colspan="5" style="width:100%">&nbsp;</td></tr>
-<tr>
-    <td colspan="5" style="width:100%"><p>Tembusan :</p></td>
-</tr>
+<?php if (strlen($data_tembusan) > 0): ?>
 <tr>
     <td colspan="5" style="width:100%">
+        <p>Tembusan :</p>
         <ol>
-            <li>Inspektur Kabupaten Pekalongan</li>
-            <li>Ka. DPU Kabupaten Pekalongan</li>
-            <li>Ka. DPPKD Kabupaten Pekalongan</li>
-            <li>Ka Dinhub Kominfo Kabupaten Pekalongan</li>
-            <li>Ka. Satpol PP Kabupaten Pekalongan</li>
-            <li>Ka. Bag. Hukum Setda Kabupaten Pekalongan</li>
-            <li>Camat Kajen dan Wonopringgo Kabupaten Pekalongan</li>
+        <?php foreach (unserialize($data_tembusan) as $tembusan) : ?>
+            <li><?php echo $tembusan ?>;</li>
+        <?php endforeach ?>
         </ol>
     </td>
 </tr>
+<?php endif ?>

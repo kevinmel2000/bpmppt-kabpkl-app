@@ -123,7 +123,7 @@ class Bpmppt_wisata extends CI_Driver
                     'name'  => 'nomor',
                     'label' => 'Nomor Ditetapkan',
                     'type'  => 'text',
-                    'std'   => ( $data_obj ? $data_obj->pemilik_lahir_tmpt : '' ),
+                    'std'   => ( $data_obj ? $data_obj->penetapan_nomor : '' ),
                     'validation'=> ''
                     ),
                 array(
@@ -131,7 +131,7 @@ class Bpmppt_wisata extends CI_Driver
                     'name'  => 'tgl',
                     'label' => 'Tanggal Ditetapkan',
                     'type'  => 'datepicker',
-                    'std'   => ( $data_obj ? $data_obj->pemilik_lahir_tgl : ''),
+                    'std'   => ( $data_obj ? $data_obj->penetapan_tgl : ''),
                     'callback'=> 'string_to_date',
                     'validation'=> ''
                     ),
@@ -215,6 +215,14 @@ class Bpmppt_wisata extends CI_Driver
             'label' => 'Keterangan Lain',
             'type'  => 'textarea',
             'std'   => ( $data_obj ? $data_obj->usaha_ket : '') );
+
+        $fields[]   = array(
+            'name'  => $this->alias.'_fieldset_tembusan',
+            'label' => 'Tembusan Dokumen',
+            'attr'  => ( $data_obj ? array('disabled'=>'') : '' ),
+            'type'  => 'fieldset' );
+
+        $fields[] = $this->field_tembusan($data_obj, $this->alias);
 
         return $fields;
     }

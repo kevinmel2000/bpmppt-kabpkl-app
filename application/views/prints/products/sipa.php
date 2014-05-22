@@ -7,7 +7,7 @@
 <tr><td colspan="5" style="width:100%">&nbsp;</td></tr>
 <tr>
     <td style="width:10%"><p>Dasar :</p></td>
-    <td colspan="4" style="width:90%">
+    <td colspan="4" style="width:90%" class="align-justify">
         <ol class="lower-alpha">
             <li>Peraturan Daerah Kabupaten Pekalongan no 1 Tahun 2012 tentang Retribusi Daerah</li>
             <li>Peraturan Bupati Pekalongan No. 12 Tahun 2012 tentang Pendelegasian Kewenangan Penandatanganan Perizinan dan Non Perizinan Kepada Kepala Badan Penanaman Modal dan Pelayanan Perijinan Terpadu Kabupaten Pekalongan</li>
@@ -46,7 +46,7 @@
             <li>:</li>
         </ol>
     </td>
-    <td colspan="3" style="width:68%">
+    <td colspan="3" style="width:68%" class="align-justify">
         <ol class="none">
             <li><?php echo $pemohon_nama ?></li>
             <li><?php echo $pemohon_alamat ?></li>
@@ -63,7 +63,7 @@
     <td colspan="5" style="width:100%"><p>Dengan Ketentuan :</p></td>
 </tr>
 <tr>
-    <td colspan="5" style="width:100%">
+    <td colspan="5" style="width:100%" class="align-justify">
         <ol>
             <li>Menaati Peraturan Daerah Kabupaten Peklaongan No. 1 Tahun 2012 tentang Retribusi Daerah</li>
             <li>Membayar pajak reklame di Dinas Pendapatan dan pengelolaan Keuangan Daerah Kabupaten Pekalongan</li>
@@ -101,19 +101,15 @@
     </td>
 </tr>
 <tr><td colspan="5" style="width:100%">&nbsp;</td></tr>
-<tr>
-    <td colspan="5" style="width:100%"><p>Tembusan :</p></td>
-</tr>
+<?php if (strlen($data_tembusan) > 0): ?>
 <tr>
     <td colspan="5" style="width:100%">
+        <p>Tembusan :</p>
         <ol>
-            <li>Inspektur Kabupaten Pekalongan</li>
-            <li>Ka. DPU Kabupaten Pekalongan</li>
-            <li>Ka. DPPKD Kabupaten Pekalongan</li>
-            <li>Ka Dinhub Kominfo Kabupaten Pekalongan</li>
-            <li>Ka. Satpol PP Kabupaten Pekalongan</li>
-            <li>Ka. Bag. Hukum Setda Kabupaten Pekalongan</li>
-            <li>Camat Kajen dan Wonopringgo Kabupaten Pekalongan</li>
+        <?php foreach (unserialize($data_tembusan) as $tembusan) : ?>
+            <li><?php echo $tembusan ?>;</li>
+        <?php endforeach ?>
         </ol>
     </td>
 </tr>
+<?php endif ?>

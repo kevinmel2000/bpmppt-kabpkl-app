@@ -91,10 +91,12 @@ class Bpmppt_tdp extends CI_Driver
         'usaha_pendirian_akta_tgl'          => '',
         'usaha_pendirian_pengesahan_no'     => '',
         'usaha_pendirian_pengesahan_tgl'    => '',
+        'usaha_pendirian_pengesahan_uraian' => '',
         'usaha_perubahan_akta_no'           => '',
         'usaha_perubahan_akta_tgl'          => '',
         'usaha_perubahan_pengesahan_no'     => '',
         'usaha_perubahan_pengesahan_tgl'    => '',
+        'usaha_perubahan_pengesahan_uraian' => '',
         'usaha_npwp'                        => '',
         'usaha_saham_status'                => '',
         'usaha_modal_awal'                  => '',
@@ -500,6 +502,14 @@ class Bpmppt_tdp extends CI_Driver
                     'std'   => ( $data_obj ? $data_obj->usaha_saham_nilai_tgl : ''),
                     'validation'=> ( !$data_obj ? 'numeric' : '' ) ),
                 ));
+
+        $fields[]   = array(
+            'name'  => $this->alias.'_fieldset_tembusan',
+            'label' => 'Tembusan Dokumen',
+            'attr'  => ( $data_obj ? array('disabled'=>'') : '' ),
+            'type'  => 'fieldset' );
+
+        $fields[] = $this->field_tembusan($data_obj, $this->alias);
 
         return $fields;
     }

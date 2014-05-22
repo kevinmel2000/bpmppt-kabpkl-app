@@ -91,6 +91,10 @@ class Bpmppt extends CI_Driver_Library
      */
     private $modules = array();
 
+    public $table_templ = array(
+        'table_open' => '<table id="table-koordinat" class="table table-exp table-striped table-hover table-condensed">'
+        );
+
     /**
      * Default class constructor
      */
@@ -302,6 +306,8 @@ class Bpmppt extends CI_Driver_Library
                     (array) $this->get_fulldata_by_id($data_id)
                     );
 
+        $this->$driver->fields['data_tembusan'] = '';
+
         foreach ($this->$driver->fields as $key => $value)
         {
             if(!isset($data[$key]))
@@ -341,6 +347,90 @@ class Bpmppt extends CI_Driver_Library
 
             return FALSE;
         }
+    }
+
+    public function field_tembusan($data = FALSE, $alias)
+    {
+        if (!$this->_ci->load->is_loaded('table'))
+        {
+            $this->_ci->load->library('table');
+        }
+        
+        $this->_ci->table->set_template($this->table_templ);
+
+        $data_mode = ($data != FALSE and isset($data->data_tembusan));
+
+        // var_dump($this);
+        $head[] = array(
+            'data'  => 'Tembusan Kepada',
+            'class' => 'head-kepada',
+            'width' => '10%' );
+        
+        if (!$data_mode)
+        {
+            $head[] = array(
+                'data'  => form_button( array(
+                    'name'  => $alias.'_tembusan_add-btn',
+                    'type'  => 'button',
+                    'class' => 'btn btn-primary btn-block btn-sm',
+                    'value' => 'add',
+                    'title' => 'Tambahkan baris',
+                    'content'=> 'Add' ) ),
+                'class' => 'head-action',
+                'width' => '90%' );
+        }
+
+        $this->_ci->table->set_heading( $head );
+
+        if ($data_mode)
+        {
+            $i = 0;
+            foreach ( unserialize($data->data_tembusan) as $row )
+            {
+                $cols[$i][] = array(
+                    'data'  => $row,
+                    'class' => 'data-id',
+                    'width' => '10%' );
+
+                $this->_ci->table->add_row( $cols[$i] );
+                $i++;
+            }
+        }
+        else
+        {
+            $cols[] = array(
+                'data'  => form_input( array(
+                    'name'  => $alias.'_data_tembusan[]',
+                    'type'  => 'text',
+                    'class' => 'form-control input-sm',
+                    'title' => 'Masukan nomor titik',
+                    'placeholder'=> 'No' ), '', ''),
+                'class' => 'data-id',
+                'width' => '90%' );
+
+            if (!$data_mode)
+            {
+                $cols[] = array(
+                    'data'  => form_button( array(
+                        'name'  => $alias.'_tembusan_remove-btn',
+                        'type'  => 'button',
+                        'class' => 'btn btn-danger btn-block btn-sm remove-btn',
+                        'value' => 'remove',
+                        'title' => 'Hapus baris ini',
+                        'content'=> '&times;' ) ),
+                    'class' => '',
+                    'width' => '10%' );
+            }
+
+            $this->_ci->table->add_row( $cols );
+        }
+
+        return array(
+            'name'  => $alias.'_data_tembusan',
+            'label' => 'Daftar Tembusan',
+            'type'  => 'custom',
+            'value' => $this->_ci->table->generate(),
+            'validation'=> ( !$data ? '' : '' ) );
     }
 }
 

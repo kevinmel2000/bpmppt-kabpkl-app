@@ -114,7 +114,7 @@
 </tr>
 <tr>
     <td colspan="2">&nbsp;</td>
-    <td colspan="5" style="width:78%">
+    <td colspan="5" style="width:78%" class="align-justify">
         <ol>
             <li>Pelaksanaan pembangunan tidak boleh menyimpang dari lampiran yang   merupakan bagian tak terpisahkan dari keputusan ini.</li>
             <li>Pelaksanaan pembangunan sesuai dengan Perda No. 1 Tahun  2012  Tetang Retribusi Daerah.</li>
@@ -125,11 +125,11 @@
 <tr>
     <td style="width:20%"><p>KETIGA</p></td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%">Hal –hal yang harus diperhatikan dan ditaati oleh penerima / pemegang Izin</td>
+    <td colspan="5" style="width:78%" class="align-justify">Hal –hal yang harus diperhatikan dan ditaati oleh penerima / pemegang Izin</td>
 </tr>
 <tr>
     <td colspan="2">&nbsp;</td>
-    <td colspan="5" style="width:78%">
+    <td colspan="5" style="width:78%" class="align-justify">
         <ol>
             <li>Pemegang Izin sebagaimana dimaksud diktum KESATU Keputusan ini wajib membayar Retribusi Izin Mendirikan Bangunan sebesar sebagaimana tercantum dalam Surat Ketetapan Retribusi Daerah ( SKRD ).</li>
             <li>Selama pelaksanaan pekerjaan / kegiatan fisik berlangsung sekali-kali tidak boleh menimbulkan kerugian pihak lain / tetangga / lingkungan.</li>
@@ -153,11 +153,11 @@
 <tr>
     <td style="width:20%"><p>KEEMPAT</p></td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%">Mencatat bahwa :</td>
+    <td colspan="5" style="width:78%" class="align-justify">Mencatat bahwa :</td>
 </tr>
 <tr>
     <td colspan="2">&nbsp;</td>
-    <td colspan="5" style="width:78%">
+    <td colspan="5" style="width:78%" class="align-justify">
         <ol>
             <li>Izin ini tidak memberikan hak untuk pemakaian / penguasaan tanah.</li>
             <li>Retribusi IMB / biaya lain yang telah dibayarkan tidak dapat diminta kembali apabila :

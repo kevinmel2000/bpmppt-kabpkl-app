@@ -28,13 +28,13 @@
 <tr>
     <td style="width:20%"><p>Membaca</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%">Surat dari Perusahaan <?php echo $usaha_nama ?><br>Tanggal <?php echo $surat_nomor ?> Perihal Permohonan Izin Usaha Industri.</td>
+    <td colspan="5" style="width:78%" class="align-justify">Surat dari Perusahaan <?php echo $usaha_nama ?><br>Tanggal <?php echo $surat_nomor ?> Perihal Permohonan Izin Usaha Industri.</td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
     <td style="width:20%"><p>Menimbang</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%">
+    <td colspan="5" style="width:78%" class="align-justify">
         <ol>
             <li>Bahwa berdasarkan penilaian dan penelitian terhadap realisasi pembangunan pabrik dan sarana produksi oleh perusahaan <?php echo $usaha_nama ?> dianggap telah memenuhi syarat-syarat yang diperlukan bagi industri tersebut untuk mendapatkan Izin Usaha Industri;</li>
             <li>Bahwa untuk itu perlu diberikan Izin Usaha Industri.</li>
@@ -44,7 +44,7 @@
 <tr>
     <td style="width:20%"><p>Mengingat</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%">
+    <td colspan="5" style="width:78%" class="align-justify">
         <ol>
             <li>Undang-Undang Nomor 13 Tahun 1950 tentang Pembentukan Daerah-daerah Kabupaten dalam Lingkungan Propinsi Jawa Tengah;</li>
             <li>Undang-Undang Nomor 9 Tahun 1965 tentang Pembentukan Daerah Tingkat II Batang dengan mengubah Undang-Undang Nomor 13 Tahun 1950 tentang Pembentukan Daerah-daerah Kabupaten dalam Lingkungan Propinsi Jawa Tengah (Lembaran Negara Republik Indonesia Tahun 1965 Nomor 52, Tambahan Lembaran Negara Republik Indonesia Tahun 1965 Nomor 52, Tambahan Lembaran Negara Republik Indonesia Nomor 2757);</li>
@@ -76,32 +76,46 @@
 <tr>
     <td style="width:20%">Menetapkan</td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%">&nbsp;</td>
+    <td colspan="5" style="width:78%" class="align-justify">&nbsp;</td>
 </tr>
 <tr>
     <td style="width:20%">PERTAMA</td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%">Memberikan Izin Usaha Industri :</td>
+    <td colspan="5" style="width:78%" class="align-justify">Memberikan Izin Usaha Industri :</td>
 </tr>
 <tr>
     <td colspan="2">&nbsp;</td>
-    <td colspan="2" style="width:30%">
-        <p>Kepada</p>
-        <p>Nomor Pokok Wajib Pajak (NPWP)</p>
-        <p>Untuk menjalankan Perusahaan Industri</p>
-        <p>Jenis Industri (KBLI)</p>
-        <p>a. Alamat Perusahaan</p>
-        <p>b. Alamat Pabrik</p>
-    </td>
-    <td style="width:2%"><p>:</p><p>:</p><p>:</p><p>:</p><p>:</p><p>:</p></td>
-    <td colspan="2" style="width:47%">
-        <p><?php echo $usaha_nama ?></p>
-        <p><?php echo $usaha_npwp ?></p>
-        <p>&nbsp;</p>
-        <p><?php echo $usaha_jenis_kbli ?></p>
-        <p><?php echo $usaha_alamat ?></p>
-        <p><?php echo $usaha_lokasi ?></p>
-    </td>
+    <td colspan="2" style="width:30%">Kepada</td>
+    <td style="width:2%">:</td>
+    <td colspan="2" style="width:47%"><?php echo $usaha_nama ?></td>
+</tr>
+<tr>
+    <td colspan="2">&nbsp;</td>
+    <td colspan="2" style="width:30%">Nomor Pokok Wajib Pajak (NPWP)</td>
+    <td style="width:2%">:</td>
+    <td colspan="2" style="width:47%"><?php echo $usaha_npwp ?></td>
+</tr>
+<tr>
+    <td colspan="2">&nbsp;</td>
+    <td colspan="5" style="">Untuk menjalankan Perusahaan Industri</td>
+</tr>
+<tr>
+    <td colspan="2">&nbsp;</td>
+    <td colspan="2" style="width:30%">Jenis Industri (KBLI)</td>
+    <td style="width:2%">:</td>
+    <td colspan="2" style="width:47%"><?php echo $usaha_jenis_kbli ?></td>
+</tr>
+<tr>
+    <td colspan="2">&nbsp;</td>
+    <td colspan="2" style="width:30%">a. Alamat Perusahaan</td>
+    <td style="width:2%">:</td>
+    <td colspan="2" style="width:47%"><?php echo $usaha_alamat ?></td>
+</tr>
+<tr>
+    <td colspan="2">&nbsp;</td>
+    <td colspan="2" style="width:30%">b. Alamat Pabrik</td>
+    <td style="width:2%">:</td>
+    <td colspan="2" style="width:47%"><?php echo $usaha_lokasi ?></td>
 </tr>
 <tr>
     <td colspan="2">&nbsp;</td>
@@ -111,25 +125,25 @@
 <tr>
     <td style="width:20%"><p>KEDUA</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%">Izin Usaha Industri ini berlaku selama perusahaan industri ini beroperasi, kecuali apabila dalam jangka waktu 4 (empat) tahun terhitung mulai tanggal Surat Pernyataan dibuat, tidak merealisasikan pembangunan pabrik dan sarana produksi serta tidak memenuhi kesanggupan yang tercantum dalam Surat Pernyataan, Izin Usaha Industri batal dengan sendirinya.</td>
+    <td colspan="5" style="width:78%" class="align-justify">Izin Usaha Industri ini berlaku selama perusahaan industri ini beroperasi, kecuali apabila dalam jangka waktu 4 (empat) tahun terhitung mulai tanggal Surat Pernyataan dibuat, tidak merealisasikan pembangunan pabrik dan sarana produksi serta tidak memenuhi kesanggupan yang tercantum dalam Surat Pernyataan, Izin Usaha Industri batal dengan sendirinya.</td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
     <td style="width:20%">KETIGA</td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%">Izin Usaha Industri ini merupakan bagian yang tidak terpisahkan dari Surat Pernyataan tertanggal <?php echo $surat_tanggal ?> yang dibuat oleh perusahaan yang bersangkutan.</td>
+    <td colspan="5" style="width:78%" class="align-justify">Izin Usaha Industri ini merupakan bagian yang tidak terpisahkan dari Surat Pernyataan tertanggal <?php echo bdate('d F Y', $surat_tanggal) ?> yang dibuat oleh perusahaan yang bersangkutan.</td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
     <td style="width:20%">KEEMPAT</td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%">Izin Usaha Industri ini terlepas dari Izin-izin yang diharuskan berdasarkan peraturan perundang-undangan lain yang berlaku.</td>
+    <td colspan="5" style="width:78%" class="align-justify">Izin Usaha Industri ini terlepas dari Izin-izin yang diharuskan berdasarkan peraturan perundang-undangan lain yang berlaku.</td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
     <td style="width:20%">KELIMA</td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%">Izin Usaha Industri ini mulai berlaku pada tanggal ditetapkan.</td>
+    <td colspan="5" style="width:78%" class="align-justify">Izin Usaha Industri ini mulai berlaku pada tanggal ditetapkan.</td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr>
@@ -154,21 +168,16 @@
         <p>NIP. <?php echo strtoupper($skpd_lead_nip) ?></p>
     </td>
 </tr>
+<?php if (strlen($data_tembusan) > 0): ?>
 <tr>
     <td colspan="7">
         <p>Tembusan :</p>
         <ol>
-            <li>Menteri Perindustrian RI</li>
-            <li>Cq. Sekretaris Jenderal Kementerian Perindustrian RI</li>
-            <li>Inspektur Jenderal Kementerian Perindustrian RI</li>
-            <li>Dirjen IKM Kementerian Perindustrian RI</li>
-            <li>Gubernur Jawa Tengah</li>
-            <li>Kepala PUSDATIN Kementerian Perindustrian RI</li>
-            <li>Kepala Dinas Perindustrian Prop. Jawa Tengah</li>
-            <li>Bupati Pekalongan</li>
-            <li>Kepala DINPERINDAGKOP Kab. Pekalongan</li>
-            <li>A r s i p </li>
+        <?php foreach (unserialize($data_tembusan) as $tembusan) : ?>
+            <li><?php echo $tembusan ?>;</li>
+        <?php endforeach ?>
         </ol>
     </td>
 </tr>
+<?php endif ?>
 

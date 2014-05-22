@@ -319,6 +319,14 @@ class Bpmppt_iui extends CI_Driver
             'attr'  => ( $data_obj ? 'disabled' : '' ),
             'std'   => ( $data_obj ? $data_obj->usaha_nama : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
+
+        $fields[]   = array(
+            'name'  => $this->alias.'_fieldset_tembusan',
+            'label' => 'Tembusan Dokumen',
+            'attr'  => ( $data_obj ? array('disabled'=>'') : '' ),
+            'type'  => 'fieldset' );
+
+        $fields[] = $this->field_tembusan($data_obj, $this->alias);
         
         return $fields;
     }

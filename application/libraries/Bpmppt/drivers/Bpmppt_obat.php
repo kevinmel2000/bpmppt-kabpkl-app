@@ -163,6 +163,14 @@ class Bpmppt_obat extends CI_Driver
             'std'   => ( $data_obj ? $data_obj->lokasi_area_hijau : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
+        $fields[]   = array(
+            'name'  => $this->alias.'_fieldset_tembusan',
+            'label' => 'Tembusan Dokumen',
+            'attr'  => ( $data_obj ? array('disabled'=>'') : '' ),
+            'type'  => 'fieldset' );
+
+        $fields[] = $this->field_tembusan($data_obj, $this->alias);
+
         return $fields;
     }
 

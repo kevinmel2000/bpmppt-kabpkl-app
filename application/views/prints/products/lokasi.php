@@ -30,7 +30,7 @@
 <tr>
     <td style="width:20%"><p>dasar</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%">
+    <td colspan="5" style="width:78%" class="align-justify">
         <ol>
             <li>Undang-undang Nomor 13 Tahun 950 tentang Pembentukan Daerah-daerah Kabupaten Dalam Lingkungan Propinsi Jawa Tengah;</li>
             <li>Undang-undanga Nomor 9 Tahun 1965tengang Pembentukan Daerah Tingkat II Batang dengan mengubah Undang-Undang Nomoe 13 Tahun 1965 tentang Pembentukan Daerah-daerah Kabupaten Dalam Lingkungan Propinsi Jawa Tengah (Lembaran Negara Tahun 1965 Nomor 52, Tambahan Lembaran Negara Nomor 2757);</li>
@@ -52,7 +52,7 @@
 <tr>
     <td style="width:20%"><p>Kepada</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%">&nbsp;</td>
+    <td colspan="5" style="width:78%" class="align-justify">&nbsp;</td>
 </tr>
 <tr>
     <td style="width:20%">
@@ -62,7 +62,7 @@
         <p>Untuk</p>
     </td>
     <td style="width:2%"><p>:</p><p>:</p><p>:</p><p>:</p></td>
-    <td colspan="5" style="width:78%">
+    <td colspan="5" style="width:78%" class="align-justify">
         <p><?php echo $pemohon_nama ?></p>
         <p><?php echo $pemohon_jabatan ?></p>
         <p><?php echo $pemohon_alamat ?></p>
@@ -70,7 +70,7 @@
     </td>
 </tr>
 <tr>
-    <td colspan="7" style="width:100%">
+    <td colspan="7" style="width:100%" class="align-justify">
         <p>Dengan ketentuan sebagai berikut :</p>
         <ol>
             <li>Pemberian izin lokasi <?php echo $lokasi_tujuan ?> dimaksud seluas &#177; <?php echo $lokasi_luas ?> m<sup>2</sup> terletak di <?php echo $lokasi_alamat ?>;</li>
@@ -114,18 +114,15 @@
         <p>NIP. <?php echo strtoupper($skpd_lead_nip) ?></p>
     </td>
 </tr>
+<?php if (strlen($data_tembusan) > 0): ?>
 <tr>
     <td colspan="7">
         <p>Tembusan :</p>
         <ol>
-            <li>Gubernur Jawa Tengah;</li>
-            <li>Kepala Kantor Wilayah Badan Pertanahan Nasional Propinsi Jawa Tengah;</li>
-            <li>Wakil Bupati Pekalongan;</li>
-            <li>Asisten Ekonmomi, Pembangunan dan Kesejahteraan Rakyat Setda Kabupaten Pekalongan;</li>
-            <li>Inspektur Kabupaten Pekalongan;</li>
-            <li>Tim BP4D KAbupaten Pekalongan;</li>
-            <li>Camat Kajen;</li>
+        <?php foreach (unserialize($data_tembusan) as $tembusan) : ?>
+            <li><?php echo $tembusan ?>;</li>
+        <?php endforeach ?>
         </ol>
     </td>
 </tr>
-
+<?php endif ?>
