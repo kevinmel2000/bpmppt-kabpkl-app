@@ -182,9 +182,7 @@ function make_menu($menu_array, $responsivable = FALSE)
                     break;
 
                 case 'link':
-                    $list_attr['class'] .= 'twbs-tooltip nav-link';
-                    $list_attr['data-toggle']    = 'tooltip';
-                    $list_attr['data-placement'] = 'left';
+                    $list_attr['class'] .= 'nav-link';
 
                     if (strpos(current_url(), site_url($menu_item['url'])) !== FALSE)
                     {
@@ -207,11 +205,6 @@ function make_menu($menu_array, $responsivable = FALSE)
                     }
 
                     $anchor_pre = '<span class="menu-text">';
-
-                    if ($responsivable)
-                    {
-                        $anchor_pre = '<i class="fa fa-file visible-sm"></i><span class="menu-text hidden-sm">';
-                    }
 
                     $output .= anchor($menu_item['url'], $anchor_pre.$menu_item['label'].'</span>', $menu_item['attr']);
 

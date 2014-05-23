@@ -33,10 +33,9 @@
  *
  * @package     Bapa Pack BPMPPT
  * @author      Fery Wardiyanto
- * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
+ * @copyright   Copyright (c) Badan Penanaman Modal dan Pelayanan Perijinan Terpadu Kab. Pekalongan
  * @license     http://dbad-license.org
  * @since       Version 1.0
- * @filesource
  */
 
 // =============================================================================
@@ -91,6 +90,18 @@ class Bpmppt extends CI_Driver_Library
      */
     private $modules = array();
 
+    /**
+     * Form fields
+     *
+     * @var  array
+     */
+    public $fields;
+
+    /**
+     * CI Table Template Configuration
+     *
+     * @var  array
+     */
     public $table_templ = array(
         'table_open' => '<table id="table-koordinat" class="table table-exp table-striped table-hover table-condensed">'
         );
@@ -112,8 +123,8 @@ class Bpmppt extends CI_Driver_Library
             {
                 $this->valid_drivers[] = $self.'_'.$module;
 
-                $child  = $this->$module;
-                $code   = ( property_exists( $this->$module, 'code' ) )
+                $child = $this->$module;
+                $code  = ( property_exists( $this->$module, 'code' ) )
                     ? $child->code
                     : FALSE;
 
@@ -121,9 +132,12 @@ class Bpmppt extends CI_Driver_Library
                     'name'  => $child->name,
                     'alias' => $child->alias,
                     'label' => $child->name.( $code ? ' ('.$code.')' : '' ),
-                    'code'  => $code );
+                    'code'  => $code,
+                    );
             }
         }
+
+        // $this->fields[] = array();
 
         log_message('debug', '#BPMPPT: Drivers Library initialized.');
     }
@@ -162,7 +176,9 @@ class Bpmppt extends CI_Driver_Library
     public function get_modules( $obj = FALSE )
     {
         if ( $obj )
+        {
             return array_to_object( $this->modules );
+        }
 
         return (array) $this->modules;
     }
@@ -184,7 +200,9 @@ class Bpmppt extends CI_Driver_Library
         $val || $val = 'name';
 
         foreach ( $this->modules as $module )
+        {
             $ret[$module[$key]] = $module[$val];
+        }
 
         return $ret;
     }
@@ -269,11 +287,14 @@ class Bpmppt extends CI_Driver_Library
      *
      * @return  array|false
      */
-    public function get_form( $driver, $data_obj )
+    public function get_form( $driver, $data_obj = FALSE )
     {
-        if (is_object($data_obj))
+        // $data_obj   = ( $data_id ? $this->get_fulldata_by_id( $data_id ) : FALSE );
+        $modul_slug = $this->get_alias($driver);
+
+        if ($data_obj)
         {
-            foreach ($this->$driver->fields as $key => $value)
+            foreach ($this->$driver->defaults as $key => $value)
             {
                 if(!isset($data_obj->$key))
                 {
@@ -282,12 +303,129 @@ class Bpmppt extends CI_Driver_Library
             }
         }
 
-        if ( method_exists( $this->$driver, 'form') )
+        if ( $driver != 'imb' )
         {
-            return $this->$driver->form( $data_obj );
+            $data_label = 'Permohonan';
+
+            if ($driver == 'tdp')
+            {
+                $data_label = 'Agenda';
+            }
+            
+            if ($driver == 'siup')
+            {
+                $data_label = 'SIUP';
+            }
+
+            $this->fields[] = array(
+                'name'  => $modul_slug.'_surat',
+                'label' => 'No. &amp; Tgl. '.$data_label,
+                'type'  => 'subfield',
+                'attr'  => ( $data_obj ? 'disabled' : ''),
+                'fields'=> array(
+                    array(
+                        'name'  => 'nomor',
+                        'label' => 'Nomor',
+                        'type'  => 'text',
+                        'std'   => ( $data_obj ? $data_obj->surat_nomor : ''),
+                        'validation'=> ( !$data_obj ? 'required' : '' ) ),
+                    array(
+                        'name'  => 'tanggal',
+                        'label' => 'Tanggal',
+                        'type'  => 'datepicker',
+                        'std'   => ( $data_obj ? format_date( $data_obj->surat_tanggal ) : ''),
+                        'validation'=> ( !$data_obj ? 'required' : '' ),
+                        'callback'=> 'string_to_date' ),
+                    )
+                );
         }
 
-        return FALSE;
+        if ( !method_exists( $this->$driver, 'form') )
+        {
+            return FALSE;
+        }
+
+        $this->_ci->load->library('baka_pack/former');
+
+        foreach ($this->$driver->form( $data_obj ) as $form_field)
+        {
+            if ($data_obj)
+            {
+                if (isset($form_field['attr']))
+                {
+                    if (is_array($form_field['attr']))
+                    {
+                        $form_field['attr']['disabled'] = '';
+                    }
+                    else
+                    {
+                        $form_field['attr'] .= ' disabled';
+                    }
+                }
+                else
+                {
+                    $form_field['attr'] = 'disabled';
+                }
+            }
+
+            $form_field['name'] = $modul_slug.'_'.$form_field['name'];
+
+            $this->fields[] = $form_field;
+        }
+
+        $this->fields[] = array(
+            'name'  => $modul_slug.'_fieldset_tembusan',
+            'label' => 'Tembusan Dokumen',
+            'attr'  => ( $data_obj ? array('disabled'=>'') : '' ),
+            'type'  => 'fieldset' );
+
+        $this->fields[] = $this->field_tembusan($data_obj, $modul_slug);
+
+        $no_buttons = $data_obj ? TRUE : FALSE ;
+
+        $form = $this->_ci->former->init( array(
+            'name'       => $modul_slug,
+            'action'     => current_url(),
+            'fields'     => $this->fields,
+            'no_buttons' => $no_buttons,
+            ));
+
+        if ( $form_data = $form->validate_submition() )
+        {
+            if ( $driver == 'imb' )
+            {
+                $form_data[$modul_slug.'_surat_nomor'] = 614;
+            }
+
+            if ( $driver == 'iup' )
+            {
+                $i = 0;
+                $koor_fn = $modul_slug.'_tambang_koor';
+
+                foreach ($_POST[$koor_fn.'_no'] as $no)
+                {
+                    foreach (array('no', 'gb-1', 'gb-2', 'gb-3', 'gl-1', 'gl-2', 'gl-3', 'lsu') as $name)
+                    {
+                        $koor_name = $koor_fn.'_'.$name;
+                        $koordinat[$i][$name] = isset($_POST[$koor_name][$i]) ? $_POST[$koor_name][$i] : 0;
+                        unset($_POST[$koor_name][$i]);
+                    }
+
+                    $i++;
+                }
+
+                $form_data[$modul_slug.'_tambang_koor'] = serialize($koordinat);
+            }
+
+            unset($form_data[$modul_slug]);
+
+            if ($data_id = $this->simpan( $modul_slug, $form_data ))
+            {
+                redirect( current_url().$data_id );
+            }
+        }
+
+        return $form->generate();
     }
 
     // -------------------------------------------------------------------------
@@ -306,9 +444,9 @@ class Bpmppt extends CI_Driver_Library
                     (array) $this->get_fulldata_by_id($data_id)
                     );
 
-        $this->$driver->fields['data_tembusan'] = '';
+        $this->$driver->defaults['data_tembusan'] = '';
 
-        foreach ($this->$driver->fields as $key => $value)
+        foreach ($this->$driver->defaults as $key => $value)
         {
             if(!isset($data[$key]))
             {
@@ -348,6 +486,8 @@ class Bpmppt extends CI_Driver_Library
             return FALSE;
         }
     }
+
+    // -------------------------------------------------------------------------
 
     public function field_tembusan($data = FALSE, $alias)
     {
@@ -398,13 +538,14 @@ class Bpmppt extends CI_Driver_Library
         }
         else
         {
+            $method = $this->_ci->former->_attrs['method'];
+
             $cols[] = array(
                 'data'  => form_input( array(
                     'name'  => $alias.'_data_tembusan[]',
                     'type'  => 'text',
                     'class' => 'form-control input-sm',
-                    'title' => 'Masukan nomor titik',
-                    'placeholder'=> 'No' ), '', ''),
+                    'placeholder'=> 'Kepada...' ), $this->_ci->input->$method($alias.'_data_tembusan[]')),
                 'class' => 'data-id',
                 'width' => '90%' );
 

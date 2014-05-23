@@ -33,10 +33,9 @@
  *
  * @package     Bapa Pack BPMPPT
  * @author      Fery Wardiyanto
- * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
+ * @copyright   Copyright (c) Badan Penanaman Modal dan Pelayanan Perijinan Terpadu Kab. Pekalongan
  * @license     http://dbad-license.org
  * @since       Version 1.0
- * @filesource
  */
 
 // =============================================================================
@@ -64,7 +63,7 @@ class Bpmppt_iplc extends CI_Driver
      *
      * @var  array
      */
-    public $fields = array(
+    public $defaults = array(
         'pemohon_nama'              => '',
         'pemohon_jabatan'           => '',
         'pemohon_usaha'             => '',
@@ -97,67 +96,65 @@ class Bpmppt_iplc extends CI_Driver
      */
     public function form( $data_obj = FALSE )
     {
-        $fields[]   = array(
-            'name'  => $this->alias.'_fieldset_data_pemohon',
+        $fields[] = array(
+            'name'  => 'fieldset_data_pemohon',
             'label' => 'Data Pemohon',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
             'type'  => 'fieldset' );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pemohon_nama',
+        $fields[] = array(
+            'name'  => 'pemohon_nama',
             'label' => 'Nama lengkap',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->pemohon_nama : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pemohon_jabatan',
+        $fields[] = array(
+            'name'  => 'pemohon_jabatan',
             'label' => 'Jabatan',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->pemohon_jabatan : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pemohon_usaha',
+        $fields[] = array(
+            'name'  => 'pemohon_usaha',
             'label' => 'Nama Perusahaan',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->pemohon_usaha : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pemohon_alamat',
+        $fields[] = array(
+            'name'  => 'pemohon_alamat',
             'label' => 'Alamat',
             'type'  => 'textarea',
             'std'   => ( $data_obj ? $data_obj->pemohon_alamat : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_fieldset_data_lokasi',
+        $fields[] = array(
+            'name'  => 'fieldset_data_lokasi',
             'label' => 'Data Lokasi',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
             'type'  => 'fieldset' );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_limbah_kapasitas_produksi',
+        $fields[] = array(
+            'name'  => 'limbah_kapasitas_produksi',
             'label' => 'Kapasitas Produksi',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->limbah_kapasitas_produksi : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_limbah_debit_max',
+        $fields[] = array(
+            'name'  => 'limbah_debit_max',
             'label' => 'Debit max limbah',
             'type'  => 'subfield',
             'fields'=> array(
                 array(
-                    'col'   => '6',
                     'name'  => 'proses',
                     'label' => 'proses',
                     'type'  => 'text',
                     'std'   => ( $data_obj ? $data_obj->limbah_debit_max_proses : ''),
                     'validation'=> ( !$data_obj ? 'required' : '' ) ),
                 array(
-                    'col'   => '6',
                     'name'  => 'kond',
                     'label' => 'kondensor',
                     'type'  => 'text',
@@ -166,44 +163,36 @@ class Bpmppt_iplc extends CI_Driver
                 )
             );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_limbah_kadar_max_proses',
+        $fields[] = array(
+            'name'  => 'limbah_kadar_max_proses',
             'label' => 'Kadar max proses',
             'type'  => 'subfield',
             'fields'=> $this->subfield_limbah( 'limbah_kadar_max_proses_', $data_obj ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_limbah_beban_max_proses',
+        $fields[] = array(
+            'name'  => 'limbah_beban_max_proses',
             'label' => 'Beban pencemaran proses',
             'type'  => 'subfield',
             'fields'=> $this->subfield_limbah( 'limbah_beban_max_proses_', $data_obj ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_limbah_kadar_max_kond',
+        $fields[] = array(
+            'name'  => 'limbah_kadar_max_kond',
             'label' => 'Kadar max kondensor',
             'type'  => 'subfield',
             'fields'=> $this->subfield_limbah( 'limbah_kadar_max_kond_', $data_obj ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_limbah_beban_max_kond',
+        $fields[] = array(
+            'name'  => 'limbah_beban_max_kond',
             'label' => 'Beban pencemaran kondensor',
             'type'  => 'subfield',
             'fields'=> $this->subfield_limbah( 'limbah_beban_max_kond_', $data_obj ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_limbah_target_buang',
+        $fields[] = array(
+            'name'  => 'limbah_target_buang',
             'label' => 'Target pembuangan',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->limbah_target_buang : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
-
-        $fields[]   = array(
-            'name'  => $this->alias.'_fieldset_tembusan',
-            'label' => 'Tembusan Dokumen',
-            'attr'  => ( $data_obj ? array('disabled'=>'') : '' ),
-            'type'  => 'fieldset' );
-
-        $fields[] = $this->field_tembusan($data_obj, $this->alias);
 
         return $fields;
     }
@@ -213,62 +202,56 @@ class Bpmppt_iplc extends CI_Driver
     protected function subfield_limbah( $parent, $data_obj = FALSE )
     {
         
-        $this->fields[$parent.'bod']        = '';
-        $this->fields[$parent.'cod']        = '';
-        $this->fields[$parent.'tts']        = '';
-        $this->fields[$parent.'minyak']     = '';
-        $this->fields[$parent.'sulfida']    = '';
-        $this->fields[$parent.'ph']         = '';
+        $this->defaults[$parent.'bod']        = '';
+        $this->defaults[$parent.'cod']        = '';
+        $this->defaults[$parent.'tts']        = '';
+        $this->defaults[$parent.'minyak']     = '';
+        $this->defaults[$parent.'sulfida']    = '';
+        $this->defaults[$parent.'ph']         = '';
 
-        $fields[]   = array(
-            'col'   => '2',
+        $subs[] = array(
             'name'  => 'bod',
             'label' => 'BOD',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->{$parent.'bod'} : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
         
-        $fields[]   = array(
-            'col'   => '2',
+        $subs[] = array(
             'name'  => 'cod',
             'label' => 'COD',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->{$parent.'cod'} : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
         
-        $fields[]   = array(
-            'col'   => '2',
+        $subs[] = array(
             'name'  => 'tts',
             'label' => 'TTS',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->{$parent.'tts'} : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
         
-        $fields[]   = array(
-            'col'   => '2',
+        $subs[] = array(
             'name'  => 'minyak',
             'label' => 'Minyak',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->{$parent.'minyak'} : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
         
-        $fields[]   = array(
-            'col'   => '2',
+        $subs[] = array(
             'name'  => 'sulfida',
             'label' => 'Silfida',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->{$parent.'sulfida'} : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
         
-        $fields[]   = array(
-            'col'   => '2',
+        $subs[] = array(
             'name'  => 'ph',
             'label' => 'pH',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->{$parent.'ph'} : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        return $fields;
+        return $subs;
     }
 
     // -------------------------------------------------------------------------

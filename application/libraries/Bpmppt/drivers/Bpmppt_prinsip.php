@@ -33,10 +33,9 @@
  *
  * @package     Bapa Pack BPMPPT
  * @author      Fery Wardiyanto
- * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
+ * @copyright   Copyright (c) Badan Penanaman Modal dan Pelayanan Perijinan Terpadu Kab. Pekalongan
  * @license     http://dbad-license.org
  * @since       Version 1.0
- * @filesource
  */
 
 // =============================================================================
@@ -62,7 +61,7 @@ class Bpmppt_prinsip extends CI_Driver
      *
      * @var  array
      */
-    public $fields = array(
+    public $defaults = array(
         'pemohon_nama'      => '',
         'pemohon_jabatan'   => '',
         'pemohon_usaha'     => '',
@@ -95,81 +94,73 @@ class Bpmppt_prinsip extends CI_Driver
      */
     public function form( $data_obj = FALSE )
     {
-        $fields[]   = array(
-            'name'  => $this->alias.'_fieldset_data_pemohon',
+        $fields[] = array(
+            'name'  => 'fieldset_data_pemohon',
             'label' => 'Data Pemohon',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
             'type'  => 'fieldset' );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pemohon_nama',
+        $fields[] = array(
+            'name'  => 'pemohon_nama',
             'label' => 'Nama lengkap',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->pemohon_nama : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pemohon_jabatan',
+        $fields[] = array(
+            'name'  => 'pemohon_jabatan',
             'label' => 'Jabatan',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->pemohon_jabatan : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pemohon_usaha',
+        $fields[] = array(
+            'name'  => 'pemohon_usaha',
             'label' => 'Perusahaan',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->pemohon_usaha : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pemohon_alamat',
+        $fields[] = array(
+            'name'  => 'pemohon_alamat',
             'label' => 'Alamat',
             'type'  => 'textarea',
             'std'   => ( $data_obj ? $data_obj->pemohon_alamat : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_fieldset_data_lokasi',
+        $fields[] = array(
+            'name'  => 'fieldset_data_lokasi',
             'label' => 'Data Lokasi',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
             'type'  => 'fieldset' );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_lokasi_tujuan',
+        $fields[] = array(
+            'name'  => 'lokasi_tujuan',
             'label' => 'Tujuan Permohonan',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->lokasi_tujuan : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_lokasi_alamat',
+        $fields[] = array(
+            'name'  => 'lokasi_alamat',
             'label' => 'Alamat Lokasi',
             'type'  => 'textarea',
             'std'   => ( $data_obj ? $data_obj->lokasi_alamat : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_lokasi_nama',
+        $fields[] = array(
+            'name'  => 'lokasi_nama',
             'label' => 'Luas Area (M<sup>2</sup>)',
             'type'  => 'number',
             'std'   => ( $data_obj ? $data_obj->lokasi_nama : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_lokasi_area_hijau',
+        $fields[] = array(
+            'name'  => 'lokasi_area_hijau',
             'label' => 'Area terbuka hijau',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->lokasi_area_hijau : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
-
-        $fields[]   = array(
-            'name'  => $this->alias.'_fieldset_tembusan',
-            'label' => 'Tembusan Dokumen',
-            'attr'  => ( $data_obj ? array('disabled'=>'') : '' ),
-            'type'  => 'fieldset' );
-
-        $fields[] = $this->field_tembusan($data_obj, $this->alias);
 
         return $fields;
     }

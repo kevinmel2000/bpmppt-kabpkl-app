@@ -33,10 +33,9 @@
  *
  * @package     Bapa Pack BPMPPT
  * @author      Fery Wardiyanto
- * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
+ * @copyright   Copyright (c) Badan Penanaman Modal dan Pelayanan Perijinan Terpadu Kab. Pekalongan
  * @license     http://dbad-license.org
  * @since       Version 1.0
- * @filesource
  */
 
 // =============================================================================
@@ -64,7 +63,7 @@ class Bpmppt_iui extends CI_Driver
      *
      * @var  array
      */
-    public $fields = array(
+    public $defaults = array(
         'permohonan_jenis'  => '',
         'pemohon_nama'      => '',
         'pemohon_kerja'     => '',
@@ -112,8 +111,8 @@ class Bpmppt_iui extends CI_Driver
      */
     public function form( $data_obj = FALSE )
     {
-        $fields[]   = array(
-            'name'  => $this->alias.'_permohonan_jenis',
+        $fields[] = array(
+            'name'  => 'permohonan_jenis',
             'label' => 'Jenis Pengajuan',
             'type'  => 'radio',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
@@ -124,147 +123,155 @@ class Bpmppt_iui extends CI_Driver
                 'Daftar Ulang'     => 'Daftar Ulang' ),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_fieldset_data_pemohon',
+        $fields[] = array(
+            'name'  => 'pembaruan_ke',
+            'label' => 'Daftar ulang Ke',
+            'type'  => 'text',
+            'fold'  => array(
+                'key'   => $this->alias.'_surat_jenis_pengajuan',
+                'value' => 'Daftar Ulang'
+                ),
+            'std'   => ( $data_obj ? $data_obj->pembaruan_ke : '') );
+
+        $fields[] = array(
+            'name'  => 'fieldset_data_pemohon',
             'label' => 'Data Pemohon',
             'type'  => 'fieldset',
             'attr'  => ( $data_obj ? 'disabled' : '' ));
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pemohon_nama',
+        $fields[] = array(
+            'name'  => 'pemohon_nama',
             'label' => 'Nama lengkap',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->pemohon_nama : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pemohon_kerja',
+        $fields[] = array(
+            'name'  => 'pemohon_kerja',
             'label' => 'Pekerjaan',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->pemohon_kerja : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pemohon_alamat',
+        $fields[] = array(
+            'name'  => 'pemohon_alamat',
             'label' => 'Alamat',
             'type'  => 'textarea',
             'std'   => ( $data_obj ? $data_obj->pemohon_alamat : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pemohon_telp',
+        $fields[] = array(
+            'name'  => 'pemohon_telp',
             'label' => 'No. Telp',
             'type'  => 'tel',
             'std'   => ( $data_obj ? $data_obj->pemohon_telp : ''),
             'validation'=> 'numeric' );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_fieldset_data_pemilik',
+        $fields[] = array(
+            'name'  => 'fieldset_data_pemilik',
             'label' => 'Data Pemilik Perusahaan',
             'type'  => 'fieldset',
             'attr'  => ( $data_obj ? 'disabled' : '' ));
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pemilik_nama',
+        $fields[] = array(
+            'name'  => 'pemilik_nama',
             'label' => 'Nama lengkap',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->pemilik_nama : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pemilik_alamat',
+        $fields[] = array(
+            'name'  => 'pemilik_alamat',
             'label' => 'Alamat',
             'type'  => 'textarea',
             'std'   => ( $data_obj ? $data_obj->pemilik_alamat : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pemilik_telp',
+        $fields[] = array(
+            'name'  => 'pemilik_telp',
             'label' => 'No. Telp',
             'type'  => 'tel',
             'std'   => ( $data_obj ? $data_obj->pemilik_telp : ''),
             'validation'=> 'numeric' );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_fieldset_data_usaha',
+        $fields[] = array(
+            'name'  => 'fieldset_data_usaha',
             'label' => 'Data Perusahaan',
             'type'  => 'fieldset',
             'attr'  => ( $data_obj ? 'disabled' : '' ));
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_nama',
+        $fields[] = array(
+            'name'  => 'usaha_nama',
             'label' => 'Nama Perusahaan',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->usaha_nama : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_skala',
+        $fields[] = array(
+            'name'  => 'usaha_skala',
             'label' => 'Skala',
             'type'  => 'dropdown',
             'std'   => ( $data_obj ? $data_obj->usaha_skala : ''),
-            'option'=> array(
+            'option'=> add_placeholder(array(
                 'kecil'     => 'Perusahaan Kecil',
                 'menengah'  => 'Perusahaan Menengah',
-                'besar'     => 'Perusahaan Besar' ),
+                'besar'     => 'Perusahaan Besar' )) ,
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_npwp',
+        $fields[] = array(
+            'name'  => 'usaha_npwp',
             'label' => 'No. NPWP',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->usaha_npwp : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_alamat',
+        $fields[] = array(
+            'name'  => 'usaha_alamat',
             'label' => 'Alamat',
             'type'  => 'textarea',
             'std'   => ( $data_obj ? $data_obj->usaha_alamat : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_telp',
+        $fields[] = array(
+            'name'  => 'usaha_telp',
             'label' => 'No. Telp',
             'type'  => 'tel',
             'std'   => ( $data_obj ? $data_obj->usaha_telp : ''),
             'validation'=> 'numeric' );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_kawasan',
+        $fields[] = array(
+            'name'  => 'usaha_kawasan',
             'label' => 'Kawasan Industri',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->usaha_kawasan : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_pj',
+        $fields[] = array(
+            'name'  => 'usaha_pj',
             'label' => 'Nama Penanggungjawab',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->usaha_pj : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_npwp',
+        $fields[] = array(
+            'name'  => 'usaha_npwp',
             'label' => 'No. NPWP',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->usaha_npwp : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_jenis',
+        $fields[] = array(
+            'name'  => 'usaha_jenis',
             'label' => 'Jenis Perusahaan',
             'type'  => 'subfield',
             'fields'=> array(
                 array(
-                    'col'   => '6',
                     'name'  => 'kbli',
                     'label' => 'KBLI',
                     'type'  => 'text',
                     'std'   => ( $data_obj ? $data_obj->usaha_jenis_kbli : ''),
                     'validation'=> ( !$data_obj ? 'required' : '' ) ),
                 array(
-                    'col'   => '6',
                     'name'  => 'kki',
                     'label' => 'KKI',
                     'type'  => 'text',
@@ -273,21 +280,19 @@ class Bpmppt_iui extends CI_Driver
                 )
             );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_akta',
+        $fields[] = array(
+            'name'  => 'usaha_akta',
             'label' => 'Pendirian',
             'type'  => 'subfield',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
             'fields'=> array(
                 array(
-                    'col'   => '6',
                     'name'  => 'ntrs',
                     'label' => 'Nama Notaris',
                     'type'  => 'text',
                     'std'   => ( $data_obj ? $data_obj->usaha_akta_ntrs : ''),
                     'validation'=> ( !$data_obj ? 'required' : '' ) ),
                 array(
-                    'col'   => '6',
                     'name'  => 'nomor',
                     'label' => 'Nomor Akta',
                     'type'  => 'text',
@@ -296,38 +301,30 @@ class Bpmppt_iui extends CI_Driver
                 )
             );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_direksi',
+        $fields[] = array(
+            'name'  => 'usaha_direksi',
             'label' => 'Nama Direksi',
             'type'  => 'text',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
             'std'   => ( $data_obj ? $data_obj->usaha_direksi : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_lokasi',
+        $fields[] = array(
+            'name'  => 'usaha_lokasi',
             'label' => 'Lokasi Pabrik',
             'type'  => 'textarea',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
             'std'   => ( $data_obj ? $data_obj->usaha_lokasi : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_nama',
+        $fields[] = array(
+            'name'  => 'usaha_nama',
             'label' => 'Luas Tanah (M<sup>2</sup>)',
             'type'  => 'number',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
             'std'   => ( $data_obj ? $data_obj->usaha_nama : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_fieldset_tembusan',
-            'label' => 'Tembusan Dokumen',
-            'attr'  => ( $data_obj ? array('disabled'=>'') : '' ),
-            'type'  => 'fieldset' );
-
-        $fields[] = $this->field_tembusan($data_obj, $this->alias);
-        
         return $fields;
     }
 

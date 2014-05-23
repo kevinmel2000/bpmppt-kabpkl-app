@@ -33,10 +33,9 @@
  *
  * @package     Bapa Pack BPMPPT
  * @author      Fery Wardiyanto
- * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
+ * @copyright   Copyright (c) Badan Penanaman Modal dan Pelayanan Perijinan Terpadu Kab. Pekalongan
  * @license     http://dbad-license.org
  * @since       Version 1.0
- * @filesource
  */
 
 // =============================================================================
@@ -64,7 +63,7 @@ class Bpmppt_siup extends CI_Driver
      *
      * @var  array
      */
-    public $fields = array(
+    public $defaults = array(
         'pengajuan_jenis'                   => '',
         'pembaruan_ke'                      => '',
         'pemohon_nama'                      => '',
@@ -123,8 +122,8 @@ class Bpmppt_siup extends CI_Driver
      */
     public function form( $data_obj = FALSE )
     {
-        $fields[]   = array(
-            'name'  => $this->alias.'_pengajuan_jenis',
+        $fields[] = array(
+            'name'  => 'pengajuan_jenis',
             'label' => 'Jenis Pengajuan',
             'type'  => 'radio',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
@@ -134,8 +133,8 @@ class Bpmppt_siup extends CI_Driver
                 'Perubahan'        => 'Perubahan',
                 'Daftar Ulang'     => 'Daftar Ulang' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pembaruan_ke',
+        $fields[] = array(
+            'name'  => 'pembaruan_ke',
             'label' => 'Daftar ulang Ke',
             'type'  => 'text',
             'fold'  => array(
@@ -144,37 +143,36 @@ class Bpmppt_siup extends CI_Driver
                 ),
             'std'   => ( $data_obj ? $data_obj->pembaruan_ke : '') );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_fieldset_data_pemilik',
+        $fields[] = array(
+            'name'  => 'fieldset_data_pemilik',
             'label' => 'Data Pemilik Perusahaan',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
             'type'  => 'fieldset' );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pemohon_nama',
+        $fields[] = array(
+            'name'  => 'pemohon_nama',
             'label' => 'Nama lengkap',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->pemohon_nama : '') );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pemilik_ktp',
+        $fields[] = array(
+            'name'  => 'pemilik_ktp',
             'label' => 'Nomor KTP',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->pemilik_ktp : '') );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pemilik_alamat',
+        $fields[] = array(
+            'name'  => 'pemilik_alamat',
             'label' => 'Alamat',
             'type'  => 'textarea',
             'std'   => ( $data_obj ? $data_obj->pemilik_alamat : '') );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pemilik_lahir',
+        $fields[] = array(
+            'name'  => 'pemilik_lahir',
             'label' => 'Tempat &amp; Tgl. Lahir',
             'type'  => 'subfield',
             'fields'=> array(
                 array(
-                    'col'   => '6',
                     'name'  => 'tmpt',
                     'label' => 'Tempat Lahir',
                     'type'  => 'text',
@@ -182,7 +180,6 @@ class Bpmppt_siup extends CI_Driver
                     'validation'=> ''
                     ),
                 array(
-                    'col'   => '6',
                     'name'  => 'tgl',
                     'label' => 'Tanggal Lahir',
                     'type'  => 'datepicker',
@@ -192,20 +189,18 @@ class Bpmppt_siup extends CI_Driver
                     ),
                 ));
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pemilik_no',
+        $fields[] = array(
+            'name'  => 'pemilik_no',
             'label' => 'Nomor Telp/Fax',
             'type'  => 'subfield',
             'fields'=> array(
                 array(
-                    'col'   => '6',
                     'name'  => 'telp',
                     'label' => 'Telpon',
                     'type'  => 'number',
                     'std'   => ( $data_obj ? $data_obj->pemilik_no_telp : ''),
                     'validation'=> 'numeric' ),
                 array(
-                    'col'   => '6',
                     'name'  => 'fax',
                     'label' => 'Faksimili',
                     'type'  => 'number',
@@ -213,14 +208,14 @@ class Bpmppt_siup extends CI_Driver
                     'validation'=> 'numeric' ),
                 ));
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_fieldset_data_usaha',
+        $fields[] = array(
+            'name'  => 'fieldset_data_usaha',
             'label' => 'Data Perusahaan',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
             'type'  => 'fieldset' );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_nama',
+        $fields[] = array(
+            'name'  => 'usaha_nama',
             'label' => 'Nama lengkap',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->usaha_nama : '') );
@@ -234,18 +229,20 @@ class Bpmppt_siup extends CI_Driver
             );
 
         foreach ( $u_jenis as $jenis )
+        {
             $jns_opt[$jenis] = $jenis;
+        }
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_jenis',
+        $fields[] = array(
+            'name'  => 'usaha_jenis',
             'label' => 'Jenis Perusahaan',
             'type'  => 'radio',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
             'std'   => ( $data_obj ? $data_obj->usaha_jenis : ''),
             'option'=> $jns_opt );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_skala',
+        $fields[] = array(
+            'name'  => 'usaha_skala',
             'label' => 'Skala Perusahaan',
             'type'  => 'radio',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
@@ -256,8 +253,8 @@ class Bpmppt_siup extends CI_Driver
                 'PM' => 'Menengah',
                 'PB' => 'Besar' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_kegiatan',
+        $fields[] = array(
+            'name'  => 'usaha_kegiatan',
             'label' => 'Kegiatan Usaha (KBLI)',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->usaha_kegiatan : '') );
@@ -269,40 +266,38 @@ class Bpmppt_siup extends CI_Driver
             $lemb_opt[$lemb] = $lemb;
         }
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_lembaga',
+        $fields[] = array(
+            'name'  => 'usaha_lembaga',
             'label' => 'Kelembagaan',
-            'type'  => 'multiselect',
+            'type'  => 'checkbox',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
             'std'   => ( $data_obj ? unserialize($data_obj->usaha_lembaga) : ''),
             'option'=> $lemb_opt );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_komoditi',
+        $fields[] = array(
+            'name'  => 'usaha_komoditi',
             'label' => 'Komoditi Usaha',
             'type'  => 'textarea',
             'std'   => ( $data_obj ? $data_obj->usaha_komoditi : '') );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_alamat',
+        $fields[] = array(
+            'name'  => 'usaha_alamat',
             'label' => 'Alamat',
             'type'  => 'textarea',
             'std'   => ( $data_obj ? $data_obj->usaha_alamat : '') );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_no',
+        $fields[] = array(
+            'name'  => 'usaha_no',
             'label' => 'Nomor Telp/Fax',
             'type'  => 'subfield',
             'fields'=> array(
                 array(
-                    'col'   => '6',
                     'name'  => 'telp',
                     'label' => 'Telpon',
                     'type'  => 'number',
                     'std'   => ( $data_obj ? $data_obj->usaha_no_telp : ''),
                     'validation'=> 'numeric' ),
                 array(
-                    'col'   => '6',
                     'name'  => 'fax',
                     'label' => 'Faksimili',
                     'type'  => 'number',
@@ -310,25 +305,24 @@ class Bpmppt_siup extends CI_Driver
                     'validation'=> 'numeric' ),
                 ));
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_saham_status',
+        $fields[] = array(
+            'name'  => 'usaha_saham_status',
             'label' => 'Status Saham',
-            'type'  => 'dropdown',
+            'type'  => 'radio',
             'std'   => ( $data_obj ? $data_obj->usaha_saham_status : ''),
             'option'=> array(
-                '' => '---',
                 'pmdm' => 'Penanaman Modal Dalam Negeri',
-                'pma' => 'Penanaman Modal Asing' ) );
+                'pma'  => 'Penanaman Modal Asing' ));
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_modal_awal',
+        $fields[] = array(
+            'name'  => 'usaha_modal_awal',
             'label' => 'Modal awal',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->usaha_modal_awal : ''),
             'validation'=> ( !$data_obj ? 'required|numeric' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_saham_nilai',
+        $fields[] = array(
+            'name'  => 'usaha_saham_nilai',
             'label' => 'Nilai Saham',
             'type'  => 'subfield',
             'fields'=> array(
@@ -354,14 +348,6 @@ class Bpmppt_siup extends CI_Driver
                     'std'   => ( $data_obj ? $data_obj->usaha_saham_nilai_tgl : ''),
                     'validation'=> ( !$data_obj ? 'required|numeric' : '' ) ),
                 ));
-
-        $fields[]   = array(
-            'name'  => $this->alias.'_fieldset_tembusan',
-            'label' => 'Tembusan Dokumen',
-            'attr'  => ( $data_obj ? array('disabled'=>'') : '' ),
-            'type'  => 'fieldset' );
-
-        $fields[] = $this->field_tembusan($data_obj, $this->alias);
 
         return $fields;
     }

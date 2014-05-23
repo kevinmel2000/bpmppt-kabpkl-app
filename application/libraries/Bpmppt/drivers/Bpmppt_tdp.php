@@ -33,10 +33,9 @@
  *
  * @package     Bapa Pack BPMPPT
  * @author      Fery Wardiyanto
- * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
+ * @copyright   Copyright (c) Badan Penanaman Modal dan Pelayanan Perijinan Terpadu Kab. Pekalongan
  * @license     http://dbad-license.org
  * @since       Version 1.0
- * @filesource
  */
 
 // =============================================================================
@@ -64,7 +63,7 @@ class Bpmppt_tdp extends CI_Driver
      *
      * @var  array
      */
-    public $fields = array(
+    public $defaults = array(
         'no_daftar'                         => '',
         'no_sk'                             => '',
         'tgl_berlaku'                       => '',
@@ -134,38 +133,37 @@ class Bpmppt_tdp extends CI_Driver
      */
     public function form( $data_obj = FALSE )
     {
-        $fields[]   = array(
-            'name'  => $this->alias.'_no_tdp',
+        $fields[] = array(
+            'name'  => 'no_tdp',
             'label' => 'Nomor TDP',
             'type'  => 'text',
-            'std'   => ( $data_obj ? $data_obj->no_daftar : ''),
+            'std'   => ( $data_obj ? $data_obj->no_tdp : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_no_agenda',
+        $fields[] = array(
+            'name'  => 'no_agenda',
             'label' => 'Nomor Agenda PT',
             'type'  => 'text',
-            'std'   => ( $data_obj ? $data_obj->no_sk : '') );
+            'std'   => ( $data_obj ? $data_obj->no_agenda : '') );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_tgl_berlaku',
+        $fields[] = array(
+            'name'  => 'tgl_berlaku',
             'label' => 'Tgl. Masa Berlaku',
             'type'  => 'datepicker',
             'std'   => ( $data_obj ? $data_obj->tgl_berlaku : '') );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pengajuan_jenis',
+        $fields[] = array(
+            'name'  => 'pengajuan_jenis',
             'label' => 'Jenis Pengajuan',
             'type'  => 'radio',
-            'attr'  => ( $data_obj ? 'disabled' : '' ),
             'std'   => ( $data_obj ? $data_obj->pengajuan_jenis : ''),
             'option'=> array(
                 'daftar baru'   => 'Pendaftaran Baru',
                 'balik nama'    => 'Balik Nama',
                 'daftar ulang'  => 'Daftar Ulang' ));
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pembaruan_ke',
+        $fields[] = array(
+            'name'  => 'pembaruan_ke',
             'label' => 'Daftar ulang Ke',
             'type'  => 'text',
             'fold'  => array(
@@ -173,32 +171,31 @@ class Bpmppt_tdp extends CI_Driver
                 'value' => 'daftar ulang' ),
             'std'   => ( $data_obj ? $data_obj->pembaruan_ke : ''));
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_fieldset_data_pemilik',
+        $fields[] = array(
+            'name'  => 'fieldset_data_pemilik',
             'label' => 'Data Pemilik Perusahaan',
-            'attr'  => ( $data_obj ? 'disabled' : '' ),
             'type'  => 'fieldset' );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pemohon_nama',
+        $fields[] = array(
+            'name'  => 'pemohon_nama',
             'label' => 'Nama lengkap',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->pemohon_nama : ''));
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pemilik_ktp',
+        $fields[] = array(
+            'name'  => 'pemilik_ktp',
             'label' => 'Nomor KTP',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->pemilik_ktp : ''));
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pemilik_alamat',
+        $fields[] = array(
+            'name'  => 'pemilik_alamat',
             'label' => 'Alamat',
             'type'  => 'textarea',
             'std'   => ( $data_obj ? $data_obj->pemilik_alamat : ''));
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pemilik_kwn',
+        $fields[] = array(
+            'name'  => 'pemilik_kwn',
             'label' => 'Kewarganegaraan',
             'type'  => 'radio',
             'std'   => ( $data_obj ? $data_obj->pemilik_kwn : ''),
@@ -206,19 +203,17 @@ class Bpmppt_tdp extends CI_Driver
                 'wni' => 'Warga Negara Indonesia',
                 'wna' => 'Warga Negara Asing' ));
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pemilik_lahir',
+        $fields[] = array(
+            'name'  => 'pemilik_lahir',
             'label' => 'Tempat &amp; Tgl. Lahir',
             'type'  => 'subfield',
             'fields'=> array(
                 array(
-                    'col'   => '6',
                     'name'  => 'tmpt',
                     'label' => 'Tempat Lahir',
                     'type'  => 'text',
                     'std'   => ( $data_obj ? $data_obj->pemilik_lahir_tmpt : '') ),
                 array(
-                    'col'   => '6',
                     'name'  => 'tgl',
                     'label' => 'Tanggal Lahir',
                     'type'  => 'datepicker',
@@ -226,20 +221,18 @@ class Bpmppt_tdp extends CI_Driver
                     'callback'=> 'string_to_date' ),
                 ));
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pemilik_no',
+        $fields[] = array(
+            'name'  => 'pemilik_no',
             'label' => 'Nomor Telp/Fax',
             'type'  => 'subfield',
             'fields'=> array(
                 array(
-                    'col'   => '6',
                     'name'  => 'telp',
                     'label' => 'Telpon',
                     'type'  => 'tel',
                     'std'   => ( $data_obj ? $data_obj->pemilik_no_telp : ''),
                     'validation'=> 'numeric' ),
                 array(
-                    'col'   => '6',
                     'name'  => 'fax',
                     'label' => 'Faksimili',
                     'type'  => 'tel',
@@ -247,14 +240,13 @@ class Bpmppt_tdp extends CI_Driver
                     'validation'=> 'numeric' ),
                 ));
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_fieldset_data_usaha',
+        $fields[] = array(
+            'name'  => 'fieldset_data_usaha',
             'label' => 'Data Perusahaan',
-            'attr'  => ( $data_obj ? 'disabled' : '' ),
             'type'  => 'fieldset' );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_nama',
+        $fields[] = array(
+            'name'  => 'usaha_nama',
             'label' => 'Nama lengkap',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->usaha_nama : ''));
@@ -272,58 +264,53 @@ class Bpmppt_tdp extends CI_Driver
             $jns_opt[$jenis] = $jenis;
         }
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_jenis',
+        $fields[] = array(
+            'name'  => 'usaha_jenis',
             'label' => 'Jenis Perusahaan',
             'type'  => 'radio',
-            'attr'  => ( $data_obj ? 'disabled' : '' ),
             'std'   => ( $data_obj ? $data_obj->usaha_jenis : ''),
             'option'=> $jns_opt );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_skala',
+        $fields[] = array(
+            'name'  => 'usaha_skala',
             'label' => 'Skala Perusahaan',
             'type'  => 'radio',
-            'attr'  => ( $data_obj ? 'disabled' : '' ),
             'std'   => ( $data_obj ? $data_obj->usaha_skala : ''),
             'option'=> array(
                 'PK' => 'Perusahaan Kecil',
                 'PM' => 'Menengah',
                 'PB' => 'Besar' ));
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_status',
+        $fields[] = array(
+            'name'  => 'usaha_status',
             'label' => 'Status Perusahaan',
             'type'  => 'radio',
-            'attr'  => ( $data_obj ? 'disabled' : '' ),
             'std'   => ( $data_obj ? $data_obj->usaha_status : ''),
             'option'=> array(
-                'tunggal' => 'Kantor Tunggal',
-                'pusat' => 'Kantor Pusat',
-                'cabang' => 'Kantor Cabang',
-                'pembantu' => 'Kantor Pembantu',
+                'tunggal'    => 'Kantor Tunggal',
+                'pusat'      => 'Kantor Pusat',
+                'cabang'     => 'Kantor Cabang',
+                'pembantu'   => 'Kantor Pembantu',
                 'perwakilan' => 'Kantor Perwakilan' ));
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_alamat',
+        $fields[] = array(
+            'name'  => 'usaha_alamat',
             'label' => 'Alamat',
             'type'  => 'textarea',
             'std'   => ( $data_obj ? $data_obj->usaha_alamat : ''));
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_no',
+        $fields[] = array(
+            'name'  => 'usaha_no',
             'label' => 'Nomor Telp/Fax',
             'type'  => 'subfield',
             'fields'=> array(
                 array(
-                    'col'   => '6',
                     'name'  => 'telp',
                     'label' => 'Telpon',
                     'type'  => 'tel',
                     'std'   => ( $data_obj ? $data_obj->usaha_no_telp : ''),
                     'validation'=> 'numeric' ),
                 array(
-                    'col'   => '6',
                     'name'  => 'fax',
                     'label' => 'Faksimili',
                     'type'  => 'tel',
@@ -337,32 +324,30 @@ class Bpmppt_tdp extends CI_Driver
          * 500 >    Besar
          */
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_fieldset_data_usaha_kegiatan',
+        $fields[] = array(
+            'name'  => 'fieldset_data_usaha_kegiatan',
             'label' => 'Kegiatan Usaha',
-            'attr'  => ( $data_obj ? 'disabled' : '' ),
             'type'  => 'fieldset' );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_pokok',
+        $fields[] = array(
+            'name'  => 'usaha_pokok',
             'label' => 'Kegiatan Usaha Pokok',
             'type'  => 'textarea',
             'std'   => ( $data_obj ? $data_obj->usaha_pokok : ''));
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_kbli',
+        $fields[] = array(
+            'name'  => 'usaha_kbli',
             'label' => 'KBLI',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->usaha_kbli : ''));
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_fieldset_data_usaha_akta',
+        $fields[] = array(
+            'name'  => 'fieldset_data_usaha_akta',
             'label' => 'Data Akta dan Pengesahan',
-            'attr'  => ( $data_obj ? 'disabled' : '' ),
             'type'  => 'fieldset' );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_akta_pengesahan',
+        $fields[] = array(
+            'name'  => 'usaha_akta_pengesahan',
             'label' => 'Akta Pengesahan Pendirian B.H.',
             'type'  => 'subfield',
             'fields'=> array(
@@ -371,26 +356,26 @@ class Bpmppt_tdp extends CI_Driver
                     'name'  => 'no',
                     'label' => 'Nomor Akta',
                     'type'  => 'text',
-                    'std'   => ( $data_obj ? $data_obj->usaha_pendirian_akta_no : ''),
+                    'std'   => ( $data_obj ? $data_obj->usaha_akta_pengesahan_no : ''),
                     'validation'=> '' ),
                 array(
                     'col'   => '3',
                     'name'  => 'tgl',
                     'label' => 'Tanggal Akta',
                     'type'  => 'datepicker',
-                    'std'   => ( $data_obj ? $data_obj->usaha_pendirian_akta_tgl : ''),
+                    'std'   => ( $data_obj ? $data_obj->usaha_akta_pengesahan_tgl : ''),
                     'validation'=> '' ),
                 array(
                     'col'   => '6',
                     'name'  => 'uraian',
                     'label' => 'Uraian',
                     'type'  => 'text',
-                    'std'   => ( $data_obj ? $data_obj->usaha_pendirian_pengesahan_uraian : ''),
+                    'std'   => ( $data_obj ? $data_obj->usaha_akta_pengesahan_uraian : ''),
                     'validation'=> '' ),
                 ));
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_akta_perubahan',
+        $fields[] = array(
+            'name'  => 'usaha_akta_perubahan',
             'label' => 'Akta Perubahan A.D.B.H.',
             'type'  => 'subfield',
             'fields'=> array(
@@ -399,26 +384,26 @@ class Bpmppt_tdp extends CI_Driver
                     'name'  => 'no',
                     'label' => 'Nomor Pengesahan',
                     'type'  => 'text',
-                    'std'   => ( $data_obj ? $data_obj->usaha_pendirian_pengesahan_no : ''),
+                    'std'   => ( $data_obj ? $data_obj->usaha_akta_perubahan_no : ''),
                     'validation'=> '' ),
                 array(
                     'col'   => '3',
                     'name'  => 'tgl',
                     'label' => 'Tanggal Pengesahan',
                     'type'  => 'datepicker',
-                    'std'   => ( $data_obj ? $data_obj->usaha_pendirian_pengesahan_tgl : ''),
+                    'std'   => ( $data_obj ? $data_obj->usaha_akta_perubahan_tgl : ''),
                     'validation'=> '' ),
                 array(
                     'col'   => '6',
                     'name'  => 'uraian',
                     'label' => 'Uraian',
                     'type'  => 'text',
-                    'std'   => ( $data_obj ? $data_obj->usaha_pendirian_pengesahan_uraian : ''),
+                    'std'   => ( $data_obj ? $data_obj->usaha_akta_perubahan_uraian : ''),
                     'validation'=> '' ),
                 ));
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_perubahan_ad',
+        $fields[] = array(
+            'name'  => 'usaha_perubahan_ad',
             'label' => 'Penerimaan Perubahan A.D.',
             'type'  => 'subfield',
             'fields'=> array(
@@ -427,56 +412,54 @@ class Bpmppt_tdp extends CI_Driver
                     'name'  => 'no',
                     'label' => 'Nomor Akta',
                     'type'  => 'text',
-                    'std'   => ( $data_obj ? $data_obj->usaha_perubahan_akta_no : ''),
+                    'std'   => ( $data_obj ? $data_obj->usaha_perubahan_ad_no : ''),
                     'validation'=> '' ),
                 array(
                     'col'   => '3',
                     'name'  => 'tgl',
                     'label' => 'Tanggal Akta',
                     'type'  => 'datepicker',
-                    'std'   => ( $data_obj ? $data_obj->usaha_perubahan_akta_tgl : ''),
+                    'std'   => ( $data_obj ? $data_obj->usaha_perubahan_ad_tgl : ''),
                     'validation'=> '' ),
                 array(
                     'col'   => '6',
                     'name'  => 'uraian',
                     'label' => 'Uraian',
                     'type'  => 'text',
-                    'std'   => ( $data_obj ? $data_obj->usaha_pendirian_pengesahan_uraian : ''),
+                    'std'   => ( $data_obj ? $data_obj->usaha_perubahan_ad_uraian : ''),
                     'validation'=> '' ),
                 ));
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_fieldset_data_usaha_saham',
+        $fields[] = array(
+            'name'  => 'fieldset_data_usaha_saham',
             'label' => 'Data Modal Usaha',
-            'attr'  => ( $data_obj ? 'disabled' : '' ),
             'type'  => 'fieldset' );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_npwp',
+        $fields[] = array(
+            'name'  => 'usaha_npwp',
             'label' => 'NPWP Perusahaan',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->usaha_npwp : ''),
             'validation'=> ( !$data_obj ? 'numeric' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_saham_status',
+        $fields[] = array(
+            'name'  => 'usaha_saham_status',
             'label' => 'Status Saham',
-            'type'  => 'dropdown',
+            'type'  => 'radio',
             'std'   => ( $data_obj ? $data_obj->usaha_saham_status : ''),
             'option'=> array(
-                '' => '---',
                 'pmdm' => 'Penanaman Modal Dalam Negeri',
-                'pma' => 'Penanaman Modal Asing' ));
+                'pma'  => 'Penanaman Modal Asing' ));
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_modal_awal',
+        $fields[] = array(
+            'name'  => 'usaha_modal_awal',
             'label' => 'Modal awal',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->usaha_modal_awal : ''),
             'validation'=> ( !$data_obj ? 'numeric' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_saham_nilai',
+        $fields[] = array(
+            'name'  => 'usaha_saham_nilai',
             'label' => 'Nilai Saham',
             'type'  => 'subfield',
             'fields'=> array(
@@ -502,14 +485,6 @@ class Bpmppt_tdp extends CI_Driver
                     'std'   => ( $data_obj ? $data_obj->usaha_saham_nilai_tgl : ''),
                     'validation'=> ( !$data_obj ? 'numeric' : '' ) ),
                 ));
-
-        $fields[]   = array(
-            'name'  => $this->alias.'_fieldset_tembusan',
-            'label' => 'Tembusan Dokumen',
-            'attr'  => ( $data_obj ? array('disabled'=>'') : '' ),
-            'type'  => 'fieldset' );
-
-        $fields[] = $this->field_tembusan($data_obj, $this->alias);
 
         return $fields;
     }

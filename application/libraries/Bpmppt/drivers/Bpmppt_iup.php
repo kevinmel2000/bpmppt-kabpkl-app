@@ -33,10 +33,9 @@
  *
  * @package     Bapa Pack BPMPPT
  * @author      Fery Wardiyanto
- * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
+ * @copyright   Copyright (c) Badan Penanaman Modal dan Pelayanan Perijinan Terpadu Kab. Pekalongan
  * @license     http://dbad-license.org
  * @since       Version 1.0
- * @filesource
  */
 
 // =============================================================================
@@ -64,7 +63,7 @@ class Bpmppt_iup extends CI_Driver
      *
      * @var  array
      */
-    public $fields = array(
+    public $defaults = array(
         'rekomendasi_nomor'     => '',
         'rekomendasi_tanggal'   => '',
         'pemohon_nama'          => '',
@@ -98,21 +97,19 @@ class Bpmppt_iup extends CI_Driver
      */
     public function form( $data_obj = FALSE )
     {
-        $fields[]   = array(
-            'name'  => $this->alias.'_rekomendasi',
+        $fields[] = array(
+            'name'  => 'rekomendasi',
             'label' => 'Surat Rekomendasi',
             'type'  => 'subfield',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
             'fields'=> array(
                 array(
-                    'col'   => '6',
                     'name'  => 'nomor',
                     'label' => 'Nomor',
                     'type'  => 'text',
                     'std'   => ( $data_obj ? $data_obj->rekomendasi_nomor : ''),
                     'validation'=> ( !$data_obj ? 'required' : '' ) ),
                 array(
-                    'col'   => '6',
                     'name'  => 'tanggal',
                     'label' => 'Tanggal',
                     'type'  => 'datepicker',
@@ -121,34 +118,34 @@ class Bpmppt_iup extends CI_Driver
                     'callback'=> 'string_to_date' ),
                 ));
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_fieldset_data_pemohon',
+        $fields[] = array(
+            'name'  => 'fieldset_data_pemohon',
             'label' => 'Data Pemohon',
             'attr'  => ( $data_obj ? array( 'disabled' => TRUE ) : '' ),
             'type'  => 'fieldset' );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pemohon_nama',
+        $fields[] = array(
+            'name'  => 'pemohon_nama',
             'label' => 'Nama lengkap',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->pemohon_nama : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pemohon_alamat',
+        $fields[] = array(
+            'name'  => 'pemohon_alamat',
             'label' => 'Alamat',
             'type'  => 'textarea',
             'std'   => ( $data_obj ? $data_obj->pemohon_alamat : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_fieldset_perijinan',
+        $fields[] = array(
+            'name'  => 'fieldset_perijinan',
             'label' => 'Ketentuan Perijinan',
             'attr'  => ( $data_obj ? array( 'disabled' => TRUE ) : '' ),
             'type'  => 'fieldset' );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_tambang_waktu',
+        $fields[] = array(
+            'name'  => 'tambang_waktu',
             'label' => 'Jangka waktu',
             'type'  => 'subfield',
             'fields'=> array(
@@ -169,47 +166,39 @@ class Bpmppt_iup extends CI_Driver
                     'callback'=> 'string_to_date' ),
                 ));
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_tambang_jns_galian',
+        $fields[] = array(
+            'name'  => 'tambang_jns_galian',
             'label' => 'Jenis Galian',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->tambang_jns_galian : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_tambang_luas',
+        $fields[] = array(
+            'name'  => 'tambang_luas',
             'label' => 'Luas Area (M<sup>2</sup>)',
             'type'  => 'number',
             'std'   => ( $data_obj ? $data_obj->tambang_luas : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_tambang_alamat',
+        $fields[] = array(
+            'name'  => 'tambang_alamat',
             'label' => 'Alamat Lokasi',
             'type'  => 'textarea',
             'std'   => ( $data_obj ? $data_obj->tambang_alamat : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_fieldset_tambang',
+        $fields[] = array(
+            'name'  => 'fieldset_tambang',
             'label' => 'Data Pertambangan',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
             'type'  => 'fieldset' );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_tambang_koor',
+        $fields[] = array(
+            'name'  => 'tambang_koor',
             'label' => 'Kode Koordinat',
             'type'  => 'custom',
             'value' => $this->custom_field($data_obj, 'tambang_koor'),
             'validation'=> ( !$data_obj ? '' : '' ) );
-
-        $fields[]   = array(
-            'name'  => $this->alias.'_fieldset_tembusan',
-            'label' => 'Tembusan Dokumen',
-            'attr'  => ( $data_obj ? array('disabled'=>'') : '' ),
-            'type'  => 'fieldset' );
-
-        $fields[] = $this->field_tembusan($data_obj, $this->alias);
 
         return $fields;
     }
@@ -250,7 +239,7 @@ class Bpmppt_iup extends CI_Driver
         {
             $head[] = array(
                 'data'  => form_button( array(
-                    'name'  => $this->alias.'_'.$field_name.'_add-btn',
+                    'name'  => ''.$field_name.'_add-btn',
                     'type'  => 'button',
                     'class' => 'btn btn-primary bs-tooltip btn-block btn-sm',
                     'value' => 'add',
@@ -315,7 +304,7 @@ class Bpmppt_iup extends CI_Driver
         {
             $cols[] = array(
                 'data'  => form_input( array(
-                    'name'  => $this->alias.'_'.$field_name.'_no[]',
+                    'name'  => ''.$field_name.'_no[]',
                     'type'  => 'text',
                     'class' => 'form-control bs-tooltip input-sm',
                     'title' => 'Masukan nomor titik',
@@ -325,7 +314,7 @@ class Bpmppt_iup extends CI_Driver
 
             $cols[] = array(
                 'data'  => form_input( array(
-                    'name'  => $this->alias.'_'.$field_name.'_gb-1[]',
+                    'name'  => ''.$field_name.'_gb-1[]',
                     'type'  => 'text',
                     'class' => 'form-control bs-tooltip input-sm',
                     'title' => 'Masukan nilai &deg; Garis Bujur',
@@ -335,7 +324,7 @@ class Bpmppt_iup extends CI_Driver
 
             $cols[] = array(
                 'data'  => form_input( array(
-                    'name'  => $this->alias.'_'.$field_name.'_gb-2[]',
+                    'name'  => ''.$field_name.'_gb-2[]',
                     'type'  => 'text',
                     'class' => 'form-control bs-tooltip input-sm',
                     'title' => 'Masukan nilai &apos; Garis Bujur',
@@ -345,7 +334,7 @@ class Bpmppt_iup extends CI_Driver
 
             $cols[] = array(
                 'data'  => form_input( array(
-                    'name'  => $this->alias.'_'.$field_name.'_gb-3[]',
+                    'name'  => ''.$field_name.'_gb-3[]',
                     'type'  => 'text',
                     'class' => 'form-control bs-tooltip input-sm',
                     'title' => 'Masukan nilai &quot; Garis Bujur',
@@ -355,7 +344,7 @@ class Bpmppt_iup extends CI_Driver
 
             $cols[] = array(
                 'data'  => form_input( array(
-                    'name'  => $this->alias.'_'.$field_name.'_gl-1[]',
+                    'name'  => ''.$field_name.'_gl-1[]',
                     'type'  => 'text',
                     'class' => 'form-control bs-tooltip input-sm',
                     'title' => 'Masukan nilai &deg; Garis Lintang',
@@ -365,7 +354,7 @@ class Bpmppt_iup extends CI_Driver
 
             $cols[] = array(
                 'data'  => form_input( array(
-                    'name'  => $this->alias.'_'.$field_name.'_gl-2[]',
+                    'name'  => ''.$field_name.'_gl-2[]',
                     'type'  => 'text',
                     'class' => 'form-control bs-tooltip input-sm',
                     'title' => 'Masukan nilai &apos; Garis Lintang',
@@ -375,7 +364,7 @@ class Bpmppt_iup extends CI_Driver
 
             $cols[] = array(
                 'data'  => form_input( array(
-                    'name'  => $this->alias.'_'.$field_name.'_gl-3[]',
+                    'name'  => ''.$field_name.'_gl-3[]',
                     'type'  => 'text',
                     'class' => 'form-control bs-tooltip input-sm',
                     'title' => 'Masukan nilai &quot; Garis Lintang',
@@ -385,7 +374,7 @@ class Bpmppt_iup extends CI_Driver
 
             $cols[] = array(
                 'data'  => form_input( array(
-                    'name'  => $this->alias.'_'.$field_name.'_lsu[]',
+                    'name'  => ''.$field_name.'_lsu[]',
                     'type'  => 'text',
                     'class' => 'form-control bs-tooltip input-sm',
                     'title' => 'ini tooltip',
@@ -397,7 +386,7 @@ class Bpmppt_iup extends CI_Driver
             {
                 $cols[] = array(
                     'data'  => form_button( array(
-                        'name'  => $this->alias.'_'.$field_name.'_remove-btn',
+                        'name'  => ''.$field_name.'_remove-btn',
                         'type'  => 'button',
                         'class' => 'btn btn-danger bs-tooltip btn-block btn-sm remove-btn',
                         'value' => 'remove',

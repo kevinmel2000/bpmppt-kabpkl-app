@@ -33,10 +33,9 @@
  *
  * @package     Bapa Pack BPMPPT
  * @author      Fery Wardiyanto
- * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
+ * @copyright   Copyright (c) Badan Penanaman Modal dan Pelayanan Perijinan Terpadu Kab. Pekalongan
  * @license     http://dbad-license.org
  * @since       Version 1.0
- * @filesource
  */
 
 // =============================================================================
@@ -64,7 +63,7 @@ class Bpmppt_imb extends CI_Driver
      *
      * @var  array
      */
-    public $fields = array(
+    public $defaults = array(
         'bangunan_maksud'           => '',
         'bangunan_guna'             => '',
         'pemohon_nama'              => '',
@@ -101,8 +100,8 @@ class Bpmppt_imb extends CI_Driver
      */
     public function form( $data_obj = FALSE )
     {
-        $fields[]   = array(
-            'name'  => $this->alias.'_bangunan_maksud',
+        $fields[] = array(
+            'name'  => 'bangunan_maksud',
             'label' => 'Maksud Permohonan',
             'type'  => 'radio',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
@@ -112,72 +111,72 @@ class Bpmppt_imb extends CI_Driver
             'std'   => ( $data_obj ? $data_obj->bangunan_maksud : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_bangunan_guna',
+        $fields[] = array(
+            'name'  => 'bangunan_guna',
             'label' => 'Penggunaan bangunan',
             'type'  => 'radio',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
             'option'=> array(
                 'Rumah Tinggal' => 'Rumah Tinggal',
-                'kios'  => 'Kios',
-                'toko'  => 'Toko',
-                'gudang'=> 'Gudang',
-                'pabrik'=> 'Pabrik',
-                'kantor'=> 'Kantor' ),
+                'kios'          => 'Kios',
+                'toko'          => 'Toko',
+                'gudang'        => 'Gudang',
+                'pabrik'        => 'Pabrik',
+                'kantor'        => 'Kantor' ),
             'std'   => ( $data_obj ? $data_obj->bangunan_guna : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_fieldset_data_pemohon',
+        $fields[] = array(
+            'name'  => 'fieldset_data_pemohon',
             'label' => 'Data Pemohon',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
             'type'  => 'fieldset' );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pemohon_nama',
+        $fields[] = array(
+            'name'  => 'pemohon_nama',
             'label' => 'Nama lengkap',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->pemohon_nama : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pemohon_kerja',
+        $fields[] = array(
+            'name'  => 'pemohon_kerja',
             'label' => 'Pekerjaan',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->pemohon_kerja : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pemohon_alamat',
+        $fields[] = array(
+            'name'  => 'pemohon_alamat',
             'label' => 'Alamat',
             'type'  => 'textarea',
             'std'   => ( $data_obj ? $data_obj->pemohon_alamat : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_fieldset_data_bangunan',
+        $fields[] = array(
+            'name'  => 'fieldset_data_bangunan',
             'label' => 'Data Bangunan',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
             'type'  => 'fieldset' );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_bangunan_lokasi',
+        $fields[] = array(
+            'name'  => 'bangunan_lokasi',
             'label' => 'Lokasi bangunan',
             'type'  => 'textarea',
             'std'   => ( $data_obj ? $data_obj->bangunan_lokasi : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_bangunan_tanah_luas',
+        $fields[] = array(
+            'name'  => 'bangunan_tanah_luas',
             'label' => 'Luas Tanah Bangunan (M<sup>2</sup>)',
             'type'  => 'number',
             'std'   => ( $data_obj ? $data_obj->bangunan_tanah_luas : ''),
             'validation'=> ( !$data_obj ? 'required|numeric' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_bangunan_tanah_keadaan',
+        $fields[] = array(
+            'name'  => 'bangunan_tanah_keadaan',
             'label' => 'Keadaan Tanah',
-            'type'  => 'dropdown',
+            'type'  => 'radio',
             'option'=> array(
                 'd1'    => 'D I',
                 'd2'    => 'D II',
@@ -185,45 +184,37 @@ class Bpmppt_imb extends CI_Driver
             'std'   => ( $data_obj ? $data_obj->bangunan_tanah_keadaan : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_bangunan_tanah_status',
+        $fields[] = array(
+            'name'  => 'bangunan_tanah_status',
             'label' => 'Status Tanah',
-            'type'  => 'dropdown',
+            'type'  => 'radio',
             'option'=> array(
                 'hm'    => 'Hak milik',
                 'hg'    => 'Hak guna bangunan' ),
             'std'   => ( $data_obj ? $data_obj->bangunan_tanah_status : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_bangunan_milik_no',
+        $fields[] = array(
+            'name'  => 'bangunan_milik_no',
             'label' => 'Nomor kepemilikan',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->bangunan_milik_no : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_bangunan_milik_an',
+        $fields[] = array(
+            'name'  => 'bangunan_milik_an',
             'label' => 'Atas Nama kepemilikan',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->bangunan_milik_an : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_bangunan_luas',
+        $fields[] = array(
+            'name'  => 'bangunan_luas',
             'label' => 'Luas bangunan (M<sup>2</sup>)',
             'type'  => 'number',
             'std'   => ( $data_obj ? $data_obj->bangunan_luas : ''),
             'validation'=> 'required|numeric' );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_fieldset_tembusan',
-            'label' => 'Tembusan Dokumen',
-            'attr'  => ( $data_obj ? array('disabled'=>'') : '' ),
-            'type'  => 'fieldset' );
-
-        $fields[] = $this->field_tembusan($data_obj, $this->alias);
-        
         return $fields;
     }
 

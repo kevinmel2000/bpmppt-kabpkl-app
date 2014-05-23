@@ -48,4 +48,18 @@ $(document).ready( function () {
                 $('.remove-btn').addClass('disabled')
             }
         })
+
+    $('#sidebar-toggle').on('click', function (e) {
+        $('#sidebar').show();
+        $('body').css('overflow', 'hidden');
+
+        e.preventDefault();
+    })
+
+    $('#sidebar-backdrop').on('click', function (e) {
+        $('#sidebar').hide();
+        $('body').css('overflow', 'auto');
+
+        e.preventDefault();
+    })
 });

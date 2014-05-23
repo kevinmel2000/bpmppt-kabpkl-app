@@ -33,10 +33,9 @@
  *
  * @package     Bapa Pack BPMPPT
  * @author      Fery Wardiyanto
- * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
+ * @copyright   Copyright (c) Badan Penanaman Modal dan Pelayanan Perijinan Terpadu Kab. Pekalongan
  * @license     http://dbad-license.org
  * @since       Version 1.0
- * @filesource
  */
 
 // =============================================================================
@@ -62,7 +61,7 @@ class Bpmppt_reklame extends CI_Driver
      *
      * @var  array
      */
-    public $fields = array(
+    public $defaults = array(
         'pemohon_nama'              => '',
         'pemohon_kerja'             => '',
         'pemohon_alamat'            => '',
@@ -101,81 +100,79 @@ class Bpmppt_reklame extends CI_Driver
      */
     public function form( $data_obj = FALSE )
     {
-        $fields[]   = array(
-            'name'  => $this->alias.'_fieldset_data_pemohon',
+        $fields[] = array(
+            'name'  => 'fieldset_data_pemohon',
             'label' => 'Data Pemohon',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
             'type'  => 'fieldset' );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pemohon_nama',
+        $fields[] = array(
+            'name'  => 'pemohon_nama',
             'label' => 'Nama lengkap',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->pemohon_nama : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pemohon_kerja',
+        $fields[] = array(
+            'name'  => 'pemohon_kerja',
             'label' => 'Pekerjaan',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->pemohon_kerja : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pemohon_alamat',
+        $fields[] = array(
+            'name'  => 'pemohon_alamat',
             'label' => 'Alamat',
             'type'  => 'textarea',
             'std'   => ( $data_obj ? $data_obj->pemohon_alamat : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pemohon_telp',
+        $fields[] = array(
+            'name'  => 'pemohon_telp',
             'label' => 'No. Telp',
             'type'  => 'tel',
             'std'   => ( $data_obj ? $data_obj->pemohon_telp : ''),
             'validation'=> 'numeric' );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_fieldset_data_reklame',
+        $fields[] = array(
+            'name'  => 'fieldset_data_reklame',
             'label' => 'Data Reklame',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
             'type'  => 'fieldset' );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_reklame_jenis',
+        $fields[] = array(
+            'name'  => 'reklame_jenis',
             'label' => 'Jenis Reklame',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->reklame_jenis : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_reklame_juml',
+        $fields[] = array(
+            'name'  => 'reklame_juml',
             'label' => 'Jumlah',
             'type'  => 'number',
             'std'   => ( $data_obj ? $data_obj->reklame_juml : ''),
             'validation'=> 'required|numeric' );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_reklame_lokasi',
+        $fields[] = array(
+            'name'  => 'reklame_lokasi',
             'label' => 'Lokasi pemasangan',
             'type'  => 'textarea',
             'std'   => ( $data_obj ? $data_obj->reklame_lokasi : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_reklame_ukuran',
+        $fields[] = array(
+            'name'  => 'reklame_ukuran',
             'label' => 'Ukuran (P x L)',
             'type'  => 'subfield',
             'fields'=> array(
                 array(
-                    'col'   => '6',
                     'name'  => 'panjang',
                     'label' => 'Panjang',
                     'type'  => 'number',
                     'std'   => ( $data_obj ? $data_obj->reklame_ukuran_panjang : ''),
                     'validation'=> 'required|numerik' ),
                 array(
-                    'col'   => '6',
                     'name'  => 'lebar',
                     'label' => 'Lebar',
                     'type'  => 'number',
@@ -184,27 +181,24 @@ class Bpmppt_reklame extends CI_Driver
                 )
             );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_reklame_range',
+        $fields[] = array(
+            'name'  => 'reklame_range',
             'label' => 'Jangka waktu',
             'type'  => 'subfield',
             'fields'=> array(
                 array(
-                    'col'   => '4',
                     'name'  => 'tgl_text',
                     'label' => 'Terbilang',
                     'type'  => 'text',
                     'std'   => ( $data_obj ? $data_obj->reklame_range_tgl_text : ''),
                     'validation'=> 'required' ),
                 array(
-                    'col'   => '4',
                     'name'  => 'tgl_mulai',
                     'label' => 'Mulai Tanggal',
                     'type'  => 'datepicker',
                     'std'   => ( $data_obj ? $data_obj->reklame_range_tgl_mulai : ''),
                     'validation'=> 'required|numerik' ),
                 array(
-                    'col'   => '4',
                     'name'  => 'tgl_selesai',
                     'label' => 'Sampai Tanggal',
                     'type'  => 'datepicker',
@@ -213,28 +207,20 @@ class Bpmppt_reklame extends CI_Driver
                 )
             );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_reklame_tema',
+        $fields[] = array(
+            'name'  => 'reklame_tema',
             'label' => 'Tema/Isi',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->reklame_tema : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_reklame_ket',
+        $fields[] = array(
+            'name'  => 'reklame_ket',
             'label' => 'Keterangan',
             'type'  => 'textarea',
             'std'   => ( $data_obj ? $data_obj->reklame_ket : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_fieldset_tembusan',
-            'label' => 'Tembusan Dokumen',
-            'attr'  => ( $data_obj ? array('disabled'=>'') : '' ),
-            'type'  => 'fieldset' );
-
-        $fields[] = $this->field_tembusan($data_obj, $this->alias);
-        
         return $fields;
     }
 

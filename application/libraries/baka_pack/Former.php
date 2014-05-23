@@ -61,7 +61,7 @@ class Former
      *
      * @var  array
      */
-    protected $_attrs = array(
+    public $_attrs = array(
         'action'    => '',
         'name'      => '',
         'class'     => '',
@@ -546,11 +546,14 @@ class Former
         $field_id          = isset($field_attrs['id']) ? $field_attrs['id'] : $field_attrs['name'];
         $field_attrs['id'] = 'field-'.str_replace('_', '-', $field_id);
 
-        $field_attrs['attr'] = '';
+        if (!isset($field_attrs['attr']))
+        {
+            $field_attrs['attr'] = '';
+        }
 
         if ($is_sub and isset($field_attrs['label']))
         {
-            $field_attrs['attr'] .= 'placeholder="'.$field_attrs['label'].'"';
+            $field_attrs['attr'] .= ' placeholder="'.$field_attrs['label'].'"';
         }
 
         $attributes  = array_set_defaults($field_attrs, $this->_default_attr);
@@ -616,7 +619,7 @@ class Former
                     {
                         if (strpos('required', $field['validation']) !== FALSE)
                         {
-                            $field['label'] .= ' *';
+                            $field['label'] .= ' &#42;';
                         }
 
                         $field_attrs['validation'] = $field['validation'];
@@ -706,30 +709,38 @@ class Former
 
                     if (!isset($min)) $min = 0;
                     if (!isset($max)) $max = 10;
-                    
-                    $script = "$('.jqui-spinner').spinner({\n"
-                            . "    spin: function(event, ui) {\n"
-                            . "        var val = ui.value,\n"
-                            . "            max = $(this).data('spinner-max'),\n"
-                            . "            min = $(this).data('spinner-min');\n"
-                            . "        if (val > max) {\n"
-                            . "            val = min;\n"
-                            . "        } else if (val < min) {\n"
-                            . "            val = max;\n"
-                            . "        }\n"
-                            . "        $(this).spinner('value', val);\n"
-                            . "        event.preventDefault();\n"
+
+                    $script = "$('.jqui-spinner').each(function () {\n"
+                            . "    if ($(this).attr('disabled') != undefined || $(this).attr('readonly') != undefined) {\n"
+                            // . "        $(this).spinner('disable', true)\n"
+                            . "        console.log($(this).attr('disabled') != undefined)\n"
+                            . "    }\n"
+                            . "    else {\n"
+                            . "        $(this).spinner({\n"
+                            . "            spin: function(event, ui) {\n"
+                            . "                var val = ui.value,\n"
+                            . "                    max = $(this).data('spinner-max'),\n"
+                            . "                    min = $(this).data('spinner-min');\n"
+                            . "                if (val > max) {\n"
+                            . "                    val = min;\n"
+                            . "                } else if (val < min) {\n"
+                            . "                    val = max;\n"
+                            . "                }\n"
+                            . "                $(this).spinner('value', val);\n"
+                            . "                event.preventDefault();\n"
+                            . "            }\n"
+                            . "        });\n"
                             . "    }\n"
                             . "});";
 
                     Asssets::set_script('jqui-spinner-trigger', $script, 'jqui-spinner');
 
                     $input = form_input(array(
-                            'name'      => $name,
-                            'id'        => $id,
+                            'name'              => $name,
+                            'id'                => $id,
                             'data-spinner-min'  => $min,
                             'data-spinner-max'  => $max,
-                            'class'     => $input_class.' jqui-spinner'), set_value($name, $std), $attr);
+                            'class'             => $input_class.' jqui-spinner'), set_value($name, $std), $attr);
                     break;
 
                 // Jquery-ui Slider
@@ -738,14 +749,33 @@ class Former
                     $jqui_load = TRUE;
                     Asssets::set_script('jqui-slider', $jqui_path.'slider.min.js', 'jqui-core', '1.10.4');
 
-                    if (!isset($min)) $min = 0;
-                    if (!isset($max)) $max = 10;
-                    if (!isset($step)) $step = 1;
+                    if (!isset($min))
+                    {
+                        $min = 0;
+                    }
+
+                    if (!isset($max))
+                    {
+                        $max = 10;
+                    }
+
+                    if (!isset($step))
+                    {
+                        $step = 1;
+                    }
 
                     if ($type == 'rangeslider')
                     {
-                        if (!isset($std['min'])) $std['min'] = $min;
-                        if (!isset($std['max'])) $std['max'] = $max;
+                        if (!isset($std['min']))
+                        {
+                            $std['min'] = $min;
+                        }
+
+                        if (!isset($std['max']))
+                        {
+                            $std['max'] = $max;
+                        }
+
                         $std = $std['min'].'-'.$std['max'];
                     }
                     
@@ -952,8 +982,8 @@ class Former
 
                             $_id = str_replace('-', '-', $name.'-'.$value);
 
-                            $check  = '<div class="'.$type.'">'
-                                    . $form_func($field, $value, $set_func($name, $value, $actived), 'id="'.$_id.'"')
+                            $check  = '<div class="'.$type.'" '.$attr.'>'
+                                    . $form_func($field, $value, $set_func($name, $value, $actived), 'id="'.$_id.'" '.$attr)
                                     . '<label for="'.$_id.'"> '.$opt.'</label>'
                                     . '</div>';
 
@@ -1086,6 +1116,7 @@ class Former
                 Asssets::set_script('jqui-button',       $jqui_path.'button.min.js', 'jqui-widget', '1.10.4');
                 Asssets::set_script('jqui-mouse',        $jqui_path.'mouse.min.js', 'jqui-widget', '1.10.4');
                 Asssets::set_script('jqui-position',     $jqui_path.'position.min.js', 'jqui-widget', '1.10.4');
+                Asssets::set_script('jqui-touch',        'lib/jquery.ui.touch-punch.min.js', 'jqui-mouse', '0.2.3');
                 Asssets::set_script('jquery-mousewheel', 'lib/jquery.mousewheel.min.js', 'jquery', '3.1.0');
             }
 
@@ -1114,7 +1145,7 @@ class Former
         extract($this->_template);
 
         $attrs    = array_set_defaults($attrs, $this->_default_attr);
-        $is_error = '';
+        $is_error = FALSE;
 
         if (!is_array($attrs['desc']))
         {
@@ -1133,12 +1164,10 @@ class Former
                 $group_class    .= ' form-required';
             }
 
-            if ($is_error != '')
+            if ($is_error)
             {
                 $group_class .= ' has-error';
             }
-
-            // var_dump($is_error);
         }
 
         if (isset($attrs['class']))
@@ -1158,7 +1187,7 @@ class Former
 
         $html      = sprintf($group_open, $group_class, $group_attr);
         $left_desc = isset($attrs['left-desc']) and $attrs['left-desc'] == TRUE;
-        $errors    = ($is_error != '' and !is_array($attrs['desc'])) ? $is_error : $attrs['desc'];
+        $errors    = ($is_error and !is_array($attrs['desc'])) ? $is_error : $attrs['desc'];
 
         if ($attrs['label'] != '' OR $this->is_hform)
         {
@@ -1345,7 +1374,7 @@ class Former
      */
     protected function set_field_rules($name, $label, $type, $validation = '', $callback = '')
     {
-        $field_arr  = ($type == 'checkbox' OR $type == 'multiselect' OR $type == 'upload' ? TRUE : FALSE);
+        $field_arr  = (strpos($name, '[]') === FALSE OR $type == 'checkbox' OR $type == 'multiselect' OR $type == 'upload' ? TRUE : FALSE);
         $rules      = ($field_arr ? 'xss_clean' : 'trim|xss_clean');
 
         if (strlen($validation) > 0)

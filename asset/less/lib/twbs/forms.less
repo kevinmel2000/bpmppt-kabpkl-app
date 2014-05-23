@@ -335,6 +335,31 @@ input[type=radio] {
     vertical-align: middle;
     speak: none;
   }
+
+  &[disabled],
+  &[readonly] {
+    &:before,
+    &:checked:before,
+    &:hover:before,
+    &:focus:before,
+    &:active:before {
+      color: @gray;
+    }
+  }
+}
+
+.radio,
+.radio-inline,
+.checkbox,
+.checkbox-inline {
+  &[disabled],
+  &[readonly] {
+    .opacity(.6);
+    
+    label {
+      cursor: not-allowed;
+    }
+  }
 }
 
 input[type=checkbox] {

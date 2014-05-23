@@ -162,7 +162,7 @@ class Layanan extends BAKA_Controller
             $this->set_panel_title( 'Semua data ' . $this->bpmppt->get_label( $data_type ) );
 
             $slug = $this->bpmppt->get_alias( $data_type );
-            $stat  = FALSE;
+            $stat = FALSE;
 
             switch ( $this->uri->segment(5) )
             {
@@ -207,8 +207,7 @@ class Layanan extends BAKA_Controller
 
     public function form( $data_type, $data_id = FALSE )
     {
-        $modul_slug = $this->bpmppt->get_alias( $data_type );
-        $data_obj   = ( $data_id ? $this->bpmppt->get_fulldata_by_id( $data_id ) : FALSE );
+        $data_obj = ( $data_id ? $this->bpmppt->get_fulldata_by_id( $data_id ) : FALSE );
 
         $this->set_panel_title( 'Input data ' . $this->bpmppt->get_label( $data_type ) );
         $this->data['tool_buttons']['data'] = 'Kembali|default';
@@ -231,110 +230,15 @@ class Layanan extends BAKA_Controller
                 $this->data['tool_buttons']['aksi|default']['delete/'.$data_id] = 'Hapus Permanen&message="Anda yakin ingin menghapus data nomor '.$data_obj->surat_nomor.'"';
             }
 
-            $this->data['tool_buttons']['Ubah status:dd|default']   = array(
-                'ubah-status/'.$data_id.'/pending/'     => 'Pending',
-                'ubah-status/'.$data_id.'/approved/'    => 'Disetujui',
-                'ubah-status/'.$data_id.'/done/'        => 'Selesai' );
+            $this->data['tool_buttons']['Ubah status:dd|default'] = array(
+                'ubah-status/'.$data_id.'/pending/'  => 'Pending',
+                'ubah-status/'.$data_id.'/approved/' => 'Disetujui',
+                'ubah-status/'.$data_id.'/done/'     => 'Selesai' );
 
             $date   = ( $status != 'pending' ? ' pada: '.format_datetime( $data_obj->{$status.'_on'} ) : '' );
-
-            // $fields[] = array(
-            //     'name'  => $modul_slug.'_pemohon_jabatan',
-            //     'label' => 'Status Pengajuan',
-            //     'type'  => 'static',
-            //     'std'   => '<span class="label label-'.$status.'">'._x('status_'.$status).'</span>'.$date );
         }
 
-        if ( $data_type != 'imb' )
-        {
-            $data_label = 'Permohonan';
-
-            if ($data_type == 'tdp')
-            {
-                $data_label = 'Agenda';
-            }
-            
-            if ($data_type == 'siup')
-            {
-                $data_label = 'SIUP';
-            }
-
-            $fields[] = array(
-                'name'  => $modul_slug.'_surat',
-                'label' => 'No. &amp; Tgl. '.$data_label,
-                'type'  => 'subfield',
-                'attr'  => ( $data_obj ? 'disabled' : ''),
-                'fields'=> array(
-                    array(
-                        'col'   => '6',
-                        'name'  => 'nomor',
-                        'label' => 'Nomor',
-                        'type'  => 'text',
-                        'std'   => ( $data_obj ? $data_obj->surat_nomor : ''),
-                        'validation'=> ( !$data_obj ? 'required' : '' ) ),
-                    array(
-                        'col'   => '6',
-                        'name'  => 'tanggal',
-                        'label' => 'Tanggal',
-                        'type'  => 'datepicker',
-                        'std'   => ( $data_obj ? format_date( $data_obj->surat_tanggal ) : ''),
-                        'validation'=> ( !$data_obj ? 'required' : '' ),
-                        'callback'=> 'string_to_date' ),
-                    )
-                );
-        }
-
-        $this->load->library('baka_pack/former');
-
-        $no_buttons = $data_id != '' ? TRUE : FALSE ;
-
-        $form = $this->former->init( array(
-            'name'       => $modul_slug,
-            'action'     => current_url(),
-            'fields'     => array_merge( $fields, $this->bpmppt->get_form( $data_type, $data_obj )),
-            'no_buttons' => $no_buttons,
-            ));
-
-        if ( $form_data = $form->validate_submition() )
-        {
-            if ( $data_type == 'imb' )
-            {
-                $form_data[$modul_slug.'_surat_nomor'] = 614;
-            }
-
-            if ( $data_type == 'iup' )
-            {
-                $i = 0;
-                $koor_fn = $modul_slug.'_tambang_koor';
-
-                foreach ($_POST[$koor_fn.'_no'] as $no)
-                {
-                    foreach (array('no', 'gb-1', 'gb-2', 'gb-3', 'gl-1', 'gl-2', 'gl-3', 'lsu') as $name)
-                    {
-                        $koor_name = $koor_fn.'_'.$name;
-                        $koordinat[$i][$name] = isset($_POST[$koor_name][$i]) ? $_POST[$koor_name][$i] : 0;
-                        unset($_POST[$koor_name][$i]);
-                    }
-
-                    $i++;
-                }
-
-                $form_data[$modul_slug.'_tambang_koor'] = serialize($koordinat);
-            }
-
-            unset($form_data[$modul_slug]);
-
-            $data_id = $this->bpmppt->simpan( $modul_slug, $form_data );
-            
-            foreach ( Messg::get() as $level => $message )
-            {
-                $this->session->set_flashdata( $level, $message );
-            }
-
-            redirect( $this->data['page_link'].'form/'.$data_id );
-        }
-
-        $this->data['panel_body'] = $form->generate();
+        $this->data['panel_body'] = $this->bpmppt->get_form( $data_type, $data_obj );
 
         $this->load->theme('pages/panel_form', $this->data);
     }

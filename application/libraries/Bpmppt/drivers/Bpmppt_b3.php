@@ -33,10 +33,9 @@
  *
  * @package     Bapa Pack BPMPPT
  * @author      Fery Wardiyanto
- * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
+ * @copyright   Copyright (c) Badan Penanaman Modal dan Pelayanan Perijinan Terpadu Kab. Pekalongan
  * @license     http://dbad-license.org
  * @since       Version 1.0
- * @filesource
  */
 
 // =============================================================================
@@ -65,7 +64,7 @@ class Bpmppt_b3 extends CI_Driver
      *
      * @var  array
      */
-    public $fields = array(
+    public $defaults = array(
         'pemohon_nama'      => '',
         'pemohon_alamat'    => '',
         'pemohon_jabatan'   => '',
@@ -105,100 +104,98 @@ class Bpmppt_b3 extends CI_Driver
      */
     public function form( $data_obj = FALSE )
     {
-        $fields[]   = array(
-            'name'  => $this->alias.'_fieldset_data_pemohon',
+        $fields[] = array(
+            'name'  => 'fieldset_data_pemohon',
             'label' => 'Data Pemohon',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
             'type'  => 'fieldset' );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pemohon_nama',
+        $fields[] = array(
+            'name'  => 'pemohon_nama',
             'label' => 'Nama lengkap',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->pemohon_nama : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pemohon_alamat',
+        $fields[] = array(
+            'name'  => 'pemohon_alamat',
             'label' => 'Alamat',
             'type'  => 'textarea',
             'std'   => ( $data_obj ? $data_obj->pemohon_alamat : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_pemohon_jabatan',
+        $fields[] = array(
+            'name'  => 'pemohon_jabatan',
             'label' => 'Jabatan',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->pemohon_jabatan : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_fieldset_data_daftar',
+        $fields[] = array(
+            'name'  => 'fieldset_data_daftar',
             'label' => 'Data Pendaftaran',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
             'type'  => 'fieldset' );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_daftar_nomor',
+        $fields[] = array(
+            'name'  => 'daftar_nomor',
             'label' => 'Nomor Daftar Permohonan.',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->daftar_nomor : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_daftar_tanggal',
+        $fields[] = array(
+            'name'  => 'daftar_tanggal',
             'label' => 'Tanggal Daftar Permohonan.',
             'type'  => 'datepicker',
             'std'   => ( $data_obj ? $data_obj->daftar_tanggal : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_fieldset_data_usaha',
+        $fields[] = array(
+            'name'  => 'fieldset_data_usaha',
             'label' => 'Data Perusahaan',
             'attr'  => ( $data_obj ? 'disabled' : '' ),
             'type'  => 'fieldset' );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_nama',
+        $fields[] = array(
+            'name'  => 'usaha_nama',
             'label' => 'Nama Perusahaan',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->usaha_nama : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_bidang',
+        $fields[] = array(
+            'name'  => 'usaha_bidang',
             'label' => 'Bidang usaha',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->usaha_bidang : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_alamat',
+        $fields[] = array(
+            'name'  => 'usaha_alamat',
             'label' => 'Alamat Kantor',
             'type'  => 'textarea',
             'std'   => ( $data_obj ? $data_obj->usaha_alamat : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_lokasi',
+        $fields[] = array(
+            'name'  => 'usaha_lokasi',
             'label' => 'Lokasi Usaha',
             'type'  => 'textarea',
             'std'   => ( $data_obj ? $data_obj->usaha_lokasi : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_kontak',
+        $fields[] = array(
+            'name'  => 'usaha_kontak',
             'label' => 'Nomor Telp. &amp; Fax.',
             'type'  => 'subfield',
             'fields'=> array(
                 array(
-                    'col'   => '6',
                     'name'  => 'telp',
                     'label' => 'No. Telpon',
                     'type'  => 'tel',
                     'std'   => ( $data_obj ? $data_obj->usaha_kontak_telp : '') ),
                 array(
-                    'col'   => '6',
                     'name'  => 'fax',
                     'label' => 'No. Fax',
                     'type'  => 'tel',
@@ -206,34 +203,30 @@ class Bpmppt_b3 extends CI_Driver
                 )
             );
 
-        $fields[]   = array(
-            'name'  => $this->alias.'_usaha_tps',
+        $fields[] = array(
+            'name'  => 'usaha_tps',
             'label' => 'Tempat Pembuangan Sementara',
             'type'  => 'subfield',
             'fields'=> array(
                 array(
-                    'col'   => '3',
                     'name'  => 'fungsi',
                     'label' => 'Keterangan fungsi',
                     'type'  => 'text',
                     'std'   => ( $data_obj ? $data_obj->usaha_tps_fungsi : ''),
                     'validation'=> ( !$data_obj ? 'required' : '' ) ),
                 array(
-                    'col'   => '3',
                     'name'  => 'ukuran',
                     'label' => 'Ukuran',
                     'type'  => 'text',
                     'std'   => ( $data_obj ? $data_obj->usaha_tps_ukuran : ''),
                     'validation'=> ( !$data_obj ? 'required' : '' ) ),
                 array(
-                    'col'   => '3',
                     'name'  => 'koor_s',
                     'label' => 'Koor. S',
                     'type'  => 'text',
                     'std'   => ( $data_obj ? $data_obj->usaha_tps_koor_s : ''),
                     'validation'=> ( !$data_obj ? 'required' : '' ) ),
                 array(
-                    'col'   => '3',
                     'name'  => 'koor_e',
                     'label' => 'Koor. E',
                     'type'  => 'text',
