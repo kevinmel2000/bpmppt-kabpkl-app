@@ -201,8 +201,8 @@ class Former
         $this->_ci->load->library('form_validation');
 
         // Give some default values
-        $this->_attrs['action']     = current_url(); 
-        $this->_attrs['name']       = str_replace('/', '-', uri_string());
+        $this->_attrs['action'] = current_url(); 
+        $this->_attrs['name']   = str_replace('/', '-', uri_string());
 
         if (!empty($attrs))
         {
@@ -225,7 +225,7 @@ class Former
     public function init(array $attrs = array())
     {
         // Applying default form attributes
-        foreach (array('action', 'name', 'id', 'class', 'method', 'extras') as $attr_key)
+        foreach (array('action', 'name', 'id', 'class', 'method', 'extras', 'hiddens') as $attr_key)
         {
             if (isset($attrs[$attr_key]))
             {
@@ -483,8 +483,16 @@ class Former
             $this->_attrs = array_merge($this->_attrs, $_extras);
         }
 
+        $_hiddens = array();
+
+        if (isset($this->_attrs['hiddens']))
+        {
+            $_hiddens = $this->_attrs['hiddens'];
+            unset($this->_attrs['hiddens']);
+        }
+
         // Let's get started
-        $html = form_open($_action, $this->_attrs);
+        $html = form_open($_action, $this->_attrs, $_hiddens);
 
         // Loop the fields if not empty
         if (count($this->_fields) > 0)
@@ -1393,6 +1401,14 @@ class Former
         else
         {
             $this->form_data[$name] = $this->_ci->input->$method($name);
+        }
+
+        if (isset($this->_attrs['hiddens']))
+        {
+            foreach ($this->_attrs['hiddens'] as $h_name => $h_value)
+            {
+                $this->form_data[$h_name] = $this->_ci->input->$method($h_name);
+            }
         }
 
         if ($type == 'upload')

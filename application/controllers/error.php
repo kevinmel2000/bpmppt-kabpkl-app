@@ -51,7 +51,7 @@ class Error extends BAKA_Controller
     {
         parent::__construct();
 
-        $this->verify_login();
+        $this->verify_login(uri_string());
     }
 
     public function index( $page = '' )

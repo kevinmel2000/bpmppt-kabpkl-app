@@ -51,7 +51,7 @@ class Info extends BAKA_Controller
     {
         parent::__construct();
 
-        $this->verify_login();
+        $this->verify_login(uri_string());
 
         if ( !$this->authr->is_permited('sys_manage') )
         {

@@ -51,7 +51,7 @@ class Pengguna extends BAKA_Controller
     {
         parent::__construct();
 
-        $this->verify_login();
+        $this->verify_login(uri_string());
 
         $this->themee->add_navbar( 'admin_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
         $this->admin_navbar( 'admin_sidebar', 'side' );

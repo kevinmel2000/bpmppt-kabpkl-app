@@ -51,7 +51,7 @@ class Laporan extends BAKA_Controller
     {
         parent::__construct();
 
-        $this->verify_login();
+        $this->verify_login(uri_string());
 
         $this->themee->add_navbar( 'data_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
         $this->data_navbar( 'data_sidebar', 'side' );

@@ -137,20 +137,27 @@ class Auth extends BAKA_Controller
             'name'      => 'login',
             'action'    => current_url(),
             'fields'    => $fields,
+            'hiddens'   => array(
+                'goto' => $this->input->get('from'),
+                ),
             'buttons'   => $buttons,
             'is_hform'  => FALSE ));
 
         if ( $input = $form->validate_submition() )
         {
-            $goto = $this->authr->login( $input['username'], $input['password'], $input['remember'] ) ? 'data/utama' : current_url();
+            $goto = $this->authr->login( $input['username'], $input['password'], $input['remember'] ) ? $input['goto'] : '';
 
             foreach ( Messg::get() as $level => $item )
             {
                 $this->session->set_flashdata( $level, $item );
             }
 
-            redirect( $goto );
+            // var_dump($input['goto']);
+
+            redirect( $goto );  
         }
+
+        $this->set_panel_body($form->generate());
 
         $this->data['desc_body'] = array_merge($this->data['desc_body'], array(
             'Untul login sebagai Administrator silahkan gunakan',
@@ -164,8 +171,6 @@ class Auth extends BAKA_Controller
                 'password: <b>1234</b>',
                 ),
             ));
-
-        $this->set_panel_body($form->generate());
 
         $this->load->theme('pages/auth', $this->data, 'auth');
     }

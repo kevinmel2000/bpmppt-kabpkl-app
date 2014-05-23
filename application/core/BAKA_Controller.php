@@ -124,11 +124,11 @@ class BAKA_Controller extends CI_Controller
      *
      * @return  void
      */
-    protected function verify_login()
+    protected function verify_login($from = '')
     {
         if (!$this->authr->is_logged_in() AND !$this->authr->is_logged_in(FALSE) AND !is_cli())
         {
-            redirect('login');
+            redirect('login?from='.$from);
         }
         
         if ($this->authr->is_logged_in(FALSE) AND !is_cli())
