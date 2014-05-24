@@ -74,7 +74,7 @@ class Internal extends BAKA_Controller
             $this->_notice( 'access-denied' );
         }
 
-        $this->data['panel_title'] = $this->themee->set_title('Properti data SKPD');
+        $this->set_panel_title('Properti data SKPD');
 
         $fields[]   = array(
             'name'  => 'skpd_name',
@@ -182,7 +182,7 @@ class Internal extends BAKA_Controller
             $this->_notice( 'access-denied' );
         }
 
-        $this->data['panel_title'] = $this->themee->set_title('Pengaturan Aplikasi');
+        $this->set_panel_title('Pengaturan Aplikasi');
 
         $fields[]   = array(
             'name'  => 'app_data_show_limit',
@@ -577,7 +577,7 @@ class Internal extends BAKA_Controller
 
     private function _prop_data()
     {
-        $this->data['panel_title']  = $this->themee->set_title('Pengaturan Properti Data');
+        $this->set_panel_title('Pengaturan Properti Data');
 
         $this->data['tool_buttons']['form'] = 'Baru|primary';
 
@@ -602,7 +602,7 @@ class Internal extends BAKA_Controller
 
     private function _prop_form( $prop_id = NULL )
     {
-        $this->data['panel_title'] = $this->themee->set_title('Pengaturan Properti Data');
+        $this->set_panel_title('Pengaturan Properti Data');
 
         $this->data['tool_buttons']['data'] = 'Kembali|default';
 

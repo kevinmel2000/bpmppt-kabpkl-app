@@ -159,7 +159,7 @@ class Layanan extends BAKA_Controller
                 'cetak/setting' => 'Laporan',
                 );
 
-            $this->set_panel_title( 'Semua data ' . $this->bpmppt->get_label( $data_type ) );
+            $this->set_panel_title( 'Semua data '.$this->bpmppt->get_label( $data_type ) );
 
             $slug = $this->bpmppt->get_alias( $data_type );
             $stat = FALSE;
@@ -209,7 +209,7 @@ class Layanan extends BAKA_Controller
     {
         $data_obj = ( $data_id ? $this->bpmppt->get_fulldata_by_id( $data_id ) : FALSE );
 
-        $this->set_panel_title( 'Input data ' . $this->bpmppt->get_label( $data_type ) );
+        $this->set_panel_title( 'Input data '.$this->bpmppt->get_label( $data_type ) );
         $this->data['tool_buttons']['data'] = 'Kembali|default';
 
         $fields = array();
@@ -383,7 +383,7 @@ class Layanan extends BAKA_Controller
         $modul_slug = $this->bpmppt->get_alias( $data_type );
         $data_label = $this->bpmppt->get_label( $data_type );
 
-        $this->set_panel_title( 'Editing template output ' . $data_label );
+        $this->set_panel_title( 'Editing template output '.$data_label );
         $this->data['tool_buttons']['data'] = 'Kembali|default';
 
         $this->load->helper('file');
@@ -444,7 +444,7 @@ class Layanan extends BAKA_Controller
         $modul_slug = $this->bpmppt->get_alias( $data_type );
         $data_label = $this->bpmppt->get_label( $data_type );
 
-        $this->set_panel_title( 'Editing template output ' . $data_label );
+        $this->set_panel_title( 'Editing template output '.$data_label );
         $this->data['tool_buttons']['data'] = 'Kembali|default';
 
         $this->load->helper('file');

@@ -152,8 +152,6 @@ class Auth extends BAKA_Controller
                 $this->session->set_flashdata( $level, $item );
             }
 
-            // var_dump($input['goto']);
-
             redirect( $goto );  
         }
 

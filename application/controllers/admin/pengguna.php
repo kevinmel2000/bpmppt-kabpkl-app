@@ -129,7 +129,7 @@ class Pengguna extends BAKA_Controller
         $user   = ( $user_id != '' ? $this->authr->users->get( $user_id ) : FALSE );
         $judul  = ( $user_id == $this->current_user['user_id'] ? 'Profile anda: ' : 'Data pengguna: ');
 
-        $this->data['panel_title'] = $this->themee->set_title( ( $user ? $judul.$user->username : 'Buat pengguna baru' ));
+        $this->set_panel_title(( $user ? $judul.$user->username : 'Buat pengguna baru' ));
         $this->data['tool_buttons']['data'] = 'Kembali|default';
 
         if ( $user )
@@ -144,8 +144,8 @@ class Pengguna extends BAKA_Controller
 
         if ( (bool) Setting::get('auth_use_username') )
         {
-            $username_min_length = Setting::get('auth_username_min_length');
-            $username_max_length = Setting::get('auth_username_max_length');
+            $username_min_length = Setting::get('auth_username_length_min');
+            $username_max_length = Setting::get('auth_username_length_max');
 
             $fields[]   = array(
                 'name'  => 'user-username',
@@ -177,8 +177,8 @@ class Pengguna extends BAKA_Controller
                 'label' => 'Password lama' );
         }
 
-        $password_min_length = Setting::get('auth_password_min_length');
-        $password_max_length = Setting::get('auth_password_max_length');
+        $password_min_length = Setting::get('auth_password_length_min');
+        $password_max_length = Setting::get('auth_password_length_max');
 
         $fields[]   = array(
             'name'  => 'user-new-password',
@@ -229,13 +229,15 @@ class Pengguna extends BAKA_Controller
                 'label' => 'Dibuat pada',
                 'std'   => format_datetime($user->created) );
 
+            $is_banned = (bool) $user->banned;
+
             $fields[]   = array(
                 'name'  => 'user-banned',
                 'type'  => 'static',
                 'label' => 'Dicekal',
-                'std'   => (bool) $user->banned ? twb_label('Ya', 'danger') : twb_label('Tidak', 'success') );
+                'std'   => $is_banned ? twb_label('Ya', 'danger') : twb_label('Tidak', 'success') );
 
-            if ( (bool) $user->banned )
+            if ( $is_banned )
             {
                 $fields[]   = array(
                     'name'  => 'user-ban-reason',
@@ -312,7 +314,7 @@ class Pengguna extends BAKA_Controller
     {
         $username = $this->authr->users->get( $user_id )->username;
 
-        $this->data['panel_title']  = $this->themee->set_title('Cekal pengguna: '.$username);
+        $this->set_panel_title('Cekal pengguna: '.$username);
 
         $fields[]   = array(
             'name'  => 'ban-user',
@@ -609,7 +611,7 @@ class Pengguna extends BAKA_Controller
     private function _perm_table()
     {
         $this->data['page_link']    = 'admin/pengguna/permission/';
-        $this->data['panel_title']  = $this->themee->set_title('Semua data hak akses pengguna');
+        $this->set_panel_title('Semua data hak akses pengguna');
         $this->data['tool_buttons']['form'] = 'Baru|primary';
 
         $this->load->library('baka_pack/gridr', array(
