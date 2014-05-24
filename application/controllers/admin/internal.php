@@ -253,7 +253,6 @@ class Internal extends BAKA_Controller
                 'key'   => 'email_protocol',
                 'value' => 'smtp' ),
             'std'   => Setting::get('email_smtp_user'),
-            // 'validation'=> 'valid_email'
             );
 
         $fields[]   = array(
@@ -308,7 +307,6 @@ class Internal extends BAKA_Controller
             'label' => 'Prioritas',
             'min'   => 1,
             'max'   => 5,
-            'step'  => 1,
             'std'   => Setting::get('email_priority'),
             'desc'  => 'Prioritas email diisi dengan angka 1-5, angka 1 untuk paling tinggi dan 5 untuk paling rendah.',
             'validation'=> 'numeric|greater_than[0]|less_than[6]' );
@@ -323,51 +321,27 @@ class Internal extends BAKA_Controller
 
         $fields[]   = array(
             'name'  => 'auth_username_length',
-            'type'  => 'subfield',
+            'type'  => 'rangeslider',
             'label' => 'Jumlah karakter Username',
-            'fields'=> array(
-                array(
-                    'name'  => 'min',
-                    'type'  => 'number',
-                    'min'   => $user_min,
-                    'max'   => $user_max,
-                    'label' => 'Minimal',
-                    'std'   => Setting::get('auth_username_min_length'),
-                    'validation'=>'required|numeric' ),
-                array(
-                    'name'  => 'max',
-                    'type'  => 'number',
-                    'min'   => $user_min,
-                    'max'   => $user_max,
-                    'label' => 'Maksimal',
-                    'std'   => Setting::get('auth_username_max_length'),
-                    'validation'=>'required|numeric' )
+            'min'   => $user_min,
+            'max'   => $user_max,
+            'std'   => array(
+                'min' => Setting::get('auth_username_length_min'),
+                'max' => Setting::get('auth_username_length_max'),
                 ),
-            'desc'  => 'Jumlah minimal dan maksimal karakter Username' );
+            'desc'  => 'Jumlah minimal dan maksimal karakter Username.' );
 
         $fields[]   = array(
             'name'  => 'auth_password_length',
-            'type'  => 'subfield',
+            'type'  => 'rangeslider',
             'label' => 'Jumlah karakter Password',
-            'fields'=> array(
-                array(
-                    'name'  => 'min',
-                    'type'  => 'number',
-                    'min'   => $user_min,
-                    'max'   => $user_max,
-                    'label' => 'Minimal',
-                    'std'   => Setting::get('auth_password_min_length'),
-                    'validation'=>'required|numeric' ),
-                array(
-                    'name'  => 'max',
-                    'type'  => 'number',
-                    'min'   => $user_min,
-                    'max'   => $user_max,
-                    'label' => 'Maksimal',
-                    'std'   => Setting::get('auth_password_max_length'),
-                    'validation'=>'required|numeric' )
+            'min'   => $user_min,
+            'max'   => $user_max,
+            'std'   => array(
+                'min' => Setting::get('auth_password_length_min'),
+                'max' => Setting::get('auth_password_length_max'),
                 ),
-            'desc'  => 'Jumlah minimal dan maksimal karakter Password' );
+            'desc'  => 'Jumlah minimal dan maksimal karakter Password.' );
 
         $fields[]   = array(
             'name'  => 'auth_fieldset_register',
@@ -388,15 +362,16 @@ class Internal extends BAKA_Controller
             'label' => 'Aktivasi via email',
             'std'   => Setting::get('auth_email_activation'));
 
-        $email_expired = Setting::get('auth_email_act_expire');
+        $auth_email_act_expire = second_to_day(Setting::get('auth_email_act_expire'));
 
         $fields[]   = array(
             'name'  => 'auth_email_act_expire',
-            'type'  => 'number',
+            'type'  => 'slider',
             'label' => 'Batas aktivasi email',
-            'std'   => $email_expired,
-            'desc'  => 'Batas waktu aktivasi email dalam detik. Nilai '.$email_expired.' detik = '.second_to_day( $email_expired ).' hari.',
-            'validation'=>'numeric' );
+            'min'   => 1,
+            'max'   => 10,
+            'std'   => $auth_email_act_expire,
+            'desc'  => 'Batas waktu aktivasi email dalam detik. Nilai '.$auth_email_act_expire.' hari.' );
 
         $fields[]   = array(
             'name'  => 'auth_use_username',
@@ -436,19 +411,23 @@ class Internal extends BAKA_Controller
 
         $fields[]   = array(
             'name'  => 'auth_login_max_attempts',
-            'type'  => 'number',
+            'type'  => 'slider',
             'label' => 'Maksimum login',
+            'min'   => 1,
+            'max'   => 10,
             'std'   => Setting::get('auth_login_max_attempts'),
-            'desc'  => 'batas maksimum login untuk tiap pengguna');
+            'desc'  => 'Batas maksimum login untuk tiap pengguna.' );
 
-        $login_expired = Setting::get('auth_login_attempt_expire');
+        $auth_login_attempt_expire = second_to_day(Setting::get('auth_login_attempt_expire'));
 
         $fields[]   = array(
             'name'  => 'auth_login_attempt_expire',
-            'type'  => 'number',
+            'type'  => 'slider',
             'label' => 'Masa kadaluarsa login',
-            'std'   => $login_expired,
-            'desc'  => 'Batas waktu pengguna dapat login kembali dalam detik. Nilai '.$login_expired.' detik = '.second_to_day( $login_expired ).' hari.');
+            'min'   => 1,
+            'max'   => 10,
+            'std'   => $auth_login_attempt_expire,
+            'desc'  => 'Batas waktu pengguna dapat login kembali dalam detik. Nilai '.$auth_login_attempt_expire.' hari.' );
 
         $fields[]   = array(
             'name'  => 'auth_fieldset_captcha',
@@ -541,8 +520,15 @@ class Internal extends BAKA_Controller
 
             foreach ( $form_data as $opt_key => $opt_val )
             {
+                if ($opt_key == 'auth_login_attempt_expire' or $opt_key == 'auth_email_act_expire')
+                {
+                    $opt_val *= 86400;
+                }
+
                 $return = Setting::edit( $opt_key, $opt_val );
             }
+
+            // var_dump($form_data);
 
             $this->db->trans_complete();
 
@@ -552,6 +538,7 @@ class Internal extends BAKA_Controller
             }
             else
             {
+                // $this->session->set_flashdata('success', array_values($form_data));
                 $this->session->set_flashdata('success', array('Konfigurasi berhasil disimpan.'));
             }
 

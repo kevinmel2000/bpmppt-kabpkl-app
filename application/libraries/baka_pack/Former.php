@@ -771,6 +771,91 @@ class Former
                     {
                         $step = 1;
                     }
+                    
+                    $script = "$('.jqui-".$type."').each( function() {\n"
+                            . "    var el = $(this),\n"
+                            . "        elmin = el.data('slider-min'),\n"
+                            . "        elmax = el.data('slider-max'),\n";
+
+                    if ($type == 'rangeslider')
+                    {
+                        $script .= "        inputMin = $('#'+el.data('slider-target-min')),\n"
+                                .  "        inputMax = $('#'+el.data('slider-target-max'))\n\n";
+                    }
+                    else
+                    {
+                        $script .= "        input = $('#'+el.data('slider-target'))\n\n";
+                    }
+
+                    $script .= "    el.slider({\n"
+                            .  "        max: elmax,\n"
+                            .  "        min: elmin,\n"
+                            .  "        step: el.data('slider-step'),\n";
+
+                    if ($type == 'rangeslider')
+                    {
+                        $script .= "        range: true,\n"
+                                .  "        values: [inputMin.val(), inputMax.val()],\n"
+                                .  "        slide: function(event, ui) {\n"
+                                .  "            inputMin.val(ui.values[0]);\n"
+                                .  "            inputMax.val(ui.values[1]);\n"
+                                .  "        }\n"
+                                .  "    });\n\n"
+                                .  "    inputMin.on('change', function() {\n"
+                                .  "        var val = +$(this).val();\n"
+                                .  "        if (val <= elmin) {\n"
+                                .  "            val = elmin;\n"
+                                .  "        }\n"
+                                .  "        else if (val > inputMax.val()) {\n"
+                                .  "            val = inputMax.val();\n"
+                                .  "        }\n"
+                                .  "        inputMin.val(val)\n"
+                                .  "        el.slider('values', 0, val)\n"
+                                .  "    });\n\n"
+                                .  "    inputMax.on('change', function() {\n"
+                                .  "        var val = +$(this).val();\n"
+                                .  "        if (val >= elmax) {\n"
+                                .  "            val = elmax\n"
+                                .  "        }\n"
+                                .  "        else if (val < inputMin.val()) {\n"
+                                .  "            val = inputMin.val()\n"
+                                .  "        }\n"
+                                .  "        inputMax.val(val)\n"
+                                .  "        el.slider('values', 1, val)\n"
+                                .  "    });\n";
+                    }
+                    else
+                    {
+                        $script .= "        range: 'min',\n"
+                                .  "        value: input.val(),\n"
+                                .  "        slide: function(event, ui) {\n"
+                                .  "            input.val(ui.value);\n"
+                                .  "        }\n"
+                                .  "    });\n"
+                                .  "    input.on('change', function() {\n"
+                                .  "        var val = +$(this).val();\n"
+                                .  "        if (val > elmax) {\n"
+                                .  "            val = elmax\n"
+                                .  "        }\n"
+                                .  "        else if (val < elmin) {\n"
+                                .  "            val = elmin\n"
+                                .  "        }\n"
+                                .  "        $(this).val(val)\n"
+                                .  "        el.slider('value', val)\n"
+                                .  "    });\n";
+                    }
+
+                    $script .= "});";
+
+                    Asssets::set_script('jqui-'.$type.'-trigger', $script, 'jqui-slider');
+
+                    $slider_attrs = array(
+                        'class'              => 'jqui-'.$type,
+                        'data-slider-target' => $id,
+                        'data-slider-step'   => $step,
+                        'data-slider-min'    => $min,
+                        'data-slider-max'    => $max,
+                        );
 
                     if ($type == 'rangeslider')
                     {
@@ -784,46 +869,36 @@ class Former
                             $std['max'] = $max;
                         }
 
-                        $std = $std['min'].'-'.$std['max'];
+                        $slider_attrs['data-slider-target-min'] = $id.'-min';
+                        $slider_attrs['data-slider-target-max'] = $id.'-max';
+
+                        $form_input = '<div class="input-group">'
+                                    . form_input(array(
+                                        'name'  => $name.'_min',
+                                        'id'    => $id.'-min',
+                                        'type'  => 'number',
+                                        'style' => 'width: 50%;',
+                                        'class' => $input_class), set_value($name.'_min', $std['min']), $attr)
+                                    . form_input(array(
+                                        'name'  => $name.'_max',
+                                        'id'    => $id.'-max',
+                                        'type'  => 'number',
+                                        'style' => 'width: 50%;',
+                                        'class' => $input_class), set_value($name.'_max', $std['max']), $attr)
+                                    . '</div>';
                     }
-                    
-                    $script = "$('.jqui-slider').each( function() {\n"
-                            . "    var el = $(this),"
-                            . "        input = el.data('slider-input-target'),\n"
-                            . "        elmax = el.data('slider-max'),\n"
-                            . "        elmin = el.data('slider-min')\n\n"
-                            . "    el.slider({\n"
-                            . "        max: elmax,\n"
-                            . "        min: elmin,\n"
-                            . "        range: 'min',\n"
-                            . "        value: $('#'+input).val(),\n"
-                            . "        step: el.data('slider-step'),\n"
-                            . "        slide: function(event, ui) {\n"
-                            . "            $('#'+input).val(ui.value);\n"
-                            . "        }\n"
-                            . "    });\n"
-                            . "    $('#'+input).on('change', function() {\n"
-                            . "        var val = $(this).val();"
-                            . "        if (val > elmax) {\n"
-                            . "            val = elmax\n"
-                            . "        } else if (val < elmin) {\n"
-                            . "            val = elmin\n"
-                            . "        }\n"
-                            . "        $(this).val(val)\n"
-                            . "        el.slider('value', val)\n"
-                            . "    });\n"
-                            . "});";
+                    else
+                    {
+                        $form_input = form_input(array(
+                            'name'  => $name,
+                            'id'    => $id,
+                            'type'  => 'number',
+                            'class' => $input_class), set_value($name, $std), $attr);
+                    }
 
-                    Asssets::set_script('jqui-slider-trigger', $script, 'jqui-slider');
-
-                    $input  = '<div class="row"><div class="'.twbs_set_columns(2, 2, 2, 3).'">'
-                            . form_input(array(
-                                'name'  => $name,
-                                'id'    => $id,
-                                'type'  => 'number',
-                                'class' => $input_class), set_value($name, $std), $attr)
-                            . '</div><div class="'.twbs_set_columns(10, 10, 10, 9).'">'
-                            . '<div class="jqui-slider" data-slider-input-target="'.$id.'" data-slider-step="'.$step.'" data-slider-min="'.$min.'" data-slider-max="'.$max.'"></div>'
+                    $input  = '<div class="row"><div class="'.twbs_set_columns(3, 3, 3, 3).'">'.$form_input.'</div>'
+                            . '<div class="'.twbs_set_columns(9, 9, 9, 9).'">'
+                            . '<div '.parse_attrs($slider_attrs).'></div>'
                             . '</div></div>';
                     break;
 
@@ -1331,9 +1406,25 @@ class Former
                         $field['name'].'_'.$sub['name'],                            // Subfield Name
                         $sub['label'],                                              // Subfield Label
                         $sub['type'],
-                        (isset($sub['validation'])  ? $sub['validation']: ''),      // Subfield Validation  (jika ada)
-                        (isset($sub['callback'])    ? $sub['callback']  : ''));     // Subfield Callback    (jika ada)
+                        (isset($sub['validation']) ? $sub['validation'] : ''),      // Subfield Validation  (jika ada)
+                        (isset($sub['callback'])   ? $sub['callback']   : ''));     // Subfield Callback    (jika ada)
                 }
+            }
+            else if ($field['type'] == 'rangeslider')
+            {
+                $this->set_field_rules(
+                    $field['name'].'_min',                                                 // Field Name
+                    $field['label'],                                                // Field Label
+                    $field['type'],
+                    (isset($field['validation']) ? $field['validation'] : ''),      // Field Validation (jika ada)
+                    (isset($field['callback'])   ? $field['callback']   : ''));     // Field Callback   (jika ada)
+
+                $this->set_field_rules(
+                    $field['name'].'_max',                                                 // Field Name
+                    $field['label'],                                                // Field Label
+                    $field['type'],
+                    (isset($field['validation']) ? $field['validation'] : ''),      // Field Validation (jika ada)
+                    (isset($field['callback'])   ? $field['callback']   : ''));     // Field Callback   (jika ada)
             }
             else if ($field['type'] != 'static' AND $field['type'] != 'fieldset')
             {
@@ -1341,8 +1432,8 @@ class Former
                     $field['name'],                                                 // Field Name
                     $field['label'],                                                // Field Label
                     $field['type'],
-                    (isset($field['validation'])? $field['validation']  : ''),      // Field Validation (jika ada)
-                    (isset($field['callback'])  ? $field['callback']    : ''));     // Field Callback   (jika ada)
+                    (isset($field['validation']) ? $field['validation'] : ''),      // Field Validation (jika ada)
+                    (isset($field['callback'])   ? $field['callback']   : ''));     // Field Callback   (jika ada)
             }
         }
 
