@@ -15,16 +15,6 @@
 		<h1><?php echo $desc_title ?></h1>
 	</div>
 
-	<?php foreach ($desc_body as $k => $body): if (!is_array($body)) : ?>
-		<p><?php echo $body ?></p>
-	<?php else: ?>
-
-		<ul>
-		<?php foreach ($body as $list): ?>
-			<li><?php echo $list ?></li>
-		<?php endforeach ?>
-		</ul>
-
-	<?php endif; endforeach; ?>
+	<?php echo $desc_body ?>
 
 </div>

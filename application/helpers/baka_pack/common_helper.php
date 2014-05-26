@@ -154,6 +154,11 @@ function bdate($format = '', $strdate = '')
 {
     setlocale(LC_ALL, 'id');
 
+    if ($strdate == '0000-00-00 00:00:00')
+    {
+        return '-';
+    }
+
     $strdate = strlen($strdate) > 0 ? strtotime($strdate) : time();
     $format || $format = 'Y-m-d H:i:s';
 

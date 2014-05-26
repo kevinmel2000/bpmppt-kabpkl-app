@@ -51,10 +51,7 @@ class Auth extends BAKA_Controller
     {
         parent::__construct();
 
-        $this->data['desc_title'] = 'Selamat Datang di '.$this->data['footer_right'];
-        $this->data['desc_body']  = array(
-            'Aplikasi ini sepenuhnya adalah milik dari '.$this->data['footer_left'].' dan url ini sepenuhnya hanya untuk tujuan Demo dan Testing semata.',
-            );
+        $this->data['desc_title'] = Setting::get('welcome_title');
 
         $this->load->library('baka_pack/former');
         $this->set_panel_title('User Authentication');
@@ -157,18 +154,7 @@ class Auth extends BAKA_Controller
 
         $this->set_panel_body($form->generate());
 
-        $this->data['desc_body'] = array_merge($this->data['desc_body'], array(
-            'Untul login sebagai Administrator silahkan gunakan',
-            array(
-                'Username: <b>admin</b>',
-                'password: <b>password</b>',
-                ),
-            'Untul login sebagai Pengguna silahkan gunakan',
-            array(
-                'Username: <b>pengguna1</b>',
-                'password: <b>1234</b>',
-                ),
-            ));
+        $this->data['desc_body'] = Setting::get('welcome_login');
 
         $this->load->theme('pages/auth', $this->data, 'auth');
     }
@@ -271,9 +257,7 @@ class Auth extends BAKA_Controller
             redirect( $goto );
         }
 
-        $this->data['desc_body'] = array_merge($this->data['desc_body'], array(
-            'Silahkan daftarkan diri anda dengan mengisi formulir disamping.',
-            ));
+        $this->data['desc_body'] = Setting::get('welcome_register');
         
         $this->set_panel_body($form->generate());
 
@@ -341,10 +325,7 @@ class Auth extends BAKA_Controller
             }
         }
 
-        $this->data['desc_body'] = array_merge($this->data['desc_body'], array(
-            'Nampaknya akun anda belum diaktifkan, mungkin karena anda belum mengkonfirmasi email aktifasi yang kami kirimkan?. Silahkan coba kirim ulang aktifasi agar anda dapat segera menggunakan aplikasi ini.',
-            'Dengan cara isikan alamat email (aktif) anda ke formulir disamping lalu tekan "Kirim". Maka kami akan mengirimkan aktifasi yang baru.',
-            ));
+        $this->data['desc_body'] = Setting::get('welcome_resend');
         
         $this->set_panel_body($form->generate());
 
@@ -406,9 +387,7 @@ class Auth extends BAKA_Controller
             }
         }
 
-        $this->data['desc_body'] = array_merge($this->data['desc_body'], array(
-            'Jika anda lupa Username atau Password login, silahkan isi form disamping dengan email anda. Maka kami akan segera mengirim sebuah url untuk mengatur ulang password dan username anda.',
-            ));
+        $this->data['desc_body'] = Setting::get('welcome_forgot');
         
         $this->set_panel_body($form->generate());
 
@@ -494,11 +473,7 @@ class Auth extends BAKA_Controller
             }
         }
 
-        $this->data['desc_body'] = array_merge($this->data['desc_body'], array(
-            'Untul login sebagai Administrator silahkan gunakan',
-            'Username: admin',
-            'password: password',
-            ));
+        $this->data['desc_body'] = '';
         
         $this->set_panel_body($form->generate());
 

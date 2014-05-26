@@ -98,7 +98,7 @@ class Internal extends BAKA_Controller
             'validation'=>'required' );
 
         $fields[]   = array(
-            'name'  => 'skpd_addrresses',
+            'name'  => 'contact_fieldset',
             'type'  => 'fieldset',
             'label' => 'Alamat dan Kontak SKPD' );
 
@@ -169,6 +169,45 @@ class Internal extends BAKA_Controller
             'label' => 'Alamat Email',
             'std'   => Setting::get('skpd_email'),
             'validation'=>'valid_email' );
+
+        $fields[]   = array(
+            'name'  => 'opening_fieldset',
+            'type'  => 'fieldset',
+            'label' => 'Opening Text' );
+
+        $fields[]   = array(
+            'name'  => 'welcome_title',
+            'type'  => 'text',
+            'label' => 'Judul Pembuka',
+            'std'   => Setting::get('welcome_title') );
+
+        $fields[]   = array(
+            'name'  => 'welcome_login',
+            'type'  => 'editor',
+            'height'=> 300,
+            'label' => 'Pembuka Halaman Login',
+            'std'   => Setting::get('welcome_login') );
+
+        $fields[]   = array(
+            'name'  => 'welcome_resend',
+            'type'  => 'editor',
+            'height'=> 300,
+            'label' => 'Pembuka Resend',
+            'std'   => Setting::get('welcome_resend') );
+
+        $fields[]   = array(
+            'name'  => 'welcome_register',
+            'type'  => 'editor',
+            'height'=> 300,
+            'label' => 'Pembuka Register',
+            'std'   => Setting::get('welcome_register') );
+
+        $fields[]   = array(
+            'name'  => 'welcome_forgot',
+            'type'  => 'editor',
+            'height'=> 300,
+            'label' => 'Isi Pembuka',
+            'std'   => Setting::get('welcome_forgot') );
 
         $this->_option_form( $fields );
 
