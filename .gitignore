@@ -68,3 +68,8 @@ vendor/
 !/application/storage/cache/index.html
 !/application/storage/uploads/index.html
 !/application/storage/backups/index.html
+
+
+# temporary
+tools/
+application/core/MY*
