@@ -177,7 +177,7 @@ class Layanan extends BAKA_Controller
                     break;
             }
 
-            $this->load->library('baka_pack/gridr', array(
+            $this->load->library('gridr', array(
                 'base_url'   => $this->data['page_link'],
                 ));
 
@@ -298,7 +298,7 @@ class Layanan extends BAKA_Controller
                 'label' => 'Cetak sekarang',
                 'class' => 'btn-primary pull-right' );
 
-            $this->load->library('baka_pack/former');
+            $this->load->library('former');
 
             $form = $this->former->init( array(
                 'name'      => 'print-'.$data_type,
@@ -405,7 +405,7 @@ class Layanan extends BAKA_Controller
                     .  'Jika anda hendak memindahkan posisi, cut dan paste keseluruhan text termasuk kurung kurawalnya <i>misal: {text}</i> ke posisi baru yang anda inginkan.',
             );
 
-        $this->load->library('baka_pack/former');
+        $this->load->library('former');
 
         $form = $this->former->init( array(
             'name'      => 'template-'.$modul_slug,
@@ -473,7 +473,7 @@ class Layanan extends BAKA_Controller
                     .  'Jika anda hendak memindahkan posisi, cut dan paste keseluruhan text termasuk kurung kurawalnya <i>misal: {text}</i> ke posisi baru yang anda inginkan.',
             );
 
-        $this->load->library('baka_pack/former');
+        $this->load->library('former');
 
         $form = $this->former->init( array(
             'name'      => 'template-'.$modul_slug,

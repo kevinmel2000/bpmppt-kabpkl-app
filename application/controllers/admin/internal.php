@@ -543,7 +543,7 @@ class Internal extends BAKA_Controller
 
     private function _option_form( $fields )
     {
-        $this->load->library('baka_pack/former');
+        $this->load->library('former');
 
         $form = $this->former->init( array(
             'name'   => 'app-settings',
@@ -620,7 +620,7 @@ class Internal extends BAKA_Controller
 
         $this->data['tool_buttons']['form'] = 'Baru|primary';
 
-        $this->load->library('baka_pack/gridr', array(
+        $this->load->library('gridr', array(
             'base_url'   => $this->data['page_link'],
             ));
 
@@ -661,7 +661,7 @@ class Internal extends BAKA_Controller
             'std'   => ( $prop ? $prop->env_value : '' ),
             'validation'=> ( !$prop ? 'required' : '' ) );
 
-        $this->load->library('baka_pack/former');
+        $this->load->library('former');
 
         $form = $this->former->init( array(
             'name'   => 'internal-prop',

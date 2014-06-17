@@ -98,7 +98,7 @@ class Pengguna extends BAKA_Controller
 
         $this->data['tool_buttons']['form'] = 'Baru|primary';
 
-        $this->load->library('baka_pack/gridr', array(
+        $this->load->library('gridr', array(
             'base_url'   => $this->data['page_link'],
             ));
 
@@ -253,7 +253,7 @@ class Pengguna extends BAKA_Controller
                 'std'   => format_datetime($user->last_login) );
         }
 
-        $this->load->library('baka_pack/former');
+        $this->load->library('former');
 
         $form = $this->former->init( array(
             'name'   => 'user-form',
@@ -330,7 +330,7 @@ class Pengguna extends BAKA_Controller
             'desc'  => 'Mohon tuliskan secara lengkap alasan pencekalan pengguna "'.$username.'".',
             'validation'=> 'required' );
 
-        $this->load->library('baka_pack/former');
+        $this->load->library('former');
 
         $form = $this->former->init( array(
             'name' => 'user-ban',
@@ -445,7 +445,7 @@ class Pengguna extends BAKA_Controller
                 'desc'  => '' );
         }
 
-        $this->load->library('baka_pack/former');
+        $this->load->library('former');
 
         $form = $this->former->init( array(
             'name'   => 'user-roles',
@@ -499,7 +499,7 @@ class Pengguna extends BAKA_Controller
         $this->data['panel_title'] = $this->themee->set_title('Semua data kelompok pengguna');
         $this->data['tool_buttons']['form'] = 'Baru|primary';
 
-        $this->load->library('baka_pack/gridr', array(
+        $this->load->library('gridr', array(
             'base_url'   => $this->data['page_link'],
             ));
 
@@ -570,7 +570,7 @@ class Pengguna extends BAKA_Controller
             'desc'  => 'Pilih <em>Ya</em> untuk menjadikna perm ini sebagai perm bawaan setiap mendambahkan pengguna baru, atau pilih <em>Tidak</em> untuk sebaliknya.',
             'validation'=> ( !$perm ? 'required' : '' ) );
 
-        $this->load->library('baka_pack/former');
+        $this->load->library('former');
 
         $form = $this->former->init( array(
             'name' => 'user-perm',
@@ -614,7 +614,7 @@ class Pengguna extends BAKA_Controller
         $this->set_panel_title('Semua data hak akses pengguna');
         $this->data['tool_buttons']['form'] = 'Baru|primary';
 
-        $this->load->library('baka_pack/gridr', array(
+        $this->load->library('gridr', array(
             'identifier' => 'permission_id',
             'base_url'   => $this->data['page_link'],
             ));

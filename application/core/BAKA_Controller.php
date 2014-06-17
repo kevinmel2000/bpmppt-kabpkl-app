@@ -104,6 +104,13 @@ class BAKA_Controller extends CI_Controller
     }
 
     // -------------------------------------------------------------------------
+    
+    public function captcha()
+    {
+        echo $this->authr->captcha->generate();
+    }
+
+    // -------------------------------------------------------------------------
 
     /**
      * Redirecting to notice page

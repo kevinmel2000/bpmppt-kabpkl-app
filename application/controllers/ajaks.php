@@ -63,7 +63,7 @@ class Ajaks extends BAKA_Controller
     {
         if (!$this->load->is_loaded('baka_pack/median'))
         {
-            $this->load->library('baka_pack/median', array(
+            $this->load->library('median', array(
                 'allowed_types' => $this->input->get('types'),
                 'file_limit'    => $this->input->get('limit'),
                 ));

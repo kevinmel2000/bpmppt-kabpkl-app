@@ -73,7 +73,7 @@ class Info extends BAKA_Controller
 
         $this->set_panel_title('Informasi Sistem');
 
-        $this->load->library('baka_pack/utily');
+        $this->load->library('utily');
         $this->load->library('table');
 
         $server_info = $this->utily->get_server_info();
@@ -128,8 +128,8 @@ class Info extends BAKA_Controller
         $fields[]   = array(
             'name'  => 'db-info',
             'type'  => 'custom',
-            'label' => 'Informasi Server',
-            'value' => $this->table->generate() );
+            'label' => 'Informasi Database',
+            'value' => $this->utily->get_db_info() );
 
         $this->table->set_heading(array(
             array(
@@ -198,7 +198,7 @@ class Info extends BAKA_Controller
             'label' => 'Module Apache',
             'value' => $this->table->generate() );
 
-        $this->load->library('baka_pack/former');
+        $this->load->library('former');
 
         $form = $this->former->init( array(
             'name'      => 'info',

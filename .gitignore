@@ -55,6 +55,7 @@ vendor/
 !.htaccess
 !.travis.yml
 !.gitattributes
+!.gitmodules
 !.gitignore
 !.editorconfig
 !.afignore

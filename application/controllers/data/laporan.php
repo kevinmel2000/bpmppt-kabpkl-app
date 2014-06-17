@@ -115,7 +115,7 @@ class Laporan extends BAKA_Controller
             'label' => 'Cetak sekarang',
             'class' => 'btn-primary pull-right' );
 
-        $this->load->library('baka_pack/former');
+        $this->load->library('former');
 
         $form = $this->former->init( array(
             'name'      => 'print-all',

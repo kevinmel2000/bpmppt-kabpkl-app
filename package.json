@@ -2,18 +2,27 @@
   "name": "BPMPPT-App",
   "version": "0.1.4",
   "description": "Aplikasi Pengelolaan Dokumen Perijinan di BPMPPT Kab. Pekalongan",
-  "author": "Fery Wardiyanto",
   "license": "OSL",
   "gitHead": "422678f64c379bd5329f708ae694d4eb9103a8c4",
   "readmeFilename": "README.md",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/feryardiant/bpmppt.git"
+    "url": "https://github.com/feryardiant/bpmppt"
   },
-  "keywords": [
-    "codeigniter"
+  "author": [
+    {
+      "name": "Fery Wardiyanto",
+      "email": "ferywardiyanto@gmail.com"
+    }
   ],
+  "keywords": [
+    "codeigniter",
+    "application"
+  ],
+  "support": {
+    "issues": "https://github.com/feryardiant/bpmppt/issues"
+  },
   "engines": {
     "node": "~0.10.1"
   },

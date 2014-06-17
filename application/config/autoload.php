@@ -37,7 +37,7 @@
 |
 */
 
-$autoload['packages'] = array();
+$autoload['packages'] = array(APPPATH.'third_party/bakaigniter');
 
 
 /*
@@ -54,9 +54,7 @@ $autoload['packages'] = array();
 
 $autoload['libraries'] = array(
 	'database',
-	'baka_pack/messg',
-	'baka_pack/setting',
-	'baka_pack/themee',
+	'ignite',
 	);
 
 
@@ -70,13 +68,13 @@ $autoload['libraries'] = array(
 */
 
 $autoload['helper'] = array(
+	'common',
 	'url',
-	'html',
+	// 'html',
 	'date',
-	'baka_pack/array',
-	'baka_pack/common',
-	'baka_pack/data',
-	'baka_pack/former',
+	'array',
+	'data',
+	// 'former',
 	);
 
 
@@ -94,7 +92,7 @@ $autoload['helper'] = array(
 |
 */
 
-$autoload['config'] = array('baka_pack', 'lang_codes');
+$autoload['config'] = array('bakaigniter', 'lang_codes');
 
 
 /*
@@ -110,7 +108,7 @@ $autoload['config'] = array('baka_pack', 'lang_codes');
 |
 */
 
-$autoload['language'] = array('baka_pack');
+$autoload['language'] = array('bakaigniter');
 
 
 /*

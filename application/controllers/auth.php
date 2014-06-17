@@ -53,7 +53,7 @@ class Auth extends BAKA_Controller
 
         $this->data['desc_title'] = Setting::get('welcome_title');
 
-        $this->load->library('baka_pack/former');
+        $this->load->library('former');
         $this->set_panel_title('User Authentication');
     }
 

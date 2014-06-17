@@ -78,7 +78,7 @@ class Sistem extends BAKA_Controller
 
         $this->set_panel_title('Informasi Sistem');
 
-        $this->load->library('baka_pack/utily');
+        $this->load->library('utily');
         $this->load->library('table');
 
         $server_info = $this->utily->get_server_info();
@@ -203,7 +203,7 @@ class Sistem extends BAKA_Controller
             'label' => 'Module Apache',
             'value' => $this->table->generate() );
 
-        $this->load->library('baka_pack/former');
+        $this->load->library('former');
 
         $form = $this->former->init( array(
             'name'      => 'info',
@@ -225,25 +225,7 @@ class Sistem extends BAKA_Controller
         }
 
         $this->set_panel_title('Cadangkan Basis Data');
-        $this->load->library('baka_pack/utily');
-
-        $fields[]   = array(
-            'name'  => 'db-driver',
-            'type'  => 'static',
-            'label' => 'Database driver',
-            'std'   => $this->utily->get_info('driver') );
-
-        $fields[]   = array(
-            'name'  => 'host-info',
-            'type'  => 'static',
-            'label' => 'Host info',
-            'std'   => $this->utily->get_info('host_info') );
-
-        $fields[]   = array(
-            'name'  => 'server-info',
-            'type'  => 'static',
-            'label' => 'Server info',
-            'std'   => $this->utily->get_info('server_info').' Version. '.$this->utily->get_info('server_version') );
+        $this->load->library('utily');
 
         $fields[]   = array(
             'name'  => 'backup-all',
@@ -258,7 +240,7 @@ class Sistem extends BAKA_Controller
             'label' => 'Backup beberapa tabel',
             'option'=> $this->utily->list_tables(),
             'fold'  => array(
-                'key' => 'backup-all',
+                'key'   => 'backup-all',
                 'value' => 0 ),
             'validation'=> '' );
 
@@ -297,13 +279,13 @@ class Sistem extends BAKA_Controller
             'label' => 'lang:backup_btn',
             'class' => 'btn-primary pull-right' );
 
-        $this->load->library('baka_pack/former');
+        $this->load->library('former');
 
-        $form = $this->former->init( array(
-            'name'      => 'backup',
-            'action'    => current_url(),
-            'fields'    => $fields,
-            'buttons'   => $buttons,
+        $form = $this->former->init(array(
+            'name'    => 'backup',
+            'action'  => current_url(),
+            'fields'  => $fields,
+            'buttons' => $buttons,
             ));
 
         if ( $form_data = $form->validate_submition() )
@@ -347,7 +329,7 @@ class Sistem extends BAKA_Controller
         }
 
         $this->set_panel_title('Pemulihan Basis Data');
-        $this->load->library('baka_pack/utily');
+        $this->load->library('utily');
 
         $fields[]   = array(
             'name'  => 'restore-from-backup',
@@ -401,7 +383,7 @@ class Sistem extends BAKA_Controller
             'label' => 'lang:restore_btn',
             'class' => 'btn-primary pull-right' );
 
-        $this->load->library('baka_pack/former');
+        $this->load->library('former');
 
         $form = $this->former->init( array(
             'name'    => 'restore',

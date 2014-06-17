@@ -63,6 +63,7 @@ class BAKA_Loader extends CI_Loader
     function theme($view, $vars = array(), $file = '', $return = FALSE)
     {
         $file || $file = 'index';
+        $CI =& get_instance();
 
         if (php_sapi_name() === 'cli' OR defined('STDIN'))
         {
@@ -73,6 +74,10 @@ class BAKA_Loader extends CI_Loader
             log_message('debug', "#Baka_pack: Core Loader->theme File \"$file\" loaded as view via ajax.");
 
             return $this->view($view, $vars, FALSE);
+        }
+        else if (($captcha = $CI->input->get('captcha')) and $captcha = 'gen')
+        {
+            $CI->authr->captcha_img();
         }
         else
         {
