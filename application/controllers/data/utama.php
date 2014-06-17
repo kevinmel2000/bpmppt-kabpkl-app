@@ -89,7 +89,7 @@ class Utama extends BAKA_Controller
                     );
             }
             
-            Asssets::set_script('chartjs', 'lib/chart.min.js', '', 'master');
+            set_script('chartjs', 'lib/chart.min.js', '', 'master');
 
             $script = "$('.charts').each(function () {\n"
                     . "    var el = $(this),\n"
@@ -106,7 +106,7 @@ class Utama extends BAKA_Controller
                     . "        myNewChart = new Chart(ctx).Doughnut(data, options);\n"
                     . "});";
 
-            Asssets::set_script('chartjs-trigger', $script, 'chartjs');
+            set_script('chartjs-trigger', $script, 'chartjs');
 
             $this->load->theme('pages/panel_alldata', $this->data);
         }
