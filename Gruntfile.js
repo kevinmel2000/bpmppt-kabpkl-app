@@ -155,7 +155,7 @@ module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt, {scope: 'devDependencies'});
   require('time-grunt')(grunt);
 
-  grunt.registerTask('build', ['cssdist', 'csstest', 'phptest']);
+  grunt.registerTask('build', ['cssdist', 'csstest']);
 
   grunt.registerTask('phptest', ['phplint', 'phpunit']);
 
