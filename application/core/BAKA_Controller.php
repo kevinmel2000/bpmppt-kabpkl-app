@@ -68,7 +68,7 @@ class BAKA_Controller extends CI_Controller
         $script = "$('.twbs-tooltip').tooltip();";
         set_script('bootstrap-tooltip-trigger', $script, 'bootstrap');
 
-        if (Themee::verify_browser())
+        if ($this->themee->verify_browser())
         {
             log_message('error', lang("error_browser_jadul"));
             show_error(array('Peramban yang anda gunakan tidak memenuhi syarat minimal penggunaan aplikasi ini.','Silahkan gunakan '.anchor('http://www.mozilla.org/id/', 'Mozilla Firefox', 'target="_blank"').' atau '.anchor('https://www.google.com/intl/id/chrome/browser/', 'Google Chrome', 'target="_blank"').' biar lebih GREGET!'), 500, 'error_browser_jadul');

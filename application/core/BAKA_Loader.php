@@ -48,25 +48,14 @@
  */
 class BAKA_Loader extends CI_Loader
 {
-    /**
-     * Default class Constructor
-     */
-    function __construct()
-    {
-        parent::__construct();
-
-        log_message('debug', "#Baka_pack: Core Loader Class Initialized");
-    }
-
-    // -------------------------------------------------------------------------
-
     function theme($view, $vars = array(), $file = '', $return = FALSE)
     {
         $file || $file = 'index';
-        $CI =& get_instance();
 
-        if (php_sapi_name() === 'cli' OR defined('STDIN'))
+        if (IS_CLI)
         {
+            log_message('debug', "#Baka_pack: Core Loader->theme File \"$file\" loaded as view via cli.");
+
             echo json_encode($var);
         }
         else if (IS_AJAX)
@@ -74,10 +63,6 @@ class BAKA_Loader extends CI_Loader
             log_message('debug', "#Baka_pack: Core Loader->theme File \"$file\" loaded as view via ajax.");
 
             return $this->view($view, $vars, FALSE);
-        }
-        else if (($captcha = $CI->input->get('captcha')) and $captcha = 'gen')
-        {
-            $CI->authr->captcha_img();
         }
         else
         {
@@ -87,15 +72,6 @@ class BAKA_Loader extends CI_Loader
 
             return $this->view($file, $data, $return);
         }
-
-        // if (!IS_AJAX)
-        // {
-        //     $data['contents'] = $this->view($view, $vars, TRUE);
-
-        //     log_message('debug', "#Baka_pack: Loader->theme File \"$file\" loaded as view.");
-
-        //     return $this->view($file, $data, $return);
-        // }
     }
 }
 
