@@ -89,7 +89,7 @@ class Bpmppt_model extends CI_Model
 
         foreach ( $prop as $property )
         {
-            $data[$property] = Setting::get( $property );
+            $data[$property] = get_setting( $property );
         }
 
         return $data;

@@ -97,7 +97,7 @@ class BAKA_Controller extends CI_Controller
         $this->data['panel_title']  = '';
         $this->data['panel_body']   = '';
 
-        $this->data['footer_left']  = '&copy; '.Setting::get('skpd_name').' '.Setting::get('skpd_city');
+        $this->data['footer_left']  = '&copy; '.$this->bakaigniter->get_setting('skpd_name').' '.$this->bakaigniter->get_setting('skpd_city');
         $this->data['footer_right'] = $app_name.' Ver. '.get_conf('app_version');
 
         log_message('debug', "#Baka_pack: Core Controller Class Initialized");

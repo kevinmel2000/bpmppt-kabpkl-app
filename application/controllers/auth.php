@@ -51,7 +51,7 @@ class Auth extends BAKA_Controller
     {
         parent::__construct();
 
-        $this->data['desc_title'] = Setting::get('welcome_title');
+        $this->data['desc_title'] = get_setting('welcome_title');
 
         $this->load->library('former');
         $this->set_panel_title('User Authentication');
@@ -67,7 +67,7 @@ class Auth extends BAKA_Controller
         $this->verify_status();
         $this->set_panel_title('Login Pengguna');
 
-        $attempts = ( Setting::get('auth_login_count_attempts') AND ($attempts = $this->input->post('username'))) ? $this->security->xss_clean($attempts) : '';
+        $attempts = ( get_setting('auth_login_count_attempts') AND ($attempts = $this->input->post('username'))) ? $this->security->xss_clean($attempts) : '';
 
         $fields[]   = array(
             'name'  => 'username',
@@ -89,7 +89,7 @@ class Auth extends BAKA_Controller
 
         if ( $this->authr->is_max_attempts_exceeded( $attempts ) )
         {
-            if ( (bool) Setting::get('auth_use_recaptcha') )
+            if ( (bool) get_setting('auth_use_recaptcha') )
             {
                 $fields[]   = array(
                     'name'  => 'recaptcha',
@@ -120,7 +120,7 @@ class Auth extends BAKA_Controller
             'url'   => 'forgot',
             'class' => 'btn-default pull-right' );
 
-        if ( (bool) Setting::get('auth_allow_registration') )
+        if ( (bool) get_setting('auth_allow_registration') )
         {
             $buttons[]  = array(
                 'name'  => 'register',
@@ -154,7 +154,7 @@ class Auth extends BAKA_Controller
 
         $this->set_panel_body($form->generate());
 
-        $this->data['desc_body'] = Setting::get('welcome_login');
+        $this->data['desc_body'] = get_setting('welcome_login');
 
         $this->load->theme('pages/auth', $this->data, 'auth');
     }
@@ -165,12 +165,12 @@ class Auth extends BAKA_Controller
 
         $this->set_panel_title('Register Pengguna');
 
-        if ( !Setting::get('auth_allow_registration') )
+        if ( !get_setting('auth_allow_registration') )
         {
             $this->_notice('registration-disabled');
         }
 
-        if ( (bool) Setting::get('auth_use_username') )
+        if ( (bool) get_setting('auth_use_username') )
         {
             $fields[]   = array(
                 'name'  => 'username',
@@ -197,9 +197,9 @@ class Auth extends BAKA_Controller
             'label' => 'Ulangi Password',
             'validation'=> 'required|matches[password]' );
 
-        if ( (bool) Setting::get('auth_captcha_registration') )
+        if ( (bool) get_setting('auth_captcha_registration') )
         {
-            if ( (bool) Setting::get('auth_use_recaptcha') )
+            if ( (bool) get_setting('auth_use_recaptcha') )
             {
                 $fields[]   = array(
                     'name'  => 'recaptcha',
@@ -257,7 +257,7 @@ class Auth extends BAKA_Controller
             redirect( $goto );
         }
 
-        $this->data['desc_body'] = Setting::get('welcome_register');
+        $this->data['desc_body'] = get_setting('welcome_register');
         
         $this->set_panel_body($form->generate());
 
@@ -312,7 +312,7 @@ class Auth extends BAKA_Controller
             if ( $data = $this->authr->change_email( $user_data['email'] ) )
             {
                 // success
-                $data['activation_period'] = Setting::get('auth_email_activation_expire') / 3600;
+                $data['activation_period'] = get_setting('auth_email_activation_expire') / 3600;
 
                 $this->send_email( $user_data['email'], 'activate', $data );
                 $this->_notice('activation-sent');
@@ -325,7 +325,7 @@ class Auth extends BAKA_Controller
             }
         }
 
-        $this->data['desc_body'] = Setting::get('welcome_resend');
+        $this->data['desc_body'] = get_setting('welcome_resend');
         
         $this->set_panel_body($form->generate());
 
@@ -387,7 +387,7 @@ class Auth extends BAKA_Controller
             }
         }
 
-        $this->data['desc_body'] = Setting::get('welcome_forgot');
+        $this->data['desc_body'] = get_setting('welcome_forgot');
         
         $this->set_panel_body($form->generate());
 

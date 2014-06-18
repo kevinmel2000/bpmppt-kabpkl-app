@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 /**
- * BAKA Form Validation Class
+ * MY Form Validation Class
  *
  * Pre-processes global input data for security
  * Extending native CI Form Validation
@@ -19,24 +19,8 @@
  * @subpackage  Libraries
  * @category    Validation
  */
-class BAKA_Form_validation extends CI_Form_validation
+class MY_Form_validation extends CI_Form_validation
 {
-    /**
-     * Default Class Constructor
-     * 
-     * @param   array
-     * 
-     * @return  void
-     */
-    function __construct( $rules = array() )
-    {
-        parent::__construct( $rules );
-
-        log_message('debug', "#BakaIgniter: Core Form_validation Class Initialized");
-    }
-
-    // -------------------------------------------------------------------------
-
     /**
      * Validating Google reCaptcha input from user form
      * 
@@ -47,7 +31,7 @@ class BAKA_Form_validation extends CI_Form_validation
     function valid_recaptcha( $code )
     {
         $resp = recaptcha_check_answer(
-                    get_setting('auth_recaptcha_public_key'),
+                    Setting::get('auth_recaptcha_public_key'),
                     $this->ip_address(),
                     $this->post('recaptcha_challenge_field'),
                     $code );
@@ -183,10 +167,16 @@ class BAKA_Form_validation extends CI_Form_validation
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Validate username lenght
+     *
+     * @param   string  $string  Username
+     * @return  bool
+     */
     function valid_username_length( $string )
     {
-        $min_length = get_setting('auth_username_length_min');
-        $max_length = get_setting('auth_username_length_max');
+        $min_length = Setting::get('auth_username_length_min');
+        $max_length = Setting::get('auth_username_length_max');
 
         if ( !$this->min_length( $string, $min_length ) )
         {
@@ -207,10 +197,16 @@ class BAKA_Form_validation extends CI_Form_validation
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Validate password lenght
+     *
+     * @param   string  $string  Password
+     * @return  bool
+     */
     function valid_password_length( $string )
     {
-        $min_length = get_setting('auth_password_length_min');
-        $max_length = get_setting('auth_password_length_max');
+        $min_length = Setting::get('auth_password_length_min');
+        $max_length = Setting::get('auth_password_length_max');
 
         if ( !$this->min_length( $string, $min_length ) )
         {

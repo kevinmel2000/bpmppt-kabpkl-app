@@ -345,7 +345,7 @@ class Bpmppt extends CI_Driver_Library
             return FALSE;
         }
 
-        $this->_ci->load->library('baka_pack/former');
+        $this->_ci->load->library('former');
 
         foreach ($this->$driver->form( $data_obj ) as $form_field)
         {
@@ -473,7 +473,7 @@ class Bpmppt extends CI_Driver_Library
 
         if ( $result = $this->create_data( $driver_alias, $data, $form_data ) )
         {
-            Messg::set('success', array(
+            set_message('success', array(
                 'Permohonan dari saudara/i '.$data['petitioner'].' berhasil disimpan.',
                 'Klik cetak jika anda ingin langsung mencetaknya.'));
 
@@ -481,7 +481,7 @@ class Bpmppt extends CI_Driver_Library
         }
         else
         {
-            Messg::set('error', 'Terjadi kegagalan penginputan data.');
+            set_message('error', 'Terjadi kegagalan penginputan data.');
 
             return FALSE;
         }
