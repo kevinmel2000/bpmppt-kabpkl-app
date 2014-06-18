@@ -64,14 +64,13 @@ class Bakaigniter
         $this->_ci->config->load('bakaigniter');
         $this->_ci->lang->load('bakaigniter');
 
-        $this->_ci->load->driver('authr');
-        $this->_ci->load->library('messg');
-        $this->_ci->load->library('themee');
-        $this->_ci->load->helpers(array('date', 'array', 'baka_array', 'baka_data'));
-
         $this->_table_name = get_conf('system_opt_table');
 
         $this->initialize();
+
+        $this->_ci->load->driver('authr');
+        $this->_ci->load->library('themee');
+        $this->_ci->load->helpers(array('date', 'array', 'baka_array', 'baka_data'));
 
         log_message('debug', "#BakaIgniter: Bakaigniter Class Initialized");
     }

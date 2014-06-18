@@ -283,7 +283,7 @@ class Pengguna extends BAKA_Controller
                 $result   = $this->authr->update_user( $user_id, $username, $email, $old_pass, $password, $roles );
             }
 
-            foreach ( Messg::get() as $level => $message )
+            foreach ( get_message() as $level => $message )
             {
                 $this->session->set_flashdata( $level, $message );
             }
@@ -300,12 +300,12 @@ class Pengguna extends BAKA_Controller
     {
         if ( $this->authr->remove_user( $user_id ) )
         {
-            $this->session->set_flashdata('success', Messg::get('success'));
+            $this->session->set_flashdata('success', get_message('success'));
             redirect( $this->data['page_link'] );
         }
         else
         {
-            $this->session->set_flashdata('error', Messg::get('error'));
+            $this->session->set_flashdata('error', get_message('error'));
             redirect( current_url() );
         }
     }
@@ -342,12 +342,12 @@ class Pengguna extends BAKA_Controller
         {
             if ( $this->authr->ban_user( $user_id, $form_data['ban-reason'] ) )
             {
-                $this->session->set_flashdata('success', Messg::get('success'));
+                $this->session->set_flashdata('success', get_message('success'));
                 redirect( $this->data['page_link'] );
             }
             else
             {
-                $this->session->set_flashdata('error', Messg::get('error'));
+                $this->session->set_flashdata('error', get_message('error'));
                 redirect( current_url() );
             }
         }
@@ -475,7 +475,7 @@ class Pengguna extends BAKA_Controller
 
             $result = $this->authr->roles->update( $role_data, $group_id, $perm_data );
 
-            foreach ( Messg::get() as $level => $message )
+            foreach ( get_message() as $level => $message )
             {
                 $this->session->set_flashdata( $level, $message );
             }

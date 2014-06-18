@@ -421,7 +421,7 @@ class Bpmppt extends CI_Driver_Library
 
             if ($data_id = $this->simpan( $modul_slug, $form_data ))
             {
-                redirect( current_url().$data_id );
+                redirect( current_url().'/'.$data_id );
             }
         }
 

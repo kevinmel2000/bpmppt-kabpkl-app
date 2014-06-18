@@ -136,10 +136,14 @@ class Bpmppt_model extends CI_Model
     public function get_data_by_status( $data_status, $module_name = '' )
     {
         if ( $data_status != 'semua' )
+        {
             $where['status'] = $data_status;
+        }
 
         if ($module_name != '')
+        {
             $where['type'] = $module_name;
+        }
 
         return $this->get_where( $where );
     }
@@ -152,7 +156,9 @@ class Bpmppt_model extends CI_Model
         $where['created_by'] = $data_created_by;
 
         if ($module_name != '')
+        {
             $where['type'] = $module_name;
+        }
 
         return $this->get_where( $where );
     }
@@ -165,7 +171,9 @@ class Bpmppt_model extends CI_Model
         $where['petitioner'] = $data_petitioner;
 
         if ($module_name != '')
+        {
             $where['type'] = $module_name;
+        }
 
         return $this->get_where( $where );
     }
@@ -183,7 +191,9 @@ class Bpmppt_model extends CI_Model
     public function find_data_by_petitioner( $data_petitioner, $module_name = '' )
     {
         if ($module_name != '')
+        {
             $this->db->where('type', $module_name);
+        }
 
         $this->db->like('petitioner', $data_petitioner);
 
@@ -285,7 +295,7 @@ class Bpmppt_model extends CI_Model
     {
         if ($query = $this->db->get_where( $this->_table['data_meta'], array( 'data_id' => $data_id, 'data_type' => $module_alias ) ))
         {
-            $obj = new bakaObject;
+            $obj = new stdClass;
 
             foreach ( $query->result() as $row )
             {
@@ -441,7 +451,6 @@ class Bpmppt_model extends CI_Model
      *
      * @return  array|false
      */
-
     public function get_report( $where = array() )
     {
         $query = $this->get_where( $where )->get();

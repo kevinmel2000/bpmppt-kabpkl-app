@@ -306,11 +306,11 @@ class Sistem extends BAKA_Controller
 
             if ( $this->utily->backup($tables, $download) )
             {
-                $this->session->set_flashdata('success', Messg::get('success'));
+                $this->session->set_flashdata('success', get_message('success'));
             }
             else
             {
-                $this->session->set_flashdata('error', Messg::get('error'));
+                $this->session->set_flashdata('error', get_message('error'));
             }
 
             redirect( current_url() );
@@ -408,11 +408,11 @@ class Sistem extends BAKA_Controller
 
             if ( $this->utily->restore($file_name, $upload) )
             {
-                $this->session->set_flashdata('success', Messg::get('success'));
+                $this->session->set_flashdata('success', get_message('success'));
             }
             else
             {
-                $this->session->set_flashdata('error', Messg::get('error'));
+                $this->session->set_flashdata('error', get_message('error'));
             }
 
             redirect( current_url() );

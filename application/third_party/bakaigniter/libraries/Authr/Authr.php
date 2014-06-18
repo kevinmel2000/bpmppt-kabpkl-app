@@ -242,11 +242,11 @@ class Authr extends CI_Driver_Library
         if ((bool) $remember)
         {
             // create auto login
-            $this->create_autologin($user->id);
+            $this->create_autologin( $user->id );
         }
 
         // clean login attempts
-        $this->login_attempt->clear($user->username);
+        $this->login_attempt->clear( $user->username );
 
         // update login info
         $this->users->update_login_info($user->id);
@@ -890,19 +890,6 @@ class Authr extends CI_Driver_Library
         }
 
         return md5($key);
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Check if login attempts exceeded max login attempts (specified in config)
-     *
-     * @param   string
-     * @return  bool
-     */
-    public function is_max_attempts_exceeded($login)
-    {
-        return $this->login_attempt->get_num($login) >= get_setting('auth_login_max_attempts');
     }
 }
 

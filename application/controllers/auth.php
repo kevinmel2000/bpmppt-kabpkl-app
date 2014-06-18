@@ -87,7 +87,7 @@ class Auth extends BAKA_Controller
             'label' => '',
             'option'=> array( 1 => 'Ingat saya dikomputer ini.' ) );
 
-        if ( $this->authr->is_max_attempts_exceeded( $attempts ) )
+        if ( $this->authr->login_attempt->is_max_exceeded( $attempts ) )
         {
             if ( (bool) get_setting('auth_use_recaptcha') )
             {
@@ -137,6 +137,9 @@ class Auth extends BAKA_Controller
             'hiddens'   => array(
                 'goto' => $this->input->get('from'),
                 ),
+            'extras'   => array(
+                'autocomplete' => 'off',
+                ),
             'buttons'   => $buttons,
             'is_hform'  => FALSE ));
 
@@ -144,7 +147,7 @@ class Auth extends BAKA_Controller
         {
             $goto = $this->authr->login( $input['username'], $input['password'], $input['remember'] ) ? $input['goto'] : '';
 
-            foreach ( Messg::get() as $level => $item )
+            foreach ( get_message() as $level => $item )
             {
                 $this->session->set_flashdata( $level, $item );
             }
@@ -249,7 +252,7 @@ class Auth extends BAKA_Controller
         {
             $goto = $this->authr->create_user( $form_data['username'], $form_data['email'], $form_data['password'] ) ? 'notice/registration-success' : current_url();
 
-            foreach ( Messg::get() as $level => $item )
+            foreach ( get_message() as $level => $item )
             {
                 $this->session->set_flashdata( $level, $item );
             }

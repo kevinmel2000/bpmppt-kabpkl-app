@@ -13,7 +13,7 @@
 <tr><td colspan="7" style="width:100%"> </td></tr>
 <tr class="align-center bold">
     <td colspan="7" style="width:100%">
-        <p>PEMBERIAN IZIN PENYIMPANAN SEMENTARA</p>
+        <p>PEMBERIAN IZIN PENYIMPANAN SEMENTARAs</p>
         <p>LIMBAH BAHAN BERBAHAYA DAN BERACUN</p>
         <p><?php echo strtoupper($usaha_nama) ?></p>
     </td>
@@ -44,11 +44,11 @@
             </tr><tr>
                 <td>Saudara</td>
                 <td>:</td>
-                <td colspan="4"><?php echo $pemohon_nama ?></span><br></td>
+                <td colspan="4"><?php echo $pemohon_nama ?><br></td>
             </tr><tr>
                 <td>Alamat</td>
                 <td>:</td>
-                <td colspan="4"><?php echo $pemohon_alamat ?></span><br></td>
+                <td colspan="4"><?php echo $pemohon_alamat ?><br></td>
             </tr></tbody></table></li>
             <li>Persyaratan teknis dan administratif yang diperlukan berdasarkan Peraturan Perundang-undangan yang berlaku dan hasil pemeriksaan petugas lapangan dimuat dalam Berita Acara enelitian Lapangan telah terpenuhi,m maka perlu ditetapkan dengan Keputusan Kepala Badan Penanaman Modal dan Pelayanan Perzinan Terpadu.</li>
         </ol>
@@ -188,7 +188,7 @@
 <tr>
     <td style="width:20%">KELIMA</td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%" class="align-justify" >
+    <td colspan="5" style="width:78%" class="align-justify">
         <ol>
             <li>Permohonan perpanjangan terhadap izin ini diajukan selambat-lambatnya 3 (tiga) bulan sebelum masa berlaku izin ini berakhir;</li>
             <li>Keputusan ini berlaku selama 5 (lima) tahun sejak tanggal ditetapkan;</li>
@@ -201,7 +201,7 @@
     <td colspan="6" style="width:60%"> </td>
     <td style="width:40%">
         <p>Ditetapkan di : Kajen</p>
-        <p class="underline">Pada Tanggal :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo bdate('F', $created_on).' '.bdate('Y') ?></p>
+        <p class="underline">Pada Tanggal :      <?php echo bdate('F', $created_on).' '.bdate('Y') ?></p>
     </td>
 </tr>
 <tr><td colspan="7" style="width:100%"> </td></tr>
@@ -218,15 +218,14 @@
         <p>NIP. <?php echo strtoupper($skpd_lead_nip) ?></p>
     </td>
 </tr>
-<?php if (strlen($data_tembusan) > 0): ?>
-<tr>
+<!--?php if (strlen($data_tembusan) --><tr>
     <td colspan="7">
         <p>Tembusan :</p>
         <ol>
-        <?php foreach (unserialize($data_tembusan) as $tembusan) : ?>
-            <li><?php echo $tembusan ?>;</li>
-        <?php endforeach ?>
-        </ol>
-    </td>
+        <!--?php foreach (unserialize($data_tembusan) as $tembusan) : ?>
+            <li--><?php echo $tembusan ?>;
+        <!--?php endforeach ?>
+        </ol-->
+    </ol></td>
 </tr>
-<?php endif ?>
+<!--?php endif ?></tbody-->
