@@ -18,9 +18,9 @@ $conf = array(
 
 if (!defined('PROJECT_DIR'))
 {
-    $conf['function'] = 'error_handler_hooks';
+    // $conf['function'] = 'error_handler_hooks';
 
-    $hook['pre_controller'] = $conf;
+    // $hook['pre_controller'] = $conf;
 }
 else
 {
