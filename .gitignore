@@ -40,7 +40,7 @@ nbactions.xml
 # Dependencies Folder
 node_modules/
 bower_components/
-vendor/
+/vendor/
 
 # Ignore Application Specifics
 /application/storage/dbs/*
