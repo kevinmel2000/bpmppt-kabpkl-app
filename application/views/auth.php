@@ -4,7 +4,7 @@
 
     <div class="container">
 
-        <?php echo form_alert()?>
+        <?php echo form_alert() ?>
 
         <div class="row">
             <?php echo $contents ?>

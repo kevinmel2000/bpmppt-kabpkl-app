@@ -136,14 +136,14 @@ class Auth extends BAKA_Controller
 
         if ( $input = $form->validate_submition() )
         {
-            $goto = $this->authr->login( $input['username'], $input['password'], $input['remember'] ) ? $input['goto'] : '';
+            $goto = $this->authr->login( $input['username'], $input['password'], $input['remember'] ) ? $input['goto'] : current_url();
 
             foreach ( get_message() as $level => $item )
             {
                 $this->session->set_flashdata( $level, $item );
             }
 
-            redirect( $goto );  
+            redirect( $goto );
         }
 
         $this->set_panel_body($form->generate());

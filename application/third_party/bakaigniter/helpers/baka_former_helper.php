@@ -126,25 +126,15 @@ function form_alert()
 
     $messages   = array();
     $class      = 'warning';
-
-    if ( $messages  = $ci->session->flashdata('message') )
-    {
-        $class = 'warning';
-    }
-    else if ( $messages = $ci->session->flashdata('success') )
-    {
-        $class = 'success';
-    }
-    else if ( $messages = $ci->session->flashdata('info') )
-    {
-        $class = 'info';
-    }
-    else if ( $messages = $ci->session->flashdata('error') )
-    {
-        $class = 'danger';
-    }
-
     $output = '';
+
+    foreach ( array('message', 'success', 'info', 'error') as $type )
+    {
+        if ( $messages  = $ci->session->flashdata($type) )
+        {
+            $class = $type != 'error' ? $type : 'danger';
+        }
+    }
 
     $dismiss = '<a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>';
 
