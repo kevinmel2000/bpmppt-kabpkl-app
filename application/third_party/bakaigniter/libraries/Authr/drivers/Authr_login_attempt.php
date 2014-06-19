@@ -95,7 +95,7 @@ class Authr_login_attempt extends CI_Driver
     {
         // Purge obsolete login attempts
         $this->_ci->db->where( array('ip_address' => $this->_ci->input->ip_address(), 'login' => $login) )
-                      ->or_where('unix_timestamp(time) <', time()-get_setting('auth_login_attempt_expire'))
+                      ->or_where('unix_timestamp(time) <', (time() - get_setting('auth_login_attempt_expire')))
                       ->delete( $this->table['login_attempts'] );
     }
 }

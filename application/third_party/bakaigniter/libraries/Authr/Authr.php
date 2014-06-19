@@ -281,7 +281,7 @@ class Authr extends CI_Driver_Library
      *
      * @return  bool
      */
-    public function is_logged_in($activated = TRUE)
+    public function is_logged_in( $activated = TRUE )
     {
         return $this->_ci->session->userdata('status') === bool_to_int($activated) and !IS_CLI;
     }
@@ -329,7 +329,7 @@ class Authr extends CI_Driver_Library
      *
      * @return  array
      */
-    public function get_current_user($data_key = '')
+    public function get_current_user( $data_key = '' )
     {
         $user_data = $this->_ci->session->all_userdata();
 
@@ -353,7 +353,7 @@ class Authr extends CI_Driver_Library
      * @param   bool
      * @return  array
      */
-    public function create_user($username, $email, $password, $roles = array())
+    public function create_user( $username, $email, $password, $roles = array() )
     {
         $user_data = array(
             'username'  => $username,
@@ -396,15 +396,15 @@ class Authr extends CI_Driver_Library
      *
      * @return  bool
      */
-    public function update_user($user_id, $username, $email, $old_pass, $new_pass, $roles = array())
+    public function update_user( $user_id, $username, $email, $old_pass, $new_pass, $roles = array() )
     {
         $user = $this->users->get($user_id);
+        $return = FALSE;
+
         $data = array(
             'username' => $username,
             'email'    => $email,
             );
-
-        $return = FALSE;
 
         if (strlen($old_pass) > 0 and strlen($new_pass) > 0)
         {
@@ -449,7 +449,7 @@ class Authr extends CI_Driver_Library
      *
      * @return  bool|array
      */
-    public function change_email($email, $user_id = NULL)
+    public function change_email( $email, $user_id = NULL )
     {
         if (is_null($user_id))
         {
@@ -496,7 +496,7 @@ class Authr extends CI_Driver_Library
      *
      * @return  bool
      */
-    public function activate($user_id, $activation_key)
+    public function activate( $user_id, $activation_key )
     {
         $this->purge_na();
         return $this->activate_user($user_id, $activation_key);
@@ -512,7 +512,7 @@ class Authr extends CI_Driver_Library
      * @param   string
      * @return  array
      */
-    public function forgot_pass($login)
+    public function forgot_pass( $login )
     {
         if (!($user = $this->get_user_by_login($login)))
         {
@@ -541,25 +541,25 @@ class Authr extends CI_Driver_Library
      * @param   string
      * @return  bool
      */
-    public function reset_pass($user_id, $new_pass_key, $new_password)
+    public function reset_pass( $user_id, $new_pass_key, $new_password )
     {
         if (!($user = $this->get_user_by_id($user_id, TRUE)))
         {
             return FALSE;
         }
 
-        if ($this->reset_password($user_id, $this->do_hash($new_password), $new_pass_key, get_conf('forgot_password_expire')))
+        if ( $this->users->reset_password($user_id, $this->do_hash($new_password), $new_pass_key, get_conf('forgot_password_expire')))
         {
             // success
             // Clear all user's autologins
-            $this->clear_autologin($user->id);
+            $this->clear_autologin( $user->id );
 
-            return array(
+            return $this->bakaigniter->send_email( $user->email, 'lang:activate', array(
                 'user_id'       => $user_id,
                 'username'      => $user->username,
                 'email'         => $user->email,
                 'new_password'  => $new_password
-                );
+                ));
         }
 
         return FALSE;
@@ -576,7 +576,7 @@ class Authr extends CI_Driver_Library
      *
      * @return  bool
      */
-    public function change_pass($old_pass, $new_pass)
+    public function change_pass( $old_pass, $new_pass )
     {
         $user_id = $this->get_user_id();
 
@@ -605,7 +605,7 @@ class Authr extends CI_Driver_Library
      * @param   string
      * @return  array
      */
-    public function set_new_email($new_email, $password)
+    public function set_new_email( $new_email, $password )
     {
         $user_id = $this->get_user_id();
 
@@ -660,7 +660,7 @@ class Authr extends CI_Driver_Library
      * @param   string
      * @return  bool
      */
-    public function remove_user($user_id, $purge = FALSE)
+    public function remove_user( $user_id, $purge = FALSE )
     {
         if (!$this->users->delete($user_id))
         {
@@ -681,7 +681,7 @@ class Authr extends CI_Driver_Library
      * @param   string
      * @return  bool
      */
-    public function _delete_user($password)
+    public function _delete_user( $password )
     {
         $user_id = $this->get_user_id();
 
@@ -716,13 +716,15 @@ class Authr extends CI_Driver_Library
             return FALSE;
         }
 
-        if ( !($cookie_name = get_conf('autologin_cookie_name')))
+        $cookie_name_conf = 'autologin';
+
+        if ( $cookie_name = get_conf('autologin_cookie_name') )
         {
-            $cookie_name = 'autologin';
+            $cookie_name_conf = $cookie_name;
         }
 
         // not logged in (as any user)
-        if ($cookie = get_cookie($cookie_name, TRUE))
+        if ($cookie = get_cookie($cookie_name_conf, TRUE))
         {
             $data = unserialize($cookie);
 
@@ -775,7 +777,7 @@ class Authr extends CI_Driver_Library
      * @param   int
      * @return  bool
      */
-    public function create_autologin($user_id)
+    public function create_autologin( $user_id )
     {
         // somehow i need to use $this->generate_random_key()
         $key = substr(md5(uniqid(mt_rand().get_cookie(config_item('sess_cookie_name')))), 0, 16);
@@ -784,7 +786,7 @@ class Authr extends CI_Driver_Library
 
         if ($this->autologin->set($user_id, md5($key)))
         {
-            $this->_set_cookie(serialize(array('user_id' => $user_id, 'key' => $key)));
+            $this->_set_cookie( $user_id, $key );
             return TRUE;
         }
         
@@ -793,28 +795,31 @@ class Authr extends CI_Driver_Library
 
     // -------------------------------------------------------------------------
 
-    protected function _set_cookie($user_id, $key)
+    protected function _set_cookie( $user_id, $key )
     {
-        if (!($cookie_name = get_conf('autologin_cookie_name')))
+        $cookie_name_conf = 'autologin';
+        $cookie_life_conf = config_item('sess_expiration');
+
+        if ( $cookie_name = get_conf('autologin_cookie_name') )
         {
-            $cookie_name = 'autologin';
+            $cookie_name_conf = $cookie_name;
         }
 
-        if (!($cookie_life = get_conf('autologin_cookie_life')))
+        if ( $cookie_life = get_conf('autologin_cookie_life') )
         {
-            $cookie_life = config_item('sess_expiration');
+            $cookie_life_conf = $cookie_life;
         }
 
         set_cookie(array(
-            'name'   => $cookie_name,
+            'name'   => $cookie_name_conf,
             'value'  => serialize(array('user_id' => $user_id, 'key' => $key)),
-            'expire' => $cookie_life
+            'expire' => $cookie_life_conf
             ));
     }
 
     // -------------------------------------------------------------------------
 
-    public function update_role($role_data, $role_id = NULL, $perms = array())
+    public function update_role( $role_data, $role_id = NULL, $perms = array() )
     {
         if (!($return = $this->edit_role($role_data, $role_id = NULL, $perms = array())))
         {
@@ -832,7 +837,7 @@ class Authr extends CI_Driver_Library
      * @param string $permission: The permission you want to check for from the `permissions.permission` table.
      * @return bool
      */
-    public function is_permited($permission)
+    public function is_permited( $permission )
     {
         // if (!$this->perm_exists($permission))
         // {
@@ -879,7 +884,7 @@ class Authr extends CI_Driver_Library
      */
     public function generate_random_key()
     {
-        if (function_exists('openssl_random_pseudo_bytes'))
+        if (function_exists( 'openssl_random_pseudo_bytes') )
         {
             $key = openssl_random_pseudo_bytes(1024, $cstrong).microtime().mt_rand();
         }

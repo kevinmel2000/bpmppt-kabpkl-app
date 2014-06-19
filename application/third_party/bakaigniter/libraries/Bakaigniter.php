@@ -154,17 +154,39 @@ class Bakaigniter
      *
      * @return  mixed
      */
-    public function edit_setting( $key, $val )
+    public function edit_setting( $key, $val = null )
     {
-        if ( ( $old = $this->get_setting( $key ) ) and $old != $val )
+        if ( $key == 'auth_login_attempt_expire' or $key == 'auth_email_act_expire' )
         {
-            if ( $return = $this->_ci->db->update( $this->_table_name, array('opt_value' => $val), array('opt_key' => $key) ) )
+            $val *= 86400;
+        }
+
+        $return = FALSE;
+
+        if ( is_array($key) and is_null($val) )
+        {
+            $this->_ci->db->trans_start();
+
+            foreach ( $key as $k => $v )
             {
-                log_message('debug', "#BakaIgniter: Setting->edit key {$key} has been updated to {$val}.");
+                $return = $this->edit_setting( $k, $v );
             }
 
-            return $return;
+            $this->_ci->db->trans_complete();
         }
+        else
+        {
+            if ( ( $old = $this->get_setting($key) ) and $old != $val )
+            {
+                if ( $this->_ci->db->update( $this->_table_name, array('opt_value' => $val), array('opt_key' => $key) ) )
+                {
+                    log_message('debug', "#BakaIgniter: Setting->edit key {$key} has been updated to {$val}.");
+                    $return = TRUE;
+                }
+            }
+        }
+
+        return $return;
     }
 
     // -------------------------------------------------------------------------
@@ -273,43 +295,58 @@ class Bakaigniter
      */
     public function send_email( $reciever, $subject, &$data )
     {
-        $email_conf = array(
-            'protocol'      => $this->get_setting('email_protocol'),
-            'mailpath'      => $this->get_setting('email_mailpath'),
-            'smtp_host'     => $this->get_setting('email_smtp_host'),
-            'smtp_user'     => $this->get_setting('email_smtp_user'),
-            'smtp_pass'     => $this->get_setting('email_smtp_pass'),
-            'smtp_port'     => $this->get_setting('email_smtp_port'),
-            'smtp_timeout'  => $this->get_setting('email_smtp_timeout'),
-            'wordwrap'      => $this->get_setting('email_wordwrap'),
-            'wrapchars'     => 80,
-            'mailtype'      => $this->get_setting('email_mailtype'),
-            'charset'       => 'utf-8',
-            'validate'      => TRUE,
-            'priority'      => $this->get_setting('email_priority'),
-            'crlf'          => "\r\n",
-            'newline'       => "\r\n",
-            );
+        if ( $email_protocol = $this->get_setting('email_protocol') )
+        {
+            // Load Native CI Email Library & setup some configs
+            $this->_ci->load->library('email', array(
+                'protocol'      => $email_protocol,
+                'mailpath'      => $this->get_setting('email_mailpath'),
+                'smtp_host'     => $this->get_setting('email_smtp_host'),
+                'smtp_user'     => $this->get_setting('email_smtp_user'),
+                'smtp_pass'     => $this->get_setting('email_smtp_pass'),
+                'smtp_port'     => $this->get_setting('email_smtp_port'),
+                'smtp_timeout'  => $this->get_setting('email_smtp_timeout'),
+                'wordwrap'      => $this->get_setting('email_wordwrap'),
+                'wrapchars'     => 80,
+                'mailtype'      => $this->get_setting('email_mailtype'),
+                'charset'       => 'utf-8',
+                'validate'      => TRUE,
+                'priority'      => $this->get_setting('email_priority'),
+                'crlf'          => "\r\n",
+                'newline'       => "\r\n",
+                ));
 
-        // Load Native CI Email Library & setup some configs
-        $this->_ci->load->library('email', $email_conf);
+            // Setup Email Sender
+            $this->_ci->email->from( $this->get_setting('skpd_email'), $this->get_setting('skpd_name') );
+            $this->_ci->email->reply_to( $this->get_setting('skpd_email'), $this->get_setting('skpd_name') );
 
-        // Setup Email Sender
-        $this->_ci->email->from( $this->get_setting('skpd_email'), $this->get_setting('skpd_name') );
-        $this->_ci->email->reply_to( $this->get_setting('skpd_email'), $this->get_setting('skpd_name') );
+            // Setup Reciever
+            $this->_ci->email->to( $reciever );
 
-        // Setup Reciever
-        $this->_ci->email->to( $reciever );
-        $this->_ci->email->cc( get_conf('app_author_email') );
+            if ( $author_email = get_conf('app_author_email') )
+            {
+                $this->_ci->email->cc( $author_email );
+            }
 
-        // Setup Email Content
-        $this->_ci->email->subject( _x('email_subject_'.$subject) );
-        $this->_ci->email->message( $this->_ci->load->view('email/'.$subject.'-html', $data, TRUE));
-        $this->_ci->email->set_alt_message( $this->_ci->load->view('email/'.$subject.'-txt', $data, TRUE));
+            if ( substr($subject, 0, 5) == 'lang:' )
+            {
+                $subject = str_replace('lang:', '', $subject);
+                $subject = _x('email_subject_'.$subject);
+            }
 
-        // Do send the email & clean up
-        $this->_ci->email->send();
-        $this->_ci->email->clear();
+            // Setup Email Content
+            $this->_ci->email->subject( $subject );
+            $this->_ci->email->message( $this->_ci->load->view('email/'.$subject.'-html', $data, TRUE));
+            $this->_ci->email->set_alt_message( $this->_ci->load->view('email/'.$subject.'-txt', $data, TRUE));
+
+            // Do send the email & clean up
+            $return = $this->_ci->email->send();
+            $this->_ci->email->clear();
+
+            return $return;
+        }
+
+        return FALSE;
     }
 }
 

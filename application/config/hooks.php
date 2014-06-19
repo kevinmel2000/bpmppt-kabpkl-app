@@ -10,23 +10,23 @@
 |
 */
 
+$conf = array(
+    'class'    => 'Bakahooks',
+    'filename' => 'Bakahooks.php',
+    'filepath' => 'third_party/bakaigniter/libraries',
+    );
+
 if (!defined('PROJECT_DIR'))
 {
-    // $hook['pre_controller'] = array(
-    //     'class'    => 'Baka_pack',
-    //     'function' => 'error_handler',
-    //     'filename' => 'Baka_pack.php',
-    //     'filepath' => 'hooks'
-    //     );
+    $conf['function'] = 'error_handler_hooks';
+
+    $hook['pre_controller'] = $conf;
 }
 else
 {
-    $hook['display_override'] = array(
-        'class'    => 'Baka_pack',
-        'function' => 'get_output',
-        'filename' => 'Baka_pack.php',
-        'filepath' => 'hooks'
-        );
+    $conf['function'] = 'get_output_hooks';
+
+    $hook['display_override'] = $conf;
 }
 
 /* End of file hooks.php */

@@ -553,41 +553,17 @@ class Internal extends BAKA_Controller
 
         if ( $form_data = $form->validate_submition() )
         {
-            $return = FALSE;
-
-            $this->db->trans_start();
-
-            foreach ( $form_data as $opt_key => $opt_val )
-            {
-                if ($opt_key == 'auth_login_attempt_expire' or $opt_key == 'auth_email_act_expire')
-                {
-                    $opt_val *= 86400;
-                }
-
-                $return = Setting::edit( $opt_key, $opt_val );
-            }
-
-            // var_dump($form_data);
-
-            $this->db->trans_complete();
-
-            if ( $return === FALSE )
+            if ( $this->bakaigniter->edit_setting( $form_data ) )
             {
                 $this->session->set_flashdata('error', array('Terjadi masalah penyimpanan konfigurasi.'));
             }
             else
             {
-                // $this->session->set_flashdata('success', array_values($form_data));
                 $this->session->set_flashdata('success', array('Konfigurasi berhasil disimpan.'));
             }
 
             redirect( current_url() );
         }
-
-        // var_dump(validation_errors());
-        // var_dump($form_data);
-
-        // var_dump( $fields );
 
         $this->data['panel_body'] = $form->generate();
     }
@@ -645,7 +621,7 @@ class Internal extends BAKA_Controller
 
         $this->data['tool_buttons']['data'] = 'Kembali|default';
 
-        $prop = (! is_null($prop_id) ? $this->db->get_where(get_conf('system_env_table'), array('id' => $prop_id) ) : FALSE );
+        $prop = ( !is_null($prop_id) ? $this->db->get_where(get_conf('system_env_table'), array('id' => $prop_id) ) : FALSE );
 
         $fields[]   = array(
             'name'  => 'app_env_key',
@@ -671,8 +647,7 @@ class Internal extends BAKA_Controller
 
         if ( $form_data = $form->validate_submition() )
         {
-            $return     = FALSE;
-            $form_data  = $form->submited_data();
+            $return = FALSE;
 
             if ( $prop )
             {

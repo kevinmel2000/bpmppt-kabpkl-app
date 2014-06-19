@@ -47,7 +47,7 @@ class BAKA_Form_validation extends CI_Form_validation
     function valid_recaptcha( $code )
     {
         $resp = recaptcha_check_answer(
-                    get_setting('auth_recaptcha_public_key'),
+                    $this->CI->bakaigniter->get_setting('auth_recaptcha_public_key'),
                     $this->ip_address(),
                     $this->post('recaptcha_challenge_field'),
                     $code );
@@ -185,8 +185,8 @@ class BAKA_Form_validation extends CI_Form_validation
 
     function valid_username_length( $string )
     {
-        $min_length = get_setting('auth_username_length_min');
-        $max_length = get_setting('auth_username_length_max');
+        $min_length = $this->CI->bakaigniter->get_setting('auth_username_length_min');
+        $max_length = $this->CI->bakaigniter->get_setting('auth_username_length_max');
 
         if ( !$this->min_length( $string, $min_length ) )
         {
@@ -209,8 +209,8 @@ class BAKA_Form_validation extends CI_Form_validation
 
     function valid_password_length( $string )
     {
-        $min_length = get_setting('auth_password_length_min');
-        $max_length = get_setting('auth_password_length_max');
+        $min_length = $this->CI->bakaigniter->get_setting('auth_password_length_min');
+        $max_length = $this->CI->bakaigniter->get_setting('auth_password_length_max');
 
         if ( !$this->min_length( $string, $min_length ) )
         {
