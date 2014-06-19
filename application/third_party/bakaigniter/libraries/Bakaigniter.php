@@ -20,11 +20,18 @@
 class Bakaigniter
 {
     /**
-     * Codeigniter superobject
+     * Codeigniter instance object
      *
      * @var  resource
      */
     protected $_ci;
+
+    /**
+     * Bakaigniter instance object
+     *
+     * @var  resource
+     */
+    private static $_instance;
 
     /**
      * Settings table name
@@ -61,6 +68,8 @@ class Bakaigniter
     {
         $this->_ci =& get_instance();
 
+        self::$_instance = $this;
+
         $this->_ci->config->load('bakaigniter');
         $this->_ci->lang->load('bakaigniter');
 
@@ -78,9 +87,24 @@ class Bakaigniter
     // -------------------------------------------------------------------------
 
     /**
+     * BakaIgniter instanciable method
+     * 
+     * @return  resource
+     */
+    public static function &get_instance()
+    {
+        if ( !self::$_instance )
+        {
+            self::$_instance = new self();
+        }
+
+        return self::$_instance;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
      * Initializing application settings
-     *
-     * @since   version 0.1.3
      * 
      * @return  void
      */

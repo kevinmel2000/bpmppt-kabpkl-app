@@ -72,15 +72,15 @@ class Authr extends CI_Driver_Library
      */
     public $valid_drivers = array(
         'authr_autologin',
-        'authr_user_log',
         'authr_login_attempt',
         'authr_permissions',
         'authr_role_perms',
         'authr_roles',
+        'authr_users',
         'authr_user_meta',
         'authr_user_perms',
         'authr_user_roles',
-        'authr_users',
+        // 'authr_user_log',
         );
 
     /**

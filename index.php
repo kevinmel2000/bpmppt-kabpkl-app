@@ -27,7 +27,7 @@ else
 	define('VCAP_SERVICES', FALSE);
 }
 
-if (defined('PROJECT_DIR') or defined('VCAP_SERVICES'))
+if (defined('PROJECT_DIR') or VCAP_SERVICES)
 {
 	define('ENVIRONMENT', 'testing');
 }

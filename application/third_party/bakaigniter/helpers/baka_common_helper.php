@@ -118,7 +118,7 @@ function get_conf( $name )
  */
 function get_setting( $name )
 {
-    $bakaigniter =& get_instance()->bakaigniter;
+    $bakaigniter =& Bakaigniter::get_instance();
 
     return $bakaigniter->get_setting( $name );
 }
@@ -133,7 +133,7 @@ function get_setting( $name )
  */
 function get_message( $level = FALSE )
 {
-    $bakaigniter =& get_instance()->bakaigniter;
+    $bakaigniter =& Bakaigniter::get_instance();
 
     return $bakaigniter->get_message( $level );
 }
@@ -149,7 +149,7 @@ function get_message( $level = FALSE )
  */
 function set_message( $level, $msg_item )
 {
-    $bakaigniter =& get_instance()->bakaigniter;
+    $bakaigniter =& Bakaigniter::get_instance();
 
     return $bakaigniter->set_message( $level, $msg_item );
 }
