@@ -16,5 +16,5 @@ elseif (getenv("TRAVIS") == true)
 define('APP_HOSTNAME', isset($env_config['hostname']) ? $env_config['hostname'] : 'localhost');
 define('APP_USERNAME', isset($env_config['username']) ? $env_config['username'] : 'root');
 define('APP_PASSWORD', isset($env_config['password']) ? $env_config['password'] : 'password');
-define('APP_DATABASE', isset($env_config['database']) ? $env_config['database'] : 'bpmppt');
+define('APP_DATABASE', isset($env_config['name'])     ? $env_config['name']     : 'bpmppt');
 define('APP_DBPREFIX', 'baka_');
