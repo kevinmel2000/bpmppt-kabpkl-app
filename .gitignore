@@ -38,8 +38,8 @@ nbactions.xml
 .idea
 
 # Dependencies Folder
-node_modules/
-bower_components/
+/node_modules/
+/bower_components/
 /vendor/
 
 # Ignore Application Specifics
@@ -62,14 +62,3 @@ bower_components/
 !.csslintrc
 !.csscomb.json
 !index.html
-!/application/storage/dbs/index.html
-!/application/storage/tmp/index.html
-!/application/storage/logs/index.html
-!/application/storage/cache/index.html
-!/application/storage/uploads/index.html
-!/application/storage/backups/index.html
-
-
-# temporary
-tools/
-application/core/MY*
