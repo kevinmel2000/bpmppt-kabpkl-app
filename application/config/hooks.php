@@ -13,14 +13,14 @@
 $conf = array(
     'class'    => 'Bakahooks',
     'filename' => 'Bakahooks.php',
-    'filepath' => 'third_party/bakaigniter/libraries',
+    'filepath' => 'bakaigniter/libraries',
     );
 
 if (!defined('PROJECT_DIR'))
 {
-    // $conf['function'] = 'error_handler_hooks';
+    $conf['function'] = 'error_handler_hooks';
 
-    // $hook['pre_controller'] = $conf;
+    $hook['pre_controller'] = $conf;
 }
 else
 {
