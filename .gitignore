@@ -47,7 +47,7 @@ nbactions.xml
 /application/storage/tmp/*
 /application/storage/logs/*
 /application/storage/cache/*
-/application/storage/upload/*
+# /application/storage/upload/*
 /application/storage/backup/*
 /asset/sql/
 
