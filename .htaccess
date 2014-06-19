@@ -3,7 +3,6 @@
 	RewriteEngine on
 
 	RewriteBase /
-	#RewriteBase /bpmppt/
 
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d

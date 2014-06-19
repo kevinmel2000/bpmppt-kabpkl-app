@@ -37,8 +37,15 @@ function redirect( $uri = '', $method = 'location', $http_response_code = 302 )
 {
     if ( IS_CLI )
     {
-        echo "Redirectings: $uri\n";
-        exit;
+        if ( !defined('PROJECT_DIR') )
+        {
+            echo "Redirectings: $uri\n";
+            exit;            
+        }
+        else
+        {
+            return;
+        }
     }
 
     if ( ! preg_match('#^https?://#i', $uri))

@@ -34,7 +34,7 @@ function set_status_header($code = 200, $text = '')
  * Just simplify your path declaration
  * -----------------------------------------------------------------------------
  */
-$dir = realpath(dirname(__FILE__).'/../').'/';
+$dir = realpath(dirname(dirname(dirname(__FILE__))).'/').'/';
 
 /**
  * -----------------------------------------------------------------------------
@@ -43,25 +43,6 @@ $dir = realpath(dirname(__FILE__).'/../').'/';
  * -----------------------------------------------------------------------------
  */
 define('PROJECT_DIR', $dir);
-
-/**
- * -----------------------------------------------------------------------------
- * In case you have some issues with CI Uri Helper and maybe your own Core
- * Controller. Maybe You have and authentication library that called from your
- * Core Controller and it will redirecting to your Login page when you're not
- * logged in yet, or some thing. So, you'll need to override this too.
- * 
- * @link  https://travis-ci.org/feryardiant/codeigniter-phpunit/builds/25091919#L69
- * 
- * So, You need to override this function too and see:
- *
- * @link  https://travis-ci.org/feryardiant/codeigniter-phpunit/builds/25093192#L69
- * -----------------------------------------------------------------------------
- */
-function redirect($uri = '', $method = 'location', $http_response_code = 302)
-{
-	return;
-}
 
 /**
  * -----------------------------------------------------------------------------

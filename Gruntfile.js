@@ -17,18 +17,11 @@ module.exports = function(grunt) {
       cores: [
         'application/core/*.php',
         'application/controllers/*.php',
-        'application/controllers/admin/*.php',
+        'application/controllers/**/*.php',
         'application/helpers/*.php',
-        'application/helpers/baka_pack/*.php',
         'application/libraries/*.php',
-        'application/libraries/baka_pack/*.php',
-        'application/libraries/Archive/**/*.php',
-        'application/libraries/Authr/**/*.php',
-      ],
-      products: [
-        'application/controllers/data/*.php',
-        'application/libraries/Bpmppt/*.php',
-        'application/libraries/Bpmppt/**/*.php',
+        'application/libraries/**/*.php',
+        'application/libraries/**/**/*.php',
         'application/views/*.php',
         'application/views/**/*.php',
         'application/views/**/**/*.php',
@@ -50,7 +43,7 @@ module.exports = function(grunt) {
         convertWarningsToExceptions: true
       },
       base: {
-        dir: './tests'
+        dir: './application/tests'
       }
     },
 
@@ -134,18 +127,13 @@ module.exports = function(grunt) {
       },
       phpTest: {
         files: [
-          'tests/**/*Test.php',
-          'tests/*Test.php'
+          '<%= phpunit.base.dir %>/**/*Test.php',
+          '<%= phpunit.base.dir %>/*Test.php'
         ],
         tasks: 'phpunit'
       },
       phpCore: {
-        files: [
-          'application/**/**/*.php',
-          'application/**/*.php',
-          'application/*.php',
-          '!application/storage/**/*.php'
-        ],
+        files: '<%= phplint.base.dir %>',
         tasks: 'phplint'
       }
     }
@@ -155,7 +143,7 @@ module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt, {scope: 'devDependencies'});
   require('time-grunt')(grunt);
 
-  grunt.registerTask('build', ['cssdist', 'csstest']);
+  grunt.registerTask('build', ['cssdist', 'csstest', 'phptest']);
 
   grunt.registerTask('phptest', ['phplint', 'phpunit']);
 

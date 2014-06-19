@@ -18,16 +18,6 @@
  *
  */
 
-
-if (defined('PROJECT_DIR'))
-{
-	define('ENVIRONMENT', 'testing');
-}
-else
-{
-	define('ENVIRONMENT', 'development');
-}
-
 if ($vcap_services = getenv("VCAP_SERVICES"))
 {
 	define('VCAP_SERVICES', $vcap_services);
@@ -35,6 +25,15 @@ if ($vcap_services = getenv("VCAP_SERVICES"))
 else
 {
 	define('VCAP_SERVICES', FALSE);
+}
+
+if (defined('PROJECT_DIR') or defined('VCAP_SERVICES'))
+{
+	define('ENVIRONMENT', 'testing');
+}
+else
+{
+	define('ENVIRONMENT', 'development');
 }
 
 // var_dump(VCAP_SERVICES);
