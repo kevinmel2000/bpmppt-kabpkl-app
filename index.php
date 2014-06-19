@@ -36,8 +36,6 @@ else
 	define('ENVIRONMENT', 'development');
 }
 
-// var_dump(VCAP_SERVICES);
-
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING
@@ -195,6 +193,15 @@ if (defined('ENVIRONMENT'))
 
 	// Name of the "system folder"
 	define('SYSDIR', trim(strrchr(trim(BASEPATH, '/'), '/'), '/'));
+
+	if ( !file_exists(FCPATH.'appconfig.php') )
+	{
+		$application_folder = 'install';
+	}
+	else
+	{
+		require FCPATH.'appconfig.php';
+	}
 
 
 	// The path to the "application" folder
