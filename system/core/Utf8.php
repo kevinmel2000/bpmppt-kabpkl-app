@@ -6,7 +6,7 @@
  *
  * @package		CodeIgniter
  * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008 - 2011, EllisLab, Inc.
+ * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc.
  * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 2.0
@@ -40,7 +40,10 @@ class CI_Utf8 {
 
 		global $CFG;
 
-		$CFG =& load_class('Config', 'core');
+		if ( !$CFG )
+		{
+			$CFG =& load_class('Config', 'core');
+		}
 
 		if (
 			preg_match('/./u', 'é') === 1					// PCRE must support UTF-8

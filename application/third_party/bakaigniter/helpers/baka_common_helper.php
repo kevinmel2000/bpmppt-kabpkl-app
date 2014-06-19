@@ -39,7 +39,7 @@ function redirect( $uri = '', $method = 'location', $http_response_code = 302 )
     {
         if ( !defined('PROJECT_DIR') )
         {
-            echo "Redirectings: $uri\n";
+            echo "Redirecting: $uri\n";
             exit;            
         }
         else

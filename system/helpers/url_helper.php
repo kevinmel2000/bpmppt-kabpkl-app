@@ -6,7 +6,7 @@
  *
  * @package		CodeIgniter
  * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008 - 2011, EllisLab, Inc.
+ * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc.
  * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
@@ -530,12 +530,6 @@ if ( ! function_exists('redirect'))
 {
 	function redirect($uri = '', $method = 'location', $http_response_code = 302)
 	{
-		if ( php_sapi_name() === 'cli' OR defined('STDIN') )
-		{
-			echo "Redirecting: $uri\n";
-			exit;
-		}
-
 		if ( ! preg_match('#^https?://#i', $uri))
 		{
 			$uri = site_url($uri);
