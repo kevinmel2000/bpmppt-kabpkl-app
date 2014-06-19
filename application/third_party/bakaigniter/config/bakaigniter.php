@@ -14,16 +14,16 @@
 */
 
 // Baka Igniter Application Name
-$config['baka_app_name']            = '';
+$config['baka_app_name']            = 'BPMPPT';
 
 // Baka Igniter Application Description
-$config['baka_app_desc']            = '';
+$config['baka_app_desc']            = 'Aplikasi pengelolaan data perijinan di BPMPPT Kab. Pekalongan';
 
 // Baka Igniter Application Description
-$config['baka_app_client']          = '';
+$config['baka_app_client']          = 'BPMPPT Kab. Pekalongan';
 
 // Baka Igniter Application Version
-$config['baka_app_version']         = '';
+$config['baka_app_version']         = '0.1.4 p1';
 
 // Baka Igniter Application Author
 $config['baka_app_author']          = 'Fery Wardiyanto';
