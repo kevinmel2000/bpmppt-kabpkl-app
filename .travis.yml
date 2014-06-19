@@ -11,7 +11,7 @@ install:
 before_script:
   - mysql -e 'drop database if exists bpmppt_test;'
   - mysql -e 'create database bpmppt_test;'
-  - mysql -utravis bpmppt_test < application/tests/backup.sql
+  - mysql -utravis bpmppt_test < database.sql
 script:
   - grunt build
 deploy:
