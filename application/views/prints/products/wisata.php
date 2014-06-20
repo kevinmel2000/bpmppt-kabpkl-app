@@ -4,7 +4,7 @@
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr class="align-center bold">
-    <td colspan="7" style="width:100%">NOMOR : 556.142/12/PAR/KAR/BPMPPT/V/2013</td>
+    <td colspan="7" style="width:100%">NOMOR : 556.142/<?php echo $surat_nomor.'/PAR/KAR/BPMPPT/'.format_roman(bdate('m', $created_on).'/'.bdate('Y')) ?></td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
 <tr class="align-center bold">

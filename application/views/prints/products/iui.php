@@ -3,7 +3,7 @@
     <td colspan="7" style="width:100%">
         <p>KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN</p>
         <p>PELAYANAN PERIZINAN TERPADU KABUPATEN PEKALONGAN</p>
-        <p>NOMOR : 534 /<?php echo $surat_nomor ?>/ BPMPPT / IUI / <?php echo strtoupper(format_roman(bdate('m', $created_on)).' / '.bdate('Y')) ?></p>
+        <p>NOMOR : 534 / <?php echo $surat_nomor ?> / BPMPPT / IUI / <?php echo strtoupper(format_roman(bdate('m', $created_on)).' / '.bdate('Y')) ?></p>
     </td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>

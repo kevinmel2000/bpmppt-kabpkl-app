@@ -4,7 +4,7 @@
         <p>BUPATI PEKALONGAN</p>
         <p>&nbsp;</p>
         <p>SURAT IZIN BUPATI PEKALONGAN</p>
-        <p>NOMOR : <?php echo $surat_nomor ?> / 156 / TAHUN <?php echo bdate('Y') ?></p>
+        <p>NOMOR : 510.4 / <?php echo $surat_nomor ?> / TAHUN <?php echo bdate('Y') ?></p>
     </td>
 </tr>
 <tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
