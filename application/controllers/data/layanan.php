@@ -238,7 +238,7 @@ class Layanan extends BAKA_Controller
             $date   = ( $status != 'pending' ? ' pada: '.format_datetime( $data_obj->{$status.'_on'} ) : '' );
         }
 
-        $this->data['panel_body'] = $this->bpmppt->get_form( $data_type, $data_obj );
+        $this->data['panel_body'] = $this->bpmppt->get_form( $data_type, $data_obj, $data_id );
 
         $this->load->theme('pages/panel_form', $this->data);
     }
@@ -279,13 +279,11 @@ class Layanan extends BAKA_Controller
                 'fields'=> array(
                     array(
                         'name' => 'month',
-                        'col'   => 6,
                         'label' => 'Bulan',
                         'type'  => 'dropdown',
                         'option'=> add_placeholder( get_month_assoc(), 'Pilih Bulan') ),
                     array(
                         'name' => 'year',
-                        'col'   => 6,
                         'label' => 'Tahun',
                         'type'  => 'dropdown',
                         'option'=> add_placeholder( get_year_assoc(), 'Pilih Tahun') )
@@ -333,7 +331,9 @@ class Layanan extends BAKA_Controller
                 $data['layanan']  = $this->bpmppt->get_label( $data_type );
                 $data['results']  = $this->bpmppt->get_report( $wheres );
 
-                $this->load->theme('prints/reports/'.$data_type, $data, 'laporan');
+                print_pre($data['results']);
+
+                // $this->load->theme('prints/reports/'.$data_type, $data, 'laporan');
             }
             else
             {
@@ -388,10 +388,14 @@ class Layanan extends BAKA_Controller
 
         $this->load->helper('file');
 
-        $file_path      = APPPATH.'views/prints/products/'.$data_type.'.php';
-        $file_content   = read_file($file_path);
-        $file_content   = str_replace('<?php echo ', '{', $file_content);
-        $file_content   = str_replace(' ?>', '}', $file_content);
+        $file_path    = APPPATH.'views/prints/products/'.$data_type.'.php';
+        $file_content = read_file($file_path);
+
+        $file_content = str_replace('<?php if (strlen($data_tembusan) > 0): ?>', '<!-- start loop -->', $file_content);
+        $file_content = str_replace('<?php endif ?>', '<!-- end loop -->', $file_content);
+
+        $file_content = str_replace('<?php', '{%', $file_content);
+        $file_content = str_replace('?>', '%}', $file_content);
 
         $fields[] = array(
             'name'  => 'tmpl-editor',
@@ -415,10 +419,11 @@ class Layanan extends BAKA_Controller
 
         if ( $form_data = $form->validate_submition() )
         {
-            $form_data['tmpl-editor'] = str_replace('{', '<?php echo ', $form_data['tmpl-editor']);
-            $form_data['tmpl-editor'] = str_replace('}', ' ?>', $form_data['tmpl-editor']);
+            $form_data['tmpl-editor'] = str_replace('{%', '<?php', $form_data['tmpl-editor']);
+            $form_data['tmpl-editor'] = str_replace('%}', '?>', $form_data['tmpl-editor']);
 
-            // var_dump($form_data);
+            $form_data['tmpl-editor'] = str_replace('<!-- start loop -->', '<?php if (strlen($data_tembusan) > 0): ?>', $form_data['tmpl-editor']);
+            $form_data['tmpl-editor'] = str_replace('<!-- end loop -->', '<?php endif ?>', $form_data['tmpl-editor']);
 
             if (write_file($file_path.'', html_entity_decode($form_data['tmpl-editor'])))
             {
@@ -456,10 +461,10 @@ class Layanan extends BAKA_Controller
         $file_content = str_replace('<?php $i++; endforeach; else : ?>', '<!-- conditional loop -->', $file_content);
         $file_content = str_replace('<?php endif ?>', '<!-- end loop -->', $file_content);
 
-        $file_content = str_replace('$row->', '%', $file_content);
+        $file_content = str_replace('$row->', '#', $file_content);
 
-        $file_content = str_replace('<?php echo ', '{', $file_content);
-        $file_content = str_replace(' ?>', '}', $file_content);
+        $file_content = str_replace('<?php', '{%', $file_content);
+        $file_content = str_replace('?>', '%}', $file_content);
 
         $fields[] = array(
             'name'  => 'tmpl-editor',
@@ -483,16 +488,14 @@ class Layanan extends BAKA_Controller
 
         if ( $form_data = $form->validate_submition() )
         {
-            $form_data['tmpl-editor'] = str_replace('%', '$row->', $form_data['tmpl-editor']);
+            $form_data['tmpl-editor'] = str_replace('#', '$row->', $form_data['tmpl-editor']);
 
-            $form_data['tmpl-editor'] = str_replace('{', '<?php echo ', $form_data['tmpl-editor']);
-            $form_data['tmpl-editor'] = str_replace('}', ' ?>', $form_data['tmpl-editor']);
+            $form_data['tmpl-editor'] = str_replace('{%', '<?php', $form_data['tmpl-editor']);
+            $form_data['tmpl-editor'] = str_replace('%}', '?>', $form_data['tmpl-editor']);
 
             $form_data['tmpl-editor'] = str_replace('<!-- start loop -->', '<?php if ( $results ) : $i = 1; foreach( $results as $row ) : ?>', $form_data['tmpl-editor']);
             $form_data['tmpl-editor'] = str_replace('<!-- conditional loop -->', '<?php $i++; endforeach; else : ?>', $form_data['tmpl-editor']);
             $form_data['tmpl-editor'] = str_replace('<!-- end loop -->', '<?php endif ?>', $form_data['tmpl-editor']);
-
-            // var_dump($form_data);
 
             if (write_file($file_path.'', html_entity_decode($form_data['tmpl-editor'])))
             {

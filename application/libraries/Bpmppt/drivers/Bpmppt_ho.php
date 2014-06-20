@@ -111,7 +111,7 @@ class Bpmppt_ho extends CI_Driver
             'name'  => 'surat_jenis_pengajuan',
             'label' => 'Jenis Pengajuan',
             'type'  => 'radio',
-            'attr'  => ( $data_obj ? 'disabled' : '' ),
+            // 'attr'  => ( $data_obj ? 'disabled' : '' ),
             'std'   => ( $data_obj ? $data_obj->surat_jenis_pengajuan : ''),
             'option'=> array(
                 'Pendaftaran Baru' => 'Pendaftaran Baru',
@@ -132,7 +132,7 @@ class Bpmppt_ho extends CI_Driver
         $fields[] = array(
             'name'  => 'fieldset_data_pemohon',
             'label' => 'Data Pemohon',
-            'attr'  => ( $data_obj ? array('disabled'=>'') : '' ),
+            // 'attr'  => ( $data_obj ? array('disabled'=>'') : '' ),
             'type'  => 'fieldset' );
 
         $fields[] = array(
@@ -166,7 +166,7 @@ class Bpmppt_ho extends CI_Driver
         $fields[] = array(
             'name'  => 'fieldset_data_perusahaan',
             'label' => 'Data Perusahaan',
-            'attr'  => ( $data_obj ? array('disabled'=>'') : '' ),
+            // 'attr'  => ( $data_obj ? array('disabled'=>'') : '' ),
             'type'  => 'fieldset' );
 
         $fields[] = array(
@@ -221,7 +221,7 @@ class Bpmppt_ho extends CI_Driver
         $fields[] = array(
             'name'  => 'fieldset_data_tetangga',
             'label' => 'Data Tetangga',
-            'attr'  => ( $data_obj ? array('disabled'=>'') : '' ),
+            // 'attr'  => ( $data_obj ? array('disabled'=>'') : '' ),
             'type'  => 'fieldset' );
 
         $fields[] = array(

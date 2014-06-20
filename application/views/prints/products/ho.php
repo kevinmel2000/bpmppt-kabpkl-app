@@ -1,29 +1,29 @@
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"> </td></tr>
 <tr>
     <td colspan="7" style="width:100%" class="align-center bold">IZIN GANGGUAN ( HO )</td>
 </tr>
 <tr>
-    <td colspan="7" style="width:100%" class="align-center bold">NOMOR : 510.8 /&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/ BPMPPT / P. Kayu / <?php echo strtoupper(format_roman(bdate('m', $created_on)).' / '.bdate('Y')) ?></td>
+    <td colspan="7" style="width:100%" class="align-center bold">NOMOR : <?php echo $surat_nomor ?> /      / BPMPPT / P. Kayu / <?php echo strtoupper(format_roman(bdate('m', $created_on)).' / '.bdate('Y')) ?></td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"> </td></tr>
 <tr>
-    <td colspan="2" style="width:30%">&nbsp;</td>
+    <td colspan="2" style="width:30%"> </td>
     <td style="width:10%">JENIS USAHA / KEGIATAN</td>
     <td style="width:2%">:</td>
     <td colspan="3" style="width:47%" class="bold"><?php echo $usaha_jenis.' * '.$usaha_nama ?> *</td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"> </td></tr>
 <tr>
-    <td colspan="2" style="width:30%">&nbsp;</td>
+    <td colspan="2" style="width:30%"> </td>
     <td style="width:10%"><p>An. SAUDARA</p></td>
     <td style="width:2%">:</td>
     <td colspan="3" style="width:47%" class="bold"><?php echo strtoupper($pemohon_nama) ?></td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"> </td></tr>
 <tr>
     <td colspan="7" style="width:100%" class="align-center bold">BUPATI PEKALONGAN</td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"> </td></tr>
 <tr>
     <td style="width:20%"><p>Membaca</p></td>
     <td style="width:2%">:</td>
@@ -58,15 +58,15 @@
         </ol>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"> </td></tr>
 <tr>
     <td colspan="7" style="width:100%" class="align-center bold">M E M U T U S K A N :</td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"> </td></tr>
 <tr>
     <td style="width:20%"><p>Menetapkan</p></td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%" class="align-justify">&nbsp;</td>
+    <td colspan="5" style="width:78%" class="align-justify"> </td>
 </tr>
 <tr>
     <td style="width:20%"><p>KESATU</p></td>
@@ -74,31 +74,31 @@
     <td colspan="5" style="width:78%" class="align-justify"><p>Memberi Izin Gangguan ( HO ) kepada Saudara <strong><?php echo $pemohon_nama ?></strong> selaku <?php echo $pemohon_kerja ?> <strong><?php echo $usaha_nama ?></strong>, Alamat Kantor di <?php echo $usaha_alamat ?>, untuk Izin tempat usaha <?php echo $usaha_jenis ?> yang terletak <?php echo $usaha_lokasi ?> di atas tanah milik <?php echo $usaha_tanah_milik ?> dengan luas tempat usaha ± <?php echo $usaha_luas ?> M<sup>2</sup>.Adapun persil tersebut berbatasan :</p></td>
 </tr>
 <tr>
-    <td colspan="2">&nbsp;</td>
+    <td colspan="2"> </td>
     <td colspan="2" style="width:35%">Sebelah Utara</td>
     <td style="width:2%">:</td>
     <td colspan="2" style="width:42%"><?php echo $usaha_tetangga_utara ?></td>
 </tr>
 <tr>
-    <td colspan="2">&nbsp;</td>
+    <td colspan="2"> </td>
     <td colspan="2" style="width:35%">Sebelah Timur</td>
     <td style="width:2%">:</td>
     <td colspan="2" style="width:42%"><?php echo $usaha_tetangga_timur ?></td>
 </tr>
 <tr>
-    <td colspan="2">&nbsp;</td>
+    <td colspan="2"> </td>
     <td colspan="2" style="width:35%">Sebelah Selatan</td>
     <td style="width:2%">:</td>
     <td colspan="2" style="width:42%"><?php echo $usaha_tetangga_selatan ?></td>
 </tr>
 <tr>
-    <td colspan="2">&nbsp;</td>
+    <td colspan="2"> </td>
     <td colspan="2" style="width:35%">Sebelah Barat</td>
     <td style="width:2%">:</td>
     <td colspan="2" style="width:42%"><?php echo $usaha_tetangga_barat ?></td>
 </tr>
 <tr>
-    <td colspan="2">&nbsp;</td>
+    <td colspan="2"> </td>
     <td colspan="5" style="width:78%" class="align-justify">
         <p>Dengan ketentuan bahwa selambat-lambatnya dalam waktu 3 (tiga) bulan sesudah tanggal Keputusan ini, pendirian perusahaan yang dimaksudkan harus sudah selesai dikerjakan dan mulai dijalankan dengan syarat-syarat sebagai berikut :</p>
         <ol>
@@ -117,7 +117,7 @@
         </ol>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"> </td></tr>
 <tr>
     <td style="width:20%"><p>KEDUA</p></td>
     <td style="width:2%">:</td>
@@ -134,33 +134,30 @@
         </ul>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"> </td></tr>
 <tr>
     <td style="width:20%"><p>KETIGA</p></td>
     <td style="width:2%">:</td>
     <td colspan="5" style="width:78%" class="align-justify">Keputusan ini mulai berlaku pada tanggal ditetapkan.</td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"> </td></tr>
 <tr>
-    <td colspan="6" style="width:60%">&nbsp;</td>
+    <td colspan="6" style="width:60%"> </td>
     <td style="width:40%">
         <p>Ditetapkan di : Kajen</p>
-        <p class="underline">Pada Tanggal :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo bdate('F', $created_on).' '.bdate('Y') ?></p>
+        <p class="underline">Pada Tanggal :      <?php echo bdate('F', $created_on).' '.bdate('Y') ?></p>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"> </td></tr>
 <tr class="align-center bold">
-    <td colspan="5" style="width:60%">&nbsp;</td>
+    <td colspan="5" style="width:60%"> </td>
     <td colspan="2" style="width:40%">
-        <p>An. BUPATI PEKALONGAN</p>
-        <p>KEPALA <?php echo strtoupper($skpd_name) ?></p>
-        <p><?php echo strtoupper($skpd_city) ?></p>
-        <p>&nbsp;</p>
-        <p>&nbsp;</p>
-        <p>&nbsp;</p>
-        <p class="underline"><?php echo strtoupper($skpd_lead_name) ?></p>
-        <p>Pembina Tingkat I</p>
-        <p>NIP. <?php echo strtoupper($skpd_lead_nip) ?></p>
+    A.n. BUPATI PEKALONGAN<br>
+    KEPALA <?php echo strtoupper($skpd_name) ?><br>
+    <?php echo strtoupper($skpd_city) ?><br><br><br>
+    <span class="underline"><?php echo strtoupper($skpd_lead_name) ?></span><br>
+    <?php echo strtoupper($skpd_lead_jabatan) ?><br>
+    NIP. <?php echo strtoupper($skpd_lead_nip) ?>
     </td>
 </tr>
 <?php if (strlen($data_tembusan) > 0): ?>

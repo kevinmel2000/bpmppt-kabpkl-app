@@ -66,7 +66,10 @@ PERUSAHAAN WAJIB MENDAFTARKAN ULANG SIUP PADA TANGGAL : <?php echo date('d F Y',
 <tr><td colspan="4" style="width:100%">&nbsp;</td></tr>
 <tr style="font-family: 'Arial'">
     <td colspan="3" style="width: 70%">&nbsp;</td>
-    <td style="width: 40%; border-bottom: 2px solid #000">Dikeluarkan di : KAJEN<br>Pada Tanggal : <?php echo bdate('d F Y', $approved_on) ?></td>
+    <td style="width: 40%; border-bottom: 2px solid #000">
+        <p>Ditetapkan di : Kajen</p>
+        <p class="underline">Pada Tanggal :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo bdate('F', $created_on).' '.bdate('Y') ?></p>
+    </td>
 </tr>
 <tr><td colspan="4" style="width:100%">&nbsp;</td></tr>
 <tr style="font-family: 'Arial'" class="align-center bold">
@@ -76,7 +79,19 @@ A.n. BUPATI PEKALONGAN<br>
 KEPALA <?php echo strtoupper($skpd_name) ?><br>
 <?php echo strtoupper($skpd_city) ?><br><br><br>
 <span class="underline"><?php echo strtoupper($skpd_lead_name) ?></span><br>
-Pembina Tingkat I<br>
+<?php echo strtoupper($skpd_lead_jabatan) ?><br>
 NIP. <?php echo strtoupper($skpd_lead_nip) ?>
     </td>
 </tr>
+<?php if (strlen($data_tembusan) > 0): ?>
+<tr>
+    <td colspan="7">
+        <p>Tembusan :</p>
+        <ol>
+        <?php foreach (unserialize($data_tembusan) as $tembusan) : ?>
+            <li><?php echo $tembusan ?>;</li>
+        <?php endforeach ?>
+        </ol>
+    </td>
+</tr>
+<?php endif ?>

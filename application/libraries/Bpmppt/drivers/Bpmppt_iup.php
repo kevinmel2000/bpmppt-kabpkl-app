@@ -101,7 +101,7 @@ class Bpmppt_iup extends CI_Driver
             'name'  => 'rekomendasi',
             'label' => 'Surat Rekomendasi',
             'type'  => 'subfield',
-            'attr'  => ( $data_obj ? 'disabled' : '' ),
+            // 'attr'  => ( $data_obj ? 'disabled' : '' ),
             'fields'=> array(
                 array(
                     'name'  => 'nomor',
@@ -121,7 +121,7 @@ class Bpmppt_iup extends CI_Driver
         $fields[] = array(
             'name'  => 'fieldset_data_pemohon',
             'label' => 'Data Pemohon',
-            'attr'  => ( $data_obj ? array( 'disabled' => TRUE ) : '' ),
+            // 'attr'  => ( $data_obj ? array( 'disabled' => TRUE ) : '' ),
             'type'  => 'fieldset' );
 
         $fields[] = array(
@@ -141,7 +141,7 @@ class Bpmppt_iup extends CI_Driver
         $fields[] = array(
             'name'  => 'fieldset_perijinan',
             'label' => 'Ketentuan Perijinan',
-            'attr'  => ( $data_obj ? array( 'disabled' => TRUE ) : '' ),
+            // 'attr'  => ( $data_obj ? array( 'disabled' => TRUE ) : '' ),
             'type'  => 'fieldset' );
 
         $fields[] = array(
@@ -190,7 +190,7 @@ class Bpmppt_iup extends CI_Driver
         $fields[] = array(
             'name'  => 'fieldset_tambang',
             'label' => 'Data Pertambangan',
-            'attr'  => ( $data_obj ? 'disabled' : '' ),
+            // 'attr'  => ( $data_obj ? 'disabled' : '' ),
             'type'  => 'fieldset' );
 
         $fields[] = array(

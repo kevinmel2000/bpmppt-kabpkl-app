@@ -208,24 +208,24 @@
 <tr class="align-center bold">
     <td colspan="5" style="width:60%"> </td>
     <td colspan="2" style="width:40%">
-        <p>An. BUPATI PEKALONGAN</p>
-        <p>KEPALA <?php echo strtoupper($skpd_name) ?></p>
-        <p><?php echo strtoupper($skpd_city) ?></p>
-        <p> </p>
-        <p> </p>
-        <p> </p>
-        <p><?php echo strtoupper($skpd_lead_name) ?></p>
-        <p>NIP. <?php echo strtoupper($skpd_lead_nip) ?></p>
+    A.n. BUPATI PEKALONGAN<br>
+    KEPALA <?php echo strtoupper($skpd_name) ?><br>
+    <?php echo strtoupper($skpd_city) ?><br><br><br>
+    <span class="underline"><?php echo strtoupper($skpd_lead_name) ?></span><br>
+    <?php echo strtoupper($skpd_lead_jabatan) ?><br>
+    NIP. <?php echo strtoupper($skpd_lead_nip) ?>
+    </td>
     </td>
 </tr>
-<!--?php if (strlen($data_tembusan) --><tr>
+<?php if (strlen($data_tembusan) > 0): ?>
+<tr>
     <td colspan="7">
         <p>Tembusan :</p>
         <ol>
-        <!--?php foreach (unserialize($data_tembusan) as $tembusan) : ?>
-            <li--><?php echo $tembusan ?>;
-        <!--?php endforeach ?>
-        </ol-->
-    </ol></td>
+        <?php foreach (unserialize($data_tembusan) as $tembusan) : ?>
+            <li><?php echo $tembusan ?>;</li>
+        <?php endforeach ?>
+        </ol>
+    </td>
 </tr>
-<!--?php endif ?></tbody-->
+<?php endif ?>

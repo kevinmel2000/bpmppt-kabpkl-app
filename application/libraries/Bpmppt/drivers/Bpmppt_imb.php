@@ -104,7 +104,7 @@ class Bpmppt_imb extends CI_Driver
             'name'  => 'bangunan_maksud',
             'label' => 'Maksud Permohonan',
             'type'  => 'radio',
-            'attr'  => ( $data_obj ? 'disabled' : '' ),
+            // 'attr'  => ( $data_obj ? 'disabled' : '' ),
             'option'=> array(
                 'baru'  => 'Mendirikan Bangunan Baru',
                 'rehap' => 'Perbaikan/Rehab Bangunan Lama' ),
@@ -115,7 +115,7 @@ class Bpmppt_imb extends CI_Driver
             'name'  => 'bangunan_guna',
             'label' => 'Penggunaan bangunan',
             'type'  => 'radio',
-            'attr'  => ( $data_obj ? 'disabled' : '' ),
+            // 'attr'  => ( $data_obj ? 'disabled' : '' ),
             'option'=> array(
                 'Rumah Tinggal' => 'Rumah Tinggal',
                 'kios'          => 'Kios',
@@ -129,7 +129,7 @@ class Bpmppt_imb extends CI_Driver
         $fields[] = array(
             'name'  => 'fieldset_data_pemohon',
             'label' => 'Data Pemohon',
-            'attr'  => ( $data_obj ? 'disabled' : '' ),
+            // 'attr'  => ( $data_obj ? 'disabled' : '' ),
             'type'  => 'fieldset' );
 
         $fields[] = array(
@@ -156,7 +156,7 @@ class Bpmppt_imb extends CI_Driver
         $fields[] = array(
             'name'  => 'fieldset_data_bangunan',
             'label' => 'Data Bangunan',
-            'attr'  => ( $data_obj ? 'disabled' : '' ),
+            // 'attr'  => ( $data_obj ? 'disabled' : '' ),
             'type'  => 'fieldset' );
 
         $fields[] = array(

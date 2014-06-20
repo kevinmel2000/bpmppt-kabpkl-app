@@ -84,7 +84,7 @@ class Bpmppt_model extends CI_Model
         $prop = array(
                 'skpd_name', 'skpd_address', 'skpd_city', 'skpd_prov',
                 'skpd_telp', 'skpd_fax', 'skpd_pos', 'skpd_web', 'skpd_email',
-                'skpd_logo','skpd_lead_name','skpd_lead_nip'
+                'skpd_logo', 'skpd_lead_name', 'skpd_lead_nip', 'skpd_lead_jabatan'
                 );
 
         foreach ( $prop as $property )
@@ -337,6 +337,47 @@ class Bpmppt_model extends CI_Model
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Save data
+     *
+     * @param   string  $module_alias  Module Alias
+     * @param   array   $main_data     Main Data
+     * @param   array   $meta_data     Meta Data
+     *
+     * @return  bool|int
+     */
+    public function save_data( $module_alias, $main_data, $meta_data, $data_id = NULL )
+    {
+        if ( $data_id )
+        {
+            $this->db->update( $this->_table['data'], $main_data, array('id' => $data_id) );
+            $return = FALSE;
+
+            foreach ( $meta_data as $meta_key => $meta_value)
+            {
+                $return = $this->update_datameta( $data_id, $module_alias, $meta_key, $meta_value );
+            }
+
+            if ( $return !== FALSE )
+            {
+                return $data_id;
+            }
+        }
+        else
+        {
+            $this->db->insert( $this->_table['data'], $main_data );
+
+            if ( $this->_create_datameta( $data_id, $module_alias, $meta_data ) )
+            {
+                return $data_id;
+            }
+        }
+
+        return FALSE;
+    }
+
+    // -------------------------------------------------------------------------
+
     public function delete_data( $data_id, $module_name )
     {
         if ( $data = $this->db->delete( $this->_table['data'], array( 'id' => $data_id, 'type' => $module_name ) ) )
@@ -378,7 +419,12 @@ class Bpmppt_model extends CI_Model
      */
     public function update_datameta( $data_id, $module_name, $meta_key, $meta_value )
     {
-        $this->db->update(
+        if ( is_array($meta_value) )
+        {
+            $meta_value = serialize($meta_value);
+        }
+
+        return $this->db->update(
             $this->_table['data_meta'],
             array(  'meta_value' => $meta_value ),
             array(  'data_id'   => $data_id,

@@ -103,7 +103,7 @@ class Bpmppt_reklame extends CI_Driver
         $fields[] = array(
             'name'  => 'fieldset_data_pemohon',
             'label' => 'Data Pemohon',
-            'attr'  => ( $data_obj ? 'disabled' : '' ),
+            // 'attr'  => ( $data_obj ? 'disabled' : '' ),
             'type'  => 'fieldset' );
 
         $fields[] = array(
@@ -137,7 +137,7 @@ class Bpmppt_reklame extends CI_Driver
         $fields[] = array(
             'name'  => 'fieldset_data_reklame',
             'label' => 'Data Reklame',
-            'attr'  => ( $data_obj ? 'disabled' : '' ),
+            // 'attr'  => ( $data_obj ? 'disabled' : '' ),
             'type'  => 'fieldset' );
 
         $fields[] = array(

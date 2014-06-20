@@ -157,15 +157,12 @@
 <tr class="align-center bold">
     <td colspan="5" style="width:60%">&nbsp;</td>
     <td colspan="2" style="width:40%">
-        <p>An. BUPATI PEKALONGAN</p>
-        <p>KEPALA <?php echo strtoupper($skpd_name) ?></p>
-        <p><?php echo strtoupper($skpd_city) ?></p>
-        <p>&nbsp;</p>
-        <p>&nbsp;</p>
-        <p>&nbsp;</p>
-        <p class="underline"><?php echo strtoupper($skpd_lead_name) ?></p>
-        <p>Pembina Tingkat I</p>
-        <p>NIP. <?php echo strtoupper($skpd_lead_nip) ?></p>
+    A.n. BUPATI PEKALONGAN<br>
+    KEPALA <?php echo strtoupper($skpd_name) ?><br>
+    <?php echo strtoupper($skpd_city) ?><br><br><br>
+    <span class="underline"><?php echo strtoupper($skpd_lead_name) ?></span><br>
+    <?php echo strtoupper($skpd_lead_jabatan) ?><br>
+    NIP. <?php echo strtoupper($skpd_lead_nip) ?>
     </td>
 </tr>
 <?php if (strlen($data_tembusan) > 0): ?>

@@ -1,4 +1,4 @@
-<table width="100$row->" class="bordered">
+<table width="100" class="bordered">
     <thead>
         <tr>
             <th>No.</th>
@@ -56,9 +56,7 @@
             <td class="align-center"><?php echo bdate( 'd F Y', $row->created_on ) ?></td>
         </tr>
     <?php $i++; endforeach; else : ?>
-        <tr>
-            <td colspan="16"><h1 style="text-align: center;">NIHIL</h1></td>
-        </tr>
+        <tr><td colspan="15"><h1 style="text-align: center;">NIHIL</h1></td></tr>
     <?php endif ?>
     </tbody>
 </table>

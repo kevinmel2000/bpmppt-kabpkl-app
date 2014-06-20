@@ -126,7 +126,7 @@ class Bpmppt_siup extends CI_Driver
             'name'  => 'pengajuan_jenis',
             'label' => 'Jenis Pengajuan',
             'type'  => 'radio',
-            'attr'  => ( $data_obj ? 'disabled' : '' ),
+            // 'attr'  => ( $data_obj ? 'disabled' : '' ),
             'std'   => ( $data_obj ? $data_obj->pengajuan_jenis : ''),
             'option'=> array(
                 'Pendaftaran Baru' => 'Pendaftaran Baru',
@@ -146,7 +146,7 @@ class Bpmppt_siup extends CI_Driver
         $fields[] = array(
             'name'  => 'fieldset_data_pemilik',
             'label' => 'Data Pemilik Perusahaan',
-            'attr'  => ( $data_obj ? 'disabled' : '' ),
+            // 'attr'  => ( $data_obj ? 'disabled' : '' ),
             'type'  => 'fieldset' );
 
         $fields[] = array(
@@ -211,7 +211,7 @@ class Bpmppt_siup extends CI_Driver
         $fields[] = array(
             'name'  => 'fieldset_data_usaha',
             'label' => 'Data Perusahaan',
-            'attr'  => ( $data_obj ? 'disabled' : '' ),
+            // 'attr'  => ( $data_obj ? 'disabled' : '' ),
             'type'  => 'fieldset' );
 
         $fields[] = array(
@@ -237,7 +237,7 @@ class Bpmppt_siup extends CI_Driver
             'name'  => 'usaha_jenis',
             'label' => 'Jenis Perusahaan',
             'type'  => 'radio',
-            'attr'  => ( $data_obj ? 'disabled' : '' ),
+            // 'attr'  => ( $data_obj ? 'disabled' : '' ),
             'std'   => ( $data_obj ? $data_obj->usaha_jenis : ''),
             'option'=> $jns_opt );
 
@@ -245,7 +245,7 @@ class Bpmppt_siup extends CI_Driver
             'name'  => 'usaha_skala',
             'label' => 'Skala Perusahaan',
             'type'  => 'radio',
-            'attr'  => ( $data_obj ? 'disabled' : '' ),
+            // 'attr'  => ( $data_obj ? 'disabled' : '' ),
             'std'   => ( $data_obj ? $data_obj->usaha_skala : ''),
             'option'=> array(
                 'MK' => 'Mikro',
@@ -270,7 +270,7 @@ class Bpmppt_siup extends CI_Driver
             'name'  => 'usaha_lembaga',
             'label' => 'Kelembagaan',
             'type'  => 'checkbox',
-            'attr'  => ( $data_obj ? 'disabled' : '' ),
+            // 'attr'  => ( $data_obj ? 'disabled' : '' ),
             'std'   => ( $data_obj ? unserialize($data_obj->usaha_lembaga) : ''),
             'option'=> $lemb_opt );
 

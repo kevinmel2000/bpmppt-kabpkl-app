@@ -115,7 +115,7 @@ class Bpmppt_iui extends CI_Driver
             'name'  => 'permohonan_jenis',
             'label' => 'Jenis Pengajuan',
             'type'  => 'radio',
-            'attr'  => ( $data_obj ? 'disabled' : '' ),
+            // 'attr'  => ( $data_obj ? 'disabled' : '' ),
             'std'   => ( $data_obj ? $data_obj->permohonan_jenis : ''),
             'option'=> array(
                 'Pendaftaran Baru' => 'Pendaftaran Baru',
@@ -136,8 +136,7 @@ class Bpmppt_iui extends CI_Driver
         $fields[] = array(
             'name'  => 'fieldset_data_pemohon',
             'label' => 'Data Pemohon',
-            'type'  => 'fieldset',
-            'attr'  => ( $data_obj ? 'disabled' : '' ));
+            'type'  => 'fieldset' );
 
         $fields[] = array(
             'name'  => 'pemohon_nama',
@@ -170,8 +169,7 @@ class Bpmppt_iui extends CI_Driver
         $fields[] = array(
             'name'  => 'fieldset_data_pemilik',
             'label' => 'Data Pemilik Perusahaan',
-            'type'  => 'fieldset',
-            'attr'  => ( $data_obj ? 'disabled' : '' ));
+            'type'  => 'fieldset' );
 
         $fields[] = array(
             'name'  => 'pemilik_nama',
@@ -197,8 +195,7 @@ class Bpmppt_iui extends CI_Driver
         $fields[] = array(
             'name'  => 'fieldset_data_usaha',
             'label' => 'Data Perusahaan',
-            'type'  => 'fieldset',
-            'attr'  => ( $data_obj ? 'disabled' : '' ));
+            'type'  => 'fieldset' );
 
         $fields[] = array(
             'name'  => 'usaha_nama',
@@ -284,7 +281,7 @@ class Bpmppt_iui extends CI_Driver
             'name'  => 'usaha_akta',
             'label' => 'Pendirian',
             'type'  => 'subfield',
-            'attr'  => ( $data_obj ? 'disabled' : '' ),
+            // 'attr'  => ( $data_obj ? 'disabled' : '' ),
             'fields'=> array(
                 array(
                     'name'  => 'ntrs',
@@ -305,7 +302,7 @@ class Bpmppt_iui extends CI_Driver
             'name'  => 'usaha_direksi',
             'label' => 'Nama Direksi',
             'type'  => 'text',
-            'attr'  => ( $data_obj ? 'disabled' : '' ),
+            // 'attr'  => ( $data_obj ? 'disabled' : '' ),
             'std'   => ( $data_obj ? $data_obj->usaha_direksi : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
@@ -313,7 +310,7 @@ class Bpmppt_iui extends CI_Driver
             'name'  => 'usaha_lokasi',
             'label' => 'Lokasi Pabrik',
             'type'  => 'textarea',
-            'attr'  => ( $data_obj ? 'disabled' : '' ),
+            // 'attr'  => ( $data_obj ? 'disabled' : '' ),
             'std'   => ( $data_obj ? $data_obj->usaha_lokasi : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
@@ -321,7 +318,7 @@ class Bpmppt_iui extends CI_Driver
             'name'  => 'usaha_nama',
             'label' => 'Luas Tanah (M<sup>2</sup>)',
             'type'  => 'number',
-            'attr'  => ( $data_obj ? 'disabled' : '' ),
+            // 'attr'  => ( $data_obj ? 'disabled' : '' ),
             'std'   => ( $data_obj ? $data_obj->usaha_nama : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 

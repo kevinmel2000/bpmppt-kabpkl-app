@@ -37,9 +37,7 @@
             <td class="align-left"><?php echo $row->approved_on ?></td>
         </tr>
     <?php $i++; endforeach; else : ?>
-        <tr>
-            <td colspan="15"><h1 style="text-align: center;">NIHIL</h1></td>
-        </tr>
+        <tr><td colspan="15"><h1 style="text-align: center;">NIHIL</h1></td></tr>
     <?php endif ?>
     </tbody>
 </table>
