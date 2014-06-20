@@ -45,6 +45,7 @@ nbactions.xml
 # Ignore Application Specifics
 /application/storage/*/*
 /application/bakaigniter/samples/
+/asset/less/
 
 # but leave there Application Specifics
 !.htaccess
