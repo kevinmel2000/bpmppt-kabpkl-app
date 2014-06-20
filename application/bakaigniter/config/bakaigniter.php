@@ -23,7 +23,7 @@ $config['baka_app_desc']            = 'Aplikasi pengelolaan data perijinan di BP
 $config['baka_app_client']          = 'BPMPPT Kab. Pekalongan';
 
 // Baka Igniter Application Version
-$config['baka_app_version']         = '0.1.4 p1';
+$config['baka_app_version']         = '0.1.5';
 
 // Baka Igniter Application Author
 $config['baka_app_author']          = 'Fery Wardiyanto';
