@@ -36,18 +36,22 @@ $(document).ready( function () {
         $('.table-exp .remove-btn').addClass('disabled')
     }
 
-    $('.table-exp')
-        .on('click', '.btn-primary', function () {
-            var table = $('.table-exp');
-            table.find('tbody').append( table.find('tbody > tr:first').clone() );
-            $('.remove-btn').removeClass('disabled');
-        })
-        .on('click', '.remove-btn', function () {
-            $(this).parents('tr').remove()
-            if ($('.remove-btn').length === 1) {
-                $('.remove-btn').addClass('disabled')
-            }
-        })
+    $('.table-exp').each(function () {
+        var table = $(this);
+
+        table
+            .on('click', '.btn-primary', function () {
+                table.find('tbody').append( table.find('tbody > tr:first').clone() );
+                table.find('tbody > tr:last input[type="text"]:first').focus();
+                $('.remove-btn').removeClass('disabled');
+            })
+            .on('click', '.remove-btn', function () {
+                $(this).parents('tr').remove()
+                if ($('.remove-btn').length === 1) {
+                    $('.remove-btn').addClass('disabled')
+                }
+            })
+    })
 
     $('#sidebar-toggle').on('click', function (e) {
         $('#sidebar').show();

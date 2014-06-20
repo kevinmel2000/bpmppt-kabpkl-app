@@ -103,7 +103,7 @@ class Bpmppt extends CI_Driver_Library
      * @var  array
      */
     public $table_templ = array(
-        'table_open' => '<table id="table-koordinat" class="table table-exp table-striped table-hover table-condensed">'
+        'table_open' => '<table class="table table-exp table-striped table-hover table-condensed">'
         );
 
     /**
@@ -491,7 +491,7 @@ class Bpmppt extends CI_Driver_Library
 
     // -------------------------------------------------------------------------
 
-    public function field_tembusan($data = FALSE, $alias)
+    public function field_tembusan( $data = FALSE, $alias = '' )
     {
         if (!$this->_ci->load->is_loaded('table'))
         {
@@ -502,44 +502,60 @@ class Bpmppt extends CI_Driver_Library
 
         $data_mode = ($data != FALSE and isset($data->data_tembusan));
 
-        // var_dump($this);
         $head[] = array(
             'data'  => 'Tembusan Kepada',
             'class' => 'head-kepada',
-            'width' => '10%' );
+            'width' => '90%' );
         
-        if (!$data_mode or $data->data_tembusan == 0)
-        {
-            $head[] = array(
-                'data'  => form_button( array(
-                    'name'  => $alias.'_tembusan_add-btn',
-                    'type'  => 'button',
-                    'class' => 'btn btn-primary btn-block btn-sm',
-                    'value' => 'add',
-                    'title' => 'Tambahkan baris',
-                    'content'=> 'Add' ) ),
-                'class' => 'head-action',
-                'width' => '90%' );
-        }
+        $head[] = array(
+            'data'  => form_button( array(
+                'name'  => $alias.'_tembusan_add-btn',
+                'type'  => 'button',
+                'class' => 'btn btn-primary btn-block btn-sm',
+                'value' => 'add',
+                'title' => 'Tambahkan baris',
+                'content'=> 'Add' ) ),
+            'class' => 'head-action',
+            'width' => '10%' );
 
         $this->_ci->table->set_heading( $head );
+        $tembusan = isset($data->data_tembusan) ? unserialize($data->data_tembusan) : $this->_ci->input->post( $alias.'_data_tembusan' );
+        $method = $this->_ci->former->_attrs['method'];
 
-        $i = 0;
-        foreach ( unserialize($data->data_tembusan) as $row )
+        if ( !empty( $tembusan ) )
         {
-            $method = $this->_ci->former->_attrs['method'];
+            foreach ( $tembusan as $row )
+            {
+                $this->_temrow( $row, $alias );
+            }
+        }
+        else
+        {
+            $this->_temrow( '', $alias );
+        }
 
-            $cols[$i][] = array(
+        return array(
+            'name'  => $alias.'_data_tembusan',
+            'label' => 'Daftar Tembusan',
+            'type'  => 'custom',
+            'value' => $this->_ci->table->generate(),
+            'validation'=> ( !$data ? '' : '' ) );
+    }
+
+    private function _temrow( $value = '', $alias = '' )
+    {
+        if ( $this->_ci->load->is_loaded('table') )
+        {
+            $column[] = array(
                 'data'  => form_input( array(
                     'name'  => $alias.'_data_tembusan[]',
                     'type'  => 'text',
                     'class' => 'form-control input-sm',
-                    'value' => $data_mode ? $row : '',
-                    'placeholder'=> 'Kepada...' ), $this->_ci->input->$method($alias.'_data_tembusan[]')),
+                    'placeholder'=> 'Kepada...' ), $value),
                 'class' => 'data-id',
                 'width' => '90%' );
 
-            $cols[$i][] = array(
+            $column[] = array(
                 'data'  => form_button( array(
                     'name'  => $alias.'_tembusan_remove-btn',
                     'type'  => 'button',
@@ -550,16 +566,8 @@ class Bpmppt extends CI_Driver_Library
                 'class' => '',
                 'width' => '10%' );
 
-            $this->_ci->table->add_row( $cols[$i] );
-            $i++;
+            $this->_ci->table->add_row( $column );
         }
-
-        return array(
-            'name'  => $alias.'_data_tembusan',
-            'label' => 'Daftar Tembusan',
-            'type'  => 'custom',
-            'value' => $this->_ci->table->generate(),
-            'validation'=> ( !$data ? '' : '' ) );
     }
 }
 
