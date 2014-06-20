@@ -12,9 +12,20 @@ elseif (getenv("TRAVIS") == true)
 	$env_config['password'] = '';
 	$env_config['name']     = 'bpmppt_test';
 }
+/*
+|--------------------------------------------------------------------
+| BASE SITE URL
+|--------------------------------------------------------------------
+*/
+define('APP_BASE_URL', 'http://localhost:8088/');
 
-define('APP_HOSTNAME', isset($env_config['hostname']) ? $env_config['hostname'] : 'localhost');
-define('APP_USERNAME', isset($env_config['username']) ? $env_config['username'] : 'root');
-define('APP_PASSWORD', isset($env_config['password']) ? $env_config['password'] : 'password');
-define('APP_DATABASE', isset($env_config['name'])     ? $env_config['name']     : 'bpmppt');
+/*
+| -------------------------------------------------------------------
+| DATABASE CONNECTIVITY SETTINGS
+| -------------------------------------------------------------------
+*/
+define('APP_HOSTNAME', 'localhost');
+define('APP_USERNAME', 'root');
+define('APP_PASSWORD', 'password');
+define('APP_DATABASE', 'bpmppt');
 define('APP_DBPREFIX', 'baka_');
