@@ -194,13 +194,9 @@ if (defined('ENVIRONMENT'))
 	// Name of the "system folder"
 	define('SYSDIR', trim(strrchr(trim(BASEPATH, '/'), '/'), '/'));
 
-	if ( !file_exists(FCPATH.'appconfig.php') )
+	if ( file_exists(FCPATH.'appconfig'.EXT) )
 	{
-		$application_folder = 'install';
-	}
-	else
-	{
-		require FCPATH.'appconfig.php';
+		require FCPATH.'appconfig'.EXT;
 	}
 
 

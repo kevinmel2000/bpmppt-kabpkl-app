@@ -43,22 +43,15 @@ nbactions.xml
 /vendor/
 
 # Ignore Application Specifics
-/application/storage/dbs/*
-/application/storage/tmp/*
-/application/storage/logs/*
-/application/storage/cache/*
-/application/storage/upload/*
-/application/storage/backup/*
+/application/storage/*/*
 /application/bakaigniter/samples/
 
 # but leave there Application Specifics
 !.htaccess
+!index.html
 !.travis.yml
 !.gitattributes
-!.gitmodules
 !.gitignore
 !.editorconfig
-!.afignore
 !.csslintrc
 !.csscomb.json
-!index.html

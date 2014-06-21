@@ -32,23 +32,24 @@ $(document).ready( function () {
         e.preventDefault();
     })
 
-    if ($('.table-exp tbody tr').length === 1) {
-        $('.table-exp .remove-btn').addClass('disabled')
-    }
-
     $('.table-exp').each(function () {
         var table = $(this);
+
+        if (table.find('tbody > tr').length === 1) {
+            table.find('.remove-btn').addClass('disabled')
+        }
 
         table
             .on('click', '.btn-primary', function () {
                 table.find('tbody').append( table.find('tbody > tr:first').clone() );
+                table.find('tbody > tr:last input[type="text"]').val('');
                 table.find('tbody > tr:last input[type="text"]:first').focus();
-                $('.remove-btn').removeClass('disabled');
+                table.find('.remove-btn').removeClass('disabled');
             })
             .on('click', '.remove-btn', function () {
                 $(this).parents('tr').remove()
-                if ($('.remove-btn').length === 1) {
-                    $('.remove-btn').addClass('disabled')
+                if (table.find('tbody > tr').length === 1) {
+                    table.find('.remove-btn').addClass('disabled')
                 }
             })
     })
