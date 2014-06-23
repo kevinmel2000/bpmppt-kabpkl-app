@@ -1,6 +1,6 @@
 #!/bin/sh
 echo "Downloading"
-wget https://github.com/feryardiant/bpmppt/archive/bpmppt.tar.gz -O - | tar xz
+wget https://github.com/feryardiant/bpmppt/archive/bpmppt.tar.gz -qO - | tar xz
 echo "Updating application folder"
 cp -rf bpmppt-bpmppt/application/ .
 echo "Updating system folder"
