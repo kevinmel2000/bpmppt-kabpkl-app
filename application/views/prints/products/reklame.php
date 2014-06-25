@@ -2,7 +2,7 @@
 <tr class="align-center bold">
     <td colspan="5" style="width:100%">
         <p>SURAT IZIN BUPATI PEKALONGAN</p>
-        <p>NOMOR : <?php echo $surat_nomor?>/      <?php echo strtoupper('/BPM PPT/Rekl/'.format_roman(bdate('m', $created_on)).'/'.bdate('Y')) ?></p>
+        <p>NOMOR : {% echo $surat_nomor%}/      {% echo strtoupper('/BPM PPT/Rekl/'.format_roman(bdate('m', $created_on)).'/'.bdate('Y')) %}</p>
         <p>IZIN PEMASANGAN REKLAME</p>
     </td>
 </tr>
@@ -13,7 +13,7 @@
         <ol class="lower-alpha">
             <li>Peraturan Daerah Kabupaten Pekalongan no 1 Tahun 2012 tentang Retribusi Daerah</li>
             <li>Peraturan Bupati Pekalongan No. 12 Tahun 2012 tentang Pendelegasian Kewenangan Penandatanganan Perizinan dan Non Perizinan Kepada Kepala Badan Penanaman Modal dan Pelayanan Perijinan Terpadu Kabupaten Pekalongan</li>
-            <li>Surat permohonan izin pemasangan reklame dari Sdr. <?php echo $pemohon_nama?> tanggal permohonan <?php echo $surat_tanggal?> tentang Permohonan Izin Reklame <b><?php echo $reklame_jenis ?></b>.</li>
+            <li>Surat permohonan izin pemasangan reklame dari Sdr. {% echo $pemohon_nama%} tanggal permohonan {% echo $surat_tanggal%} tentang Permohonan Izin Reklame <b>{% echo $reklame_jenis %}</b>.</li>
         </ol>
     </td>
 </tr>
@@ -28,37 +28,37 @@
 <tr>
     <td colspan="2" style="width:30%">1. Nama</td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:30%"><?php echo $pemohon_nama ?></td>
+    <td colspan="2" style="width:30%">{% echo $pemohon_nama %}</td>
 </tr>
 <tr>
     <td colspan="2" style="width:30%">2. Alamat</td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:30%"><?php echo $pemohon_alamat ?></td>
+    <td colspan="2" style="width:30%">{% echo $pemohon_alamat %}</td>
 </tr>
 <tr>
     <td colspan="2" style="width:30%">3. Tempat/Lok. Pemasangan</td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:30%"><?php echo $reklame_lokasi ?></td>
+    <td colspan="2" style="width:30%">{% echo $reklame_lokasi %}</td>
 </tr>
 <tr>
     <td colspan="2" style="width:30%">4. Tema Pemasangan</td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:30%"><?php echo $reklame_tema ?></td>
+    <td colspan="2" style="width:30%">{% echo $reklame_tema %}</td>
 </tr>
 <tr>
     <td colspan="2" style="width:30%">5. Ukuran</td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:30%"><?php echo $reklame_ukuran_panjang.' m x '.$reklame_ukuran_lebar.' m' ?></td>
+    <td colspan="2" style="width:30%">{% echo $reklame_ukuran_panjang.' m x '.$reklame_ukuran_lebar.' m' %}</td>
 </tr>
 <tr>
     <td colspan="2" style="width:30%">6. Jumlah</td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:30%"><?php echo $reklame_juml.' Unit' ?></td>
+    <td colspan="2" style="width:30%">{% echo $reklame_juml.' Unit' %}</td>
 </tr>
 <tr>
     <td colspan="2" style="width:30%">7. Jangka Waktu Pemasangan</td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:30%"><?php echo $reklame_range_tgl_text.' '.bdate('d F Y', $reklame_range_tgl_mulai).' - '.bdate('d F Y', $reklame_range_tgl_selesai) ?></td>
+    <td colspan="2" style="width:30%">{% echo $reklame_range_tgl_text.' '.bdate('d F Y', $reklame_range_tgl_mulai).' - '.bdate('d F Y', $reklame_range_tgl_selesai) %}</td>
 </tr>
 <tr><td colspan="5" style="width:100%"></td></tr>
 <tr>
@@ -84,7 +84,7 @@
     <td colspan="4" style="width:60%"></td>
     <td colspan="1" style="width:40%">
         <p>Ditetapkan di : Kajen</p>
-        <p>Pada Tanggal :       <?php echo bdate('F', $created_on).' '.bdate('Y') ?></p>
+        <p>Pada Tanggal :       {% echo bdate('F', $created_on).' '.bdate('Y') %}</p>
     </td>
 </tr>
 <tr><td colspan="5" style="width:100%"></td></tr>
@@ -92,23 +92,23 @@
     <td colspan="3" style="width:60%"></td>
     <td colspan="2" style="width:40%">
     A.n. BUPATI PEKALONGAN<br>
-    KEPALA <?php echo strtoupper($skpd_name) ?><br>
-    <?php echo strtoupper($skpd_city) ?><br><br><br>
-    <span class="underline"><?php echo strtoupper($skpd_lead_name) ?></span><br>
-    <?php echo strtoupper($skpd_lead_jabatan) ?><br>
-    NIP. <?php echo strtoupper($skpd_lead_nip) ?>
+    KEPALA {% echo strtoupper($skpd_name) %}<br>
+    {% echo strtoupper($skpd_city) %}<br><br><br>
+    <span class="underline">{% echo strtoupper($skpd_lead_name) %}</span><br>
+    {% echo strtoupper($skpd_lead_jabatan) %}<br>
+    NIP. {% echo strtoupper($skpd_lead_nip) %}
     </td>
 </tr>
 <tr><td colspan="5" style="width:100%"></td></tr>
-<?php if (strlen($data_tembusan) > 0): ?>
+<!-- start condition -->
 <tr>
     <td colspan="5" style="width:100%">
         <p>Tembusan :</p>
         <ol>
-        <?php foreach (unserialize($data_tembusan) as $tembusan) : ?>
-            <li><?php echo $tembusan ?>;</li>
-        <?php endforeach ?>
+        <!-- start loop -->
+            <li>{% echo $tembusan %};</li>
+        <!-- end loop -->
         </ol>
     </td>
 </tr>
-<?php endif ?>
+<!-- end condition -->

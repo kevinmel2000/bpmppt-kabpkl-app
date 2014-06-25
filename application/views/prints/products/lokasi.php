@@ -4,7 +4,7 @@
         <p>BUPATI PEKALONGAN</p>
         <p></p>
         <p>SURAT IZIN BUPATI PEKALONGAN</p>
-        <p>NOMOR : 510.4 / <?php echo $surat_nomor ?> / TAHUN <?php echo bdate('Y') ?></p>
+        <p>NOMOR : 510.4 / {% echo $surat_nomor %} / TAHUN {% echo bdate('Y') %}</p>
     </td>
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>
@@ -14,9 +14,9 @@
 <tr><td colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="7" style="width:100%">
-        <p>PEMBERIAN IZIN LOKASI <?php echo $pemohon_usaha ?></p>
-        <p><?php echo $lokasi_tujuan ?></p>
-        <p><?php echo $lokasi_alamat ?></p>
+        <p>PEMBERIAN IZIN LOKASI {% echo $pemohon_usaha %}</p>
+        <p>{% echo $lokasi_tujuan %}</p>
+        <p>{% echo $lokasi_alamat %}</p>
         <p>KABUPATEN PEKALONGAN</p>
     </td>
 </tr>
@@ -63,26 +63,26 @@
     </td>
     <td style="width:2%"><p>:</p><p>:</p><p>:</p><p>:</p></td>
     <td colspan="5" style="width:78%" class="align-justify">
-        <p><?php echo $pemohon_nama ?></p>
-        <p><?php echo $pemohon_jabatan ?></p>
-        <p><?php echo $pemohon_alamat ?></p>
-        <p><?php echo $lokasi_tujuan ?></p>
+        <p>{% echo $pemohon_nama %}</p>
+        <p>{% echo $pemohon_jabatan %}</p>
+        <p>{% echo $pemohon_alamat %}</p>
+        <p>{% echo $lokasi_tujuan %}</p>
     </td>
 </tr>
 <tr>
     <td colspan="7" style="width:100%" class="align-justify">
         <p>Dengan ketentuan sebagai berikut :</p>
         <ol>
-            <li>Pemberian izin lokasi <?php echo $lokasi_tujuan ?> dimaksud seluas &#177; <?php echo $lokasi_luas ?> m<sup>2</sup> terletak di <?php echo $lokasi_alamat ?>;</li>
+            <li>Pemberian izin lokasi {% echo $lokasi_tujuan %} dimaksud seluas ± {% echo $lokasi_luas %} m<sup>2</sup> terletak di {% echo $lokasi_alamat %};</li>
             <li>Pemegang izin lokasi wajib melaporkan perolehan dan pemanfaatan tanahnya setiap tiga (tiga) bulan kepada Bupati Pekalongan Cq. Kepala Kantor Pertanahan Kabupaten Pekalongan;</li>
             <li>Atas tanah yang sudah diperoleh pemegang izin lokasi diwajibkan mengajukan permohonan hak atas tanah kepada pejabat yang berwenang sesuai ketentuan yang berlaku;</li>
             <li>Tanah tersebut dilarang digunakan untuk kegiatan lain selain untuk pembangunan perumahan;</li>
             <li>Pemegang izin lokasi dilarang mengalihkan hak izinnya kepada siapapun dan dengan dalih apapun;</li>
-            <li>Dalam melaksanakan <?php echo $lokasi_tujuan ?> :
+            <li>Dalam melaksanakan {% echo $lokasi_tujuan %} :
                 <ol>
-                    <li>Agar memenuhi ketentuan imbangan areal yang dibangun dan areal terbuka hijau perbandingan <?php echo $lokasi_area_hijau ?></li>
+                    <li>Agar memenuhi ketentuan imbangan areal yang dibangun dan areal terbuka hijau perbandingan {% echo $lokasi_area_hijau %}</li>
                     <li>Menyediakan prasarana instalasi pengolahan - limbah dan drainase dengan mempertimbangkan rencana jaringan pembuangan di wilayah sekitarnya, sehingga keamanan dan kenyamanan lingkungan tetap terjaga</li>
-                    <li>Memenuhi segala peraturan dan ketentuan yang berlaku berkaitan dengan <?php echo $lokasi_tujuan ?></li>
+                    <li>Memenuhi segala peraturan dan ketentuan yang berlaku berkaitan dengan {% echo $lokasi_tujuan %}</li>
                 </ol>
             </li>
             <li>Pengawasan terhadap pelaksanaan ketentuan pada keputusan ini dilaksanakan oleh Bupati Pekalongan dan hasil-hasilnya dilaporkan kepada Gubernur Jawa Tengah dengan tembusan kepada Kepala Kantor Wilayah Badan Pertanaah Nasional Propinsi Jawa Tengah;</li>
@@ -96,7 +96,7 @@
     <td colspan="6" style="width:60%"></td>
     <td style="width:40%">
         <p>Ditetapkan di : Kajen</p>
-        <p>Pada Tanggal :      <?php echo bdate('F', $created_on).' '.bdate('Y') ?></p>
+        <p>Pada Tanggal :      {% echo bdate('F', $created_on).' '.bdate('Y') %}</p>
     </td>
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>
@@ -104,22 +104,22 @@
     <td colspan="5" style="width:60%"></td>
     <td colspan="2" style="width:40%">
     A.n. BUPATI PEKALONGAN<br>
-    KEPALA <?php echo strtoupper($skpd_name) ?><br>
-    <?php echo strtoupper($skpd_city) ?><br><br><br>
-    <span class="underline"><?php echo strtoupper($skpd_lead_name) ?></span><br>
-    <?php echo strtoupper($skpd_lead_jabatan) ?><br>
-    NIP. <?php echo strtoupper($skpd_lead_nip) ?>
+    KEPALA {% echo strtoupper($skpd_name) %}<br>
+    {% echo strtoupper($skpd_city) %}<br><br><br>
+    <span class="underline">{% echo strtoupper($skpd_lead_name) %}</span><br>
+    {% echo strtoupper($skpd_lead_jabatan) %}<br>
+    NIP. {% echo strtoupper($skpd_lead_nip) %}
     </td>
 </tr>
-<?php if (strlen($data_tembusan) > 0): ?>
+<!-- start condition -->
 <tr>
     <td colspan="7">
         <p>Tembusan :</p>
         <ol>
-        <?php foreach (unserialize($data_tembusan) as $tembusan) : ?>
-            <li><?php echo $tembusan ?>;</li>
-        <?php endforeach ?>
+        <!-- start loop -->
+            <li>{% echo $tembusan %};</li>
+        <!-- end loop -->
         </ol>
     </td>
 </tr>
-<?php endif ?>
+<!-- end condition -->

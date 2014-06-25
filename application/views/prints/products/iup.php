@@ -268,20 +268,18 @@
         <td><?php echo $koor['lsu'] ?></td>
     </tr>
 <?php endforeach ?>
-</tbody>
-</table><table>
-    <tr><td colspan="2" style="width:100%"></td></tr>
-    <tr class="align-center bold">
-        <td style="width:50%"></td>
-        <td style="width:50%">
-            <p>An. BUPATI PEKALONGAN</p>
-            <p>KEPALA <?php echo strtoupper($skpd_name) ?></p>
-            <p><?php echo strtoupper($skpd_city) ?></p>
-            <p></p>
-            <p></p>
-            <p></p>
-            <p><?php echo strtoupper($skpd_lead_name) ?></p>
-            <p>NIP. <?php echo strtoupper($skpd_lead_nip) ?></p>
-        </td>
-    </tr>
+</tbody></table><table>
+<tbody>
+<tr><td colspan="2" style="width:100%"></td></tr>
+<tr class="align-center bold">
+    <td style="width:50%"></td>
+    <td style="width:50%">
+A.n. BUPATI PEKALONGAN<br>
+KEPALA <?php echo strtoupper($skpd_name) ?><br>
+<?php echo strtoupper($skpd_city) ?><br><br><br>
+<span class="underline"><?php echo strtoupper($skpd_lead_name) ?></span><br>
+<?php echo strtoupper($skpd_lead_jabatan) ?><br>
+NIP. <?php echo strtoupper($skpd_lead_nip) ?>
+    </td>
+</tr>
 

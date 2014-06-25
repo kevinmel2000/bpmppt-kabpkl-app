@@ -22,19 +22,19 @@
         </tr>
     </thead>
     <tbody>
-    <?php if ( $results ) : $i = 1; foreach( $results as $row ) : ?>
-        <tr id="baris-<?php echo $row->id ?>" style="text-transform: uppercase;">
-            <td class="align-center"><?php echo $i ?></td>
-            <td class="align-left"><?php echo $row->pemohon_nama ?></td>
-            <td class="align-left"><?php echo $row->pemohon_alamat ?></td>
-            <td class="align-center"><?php echo $row->usaha_lokasi ?></td>
-            <td class="align-center"><?php echo $row->no_agenda ?></td>
-            <td class="align-center"><?php echo bdate( 'd F Y', $row->created_on ) ?></td>
-            <td class="align-center"><?php echo bdate( 'd F Y', $row->created_on ) ?></td>
-            <td class="align-left"><?php echo '-' ?></td>
+    <!-- start loop -->
+        <tr id="baris-{% echo #id %}" style="text-transform: uppercase;">
+            <td class="align-center">{% echo $i %}</td>
+            <td class="align-left">{% echo #pemohon_nama %}</td>
+            <td class="align-left">{% echo #pemohon_alamat %}</td>
+            <td class="align-center">{% echo #usaha_lokasi %}</td>
+            <td class="align-center">{% echo #no_agenda %}</td>
+            <td class="align-center">{% echo bdate( 'd F Y', #created_on ) %}</td>
+            <td class="align-center">{% echo bdate( 'd F Y', #created_on ) %}</td>
+            <td class="align-left">{% echo '-' %}</td>
         </tr>
-    <?php $i++; endforeach; else : ?>
+    <!-- conditional loop -->
         <tr><td colspan="15"><h1 style="text-align: center;">NIHIL</h1></td></tr>
-    <?php endif ?>
+    <!-- end loop -->
     </tbody>
 </table>

@@ -456,6 +456,95 @@ class Bpmppt extends CI_Driver_Library
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Get template editor
+     *
+     * @param   string  $product_type  (products|reports)
+     * @param   string  $data_type     Data type
+     * @param   array   $paterns       Search & Replacement patterns
+     * @return  mixed                  Return string by default or bool on form submit
+     */
+    public function get_template_editor( $product_type, $data_type, $paterns )
+    {
+        // Get data label
+        $data_label = $this->get_label( $data_type );
+
+        // Load file helper to read the template file
+        $this->_ci->load->helper('file');
+
+        // Getting started
+        $file_path    = APPPATH.'views/prints/'.$product_type.'/'.$data_type.'.php';
+        $file_content = read_file($file_path);
+        $new_patterns = array();
+
+        // Setup new patterns
+        foreach ( $paterns as $search => $replacement )
+        {
+            $new_patterns[] = array(
+                'search'      => $search,
+                'replacement' => $replacement,
+                );
+        }
+
+        // Remove the old one
+        unset( $paterns );
+        // Sorting low to hight
+        ksort( $new_patterns );
+
+        // Parsing file content by new patterns #lol
+        foreach ( $new_patterns as $pattern )
+        {
+            $file_content = str_replace( $pattern['search'], $pattern['replacement'], $file_content );
+        }
+
+        // Setup field
+        $fields[] = array(
+            'name'  => 'tmpl-editor',
+            'type'  => 'editor',
+            'height'=> 300,
+            'label' => 'Template Editor',
+            'std'   => $file_content,
+            'left-desc'=> TRUE,
+            'desc'  => 'Ubah dan sesuaikan template Print out dokumen '.$data_label.' sesuai dengan keinginan anda.<br>'
+                    .  '<b>CATATAN: jangan mengubah isi dari text yang diapit oleh kurung kurawal "{...}" karna itu merupakan variabel data untuk output dokumen ini.</b><br>'
+                    .  'Jika anda hendak memindahkan posisi, cut dan paste keseluruhan text termasuk kurung kurawalnya <i>misal: {text}</i> ke posisi baru yang anda inginkan.',
+            );
+
+        $this->_ci->load->library('former');
+
+        $form = $this->_ci->former->init(array(
+            'name'      => 'template-'.$this->get_alias( $data_type ),
+            'action'    => current_url(),
+            'fields'    => $fields,
+            ));
+
+        // on Submition
+        if ( $form_data = $form->validate_submition() )
+        {
+            // Reverse sort order
+            krsort( $new_patterns );
+            // re-parsing
+            foreach ( $new_patterns as $pattern )
+            {
+                $file_content = str_replace( $pattern['search'], $pattern['replacement'], $file_content );
+            }
+
+            // Save it to the file
+            if ( write_file( $file_path.'', html_entity_decode( $form_data['tmpl-editor'] ) ) )
+            {
+                $this->_ci->session->set_flashdata( 'success', 'Template '.$data_label.' berhasil diperbarui' );
+                redirect( current_url() );
+            }
+
+            $this->_ci->session->set_flashdata( 'error', 'Template '.$data_label.' gagal diperbarui' );
+            redirect( current_url() );
+        }
+
+        return $form->generate();
+    }
+
+    // -------------------------------------------------------------------------
+
     public function field_tembusan( $data = FALSE, $alias = '' )
     {
         if (!$this->_ci->load->is_loaded('table'))
