@@ -215,7 +215,7 @@
     <?php echo strtoupper($skpd_lead_jabatan) ?><br>
     NIP. <?php echo strtoupper($skpd_lead_nip) ?>
     </td>
-    </td>
+    
 </tr>
 <?php if (strlen($data_tembusan) > 0): ?>
 <tr>

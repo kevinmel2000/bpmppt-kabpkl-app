@@ -27,7 +27,7 @@ class Layanan extends BAKA_Controller
         {
             $this->set_panel_title('Semua data perijinan');
             $modules = $this->bpmppt->get_modules();
-            
+
             if (!empty($modules))
             {
                 foreach($this->bpmppt->get_modules() as $link => $layanan)
@@ -94,7 +94,7 @@ class Layanan extends BAKA_Controller
     public function data( $data_type, $id = FALSE )
     {
         // $this->data['search_form']   = TRUE;
-        
+
         if ($id == 'setting')
         {
             $this->data_out( $data_type );
@@ -130,7 +130,7 @@ class Layanan extends BAKA_Controller
                     $stat   = $this->uri->segment(6);
                     $query  = $this->bpmppt->get_data_by_status( $stat, $slug );
                     break;
-                
+
                 case 'page':
                 default:
                     $query = $this->bpmppt->get_data_by_type( $slug );

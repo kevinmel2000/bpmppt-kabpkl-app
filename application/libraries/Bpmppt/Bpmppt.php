@@ -185,7 +185,7 @@ class Bpmppt extends CI_Driver_Library
 
     /**
      * Get Module name
-     * 
+     *
      * @param   string  $name
      *
      * @return  string
@@ -199,7 +199,7 @@ class Bpmppt extends CI_Driver_Library
 
     /**
      * Get Module alias
-     * 
+     *
      * @param   string  $name
      *
      * @return  string
@@ -213,7 +213,7 @@ class Bpmppt extends CI_Driver_Library
 
     /**
      * Get Module code
-     * 
+     *
      * @param   string  $name
      *
      * @return  string
@@ -227,7 +227,7 @@ class Bpmppt extends CI_Driver_Library
 
     /**
      * Get Module label
-     * 
+     *
      * @param   string  $name
      *
      * @return  string
@@ -271,7 +271,7 @@ class Bpmppt extends CI_Driver_Library
             {
                 $data_label = 'Agenda';
             }
-            
+
             if ($driver == 'siup')
             {
                 $data_label = 'SIUP';
@@ -382,9 +382,14 @@ class Bpmppt extends CI_Driver_Library
             if ( $new_id = $this->simpan( $modul_slug, $form_data, $data_id ) )
             {
                 $new_id = $data_id == FALSE ? '/'.$new_id : '' ;
-
-                redirect( current_url().$new_id );
             }
+
+            foreach ( get_message() as $type => $item )
+            {
+                $this->_ci->session->set_flashdata( $type, $item );
+            }
+
+            redirect( current_url().$new_id );
         }
 
         return $form->generate();
@@ -421,7 +426,7 @@ class Bpmppt extends CI_Driver_Library
 
     // -------------------------------------------------------------------------
 
-    public function simpan( $driver_alias, $form_data, $data_id = NULL )
+    public function simpan( $driver_alias, $form_data, $data_id = FALSE )
     {
         // $driver_alias = $this->get_alias( $driver );
 
@@ -457,7 +462,7 @@ class Bpmppt extends CI_Driver_Library
         {
             $this->_ci->load->library('table');
         }
-        
+
         $this->_ci->table->set_template($this->table_templ);
 
         $data_mode = ($data != FALSE and isset($data->data_tembusan));
@@ -466,7 +471,7 @@ class Bpmppt extends CI_Driver_Library
             'data'  => 'Tembusan Kepada',
             'class' => 'head-kepada',
             'width' => '90%' );
-        
+
         $head[] = array(
             'data'  => form_button( array(
                 'name'  => $alias.'_tembusan_add-btn',

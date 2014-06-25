@@ -3,7 +3,7 @@
     <td colspan="7" style="width:100%" class="align-center bold">IZIN GANGGUAN ( HO )</td>
 </tr>
 <tr>
-    <td colspan="7" style="width:100%" class="align-center bold">NOMOR : 510.8 /&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/ BPMPPT / P. Kayu / <?php echo strtoupper(format_roman(bdate('m', $created_on)).' / '.bdate('Y')) ?></td>
+    <td colspan="7" style="width:100%" class="align-center bold">NOMOR : 510.8 /      / BPMPPT / P. Kayu / <?php echo strtoupper(format_roman(bdate('m', $created_on)).' / '.bdate('Y')) ?></td>
 </tr>
 <tr><td colspan="7" style="width:100%"> </td></tr>
 <tr>

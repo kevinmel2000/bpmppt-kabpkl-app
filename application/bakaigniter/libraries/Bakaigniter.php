@@ -55,6 +55,13 @@ class Bakaigniter
     protected $_configs;
 
     /**
+     * Messages Types
+     *
+     * @var  array
+     */
+    public $_message_types = array( 'success', 'info', 'warning', 'error' );
+
+    /**
      * Messages wrapper
      *
      * @var  array
@@ -88,7 +95,7 @@ class Bakaigniter
 
     /**
      * BakaIgniter instanciable method
-     * 
+     *
      * @return  resource
      */
     public static function &get_instance()
@@ -105,7 +112,7 @@ class Bakaigniter
 
     /**
      * Initializing application settings
-     * 
+     *
      * @return  void
      */
     protected function initialize()
@@ -126,7 +133,7 @@ class Bakaigniter
      * Get all application settings in array
      *
      * @since   version 0.1.3
-     * 
+     *
      * @return  array
      */
     public function get_settings()
@@ -276,7 +283,7 @@ class Bakaigniter
      */
     public function set_message( $level, $msg_item )
     {
-        if (!in_array($level, array('success', 'info', 'warning', 'error')))
+        if (!in_array($level, $this->_message_types))
         {
             log_message('error', '#BakaIgniter: Messg->set Unkown message level "'.$level.'"');
             return FALSE;
