@@ -22,7 +22,8 @@ elseif (getenv("TRAVIS") == true)
 | BASE SITE URL
 |--------------------------------------------------------------------
 */
-define('APP_BASE_URL', isset($env_config) ? $env_config['base_url'] : 'http://localhost:8088/');
+$hostname = function_exists('apache_getenv') == true ? 'http://bpmppt.local/' : 'http://localhost:8088/';
+define('APP_BASE_URL', isset($env_config) ? $env_config['base_url'] : $hostname);
 
 /*
 | -------------------------------------------------------------------

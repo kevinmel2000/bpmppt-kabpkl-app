@@ -1,4 +1,4 @@
-<?php if (! defined('BASEPATH')) exit('No direct script access allowed'); 
+<?php if (! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
  * @package     Baka Igniter Pack
@@ -78,7 +78,7 @@ class Median
 
     /**
      * Upload data
-     * 
+     *
      * @deprecated
      *
      * @var  array

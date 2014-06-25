@@ -279,7 +279,7 @@ class Authr_users extends CI_Driver
         $key = (bool) get_setting('auth_email_activation')
             ? 'new_email_key'
             : 'new_password_key';
-        
+
         $wheres['id'] = $user_id;
         $wheres[$key] = $activation_key;
         $wheres['activated'] = 0;
@@ -364,7 +364,7 @@ class Authr_users extends CI_Driver
                 }
             }
         }
-        
+
         $valid = TRUE;
 
         foreach ( $full_blacklist as $val )
@@ -372,10 +372,10 @@ class Authr_users extends CI_Driver
             if ( $username == $val )
             {
                 $valid = FALSE;
-                break; 
+                break;
             }
         }
-         
+
          return $valid;
     }
 
@@ -481,7 +481,7 @@ class Authr_users extends CI_Driver
      * @param   string
      * @param   string
      * @param   bool
-     * 
+     *
      * @return  bool
      */
     public function set_new_email( $user_id, $new_email, $new_email_key )
@@ -553,7 +553,7 @@ class Authr_users extends CI_Driver
      * Unban user
      *
      * @param   int
-     * 
+     *
      * @return  void
      */
     public function unban( $user_id )

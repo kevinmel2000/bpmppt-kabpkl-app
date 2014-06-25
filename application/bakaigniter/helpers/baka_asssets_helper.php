@@ -69,7 +69,7 @@ function load_scripts($pos)
             $output .= "\n});\n</script>\n";
         }
     }
-    
+
     return $output;
 }
 

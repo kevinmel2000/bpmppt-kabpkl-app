@@ -16,11 +16,11 @@
  * @subpackage  Drivers
  * @category    Security
  */
-class Authr extends CI_Driver_Library 
+class Authr extends CI_Driver_Library
 {
     /**
      * Codeigniter superobject
-     * 
+     *
      * @var  mixed
      */
     public $_ci;
@@ -92,7 +92,7 @@ class Authr extends CI_Driver_Library
 
         $this->_ci->load->library('session');
         $this->_ci->load->helpers(array('cookie', 'baka_authr'));
-        
+
         $this->db = $this->_ci->db;
 
         $tables = array(
@@ -163,7 +163,7 @@ class Authr extends CI_Driver_Library
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Login user on the site. Return TRUE if login is successful
      * (user exists and activated, password is correct), otherwise FALSE.
@@ -265,7 +265,7 @@ class Authr extends CI_Driver_Library
     public function logout()
     {
         $this->autologin->delete();
-        
+
         // See http://codeigniter.com/forums/viewreply/662369/ as the reason for the next line
         $this->_ci->session->set_userdata(array('user_id' => '', 'username' => '', 'display' => '', 'status' => NULL));
         $this->_ci->session->sess_destroy();
@@ -287,7 +287,7 @@ class Authr extends CI_Driver_Library
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Get logged in User ID
      *
@@ -323,7 +323,7 @@ class Authr extends CI_Driver_Library
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Get all data of current logged in user
      *
@@ -689,9 +689,9 @@ class Authr extends CI_Driver_Library
         {
             return FALSE;
         }
-            
+
         if (!$this->validate($password, $user->password))
-        {   
+        {
             set_message('error', _x('auth_incorrect_password'));
             return FALSE;
         }
@@ -789,7 +789,7 @@ class Authr extends CI_Driver_Library
             $this->_set_cookie( $user_id, $key );
             return TRUE;
         }
-        
+
         return FALSE;
     }
 
@@ -871,7 +871,7 @@ class Authr extends CI_Driver_Library
         //         }
         //     }
         // }
-        
+
         return $allow;
     }
 
@@ -879,7 +879,7 @@ class Authr extends CI_Driver_Library
 
     /**
      * Generate a random string based on kernel's random number generator
-     * 
+     *
      * @return string
      */
     public function generate_random_key()

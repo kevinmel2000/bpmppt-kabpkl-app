@@ -1,4 +1,4 @@
-<?php if (! defined('BASEPATH')) exit('No direct script access allowed'); 
+<?php if (! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
  * @package     Baka Igniter Pack
@@ -159,13 +159,13 @@ class Archive extends CI_Driver_Library
         {
             return $this->{$this->_type}->_read();
         }
-        
+
         return FALSE;
     }
 
     /**
      * Extract archive file
-     * 
+     *
      * @param   string  $target_dir  Extract target directory
      * @param   array   $file_names  Selected file(s) which will extracted
      *

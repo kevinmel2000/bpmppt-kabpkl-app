@@ -65,7 +65,7 @@ class Authr_role_perms extends CI_Driver
 
     /**
      * Get related permissions of role_id
-     * 
+     *
      * @param   int     $role_id    ID of role
      * @return  array               list of related permissions
      */
@@ -87,13 +87,13 @@ class Authr_role_perms extends CI_Driver
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Update relation of roles and permissions table
-     * 
+     *
      * @param   array   $permission  array of new permissions
      * @param   int     $role_id     id of role
-     * 
+     *
      * @return  mixed
      */
     public function update( $permissions = array(), $role_id)

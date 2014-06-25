@@ -361,7 +361,7 @@ class Utily
         {
             @shell_exec( 'mysqldump -u'.self::$_ci->db->username.$password.$database.' '.$table.">".$destination.'/'.$table.'.sql' );
         }
-        
+
         // Load the zip helper
         self::$_ci->load->library('zip');
 

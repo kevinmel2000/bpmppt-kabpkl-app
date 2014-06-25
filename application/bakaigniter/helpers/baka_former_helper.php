@@ -18,13 +18,13 @@ function set_toolbar( $tool_buttons, $page_link )
         return FALSE;
     }
 
-    $btn_class  = 'btn '; 
+    $btn_class  = 'btn ';
     $output     = '<div class="btn-toolbar">';
 
     foreach ( $tool_buttons as $url => $label )
     {
         $output .= '<div class="btn-group">';
-        
+
         if ( is_array($label) )
         {
             $s_btn    = explode('|', $url);
@@ -50,7 +50,7 @@ function set_toolbar( $tool_buttons, $page_link )
                 $item_id = 'toolbar-btn-'.str_replace(' ', '-', strtolower($l_label));
                 $item = anchor( $page_link.$l_url, $l_label,
                     'id="'.$item_id.'" class="'.( $dropdown ? '' : $btn_class.( isset($s_btn[1]) ? 'btn-'.$s_btn[1] : '' ) ).'" '.$l_attr );
-                
+
                 $output .= ( $dropdown ? '<li>'.$item.'</li>' : $item );
             }
 
@@ -65,7 +65,7 @@ function set_toolbar( $tool_buttons, $page_link )
 
         $output .= '</div>';
     }
-    
+
     $output .= '</div>';
 
     return $output;
@@ -141,7 +141,7 @@ function form_alert()
     if ( is_array( $messages ) AND count( $messages ) > 0 )
     {
         $output .= '<div class="alert alert-'.$class.'">'.$dismiss.'<ul>';
-        
+
         foreach ( $messages as $message )
         {
             $output .= '<li>'.$message.'</li>';

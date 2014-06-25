@@ -51,7 +51,7 @@ class Authr_autologin extends CI_Driver
         {
             return $query->row();
         }
-        
+
         return FALSE;
     }
 

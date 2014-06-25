@@ -88,7 +88,7 @@ class Authr_user_roles extends CI_Driver
             {
                 // If admin exists, use the default role
                 $q_role = $this->db->get_where( $this->table['roles'], array('default' => 1), 1)->row();
-                
+
                 return $this->db->insert( $this->table['user_role'],
                     array('user_id' => $user_id, 'role_id' => $q_role->role_id));
             }
@@ -152,7 +152,7 @@ class Authr_user_roles extends CI_Driver
 
         if (is_string($new))
             $new = $this->get_role_id(trim($new));
-        
+
         return $this->db->update( $this->table['user_role'],
                                   array('role_id' => $new),
                                   array('role_id' => $old, 'user_id' => $user_id) );
@@ -172,7 +172,7 @@ class Authr_user_roles extends CI_Driver
     {
         if ( $this->has_role( $user_id, $role ) )
             return TRUE;
-        
+
         // If there's only 1 role then removal is denied
         $this->db->get_where( $this->table['user_role'],
                               array('user_id' => $user_id) );
@@ -183,7 +183,7 @@ class Authr_user_roles extends CI_Driver
         // Do nothing if $role is int
         if ( is_string( $role ) )
             $role = $this->get_role_id(trim($role));
-        
+
         return $this->db->delete( $this->table['user_role'],
                                   array('user_id' => $user_id, 'role_id' => $role_id));
     }

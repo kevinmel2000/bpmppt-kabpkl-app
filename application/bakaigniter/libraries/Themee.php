@@ -167,13 +167,13 @@ class Themee
                         'label' => $label,
                         );
                     break;
-                
+
                 case 'devider':
                     $menus = array(
                         'type'  => $type,
                         );
                     break;
-                
+
                 case 'link':
                     $menus = array(
                         'name'  => $menu_id,

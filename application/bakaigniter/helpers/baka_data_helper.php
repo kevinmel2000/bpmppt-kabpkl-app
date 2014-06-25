@@ -140,7 +140,7 @@ function baka_get_umur($lahir, $sampai = '')
     $tgllahir = strtotime($lahir);
     $sekarang = ($sampai == '') ? time() : strtotime($sampai) ;
 
-    $umur = ($tgllahir < 0) ? ($sekarang + ($tgllahir * -1)) : $sekarang - $tgllahir; 
+    $umur = ($tgllahir < 0) ? ($sekarang + ($tgllahir * -1)) : $sekarang - $tgllahir;
 
     $tahun = 60 * 60 * 24 * 365;
 
@@ -166,7 +166,7 @@ function get_month_assoc()
     {
         $CI->lang->load('calendar');
     }
-    
+
     $output = array();
 
     for ( $i = 1; $i <= 12; $i++)
@@ -207,7 +207,7 @@ function format_roman($num)
 {
     $n   = intval($num);
     $res = '';
-  
+
     // roman_numerals array
     $romans = array(
         'M'  => 1000,
@@ -224,19 +224,19 @@ function format_roman($num)
         'IV' => 4,
         'I'  => 1
         );
-  
+
     foreach ($romans as $roman => $number)
     {
         // divide to get  matches
         $matches = intval($n / $number);
-  
+
         // assign the roman char * $matches
         $res .= str_repeat($roman, $matches);
-  
+
         // substract from the number
         $n = $n % $number;
     }
-  
+
     // return the res
     return $res;
 }

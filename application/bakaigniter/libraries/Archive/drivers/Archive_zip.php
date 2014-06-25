@@ -1,4 +1,4 @@
-<?php if (! defined('BASEPATH')) exit('No direct script access allowed'); 
+<?php if (! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
  * @package     Baka Igniter Pack
@@ -59,7 +59,7 @@ class Archive_zip extends CI_Driver
         for ($i = 0; $i < $this->_zip->numFiles ; $i++)
         {
             $content = $this->_zip->statIndex($i);
-            
+
             $ret[$i]['name']    = $content['name'];
             $ret[$i]['type']    = get_ext($content['name']);
             $ret[$i]['size']    = format_size($content['size']);

@@ -14,6 +14,7 @@ $conf = array(
     'class'    => 'Bakahooks',
     'filename' => 'Bakahooks.php',
     'filepath' => 'bakaigniter/libraries',
+    'function' => '',
     );
 
 if (defined('PROJECT_DIR'))
@@ -26,7 +27,10 @@ else
 {
     $conf['function'] = 'error_handler_hooks';
 
-    $hook['pre_controller'] = $conf;
+    if ( ENVIRONMENT == 'development' )
+    {
+	    $hook['pre_controller'] = $conf;
+    }
 }
 
 /* End of file hooks.php */

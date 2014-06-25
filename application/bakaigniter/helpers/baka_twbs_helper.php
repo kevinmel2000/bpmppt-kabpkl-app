@@ -18,11 +18,11 @@
 
 /**
  * TWBS Label
- * 
+ *
  * @param   string
  * @param   string
  * @param   string
- * 
+ *
  * @return  string
  */
 function twb_label($text, $class = 'default', $tag = 'span')
@@ -34,10 +34,10 @@ function twb_label($text, $class = 'default', $tag = 'span')
 
 /**
  * TWBS Badge
- * 
+ *
  * @param   string
  * @param   string
- * 
+ *
  * @return  string
  */
 function twb_badge($text, $tag = 'span')
@@ -49,11 +49,11 @@ function twb_badge($text, $tag = 'span')
 
 /**
  * TWBS Text
- * 
+ *
  * @param   string
  * @param   string
  * @param   string
- * 
+ *
  * @return  string
  */
 function twb_text($text, $class = '', $tag = 'span')
@@ -71,7 +71,7 @@ function twb_text($text, $class = '', $tag = 'span')
  * @param   int     $sm   Small column value
  * @param   int     $xs   Extra small column value
  * @param   int     $xxs  Extra extra small column value
- * 
+ *
  * @return  string
  */
 function twbs_set_columns($lg = NULL, $md = NULL, $sm = NULL, $xs = NULL, $xxs = NULL)
@@ -136,7 +136,7 @@ function twbs_set_columns($lg = NULL, $md = NULL, $sm = NULL, $xs = NULL, $xxs =
  * @param   array   $menu_list   List of dropdown menu
  * @param   string  $base_link   Based link to work with
  * @param   array   $attributes  Button attributes
- * 
+ *
  * @return  string
  */
 function twbs_button_dropdown(array $menu_list, $base_link = '', $attributes = array())

@@ -91,7 +91,7 @@ class Bakahooks
             case 'development':
                 $handler->turnOn();
                 break;
-        
+
             case 'testing':
             case 'production':
                 $handler->turnOff();

@@ -13,7 +13,7 @@
 
 /**
  * Converting an array into object
- * 
+ *
  * @param  array  $array array source
  * @return object
  */
@@ -33,7 +33,7 @@ function array_to_object( array $array )
 
 /**
  * Update array value by array key
- * 
+ *
  * @param  array
  * @param  array
  * @return array
@@ -86,7 +86,7 @@ function baka_array_search ( $needle, $haystack )
                 {
                     return array($current_key);
                 }
-                
+
                 return array_merge(array($current_key), $value);
             }
         }

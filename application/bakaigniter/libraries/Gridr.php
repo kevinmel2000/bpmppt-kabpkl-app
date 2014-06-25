@@ -352,7 +352,7 @@ class Gridr
             // Misahin antara nama function dan argument
             $func   = explode(':', $field);
 
-            // Misahin param, kalo memang ada lebih dari 1 
+            // Misahin param, kalo memang ada lebih dari 1
             $params = strpos($func[1], '|') !== FALSE ? explode('|', $func[1]) : array($func[1]);
 
             // Manggil nilai dari $row berdasarkan field dari $param

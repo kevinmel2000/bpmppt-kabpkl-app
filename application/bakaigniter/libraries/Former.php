@@ -1,4 +1,4 @@
-<?php if (! defined('BASEPATH')) exit('No direct script access allowed'); 
+<?php if (! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
  * @package     Baka Igniter Pack
@@ -171,7 +171,7 @@ class Former
         $this->_ci->load->library('form_validation');
 
         // Give some default values
-        $this->_attrs['action'] = current_url(); 
+        $this->_attrs['action'] = current_url();
         $this->_attrs['name']   = str_replace('/', '-', uri_string());
 
         if (!empty($attrs))
@@ -266,7 +266,7 @@ class Former
                 . "            key = el.data('fold-key'),\n"
                 . "            val = el.data('fold-value'),\n"
                 . "            tgt = '[name=\"'+key+'\"]';\n"
-                
+
                 . "        if ($(tgt).is(':radio')) {\n"
                 . "            showHide(el, ($(tgt).filter(':checked').val() == val))\n"
                 . "        }\n"
@@ -428,7 +428,7 @@ class Former
      * Let's see what we'll get
      *
      * @since   version 0.1.3
-     * 
+     *
      * @return  string
      */
     public function generate()
@@ -492,7 +492,7 @@ class Former
         {
             $html .= $this->_form_actions();
         }
-    
+
         // Now you can close your form
         $html .= form_close();
 
@@ -568,7 +568,7 @@ class Former
             // Call the fieldset and give it an ID with 'fieldset-' prefix
             $html .= form_fieldset($label, array_merge($attr, array('id'=>'fieldset-'.$id)));
 
-            // indicate you have an opened fieldset 
+            // indicate you have an opened fieldset
             $this->has_fieldset = TRUE;
             $this->_counts['feildsets']++;
         }
@@ -578,7 +578,7 @@ class Former
             $errors             = array();
             $input              = '<div id="'.$id.'" class="row">';
             $field_attrs['for'] = 'field-sub'.str_replace('_', '-', 'input-'.$name.'-'.$fields[0]['name']);
-            
+
             if (isset($fields) and !empty($fields))
             {
                 $c_fields = count($fields);
@@ -741,7 +741,7 @@ class Former
                     {
                         $step = 1;
                     }
-                    
+
                     $script = "$('.jqui-".$type."').each( function() {\n"
                             . "    var el = $(this),\n"
                             . "        elmin = el.data('slider-min'),\n"
@@ -1085,7 +1085,7 @@ class Former
                         'type'  => 'text',
                         'id'    => $input_id,
                         'class' => $input_class ), set_value($name, ''), $attr);
-                    
+
                     $script = "$('.change-image').on('click', function (e){\n"
                             . "     $('#".$image_id."').attr('src', '".$captcha_url."?'+Math.random());\n"
                             . "     $('#".$input_id."').focus();\n"
@@ -1209,7 +1209,7 @@ class Former
         {
             $is_error = $attrs['desc'];
         }
-        
+
         if (strlen(trim($attrs['validation'])) != 0)
         {
             if (FALSE !== strpos($attrs['validation'], 'required'))
@@ -1258,7 +1258,7 @@ class Former
 
             $html .= '</div>';
         }
-    
+
         $html .= sprintf($field_open, 'form-input '.$input_col, '')
               .  $input;
 
@@ -1278,7 +1278,7 @@ class Former
      * Form action buttons
      *
      * @since   version 0.1.3
-     * 
+     *
      * @return  string
      */
     protected function _form_actions()
@@ -1362,7 +1362,7 @@ class Former
      * using default CI Form Validation
      *
      * @since   version 0.1.3
-     * 
+     *
      * @return  bool
      */
     public function validate_submition()
@@ -1425,7 +1425,7 @@ class Former
      * I don't thing it's nessesary, but I need it for some reason :P
      *
      * @since   version 0.1.3
-     * 
+     *
      * @return  mixed
      */
     public function validation_errors()
@@ -1439,7 +1439,7 @@ class Former
      * Setup field validation rules
      *
      * @since   0.1.0
-     * 
+     *
      * @return  void
      */
     protected function set_field_rules($name, $label, $type, $validation = '', $callback = '')

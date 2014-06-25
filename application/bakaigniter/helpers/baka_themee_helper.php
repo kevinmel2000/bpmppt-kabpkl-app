@@ -13,7 +13,7 @@
 
 /**
  * Load template content
- * 
+ *
  * @param  string $file template content name
  * @return mixed        default CI view
  */
@@ -28,7 +28,7 @@ function load_view($file)
 
 /**
  * Get site title
- * 
+ *
  * @return  String
  */
 function get_site_title()
@@ -42,7 +42,7 @@ function get_site_title()
 
 /**
  * Get body attributes
- * 
+ *
  * @return  String
  */
 function get_body_attrs()
@@ -56,7 +56,7 @@ function get_body_attrs()
 
 /**
  * Get page title
- * 
+ *
  * @return  String
  */
 function get_page_title()
@@ -70,7 +70,7 @@ function get_page_title()
 
 /**
  * Get navigation bar
- * 
+ *
  * @return  String
  */
 function get_navbar()
@@ -127,11 +127,11 @@ function make_tag($texts, $limit = 10)
 
 /**
  * Creating menu list of navbar
- * 
+ *
  * @param  array  $links menu link list
  * @param  string $name  menu name
  * @param  string $class menu class
- * 
+ *
  * @return string
  */
 function make_menu($menu_array, $responsivable = FALSE)
@@ -182,7 +182,7 @@ function make_menu($menu_array, $responsivable = FALSE)
                     $output .= '<li '.parse_attrs($list_attr).'>';
 
                     $menu_item['attr']  = array_merge($menu_item['attr'], array('role'=>'menuitem', 'tabindex'=>'-1'));
-                    
+
                     if ($has_child === TRUE)
                     {
                         $menu_item['label'] .= ' <b class="caret"></b>';

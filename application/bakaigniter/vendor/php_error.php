@@ -257,7 +257,7 @@ if ( empty($_php_error_already_setup) ) {
         /*
          * These are the various magic identifiers,
          * used for headers, post requests, and so on.
-         * 
+         *
          * Their main purpose is to be long and more or less unique,
          * enough that a collision with user code is rare.
          */
@@ -573,7 +573,7 @@ if ( empty($_php_error_already_setup) ) {
         private static function isNonPHPRequest() {
             /*
              * Check if we are a mime type that isn't allowed.
-             * 
+             *
              * If an allowed type is found, then we return false,
              * as were are a PHP Request.
              *
@@ -1205,13 +1205,13 @@ if ( empty($_php_error_already_setup) ) {
          *                              If this is false, then it will also run when on non-HTML
          *                              pages too, such as replying with images of JavaScript
          *                              from your PHP. Defaults to true.
-         * 
+         *
          *  - file_link                 When true, files are linked to from the CSS Stack trace, allowing you to open them.
          *                              Defaults to true.
-         * 
+         *
          *  - save_url                  The url of where to send files, to be saved.
          *                              Note that 'enable_saving' must be on for this to be used (which it is by default).
-         * 
+         *
          *  - enable_saving             Can be true or false. When true, saving files is enabled, and when false, it is disabled.
          *                              Defaults to true!
          *
@@ -1290,7 +1290,7 @@ if ( empty($_php_error_already_setup) ) {
             $concrete5 = ErrorHandler::optionsPop( $options, 'concrete5', false );
             if ( $concrete5 ) {
                 $this->defaultErrorReportingOn = E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED;
-            } 
+            }
 
             if ( $options ) {
                 foreach ( $options as $key => $val ) {
@@ -3297,7 +3297,7 @@ if ( empty($_php_error_already_setup) ) {
                                 $id            = $fileLinesSet->getHTMLID();
                                 $fileLines     = $fileLinesSet->getLines();
 
-                                ?><div 
+                                ?><div
                                         data-file-id="<?php echo $fileLinesSet->getHTMLID() ?>"
                                         data-file-src="<?php echo $fileLinesSet->getSrc() ?>"
                                         class="error-editor-file"
@@ -3462,7 +3462,7 @@ if ( empty($_php_error_already_setup) ) {
                                         } else {
                                             $.ajax({
                                                     type: "POST",
-                                                    url: "<?php echo $saveUrl ?>", 
+                                                    url: "<?php echo $saveUrl ?>",
                                                     dataType: "json",
 
                                                     data: {
@@ -3926,7 +3926,7 @@ if ( empty($_php_error_already_setup) ) {
                 color: rgba(255, 255, 255, 0.25);
             }
             #error-editor-ace.ace_editor .ace_identifier {
-                color: #F9EE98; 
+                color: #F9EE98;
             }
             #error-editor-ace.ace_editor .ace_keyword,
             #error-editor-ace.ace_editor .ace_meta {

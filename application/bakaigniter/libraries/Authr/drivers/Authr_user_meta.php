@@ -107,7 +107,7 @@ class Authr_users_meta extends CI_Driver
             }
 
             $this->db->trans_complete();
-            
+
             if ( $this->db->trans_status() === FALSE )
             {
                 $this->db->trans_rollback();

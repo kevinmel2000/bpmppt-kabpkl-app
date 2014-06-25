@@ -54,7 +54,7 @@ if (defined('ENVIRONMENT'))
 			ini_set('display_errors', 1);
 			ini_set('display_startup_errors', 1);
 		break;
-	
+
 		case 'testing':
 		case 'production':
 			error_reporting(-1);
@@ -211,10 +211,10 @@ if (defined('ENVIRONMENT'))
 		{
 			exit("Your application folder path does not appear to be set correctly. Please open the following file and correct this: ".SELF);
 		}
-                
+
         $apppath = BASEPATH.$application_folder.'/';
 	}
-        
+
     define('APPPATH', $apppath);
 
 /*

@@ -43,7 +43,7 @@ class Authr_roles extends CI_Driver
     }
 
     // -------------------------------------------------------------------------
-    
+
     public function fetch_assoc()
     {
         $query = $this->db->get($this->table['roles']);
@@ -81,11 +81,11 @@ class Authr_roles extends CI_Driver
 
     /**
      * Updating role fields
-     * 
+     *
      * @param   int     $role_id        Role id that wanna be updated
      * @param   array   $role_data      Array of new role data
      * @param   array   $permissions    Array of new permission data
-     * 
+     *
      * @return  bool
      */
     public function edit( $role_data, $role_id = NULL, $perms = array() )
