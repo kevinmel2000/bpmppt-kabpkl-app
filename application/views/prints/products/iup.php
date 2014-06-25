@@ -1,4 +1,4 @@
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="7" style="width:100%">
         <p>KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN</p>
@@ -6,25 +6,25 @@
         <p>NOMOR : <?php echo $surat_nomor ?> /<?php echo $surat_nomor ?>/ BPMPPT / IUP / <?php echo strtoupper(format_roman(bdate('m', $created_on)).' / '.bdate('Y')) ?></p>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="7" style="width:100%"><p>TENTANG</p></td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="7" style="width:100%">
         <p>PEMBERIAN IZIN USAHA PERTAMBANGAN ( IUP ) OPERASI PRODUKSI</p>
         <p>BANTUAN (TANAH URUK) KEPADA SDR. <?php echo strtoupper($pemohon_nama) ?></p>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="7" style="width:100%">
         <p>KEPALA BADAN PENANAMAN MODAL DAN PELAYANAN PERIZINAN TERPADU</p>
         <p>KABUPATEN PEKALONGAN</p>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>Membaca</p></td>
     <td style="width:2%"><p>:</p></td>
@@ -35,13 +35,13 @@
         </ol>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>Menimbang</p></td>
     <td style="width:2%"><p>:</p></td>
     <td colspan="5" style="width:78%" class="align-justify">Bahwa segala persyaratan dalam rangka permohonan Izin Usaha Pertambangan (IUP) telah dipenuhi pemohon.</td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>Mengingat</p></td>
     <td style="width:2%"><p>:</p></td>
@@ -68,15 +68,15 @@
         </ol>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
     <td colspan="7" style="width:100%"><p style="text-align:center"><strong>M E M U T U S K A N :</strong></p></td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%">Menetapkan</td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%" class="align-justify">&nbsp;</td>
+    <td colspan="5" style="width:78%" class="align-justify"></td>
 </tr>
 <tr>
     <td style="width:20%">PERTAMA</td>
@@ -84,50 +84,50 @@
     <td colspan="5" style="width:78%" class="align-justify">Memberikan Izin Usaha Pertambangan kepada :</td>
 </tr>
 <tr>
-    <td colspan="2">&nbsp;</td>
+    <td colspan="2"></td>
     <td colspan="5">N A M A</td>
 </tr>
 <tr>
-    <td colspan="2">&nbsp;</td>
+    <td colspan="2"></td>
     <td>Untuk dan Atas Nama</td>
     <td style="width:2%">:</td>
     <td colspan="3" style="width:37%"><?php echo $pemohon_nama ?></td>
 </tr>
 <tr>
-    <td colspan="2">&nbsp;</td>
+    <td colspan="2"></td>
     <td>A l a m a t</td>
     <td style="width:2%">:</td>
     <td colspan="3" style="width:37%"><?php echo $pemohon_nama ?></td>
 </tr>
 <tr>
-    <td colspan="2">&nbsp;</td>
+    <td colspan="2"></td>
     <td colspan="5">Dengan Ketentuan sebagai berikut</td>
 </tr>
 <tr>
-    <td colspan="2">&nbsp;</td>
+    <td colspan="2"></td>
     <td>a. Jangka Waktu IUP</td>
     <td style="width:2%">:</td>
     <td colspan="3" style="width:37%"><?php echo $tambang_waktu_mulai.' s/d '.$tambang_waktu_selesai ?></td>
 </tr>
 <tr>
-    <td colspan="2">&nbsp;</td>
+    <td colspan="2"></td>
     <td>b. Jenis Bahan Galian</td>
     <td style="width:2%">:</td>
     <td colspan="3" style="width:37%"><?php echo $tambang_jns_galian ?></td>
 </tr>
 <tr>
-    <td colspan="2">&nbsp;</td>
+    <td colspan="2"></td>
     <td>c. Luas Wilayah</td>
     <td style="width:2%">:</td>
     <td colspan="3" style="width:37%"><?php echo $tambang_luas ?></td>
 </tr>
 <tr>
-    <td colspan="2">&nbsp;</td>
+    <td colspan="2"></td>
     <td>d. Lokasi Penambangan</td>
     <td style="width:2%">:</td>
     <td colspan="3" style="width:37%"><?php echo $tambang_alamat ?></td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
     <td colspan="7">Dengan Peta dan Daftar Koordinat WIUP yang diterbitkan oleh Kepala Badan Penanaman Modal dan Pelayanan Perizinan Terpadu Kabupaten Pekalongan sebagaimana tercantum dalam Lampiran I dan Lampiran II Keputusan ini.</td>
 </tr>
@@ -161,17 +161,17 @@
     <td style="width:2%">:</td>
     <td colspan="5" style="width:78%" class="align-justify">Keputusan ini mulai berlaku sejak tanggal ditetapkan dan dapat diperpanjang bila dipandang perlu menurut kebutuhan atas permintaan pemegang izin.</td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
-    <td colspan="6" style="width:60%">&nbsp;</td>
+    <td colspan="6" style="width:60%"></td>
     <td style="width:40%">
         <p>Ditetapkan di : Kajen</p>
-        <p class="underline">Pada Tanggal :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo bdate('F', $created_on).' '.bdate('Y') ?></p>
+        <p class="underline">Pada Tanggal :      <?php echo bdate('F', $created_on).' '.bdate('Y') ?></p>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
-    <td colspan="5" style="width:60%">&nbsp;</td>
+    <td colspan="5" style="width:60%"></td>
     <td colspan="2" style="width:40%">
     A.n. BUPATI PEKALONGAN<br>
     KEPALA <?php echo strtoupper($skpd_name) ?><br>
@@ -199,11 +199,11 @@
     <td colspan="2">KOORDINAT WILAYAH IZIN USAHA PERTAMBANGAN I</td>
 </tr>
 <tr>
-    <td>&nbsp;</td>
+    <td></td>
     <td colspan="2">NOMOR :  510.4 /<?php echo $surat_nomor ?>/ BPMPPT / IUP / <?php echo strtoupper(format_roman(bdate('m', $created_on)).' / '.bdate('Y')) ?></td>
 </tr>
 <tr>
-    <td>&nbsp;</td>
+    <td></td>
     <td colspan="2">TANGGAL : <?php echo $surat_tanggal ?></td>
 </tr>
 <tr><td colspan="4" class="align-center"><br><br>KOORDINAT WILAYAH IZIN USAHA PERTAMBANGAN<br><br></td></tr>
@@ -237,7 +237,7 @@
     <td>:</td>
     <td colspan="2"><?php echo $tambang_luas ?> (Ha)</td>
 </tr>
-<tr><td colspan="4" class="align-center">&nbsp;</td></tr>
+<tr><td colspan="4" class="align-center"></td></tr>
 </table><table class="bordered">
 <thead>
     <tr>
@@ -270,16 +270,16 @@
 <?php endforeach ?>
 </tbody>
 </table><table>
-    <tr><td colspan="2" style="width:100%">&nbsp;</td></tr>
+    <tr><td colspan="2" style="width:100%"></td></tr>
     <tr class="align-center bold">
-        <td style="width:50%">&nbsp;</td>
+        <td style="width:50%"></td>
         <td style="width:50%">
             <p>An. BUPATI PEKALONGAN</p>
             <p>KEPALA <?php echo strtoupper($skpd_name) ?></p>
             <p><?php echo strtoupper($skpd_city) ?></p>
-            <p>&nbsp;</p>
-            <p>&nbsp;</p>
-            <p>&nbsp;</p>
+            <p></p>
+            <p></p>
+            <p></p>
             <p><?php echo strtoupper($skpd_lead_name) ?></p>
             <p>NIP. <?php echo strtoupper($skpd_lead_nip) ?></p>
         </td>

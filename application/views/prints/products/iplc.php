@@ -1,30 +1,30 @@
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="7" style="width:100%">
         <p>KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN</p>
         <p>PELAYANAN PERIZINAN TERPADU KABUPATEN PEKALONGAN</p>
-        <p>NOMOR : 658.31 /&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/ BPMPPT / IPLC / <?php echo strtoupper(format_roman(bdate('m', $created_on)).' / '.bdate('Y')) ?></p>
+        <p>NOMOR : 658.31 /      / BPMPPT / IPLC / <?php echo strtoupper(format_roman(bdate('m', $created_on)).' / '.bdate('Y')) ?></p>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="7" style="width:100%"><p>TENTANG</p></td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="7" style="width:100%">
         <p>PEMBERIAN IZIN PEMBUANGAN AIR LIMBAH KE AIR ATAU SUMBER AIR</p>
         <p><?php echo $pemohon_usaha ?></p>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="7" style="width:100%">
         <p>KEPALA BADAN PENANAMAN MODAL DAN PELAYANAN PERIZINAN TERPADU</p>
         <p>KABUPATEN PEKALONGAN</p>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>Menimbang</p></td>
     <td style="width:2%"><p>:</p></td>
@@ -62,11 +62,11 @@
 <tr>
     <td colspan="7" style="width:100%"><p style="text-align:center"><strong>M E M U T U S K A N :</strong></p></td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>Menetapkan</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%" class="align-justify">&nbsp;</td>
+    <td colspan="5" style="width:78%" class="align-justify"></td>
 </tr>
 <tr>
     <td style="width:20%"><p>KESATU</p></td>
@@ -74,30 +74,30 @@
     <td colspan="5" style="width:78%" class="align-justify"><p>Memberikan Izin Pembuangan Air Limbah ke Air Atau Sumber Air kepada :</p></td>
 </tr>
 <tr>
-    <td colspan="2">&nbsp;</td>
+    <td colspan="2"></td>
     <td colspan="2" style="width:25%">Nama Perusahaan</td>
     <td style="width:2%">:</td>
     <td colspan="2" style="width:52%"><?php echo $pemohon_usaha ?></td>
 </tr>
 <tr>
-    <td colspan="2">&nbsp;</td>
+    <td colspan="2"></td>
     <td colspan="2" style="width:25%">Lokasi Kegiatan</td>
     <td style="width:2%">:</td>
     <td colspan="2" style="width:52%"><?php echo $pemohon_alamat ?></td>
 </tr>
 <tr>
-    <td colspan="2">&nbsp;</td>
+    <td colspan="2"></td>
     <td colspan="2" style="width:25%">Nama Penanggungjawab</td>
     <td style="width:2%">:</td>
     <td colspan="2" style="width:52%"><?php echo $pemohon_nama ?></td>
 </tr>
 <tr>
-    <td colspan="2">&nbsp;</td>
+    <td colspan="2"></td>
     <td colspan="2" style="width:25%">Jabatan</td>
     <td style="width:2%">:</td>
     <td colspan="2" style="width:52%"><?php echo $pemohon_jabatan ?></td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>KEDUA</p></td>
     <td style="width:2%"><p>:</p></td>
@@ -197,41 +197,41 @@
         </ol>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>KETIGA</p></td>
     <td style="width:2%"><p>:</p></td>
     <td colspan="5" style="width:78%" class="align-justify">Pemegang izin sebagaimana dimaksud dalam Diktum KESATU, apabila melanggar ketentuan sebagaimana dimaksud dalam Diktum KEDUA dikenakan sanksi dan atau diancam dengan pidana sesuai dengan ketentuan peraturan perundang-undangan yang berlaku</td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>KEEMPAT</p></td>
     <td style="width:2%"><p>:</p></td>
     <td colspan="5" style="width:78%" class="align-justify">Apabila pemegang izin diketahui melakukan pelanggaran terhadap ketentuan sebagaimana dimaksud dalam Diktum KEDUA, maka Pemerintah Kabupaten Pekalongan berhak mencabut izin yang telah diberikan.</td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>KELIMA</p></td>
     <td style="width:2%"><p>:</p></td>
     <td colspan="5" style="width:78%" class="align-justify">Masa berlakunya izin sebagaimana dimaksud dalam Diktum KESATU adalah 3 (tiga) tahun sejak ditetapkannya keputusan ini</td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>KEENAM</p></td>
     <td style="width:2%"><p>:</p></td>
     <td colspan="5" style="width:78%" class="align-justify">Keputusan ini mulai berlaku sejak tanggal ditetapkan ( <?php echo bdate('F', $created_on).' / '.bdate('Y') ?> s/d <?php echo bdate('F', $created_on).' / '.(bdate('Y') + 5) ?> )</td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
-    <td colspan="6" style="width:60%">&nbsp;</td>
+    <td colspan="6" style="width:60%"></td>
     <td style="width:40%">
         <p>Ditetapkan di : Kajen</p>
-        <p class="underline">Pada Tanggal :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo bdate('F', $created_on).' '.bdate('Y') ?></p>
+        <p class="underline">Pada Tanggal :      <?php echo bdate('F', $created_on).' '.bdate('Y') ?></p>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
-    <td colspan="5" style="width:60%">&nbsp;</td>
+    <td colspan="5" style="width:60%"></td>
     <td colspan="2" style="width:40%">
     A.n. BUPATI PEKALONGAN<br>
     KEPALA <?php echo strtoupper($skpd_name) ?><br>

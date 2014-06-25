@@ -1,12 +1,12 @@
-<tr><td colspan="6" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="6" style="width:100%"></td></tr>
 <tr style="font-family: 'Arial'" class="align-center bold">
     <td colspan="6" style="width:100%; font-size: 30px; font-family: 'Arial'">TANDA DAFTAR PERUSAHAAN</td>
 </tr>
-<tr><td colspan="6" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="6" style="width:100%"></td></tr>
 <tr style="font-family: 'Arial'" class="align-center bold">
     <td colspan="6" style="width:100%"><?php echo strtoupper($usaha_jenis) ?></td>
 </tr>
-<tr><td colspan="6" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="6" style="width:100%"></td></tr>
 <tr style="font-family: 'Arial'" class="align-center bold">
     <td colspan="6" style="width:100%">
         <p style="font-family: 'Arial'">BERDASARKAN<br>
@@ -23,18 +23,18 @@ TENTANG PERSEROAN TERBATAS
 <?php endif; ?></p>
     </td>
 </tr>
-<tr><td colspan="6" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="6" style="width:100%"></td></tr>
 <tr class="bold" style="font-family: 'Arial'; border: 2px solid #000">
     <td style="width:20%; border-right: 1px solid #000;">NOMOR TDP<br><?php echo $no_agenda ?></td>
     <td colspan="3" style="width:55%; border-right: 1px solid #000;">BERLAKU S/D TANGGAL<br><?php echo bdate('d F Y', $created_on) ?></td>
     <td colspan="2" style="width:35%; border-right: 2px solid #000;">PENDAFTARAN / PEMBAHARUAN KE : <?php echo $pembaruan_ke ?></td>
 </tr>
-<tr><td colspan="6" style="width:100%; line-height: 5px">&nbsp;</td></tr>
+<tr><td colspan="6" style="width:100%; line-height: 5px"></td></tr>
 <tr style="font-family: 'Arial'; border: 2px solid #000">
     <td colspan="4" style="width:65%"><span class="underline bold">AGENDA PENDAFTARAN</span><br>NOMOR: <?php echo $no_agenda ?></td>
     <td colspan="2" style="width:35%; border-right: 2px solid #000;">TANGGAL : <?php echo bdate('d F Y', $created_on) ?></td>
 </tr>
-<tr><td colspan="6" style="width:100%; line-height: 5px">&nbsp;</td></tr>
+<tr><td colspan="6" style="width:100%; line-height: 5px"></td></tr>
 <tr class="bold" style="font-family: 'Arial'; border: 2px solid #000; border-bottom-width: 1px;">
     <td style="width:20%">NAMA PERUSAHAAN</td>
     <td style="width:5%">:</td>
@@ -101,14 +101,14 @@ elseif( strtolower($usaha_jenis) == 'Perseroan Terbatas (PT)' ) : ?>
 <?php endif; ?>
 </tr>
 
-<tr><td colspan="6" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="6" style="width:100%"></td></tr>
 <tr style="font-family: 'Arial'">
-    <td colspan="3">&nbsp;</td>
+    <td colspan="3"></td>
     <td colspan="3" style="border-bottom: 2px solid #000">Dikeluarkan di : KAJEN<br>Pada Tanggal : <?php echo bdate('d F Y', $approved_on) ?></td>
 </tr>
-<tr><td colspan="6" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="6" style="width:100%"></td></tr>
 <tr style="font-family: 'Arial'" class="align-center bold">
-    <td colspan="3">&nbsp;</td>
+    <td colspan="3"></td>
     <td colspan="3">
     A.n. BUPATI PEKALONGAN<br>
     KEPALA <?php echo strtoupper($skpd_name) ?><br>

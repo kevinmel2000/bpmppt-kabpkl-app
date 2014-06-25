@@ -1,51 +1,51 @@
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="7">KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN PELAYANAN PERIZINAN TERPADU<br>KABUPATEN PEKALONGAN</td>
 </tr>
-<tr><td colspan="7">&nbsp;</td></tr>
+<tr><td colspan="7"></td></tr>
 <tr class="align-center bold">
-    <td colspan="7" style="width:100%">NOMOR : <?php echo $surat_nomor ?> /&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo strtoupper('/IMB/BPM PPT/'.format_roman(bdate('m', $created_on)).'/'.bdate('Y')) ?></td>
+    <td colspan="7" style="width:100%">NOMOR : <?php echo $surat_nomor ?> /      <?php echo strtoupper('/IMB/BPM PPT/'.format_roman(bdate('m', $created_on)).'/'.bdate('Y')) ?></td>
 </tr>
-<tr><td colspan="7">&nbsp;</td></tr>
+<tr><td colspan="7"></td></tr>
 <tr class="align-center bold">
     <td colspan="7">TENTANG</td>
 </tr>
-<tr><td colspan="7">&nbsp;</td></tr>
+<tr><td colspan="7"></td></tr>
 <tr class="align-center bold">
     <td colspan="7">IZIN MENDIRIKAN / MEREHAB / MEROBOHKAN BANGUNAN</td>
 </tr>
-<tr><td colspan="7">&nbsp;</td></tr>
+<tr><td colspan="7"></td></tr>
 <tr class="align-center bold">
     <td colspan="7">KEPALA <?php echo strtoupper($skpd_name) ?><br><?php echo strtoupper($skpd_city) ?></td>
 </tr>
-<tr><td colspan="7">&nbsp;</td></tr>
+<tr><td colspan="7"></td></tr>
 <tr>
-    <td colspan="3" style="width:30%">&nbsp;</td>
+    <td colspan="3" style="width:30%"></td>
     <td style="width:10%"><p>Membaca</p></td>
     <td style="width:2%"><p>:</p></td>
     <td colspan="2" style="width:47%"><p>dst ;</p></td>
 </tr>
 <tr>
-    <td colspan="3" style="width:30%">&nbsp;</td>
+    <td colspan="3" style="width:30%"></td>
     <td style="width:10%"><p>Menimbang</p></td>
     <td style="width:2%"><p>:</p></td>
     <td colspan="2" style="width:47%"><p>dst ;</p></td>
 </tr>
 <tr>
-    <td colspan="3" style="width:30%">&nbsp;</td>
+    <td colspan="3" style="width:30%"></td>
     <td style="width:10%"><p>Mengingat</p></td>
     <td style="width:2%"><p>:</p></td>
     <td colspan="2" style="width:47%"><p>dst ;</p></td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
     <td colspan="7" style="width:100%"><p style="text-align:center"><strong>M E M U T U S K A N :</strong></p></td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>Menetapkan</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%">&nbsp;</td>
+    <td colspan="5" style="width:78%"></td>
 </tr>
 <tr>
     <td style="width:20%"><p>KESATU</p></td>
@@ -53,67 +53,67 @@
     <td colspan="5" style="width:78%">Memberikan Izin Kepada :</td>
 </tr>
 <tr>
-    <td colspan="2">&nbsp;</td>
+    <td colspan="2"></td>
     <td colspan="2" style="width:30%"><p>Nama Pemohon</p></td>
     <td style="width:2%"><p>:</p></td>
     <td colspan="2" style="width:47%"><p><strong><?php echo $pemohon_nama ?></strong></p></td>
 </tr>
 <tr>
-    <td colspan="2">&nbsp;</td>
+    <td colspan="2"></td>
     <td colspan="2" style="width:30%"><p>Alamat Pemohon</p></td>
     <td style="width:2%"><p>:</p></td>
     <td colspan="2" style="width:47%"><p><strong><?php echo $pemohon_alamat ?></strong></p></td>
 </tr>
 <tr>
-    <td colspan="2">&nbsp;</td>
+    <td colspan="2"></td>
     <td colspan="2" style="width:30%"><p>Pekerjaan</p></td>
     <td style="width:2%"><p>:</p></td>
     <td colspan="2" style="width:47%"><p><strong><?php echo $pemohon_kerja ?></strong></p></td>
 </tr>
 <tr>
-    <td colspan="2">&nbsp;</td>
+    <td colspan="2"></td>
     <td colspan="2" style="width:30%"><p>Maksud Permohonan</p></td>
     <td style="width:2%"><p>:</p></td>
     <td colspan="2" style="width:47%"><p><strong><?php echo $bangunan_maksud ?></strong></p></td>
 </tr>
 <tr>
-    <td colspan="2">&nbsp;</td>
+    <td colspan="2"></td>
     <td colspan="2" style="width:30%"><p>Penggunaan Bangunan</p></td>
     <td style="width:2%"><p>:</p></td>
     <td colspan="2" style="width:47%"><p><strong><?php echo $bangunan_guna ?></strong></p></td>
 </tr>
 <tr>
-    <td colspan="2">&nbsp;</td>
+    <td colspan="2"></td>
     <td colspan="2" style="width:30%"><p>Lokasi Bangunan</p></td>
     <td style="width:2%"><p>:</p></td>
     <td colspan="2" style="width:47%"><p><strong><?php echo $bangunan_lokasi ?></strong></p></td>
 </tr>
 <tr>
-    <td colspan="2">&nbsp;</td>
+    <td colspan="2"></td>
     <td colspan="2" style="width:30%"><p>Luas / Keadaan Tanah</p></td>
     <td style="width:2%"><p>:</p></td>
     <td colspan="2" style="width:47%"><p><strong><?php echo '&#177; '.$bangunan_tanah_luas.' M<sup>2</sup> / '.strtoupper($bangunan_tanah_keadaan) ?></strong></p></td>
 </tr>
 <tr>
-    <td colspan="2">&nbsp;</td>
+    <td colspan="2"></td>
     <td colspan="2" style="width:30%"><p>Status Tanah</p></td>
     <td style="width:2%"><p>:</p></td>
     <td colspan="2" style="width:47%"><p><strong><?php echo $bangunan_tanah_status.$bangunan_milik_no.$bangunan_milik_an ?></strong></p></td>
 </tr>
 <tr>
-    <td colspan="2">&nbsp;</td>
+    <td colspan="2"></td>
     <td colspan="2" style="width:30%"><p>Luas Bangunan</p></td>
     <td style="width:2%"><p>:</p></td>
     <td colspan="2" style="width:47%"><p><strong><?php echo '&#177; '.$bangunan_luas.' M<sup>2</sup> / ' ?></strong></p></td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>KEDUA</p></td>
     <td style="width:2%"><p>:</p></td>
     <td colspan="5" style="width:78%">Ketentuan-ketentuan :</td>
 </tr>
 <tr>
-    <td colspan="2">&nbsp;</td>
+    <td colspan="2"></td>
     <td colspan="5" style="width:78%">
         <ol>
             <li>Pelaksanaan pembangunan tidak boleh menyimpang dari lampiran yang   merupakan bagian tak terpisahkan dari keputusan ini.</li>
@@ -121,14 +121,14 @@
         </ol>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>KETIGA</p></td>
     <td style="width:2%"><p>:</p></td>
     <td colspan="5" style="width:78%">Hal –hal yang harus diperhatikan dan ditaati oleh penerima / pemegang Izin</td>
 </tr>
 <tr>
-    <td colspan="2">&nbsp;</td>
+    <td colspan="2"></td>
     <td colspan="5" style="width:78%">
         <ol>
             <li>Pemegang Izin sebagaimana dimaksud diktum KESATU Keputusan ini wajib membayar Retribusi Izin Mendirikan Bangunan sebesar sebagaimana tercantum dalam Surat Ketetapan Retribusi Daerah ( SKRD ).</li>
@@ -149,14 +149,14 @@
         </ol>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>KEEMPAT</p></td>
     <td style="width:2%"><p>:</p></td>
     <td colspan="5" style="width:78%">Mencatat bahwa :</td>
 </tr>
 <tr>
-    <td colspan="2">&nbsp;</td>
+    <td colspan="2"></td>
     <td colspan="5" style="width:78%">
         <ol>
             <li>Izin ini tidak memberikan hak untuk pemakaian / penguasaan tanah.</li>
@@ -171,17 +171,17 @@
         </ol>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
-    <td colspan="6" style="width:60%">&nbsp;</td>
+    <td colspan="6" style="width:60%"></td>
     <td style="width:40%">
         <p>Ditetapkan di : Kajen</p>
-        <p>Pada Tanggal :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo bdate('F', $created_on).' '.bdate('Y') ?></p>
+        <p>Pada Tanggal :      <?php echo bdate('F', $created_on).' '.bdate('Y') ?></p>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%">&nbsp;</td></tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
-    <td colspan="5" style="width:60%">&nbsp;</td>
+    <td colspan="5" style="width:60%"></td>
     <td colspan="2" style="width:40%">
     A.n. BUPATI PEKALONGAN<br>
     KEPALA <?php echo strtoupper($skpd_name) ?><br>
