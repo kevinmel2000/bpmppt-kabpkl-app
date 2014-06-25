@@ -16,17 +16,17 @@ $conf = array(
     'filepath' => 'bakaigniter/libraries',
     );
 
-if (!defined('PROJECT_DIR'))
-{
-    $conf['function'] = 'error_handler_hooks';
-
-    $hook['pre_controller'] = $conf;
-}
-else
+if (defined('PROJECT_DIR'))
 {
     $conf['function'] = 'get_output_hooks';
 
     $hook['display_override'] = $conf;
+}
+else
+{
+    $conf['function'] = 'error_handler_hooks';
+
+    $hook['pre_controller'] = $conf;
 }
 
 /* End of file hooks.php */
