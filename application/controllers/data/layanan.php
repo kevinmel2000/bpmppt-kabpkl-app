@@ -343,7 +343,7 @@ class Layanan extends BAKA_Controller
         $this->set_panel_title( 'Editing template output '.$this->bpmppt->get_label( $data_type ) );
         $this->data['tool_buttons']['data'] = 'Kembali|default';
 
-        $this->data['tool_buttons']['s'] = array(
+        $this->data['tool_buttons'][] = array(
             'data/setting' => 'Produk Template|default',
             'cetak/setting' => 'Laporan Template|default'
             );
@@ -367,7 +367,7 @@ class Layanan extends BAKA_Controller
         $this->set_panel_title( 'Editing template output '.$this->bpmppt->get_label( $data_type ) );
         $this->data['tool_buttons']['data'] = 'Kembali|default';
 
-        $this->data['tool_buttons']['s'] = array(
+        $this->data['tool_buttons'][] = array(
             'data/setting' => 'Produk Template|default',
             'cetak/setting' => 'Laporan Template|default'
             );

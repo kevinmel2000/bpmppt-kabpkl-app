@@ -27,35 +27,49 @@ function set_toolbar( $tool_buttons, $page_link )
 
         if ( is_array($label) )
         {
-            $s_btn    = explode('|', $url);
-            $dropdown = ( strpos($s_btn[0], ':dd') !== FALSE ? TRUE : FALSE );
-
-            if ( $dropdown )
+            if ( is_string($url) )
             {
+                $s_btn    = explode('|', $url);
+
                 $output .= '<button type="button" class="'.$btn_class.( isset($s_btn[1]) ? 'btn-'.$s_btn[1] : '' ).' dropdown-toggle" data-toggle="dropdown">'.str_replace(':dd', '', $s_btn[0]).' <span class="caret"></span></button>';
                 $output .= '<ul class="dropdown-menu" role="menu">';
+            }
+            else
+            {
+                $output .= '<div class="btn-group">';
             }
 
             foreach ( $label as $l_url => $l_label )
             {
                 $l_attr = '';
 
-                if ( strpos($l_label, '&') !== FALSE )
+                if ( strpos($l_label, '|') !== FALSE )
                 {
-                    $l_tmp   = explode('&', $l_label);
+                    $l_tmp   = explode('|', $l_label);
                     $l_label = $l_tmp[0];
-                    $l_attr  = _parse_data_attr( $l_tmp[1] );
+                    $l_attr  = $l_tmp[1];
+                }
+
+                if ( strpos($l_attr, '&') !== FALSE )
+                {
+                    $l_attr  = _parse_data_attr( explode('&', $l_attr) );
                 }
 
                 $item_id = 'toolbar-btn-'.str_replace(' ', '-', strtolower($l_label));
                 $item = anchor( $page_link.$l_url, $l_label,
-                    'id="'.$item_id.'" class="'.( $dropdown ? '' : $btn_class.( isset($s_btn[1]) ? 'btn-'.$s_btn[1] : '' ) ).'" '.$l_attr );
+                    'id="'.$item_id.'" class="'.( is_string($url) ? '' : $btn_class.( is_string($l_attr) ? 'btn-'.$l_attr : '' ) ).'" '.$l_attr );
 
-                $output .= ( $dropdown ? '<li>'.$item.'</li>' : $item );
+                $output .= ( is_string($url) ? '<li>'.$item.'</li>' : $item );
             }
 
-            if ( $dropdown )
+            if ( is_string($url) )
+            {
                 $output .= '</ul>';
+            }
+            else
+            {
+                $output .= '</div>';
+            }
         }
         else
         {
@@ -128,9 +142,9 @@ function form_alert()
     $class      = 'warning';
     $output = '';
 
-    foreach ( array('message', 'success', 'info', 'error') as $type )
+    foreach ( $ci->bakaigniter->_message_types as $type )
     {
-        if ( $messages  = $ci->session->flashdata($type) )
+        if ( $messages  = $ci->session->flashdata( $type ) )
         {
             $class = $type != 'error' ? $type : 'danger';
         }
@@ -140,21 +154,24 @@ function form_alert()
 
     if ( is_array( $messages ) AND count( $messages ) > 0 )
     {
-        $output .= '<div class="alert alert-'.$class.'">'.$dismiss.'<ul>';
+        $output .= '<ul>';
 
         foreach ( $messages as $message )
         {
             $output .= '<li>'.$message.'</li>';
         }
 
-        $output .= '</ul></div>';
+        $output .= '</ul>';
     }
     else if ( is_string( $messages ) AND strlen( $messages ) > 0 )
     {
-        $output = '<div class="alert alert-'.$class.'">'.$dismiss.'<p>'.$messages.'</p></div>';
+        $output = '<p>'.$messages.'</p>';
     }
 
-    return $output;
+    if ( strlen($output) > 0 )
+    {
+        return '<div class="alert alert-'.$class.'">'.$dismiss.$output.'</div>';
+    }
 }
 
 // -----------------------------------------------------------------------------
