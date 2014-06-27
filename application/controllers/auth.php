@@ -203,7 +203,7 @@ class Auth extends BAKA_Controller
         }
 
         $this->data['desc_body'] = $this->bakaigniter->get_setting('welcome_register');
-        
+
         $this->set_panel_body($form->generate());
 
         $this->load->theme('pages/auth', $this->data, 'auth');
@@ -272,7 +272,7 @@ class Auth extends BAKA_Controller
         }
 
         $this->data['desc_body'] = $this->bakaigniter->get_setting('welcome_resend');
-        
+
         $this->set_panel_body($form->generate());
 
         $this->load->theme('pages/auth', $this->data, 'auth');
@@ -322,7 +322,7 @@ class Auth extends BAKA_Controller
             {
                 // Send email with password activation link
                 $this->bakaigniter->send_email( $data['email'], 'lang:forgot_password', $data );
-                    
+
                 $this->_notice('password-sent');
             }
             else
@@ -334,7 +334,7 @@ class Auth extends BAKA_Controller
         }
 
         $this->data['desc_body'] = $this->bakaigniter->get_setting('welcome_forgot');
-        
+
         $this->set_panel_body($form->generate());
 
         $this->load->theme('pages/auth', $this->data, 'auth');
@@ -422,7 +422,7 @@ class Auth extends BAKA_Controller
         }
 
         $this->data['desc_body'] = '';
-        
+
         $this->set_panel_body($form->generate());
 
         $this->load->theme('pages/auth', $this->data, 'auth');
@@ -431,7 +431,7 @@ class Auth extends BAKA_Controller
     public function logout()
     {
         $this->authr->logout();
-        
+
         redirect('login');
     }
 }

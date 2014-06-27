@@ -339,7 +339,7 @@ class Pengguna extends BAKA_Controller
 
     private function _group_del( $group_id )
     {
-        // 
+        //
     }
 
     private function _group_form( $group_id = NULL )
@@ -494,7 +494,7 @@ class Pengguna extends BAKA_Controller
 
     private function _perm_del( $perm_id )
     {
-        // 
+        //
     }
 
     private function _perm_form( $perm_id = '' )
@@ -502,7 +502,7 @@ class Pengguna extends BAKA_Controller
         $perm = ( $perm_id != '' ? $this->authr->permissions->get( $perm_id ) : FALSE );
 
         $this->data['panel_title'] = $this->themee->set_title( $perm ? 'Ubah data Hak akses pengguna '.$perm->permission : 'Buat Hak akses pengguna baru' );
-        
+
         $this->data['tool_buttons']['permission'] = 'Kembali|default';
 
         $fields[]   = array(
