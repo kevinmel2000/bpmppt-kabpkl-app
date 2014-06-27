@@ -157,7 +157,7 @@ class Median
         $script = "$('.fine-uploader').each(function() {\n"
                 . "    var fu = $(this),\n"
                 . "        fuLimit = fu.data('item-limit'),\n"
-                . "        fuTypes = fu.data('allowed-ext')\n\n"
+                . "        fuTypes = fu.data('allowed-ext')\n"
                 . "        fuField = fu.data('field-name')\n\n"
                 . "    fu.fineUploader({\n"
                 . "        template: 'qq-template',\n"
@@ -198,6 +198,8 @@ class Median
                 . "            typeError: '"._x('median_error_type')."'\n"
                 . "        }\n"
                 . "    }).on('error', function (event, id, name, reason) {\n"
+                . "        var selector = $('.qq-upload-status-text-selector');\n"
+                . "        selector.html(reason)\n"
                 . "        console.log(event);\n"
                 . "        console.log(id);\n"
                 . "        console.log(name);\n"
@@ -347,7 +349,7 @@ class Median
                 // Grab the error(s)
                 $error_message = $this->_ci->upload->display_errors('', '');
                 // Log it
-                log_message('debug', '#BakaIgniter: Media->do_upload file "'.$uploaded_data['orig_name'].'" not uploaded due to this error(s): '.$error_message.'.');
+                log_message('debug', '#BakaIgniter: Mediad->do_upload failed due to this error(s): '.$error_message.'.');
                 // Set error message
                 set_message('error', $error_message);
                 // Return it
