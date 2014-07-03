@@ -16,6 +16,7 @@ class Bpmppt_tdp extends CI_Driver
     public $code = 'TDP';
     public $alias = 'tanda_daftar_perusahaan';
     public $name = 'Tanda Daftar Perusahaan';
+    public $prefield_label = 'No. &amp; Tgl. Agenda';
 
     /**
      * Default field
@@ -85,7 +86,7 @@ class Bpmppt_tdp extends CI_Driver
       - Nomor registrasi    posisi kolom kiri
       - Masa berlaku
       - Tanggal ditetapkan
-     * 
+     *
      * @param   bool    $data_obj  Data field
      *
      * @return  array

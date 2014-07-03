@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * BPMPPT Izin Penyimpanan Sementara dan Pengumpulan Limbah Bahan Berbahaya dan 
+ * BPMPPT Izin Penyimpanan Sementara dan Pengumpulan Limbah Bahan Berbahaya dan
  * Beracun Driver
  *
  * @subpackage  Drivers

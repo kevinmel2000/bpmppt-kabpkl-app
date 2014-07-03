@@ -31,17 +31,6 @@ module.exports = function(grunt) {
     phpunit: {
       options: {
         bin: 'vendor/bin/phpunit',
-        bootstrap: '<%= phpunit.base.dir %>/bootstrap.php',
-        colors: true,
-        stopOnError: false,
-        stopOnFailure: false,
-        stopOnSkipped: false,
-        stopOnIncomplete: false,
-        // strict: true,
-        verbose: true,
-        convertErrorsToExceptions: true,
-        convertNoticesToExceptions: true,
-        convertWarningsToExceptions: true
       },
       base: {
         dir: './application/tests'

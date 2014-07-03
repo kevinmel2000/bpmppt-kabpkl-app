@@ -156,7 +156,7 @@ class Bpmppt_iup extends CI_Driver
             'name'  => 'tambang_koor',
             'label' => 'Kode Koordinat',
             'type'  => 'custom',
-            'value' => $this->custom_field($data_obj, 'tambang_koor'),
+            'value' => $this->custom_field( $data_obj ),
             'validation'=> ( !$data_obj ? '' : '' ) );
 
         return $fields;
@@ -164,7 +164,7 @@ class Bpmppt_iup extends CI_Driver
 
     // -------------------------------------------------------------------------
 
-    private function custom_field( $data = FALSE, $field_name )
+    private function custom_field( $data = FALSE )
     {
         // if ( ! $this->load->is_loaded('table'))
         if (!$this->_ci->load->is_loaded('table'))
@@ -174,7 +174,7 @@ class Bpmppt_iup extends CI_Driver
 
         $this->_ci->table->set_template( $this->table_templ );
 
-        $data_mode = $data and !empty($data->$field_name);
+        $data_mode = $data and !empty($data->tambang_koor);
 
         // var_dump($this);
         $head[] = array(
@@ -193,172 +193,108 @@ class Bpmppt_iup extends CI_Driver
             'class' => 'head-value',
             'width' => '30%',
             'colspan'=> 4 );
-        
-        if (!$data_mode)
-        {
-            $head[] = array(
-                'data'  => form_button( array(
-                    'name'  => ''.$field_name.'_add-btn',
-                    'type'  => 'button',
-                    'class' => 'btn btn-primary bs-tooltip btn-block btn-sm',
-                    'value' => 'add',
-                    'title' => 'Tambahkan baris',
-                    'content'=> 'Add' ) ),
-                'class' => 'head-action',
-                'width' => '10%' );
-        }
+
+        $head[] = array(
+            'data'  => form_button( array(
+                'name'  => 'tambang_koor_add-btn',
+                'type'  => 'button',
+                'class' => 'btn btn-primary bs-tooltip btn-block btn-sm',
+                'tabindex' => '-1',
+                'title' => 'Tambahkan baris',
+                'content'=> 'Add' ) ),
+            'class' => 'head-action',
+            'width' => '10%' );
 
         $this->_ci->table->set_heading( $head );
 
-        if ( $data_mode )
+        if ( isset( $data->tambang_koor ) and strlen( $data->tambang_koor ) > 0 )
         {
-            $i = 0;
-            foreach ( unserialize($data->$field_name) as $row )
+            foreach ( unserialize( $data->tambang_koor ) as $row )
             {
-                $cols[$i][] = array(
-                    'data'  => $row['no'],
-                    'class' => 'data-id',
-                    'width' => '10%' );
-
-                $cols[$i][] = array(
-                    'data'  => $row['gb-1'],
-                    'class' => 'data-id',
-                    'width' => '10%' );
-
-                $cols[$i][] = array(
-                    'data'  => $row['gb-2'],
-                    'class' => 'data-id',
-                    'width' => '10%' );
-
-                $cols[$i][] = array(
-                    'data'  => $row['gb-3'],
-                    'class' => 'data-id',
-                    'width' => '10%' );
-
-                $cols[$i][] = array(
-                    'data'  => $row['gl-1'],
-                    'class' => 'data-id',
-                    'width' => '10%' );
-
-                $cols[$i][] = array(
-                    'data'  => $row['gl-2'],
-                    'class' => 'data-id',
-                    'width' => '10%' );
-
-                $cols[$i][] = array(
-                    'data'  => $row['gl-3'],
-                    'class' => 'data-id',
-                    'width' => '10%' );
-
-                $cols[$i][] = array(
-                    'data'  => $row['lsu'],
-                    'class' => 'data-id',
-                    'width' => '10%' );
-
-                $this->_ci->table->add_row( $cols[$i] );
-                $i++;
+                $this->_row_koordinat( $row );
             }
         }
         else
         {
-            $cols[] = array(
-                'data'  => form_input( array(
-                    'name'  => ''.$field_name.'_no[]',
-                    'type'  => 'text',
-                    'class' => 'form-control bs-tooltip input-sm',
-                    'title' => 'Masukan nomor titik',
-                    'placeholder'=> 'No' ), '', ''),
-                'class' => 'data-id',
-                'width' => '10%' );
-
-            $cols[] = array(
-                'data'  => form_input( array(
-                    'name'  => ''.$field_name.'_gb-1[]',
-                    'type'  => 'text',
-                    'class' => 'form-control bs-tooltip input-sm',
-                    'title' => 'Masukan nilai &deg; Garis Bujur',
-                    'placeholder'=> '&deg;' ), '', ''),
-                'class' => 'data-id',
-                'width' => '10%' );
-
-            $cols[] = array(
-                'data'  => form_input( array(
-                    'name'  => ''.$field_name.'_gb-2[]',
-                    'type'  => 'text',
-                    'class' => 'form-control bs-tooltip input-sm',
-                    'title' => 'Masukan nilai &apos; Garis Bujur',
-                    'placeholder'=> '&apos;' ), '', ''),
-                'class' => 'data-id',
-                'width' => '10%' );
-
-            $cols[] = array(
-                'data'  => form_input( array(
-                    'name'  => ''.$field_name.'_gb-3[]',
-                    'type'  => 'text',
-                    'class' => 'form-control bs-tooltip input-sm',
-                    'title' => 'Masukan nilai &quot; Garis Bujur',
-                    'placeholder'=> '&quot;' ), '', ''),
-                'class' => 'data-id',
-                'width' => '10%' );
-
-            $cols[] = array(
-                'data'  => form_input( array(
-                    'name'  => ''.$field_name.'_gl-1[]',
-                    'type'  => 'text',
-                    'class' => 'form-control bs-tooltip input-sm',
-                    'title' => 'Masukan nilai &deg; Garis Lintang',
-                    'placeholder'=> '&deg;' ), '', ''),
-                'class' => 'data-id',
-                'width' => '10%' );
-
-            $cols[] = array(
-                'data'  => form_input( array(
-                    'name'  => ''.$field_name.'_gl-2[]',
-                    'type'  => 'text',
-                    'class' => 'form-control bs-tooltip input-sm',
-                    'title' => 'Masukan nilai &apos; Garis Lintang',
-                    'placeholder'=> '&apos;' ), '', ''),
-                'class' => 'data-id',
-                'width' => '10%' );
-
-            $cols[] = array(
-                'data'  => form_input( array(
-                    'name'  => ''.$field_name.'_gl-3[]',
-                    'type'  => 'text',
-                    'class' => 'form-control bs-tooltip input-sm',
-                    'title' => 'Masukan nilai &quot; Garis Lintang',
-                    'placeholder'=> '&quot;' ), '', ''),
-                'class' => 'data-id',
-                'width' => '10%' );
-
-            $cols[] = array(
-                'data'  => form_input( array(
-                    'name'  => ''.$field_name.'_lsu[]',
-                    'type'  => 'text',
-                    'class' => 'form-control bs-tooltip input-sm',
-                    'title' => 'ini tooltip',
-                    'placeholder'=> 'LS/U' ), '', ''),
-                'class' => 'data-id',
-                'width' => '10%' );
-
-            if (!$data_mode)
-            {
-                $cols[] = array(
-                    'data'  => form_button( array(
-                        'name'  => ''.$field_name.'_remove-btn',
-                        'type'  => 'button',
-                        'class' => 'btn btn-danger bs-tooltip btn-block btn-sm remove-btn',
-                        'value' => 'remove',
-                        'title' => 'Hapus baris ini',
-                        'content'=> '&times;' ) ),
-                    'class' => '',
-                    'width' => '10%' );
-            }
-
-            $this->_ci->table->add_row( $cols );
+            $this->_row_koordinat();
         }
 
         return $this->_ci->table->generate();
+    }
+
+    // -------------------------------------------------------------------------
+
+    private function _row_koordinat( $data = FALSE )
+    {
+        $cols = array(
+            'no'   => 'No',
+            'gb-1' => '&deg;',
+            'gb-2' => '&apos;',
+            'gb-3' => '&quot;',
+            'gl-1' => '&deg;',
+            'gl-2' => '&apos;',
+            'gl-3' => '&quot;',
+            'lsu'  => 'LS/U',
+            );
+
+        foreach ( $cols as $name => $label )
+        {
+            $column[] = array(
+                'data'  => form_input( array(
+                    'name'  => $this->alias.'_tambang_koor_'.$name.'[]',
+                    'type'  => 'text',
+                    'value' => $data ? $data[$name] : '',
+                    'class' => 'form-control bs-tooltip input-sm',
+                    'placeholder'=> $label ), '', ''),
+                'class' => 'data-id',
+                'width' => '10%' );
+        }
+
+        $column[] = array(
+            'data'  => form_button( array(
+                'name'  => $this->alias.'_tambang_koor_remove-btn',
+                'type'  => 'button',
+                'class' => 'btn btn-danger bs-tooltip btn-block btn-sm remove-btn',
+                'tabindex' => '-1',
+                'content'=> '&times;' ) ),
+            'class' => '',
+            'width' => '10%' );
+
+        $this->_ci->table->add_row( $column );
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Prepost form data hooks
+     *
+     * @return  mixed
+     */
+    public function _pre_post( $form_data )
+    {
+        $koor_fn = $this->alias.'_tambang_koor';
+
+        if ( isset( $_POST[$koor_fn.'_no'] ) )
+        {
+            $i = 0;
+            // $koor_fn = $this->alias.'_tambang_koor';
+
+            foreach ($_POST[$koor_fn.'_no'] as $no)
+            {
+                foreach (array('no', 'gb-1', 'gb-2', 'gb-3', 'gl-1', 'gl-2', 'gl-3', 'lsu') as $name)
+                {
+                    $koor_name = $koor_fn.'_'.$name;
+                    $koordinat[$i][$name] = isset($_POST[$koor_name][$i]) ? $_POST[$koor_name][$i] : 0;
+                    unset($_POST[$koor_name][$i]);
+                }
+
+                $i++;
+            }
+
+            $form_data[$koor_fn] = $koordinat;
+        }
+
+        return $form_data;
     }
 
     // -------------------------------------------------------------------------

@@ -1,10 +1,12 @@
-<tr><td colspan="7" style="width:100%"></td></tr>
+<table>
+    <tbody>
+        <tr><td colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="7">KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN PELAYANAN PERIZINAN TERPADU<br>KABUPATEN PEKALONGAN</td>
 </tr>
 <tr><td colspan="7"></td></tr>
 <tr class="align-center bold">
-    <td colspan="7" style="width:100%">NOMOR : 640/      {% echo strtoupper('/IMB/BPM PPT/'.format_roman(bdate('m', $created_on)).'/'.bdate('Y')) %}</td>
+    <td colspan="7" style="width:100%">NOMOR : <?php echo '640 /'.nbs(6).'/ IMB / BPM PPT /'.strtoupper(format_roman(bdate('m', $created_on)).'/'.bdate('Y')) ?></td>
 </tr>
 <tr><td colspan="7"></td></tr>
 <tr class="align-center bold">
@@ -16,7 +18,7 @@
 </tr>
 <tr><td colspan="7"></td></tr>
 <tr class="align-center bold">
-    <td colspan="7">KEPALA {% echo strtoupper($skpd_name) %}<br>{% echo strtoupper($skpd_city) %}</td>
+    <td colspan="7">KEPALA <?php echo strtoupper($skpd_name) ?><br><?php echo strtoupper($skpd_city) ?></td>
 </tr>
 <tr><td colspan="7"></td></tr>
 <tr>
@@ -56,55 +58,55 @@
     <td colspan="2"></td>
     <td colspan="2" style="width:30%">Nama Pemohon</td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:47%" class="bold">{% echo strtoupper($pemohon_nama) %}</td>
+    <td colspan="2" style="width:47%" class="bold"><?php echo strtoupper($pemohon_nama) ?></td>
 </tr>
 <tr>
     <td colspan="2"></td>
     <td colspan="2" style="width:30%"><p>Alamat Pemohon</p></td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:47%"><p>{% echo $pemohon_alamat %}</p></td>
+    <td colspan="2" style="width:47%"><p><?php echo $pemohon_alamat ?></p></td>
 </tr>
 <tr>
     <td colspan="2"></td>
     <td colspan="2" style="width:30%"><p>Pekerjaan</p></td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:47%"><p>{% echo $pemohon_kerja %}</p></td>
+    <td colspan="2" style="width:47%"><p><?php echo $pemohon_kerja ?></p></td>
 </tr>
 <tr>
     <td colspan="2"></td>
     <td colspan="2" style="width:30%"><p>Maksud Permohonan</p></td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:47%"><p>{% echo $bangunan_maksud ? 'Mendirikan bangunan baru' : 'Merehab bangunan' %}</p></td>
+    <td colspan="2" style="width:47%"><p><?php echo $bangunan_maksud ? 'Mendirikan bangunan baru' : 'Merehab bangunan' ?></p></td>
 </tr>
 <tr>
     <td colspan="2"></td>
     <td colspan="2" style="width:30%"><p class="bold">Penggunaan Bangunan</p></td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:47%"><p class="bold">{% echo strtoupper($bangunan_guna) %}</p></td>
+    <td colspan="2" style="width:47%"><p class="bold"><?php echo strtoupper($bangunan_guna) ?></p></td>
 </tr>
 <tr>
     <td colspan="2"></td>
     <td colspan="2" style="width:30%"><p>Lokasi Bangunan</p></td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:47%"><p>{% echo $bangunan_lokasi %}</p></td>
+    <td colspan="2" style="width:47%"><p><?php echo $bangunan_lokasi ?></p></td>
 </tr>
 <tr>
     <td colspan="2"></td>
     <td colspan="2" style="width:30%"><p>Luas / Keadaan Tanah</p></td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:47%"><p>{% echo '± '.$bangunan_tanah_luas.' M<sup>2</sup> / '.strtoupper($bangunan_tanah_keadaan) %}</p></td>
+    <td colspan="2" style="width:47%"><p><?php echo '± '.$bangunan_tanah_luas.' M<sup>2</sup> / '.strtoupper($bangunan_tanah_keadaan) ?></p></td>
 </tr>
 <tr>
     <td colspan="2"></td>
     <td colspan="2" style="width:30%"><p>Status Tanah</p></td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:47%"><p>{% echo ($bangunan_tanah_status == 'hm' ? 'Hak Milik, No, '.$bangunan_milik_no : 'Hak Guna Bangunan').', an. '.$bangunan_milik_an %}</p></td>
+    <td colspan="2" style="width:47%"><p><?php echo ($bangunan_tanah_status == 'hm' ? 'Hak Milik, No, '.$bangunan_milik_no : 'Hak Guna Bangunan').', an. '.$bangunan_milik_an ?></p></td>
 </tr>
 <tr>
     <td colspan="2"></td>
     <td colspan="2" style="width:30%"><p>Luas Bangunan</p></td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:47%"><p>{% echo '± '.$bangunan_luas.' M<sup>2</sup>' %}</p></td>
+    <td colspan="2" style="width:47%"><p><?php echo '± '.$bangunan_luas.' M<sup>2</sup>' ?></p></td>
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
@@ -176,7 +178,7 @@
     <td colspan="6" style="width:60%"></td>
     <td style="width:40%" class="bold ">
         <p>Ditetapkan di : Kajen</p>
-        <p class="underline">Pada Tanggal :      {% echo bdate('F', $created_on).' '.bdate('Y') %}</p>
+        <p class="underline">Pada Tanggal : <?php echo nbs(6).bdate('F', $created_on).' '.bdate('Y') ?></p>
     </td>
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>
@@ -184,22 +186,25 @@
     <td colspan="5" style="width:60%"></td>
     <td colspan="2" style="width:40%">
     A.n. BUPATI PEKALONGAN<br>
-    KEPALA {% echo strtoupper($skpd_name) %}<br>
-    {% echo strtoupper($skpd_city) %}<br><br><br>
-    <span class="underline">{% echo strtoupper($skpd_lead_name) %}</span><br>
-    {% echo strtoupper($skpd_lead_jabatan) %}<br>
-    NIP. {% echo strtoupper($skpd_lead_nip) %}
+    KEPALA <?php echo strtoupper($skpd_name) ?><br>
+    <?php echo strtoupper($skpd_city) ?><br><br><br>
+    <span class="underline"><?php echo strtoupper($skpd_lead_name) ?></span><br>
+    <?php echo strtoupper($skpd_lead_jabatan) ?><br>
+    NIP. <?php echo strtoupper($skpd_lead_nip) ?>
     </td>
 </tr>
-<!-- start condition -->
+<?php if (strlen($data_tembusan) > 0): ?>
 <tr>
     <td colspan="7">
         <p>Tembusan :</p>
         <ol>
-        <!-- start loop -->
-            <li>{% echo $tembusan %};</li>
-        <!-- end loop -->
+        <?php foreach (unserialize($data_tembusan) as $tembusan) : ?>
+            <li><?php echo $tembusan ?>;</li>
+        <?php endforeach ?>
         </ol>
     </td>
 </tr>
-<!-- end condition -->
+<?php endif ?>
+
+    </tbody>
+</table>

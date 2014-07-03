@@ -142,6 +142,7 @@ table tr.t-header p {
 }
 table td,
 table th {
+  height: 1em;
   padding: 0 5px;
   font-size: inherit;
   line-height: inherit;

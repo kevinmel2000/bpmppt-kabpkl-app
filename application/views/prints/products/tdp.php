@@ -1,4 +1,6 @@
-<tr><td colspan="6" style="width:100%"></td></tr>
+<table>
+    <tbody>
+        <tr><td colspan="6" style="width:100%"></td></tr>
 <tr style="font-family: 'Arial'" class="align-center bold">
     <td colspan="6" style="width:100%; font-size: 30px; font-family: 'Arial'">TANDA DAFTAR PERUSAHAAN</td>
 </tr>
@@ -130,3 +132,6 @@ elseif( strtolower($usaha_jenis) == 'Perseroan Terbatas (PT)' ) : ?>
     </td>
 </tr>
 <?php endif ?>
+
+    </tbody>
+</table>

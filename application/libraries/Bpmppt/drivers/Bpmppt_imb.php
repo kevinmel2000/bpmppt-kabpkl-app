@@ -180,6 +180,20 @@ class Bpmppt_imb extends CI_Driver
     // -------------------------------------------------------------------------
 
     /**
+     * Prepost form data hooks
+     *
+     * @return  mixed
+     */
+    public function _pre_post( $form_data )
+    {
+        $form_data[$this->alias.'_surat_nomor'] = 614;
+
+        return $form_data;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
      * Format cetak produk perijinan
      *
      * @return  mixed

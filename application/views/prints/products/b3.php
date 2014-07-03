@@ -1,9 +1,11 @@
-<tr><td colspan="7" style="width:100%"></td></tr>
+<table>
+    <tbody>
+        <tr><td colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="7" style="width:100%">
         <p>KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN</p>
         <p>PELAYANAN PERIZINAN TERPADU KABUPATEN PEKALONGAN</p>
-        <p>NOMOR : 660.3 /<?php echo $surat_nomor ?>/ BPMPPT / B3 / <?php echo strtoupper(format_roman(bdate('m', $created_on)).' / '.bdate('Y')) ?></p>
+        <p>NOMOR : <?php echo '660.3 / '.$surat_nomor.' / BPMPPT / B3 / '.strtoupper(format_roman(bdate('m', $created_on)).' / '.bdate('Y')) ?></p>
     </td>
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>
@@ -90,21 +92,33 @@
 </tr>
 <tr>
     <td colspan="2"></td>
-    <td colspan="2" style="width:30%">
-        <p>a. Nama Perusahaan</p>
-        <p>b. Lokasi Kegiatan</p>
-        <p>c. Nama Penanggungjawab</p>
-        <p>d. Jabatan</p>
-        <p>e. Telepon / Faksimili</p>
-    </td>
-    <td style="width:2%"><p>:</p><p>:</p><p>:</p><p>:</p><p>:</p></td>
-    <td colspan="2" style="width:47%">
-        <p><?php echo $usaha_nama ?></p>
-        <p><?php echo $usaha_lokasi ?></p>
-        <p><?php echo $pemohon_nama ?></p>
-        <p><?php echo $pemohon_jabatan ?></p>
-        <p><?php echo ($usaha_kontak_telp ? $usaha_kontak_telp : '').($usaha_kontak_fax ? ' / '.$usaha_kontak_fax : '') ?></p>
-    </td>
+    <td colspan="2" style="width:30%">a. Nama Perusahaan</td>
+    <td style="width:2%">:</td>
+    <td colspan="2" style="width:47%"><?php echo $usaha_nama ?></td>
+</tr>
+<tr>
+    <td colspan="2"></td>
+    <td colspan="2" style="width:30%">b. Lokasi Kegiatan</td>
+    <td style="width:2%">:</td>
+    <td colspan="2" style="width:47%"><?php echo $usaha_lokasi ?></td>
+</tr>
+<tr>
+    <td colspan="2"></td>
+    <td colspan="2" style="width:30%">c. Nama Penanggungjawab</td>
+    <td style="width:2%">:</td>
+    <td colspan="2" style="width:47%"><?php echo $pemohon_nama ?></td>
+</tr>
+<tr>
+    <td colspan="2"></td>
+    <td colspan="2" style="width:30%">d. Jabatan</td>
+    <td style="width:2%">:</td>
+    <td colspan="2" style="width:47%"><?php echo $pemohon_jabatan ?></td>
+</tr>
+<tr>
+    <td colspan="2"></td>
+    <td colspan="2" style="width:30%">e. Telepon / Faksimili</td>
+    <td style="width:2%">:</td>
+    <td colspan="2" style="width:47%"><?php echo ($usaha_kontak_telp ? $usaha_kontak_telp : '').($usaha_kontak_fax ? ' / '.$usaha_kontak_fax : '') ?></td>
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
@@ -201,7 +215,7 @@
     <td colspan="6" style="width:60%"></td>
     <td style="width:40%">
         <p>Ditetapkan di : Kajen</p>
-        <p class="underline">Pada Tanggal :      <?php echo bdate('F', $created_on).' '.bdate('Y') ?></p>
+        <p class="underline">Pada Tanggal : <?php echo nbs(6).bdate('F', $created_on).' '.bdate('Y') ?></p>
     </td>
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>
@@ -229,3 +243,5 @@
     </td>
 </tr>
 <?php endif ?>
+    </tbody>
+</table>

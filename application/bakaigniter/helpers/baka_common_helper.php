@@ -215,11 +215,20 @@ function baka_echo($anu)
 
 // -----------------------------------------------------------------------------
 
-function print_pre($array)
+/**
+ * Debuging purposes
+ *
+ * @param   resource  $array  Object or array
+ * @return  string
+ */
+function print_pre( $array = null )
 {
-    echo '<pre>';
-    print_r($array);
-    echo '</pre>';
+    if (!is_null($array) or !empty($array))
+    {
+        echo '<pre>';
+        print_r($array);
+        echo '</pre>';
+    }
 }
 
 /* End of file common_helper.php */

@@ -1,7 +1,9 @@
-<tr><td colspan="5" style="width:100%"></td></tr>
+<table>
+    <tbody>
+        <tr><td colspan="5" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="5" style="width:100%">
-        <p>KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN PELAYANAN PERIZINAN TERPADU<br>KABUPATEN PEKALONGAN<br>NOMOR : <?php echo $surat_nomor?>/      /<?php echo strtoupper(format_roman(bdate('m', $created_on)).'/'.bdate('Y')) ?></p>
+        <p>KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN PELAYANAN PERIZINAN TERPADU<br>KABUPATEN PEKALONGAN<br>NOMOR : <?php echo $surat_nomor.'/'.nbs(6).'/'.strtoupper(format_roman(bdate('m', $created_on)).'/'.bdate('Y')) ?></p>
     </td>
 </tr>
 <tr><td colspan="5" style="width:100%"></td></tr>
@@ -24,39 +26,39 @@
     <td colspan="5" style="width:100%"><p>Kepada :</p></td>
 </tr>
 <tr>
-    <td colspan="2" style="width:30%">
-        <ol>
-            <li>Nama</li>
-            <li>Alamat</li>
-            <li>Tempat/Lok. Pemasangan</li>
-            <li>Tema Pemasangan</li>
-            <li>Ukuran</li>
-            <li>Jumlah</li>
-            <li>Jangka Waktu Pemasangan</li>
-        </ol>
-    </td>
-    <td style="width:2%">
-        <ol class="none">
-            <li>:</li>
-            <li>:</li>
-            <li>:</li>
-            <li>:</li>
-            <li>:</li>
-            <li>:</li>
-            <li>:</li>
-        </ol>
-    </td>
-    <td colspan="3" style="width:68%" class="align-justify">
-        <ol class="none">
-            <li><?php echo $pemohon_nama ?></li>
-            <li><?php echo $pemohon_alamat ?></li>
-            <li><?php echo $reklame_lokasi ?></li>
-            <li><?php echo $reklame_tema ?></li>
-            <li><?php echo $reklame_ukuran_panjang.' m x '.$reklame_ukuran_lebar.' m' ?></li>
-            <li><?php echo $reklame_juml.' Unit' ?></li>
-            <li><?php echo '1 (satu) Bulan '.$reklame_range_tgl_mulai.' '.$reklame_range_tgl_selesai ?></li>
-        </ol>
-    </td>
+    <td colspan="2" style="width:30%">1. Nama</td>
+    <td style="width:2%">:</td>
+    <td colspan="3" style="width:68%" class="align-justify"><?php echo $pemohon_nama ?></td>
+</tr>
+<tr>
+    <td colspan="2" style="width:30%">2. Alamat</td>
+    <td style="width:2%">:</td>
+    <td colspan="3" style="width:68%" class="align-justify"><?php echo $pemohon_alamat ?></td>
+</tr>
+<tr>
+    <td colspan="2" style="width:30%">3. Tempat/Lok. Pemasangan</td>
+    <td style="width:2%">:</td>
+    <td colspan="3" style="width:68%" class="align-justify"><?php echo $reklame_lokasi ?></td>
+</tr>
+<tr>
+    <td colspan="2" style="width:30%">4. Tema Pemasangan</td>
+    <td style="width:2%">:</td>
+    <td colspan="3" style="width:68%" class="align-justify"><?php echo $reklame_tema ?></td>
+</tr>
+<tr>
+    <td colspan="2" style="width:30%">5. Ukuran</td>
+    <td style="width:2%">:</td>
+    <td colspan="3" style="width:68%" class="align-justify"><?php echo $reklame_ukuran_panjang.' m x '.$reklame_ukuran_lebar.' m' ?></td>
+</tr>
+<tr>
+    <td colspan="2" style="width:30%">6. Jumlah</td>
+    <td style="width:2%">:</td>
+    <td colspan="3" style="width:68%" class="align-justify"><?php echo $reklame_juml.' Unit' ?></td>
+</tr>
+<tr>
+    <td colspan="2" style="width:30%">7. Jangka Waktu Pemasangan</td>
+    <td style="width:2%">:</td>
+    <td colspan="3" style="width:68%" class="align-justify"><?php echo '1 (satu) Bulan '.$reklame_range_tgl_mulai.' '.$reklame_range_tgl_selesai ?></td>
 </tr>
 <tr><td colspan="5" style="width:100%"></td></tr>
 <tr>
@@ -82,7 +84,7 @@
     <td colspan="4" style="width:60%"></td>
     <td style="width: 40%; border-bottom: 2px solid #000">
         <p>Ditetapkan di : Kajen</p>
-        <p class="underline">Pada Tanggal :      <?php echo bdate('F', $created_on).' '.bdate('Y') ?></p>
+        <p class="underline">Pada Tanggal : <?php echo nbs(6).bdate('F', $created_on).' '.bdate('Y') ?></p>
     </td>
 </tr>
 <tr><td colspan="5" style="width:100%"></td></tr>
@@ -110,3 +112,6 @@
     </td>
 </tr>
 <?php endif ?>
+
+    </tbody>
+</table>

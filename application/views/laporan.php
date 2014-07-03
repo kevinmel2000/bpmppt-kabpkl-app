@@ -8,26 +8,26 @@
     <meta name="author" content="<?php echo get_conf('app_author') ?>">
     <link href="<?php echo base_url('asset/css/print.css') ?>" type="text/css" rel="stylesheet" media="all">
 </head>
-<!-- <body <?php echo get_body_attrs() ?>> -->
 <body onload="window.print()" <?php echo get_body_attrs() ?>>
-<p style="text-align: center; font-weight: bold;"><?php echo strtoupper($skpd_name.' '.$skpd_city) ?></p>
-<p>&nbsp;</p>
-<p style="font-weight: bold; display: block;"><span style="display: inline-block; width: 20%;"><?php echo strtoupper($skpd_city) ?></span><span style="display: inline-block; width:80%;"><?php echo ': '.strtoupper($layanan) ?></span></p>
-<p style="font-weight: bold; display: block;"><span style="display: inline-block; width: 20%;">BULAN</span><span style="display: inline-block; width:80%;"><?php echo ': '.strtoupper(bdate('F Y')) ?></span></p>
-<p>&nbsp;</p>
+<br>
+<p class="align-center bold" style="display: block">
+<?php echo strtoupper($skpd_name.' '.$skpd_city) ?><br><br>
+<span class="align-left" style="display: inline-block; width: 20%;"><?php echo strtoupper($skpd_city) ?></span><span class="align-left" style="display: inline-block; width:80%;"><?php echo ': '.strtoupper($layanan) ?></span><br>
+<span class="align-left" style="display: inline-block; width: 20%;">BULAN</span><span class="align-left" style="display: inline-block; width:80%;"><?php echo ': '.strtoupper(bdate('F Y')) ?></span>
+</p>
+<br>
 
 <?php echo $contents; ?>
 
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p style="margin-left: 70%; width: 30%" class="align-center">Kajen, <?php echo format_date() ?></p>
-<p style="margin-left: 70%; width: 30%" class="align-center">Kepala <?php echo $skpd_name ?></p>
-<p style="margin-left: 70%; width: 30%" class="align-center"><?php echo $skpd_city ?></p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p style="margin-left: 70%; width: 30%; font-weight: bold;" class="align-center"><?php echo $skpd_lead_name ?></p>
-<p style="margin-left: 70%; width: 30%" class="align-center">NIP. <?php echo $skpd_lead_nip ?></p>
+<br><br>
+<p style="margin-left: 70%; width: 30%" class="align-center">
+Kajen, <?php echo format_date() ?><br>
+Kepala <?php echo $skpd_name ?><br>
+<?php echo $skpd_city ?><br>
+<br><br><br>
+<span class="bold"><?php echo $skpd_lead_name ?></span><br>
+NIP. <?php echo $skpd_lead_nip ?>
+</p>
 
 </body>
 </html>

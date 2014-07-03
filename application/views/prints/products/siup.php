@@ -1,4 +1,6 @@
-<tr><td colspan="4"></td></tr>
+<table>
+    <tbody>
+        <tr><td colspan="4"></td></tr>
 <tr style="font-family: 'Arial'" class="align-center bold">
     <td colspan="4">
         <span style="font-size: 24px">SURAT IZIN USAHA PERDAGANGAN</span><br>
@@ -68,7 +70,7 @@ PERUSAHAAN WAJIB MENDAFTARKAN ULANG SIUP PADA TANGGAL : <?php echo date('d F Y',
     <td colspan="3" style="width: 70%"></td>
     <td style="width: 40%; border-bottom: 2px solid #000">
         <p>Ditetapkan di : Kajen</p>
-        <p class="underline">Pada Tanggal :      <?php echo bdate('F', $created_on).' '.bdate('Y') ?></p>
+        <p class="underline">Pada Tanggal : <?php echo nbs(6).bdate('F', $created_on).' '.bdate('Y') ?></p>
     </td>
 </tr>
 <tr><td colspan="4" style="width:100%"></td></tr>
@@ -95,3 +97,6 @@ NIP. <?php echo strtoupper($skpd_lead_nip) ?>
     </td>
 </tr>
 <?php endif ?>
+
+    </tbody>
+</table>

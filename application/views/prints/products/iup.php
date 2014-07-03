@@ -1,9 +1,11 @@
-<tr><td colspan="7" style="width:100%"></td></tr>
+<table>
+    <tbody>
+        <tr><td colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="7" style="width:100%">
         <p>KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN</p>
         <p>PELAYANAN PERIZINAN TERPADU KABUPATEN PEKALONGAN</p>
-        <p>NOMOR : <?php echo $surat_nomor ?> /<?php echo $surat_nomor ?>/ BPMPPT / IUP / <?php echo strtoupper(format_roman(bdate('m', $created_on)).' / '.bdate('Y')) ?></p>
+        <p>NOMOR : <?php echo '510.4  / '.$surat_nomor.' / BPMPPT / IUP /'.strtoupper(format_roman(bdate('m', $created_on)).' / '.bdate('Y')) ?></p>
     </td>
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>
@@ -166,7 +168,7 @@
     <td colspan="6" style="width:60%"></td>
     <td style="width:40%">
         <p>Ditetapkan di : Kajen</p>
-        <p class="underline">Pada Tanggal :      <?php echo bdate('F', $created_on).' '.bdate('Y') ?></p>
+        <p class="underline">Pada Tanggal : <?php echo nbs(6).bdate('F', $created_on).' '.bdate('Y') ?></p>
     </td>
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>
@@ -180,9 +182,7 @@
     <?php echo strtoupper($skpd_lead_jabatan) ?><br>
     NIP. <?php echo strtoupper($skpd_lead_nip) ?>
     </td>
-</tr>
-<?php if (strlen($data_tembusan) > 0): ?>
-<tr>
+</tr><?php if (strlen($data_tembusan) > 0): ?><tr>
     <td colspan="7">
         <p>Tembusan :</p>
         <ol>
@@ -191,55 +191,52 @@
         <?php endforeach ?>
         </ol>
     </td>
-</tr>
-<?php endif ?>
-</table><table class="pagebreak">
+</tr><?php endif ?></table><table class="pagebreak">
 <tr>
-    <td>LAMPIRAN I</td>
-    <td colspan="2">KOORDINAT WILAYAH IZIN USAHA PERTAMBANGAN I</td>
+    <td width="20%">LAMPIRAN I</td>
+    <td width="80%" colspan="3">KOORDINAT WILAYAH IZIN USAHA PERTAMBANGAN I</td>
 </tr>
 <tr>
-    <td></td>
-    <td colspan="2">NOMOR :  510.4 /<?php echo $surat_nomor ?>/ BPMPPT / IUP / <?php echo strtoupper(format_roman(bdate('m', $created_on)).' / '.bdate('Y')) ?></td>
+    <td width="20%"></td>
+    <td width="80%" colspan="3">NOMOR :  <?php echo '510.4  / '.$surat_nomor.' / BPMPPT / IUP /'.strtoupper(format_roman(bdate('m', $created_on)).' / '.bdate('Y')) ?></td>
 </tr>
 <tr>
-    <td></td>
-    <td colspan="2">TANGGAL : <?php echo $surat_tanggal ?></td>
+    <td width="20%"></td>
+    <td width="80%" colspan="3">TANGGAL : <?php echo nbs(6).bdate('F', $surat_tanggal).' '.bdate('Y') ?></td>
 </tr>
-<tr><td colspan="4" class="align-center"><br><br>KOORDINAT WILAYAH IZIN USAHA PERTAMBANGAN<br><br></td></tr>
+<tr><td width="100%" colspan="4" class="align-center"><br><br>KOORDINAT WILAYAH IZIN USAHA PERTAMBANGAN<br><br></td></tr>
 <tr>
-    <td>Komoditas</td>
-    <td>:</td>
-    <td colspan="2"><?php echo $tambang_jns_galian ?></td>
-</tr>
-<tr>
-    <td>Lokasi</td>
-    <td>:</td>
-    <td colspan="2"><?php echo $tambang_alamat ?></td>
+    <td width="20%">Komoditas</td>
+    <td width="2%" class="align-center">:</td>
+    <td width="78%" colspan="2"><?php echo $tambang_jns_galian ?></td>
 </tr>
 <tr>
-    <td>Provinsi</td>
-    <td>:</td>
-    <td colspan="2">Jawa Tengah</td>
+    <td width="20%">Lokasi</td>
+    <td width="2%" class="align-center">:</td>
+    <td width="78%" colspan="2"><?php echo $tambang_alamat ?></td>
 </tr>
 <tr>
-    <td>Kabupaten / Kota</td>
-    <td>:</td>
-    <td colspan="2">Kabupaten Pekalongan</td>
+    <td width="20%">Provinsi</td>
+    <td width="2%" class="align-center">:</td>
+    <td width="78%" colspan="2">Jawa Tengah</td>
 </tr>
 <tr>
-    <td>Kode</td>
-    <td>:</td>
-    <td colspan="2"><?php echo $tambang_jns_galian ?></td>
+    <td width="20%">Kabupaten / Kota</td>
+    <td width="2%" class="align-center">:</td>
+    <td width="78%" colspan="2">Kabupaten Pekalongan</td>
 </tr>
 <tr>
-    <td>Luas (Ha)</td>
-    <td>:</td>
-    <td colspan="2"><?php echo $tambang_luas ?> (Ha)</td>
+    <td width="20%">Kode</td>
+    <td width="2%" class="align-center">:</td>
+    <td width="78%" colspan="2"><?php echo $tambang_jns_galian ?></td>
+</tr>
+<tr>
+    <td width="20%">Luas (Ha)</td>
+    <td width="2%" class="align-center">:</td>
+    <td width="78%" colspan="2"><?php echo $tambang_luas ?> (Ha)</td>
 </tr>
 <tr><td colspan="4" class="align-center"></td></tr>
-</table><table class="bordered">
-<thead>
+</table><table class="bordered"><thead>
     <tr>
         <th style="width:12%" rowspan="2">No. Titik</th>
         <th colspan="3">Garis Bujur</th>
@@ -254,8 +251,7 @@
         <th style="width:12%">&quot;</th>
         <th style="width:12%">LS/U</th>
     </tr>
-</thead>
-<tbody>
+</thead><tbody>
 <?php foreach (unserialize($tambang_koor) as $koor) : ?>
     <tr>
         <td><?php echo $koor['no'] ?></td>
@@ -268,8 +264,7 @@
         <td><?php echo $koor['lsu'] ?></td>
     </tr>
 <?php endforeach ?>
-</tbody></table><table>
-<tbody>
+</tbody></table><table><tbody>
 <tr><td colspan="2" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td style="width:50%"></td>
@@ -282,4 +277,5 @@ KEPALA <?php echo strtoupper($skpd_name) ?><br>
 NIP. <?php echo strtoupper($skpd_lead_nip) ?>
     </td>
 </tr>
-
+    </tbody>
+</table>

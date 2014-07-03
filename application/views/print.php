@@ -8,8 +8,7 @@
     <meta name="author" content="<?php echo get_conf('app_author') ?>">
     <link href="<?php echo base_url('asset/css/print.css') ?>" type="text/css" rel="stylesheet" media="all">
 </head>
-<body <?php echo get_body_attrs() ?>>
-<!-- <body onload="window.print()" <?php echo get_body_attrs() ?>> -->
+<body onload="window.print()" <?php echo get_body_attrs() ?>>
 
 <table width="100%">
     <tr class="t-header">
@@ -27,7 +26,9 @@ PEMERINTAH KABUPATEN PEKALONGAN<br>
 <span style="font-size: 10px;"><?php echo strtoupper($skpd_address.', telp. '.$skpd_telp.' '.$skpd_city.' '.$skpd_pos) ?></span></p>
         </td>
     </tr>
-    <?php echo $contents; ?>
+    <tr>
+        <td><?php echo $contents; ?></td>
+    </tr>
 </table>
 
 </body>

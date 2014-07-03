@@ -1,10 +1,12 @@
-<tr><td colspan="7" style="width:100%"></td></tr>
+<table>
+    <tbody>
+        <tr><td colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="7">KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN PELAYANAN PERIZINAN TERPADU<br>KABUPATEN PEKALONGAN</td>
 </tr>
 <tr><td colspan="7"></td></tr>
 <tr class="align-center bold">
-    <td colspan="7" style="width:100%">NOMOR : <?php echo $surat_nomor ?> /      <?php echo strtoupper('/IMB/BPM PPT/'.format_roman(bdate('m', $created_on)).'/'.bdate('Y')) ?></td>
+    <td colspan="7" style="width:100%">NOMOR : <?php echo $surat_nomor.' /'.nbs(6).'/ IMB / BPM PPT /'.strtoupper(format_roman(bdate('m', $created_on)).' / '.bdate('Y')) ?></td>
 </tr>
 <tr><td colspan="7"></td></tr>
 <tr class="align-center bold">
@@ -191,3 +193,6 @@
     NIP. <?php echo strtoupper($skpd_lead_nip) ?>
     </td>
 </tr>
+
+    </tbody>
+</table>
