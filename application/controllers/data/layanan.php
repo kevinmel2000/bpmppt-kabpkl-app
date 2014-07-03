@@ -107,7 +107,7 @@ class Layanan extends BAKA_Controller
         {
             $this->data['tool_buttons']['form']              = 'Baru|primary';
             $this->data['tool_buttons']['cetak']             = 'Laporan|info';
-            $this->data['tool_buttons']['Status|default'] = array(
+            $this->data['tool_buttons'][] = array(
                 'data/status/semua'     => 'Semua',
                 'data/status/pending'   => 'Pending',
                 'data/status/approved'  => 'Disetujui',
@@ -179,16 +179,19 @@ class Layanan extends BAKA_Controller
             $status = $data_obj->status;
 
             $this->data['tool_buttons']['form'] = 'Baru|primary';
-            $this->data['tool_buttons']['aksi|default']['cetak/'.$data_id] = 'Cetak';
+            $this->data['tool_buttons'][] = array(
+                'cetak/'.$data_id => 'Cetak|info',
+                'hapus/'.$data_id => 'Hapus|danger'
+                );
 
-            if ( $data_obj->status !== 'deleted' )
-            {
-                $this->data['tool_buttons']['aksi|default']['hapus/'.$data_id] = 'Hapus&message="Anda yakin ingin menghapus data nomor '.$data_obj->surat_nomor.'"';
-            }
-            else
-            {
-                $this->data['tool_buttons']['aksi|default']['delete/'.$data_id] = 'Hapus Permanen&message="Anda yakin ingin menghapus data nomor '.$data_obj->surat_nomor.'"';
-            }
+            // if ( $data_obj->status !== 'deleted' )
+            // {
+            //     $this->data['tool_buttons']['aksi|default']['hapus/'.$data_id] = 'Hapus&message="Anda yakin ingin menghapus data nomor '.$data_obj->surat_nomor.'"';
+            // }
+            // else
+            // {
+            //     $this->data['tool_buttons']['aksi|default']['delete/'.$data_id] = 'Hapus Permanen&message="Anda yakin ingin menghapus data nomor '.$data_obj->surat_nomor.'"';
+            // }
 
             $this->data['tool_buttons']['Ubah status|default'] = array(
                 'ubah-status/'.$data_id.'/pending/'  => 'Pending',

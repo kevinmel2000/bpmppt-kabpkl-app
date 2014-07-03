@@ -31,12 +31,8 @@ function set_toolbar( $tool_buttons, $page_link )
             {
                 $s_btn    = explode('|', $url);
 
-                $output .= '<button type="button" class="'.$btn_class.( isset($s_btn[1]) ? 'btn-'.$s_btn[1] : '' ).' dropdown-toggle" data-toggle="dropdown">'.str_replace(':dd', '', $s_btn[0]).' <span class="caret"></span></button>';
+                $output .= '<button type="button" class="'.$btn_class.( isset($s_btn[1]) ? 'btn-'.$s_btn[1] : '' ).' dropdown-toggle" data-toggle="dropdown" tabindex="-1">'.str_replace(':dd', '', $s_btn[0]).' <span class="caret"></span></button>';
                 $output .= '<ul class="dropdown-menu" role="menu">';
-            }
-            else
-            {
-                $output .= '<div class="btn-group">';
             }
 
             foreach ( $label as $l_url => $l_label )
@@ -49,15 +45,19 @@ function set_toolbar( $tool_buttons, $page_link )
                     $l_label = $l_tmp[0];
                     $l_attr  = $l_tmp[1];
                 }
+                else
+                {
+                    $l_attr  = 'default';
+                }
 
                 if ( strpos($l_attr, '&') !== FALSE )
                 {
                     $l_attr  = _parse_data_attr( explode('&', $l_attr) );
                 }
 
-                $item_id = 'toolbar-btn-'.str_replace(' ', '-', strtolower($l_label));
+                $item_id = str_replace(' ', '-', strtolower($l_label));
                 $item = anchor( $page_link.$l_url, $l_label,
-                    'id="'.$item_id.'" class="'.( is_string($url) ? '' : $btn_class.( is_string($l_attr) ? 'btn-'.$l_attr : '' ) ).'" '.$l_attr );
+                    'id="toolbar-btn-'.$item_id.'" class="'.( is_string($url) ? '' : 'btn-'.$item_id.' '.$btn_class.( is_string($l_attr) ? 'btn-'.$l_attr : '' ) ).'" tabindex="-1"');
 
                 $output .= ( is_string($url) ? '<li>'.$item.'</li>' : $item );
             }
@@ -66,15 +66,11 @@ function set_toolbar( $tool_buttons, $page_link )
             {
                 $output .= '</ul>';
             }
-            else
-            {
-                $output .= '</div>';
-            }
         }
         else
         {
             $button  = explode('|', $label);
-            $output .= anchor( $page_link.$url, $button[0], 'id="toolbar-btn-'.str_replace(' ', '-', strtolower($button[0])).'" class="'.$btn_class.( isset($button[1]) ? 'btn-'.$button[1] : '' ).'"' );
+            $output .= anchor( $page_link.$url, $button[0], 'id="toolbar-btn-'.str_replace(' ', '-', strtolower($button[0])).'" class="'.$btn_class.( isset($button[1]) ? 'btn-'.$button[1] : '' ).'" tabindex="-1"' );
         }
 
         $output .= '</div>';
