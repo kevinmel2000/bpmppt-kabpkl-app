@@ -60,7 +60,6 @@ bakaigniter/
     └─ libraries
     │   └─ BAKA_Form_validation.php
     └─ database.sql
-
 ```
 
 ## Installation
