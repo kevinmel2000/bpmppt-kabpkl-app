@@ -328,6 +328,36 @@ class Bpmppt extends CI_Driver_Library
 
     // -------------------------------------------------------------------------
 
+    public function do_report( $driver, $form_data )
+    {
+        $data = $this->skpd_properties();
+
+        $wheres['type'] = $this->get_alias( $driver );
+
+        if ( $form_data['data_date_month'] )
+        {
+            $wheres['month'] = $form_data['data_date_month'];
+        }
+
+        if ( $form_data['data_date_year'] )
+        {
+            $wheres['year'] = $form_data['data_date_year'];
+        }
+
+        if ( $form_data['data_status'] != 'all' )
+        {
+            $wheres['status'] = $form_data['data_status'];
+        }
+
+        $data['submited'] = $form_data;
+        $data['layanan']  = $this->get_label( $driver );
+        $data['results']  = $this->get_report( $wheres );
+
+        return $data;
+    }
+
+    // -------------------------------------------------------------------------
+
     /**
      * Get Print properties from child driver (if available)
      *

@@ -42,6 +42,7 @@ class Laporan extends BAKA_Controller
             'name'  => 'data_status',
             'label' => 'Status Pengajuan',
             'type'  => 'radio',
+            'std'  => 'all',
             'option'=> array(
                 'all'       => 'Semua',
                 'pending'   => 'Tertunda',
@@ -56,13 +57,11 @@ class Laporan extends BAKA_Controller
             'fields'=> array(
                 array(
                     'name' => 'month',
-                    'col'   => 6,
                     'label' => 'Bulan',
                     'type'  => 'dropdown',
                     'option'=> add_placeholder( get_month_assoc(), 'Pilih Bulan') ),
                 array(
                     'name' => 'year',
-                    'col'   => 6,
                     'label' => 'Tahun',
                     'type'  => 'dropdown',
                     'option'=> add_placeholder( get_year_assoc(), 'Pilih Tahun') )
@@ -80,38 +79,25 @@ class Laporan extends BAKA_Controller
         $form = $this->former->init( array(
             'name'      => 'print-all',
             'action'    => current_url(),
-            'extras'    => array('target' => '_blank'),
+            'extras'    => array('target' => 'Popup_Window'),
             'fields'    => $fields,
             'buttons'   => $buttons,
             ));
 
-        if ( $filter_data = $form->validate_submition() )
+        $script = "$('form[name=\"print-all\"]').submit(function (e) {"
+                . "new Baka.popup('".current_url()."', 'Popup_Window', 800, 600);"
+                . "});";
+
+        set_script('print-popup', $script, 'baka-pack');
+
+        if ( $form_data = $form->validate_submition() )
         {
-            $type = $filter_data['data_type'];
-            unset($filter_data['data_type']);
+            $data_type = $form_data['data_type'];
+            unset($form_data['data_type']);
 
-            $wheres['type'] = $this->bpmppt->get_alias($type);
+            $data = $this->bpmppt->do_report( $data_type, $form_data );
 
-            if ( $filter_data['data_date_month'] )
-            {
-                $wheres['month'] = $filter_data['data_date_month'];
-            }
-
-            if ( $filter_data['data_date_year'] )
-            {
-                $wheres['year'] = $filter_data['data_date_year'];
-            }
-
-            if ( $filter_data['data_status'] != 'all' )
-            {
-                $wheres['status'] = $filter_data['data_status'];
-            }
-
-            $data            = $this->bpmppt->skpd_properties();
-            $data['layanan'] = $this->bpmppt->get_label($type);
-            $data['results'] = $this->bpmppt->get_report($wheres);
-
-            $this->load->theme('prints/reports/'.$type, $data, 'laporan');
+            $this->load->theme('prints/reports/'.$data_type, $data, 'laporan');
         }
         else
         {

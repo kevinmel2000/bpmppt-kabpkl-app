@@ -14,16 +14,16 @@
 /**
  * Converting an array into object
  *
- * @param  array  $array array source
- * @return object
+ * @param   array   $array  Source
+ * @return  object
  */
 function array_to_object( array $array )
 {
     $obj = new stdClass;
 
-    foreach ( $array as $modul => $prop )
+    foreach ( $array as $key => $val )
     {
-        $obj->$modul = ( is_array( $prop ) ? array_to_object( $prop ) : $prop );
+        $obj->$key = ( is_array( $val ) ? array_to_object( $val ) : $val );
     }
 
     return $obj;
@@ -46,7 +46,7 @@ function array_edit_val( array $array1, array $array2 )
     {
         $array[$key] = $val;
 
-        if ( isset($array2[$key]) AND $array[$key] != $array2[$key] )
+        if ( isset($array2[$key]) AND $val != $array2[$key] )
         {
             $array[$key] = $array2[$key];
         }
@@ -57,30 +57,36 @@ function array_edit_val( array $array1, array $array2 )
 
 // -----------------------------------------------------------------------------
 
-// Some array helper
-function baka_get_value_from_key( $value , $array )
+/**
+ * Get value from array by key
+ *
+ * @param   string  $needle  Key
+ * @param   array   $array  Source
+ * @return  mixed
+ */
+function array_get_val( $needle , $array )
 {
-    if ( isset( $array[$value] ) )
+    if ( isset( $array[$needle] ) )
     {
-        return $array[$value];
+        return $array[$needle];
     }
 }
 
 // -----------------------------------------------------------------------------
 
-function baka_array_search ( $needle, $haystack )
+function baka_array_search( $needle, $haystack )
 {
     foreach ( $haystack as $key => $value )
     {
         $current_key = $key;
 
-        if (is_array($value))
+        if ( is_array($value) )
         {
-            $value = baka_array_search ( $needle, $value );
+            $value = baka_array_search( $needle, $value );
         }
         else
         {
-            if ($needle === $value OR ($value != FALSE AND $value != NULL))
+            if ( $needle === $value OR ($value != FALSE AND $value != NULL) )
             {
                 if ($value == NULL)
                 {
@@ -123,7 +129,7 @@ function array_insert_after_node( $array, $after_key, $index, $value)
 // -------------------------------------------------------------------------
 
 /**
- * Set default keys in an array, it's useful to prevent un setup array keys
+ * Set default keys in an array, it's useful to prevent unseted array keys
  * but you'd use that in next code.
  *
  * @param   array  $field       An array that will recieve default key
@@ -134,7 +140,7 @@ function array_insert_after_node( $array, $after_key, $index, $value)
  *
  * @return  array
  */
-function array_set_defaults(array $array,array $defaults)
+function array_set_defaults(array $array, array $defaults)
 {
     foreach ($defaults as $key => $val)
     {

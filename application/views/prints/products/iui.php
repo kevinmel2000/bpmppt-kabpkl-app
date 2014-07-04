@@ -133,7 +133,7 @@
 <tr>
     <td style="width:20%">KETIGA</td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%" class="align-justify">Izin Usaha Industri ini merupakan bagian yang tidak terpisahkan dari Surat Pernyataan tertanggal <?php echo bdate('d F Y', $surat_tanggal) ?> yang dibuat oleh perusahaan yang bersangkutan.</td>
+    <td colspan="5" style="width:78%" class="align-justify">Izin Usaha Industri ini merupakan bagian yang tidak terpisahkan dari Surat Pernyataan tertanggal <?php echo format_date( $surat_tanggal) ?> yang dibuat oleh perusahaan yang bersangkutan.</td>
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>
 <tr>

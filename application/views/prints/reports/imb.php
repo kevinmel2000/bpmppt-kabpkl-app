@@ -2,19 +2,18 @@
     <thead>
         <tr>
             <th>No.</th>
-            <th>Nama Perusahaan</th>
-            <th>Alamat Perusahaan</th>
             <th>Nama Pemohon</th>
-            <th>Nomor IUI</th>
-            <th>Berlaku Mulai</th>
-            <th>Berlaku Sp. Dengan</th>
-            <th>Komoditi</th>
-            <th>Total Investasi</th>
-            <th>Jenis Industri</th>
-            <th>Kapasitas Industri</th>
-            <th>KBLI</th>
-            <th colspan="2">Naker</th>
-            <th>Skala Perusahaan</th>
+            <th>Pekerjaan</th>
+            <th>Alamat</th>
+            <th>Maksud Permohonan</th>
+            <th>Guna Bangunan</th>
+            <th>Lokasi Bangunan</th>
+            <th>Luas Tanah</th>
+            <th>Keadaan Tanah</th>
+            <th>Status Tanah</th>
+            <th>No. Kepemilikan</th>
+            <th>Atas Nama</th>
+            <th>Tgl. Pengajuan</th>
         </tr>
         <tr>
             <th>1</th>
@@ -30,27 +29,24 @@
             <th>11</th>
             <th>12</th>
             <th>13</th>
-            <th>14</th>
-            <th>15</th>
         </tr>
     </thead>
     <tbody>
     <?php if ( $results ) : $i = 1; foreach( $results as $row ) : ?>
         <tr id="baris-<?php echo $row->id ?>" style="text-transform: uppercase;">
             <td class="align-center"><?php echo $i ?></td>
-            <td class="align-center"><?php echo $row->no_agenda ?></td>
-            <td class="align-left"><?php echo $row->usaha_jenis ?></td>
-            <td class="align-center"><?php echo $row->no_agenda ?></td>
-            <td class="align-left"><?php echo $row->usaha_nama ?></td>
-            <td class="align-left"><?php echo $row->usaha_alamat ?></td>
-            <td class="align-left"><?php echo $row->pemohon_nama ?></td>
-            <td class="align-left"><?php echo $row->usaha_status ?></td>
-            <td class="align-left"><?php echo $row->usaha_kegiatan_pokok ?></td>
-            <td class="align-center"><?php echo $row->usaha_kegiatan_kbli ?></td>
-            <td class="align-center"><?php echo $row->pembaruan_ke ?></td>
-            <td class="align-left"><?php echo $row->pengajuan_jenis ?></td>
-            <td class="align-center"><?php echo bdate( 'd F Y', $row->created_on ) ?></td>
-            <td class="align-center"><?php echo bdate( 'd F Y', $row->created_on ) ?></td>
+            <td class="align-center"><?php echo $row->pemohon_nama ?></td>
+            <td class="align-left"><?php echo $row->pemohon_kerja ?></td>
+            <td class="align-center"><?php echo $row->pemohon_alamat ?></td>
+            <td class="align-left"><?php echo $row->bangunan_maksud ?></td>
+            <td class="align-left"><?php echo $row->bangunan_guna ?></td>
+            <td class="align-left"><?php echo $row->bangunan_lokasi ?></td>
+            <td class="align-left"><?php echo $row->bangunan_tanah_luas ?></td>
+            <td class="align-left"><?php echo $row->bangunan_tanah_keadaan ?></td>
+            <td class="align-center"><?php echo $row->bangunan_tanah_status ?></td>
+            <td class="align-center"><?php echo $row->bangunan_milik_no ?></td>
+            <td class="align-left"><?php echo $row->bangunan_milik_an ?></td>
+            <td class="align-center"><?php echo format_date( $row->created_on ) ?></td>
         </tr>
     <?php $i++; endforeach; else : ?>
         <tr><td colspan="15"><h1 style="text-align: center;">NIHIL</h1></td></tr>

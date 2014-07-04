@@ -517,8 +517,6 @@ class Bpmppt_model extends CI_Model
             return $result;
         }
 
-        // var_dump($query->last_query());
-
         return FALSE;
     }
 }

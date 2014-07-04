@@ -11,7 +11,7 @@
 
 // -----------------------------------------------------------------------------
 
-function return_bytes($val)
+function return_bytes( $val )
 {
     if (!is_string($val))
     {
@@ -33,7 +33,7 @@ function return_bytes($val)
 
 // -----------------------------------------------------------------------------
 
-function format_size($size)
+function format_size( $size )
 {
     $sizes  = Array('B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB');
     $y      = $sizes[0];
@@ -51,46 +51,46 @@ function format_size($size)
 // Date and Time helper
 // -----------------------------------------------------------------------------
 
-function format_date($string = '')
+function format_date( $string = '' )
 {
     return bdate(get_setting('app_date_format'), $string);
 }
 
 // -----------------------------------------------------------------------------
 
-function format_datetime($string = '')
+function format_datetime( $string = '' )
 {
     return bdate(get_setting('app_datetime_format'), $string);
 }
 
 // -----------------------------------------------------------------------------
 
-function format_time($string = '')
+function format_time( $string = '' )
 {
     return bdate('H:i:s', $string);
 }
 
 // -----------------------------------------------------------------------------
 
-function string_to_date($string = '')
+function string_to_date( $string = '' )
 {
     return bdate('Y-m-d', $string);
 }
 
 // -----------------------------------------------------------------------------
 
-function string_to_datetime($string = '')
+function string_to_datetime( $string = '' )
 {
     return bdate('Y-m-d H:i:s', $string);
 }
 
 // -----------------------------------------------------------------------------
 
-function bdate($format = '', $strdate = '')
+function bdate(  $format = '', $strdate = ''  )
 {
     setlocale(LC_ALL, 'id');
 
-    if ($strdate == '0000-00-00 00:00:00')
+    if ( in_array( $strdate, array( '0000-00-00 00:00:00', '0000-00-00' ) ) )
     {
         return '-';
     }
@@ -100,7 +100,7 @@ function bdate($format = '', $strdate = '')
 
     $CI =& get_instance();
 
-    if (!in_array('calendar_lang.php', $CI->lang->is_loaded, TRUE))
+    if ( !in_array( 'calendar_lang.php', $CI->lang->is_loaded, TRUE ) )
     {
         $CI->lang->load('calendar');
     }
@@ -135,7 +135,7 @@ function bdate($format = '', $strdate = '')
 
 // -----------------------------------------------------------------------------
 
-function baka_get_umur($lahir, $sampai = '')
+function baka_get_umur( $lahir, $sampai = '' )
 {
     $tgllahir = strtotime($lahir);
     $sekarang = ($sampai == '') ? time() : strtotime($sampai) ;
@@ -151,13 +151,40 @@ function baka_get_umur($lahir, $sampai = '')
 
 // -----------------------------------------------------------------------------
 
-function second_to_day($second)
+function get_date_interval( $from, $until = '' )
+{
+    $tgllahir = strtotime($from);
+    $sekarang = ($until == '') ? time() : strtotime($until) ;
+
+    $umur = ($tgllahir < 0) ? ($sekarang + ($tgllahir * -1)) : $sekarang - $tgllahir;
+
+    $tahun = 60 * 60 * 24 * 365;
+
+    $tahunlahir = $umur / $tahun;
+
+    return floor($tahunlahir);
+}
+
+// -----------------------------------------------------------------------------
+
+/**
+ * Convert second to day
+ *
+ * @param   int  $second  Second value
+ * @return  int
+ */
+function second_to_day( $second )
 {
     return $second / 60 / 60 / 24;
 }
 
 // -----------------------------------------------------------------------------
 
+/**
+ * Get months list in associative array
+ *
+ * @return  array
+ */
 function get_month_assoc()
 {
     $CI =& get_instance();
@@ -180,7 +207,13 @@ function get_month_assoc()
 
 // -----------------------------------------------------------------------------
 
-function get_year_assoc($interfal = 10)
+/**
+ * Get year list in associative array
+ *
+ * @param   int     $interfal  Year interval from now
+ * @return  array
+ */
+function get_year_assoc( $interfal = 10 )
 {
     $output = array();
 
@@ -200,10 +233,9 @@ function get_year_assoc($interfal = 10)
  * @link    http://nerdspace.co/131
  *
  * @param   int     $num  Numeric Caracter
- *
  * @return  string
  */
-function format_roman($num)
+function format_roman( $num )
 {
     $n   = intval($num);
     $res = '';

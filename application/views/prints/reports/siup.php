@@ -39,13 +39,13 @@
             <td class="align-left"><?php echo $row->usaha_nama ?></td>
             <td class="align-left"><?php echo $row->usaha_alamat ?></td>
             <td class="align-left"><?php echo $row->pemohon_nama ?></td>
-            <td class="align-left"><?php echo $row->usaha_nama ?></td>
-            <td class="align-left"><?php echo $row->pemilik_no_telp ?></td>
+            <td class="align-left"><?php echo $row->usaha_no_telp ?></td>
             <td class="align-left"><?php echo $row->usaha_modal_awal ?></td>
-            <td class="align-center"><?php echo $row->usaha_kegiatan_kbliusaha_kegiatan_pokok ?></td>
-            <td class="align-center"><?php echo bdate( 'd F Y', $row->created_on ) ?></td>
-            <td class="align-center"><?php echo bdate( 'd F Y', $row->created_on ) ?></td>
-            <td class="align-center"><?php echo $row->pembaruan_ke ?></td>
+            <td class="align-center"><?php echo $row->usaha_kegiatan ?></td>
+            <td class="align-left"><?php echo $row->usaha_komoditi ?></td>
+            <td class="align-center"><?php echo format_date( $row->created_on ) ?></td>
+            <td class="align-center"><?php echo format_date( "+5 years {$row->created_on}" ) ?></td>
+            <td class="align-center"><?php echo $row->pengajuan_jenis ?></td>
             <td class="align-left"><?php echo $row->usaha_skala ?></td>
         </tr>
     <?php $i++; endforeach; else : ?>

@@ -44,12 +44,12 @@
             <td class="align-left"><?php echo $row->usaha_alamat ?></td>
             <td class="align-left"><?php echo $row->pemohon_nama ?></td>
             <td class="align-left"><?php echo $row->usaha_status ?></td>
-            <td class="align-left"><?php echo $row->usaha_kegiatan_pokok ?></td>
-            <td class="align-center"><?php echo $row->usaha_kegiatan_kbli ?></td>
+            <td class="align-left"><?php echo $row->usaha_pokok ?></td>
+            <td class="align-center"><?php echo $row->usaha_kbli ?></td>
             <td class="align-center"><?php echo $row->pembaruan_ke ?></td>
             <td class="align-left"><?php echo $row->pengajuan_jenis ?></td>
-            <td class="align-center"><?php echo bdate( 'd F Y', $row->created_on ) ?></td>
-            <td class="align-center"><?php echo bdate( 'd F Y', $row->created_on ) ?></td>
+            <td class="align-center"><?php echo format_date( $row->surat_tanggal ) ?></td>
+            <td class="align-center"><?php echo format_date( $row->tgl_berlaku ) ?></td>
         </tr>
     <?php $i++; endforeach; else : ?>
         <tr><td colspan="15"><h1 style="text-align: center;">NIHIL</h1></td></tr>

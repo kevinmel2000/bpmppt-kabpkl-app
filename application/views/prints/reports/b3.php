@@ -29,8 +29,8 @@
             <td class="align-left"><?php echo $row->pemohon_alamat ?></td>
             <td class="align-center"><?php echo $row->usaha_lokasi ?></td>
             <td class="align-center"><?php echo $row->no_agenda ?></td>
-            <td class="align-center"><?php echo bdate( 'd F Y', $row->created_on ) ?></td>
-            <td class="align-center"><?php echo bdate( 'd F Y', $row->created_on ) ?></td>
+            <td class="align-center"><?php echo format_date( $row->created_on ) ?></td>
+            <td class="align-center"><?php echo format_date( "+5 years {$row->created_on}" ) ?></td>
             <td class="align-left"><?php echo '-' ?></td>
         </tr>
     <?php $i++; endforeach; else : ?>

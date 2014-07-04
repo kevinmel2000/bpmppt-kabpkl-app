@@ -32,8 +32,8 @@
     <td style="width:2%"><p>:</p></td>
     <td colspan="5" style="width:78%" class="align-justify">
         <ol class="lower-alpha">
-            <li>Surat Permohonan Izin Usaha Pertambangan (IUP) Operasi Produksi Bantuan (<?php echo $tambang_jns_galian ?>) A.n <?php echo $pemohon_nama ?> tanggal <?php echo bdate('d F Y', $surat_tanggal) ?>.</li>
-            <li>Rekomendasi Kepala Dinas Pengelolaan Sumber Daya Air, Energi dan SUmberdaya Mineral Kabupaten Pekalongan Nomor <?php echo $rekomendasi_nomor ?> tanggal <?php echo bdate('d F Y', $rekomendasi_tanggal) ?> tentang Izin Usaha Pertambangan (IUP) Operasi Produksi Bantuan (<?php echo $tambang_jns_galian ?>) A.n <?php echo $pemohon_nama ?>.</li>
+            <li>Surat Permohonan Izin Usaha Pertambangan (IUP) Operasi Produksi Bantuan (<?php echo $tambang_jns_galian ?>) A.n <?php echo $pemohon_nama ?> tanggal <?php echo format_date( $surat_tanggal) ?>.</li>
+            <li>Rekomendasi Kepala Dinas Pengelolaan Sumber Daya Air, Energi dan SUmberdaya Mineral Kabupaten Pekalongan Nomor <?php echo $rekomendasi_nomor ?> tanggal <?php echo format_date( $rekomendasi_tanggal) ?> tentang Izin Usaha Pertambangan (IUP) Operasi Produksi Bantuan (<?php echo $tambang_jns_galian ?>) A.n <?php echo $pemohon_nama ?>.</li>
         </ol>
     </td>
 </tr>

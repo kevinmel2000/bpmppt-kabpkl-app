@@ -108,11 +108,11 @@ class Layanan extends BAKA_Controller
             $this->data['tool_buttons']['form']              = 'Baru|primary';
             $this->data['tool_buttons']['cetak']             = 'Laporan|info';
             $this->data['tool_buttons'][] = array(
-                'data/status/semua'     => 'Semua',
-                'data/status/pending'   => 'Pending',
-                'data/status/approved'  => 'Disetujui',
-                'data/status/done'      => 'Selesai',
-                'data/status/deleted'   => 'Dihapus'
+                'data/status/semua'    => 'Semua',
+                'data/status/pending'  => 'Pending',
+                'data/status/approved' => 'Disetujui',
+                'data/status/done'     => 'Selesai',
+                'data/status/deleted'  => 'Dihapus'
                 );
             $this->data['tool_buttons']['Template|default'] = array(
                 'data/setting'  => 'Data',
@@ -138,7 +138,7 @@ class Layanan extends BAKA_Controller
             }
 
             $this->load->library('gridr', array(
-                'base_url'   => $this->data['page_link'],
+                'base_url' => $this->data['page_link'],
                 ));
 
             $grid = $this->gridr->set_column('Pengajuan',
@@ -178,20 +178,22 @@ class Layanan extends BAKA_Controller
         {
             $status = $data_obj->status;
 
+            if ( $data_obj->status !== 'deleted' )
+            {
+                $h_link = 'hapus';
+                $h_text = 'Hapus';
+            }
+            else
+            {
+                $h_link = 'delete';
+                $h_text = 'Hapus Permanen';
+            }
+
             $this->data['tool_buttons']['form'] = 'Baru|primary';
             $this->data['tool_buttons'][] = array(
                 'cetak/'.$data_id => 'Cetak|info',
-                'hapus/'.$data_id => 'Hapus|danger'
+                $h_link.'/'.$data_id => $h_text.'|danger'
                 );
-
-            // if ( $data_obj->status !== 'deleted' )
-            // {
-            //     $this->data['tool_buttons']['aksi|default']['hapus/'.$data_id] = 'Hapus&message="Anda yakin ingin menghapus data nomor '.$data_obj->surat_nomor.'"';
-            // }
-            // else
-            // {
-            //     $this->data['tool_buttons']['aksi|default']['delete/'.$data_id] = 'Hapus Permanen&message="Anda yakin ingin menghapus data nomor '.$data_obj->surat_nomor.'"';
-            // }
 
             $this->data['tool_buttons']['Ubah status|default'] = array(
                 'ubah-status/'.$data_id.'/pending/'  => 'Pending',
@@ -227,10 +229,10 @@ class Layanan extends BAKA_Controller
                 'label' => 'Status Pengajuan',
                 'type'  => 'dropdown',
                 'option'=> array(
-                    'all'       => 'Semua',
-                    'pending'   => 'Tertunda',
-                    'approved'  => 'Disetujui',
-                    'done'      => 'Selesai' ),
+                    'all'      => 'Semua',
+                    'pending'  => 'Tertunda',
+                    'approved' => 'Disetujui',
+                    'done'     => 'Selesai' ),
                 'desc'  => 'tentukan status dokumennya, pilih <em>Semua</em> untuk mencetak semua dokumen dengan jenis dokumen diatas, atau anda dapat sesuaikan dengan kebutuhan.' );
 
             $fields[] = array(
@@ -239,12 +241,12 @@ class Layanan extends BAKA_Controller
                 'type'  => 'subfield',
                 'fields'=> array(
                     array(
-                        'name' => 'month',
+                        'name'  => 'month',
                         'label' => 'Bulan',
                         'type'  => 'dropdown',
                         'option'=> add_placeholder( get_month_assoc(), 'Pilih Bulan') ),
                     array(
-                        'name' => 'year',
+                        'name'  => 'year',
                         'label' => 'Tahun',
                         'type'  => 'dropdown',
                         'option'=> add_placeholder( get_year_assoc(), 'Pilih Tahun') )
@@ -275,30 +277,7 @@ class Layanan extends BAKA_Controller
 
             if ( $form_data = $form->validate_submition() )
             {
-                $data = $this->bpmppt->skpd_properties();
-
-                $wheres['type'] = $this->bpmppt->get_alias($data_type);
-
-                if ( $form_data['data_date_month'] )
-                {
-                    $wheres['month'] = $form_data['data_date_month'];
-                }
-
-                if ( $form_data['data_date_year'] )
-                {
-                    $wheres['year'] = $form_data['data_date_year'];
-                }
-
-                if ( $form_data['data_status'] != 'all' )
-                {
-                    $wheres['status'] = $form_data['data_status'];
-                }
-
-                $data['submited'] = $form_data;
-                $data['layanan']  = $this->bpmppt->get_label( $data_type );
-                $data['results']  = $this->bpmppt->get_report( $wheres );
-
-                print_pre($data['results']);
+                $data = $this->bpmppt->do_report( $data_type, $form_data );
 
                 $this->load->theme('prints/reports/'.$data_type, $data, 'laporan');
             }
@@ -315,13 +294,11 @@ class Layanan extends BAKA_Controller
     {
         if ( $this->bpmppt->delete_data( $data_id, $this->bpmppt->get_alias($data_type) ) )
         {
-            $this->session->set_flashdata('message',
-                array('Dokumen dengan id #'.$data_id.' berhasil dihapus secara permanen.'));
+            $this->session->set_flashdata('message', 'Dokumen dengan id #'.$data_id.' berhasil dihapus secara permanen.');
         }
         else
         {
-            $this->session->set_flashdata('error',
-                array('Terjadi kesalahan penghapusan dokumen sercara permanen.'));
+            $this->session->set_flashdata('error', 'Terjadi kesalahan penghapusan dokumen sercara permanen.');
         }
 
         redirect( $this->data['page_link'] );
@@ -333,13 +310,11 @@ class Layanan extends BAKA_Controller
         {
             $message = ' '.( $new_status != 'deleted' ? 'berhasil diganti menjadi ' : '' );
 
-            $this->session->set_flashdata('success',
-                array('Status dokumen dengan id #'.$data_id.$message._x('status_'.$new_status)) );
+            $this->session->set_flashdata('success', 'Status dokumen dengan id #'.$data_id.$message._x('status_'.$new_status));
         }
         else
         {
-            $this->session->set_flashdata('error',
-                array('Terjadi kesalahan penggantian status dokumen dengan id #'.$data_id) );
+            $this->session->set_flashdata('error', 'Terjadi kesalahan penggantian status dokumen dengan id #'.$data_id);
         }
 
         redirect( $this->data['page_link'] );
@@ -356,8 +331,6 @@ class Layanan extends BAKA_Controller
             );
 
         $this->data['panel_body'] = $this->bpmppt->get_template_editor( 'products', $data_type, array(
-            // '</table><table>'                                               => '<!-- reopen table -->',
-            // '</table><table class="pagebreak">'                             => '<!-- reopen table -->',
             '<?php foreach (unserialize($tambang_koor) as $koor) : ?>'      => '<!-- start loop -->',
             '<?php foreach (unserialize($data_tembusan) as $tembusan) : ?>' => '<!-- start loop -->',
             '<?php endforeach ?>'                                           => '<!-- end loop -->',

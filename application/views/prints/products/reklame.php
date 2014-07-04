@@ -60,7 +60,7 @@
 <tr>
     <td colspan="2" style="width:30%">7. Jangka Waktu Pemasangan</td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:30%"><?php echo $reklame_range_tgl_text.' '.bdate('d F Y', $reklame_range_tgl_mulai).' - '.bdate('d F Y', $reklame_range_tgl_selesai) ?></td>
+    <td colspan="2" style="width:30%"><?php echo $reklame_range_tgl_text.' '.format_date( $reklame_range_tgl_mulai).' - '.format_date( $reklame_range_tgl_selesai) ?></td>
 </tr>
 <tr><td colspan="5" style="width:100%"></td></tr>
 <tr>
