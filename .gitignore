@@ -18,8 +18,6 @@ _*
 *.swp
 *.vi
 *~
-dvccas
-phpunit.log.json
 *.zip
 
 # IDEs project files/settings
@@ -49,9 +47,8 @@ nbactions.xml
 # but leave there Application Specifics
 !.htaccess
 !index.html
+!.git*
 !.travis.yml
-!.gitattributes
-!.gitignore
 !.editorconfig
 !.csslintrc
 !.csscomb.json

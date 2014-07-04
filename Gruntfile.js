@@ -16,15 +16,10 @@ module.exports = function(grunt) {
     phplint: {
       cores: [
         'application/core/*.php',
-        'application/controllers/*.php',
         'application/controllers/**/*.php',
-        'application/helpers/*.php',
-        'application/libraries/*.php',
         'application/libraries/**/*.php',
-        'application/libraries/**/**/*.php',
-        'application/views/*.php',
+        'application/models/**/*.php',
         'application/views/**/*.php',
-        'application/views/**/**/*.php',
       ]
     },
 
