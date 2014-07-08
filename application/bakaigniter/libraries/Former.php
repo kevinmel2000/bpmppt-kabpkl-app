@@ -1063,7 +1063,7 @@ class Former
                 // Captcha field
                 case 'captcha':
                     $captcha     = str_replace(FCPATH, '', get_conf('base_path'));
-                    $captcha_url = base_url($captcha.'vendor/captcha/captcha'.EXT);
+                    $captcha_url = base_url($captcha.'libraries/vendor/captcha/captcha'.EXT);
                     $image_id    = 'captcha-'.$id.'-img';
                     $input_id    = 'captcha-'.$id.'-input';
 
@@ -1564,4 +1564,4 @@ class Former
 }
 
 /* End of file Former.php */
-/* Location: ./application/third_party/bakaigniter/libraries/Former.php */
+/* Location: ./bakaigniter/libraries/Former.php */

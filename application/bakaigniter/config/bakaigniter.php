@@ -1,6 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * @package     Baka Igniter Pack
+ * @subpackage  Main Configuration File
  * @author      Fery Wardiyanto
  * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
  * @license     http://dbad-license.org
@@ -39,13 +40,6 @@ $config['baka_app_repo_url']        = 'http://github.com/feryardiant/bpmppt';
 
 // Baka Igniter Application Documentation
 $config['baka_app_doc_url']         = '';
-
-// Baka Igniter Minimal Web Browser Version
-$config['baka_app_min_browser']     = array(
-    'Firefox'           => 4,
-    'Chrome'            => 8,
-    'Internet Explorer' => 8,
-    );
 
 // Baka Igniter Base Path
 $config['baka_base_path']           = dirname(dirname(__FILE__)).'/';
@@ -143,4 +137,4 @@ $config['baka_phpass_hash_strength'] = 8;
 
 
 /* End of file bakaigniter.php */
-/* Location: ./application/third_party/bakaigniter/config/bakaigniter.php */
+/* Location: ./bakaigniter/config/bakaigniter.php */

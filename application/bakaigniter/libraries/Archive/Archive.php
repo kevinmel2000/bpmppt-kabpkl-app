@@ -228,4 +228,4 @@ class Archive extends CI_Driver_Library
 }
 
 /* End of file Archive.php */
-/* Location: ./application/third_party/bakaigniter/libraries/Archive/Archive.php */
+/* Location: ./bakaigniter/libraries/Archive/Archive.php */

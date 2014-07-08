@@ -96,4 +96,4 @@ class Archive_zip extends CI_Driver
 }
 
 /* End of file Archive_zip.php */
-/* Location: ./application/third_party/bakaigniter/libraries/Archive/drivers/Archive_zip.php */
+/* Location: ./bakaigniter/libraries/Archive/drivers/Archive_zip.php */

@@ -45,4 +45,4 @@ function login_by()
 }
 
 /* End of file authen_helper.php */
-/* Location: ./application/third_party/bakaigniter/helpers/authen_helper.php */
+/* Location: ./bakaigniter/helpers/authen_helper.php */

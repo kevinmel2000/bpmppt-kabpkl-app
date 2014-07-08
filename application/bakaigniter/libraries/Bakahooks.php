@@ -66,7 +66,7 @@ class Bakahooks
         // var_dump(APPPATH);
         if ( !class_exists('\php_error\ErrorHandler') )
         {
-            require_once(dirname(dirname(__FILE__)).'/vendor/php_error'.EXT);
+            require_once(dirname(__FILE__).'/vendor/php_error'.EXT);
         }
 
         $handler = new \php_error\ErrorHandler(array(
@@ -101,4 +101,4 @@ class Bakahooks
 }
 
 /* End of file Bakahooks.php */
-/* Location: ./application/third_party/bakaigniter/libraries/Bakahooks.php */
+/* Location: ./bakaigniter/libraries/Bakahooks.php */

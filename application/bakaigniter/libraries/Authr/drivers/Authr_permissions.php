@@ -108,4 +108,4 @@ class Authr_permissions extends CI_Driver
 }
 
 /* End of file Authr_permissions.php */
-/* Location: ./application/third_party/bakaigniter/libraries/Authr/driver/Authr_permissions.php */
+/* Location: ./bakaigniter/libraries/Authr/driver/Authr_permissions.php */

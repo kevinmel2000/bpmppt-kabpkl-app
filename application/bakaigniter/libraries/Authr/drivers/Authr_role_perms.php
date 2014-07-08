@@ -130,4 +130,4 @@ class Authr_role_perms extends CI_Driver
 }
 
 /* End of file Authr_role_perms.php */
-/* Location: ./application/third_party/bakaigniter/libraries/Authr/driver/Authr_role_perms.php */
+/* Location: ./bakaigniter/libraries/Authr/driver/Authr_role_perms.php */

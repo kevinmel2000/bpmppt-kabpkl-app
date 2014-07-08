@@ -139,4 +139,4 @@ function load_styles()
 
 
 /* End of file assets_helper.php */
-/* Location: ./application/third_party/bakaigniter/helpers/assets_helper.php */
+/* Location: ./bakaigniter/helpers/assets_helper.php */

@@ -197,4 +197,4 @@ function form_persyaratan( $caption, $persyaratan = array(), $syarats = '' )
 }
 
 /* End of file former_helper.php */
-/* Location: ./application/third_party/bakaigniter/helpers/former_helper.php */
+/* Location: ./bakaigniter/helpers/former_helper.php */

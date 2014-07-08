@@ -232,4 +232,4 @@ function print_pre( $array = null )
 }
 
 /* End of file common_helper.php */
-/* Location: ./application/third_party/bakaigniter/helpers/common_helper.php */
+/* Location: ./bakaigniter/helpers/common_helper.php */

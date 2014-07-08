@@ -274,4 +274,4 @@ function format_roman( $num )
 }
 
 /* End of file data_helper.php */
-/* Location: ./application/third_party/bakaigniter/helpers/data_helper.php */
+/* Location: ./bakaigniter/helpers/data_helper.php */

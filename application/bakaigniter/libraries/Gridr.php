@@ -399,4 +399,4 @@ class Gridr
 }
 
 /* End of file Gridr.php */
-/* Location: ./application/third_party/bakaigniter/libraries/Gridr.php */
+/* Location: ./bakaigniter/libraries/Gridr.php */

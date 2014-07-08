@@ -147,4 +147,4 @@ class Authr_users_meta extends CI_Driver
 }
 
 /* End of file Authr_users_meta.php */
-/* Location: ./application/third_party/bakaigniter/libraries/Authr/driver/Authr_users_meta.php */
+/* Location: ./bakaigniter/libraries/Authr/driver/Authr_users_meta.php */

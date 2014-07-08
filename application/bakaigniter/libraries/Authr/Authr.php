@@ -59,13 +59,6 @@ class Authr extends CI_Driver_Library
     protected $_user_perms;
 
     /**
-     * Driver dependency path
-     *
-     * @var  string
-     */
-    public $vendor_path = '';
-
-    /**
      * Valid drivers that will be loaded
      *
      * @var  array
@@ -126,7 +119,7 @@ class Authr extends CI_Driver_Library
      */
     protected function hash()
     {
-        require_once( get_conf('base_path').'vendor/PasswordHash.php' );
+        require_once( get_conf('base_path').'libraries/vendor/PasswordHash.php' );
 
         $phpass = new PasswordHash( get_conf('phpass_hash_strength'), get_conf('phpass_hash_portable') );
 
@@ -899,4 +892,4 @@ class Authr extends CI_Driver_Library
 }
 
 /* End of file Authr.php */
-/* Location: ./application/third_party/bakaigniter/libraries/Authr/Authr.php */
+/* Location: ./bakaigniter/libraries/Authr/Authr.php */

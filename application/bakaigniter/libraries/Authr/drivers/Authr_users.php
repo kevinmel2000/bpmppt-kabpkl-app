@@ -589,4 +589,4 @@ class Authr_users extends CI_Driver
 }
 
 /* End of file Authr_users.php */
-/* Location: ./application/third_party/bakaigniter/libraries/Authr/driver/Authr_users.php */
+/* Location: ./bakaigniter/libraries/Authr/driver/Authr_users.php */

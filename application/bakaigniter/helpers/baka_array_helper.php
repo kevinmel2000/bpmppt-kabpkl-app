@@ -154,4 +154,4 @@ function array_set_defaults(array $array, array $defaults)
 }
 
 /* End of file assets_helper.php */
-/* Location: ./application/third_party/bakaigniter/helpers/assets_helper.php */
+/* Location: ./bakaigniter/helpers/assets_helper.php */

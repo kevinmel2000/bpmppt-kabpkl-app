@@ -57,4 +57,4 @@ class Authr_user_perms extends CI_Driver
 }
 
 /* End of file Authr_user_perms.php */
-/* Location: ./application/third_party/bakaigniter/libraries/Authr/driver/Authr_user_perms.php */
+/* Location: ./bakaigniter/libraries/Authr/driver/Authr_user_perms.php */

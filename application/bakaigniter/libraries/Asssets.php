@@ -59,8 +59,10 @@ class Asssets
      */
     public function __construct()
     {
+        // Get instanciation of CI Super Object
         $this->_ci =& get_instance();
-
+        // Load This Lib Configuration
+        $this->_ci->config->load('asssets');
         $this->_ci->load->helper('baka_asssets');
 
         log_message('debug', "#BakaIgniter: Asssets Class Initialized");
@@ -223,4 +225,4 @@ class Asssets
 }
 
 /* End of file Asssets.php */
-/* Location: ./application/third_party/bakaigniter/libraries/Asssets.php */
+/* Location: ./bakaigniter/libraries/Asssets.php */

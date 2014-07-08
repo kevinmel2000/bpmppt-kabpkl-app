@@ -101,4 +101,4 @@ class Authr_login_attempt extends CI_Driver
 }
 
 /* End of file Authr_login_attempt.php */
-/* Location: ./application/third_party/bakaigniter/libraries/Authr/driver/Authr_login_attempt.php */
+/* Location: ./bakaigniter/libraries/Authr/driver/Authr_login_attempt.php */

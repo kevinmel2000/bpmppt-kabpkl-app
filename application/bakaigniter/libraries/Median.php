@@ -399,4 +399,4 @@ class Median
 }
 
 /* End of file Median.php */
-/* Location: ./application/third_party/bakaigniter/libraries/Median.php */
+/* Location: ./bakaigniter/libraries/Median.php */

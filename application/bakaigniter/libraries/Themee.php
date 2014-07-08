@@ -24,7 +24,7 @@ class Themee
      *
      * @var  mixed
      */
-    protected static $_ci;
+    protected $_ci;
 
     protected $page_title    = '';
 
@@ -41,17 +41,18 @@ class Themee
      */
     public function __construct()
     {
-        self::$_ci =& get_instance();
-
-        self::$_ci->load->library('user_agent');
-        self::$_ci->load->library('asssets');
-        self::$_ci->load->helpers(array('baka_themee', 'html', 'baka_former', 'baka_twbs'));
+        // Get instanciation of CI Super Object
+        $this->_ci =& get_instance();
+        // Load This Lib Configuration
+        $this->_ci->config->load('themee');
+        $this->_ci->load->library('asssets');
+        $this->_ci->load->helpers(array( 'url', 'baka_themee', 'html', 'baka_former', 'baka_twbs' ));
 
         // Setup body classes & id
-        $this->set_body_attr('id', self::$_ci->router->fetch_class() );
+        $this->set_body_attr('id', $this->_ci->router->fetch_class() );
         $this->set_title(get_conf('app_name'));
 
-        $this->authenticated = !self::verify_browser() AND self::$_ci->authr->is_logged_in();
+        $this->authenticated = !$this->verify_browser() AND $this->_ci->authr->is_logged_in();
 
         log_message('debug', "#BakaIgniter: Themee Class Initialized");
     }
@@ -63,11 +64,13 @@ class Themee
      *
      * @return  bool
      */
-    public static function verify_browser()
+    public function verify_browser()
     {
-        $min_browser     = get_conf('app_min_browser');
-        $current_browser = self::$_ci->agent->browser();
-        $current_version = explode('.', self::$_ci->agent->version());
+        $this->_ci->load->library('user_agent');
+
+        $min_browser     = $this->_ci->config->item('themee_min_browser');
+        $current_browser = $this->_ci->agent->browser();
+        $current_version = explode('.', $this->_ci->agent->version());
 
         if (isset($min_browser[$current_browser]) and !IS_CLI)
         {
@@ -83,13 +86,13 @@ class Themee
      * @param   string  $page_title  Page Title
      * @return  string
      */
-    public function set_title($page_title)
+    public function set_title( $page_title )
     {
         // Setup page title
         $this->page_title = $page_title;
 
         // setup site title
-        if (strlen($this->site_title) > 0)
+        if ( strlen( $this->site_title ) > 0 )
         {
             $this->site_title .= ' - '.$page_title;
         }
@@ -113,9 +116,9 @@ class Themee
      * @param   string  $val  Attribute Value
      * @return  mixed
      */
-    private function set_body_attr($key, $val)
+    private function set_body_attr( $key, $val )
     {
-        if (!in_array($key, array('id', 'class')))
+        if ( !in_array( $key, array( 'id', 'class' ) ) )
         {
             log_message('error', 'Asssets lib: '.$key.' body attribute is not supported.');
             return FALSE;
@@ -123,12 +126,12 @@ class Themee
 
         $attrs = array();
 
-        if ($key == 'id')
+        if ( $key == 'id' )
         {
             $this->body_attr['id']    = 'page-'.$val;
             $this->body_attr['class'] = 'page '.$val;
         }
-        else if ($key == 'class')
+        else if ( $key == 'class' )
         {
             $this->body_attr['class'] .= ' '.$val;
         }
@@ -147,9 +150,9 @@ class Themee
 
     public function add_navmenu( $parent_id, $menu_id, $type = 'link', $url = '', $label = '', $attr = array(), $position = 'top' )
     {
-        if (is_array($menu_id))
+        if ( is_array($menu_id) )
         {
-            foreach ($menu_id as $key => $value)
+            foreach ( $menu_id as $key => $value )
             {
                 $this->add_navmenu($parent_id, $key, $value['url'], $value['label'], $value['type'], $value['attr'], $value['position']);
             }
@@ -212,9 +215,9 @@ class Themee
      * @param   string  $property  This class properties
      * @return  mixed
      */
-    public function get($property)
+    public function get( $property )
     {
-        if (!isset($this->$property))
+        if ( !isset( $this->$property ) )
         {
             log_message('error', "#BakaIgniter: Themee->get property ".$property." doesn't exists.");
             return FALSE;
@@ -225,4 +228,4 @@ class Themee
 }
 
 /* End of file Themee.php */
-/* Location: ./application/third_party/bakaigniter/libraries/Themee.php */
+/* Location: ./bakaigniter/libraries/Themee.php */

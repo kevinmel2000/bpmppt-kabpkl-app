@@ -52,7 +52,7 @@ $autoload['packages'] = array(APPPATH.'bakaigniter');
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array( 'database', 'bakaigniter' );
+$autoload['libraries'] = array( 'bakaigniter' );
 
 
 /*
@@ -64,7 +64,7 @@ $autoload['libraries'] = array( 'database', 'bakaigniter' );
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array( 'baka_common', 'url' );
+$autoload['helper'] = array( 'baka_common' );
 
 
 

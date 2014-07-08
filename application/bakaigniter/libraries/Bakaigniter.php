@@ -20,6 +20,13 @@
 class Bakaigniter
 {
     /**
+     * BakaIgniter Version
+     *
+     * @var  resource
+     */
+    const VERSION = '0.1.5';
+
+    /**
      * Codeigniter instance object
      *
      * @var  resource
@@ -73,22 +80,24 @@ class Bakaigniter
      */
     public function __construct()
     {
+        // Get instanciation of CI Super Object
         $this->_ci =& get_instance();
-
-        self::$_instance = $this;
 
         $this->_ci->config->load('bakaigniter');
         $this->_ci->lang->load('bakaigniter');
 
+        $this->_ci->load->database();
         $this->_ci->load->driver('authr');
         $this->_ci->load->library('themee');
-        $this->_ci->load->helpers(array('date', 'array', 'baka_array', 'baka_data'));
+        $this->_ci->load->helpers(array( 'date', 'array', 'baka_array', 'baka_data' ));
 
         $this->_table_name = get_conf('system_opt_table');
 
         $this->initialize();
 
         log_message('debug', "#BakaIgniter: Bakaigniter Class Initialized");
+
+        self::$_instance =& $this;
     }
 
     // -------------------------------------------------------------------------
@@ -168,7 +177,7 @@ class Bakaigniter
      */
     public function get_setting( $key )
     {
-        if ( isset( $this->_settings[$key] ) )
+        if ( $this->is_setting_exists( $key ) )
         {
             return $this->_settings[$key];
         }
@@ -382,4 +391,4 @@ class Bakaigniter
 }
 
 /* End of file Bakaigniter.php */
-/* Location: ./application/third_party/bakaigniter/libraries/Bakaigniter.php */
+/* Location: ./bakaigniter/libraries/Bakaigniter.php */

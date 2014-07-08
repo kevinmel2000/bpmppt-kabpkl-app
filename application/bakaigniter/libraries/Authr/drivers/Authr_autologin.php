@@ -129,4 +129,4 @@ class Authr_autologin extends CI_Driver
 }
 
 /* End of file Authr_autologin.php */
-/* Location: ./application/third_party/bakaigniter/libraries/Authr/driver/Authr_autologin.php */
+/* Location: ./bakaigniter/libraries/Authr/driver/Authr_autologin.php */

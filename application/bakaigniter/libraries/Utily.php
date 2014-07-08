@@ -479,4 +479,4 @@ class Utily
 }
 
 /* End of file Utily.php */
-/* Location: ./application/third_party/bakaigniter/libraries/Utily.php */
+/* Location: ./bakaigniter/libraries/Utily.php */
