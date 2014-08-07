@@ -75,9 +75,9 @@ function get_page_title()
  */
 function get_navbar()
 {
-    $themee =& get_instance()->themee;
+    $authr =& get_instance()->authr;
 
-    if ( $themee->get('authenticated'))
+    if ($authr->is_logged_in())
     {
         return get_nav('top');
     }
@@ -99,7 +99,7 @@ function get_nav($position, $responsivable = FALSE)
 
     if (isset($navbar[$position]))
     {
-        return make_menu( $navbar[$position], $responsivable);
+        return make_menu($navbar[$position], $responsivable);
     }
 
     log_message('error', '#BakaIgniter: Themee->navbar '.$position.' doesn\'t exists.');

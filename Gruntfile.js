@@ -4,11 +4,10 @@ module.exports = function(grunt) {
   grunt.initConfig({
     // Metadata.
     php: {
-      dist: {
+      cores: {
         options: {
-          keepalive: true,
           open: true,
-          port: 8086,
+          port: 8088
         }
       }
     },
@@ -111,14 +110,11 @@ module.exports = function(grunt) {
         ]
       },
       phpTest: {
-        files: [
-          '<%= phpunit.base.dir %>/**/*Test.php',
-          '<%= phpunit.base.dir %>/*Test.php'
-        ],
+        files: '<%= phpunit.base.dir %>/**/*Test.php',
         tasks: 'phpunit'
       },
       phpCore: {
-        files: '<%= phplint.base.dir %>',
+        files: '<%= phplint.cores %>',
         tasks: 'phplint'
       }
     }
@@ -136,5 +132,5 @@ module.exports = function(grunt) {
 
   grunt.registerTask('csstest', ['csslint', 'cssmin']);
 
-  grunt.registerTask('default', ['php', 'watch']);
+  grunt.registerTask('default', ['php:cores', 'watch']);
 }

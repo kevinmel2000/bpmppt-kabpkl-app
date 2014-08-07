@@ -34,8 +34,6 @@ class Themee
 
     protected $navbar        = '';
 
-    protected $authenticated = '';
-
     /**
      * Default class constructor
      */
@@ -46,13 +44,11 @@ class Themee
         // Load This Lib Configuration
         $this->_ci->config->load('themee');
         $this->_ci->load->library('asssets');
-        $this->_ci->load->helpers(array( 'url', 'baka_themee', 'html', 'baka_former', 'baka_twbs' ));
+        $this->_ci->load->helpers(array('url', 'baka_themee', 'html', 'baka_former', 'baka_twbs'));
 
         // Setup body classes & id
-        $this->set_body_attr('id', $this->_ci->router->fetch_class() );
+        $this->set_body_attr('id', $this->_ci->router->fetch_class());
         $this->set_title(get_conf('app_name'));
-
-        $this->authenticated = !$this->verify_browser() AND $this->_ci->authr->is_logged_in();
 
         log_message('debug', "#BakaIgniter: Themee Class Initialized");
     }

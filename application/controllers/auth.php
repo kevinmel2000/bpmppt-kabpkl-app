@@ -103,6 +103,11 @@ class Auth extends BAKA_Controller
                 $this->session->set_flashdata( $level, $item );
             }
 
+            if (strlen($goto) == 0)
+            {
+                $goto = 'data/utama/';
+            }
+
             redirect( $goto );
         }
 

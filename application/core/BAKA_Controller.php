@@ -19,6 +19,12 @@ class BAKA_Controller extends CI_Controller
     {
         parent::__construct();
 
+        if ($this->themee->verify_browser())
+        {
+            log_message('error', lang("error_browser_jadul"));
+            show_error(array('Peramban yang anda gunakan tidak memenuhi syarat minimal penggunaan aplikasi ini.','Silahkan gunakan '.anchor('http://www.mozilla.org/id/', 'Mozilla Firefox', 'target="_blank"').' atau '.anchor('https://www.google.com/intl/id/chrome/browser/', 'Google Chrome', 'target="_blank"').' biar lebih GREGET!'), 500, 'error_browser_jadul');
+        }
+
         set_script('jquery',    'lib/jquery.min.js', '', '2.0.3');
         set_script('baka-pack', 'script.js', 'jquery' );
         set_script('bootstrap', 'lib/bootstrap.min.js', 'jquery', '3.0.0' );
@@ -27,12 +33,6 @@ class BAKA_Controller extends CI_Controller
 
         $script = "$('.twbs-tooltip').tooltip();";
         set_script('bootstrap-tooltip-trigger', $script, 'bootstrap');
-
-        if ($this->themee->verify_browser())
-        {
-            log_message('error', lang("error_browser_jadul"));
-            show_error(array('Peramban yang anda gunakan tidak memenuhi syarat minimal penggunaan aplikasi ini.','Silahkan gunakan '.anchor('http://www.mozilla.org/id/', 'Mozilla Firefox', 'target="_blank"').' atau '.anchor('https://www.google.com/intl/id/chrome/browser/', 'Google Chrome', 'target="_blank"').' biar lebih GREGET!'), 500, 'error_browser_jadul');
-        }
 
         if ($this->authr->is_logged_in())
         {
@@ -49,7 +49,7 @@ class BAKA_Controller extends CI_Controller
         $this->data['search_form']  = FALSE;
         $this->data['single_page']  = TRUE;
         $this->data['form_page']    = FALSE;
-        
+
         $this->data['need_print']   = FALSE;
 
         $this->data['tool_buttons'] = array();
@@ -64,7 +64,7 @@ class BAKA_Controller extends CI_Controller
     }
 
     // -------------------------------------------------------------------------
-    
+
     public function captcha()
     {
         echo $this->authr->captcha->generate();
@@ -97,7 +97,7 @@ class BAKA_Controller extends CI_Controller
         {
             redirect('login?from='.$from);
         }
-        
+
         if ($this->authr->is_logged_in(FALSE))
         {
             redirect('resend');
@@ -252,7 +252,7 @@ class BAKA_Controller extends CI_Controller
         // Adding Users menu header
         $this->themee->add_navmenu($parent, 'au_def', 'devider', '', '', array(), $position);
         $this->themee->add_navmenu($parent, 'au_head', 'header', '', 'Pengguna', array(), $position);
-        
+
         // Adding Self Profile sub-menu
         $this->themee->add_navmenu($parent, 'au_me', 'link', 'profile', 'Profil Saya', array(), $position);
 

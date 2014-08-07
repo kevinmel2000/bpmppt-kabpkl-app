@@ -38,6 +38,7 @@
 |
 */
 
+// $route['default_controller']	= "login";
 $route['default_controller']	= "data/utama";
 
 // Overiding 404 page not found
