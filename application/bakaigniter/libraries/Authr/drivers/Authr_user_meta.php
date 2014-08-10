@@ -16,7 +16,7 @@
  * @subpackage  Drivers
  * @category    Security
  */
-class Authr_users_meta extends CI_Driver
+class Authr_user_meta extends CI_Driver
 {
     /**
      * Driver class constructor
@@ -62,11 +62,14 @@ class Authr_users_meta extends CI_Driver
      *
      * @return bool
      */
-    public function set( $user_id, $meta_data = array() )
+    public function set( $user_id, array $meta_data = array() )
     {
-        if ( count( $meta_data ) == 0 )
+        if (count($meta_data) == 0)
         {
-            $meta_data = get_conf('default_meta_fields');
+            $meta_data = array(
+                'first_name' => '',
+                'lastname_name' => '',
+                );
         }
 
         $data = array();

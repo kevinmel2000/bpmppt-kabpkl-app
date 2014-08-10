@@ -349,6 +349,7 @@ class Authr extends CI_Driver_Library
     public function create_user( $username, $email, $password, $roles = array() )
     {
         $user_data = array(
+            'display'   => $username,
             'username'  => $username,
             'password'  => $this->do_hash($password),
             'email'     => $email
@@ -356,23 +357,27 @@ class Authr extends CI_Driver_Library
 
         $email_activation = (bool) get_setting('auth_email_activation');
 
-        if ($email_activation)
+        if ($user_id = $this->users->add($user_data, !$email_activation))
         {
-            $user_data['new_email_key'] = $this->generate_random_key();
-            $user_data['user_id']       = $user_id;
-            $user_data['password']      = $password;
+            $this->user_meta->set($user_id);
+            $this->user_roles->set($user_id, $roles);
 
-            emailer_send($email, 'activate', $user_data);
+            if ($email_activation)
+            {
+                $user_data['new_email_key'] = $this->generate_random_key();
+                $user_data['password']      = $password;
+
+                emailer_send($email, 'activate', $user_data);
+            }
+
+            set_message('success', $username.' berhasil ditambahkan sebagai pengguna baru.');
+            return TRUE;
         }
-
-        if (!($user_id = $this->add_user($user_data, !$email_activation, $roles)))
+        else
         {
             set_message('error', 'ERROR! Tidak dapat menambahkan '.$username.' sebagai pengguna baru.');
             return FALSE;
         }
-
-        set_message('success', $username.' berhasil ditambahkan sebagai pengguna baru.');
-        return TRUE;
     }
 
     // -------------------------------------------------------------------------
@@ -417,13 +422,13 @@ class Authr extends CI_Driver_Library
             }
         }
 
-        if (count($roles) > 0)
-        {
-            $data['roles'] = $roles;
-        }
-
         if ($this->users->edit($user_id, $data))
         {
+            if (!empty($roles))
+            {
+                return $this->user_roles->edit($user_id, $roles);
+            }
+
             set_message('success', 'Berhasil mengubah data pengguna '.$username);
             $return = TRUE;
         }

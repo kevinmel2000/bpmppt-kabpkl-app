@@ -118,7 +118,7 @@ class Authr_users extends CI_Driver
      */
     public function add( array $user_data, $activated = FALSE, $roles = array() )
     {
-        $user_data['last_ip']       = $this->input->ip_address();
+        $user_data['last_ip']       = $this->_ci->input->ip_address();
         $user_data['created']       = date('Y-m-d H:i:s');
         $user_data['last_login']    = date('Y-m-d H:i:s');
         $user_data['activated']     = $activated ? 1 : 0;
@@ -128,19 +128,7 @@ class Authr_users extends CI_Driver
             return FALSE;
         }
 
-        $user_id = $this->db->insert_id();
-
-        if ( $activated )
-        {
-            $this->set_user_meta( $user_id );
-
-            if ( count( $roles ) > 0 )
-            {
-                $this->set_user_roles( $user_id, $roles );
-            }
-        }
-
-        return $user_id;
+        return $this->db->insert_id();
     }
 
     // -------------------------------------------------------------------------
