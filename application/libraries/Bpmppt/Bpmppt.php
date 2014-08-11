@@ -292,7 +292,10 @@ class Bpmppt extends CI_Driver_Library
             $this->fields[] = $form_field;
         }
 
-        $this->field_tembusan( $data_obj );
+        if (!isset($this->$driver->tembusan) or (isset($this->$driver->tembusan) and $this->$driver->tembusan !== FALSE))
+        {
+            $this->field_tembusan($data_obj);
+        }
 
         // $no_buttons = $data_obj ? TRUE : FALSE ;
 

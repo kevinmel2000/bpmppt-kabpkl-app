@@ -17,6 +17,7 @@ class Bpmppt_tdp extends CI_Driver
     public $alias = 'tanda_daftar_perusahaan';
     public $name = 'Tanda Daftar Perusahaan';
     public $prefield_label = 'No. &amp; Tgl. Agenda';
+    public $tembusan = FALSE;
 
     /**
      * Default field
@@ -86,6 +87,7 @@ class Bpmppt_tdp extends CI_Driver
       - Nomor registrasi    posisi kolom kiri
       - Masa berlaku
       - Tanggal ditetapkan
+      - Periode SIUP
      *
      * @param   bool    $data_obj  Data field
      *
@@ -292,7 +294,7 @@ class Bpmppt_tdp extends CI_Driver
         $fields[] = array(
             'name'  => 'usaha_pokok',
             'label' => 'Kegiatan Usaha Pokok',
-            'type'  => 'textarea',
+            'type'  => 'editor',
             'std'   => ( $data_obj ? $data_obj->usaha_pokok : ''));
 
         $fields[] = array(
@@ -300,95 +302,6 @@ class Bpmppt_tdp extends CI_Driver
             'label' => 'KBLI',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->usaha_kbli : ''));
-
-        $fields[] = array(
-            'name'  => 'fieldset_data_usaha_akta',
-            'label' => 'Data Akta dan Pengesahan',
-            'type'  => 'fieldset' );
-
-        $fields[] = array(
-            'name'  => 'usaha_akta_pengesahan',
-            'label' => 'Akta Pengesahan Pendirian B.H.',
-            'type'  => 'subfield',
-            'fields'=> array(
-                array(
-                    'col'   => '3',
-                    'name'  => 'no',
-                    'label' => 'Nomor Akta',
-                    'type'  => 'text',
-                    'std'   => ( $data_obj ? $data_obj->usaha_akta_pengesahan_no : ''),
-                    'validation'=> '' ),
-                array(
-                    'col'   => '3',
-                    'name'  => 'tgl',
-                    'label' => 'Tanggal Akta',
-                    'type'  => 'datepicker',
-                    'std'   => ( $data_obj ? $data_obj->usaha_akta_pengesahan_tgl : ''),
-                    'validation'=> '' ),
-                array(
-                    'col'   => '6',
-                    'name'  => 'uraian',
-                    'label' => 'Uraian',
-                    'type'  => 'text',
-                    'std'   => ( $data_obj ? $data_obj->usaha_akta_pengesahan_uraian : ''),
-                    'validation'=> '' ),
-                ));
-
-        $fields[] = array(
-            'name'  => 'usaha_akta_perubahan',
-            'label' => 'Akta Perubahan A.D.B.H.',
-            'type'  => 'subfield',
-            'fields'=> array(
-                array(
-                    'col'   => '3',
-                    'name'  => 'no',
-                    'label' => 'Nomor Pengesahan',
-                    'type'  => 'text',
-                    'std'   => ( $data_obj ? $data_obj->usaha_akta_perubahan_no : ''),
-                    'validation'=> '' ),
-                array(
-                    'col'   => '3',
-                    'name'  => 'tgl',
-                    'label' => 'Tanggal Pengesahan',
-                    'type'  => 'datepicker',
-                    'std'   => ( $data_obj ? $data_obj->usaha_akta_perubahan_tgl : ''),
-                    'validation'=> '' ),
-                array(
-                    'col'   => '6',
-                    'name'  => 'uraian',
-                    'label' => 'Uraian',
-                    'type'  => 'text',
-                    'std'   => ( $data_obj ? $data_obj->usaha_akta_perubahan_uraian : ''),
-                    'validation'=> '' ),
-                ));
-
-        $fields[] = array(
-            'name'  => 'usaha_perubahan_ad',
-            'label' => 'Penerimaan Perubahan A.D.',
-            'type'  => 'subfield',
-            'fields'=> array(
-                array(
-                    'col'   => '3',
-                    'name'  => 'no',
-                    'label' => 'Nomor Akta',
-                    'type'  => 'text',
-                    'std'   => ( $data_obj ? $data_obj->usaha_perubahan_ad_no : ''),
-                    'validation'=> '' ),
-                array(
-                    'col'   => '3',
-                    'name'  => 'tgl',
-                    'label' => 'Tanggal Akta',
-                    'type'  => 'datepicker',
-                    'std'   => ( $data_obj ? $data_obj->usaha_perubahan_ad_tgl : ''),
-                    'validation'=> '' ),
-                array(
-                    'col'   => '6',
-                    'name'  => 'uraian',
-                    'label' => 'Uraian',
-                    'type'  => 'text',
-                    'std'   => ( $data_obj ? $data_obj->usaha_perubahan_ad_uraian : ''),
-                    'validation'=> '' ),
-                ));
 
         $fields[] = array(
             'name'  => 'fieldset_data_usaha_saham',
@@ -399,8 +312,7 @@ class Bpmppt_tdp extends CI_Driver
             'name'  => 'usaha_npwp',
             'label' => 'NPWP Perusahaan',
             'type'  => 'text',
-            'std'   => ( $data_obj ? $data_obj->usaha_npwp : ''),
-            'validation'=> ( !$data_obj ? 'numeric' : '' ) );
+            'std'   => ( $data_obj ? $data_obj->usaha_npwp : '') );
 
         $fields[] = array(
             'name'  => 'usaha_saham_status',
@@ -446,7 +358,147 @@ class Bpmppt_tdp extends CI_Driver
                     'validation'=> ( !$data_obj ? 'numeric' : '' ) ),
                 ));
 
+        $fields[] = array(
+            'name'  => 'fieldset_data_usaha_akta',
+            'label' => 'Data Akta dan Pengesahan',
+            'type'  => 'fieldset' );
+
+        $fields[] = array(
+            'name'  => 'usaha_data_pengesahan',
+            'label' => 'Data Pengesahan',
+            'type'  => 'custom',
+            'value' => $this->custom_field( $data_obj ),
+            'validation'=> ( !$data_obj ? '' : '' ) );
+
         return $fields;
+    }
+
+    // -------------------------------------------------------------------------
+
+    private function custom_field( $data = FALSE )
+    {
+        // if ( ! $this->load->is_loaded('table'))
+        if (!$this->_ci->load->is_loaded('table'))
+        {
+            $this->_ci->load->library('table');
+        }
+
+        $this->_ci->table->set_template( $this->table_templ );
+
+        $data_mode = $data and !empty($data->usaha_data_pengesahan);
+
+        // var_dump($this);
+        $head[] = array(
+            'data'  => 'Nomor Akta',
+            'class' => 'head-id',
+            'width' => '25%' );
+
+        $head[] = array(
+            'data'  => 'Tanggal Akta',
+            'class' => 'head-value',
+            'width' => '25%' );
+
+        $head[] = array(
+            'data'  => 'Uraian',
+            'class' => 'head-value',
+            'width' => '40%' );
+
+        $head[] = array(
+            'data'  => form_button( array(
+                'name'  => 'usaha_data_pengesahan_add-btn',
+                'type'  => 'button',
+                'class' => 'btn btn-primary bs-tooltip btn-block btn-sm',
+                'tabindex' => '-1',
+                'title' => 'Tambahkan baris',
+                'content'=> 'Add' ) ),
+            'class' => 'head-action',
+            'width' => '10%' );
+
+        $this->_ci->table->set_heading( $head );
+
+        if ( isset( $data->usaha_data_pengesahan ) and strlen( $data->usaha_data_pengesahan ) > 0 )
+        {
+            foreach ( unserialize( $data->usaha_data_pengesahan ) as $row )
+            {
+                $this->_row_koordinat( $row );
+            }
+        }
+        else
+        {
+            $this->_row_koordinat();
+        }
+
+        return $this->_ci->table->generate();
+    }
+
+    // -------------------------------------------------------------------------
+
+    private function _row_koordinat( $data = FALSE )
+    {
+        $cols = array(
+            'no'     => 'Nomor Akta',
+            'tgl'    => 'Tanggal Akta',
+            'uraian' => 'Uraian',
+            );
+
+        foreach ( $cols as $name => $label )
+        {
+            $column[] = array(
+                'data'  => form_input( array(
+                    'name'  => $this->alias.'_usaha_data_pengesahan_'.$name.'[]',
+                    'type'  => 'text',
+                    'value' => $data ? $data[$name] : '',
+                    'class' => 'form-control bs-tooltip input-sm',
+                    'placeholder'=> $label ), '', ''),
+                'class' => 'data-id',
+                'width' => '10%' );
+        }
+
+        $column[] = array(
+            'data'  => form_button( array(
+                'name'  => $this->alias.'_usaha_data_pengesahan_remove-btn',
+                'type'  => 'button',
+                'class' => 'btn btn-danger bs-tooltip btn-block btn-sm remove-btn',
+                'tabindex' => '-1',
+                'content'=> '&times;' ) ),
+            'class' => '',
+            'width' => '10%' );
+
+        $this->_ci->table->add_row( $column );
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Prepost form data hooks
+     *
+     * @return  mixed
+     */
+    public function _pre_post( $form_data )
+    {
+        $koor_fn = $this->alias.'_usaha_data_pengesahan';
+
+        if ( isset( $_POST[$koor_fn.'_no'] ) )
+        {
+            $i = 0;
+            // $koor_fn = $this->alias.'_usaha_data_pengesahan';
+
+            foreach ($_POST[$koor_fn.'_no'] as $no)
+            {
+                foreach (array('no', 'tgl', 'uraian') as $name)
+                {
+                    $koor_name = $koor_fn.'_'.$name;
+                    $koordinat[$i][$name] = isset($_POST[$koor_name][$i]) ? $_POST[$koor_name][$i] : 0;
+                    unset($_POST[$koor_name][$i]);
+                }
+
+                $i++;
+            }
+
+            $form_data[$koor_fn] = $koordinat;
+        }
+
+        return $form_data;
     }
 
     // -------------------------------------------------------------------------
