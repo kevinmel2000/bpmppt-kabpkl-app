@@ -5,7 +5,7 @@
     <td colspan="7" style="width:100%">
         <p>KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN</p>
         <p>PELAYANAN PERIZINAN TERPADU KABUPATEN PEKALONGAN</p>
-        <p>NOMOR : <?php echo '534 / '.$surat_nomor.' / BPMPPT / IUI / '.strtoupper(format_roman(bdate('m', $created_on)).' / '.bdate('Y')) ?></p>
+        <p>NOMOR : <?php echo '534 / '.$surat_nomor.' / BPMPPT / IUI / '.strtoupper(format_roman(bdate('m', $surat_tanggal)).' / '.bdate('Y')) ?></p>
     </td>
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>
@@ -133,7 +133,7 @@
 <tr>
     <td style="width:20%">KETIGA</td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%" class="align-justify">Izin Usaha Industri ini merupakan bagian yang tidak terpisahkan dari Surat Pernyataan tertanggal <?php echo format_date( $surat_tanggal) ?> yang dibuat oleh perusahaan yang bersangkutan.</td>
+    <td colspan="5" style="width:78%" class="align-justify">Izin Usaha Industri ini merupakan bagian yang tidak terpisahkan dari Surat Pernyataan tertanggal <?php echo format_date($surat_tanggal) ?> yang dibuat oleh perusahaan yang bersangkutan.</td>
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
@@ -152,7 +152,7 @@
     <td colspan="6" style="width:60%"></td>
     <td style="width:40%">
         <p>Ditetapkan di : Kajen</p>
-        <p class="underline">Pada Tanggal : <?php echo nbs(6).bdate('F', $created_on).' '.bdate('Y') ?></p>
+        <p class="underline">Pada Tanggal : <?php echo nbs(6).bdate('F', $surat_tanggal).' '.bdate('Y') ?></p>
     </td>
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>

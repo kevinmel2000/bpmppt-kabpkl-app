@@ -5,7 +5,7 @@
     <td colspan="7" style="width:100%" class="align-center bold">IZIN GANGGUAN ( HO )</td>
 </tr>
 <tr>
-    <td colspan="7" style="width:100%" class="align-center bold">NOMOR : <?php echo '510.8 /'.nbs(6).'/ BPMPPT / P. Kayu / '.strtoupper(format_roman(bdate('m', $created_on)).' / '.bdate('Y')) ?></td>
+    <td colspan="7" style="width:100%" class="align-center bold">NOMOR : <?php echo '510.8 /'.nbs(6).'/ BPMPPT / P. Kayu / '.strtoupper(format_roman(bdate('m', $surat_tanggal)).' / '.bdate('Y')) ?></td>
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
@@ -147,7 +147,7 @@
     <td colspan="6" style="width:60%"></td>
     <td style="width:40%">
         <p>Ditetapkan di : Kajen</p>
-        <p class="underline">Pada Tanggal : <?php echo nbs(6).bdate('F', $created_on).' '.bdate('Y') ?></p>
+        <p class="underline">Pada Tanggal : <?php echo nbs(6).bdate('F', $surat_tanggal).' '.bdate('Y') ?></p>
     </td>
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>

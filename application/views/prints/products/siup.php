@@ -4,7 +4,7 @@
 <tr style="font-family: 'Arial'" class="align-center bold">
     <td colspan="4">
         <span style="font-size: 24px">SURAT IZIN USAHA PERDAGANGAN</span><br>
-        <span >NOMOR : <?php echo strtoupper($no_agenda.'/11.19/'.$usaha_skala.'/'.format_roman(bdate('m', $created_on)).'/'.bdate('Y')) ?></span>
+        <span >NOMOR : <?php echo strtoupper($no_agenda.'/11.19/'.$usaha_skala.'/'.format_roman(bdate('m', $susrat_tanggal)).'/'.bdate('Y')) ?></span>
     </td>
 </tr>
 <tr><td colspan="4" style="width:100%"></td></tr>
@@ -70,7 +70,7 @@ PERUSAHAAN WAJIB MENDAFTARKAN ULANG SIUP PADA TANGGAL : <?php echo date('d F Y',
     <td colspan="3" style="width: 70%"></td>
     <td style="width: 40%; border-bottom: 2px solid #000">
         <p>Ditetapkan di : Kajen</p>
-        <p class="underline">Pada Tanggal : <?php echo nbs(6).bdate('F', $created_on).' '.bdate('Y') ?></p>
+        <p class="underline">Pada Tanggal : <?php echo nbs(6).bdate('F', $susrat_tanggal).' '.bdate('Y') ?></p>
     </td>
 </tr>
 <tr><td colspan="4" style="width:100%"></td></tr>

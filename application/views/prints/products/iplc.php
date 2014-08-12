@@ -5,7 +5,7 @@
     <td colspan="7" style="width:100%">
         <p>KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN</p>
         <p>PELAYANAN PERIZINAN TERPADU KABUPATEN PEKALONGAN</p>
-        <p>NOMOR : <?php echo '658.31 /'.nbs(6).'/ BPMPPT / IPLC / '.strtoupper(format_roman(bdate('m', $created_on)).' / '.bdate('Y')) ?></p>
+        <p>NOMOR : <?php echo '658.31 /'.nbs(6).'/ BPMPPT / IPLC / '.strtoupper(format_roman(bdate('m', $surat_tanggal)).' / '.bdate('Y')) ?></p>
     </td>
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>
@@ -221,14 +221,14 @@
 <tr>
     <td style="width:20%"><p>KEENAM</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%" class="align-justify">Keputusan ini mulai berlaku sejak tanggal ditetapkan ( <?php echo bdate('F', $created_on).' / '.bdate('Y') ?> s/d <?php echo bdate('F', $created_on).' / '.(bdate('Y') + 5) ?> )</td>
+    <td colspan="5" style="width:78%" class="align-justify">Keputusan ini mulai berlaku sejak tanggal ditetapkan ( <?php echo bdate('F', $surat_tanggal).' '.bdate('Y') ?> s/d <?php echo bdate('F', $surat_tanggal).' '.(bdate('Y') + 5) ?> )</td>
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
     <td colspan="6" style="width:60%"></td>
     <td style="width:40%">
         <p>Ditetapkan di : Kajen</p>
-        <p class="underline">Pada Tanggal : <?php echo nbs(6).bdate('F', $created_on).' '.bdate('Y') ?></p>
+        <p class="underline">Pada Tanggal : <?php echo nbs(6).bdate('F', $surat_tanggal).' '.bdate('Y') ?></p>
     </td>
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>
