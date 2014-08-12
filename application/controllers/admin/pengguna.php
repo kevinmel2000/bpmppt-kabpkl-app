@@ -102,6 +102,14 @@ class Pengguna extends BAKA_Controller
             }
         }
 
+        $fields[]   = array(
+            'name'  => 'user-display',
+            'type'  => 'display',
+            'label' => 'Nama Lengkap',
+            'std'   => ( $user ? $user->display : '' ),
+            'desc'  => 'Mohon untuk menggunakan nama asli.',
+            'validation'=> 'required' );
+
         if ( (bool) $this->bakaigniter->get_setting('auth_use_username') )
         {
             $username_min_length = $this->bakaigniter->get_setting('auth_username_length_min');
