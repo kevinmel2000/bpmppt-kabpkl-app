@@ -146,8 +146,6 @@ class Internal extends BAKA_Controller
             'validation'=>'required' );
 
         $this->_option_form( $fields );
-
-        $this->load->theme('pages/panel_form', $this->data);
     }
 
     public function app()
@@ -388,8 +386,6 @@ class Internal extends BAKA_Controller
             'std'   => $this->bakaigniter->get_setting('welcome_forgot') );
 
         $this->_option_form( $fields );
-
-        $this->load->theme('pages/panel_form', $this->data);
     }
 
     public function security()
@@ -567,8 +563,6 @@ class Internal extends BAKA_Controller
             'desc'  => 'Daftar pengecualian username yang diijinkan, dipisahkan dengan tanda koma (,)' );
 
         $this->_option_form( $fields );
-
-        $this->load->theme('pages/panel_form', $this->data);
     }
 
     private function _option_form( $fields )
@@ -596,138 +590,8 @@ class Internal extends BAKA_Controller
         }
 
         $this->data['panel_body'] = $form->generate();
-    }
-
-    public function prop( $page = '', $prop_id = NULL )
-    {
-        $this->data['page_link'] = 'admin/internal/prop/';
-
-        $this->data['load_toolbar'] = TRUE;
-
-        switch ( $page ) {
-            case 'form':
-                $this->_prop_form( $prop_id );
-                break;
-
-            case 'hapus':
-                $this->_prop_del( $prop_id );
-                break;
-
-            case 'data':
-            default:
-                $this->_prop_data();
-                break;
-        }
-    }
-
-    private function _prop_data()
-    {
-        $this->set_panel_title('Pengaturan Properti Data');
-
-        $this->data['tool_buttons']['form'] = 'Baru|primary';
-
-        $this->load->library('gridr', array(
-            'base_url'   => $this->data['page_link'],
-            ));
-
-        $query = $this->db->select()
-                          ->from( get_conf('system_env_table') )
-                          ->where('user_id', $this->authr->get_user_id())
-                          ->or_where('user_id', 0);
-
-        $grid = $this->gridr->set_column('Key', 'env_key', '45%', '<strong>%s</strong>')
-                            ->set_column('Value', 'env_value', '40%', '%s')
-                            ->set_button('form', 'Lihat data')
-                            ->set_button('hapus', 'Hapus data');
-
-        $this->data['panel_body'] = $grid->generate( $query );
-
-        $this->load->theme('pages/panel_data', $this->data);
-    }
-
-    private function _prop_form( $prop_id = NULL )
-    {
-        $this->set_panel_title('Pengaturan Properti Data');
-
-        $this->data['tool_buttons']['data'] = 'Kembali|default';
-
-        $prop = ( !is_null($prop_id) ? $this->db->get_where(get_conf('system_env_table'), array('id' => $prop_id) ) : FALSE );
-
-        $fields[]   = array(
-            'name'  => 'app_env_key',
-            'type'  => 'text',
-            'label' => 'Nama Properti',
-            'std'   => ( $prop ? $prop->env_key : '' ),
-            'validation'=> ( !$prop ? 'required' : '' ) );
-
-        $fields[]   = array(
-            'name'  => 'app_env_value',
-            'type'  => 'text',
-            'label' => 'Nilai Properti',
-            'std'   => ( $prop ? $prop->env_value : '' ),
-            'validation'=> ( !$prop ? 'required' : '' ) );
-
-        $this->load->library('former');
-
-        $form = $this->former->init( array(
-            'name'   => 'internal-prop',
-            'action' => current_url(),
-            'fields' => $fields,
-            ));
-
-        if ( $form_data = $form->validate_submition() )
-        {
-            $return = FALSE;
-
-            if ( $prop )
-            {
-                $return = $this->db->update(
-                    get_conf('system_env_table'),
-                    array('env_key' => $form_data['app_env_value'], 'env_value' => $form_data['app_env_value'] ),
-                    array('id'      => $prop_id )
-                    );
-            }
-            else
-            {
-                $return = $this->db->insert(
-                    get_conf('system_env_table'),
-                    array(
-                        'user_id'   => $this->authr->get_user_id(),
-                        'env_key'   => $form_data['app_env_value'],
-                        'env_value' => $form_data['app_env_value']
-                        )
-                    );
-            }
-
-            if ( $return === FALSE )
-            {
-                $this->session->set_flashdata('error', array('Terjadi masalah penyimpanan konfigurasi.'));
-                redirect( current_url() );
-            }
-            else
-            {
-                $this->session->set_flashdata('success', array('Properti berhasil disimpan.'));
-                redirect( $this->data['page_link'].'data/' );
-            }
-        }
-
-        $this->data['panel_body'] = $form->generate();
 
         $this->load->theme('pages/panel_form', $this->data);
-    }
-
-    private function _prop_del( $prop_id )
-    {
-        if ( $this->db->delete( get_conf('system_env_table'), array('id' => $prop_id) ) )
-        {
-            $this->session->set_flashdata('success', array('Properti berhasil dihapus.'));
-        }
-        else
-        {
-            $this->session->set_flashdata('error', array('Terjadi masalah penghapusan konfigurasi.'));
-        }
-
-        redirect( current_url() );
     }
 }
 
