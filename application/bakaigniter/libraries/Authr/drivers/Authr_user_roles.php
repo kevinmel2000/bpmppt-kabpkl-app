@@ -133,9 +133,14 @@ class Authr_user_roles extends CI_Driver
             return FALSE;
         }
 
-        for ($i = 0; $i < count($roles); $i++)
+        if (count($roles) > 0)
         {
-            $this->db->delete($this->table['user_role'], array('user_id' => $user_id, 'role_id' => $roles[$i]));
+            foreach ($roles as $role)
+            {
+                $this->db->delete($this->table['user_role'], array('user_id' => $user_id, 'role_id' => $role));
+            }
+
+            return TRUE;
         }
 
         return FALSE;

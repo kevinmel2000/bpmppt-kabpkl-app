@@ -346,10 +346,10 @@ class Authr extends CI_Driver_Library
      * @param   bool
      * @return  array
      */
-    public function create_user( $username, $email, $password, $roles = array() )
+    public function create_user( $display, $username, $email, $password, $roles = array() )
     {
         $user_data = array(
-            'display'   => $username,
+            'display'   => $display,
             'username'  => $username,
             'password'  => $this->do_hash($password),
             'email'     => $email
@@ -394,12 +394,13 @@ class Authr extends CI_Driver_Library
      *
      * @return  bool
      */
-    public function update_user( $user_id, $username, $email, $old_pass, $new_pass, $roles = array() )
+    public function update_user( $user_id, $display, $username, $email, $old_pass, $new_pass, $roles = array() )
     {
         $user = $this->users->get($user_id);
         $return = FALSE;
 
         $data = array(
+            'display'  => $display,
             'username' => $username,
             'email'    => $email,
             );
@@ -426,7 +427,7 @@ class Authr extends CI_Driver_Library
         {
             if (!empty($roles))
             {
-                return $this->user_roles->edit($user_id, $roles);
+                $this->user_roles->edit($user_id, $roles);
             }
 
             set_message('success', 'Berhasil mengubah data pengguna '.$username);

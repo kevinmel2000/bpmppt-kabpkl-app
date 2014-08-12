@@ -35,6 +35,8 @@ $lang['status_approved']    = 'Disetujui';
 $lang['status_printed']     = 'Dicetak';
 $lang['status_done']        = 'Selesai';
 $lang['status_deleted']     = 'Dihapus';
+$lang['status_banned']      = 'Dicekal';
+$lang['status_activated']   = 'Aktif';
 
 // -----------------------------------------------------------------------------
 // Another Statuse
@@ -44,6 +46,8 @@ $lang['approved']   = 'Disetujui';
 $lang['printed']    = 'Dicetak';
 $lang['done']       = 'Selesai';
 $lang['deleted']    = 'Dihapus';
+$lang['banned']     = 'Dicekal';
+$lang['activated']  = 'Aktif';
 
 // -----------------------------------------------------------------------------
 // Themee

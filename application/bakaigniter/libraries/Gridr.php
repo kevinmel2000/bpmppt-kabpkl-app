@@ -255,9 +255,6 @@ class Gridr
                     {
                         $fields = array();
 
-                        /**
-                         * @todo  Antisipasi error kalo field tidak ada atau penulisan field salah.
-                         */
                         if (strpos($cell_val['field'], ',') !== FALSE)
                         {
                             foreach (array_map('trim', explode(",", $cell_val['field'])) as $col)
@@ -373,7 +370,7 @@ class Gridr
         }
         else
         {
-            $output = $row->$field;
+            $output = isset($row->$field) ? $row->$field : $field;
         }
 
         return $output;

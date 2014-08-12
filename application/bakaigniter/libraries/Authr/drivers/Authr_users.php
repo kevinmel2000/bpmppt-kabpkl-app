@@ -33,17 +33,15 @@ class Authr_users extends CI_Driver
      *
      * @return  object
      */
-    public function fetch( $status = '' )
+    public function fetch( $status = 'activated' )
     {
-        $status || $status = 'activated';
-
         if ( !in_array( $status, array( 'activated', 'banned', 'deleted' ) ) )
         {
             log_message('error', '#Authr: Users->fetch failed identify users using '.$status.' field.');
             return FALSE;
         }
 
-        return $this->db->select("a.id, a.username, a.email")
+        return $this->db->select("a.id, a.display, a.username, a.email")
                         ->select("a.activated, a.banned, a.ban_reason, a.deleted")
                         ->select("a.last_ip, a.last_login, a.created, a.modified")
                         ->select("group_concat(distinct c.role_id) role_id")
@@ -148,21 +146,8 @@ class Authr_users extends CI_Driver
             return FALSE;
         }
 
-        $roles = array();
-
-        if (isset($user_data['roles']))
-        {
-            $roles = $user_data['roles'];
-            unset($user_data['roles']);
-        }
-
         if ($this->db->update( $this->table['users'], $user_data, array( 'id' => $user_id ) ))
         {
-            if (!empty($roles))
-            {
-                return $this->edit_user_roles($user_id, $roles);
-            }
-
             return TRUE;
         }
 
