@@ -235,14 +235,14 @@ class BAKA_Controller extends CI_Controller
         // Adding application sub-menu (if permited)
         if ($this->authr->is_permited('internal_application_manage'))
         {
-            $this->themee->add_navmenu($parent, 'ai_application', 'link', 'admin/internal/app', 'Pengaturan Aplikasi', array(), $position);
+            $this->themee->add_navmenu($parent, 'ai_application', 'link', 'admin/internal/app', 'Aplikasi', array(), $position);
         }
 
         // Adding security sub-menu (if permited)
-        // if ($this->authr->is_permited('internal_security_manage'))
-        // {
-        //     $this->themee->add_navmenu($parent, 'ai_security', 'link', 'admin/internal/keamanan', 'Keamanan', array(), $position);
-        // }
+        if ($this->authr->is_permited('internal_security_manage'))
+        {
+            $this->themee->add_navmenu($parent, 'ai_security', 'link', 'admin/internal/security', 'Keamanan', array(), $position);
+        }
 
         // $this->themee->add_navmenu(
         // $parent, 'ai_property', 'link', 'admin/internal/prop', 'Properti', array(), $position);

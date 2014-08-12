@@ -36,31 +36,16 @@ class Internal extends BAKA_Controller
 
         $this->set_panel_title('Properti data SKPD');
 
+        /** --------------------------------------------------------------------
+         * Data kontak SKPD
+         * ------------------------------------------------------------------ */
+
         $fields[]   = array(
             'name'  => 'skpd_name',
             'type'  => 'text',
             'label' => 'Nama SKPD',
             'std'   => $this->bakaigniter->get_setting('skpd_name'),
             'validation'=>'required' );
-
-        $fields[]   = array(
-            'name'  => 'skpd_lead_name',
-            'type'  => 'text',
-            'label' => 'Nama Pimpinan',
-            'std'   => $this->bakaigniter->get_setting('skpd_lead_name'),
-            'validation'=>'required' );
-
-        $fields[]   = array(
-            'name'  => 'skpd_lead_nip',
-            'type'  => 'text',
-            'label' => 'NIP Pimpinan',
-            'std'   => $this->bakaigniter->get_setting('skpd_lead_nip'),
-            'validation'=>'required' );
-
-        $fields[]   = array(
-            'name'  => 'contact_fieldset',
-            'type'  => 'fieldset',
-            'label' => 'Alamat dan Kontak SKPD' );
 
         $fields[]   = array(
             'name'  => 'skpd_address',
@@ -102,9 +87,9 @@ class Internal extends BAKA_Controller
                     'std'   => $this->bakaigniter->get_setting('skpd_telp'),
                     'validation'=>'required|min_length[6]|max_length[15]' ),
                 array(
-                    'name'  => 'max',
+                    'name'  => 'fax',
                     'type'  => 'tel',
-                    'label' => 'Maksimal',
+                    'label' => 'Faksimili',
                     'std'   => $this->bakaigniter->get_setting('skpd_fax'),
                     'validation'=>'required|min_length[6]|max_length[15]' )
                 ),
@@ -130,44 +115,35 @@ class Internal extends BAKA_Controller
             'std'   => $this->bakaigniter->get_setting('skpd_email'),
             'validation'=>'valid_email' );
 
+        /** --------------------------------------------------------------------
+         * Data Pimpinan SKPD
+         * ------------------------------------------------------------------ */
+
         $fields[]   = array(
-            'name'  => 'opening_fieldset',
+            'name'  => 'leader_fieldset',
             'type'  => 'fieldset',
-            'label' => 'Opening Text' );
+            'label' => 'Data Pimpinan' );
 
         $fields[]   = array(
-            'name'  => 'welcome_title',
+            'name'  => 'skpd_lead_name',
             'type'  => 'text',
-            'label' => 'Judul Pembuka',
-            'std'   => $this->bakaigniter->get_setting('welcome_title') );
+            'label' => 'Nama Pimpinan',
+            'std'   => $this->bakaigniter->get_setting('skpd_lead_name'),
+            'validation'=>'required' );
 
         $fields[]   = array(
-            'name'  => 'welcome_login',
-            'type'  => 'editor',
-            'height'=> 300,
-            'label' => 'Pembuka Halaman Login',
-            'std'   => $this->bakaigniter->get_setting('welcome_login') );
+            'name'  => 'skpd_lead_jabatan',
+            'type'  => 'text',
+            'label' => 'Nama Pimpinan',
+            'std'   => $this->bakaigniter->get_setting('skpd_lead_jabatan'),
+            'validation'=>'required' );
 
         $fields[]   = array(
-            'name'  => 'welcome_resend',
-            'type'  => 'editor',
-            'height'=> 300,
-            'label' => 'Pembuka Resend',
-            'std'   => $this->bakaigniter->get_setting('welcome_resend') );
-
-        $fields[]   = array(
-            'name'  => 'welcome_register',
-            'type'  => 'editor',
-            'height'=> 300,
-            'label' => 'Pembuka Register',
-            'std'   => $this->bakaigniter->get_setting('welcome_register') );
-
-        $fields[]   = array(
-            'name'  => 'welcome_forgot',
-            'type'  => 'editor',
-            'height'=> 300,
-            'label' => 'Isi Pembuka',
-            'std'   => $this->bakaigniter->get_setting('welcome_forgot') );
+            'name'  => 'skpd_lead_nip',
+            'type'  => 'text',
+            'label' => 'NIP Pimpinan',
+            'std'   => $this->bakaigniter->get_setting('skpd_lead_nip'),
+            'validation'=>'required' );
 
         $this->_option_form( $fields );
 
@@ -182,6 +158,10 @@ class Internal extends BAKA_Controller
         }
 
         $this->set_panel_title('Pengaturan Aplikasi');
+
+        /** --------------------------------------------------------------------
+         * Pengaturan Data
+         * ------------------------------------------------------------------ */
 
         $fields[]   = array(
             'name'  => 'app_data_show_limit',
@@ -208,6 +188,10 @@ class Internal extends BAKA_Controller
             'std'   => $this->bakaigniter->get_setting('app_datetime_format'),
             'desc'  => 'Format tanggal dan waktu menggunakan dasar '.$php_link,
             'validation'=>'required' );
+
+        /** --------------------------------------------------------------------
+         * Pengaturan Email
+         * ------------------------------------------------------------------ */
 
         $fields[]   = array(
             'name'  => 'app_fieldset_email',
@@ -310,6 +294,117 @@ class Internal extends BAKA_Controller
             'desc'  => 'Prioritas email diisi dengan angka 1-5, angka 1 untuk paling tinggi dan 5 untuk paling rendah.',
             'validation'=> 'numeric|greater_than[0]|less_than[6]' );
 
+        /** --------------------------------------------------------------------
+         * Pengaturan Pendaftaran
+         * ------------------------------------------------------------------ */
+
+        $fields[]   = array(
+            'name'  => 'auth_fieldset_register',
+            'type'  => 'fieldset',
+            'label' => 'Pendaftaran' );
+
+        $fields[]   = array(
+            'name'  => 'auth_allow_registration',
+            'type'  => 'switch',
+            'label' => 'Ijinkan registrasi Umum',
+            'std'   => $this->bakaigniter->get_setting('auth_allow_registration'),
+            'desc'  => 'Ijinkan registrasi umum',
+            'validation'=>'numeric' );
+
+        $fields[]   = array(
+            'name'  => 'auth_email_activation',
+            'type'  => 'switch',
+            'label' => 'Aktivasi via email',
+            'fold'  => array(
+                'key'   => 'auth_allow_registration',
+                'value' => 1 ),
+            'std'   => $this->bakaigniter->get_setting('auth_email_activation'));
+
+        $auth_email_act_expire = second_to_day($this->bakaigniter->get_setting('auth_email_act_expire'));
+
+        $fields[]   = array(
+            'name'  => 'auth_email_act_expire',
+            'type'  => 'slider',
+            'label' => 'Batas aktivasi email',
+            'fold'  => array(
+                'key'   => 'auth_email_activation',
+                'value' => 1 ),
+            'min'   => 1,
+            'max'   => 10,
+            'std'   => $auth_email_act_expire,
+            'desc'  => 'Batas waktu aktivasi email dalam detik. Nilai '.$auth_email_act_expire.' hari.' );
+
+        $fields[]   = array(
+            'name'  => 'auth_use_username',
+            'type'  => 'switch',
+            'label' => 'Gunakan username',
+            'fold'  => array(
+                'key'   => 'auth_allow_registration',
+                'value' => 1 ),
+            'std'   => $this->bakaigniter->get_setting('auth_use_username'),
+            'desc'  => 'Gunakan username untuk setiap pengguna.');
+
+        /** --------------------------------------------------------------------
+         * Pengaturan Halaman depan
+         * ------------------------------------------------------------------ */
+
+        $fields[]   = array(
+            'name'  => 'opening_fieldset',
+            'type'  => 'fieldset',
+            'label' => 'Opening Text' );
+
+        $fields[]   = array(
+            'name'  => 'welcome_title',
+            'type'  => 'text',
+            'label' => 'Judul Pembuka',
+            'std'   => $this->bakaigniter->get_setting('welcome_title') );
+
+        $fields[]   = array(
+            'name'  => 'welcome_login',
+            'type'  => 'editor',
+            'height'=> 200,
+            'label' => 'Pembuka Halaman Login',
+            'std'   => $this->bakaigniter->get_setting('welcome_login') );
+
+        $fields[]   = array(
+            'name'  => 'welcome_resend',
+            'type'  => 'editor',
+            'height'=> 200,
+            'label' => 'Pembuka Resend',
+            'std'   => $this->bakaigniter->get_setting('welcome_resend') );
+
+        $fields[]   = array(
+            'name'  => 'welcome_register',
+            'type'  => 'editor',
+            'height'=> 200,
+            'label' => 'Pembuka Register',
+            'std'   => $this->bakaigniter->get_setting('welcome_register') );
+
+        $fields[]   = array(
+            'name'  => 'welcome_forgot',
+            'type'  => 'editor',
+            'height'=> 200,
+            'label' => 'Isi Pembuka',
+            'std'   => $this->bakaigniter->get_setting('welcome_forgot') );
+
+        $this->_option_form( $fields );
+
+        $this->load->theme('pages/panel_form', $this->data);
+    }
+
+    public function security()
+    {
+        if ( !$this->authr->is_permited('internal_security_manage') )
+        {
+            $this->_notice( 'access-denied' );
+        }
+
+        $this->set_panel_title('Pengaturan Keamanan');
+
+        /** --------------------------------------------------------------------
+         * Pengaturan Kemanan
+         * ------------------------------------------------------------------ */
+
         $fields[]   = array(
             'name'  => 'app_fieldset_security',
             'type'  => 'fieldset',
@@ -342,42 +437,9 @@ class Internal extends BAKA_Controller
                 ),
             'desc'  => 'Jumlah minimal dan maksimal karakter Password.' );
 
-        $fields[]   = array(
-            'name'  => 'auth_fieldset_register',
-            'type'  => 'fieldset',
-            'label' => 'Pendaftaran' );
-
-        $fields[]   = array(
-            'name'  => 'auth_allow_registration',
-            'type'  => 'switch',
-            'label' => 'Ijinkan registrasi Umum',
-            'std'   => $this->bakaigniter->get_setting('auth_allow_registration'),
-            'desc'  => 'Ijinkan registrasi umum',
-            'validation'=>'numeric' );
-
-        $fields[]   = array(
-            'name'  => 'auth_email_activation',
-            'type'  => 'switch',
-            'label' => 'Aktivasi via email',
-            'std'   => $this->bakaigniter->get_setting('auth_email_activation'));
-
-        $auth_email_act_expire = second_to_day($this->bakaigniter->get_setting('auth_email_act_expire'));
-
-        $fields[]   = array(
-            'name'  => 'auth_email_act_expire',
-            'type'  => 'slider',
-            'label' => 'Batas aktivasi email',
-            'min'   => 1,
-            'max'   => 10,
-            'std'   => $auth_email_act_expire,
-            'desc'  => 'Batas waktu aktivasi email dalam detik. Nilai '.$auth_email_act_expire.' hari.' );
-
-        $fields[]   = array(
-            'name'  => 'auth_use_username',
-            'type'  => 'switch',
-            'label' => 'Gunakan username',
-            'std'   => $this->bakaigniter->get_setting('auth_use_username'),
-            'desc'  => 'Gunakan username untuk setiap pengguna.');
+        /** --------------------------------------------------------------------
+         * Pengaturan Login
+         * ------------------------------------------------------------------ */
 
         $fields[]   = array(
             'name'  => 'auth_fieldset_login',
@@ -428,6 +490,10 @@ class Internal extends BAKA_Controller
             'std'   => $auth_login_attempt_expire,
             'desc'  => 'Batas waktu pengguna dapat login kembali dalam detik. Nilai '.$auth_login_attempt_expire.' hari.' );
 
+        /** --------------------------------------------------------------------
+         * Pengaturan Captcha
+         * ------------------------------------------------------------------ */
+
         $fields[]   = array(
             'name'  => 'auth_fieldset_captcha',
             'type'  => 'fieldset',
@@ -469,6 +535,10 @@ class Internal extends BAKA_Controller
                 'value' => 1
                 ),
             'std'   => $this->bakaigniter->get_setting('auth_recaptcha_private_key') );
+
+        /** --------------------------------------------------------------------
+         * Pengaturan Username
+         * ------------------------------------------------------------------ */
 
         $fields[]   = array(
             'name'  => 'auth_fieldset_blacklist',
@@ -569,7 +639,7 @@ class Internal extends BAKA_Controller
                             ->set_column('Value', 'env_value', '40%', '%s')
                             ->set_button('form', 'Lihat data')
                             ->set_button('hapus', 'Hapus data');
-                          
+
         $this->data['panel_body'] = $grid->generate( $query );
 
         $this->load->theme('pages/panel_data', $this->data);
@@ -656,7 +726,7 @@ class Internal extends BAKA_Controller
         {
             $this->session->set_flashdata('error', array('Terjadi masalah penghapusan konfigurasi.'));
         }
-        
+
         redirect( current_url() );
     }
 }
