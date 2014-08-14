@@ -661,7 +661,7 @@ class Authr extends CI_Driver_Library
      */
     public function remove_user( $user_id, $purge = FALSE )
     {
-        if (!$this->users->delete($user_id))
+        if (!$this->users->delete($user_id, $purge))
         {
             set_message('error', 'Gagal menghapus pengguna');
             return FALSE;

@@ -36,8 +36,53 @@ class Pengguna extends BAKA_Controller
             case 'ban':
                 $this->_user_ban($user_id);
                 break;
+            case 'unban':
+                if ( $this->authr->remove_user( $user_id, $purge ) )
+                {
+                    $this->session->set_flashdata('success', get_message('success'));
+                    redirect( $this->data['page_link'] );
+                }
+                else
+                {
+                    $this->session->set_flashdata('error', get_message('error'));
+                    redirect( current_url() );
+                }
+                break;
             case 'delete':
-                $this->_user_del($user_id);
+                if ( $this->authr->remove_user( $user_id ) )
+                {
+                    $this->session->set_flashdata('success', get_message('success'));
+                    redirect( $this->data['page_link'] );
+                }
+                else
+                {
+                    $this->session->set_flashdata('error', get_message('error'));
+                    redirect( current_url() );
+                }
+                break;
+            case 'undelete':
+                if ( $this->authr->remove_user( $user_id, $purge ) )
+                {
+                    $this->session->set_flashdata('success', get_message('success'));
+                    redirect( $this->data['page_link'] );
+                }
+                else
+                {
+                    $this->session->set_flashdata('error', get_message('error'));
+                    redirect( current_url() );
+                }
+                break;
+            case 'remove':
+                if ( $this->authr->remove_user( $user_id, $purge ) )
+                {
+                    $this->session->set_flashdata('success', get_message('success'));
+                    redirect( $this->data['page_link'] );
+                }
+                else
+                {
+                    $this->session->set_flashdata('error', get_message('error'));
+                    redirect( current_url() );
+                }
                 break;
             default:
                 if ($page == '' or $page == 'data')
@@ -75,20 +120,20 @@ class Pengguna extends BAKA_Controller
         {
             // $status = 'Aktif';
             $grid->set_button('form', 'Lihat pengguna')
-                 ->set_button('cekal', 'Cekal pengguna')
-                 ->set_button('hapus', 'Hapus pengguna');
+                 ->set_button('ban', 'Cekal pengguna')
+                 ->set_button('delete', 'Hapus pengguna');
         }
         elseif ($status == 'banned')
         {
             // $status = 'Dicekal';
             $grid->set_button('form', 'Lihat pengguna')
                  ->set_button('unban', 'Batalkan pencekalan')
-                 ->set_button('hapus', 'Hapus pengguna');
+                 ->set_button('delete', 'Hapus pengguna');
         }
         elseif ($status == 'deleted')
         {
             // $status = 'Terhapus';
-            $grid->set_button('cekal', 'Cekal pengguna')
+            $grid->set_button('ban', 'Cekal pengguna')
                  ->set_button('undelete', 'Batalkan penghapusan');
         }
 
@@ -331,20 +376,6 @@ class Pengguna extends BAKA_Controller
         $this->data['panel_body'] = $form->generate();
 
         $this->load->theme('pages/panel_form', $this->data);
-    }
-
-    private function _user_del( $user_id )
-    {
-        if ( $this->authr->remove_user( $user_id ) )
-        {
-            $this->session->set_flashdata('success', get_message('success'));
-            redirect( $this->data['page_link'] );
-        }
-        else
-        {
-            $this->session->set_flashdata('error', get_message('error'));
-            redirect( current_url() );
-        }
     }
 
     private function _user_ban( $user_id )

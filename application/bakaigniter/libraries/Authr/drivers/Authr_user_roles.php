@@ -62,28 +62,32 @@ class Authr_user_roles extends CI_Driver
      *
      * @return  bool
      */
-    public function set( $user_id, $roles_id = array() )
+    public function set( $user_id, $roles = array() )
     {
+        // If admin exists
         if ($this->db->get_where($this->table['user_role'], array('role_id' => 1), 1)->num_rows() > 0)
         {
-            // If admin exists, use the default role
-            $q_role = $this->db->get_where($this->table['roles'], array('default' => 1), 1)->row();
+            // If $roles is empty
+            if (count($roles) == 0)
+            {
+                // Use default role
+                $roles[] = $this->db->get_where($this->table['roles'], array('default' => 1), 1)->row()->role_id;
+            }
 
-            return $this->db->insert(
-                $this->table['user_role'],
-                array('user_id' => $user_id, 'role_id' => $q_role->role_id)
-                );
+            foreach ($roles as $role)
+            {
+                $role_data[] = array(
+                    'user_id' => $user_id,
+                    'role_id' => $role,
+                    );
+            }
+
+            return $this->db->insert_batch($this->table['user_role'], $role_data);
         }
         else
         {
-            for ($i = 0; $i < count($roles_id); $i++)
-            {
-                $role_data[$i]['user_id'] = $user_id;
-                $role_data[$i]['role_id'] = $roles_id[$i];
-            }
-
-            // If there's no admin then make this person the admin
-            return $this->db->insert_batch( $this->table['user_role'], $role_data );
+            // If admin not exists, set this $user_id as admin.
+            return $this->db->insert($this->table['user_role'], array('user_id' => $user_id, 'role_id' => 1));
         }
     }
 
@@ -105,12 +109,12 @@ class Authr_user_roles extends CI_Driver
 
         // Fetch all user roles
         $old_roles = array_keys($this->get($user_id));
-        // Set them
-        $this->set($user_id, $new_roles);
         // Grab user roles differences
         $deleted_roles = array_diff($new_roles, $old_roles);
         // Delete unused roles
         $this->remove($user_id, $deleted_roles);
+        // Set them
+        $this->set($user_id, $new_roles);
 
         return TRUE;
     }
