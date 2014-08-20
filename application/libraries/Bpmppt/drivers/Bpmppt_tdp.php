@@ -25,8 +25,9 @@ class Bpmppt_tdp extends CI_Driver
      * @var  array
      */
     public $defaults = array(
+        'daftar_no'                         => '',
+        'daftar_tgl'                        => '',
         'no_tdp'                            => '',
-        'no_daftar'                         => '',
         'no_sk'                             => '',
         'tgl_berlaku'                       => '',
         'pengajuan_jenis'                   => '',
@@ -83,20 +84,29 @@ class Bpmppt_tdp extends CI_Driver
     /**
      * Form fields from this driver
      *
-     * @todo
-      Tambahan nomor
-      - Nomor agenda        posisi atas
-      - Nomor registrasi    posisi kolom kiri
-      - Masa berlaku
-      - Tanggal ditetapkan
-      - Periode SIUP
-     *
      * @param   bool    $data_obj  Data field
-     *
      * @return  array
      */
     public function form( $data_obj = FALSE )
     {
+        $fields[] = array(
+            'name'  => 'daftar',
+            'label' => 'Nomor &amp; Tgl. Pendaftaran',
+            'type'  => 'subfield',
+            'fields'=> array(
+                array(
+                    'name'  => 'no',
+                    'label' => 'Nomor Pendaftaran',
+                    'type'  => 'text',
+                    'std'   => ( $data_obj ? $data_obj->daftar_no : '') ),
+                array(
+                    'name'  => 'tgl',
+                    'label' => 'Tanggal Pendaftaran',
+                    'type'  => 'datepicker',
+                    'std'   => ( $data_obj ? $data_obj->daftar_tgl : '') ,
+                    'callback'=> 'string_to_date' ),
+                ));
+
         $fields[] = array(
             'name'  => 'no_tdp',
             'label' => 'Nomor TDP',
@@ -105,15 +115,10 @@ class Bpmppt_tdp extends CI_Driver
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
         $fields[] = array(
-            'name'  => 'no_daftar',
-            'label' => 'Nomor Pendaftaran',
-            'type'  => 'text',
-            'std'   => ( $data_obj ? $data_obj->no_daftar : '') );
-
-        $fields[] = array(
             'name'  => 'tgl_berlaku',
             'label' => 'Tgl. Masa Berlaku',
             'type'  => 'datepicker',
+            'callback'=> 'string_to_date',
             'std'   => ( $data_obj ? $data_obj->tgl_berlaku : '') );
 
         $fields[] = array(

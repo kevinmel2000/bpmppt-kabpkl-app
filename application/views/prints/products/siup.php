@@ -57,11 +57,8 @@ echo $e;
 </tr>
 <tr class="bold" style="border: 2px solid #000; border-top-width: 1px">
     <td colspan="4" style="width:70%; border-right: 2px solid #000;">
-<?php if ($status == 'approved')
-
-?>
 IZIN INI BERLAKU UNTUK MELAKUKAN KEGIATAN USAHA PERDAGANGAN DISELURUH WILAYAH REPUBLIK INDONESIA, SELAMA PERUSAHAAN MASUK MENJALANKAN USAHANYA, DAN WAJIB DIDAFTAR ULANG SETIAP 5 (LIMA) TAHUN SEKALI<br>
-PERUSAHAAN WAJIB MENDAFTARKAN ULANG SIUP PADA TANGGAL : <?php echo date('d F Y', strtotime('+5 years')) ?>
+PERUSAHAAN WAJIB MENDAFTARKAN ULANG SIUP PADA TANGGAL : <?php echo bdate('d F Y', '+5 years') ?>
     </td>
 </tr>
 
