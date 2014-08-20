@@ -27,6 +27,7 @@ class Bpmppt_siup extends CI_Driver
     public $defaults = array(
         'pengajuan_jenis'                   => '',
         'pembaruan_ke'                      => '',
+        'siup_lama'                         => '',
         'pemohon_nama'                      => '',
         'pemilik_ktp'                       => '',
         'pemilik_alamat'                    => '',
@@ -102,6 +103,17 @@ class Bpmppt_siup extends CI_Driver
                 'value' => 'Daftar Ulang'
                 ),
             'std'   => ( $data_obj ? $data_obj->pembaruan_ke : '') );
+
+        $fields[] = array(
+            'name'  => 'siup_lama',
+            'label' => 'Data SIUP Lama',
+            'type'  => 'custom',
+            'value' => $this->custom_field($data_obj),
+            'fold'  => array(
+                'key' => $this->alias.'_pengajuan_jenis',
+                'value' => 'Daftar Ulang|Perubahan'
+                ),
+            'validation'=> ( !$data_obj ? '' : '' ) );
 
         $fields[] = array(
             'name'  => 'fieldset_data_pemilik',
@@ -303,6 +315,131 @@ class Bpmppt_siup extends CI_Driver
                 ));
 
         return $fields;
+    }
+
+    // -------------------------------------------------------------------------
+
+    private function custom_field( $data = FALSE )
+    {
+        if (!$this->_ci->load->is_loaded('table'))
+        {
+            $this->_ci->load->library('table');
+        }
+
+        $this->_ci->table->set_template($this->table_templ);
+
+        $data_mode = $data and !empty($data->siup_lama);
+
+        // var_dump($this);
+        $head[] = array(
+            'data'  => 'Nomor Akta',
+            'class' => 'head-id',
+            'width' => '25%' );
+
+        $head[] = array(
+            'data'  => 'Tanggal Akta',
+            'class' => 'head-value',
+            'width' => '25%' );
+
+        $head[] = array(
+            'data'  => 'Uraian',
+            'class' => 'head-value',
+            'width' => '40%' );
+
+        $head[] = array(
+            'data'  => form_button( array(
+                'name'  => 'siup_lama_add-btn',
+                'type'  => 'button',
+                'class' => 'btn btn-primary bs-tooltip btn-block btn-sm',
+                'tabindex' => '-1',
+                'title' => 'Tambahkan baris',
+                'content'=> 'Add' ) ),
+            'class' => 'head-action',
+            'width' => '10%' );
+
+        $this->_ci->table->set_heading( $head );
+
+        if (isset($data->siup_lama) and strlen($data->siup_lama) > 0)
+        {
+            foreach (unserialize($data->siup_lama) as $row)
+            {
+                $this->_row_siup_lama($row);
+            }
+        }
+        else
+        {
+            $this->_row_siup_lama();
+        }
+
+        return $this->_ci->table->generate();
+    }
+
+    // -------------------------------------------------------------------------
+
+    private function _row_siup_lama($data = FALSE)
+    {
+        $cols = array(
+            'no'  => 'Nomor',
+            'tgl' => 'Tanggal',
+            );
+
+        foreach ($cols as $name => $label)
+        {
+            $column[] = array(
+                'data'  => form_input(array(
+                    'name'  => $this->alias.'_siup_lama_'.$name.'[]',
+                    'type'  => 'text',
+                    'value' => $data ? $data[$name] : '',
+                    'class' => 'form-control bs-tooltip input-sm',
+                    'placeholder'=> $label ), '', ''),
+                'class' => 'data-id',
+                'width' => '10%' );
+        }
+
+        $column[] = array(
+            'data'  => form_button( array(
+                'name'  => $this->alias.'_siup_lama_remove-btn',
+                'type'  => 'button',
+                'class' => 'btn btn-danger bs-tooltip btn-block btn-sm remove-btn',
+                'tabindex' => '-1',
+                'content'=> '&times;' ) ),
+            'class' => '',
+            'width' => '10%' );
+
+        $this->_ci->table->add_row( $column );
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Prepost form data hooks
+     *
+     * @return  mixed
+     */
+    public function _pre_post( $form_data )
+    {
+        $pengesahan_fn = $this->alias.'_siup_lama';
+
+        if (isset($_POST[$pengesahan_fn.'_no']))
+        {
+            $i = 0;
+
+            foreach ($_POST[$pengesahan_fn.'_no'] as $no)
+            {
+                foreach (array('no', 'tgl', 'uraian') as $name)
+                {
+                    $pengesahan_name = $pengesahan_fn.'_'.$name;
+                    $pengesahan[$i][$name] = isset($_POST[$pengesahan_name][$i]) ? $_POST[$pengesahan_name][$i] : 0;
+                    unset($_POST[$pengesahan_name][$i]);
+                }
+
+                $i++;
+            }
+
+            $form_data[$pengesahan_fn] = $pengesahan;
+        }
+
+        return $form_data;
     }
 }
 
