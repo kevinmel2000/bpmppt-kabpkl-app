@@ -296,30 +296,6 @@ class Bpmppt_iup extends CI_Driver
 
         return $form_data;
     }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Format cetak produk perijinan
-     *
-     * @return  mixed
-     */
-    public function produk()
-    {
-        return false;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Format output laporan
-     *
-     * @return  mixed
-     */
-    public function laporan()
-    {
-        return false;
-    }
 }
 
 /* End of file Bpmppt_iup.php */

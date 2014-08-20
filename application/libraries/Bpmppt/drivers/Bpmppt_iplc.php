@@ -160,7 +160,7 @@ class Bpmppt_iplc extends CI_Driver
 
     protected function subfield_limbah( $parent, $data_obj = FALSE )
     {
-        
+
         $this->defaults[$parent.'bod']        = '';
         $this->defaults[$parent.'cod']        = '';
         $this->defaults[$parent.'tts']        = '';
@@ -174,35 +174,35 @@ class Bpmppt_iplc extends CI_Driver
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->{$parent.'bod'} : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
-        
+
         $subs[] = array(
             'name'  => 'cod',
             'label' => 'COD',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->{$parent.'cod'} : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
-        
+
         $subs[] = array(
             'name'  => 'tts',
             'label' => 'TTS',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->{$parent.'tts'} : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
-        
+
         $subs[] = array(
             'name'  => 'minyak',
             'label' => 'Minyak',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->{$parent.'minyak'} : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
-        
+
         $subs[] = array(
             'name'  => 'sulfida',
             'label' => 'Silfida',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->{$parent.'sulfida'} : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
-        
+
         $subs[] = array(
             'name'  => 'ph',
             'label' => 'pH',
@@ -211,30 +211,6 @@ class Bpmppt_iplc extends CI_Driver
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
         return $subs;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Format cetak produk perijinan
-     *
-     * @return  mixed
-     */
-    public function produk()
-    {
-        return false;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Format output laporan
-     *
-     * @return  mixed
-     */
-    public function laporan()
-    {
-        return false;
     }
 }
 

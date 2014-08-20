@@ -213,30 +213,6 @@ class Bpmppt_ho extends CI_Driver
 
         return $fields;
     }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Format cetak produk perijinan
-     *
-     * @return  mixed
-     */
-    public function produk()
-    {
-        return false;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Format output laporan
-     *
-     * @return  mixed
-     */
-    public function laporan()
-    {
-        return false;
-    }
 }
 
 /* End of file Bpmppt_ho.php */
