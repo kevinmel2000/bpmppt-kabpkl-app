@@ -25,6 +25,7 @@ class Bpmppt_reklame extends CI_Driver
         'pemohon_kerja'             => '',
         'pemohon_alamat'            => '',
         'pemohon_telp'              => '',
+        'pengajuan_jenis'           => '',
         'reklame_jenis'             => '',
         'reklame_juml'              => '',
         'reklame_lokasi'            => '',
@@ -59,6 +60,17 @@ class Bpmppt_reklame extends CI_Driver
      */
     public function form( $data_obj = FALSE )
     {
+        $fields[] = array(
+            'name'  => 'pengajuan_jenis',
+            'label' => 'Jenis Pengajuan',
+            'type'  => 'radio',
+            'std'   => ( $data_obj ? $data_obj->pengajuan_jenis : ''),
+            'option'=> array(
+                'Pendaftaran Baru' => 'Pendaftaran Baru',
+                'Perpanjangan'     => 'Perpanjangan'
+                ),
+            'validation'=> ( !$data_obj ? 'required' : '' ));
+
         $fields[] = array(
             'name'  => 'fieldset_data_pemohon',
             'label' => 'Data Pemohon',

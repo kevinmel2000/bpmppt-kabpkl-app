@@ -103,7 +103,7 @@ class Bpmppt_tdp extends CI_Driver
                     'name'  => 'tgl',
                     'label' => 'Tanggal Pendaftaran',
                     'type'  => 'datepicker',
-                    'std'   => ( $data_obj ? $data_obj->daftar_tgl : '') ,
+                    'std'   => ( $data_obj ? format_date($data_obj->daftar_tgl) : '') ,
                     'callback'=> 'string_to_date' ),
                 ));
 
@@ -119,7 +119,7 @@ class Bpmppt_tdp extends CI_Driver
             'label' => 'Tgl. Masa Berlaku',
             'type'  => 'datepicker',
             'callback'=> 'string_to_date',
-            'std'   => ( $data_obj ? $data_obj->tgl_berlaku : '') );
+            'std'   => ( $data_obj ? format_date($data_obj->tgl_berlaku) : '') );
 
         $fields[] = array(
             'name'  => 'pengajuan_jenis',
@@ -186,7 +186,7 @@ class Bpmppt_tdp extends CI_Driver
                     'name'  => 'tgl',
                     'label' => 'Tanggal Lahir',
                     'type'  => 'datepicker',
-                    'std'   => ( $data_obj ? $data_obj->pemilik_lahir_tgl : '') ,
+                    'std'   => ( $data_obj ? format_date($data_obj->pemilik_lahir_tgl) : '') ,
                     'callback'=> 'string_to_date' ),
                 ));
 
@@ -354,6 +354,7 @@ class Bpmppt_tdp extends CI_Driver
                     'name'  => 'nasional',
                     'label' => 'Nasional (%)',
                     'type'  => 'number',
+                    'max'   => 100,
                     'std'   => ( $data_obj ? $data_obj->usaha_saham_nilai_nasional : ''),
                     'validation'=> ( !$data_obj ? 'numeric' : '' ) ),
                 array(
@@ -361,6 +362,7 @@ class Bpmppt_tdp extends CI_Driver
                     'name'  => 'tgl',
                     'label' => 'Asing (%)',
                     'type'  => 'number',
+                    'max'   => 100,
                     'std'   => ( $data_obj ? $data_obj->usaha_saham_nilai_tgl : ''),
                     'validation'=> ( !$data_obj ? 'numeric' : '' ) ),
                 ));

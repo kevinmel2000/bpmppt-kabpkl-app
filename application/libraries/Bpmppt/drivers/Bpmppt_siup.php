@@ -153,7 +153,7 @@ class Bpmppt_siup extends CI_Driver
                     'name'  => 'tgl',
                     'label' => 'Tanggal Lahir',
                     'type'  => 'datepicker',
-                    'std'   => ( $data_obj ? $data_obj->pemilik_lahir_tgl : ''),
+                    'std'   => ( $data_obj ? format_date($data_obj->pemilik_lahir_tgl) : ''),
                     'callback'=> 'string_to_date',
                     ),
                 ));
@@ -303,6 +303,7 @@ class Bpmppt_siup extends CI_Driver
                     'name'  => 'nasional',
                     'label' => 'Nasional (%)',
                     'type'  => 'number',
+                    'max'   => 100,
                     'std'   => ( $data_obj ? $data_obj->usaha_saham_nilai_nasional : ''),
                     'validation'=> ( !$data_obj ? 'required|numeric' : '' ) ),
                 array(
@@ -310,6 +311,7 @@ class Bpmppt_siup extends CI_Driver
                     'name'  => 'tgl',
                     'label' => 'Asing (%)',
                     'type'  => 'number',
+                    'max'   => 100,
                     'std'   => ( $data_obj ? $data_obj->usaha_saham_nilai_tgl : ''),
                     'validation'=> ( !$data_obj ? 'required|numeric' : '' ) ),
                 ));
@@ -332,19 +334,14 @@ class Bpmppt_siup extends CI_Driver
 
         // var_dump($this);
         $head[] = array(
-            'data'  => 'Nomor Akta',
+            'data'  => 'Nomor SIUP',
             'class' => 'head-id',
-            'width' => '25%' );
+            'width' => '45%' );
 
         $head[] = array(
-            'data'  => 'Tanggal Akta',
+            'data'  => 'Tanggal SIUP',
             'class' => 'head-value',
-            'width' => '25%' );
-
-        $head[] = array(
-            'data'  => 'Uraian',
-            'class' => 'head-value',
-            'width' => '40%' );
+            'width' => '45%' );
 
         $head[] = array(
             'data'  => form_button( array(
@@ -426,7 +423,7 @@ class Bpmppt_siup extends CI_Driver
 
             foreach ($_POST[$pengesahan_fn.'_no'] as $no)
             {
-                foreach (array('no', 'tgl', 'uraian') as $name)
+                foreach (array('no', 'tgl') as $name)
                 {
                     $pengesahan_name = $pengesahan_fn.'_'.$name;
                     $pengesahan[$i][$name] = isset($_POST[$pengesahan_name][$i]) ? $_POST[$pengesahan_name][$i] : 0;

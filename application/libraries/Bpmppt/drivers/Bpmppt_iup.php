@@ -72,7 +72,7 @@ class Bpmppt_iup extends CI_Driver
                     'name'  => 'tanggal',
                     'label' => 'Tanggal',
                     'type'  => 'datepicker',
-                    'std'   => ( $data_obj ? $data_obj->rekomendasi_tanggal : ''),
+                    'std'   => ( $data_obj ? format_date($data_obj->rekomendasi_tanggal) : ''),
                     'validation'=> ( !$data_obj ? 'required' : '' ),
                     'callback'=> 'string_to_date' ),
                 ));

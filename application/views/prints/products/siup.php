@@ -55,13 +55,23 @@ echo $e;
     <td style="width:5%">:</td>
     <td colspan="2" style="width:70%; border-right: 2px solid #000;"><?php echo $usaha_komoditi ?></td>
 </tr>
+<?php if ($pengajuan_jenis != 'Pendaftaran Baru' and strlen($siup_lama) > 0) : ?>
+<tr class="bold" style="border: 2px solid #000; border-bottom-width: 1px; border-top-width: 1px">
+    <td style="width:25%">SIUP LAMA NOMOR</td>
+    <td style="width:5%">:</td>
+    <td colspan="2" style="width:70%; border-right: 2px solid #000;">
+    <?php foreach (unserialize($siup_lama) as $siuplama) : ?>
+        <p><?php echo strtoupper($siuplama['no'] .' TANGGAL : '. $siuplama['tgl']) ?></p>
+    <?php endforeach ?>
+    </td>
+</tr>
+<?php endif ?>
 <tr class="bold" style="border: 2px solid #000; border-top-width: 1px">
     <td colspan="4" style="width:70%; border-right: 2px solid #000;">
 IZIN INI BERLAKU UNTUK MELAKUKAN KEGIATAN USAHA PERDAGANGAN DISELURUH WILAYAH REPUBLIK INDONESIA, SELAMA PERUSAHAAN MASUK MENJALANKAN USAHANYA, DAN WAJIB DIDAFTAR ULANG SETIAP 5 (LIMA) TAHUN SEKALI<br>
-PERUSAHAAN WAJIB MENDAFTARKAN ULANG SIUP PADA TANGGAL : <?php echo bdate('d F Y', '+5 years') ?>
+PERUSAHAAN WAJIB MENDAFTARKAN ULANG SIUP PADA TANGGAL : <?php echo bdate('d F Y', $surat_tanggal.'+5 years') ?>
     </td>
 </tr>
-
 <tr><td colspan="4" style="width:100%"></td></tr>
 <tr style="font-family: 'Arial'">
     <td colspan="3" style="width: 70%"></td>

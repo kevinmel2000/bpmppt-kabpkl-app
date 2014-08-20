@@ -9,10 +9,10 @@
     <link href="<?php echo base_url('asset/css/print.css') ?>" type="text/css" rel="stylesheet" media="all">
 </head>
 <body onload="window.print()" <?php echo get_body_attrs() ?>>
-
+<?php $types = array('izin_reklame', 'izin_gangguan') ?>
 <table width="100%" class="<?php echo $type ?>">
     <tr class="t-header">
-        <td colspan="7" width="100%" <?php echo ($type == 'izin_gangguan' ? 'style="border: 1px solid #000"' : '') ?>>
+        <td colspan="7" width="100%" <?php echo (in_array($type, $types) ? 'style="border: 1px solid #000"' : '') ?>>
 <?php echo img( array(
     'src'   =>  $skpd_logo,
     'alt'   => 'Logo cetak',
@@ -26,8 +26,8 @@ PEMERINTAH KABUPATEN PEKALONGAN<br>
 <span style="font-size: 10px;"><?php echo strtoupper($skpd_address.', telp. '.$skpd_telp.' '.$skpd_city.' '.$skpd_pos) ?></span></p>
         </td>
     </tr>
-    <?php echo ($type == 'izin_gangguan' ? '<tr><td>'.nbs(1).'</td></tr>' : '') ?>
-    <tr><td  <?php echo ($type == 'izin_gangguan' ? 'style="border: 1px solid #000"' : '') ?>><?php echo $contents; ?></td></tr>
+    <?php echo (in_array($type, $types) ? '<tr><td>'.nbs(1).'</td></tr>' : '') ?>
+    <tr><td  <?php echo (in_array($type, $types) ? 'style="border: 1px solid #000"' : '') ?>><?php echo $contents; ?></td></tr>
 </table>
 
 </body>

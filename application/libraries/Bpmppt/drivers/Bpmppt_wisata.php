@@ -87,7 +87,7 @@ class Bpmppt_wisata extends CI_Driver
                     'name'  => 'tgl',
                     'label' => 'Tanggal Ditetapkan',
                     'type'  => 'datepicker',
-                    'std'   => ( $data_obj ? $data_obj->penetapan_tgl : ''),
+                    'std'   => ( $data_obj ? format_date($data_obj->penetapan_tgl) : ''),
                     'callback'=> 'string_to_date',
                     'validation'=> ''
                     ),
