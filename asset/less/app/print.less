@@ -70,6 +70,10 @@ table {
     page-break-before: always;
   }
 
+  p {
+    font-size: inherit;
+  }
+
   tr.t-header {
     td {
       border-bottom: 2px solid #000;
@@ -97,6 +101,13 @@ table {
   table {
     width: auto;
     margin-bottom: 10px;
+  }
+
+  &.tanda_daftar_perusahaan,
+  &.surat_izin_usaha_perdagangan {
+    p {
+      font-family: 'Arial' !important;
+    }
   }
 }
 

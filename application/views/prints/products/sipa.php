@@ -3,7 +3,7 @@
         <tr><td colspan="5" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="5" style="width:100%">
-        <p>KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN PELAYANAN PERIZINAN TERPADU<br>KABUPATEN PEKALONGAN<br>NOMOR : <?php echo $surat_nomor.'/'.nbs(6).'/'.strtoupper(format_roman(bdate('m', $susrat_tanggal)).'/'.bdate('Y')) ?></p>
+        <p>KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN PELAYANAN PERIZINAN TERPADU<br>KABUPATEN PEKALONGAN<br>NOMOR : <?php echo $surat_nomor.'/'.nbs(6).'/'.strtoupper(format_roman(bdate('m', $surat_tanggal)).'/'.bdate('Y')) ?></p>
     </td>
 </tr>
 <tr><td colspan="5" style="width:100%"></td></tr>
@@ -84,7 +84,7 @@
     <td colspan="4" style="width:60%"></td>
     <td style="width: 40%; border-bottom: 2px solid #000">
         <p>Ditetapkan di : Kajen</p>
-        <p class="underline">Pada Tanggal : <?php echo nbs(6).bdate('F', $susrat_tanggal).' '.bdate('Y') ?></p>
+        <p class="underline">Pada Tanggal : <?php echo nbs(6).bdate('F', $surat_tanggal).' '.bdate('Y') ?></p>
     </td>
 </tr>
 <tr><td colspan="5" style="width:100%"></td></tr>

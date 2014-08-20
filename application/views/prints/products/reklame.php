@@ -4,7 +4,7 @@
 <tr class="align-center bold">
     <td colspan="5" style="width:100%">
         <p>SURAT IZIN BUPATI PEKALONGAN</p>
-        <p>NOMOR : <?php echo $surat_nomor.'/'.nbs(6).'/ BPM PPT / REKL /'.strtoupper(format_roman(bdate('m', $susrat_tanggal)).' / '.bdate('Y')) ?></p>
+        <p>NOMOR : <?php echo $surat_nomor.'/'.nbs(6).'/ BPM PPT / REKL /'.strtoupper(format_roman(bdate('m', $surat_tanggal)).' / '.bdate('Y')) ?></p>
         <p>IZIN PEMASANGAN REKLAME</p>
     </td>
 </tr>
@@ -86,7 +86,7 @@
     <td colspan="4" style="width:60%"></td>
     <td colspan="1" style="width:40%">
         <p>Ditetapkan di : Kajen</p>
-        <p class="underline">Pada Tanggal : <?php echo nbs(6).bdate('F', $susrat_tanggal).' '.bdate('Y') ?></p>
+        <p class="underline">Pada Tanggal : <?php echo nbs(6).bdate('F', $surat_tanggal).' '.bdate('Y') ?></p>
     </td>
 </tr>
 <tr><td colspan="5" style="width:100%"></td></tr>

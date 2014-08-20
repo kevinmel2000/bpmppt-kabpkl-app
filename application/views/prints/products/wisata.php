@@ -6,7 +6,7 @@
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
-    <td colspan="7" style="width:100%">NOMOR : <?php echo '556.142/'.$surat_nomor.'/PAR/KAR/BPMPPT/'.format_roman(bdate('m', $susrat_tanggal).'/'.bdate('Y')) ?></td>
+    <td colspan="7" style="width:100%">NOMOR : <?php echo '556.142/'.$surat_nomor.'/PAR/KAR/BPMPPT/'.format_roman(bdate('m', $surat_tanggal).'/'.bdate('Y')) ?></td>
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
@@ -129,7 +129,7 @@
     <td colspan="6" style="width:60%"></td>
     <td style="width:40%">
         <p>Ditetapkan di : Kajen</p>
-        <p class="underline">Pada Tanggal : <?php echo nbs(6).bdate('F', $susrat_tanggal).' '.bdate('Y') ?></p>
+        <p class="underline">Pada Tanggal : <?php echo nbs(6).bdate('F', $surat_tanggal).' '.bdate('Y') ?></p>
     </td>
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>

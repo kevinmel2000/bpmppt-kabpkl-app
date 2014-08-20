@@ -25,6 +25,7 @@ class Bpmppt_tdp extends CI_Driver
      * @var  array
      */
     public $defaults = array(
+        'no_tdp'                            => '',
         'no_daftar'                         => '',
         'no_sk'                             => '',
         'tgl_berlaku'                       => '',
@@ -63,6 +64,7 @@ class Bpmppt_tdp extends CI_Driver
         'usaha_saham_nilai_total'           => '',
         'usaha_saham_nilai_nasional'        => '',
         'usaha_saham_nilai_tgl'             => '',
+        'usaha_data_pengesahan'             => '',
         );
 
     // -------------------------------------------------------------------------
@@ -103,10 +105,10 @@ class Bpmppt_tdp extends CI_Driver
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
         $fields[] = array(
-            'name'  => 'no_agenda',
-            'label' => 'Nomor Agenda PT',
+            'name'  => 'no_daftar',
+            'label' => 'Nomor Pendaftaran',
             'type'  => 'text',
-            'std'   => ( $data_obj ? $data_obj->no_agenda : '') );
+            'std'   => ( $data_obj ? $data_obj->no_daftar : '') );
 
         $fields[] = array(
             'name'  => 'tgl_berlaku',
@@ -377,13 +379,12 @@ class Bpmppt_tdp extends CI_Driver
 
     private function custom_field( $data = FALSE )
     {
-        // if ( ! $this->load->is_loaded('table'))
         if (!$this->_ci->load->is_loaded('table'))
         {
             $this->_ci->load->library('table');
         }
 
-        $this->_ci->table->set_template( $this->table_templ );
+        $this->_ci->table->set_template($this->table_templ);
 
         $data_mode = $data and !empty($data->usaha_data_pengesahan);
 
@@ -416,16 +417,16 @@ class Bpmppt_tdp extends CI_Driver
 
         $this->_ci->table->set_heading( $head );
 
-        if ( isset( $data->usaha_data_pengesahan ) and strlen( $data->usaha_data_pengesahan ) > 0 )
+        if (isset($data->usaha_data_pengesahan) and strlen($data->usaha_data_pengesahan) > 0)
         {
-            foreach ( unserialize( $data->usaha_data_pengesahan ) as $row )
+            foreach (unserialize($data->usaha_data_pengesahan) as $row)
             {
-                $this->_row_koordinat( $row );
+                $this->_row_pengesahan($row);
             }
         }
         else
         {
-            $this->_row_koordinat();
+            $this->_row_pengesahan();
         }
 
         return $this->_ci->table->generate();
@@ -433,7 +434,7 @@ class Bpmppt_tdp extends CI_Driver
 
     // -------------------------------------------------------------------------
 
-    private function _row_koordinat( $data = FALSE )
+    private function _row_pengesahan( $data = FALSE )
     {
         $cols = array(
             'no'     => 'Nomor Akta',
@@ -441,7 +442,7 @@ class Bpmppt_tdp extends CI_Driver
             'uraian' => 'Uraian',
             );
 
-        foreach ( $cols as $name => $label )
+        foreach ($cols as $name => $label)
         {
             $column[] = array(
                 'data'  => form_input( array(
@@ -476,26 +477,25 @@ class Bpmppt_tdp extends CI_Driver
      */
     public function _pre_post( $form_data )
     {
-        $koor_fn = $this->alias.'_usaha_data_pengesahan';
+        $pengesahan_fn = $this->alias.'_usaha_data_pengesahan';
 
-        if ( isset( $_POST[$koor_fn.'_no'] ) )
+        if (isset($_POST[$pengesahan_fn.'_no']))
         {
             $i = 0;
-            // $koor_fn = $this->alias.'_usaha_data_pengesahan';
 
-            foreach ($_POST[$koor_fn.'_no'] as $no)
+            foreach ($_POST[$pengesahan_fn.'_no'] as $no)
             {
                 foreach (array('no', 'tgl', 'uraian') as $name)
                 {
-                    $koor_name = $koor_fn.'_'.$name;
-                    $koordinat[$i][$name] = isset($_POST[$koor_name][$i]) ? $_POST[$koor_name][$i] : 0;
-                    unset($_POST[$koor_name][$i]);
+                    $pengesahan_name = $pengesahan_fn.'_'.$name;
+                    $pengesahan[$i][$name] = isset($_POST[$pengesahan_name][$i]) ? $_POST[$pengesahan_name][$i] : 0;
+                    unset($_POST[$pengesahan_name][$i]);
                 }
 
                 $i++;
             }
 
-            $form_data[$koor_fn] = $koordinat;
+            $form_data[$pengesahan_fn] = $pengesahan;
         }
 
         return $form_data;

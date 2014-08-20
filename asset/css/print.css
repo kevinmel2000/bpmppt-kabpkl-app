@@ -134,6 +134,9 @@ table.bordered td {
 table.pagebreak {
   page-break-before: always;
 }
+table p {
+  font-size: inherit;
+}
 table tr.t-header td {
   border-bottom: 2px solid #000;
 }
@@ -155,6 +158,10 @@ table th {
 table table {
   width: auto;
   margin-bottom: 10px;
+}
+table.tanda_daftar_perusahaan p,
+table.surat_izin_usaha_perdagangan p {
+  font-family: 'Arial' !important;
 }
 sub,
 sup {

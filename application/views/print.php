@@ -10,7 +10,7 @@
 </head>
 <body onload="window.print()" <?php echo get_body_attrs() ?>>
 
-<table width="100%">
+<table width="100%" class="<?php echo $type ?>">
     <tr class="t-header">
         <td colspan="7" width="100%" <?php echo ($type == 'izin_gangguan' ? 'style="border: 1px solid #000"' : '') ?>>
 <?php echo img( array(
