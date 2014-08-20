@@ -12,23 +12,22 @@
 
 <table width="100%">
     <tr class="t-header">
-        <td colspan="7" width="100%">
+        <td colspan="7" width="100%" <?php echo ($type == 'izin_gangguan' ? 'style="border: 1px solid #000"' : '') ?>>
 <?php echo img( array(
     'src'   =>  $skpd_logo,
     'alt'   => 'Logo cetak',
     'class' => 'img',
     'width' => '62',
     'height'=> 'auto',
-    'style' => 'position:absolute; top:0; left:0;')); ?>
+    'style' => 'position:absolute; top:0; left:5px;')); ?>
 <p class="align-center bold" style="margin-top: 5px">
 PEMERINTAH KABUPATEN PEKALONGAN<br>
 <span style="font-size: 16px"><?php echo strtoupper($skpd_name) ?></span><br>
 <span style="font-size: 10px;"><?php echo strtoupper($skpd_address.', telp. '.$skpd_telp.' '.$skpd_city.' '.$skpd_pos) ?></span></p>
         </td>
     </tr>
-    <tr>
-        <td><?php echo $contents; ?></td>
-    </tr>
+    <?php echo ($type == 'izin_gangguan' ? '<tr><td>'.nbs(1).'</td></tr>' : '') ?>
+    <tr><td  <?php echo ($type == 'izin_gangguan' ? 'style="border: 1px solid #000"' : '') ?>><?php echo $contents; ?></td></tr>
 </table>
 
 </body>

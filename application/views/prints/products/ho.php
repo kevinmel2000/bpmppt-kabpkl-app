@@ -5,7 +5,7 @@
     <td colspan="7" style="width:100%" class="align-center bold">IZIN GANGGUAN ( HO )</td>
 </tr>
 <tr>
-    <td colspan="7" style="width:100%" class="align-center bold">NOMOR : <?php echo '510.8 /'.nbs(6).'/ BPMPPT / P. Kayu / '.strtoupper(format_roman(bdate('m', $surat_tanggal)).' / '.bdate('Y')) ?></td>
+    <td colspan="7" style="width:100%" class="align-center bold">NOMOR : <?php echo '510.8 /'.nbs(6).'/ BPMPPT / '.$usaha_jenis.' / '.strtoupper(format_roman(bdate('m', $surat_tanggal)).' / '.bdate('Y')) ?></td>
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
@@ -29,14 +29,14 @@
 <tr>
     <td style="width:20%"><p>Membaca</p></td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%" class="align-justify"><p>Surat Permohonan Saudara <?php echo $pemohon_nama ?> selaku <?php echo $pemohon_kerja.' '.$usaha_nama ?>, Alamat Kantor di <?php echo $usaha_alamat ?>, tanggal <?php echo format_date( $surat_tanggal) ?> untuk Izin tempat usaha <?php echo $usaha_jenis ?>, yang terletak di <?php echo $usaha_lokasi ?>.</p></td>
+    <td colspan="5" style="width:78%" class="align-justify"><p>Surat Permohonan Saudara <?php echo $pemohon_nama ?> selaku <strong><?php echo $pemohon_kerja.' '.$usaha_nama ?></strong>, Alamat di <strong><?php echo $usaha_alamat ?></strong>, tanggal <?php echo format_date($surat_tanggal) ?> untuk Izin tempat usaha <?php echo $usaha_jenis ?>, yang terletak di <?php echo $usaha_lokasi ?>.</p></td>
 </tr>
 <tr>
     <td style="width:20%"><p>Menimbang</p></td>
     <td style="width:2%">:</td>
     <td colspan="5" style="width:78%" class="align-justify">
         <ol>
-            <li>Bahwa permohonan tersebut telah diumumkan menurut cara - cara tersebut dalam pasal 5 Undang-undang Gangguan ( HO )</li>
+            <li>Bahwa permohonan tersebut telah diumumkan menurut cara-cara tersebut dalam pasal 5 Undang-undang Gangguan ( HO )</li>
             <li>Bahwa dalam satu bulan tidak diterima keberatan dari pemilik, pengusaha atau persil-persil yang berbatasan dengan persil tersebut.</li>
             <li>Bahwa tidak ada hal-hal yang mungkin menimbulkan bahaya kerugian atau gangguan atas tanah sekitarnya.</li>
         </ol>
@@ -125,15 +125,15 @@
     <td style="width:2%">:</td>
     <td colspan="5" style="width:78%" class="align-justify">
         <p>Surat Keputusan ini berlaku sejak ditetapkan dengan ketentuan :</p>
-        <ul>
+        <ol class="lower-alpha">
             <li>Izin sewaktu-waktu dapat dicabut apabila dikemudian hari ternyata menurut situasi perkembangan perusahaan maupun lingkungan masyarakat ternyata izin tersebut sudah tidak memenuhi ketentuan lagi.</li>
             <li>Surat Keputusan ini berlaku selama perusahaan melakukan usahanya.</li>
-            <li>Dalam rangka pengawasan dan pengendalian wajib melakukan daftar ulang setiap 3 ( tiga ) tahun.</li>
+            <li>Dalam rangka pengawasan dan pengendalian wajib melakukan daftar olang setiap 3 ( tiga ) tahun.</li>
             <li>Bahwa apabila persyaratan yang diwajibkan untuk perusahaan tersebut tidak dipenuhi, maka izin tersebut akan dicabut.</li>
             <li>Bahwa izin yang ditetapkan / dikeluarkan ini merupakan persyaratan pendirian suatu usaha/perusahaan yang harus dipenuhi sesuai dengan peraturan yang berlaku.</li>
             <li>Apabila ada perselisihan atau sengketa didalam perusahaan yang diberikan izin ini maka Pemerintah Daerah dapat menutup perusahaan tersebut dan akan dibuka kembali setelah masalahnya dapat diselesaikan dengan musyawarah.</li>
             <li>Bahwa segala sesuatu akan diadakan perubahan sebagaimana mestinya, apabila dikemudian hari ternyata terdapat kekeliruan dalam penetapan ini.</li>
-        </ul>
+        </ol>
     </td>
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>
@@ -147,7 +147,7 @@
     <td colspan="6" style="width:60%"></td>
     <td style="width:40%">
         <p>Ditetapkan di : Kajen</p>
-        <p class="underline">Pada Tanggal : <?php echo nbs(6).bdate('F', $surat_tanggal).' '.bdate('Y') ?></p>
+        <p class="underline">Pada Tanggal : <?php echo nbs(16).bdate('Y') ?></p>
     </td>
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>
