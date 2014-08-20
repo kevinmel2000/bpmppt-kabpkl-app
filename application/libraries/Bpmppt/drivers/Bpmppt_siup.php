@@ -17,6 +17,7 @@ class Bpmppt_siup extends CI_Driver
     public $alias = 'surat_izin_usaha_perdagangan';
     public $name = 'Surat Izin Usaha Perdangangan';
     public $prefield_label = 'No. &amp; Tgl. SIUP';
+    public $tembusan = FALSE;
 
     /**
      * Default field
