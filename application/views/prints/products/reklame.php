@@ -36,10 +36,11 @@
     <td style="width:2%">:</td>
     <td colspan="2" style="width:30%"><?php echo $pemohon_alamat ?></td>
 </tr>
+<?php $lampirans = unserialize($lampirans) ?>
 <tr>
     <td colspan="2" style="width:30%">3. Tempat/Lok. Pemasangan</td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:30%"><?php echo $reklame_lokasi ?></td>
+    <td colspan="2" style="width:30%"><?php echo (count($lampirans) == 1 ? $lampirans[0]['tempat'] : 'Terlampir') ?></td>
 </tr>
 <tr>
     <td colspan="2" style="width:30%">4. Tema Pemasangan</td>
@@ -49,7 +50,7 @@
 <tr>
     <td colspan="2" style="width:30%">5. Ukuran</td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:30%"><?php echo $reklame_ukuran_panjang.' m x '.$reklame_ukuran_lebar.' m' ?></td>
+    <td colspan="2" style="width:30%"><?php echo (count($lampirans) == 1 ? $lampirans[0]['panjang'].' m x '.$lampirans[0]['lebar'].' m' : 'Terlampir') ?></td>
 </tr>
 <tr>
     <td colspan="2" style="width:30%">6. Jumlah</td>
@@ -112,6 +113,38 @@
     </td>
 </tr>
 <?php endif ?>
-
     </tbody>
 </table>
+<?php if (count($lampirans) > 1): ?>
+<table>
+    <tr>
+        <td colspan="4" class="bold"><?php echo strtoupper('Lampiran Izin Reklame '.$pemohon_nama) ?>.<br></td>
+    </tr>
+    <tr style="border:1px solid #000" class="bold">
+        <td style="border:1px solid #000; width:10%">No.</td>
+        <td style="border:1px solid #000; width:20%">Jenis Reklame</td>
+        <td style="border:1px solid #000; width:50%">Lokasi</td>
+        <td style="border:1px solid #000; width:20%">Ukuran (M)</td>
+    </tr>
+    <?php $i = 1; foreach ($lampirans as $lampiran): ?>
+    <tr style="border:1px solid #000">
+        <td style="border:1px solid #000"><?php echo $i ?></td>
+        <td style="border:1px solid #000"><?php echo $reklame_jenis ?></td>
+        <td style="border:1px solid #000"><?php echo $lampiran['tempat'] ?></td>
+        <td style="border:1px solid #000"><?php echo $lampiran['panjang'].' x '.$lampiran['lebar'] ?> (M)</td>
+    </tr>
+    <?php $i++; endforeach; ?>
+    <tr><td colspan="4" style="width:100%"></td></tr>
+    <tr class="align-center bold">
+        <td colspan="2" style="width:60%"></td>
+        <td colspan="2" style="width:40%">
+        A.n. BUPATI PEKALONGAN<br>
+        KEPALA <?php echo strtoupper($skpd_name) ?><br>
+        <?php echo strtoupper($skpd_city) ?><br><br><br>
+        <span class="underline"><?php echo strtoupper($skpd_lead_name) ?></span><br>
+        <?php echo strtoupper($skpd_lead_jabatan) ?><br>
+        NIP. <?php echo strtoupper($skpd_lead_nip) ?>
+        </td>
+    </tr>
+</table>
+<?php endif; ?>

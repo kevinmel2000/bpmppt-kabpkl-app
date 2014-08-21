@@ -163,6 +163,11 @@ table.tanda_daftar_perusahaan p,
 table.surat_izin_usaha_perdagangan p {
   font-family: 'Arial' !important;
 }
+table.izin_reklame,
+table.izin_gangguan {
+  font-size: 11px;
+  line-height: 1.2em;
+}
 sub,
 sup {
   position: relative;

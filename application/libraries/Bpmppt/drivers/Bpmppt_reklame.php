@@ -28,14 +28,14 @@ class Bpmppt_reklame extends CI_Driver
         'pengajuan_jenis'           => '',
         'reklame_jenis'             => '',
         'reklame_juml'              => '',
-        'reklame_lokasi'            => '',
-        'reklame_ukuran_panjang'    => '',
-        'reklame_ukuran_lebar'      => '',
         'reklame_range_tgl_text'    => '',
         'reklame_range_tgl_mulai'   => '',
         'reklame_range_tgl_selesai' => '',
         'reklame_tema'              => '',
         'reklame_ket'               => '',
+        'lampirans_tempat'          => '',
+        'lampirans_panjang'         => '',
+        'lampirans_lebar'           => '',
         );
 
     // -------------------------------------------------------------------------
@@ -126,33 +126,6 @@ class Bpmppt_reklame extends CI_Driver
             'validation'=> 'required|numeric' );
 
         $fields[] = array(
-            'name'  => 'reklame_lokasi',
-            'label' => 'Lokasi pemasangan',
-            'type'  => 'textarea',
-            'std'   => ( $data_obj ? $data_obj->reklame_lokasi : ''),
-            'validation'=> ( !$data_obj ? 'required' : '' ) );
-
-        $fields[] = array(
-            'name'  => 'reklame_ukuran',
-            'label' => 'Ukuran (P x L)',
-            'type'  => 'subfield',
-            'fields'=> array(
-                array(
-                    'name'  => 'panjang',
-                    'label' => 'Panjang',
-                    'type'  => 'number',
-                    'std'   => ( $data_obj ? $data_obj->reklame_ukuran_panjang : ''),
-                    'validation'=> 'required|numerik' ),
-                array(
-                    'name'  => 'lebar',
-                    'label' => 'Lebar',
-                    'type'  => 'number',
-                    'std'   => ( $data_obj ? $data_obj->reklame_ukuran_lebar : ''),
-                    'validation'=> 'required|numerik' ),
-                )
-            );
-
-        $fields[] = array(
             'name'  => 'reklame_range',
             'label' => 'Jangka waktu',
             'type'  => 'subfield',
@@ -192,7 +165,143 @@ class Bpmppt_reklame extends CI_Driver
             'std'   => ( $data_obj ? $data_obj->reklame_ket : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
+        $fields[] = array(
+            'name'  => 'lampirans',
+            'label' => 'Data Lampiran',
+            'type'  => 'custom',
+            'fold'  => array(
+                'key'   => 'reklame_lampiran',
+                'value' => 1 ),
+            'value' => $this->custom_field( $data_obj ),
+            );
+
         return $fields;
+    }
+
+    // -------------------------------------------------------------------------
+
+    private function custom_field( $data = FALSE )
+    {
+        if (!$this->_ci->load->is_loaded('table'))
+        {
+            $this->_ci->load->library('table');
+        }
+
+        $this->_ci->table->set_template($this->table_templ);
+
+        $data_mode = $data and !empty($data->lampirans);
+
+        // var_dump($this);
+        $head[] = array(
+            'data'  => 'Lokasi Pemasangan',
+            'class' => 'head-id',
+            'width' => '60%' );
+
+        $head[] = array(
+            'data'  => 'Panjang',
+            'class' => 'head-value',
+            'width' => '15%' );
+
+        $head[] = array(
+            'data'  => 'Lebar',
+            'class' => 'head-value',
+            'width' => '15%' );
+
+        $head[] = array(
+            'data'  => form_button( array(
+                'name'  => 'lampirans_add-btn',
+                'type'  => 'button',
+                'class' => 'btn btn-primary bs-tooltip btn-block btn-sm',
+                'tabindex' => '-1',
+                'title' => 'Tambahkan baris',
+                'content'=> 'Add' ) ),
+            'class' => 'head-action',
+            'width' => '10%' );
+
+        $this->_ci->table->set_heading( $head );
+
+        if (isset($data->lampirans) and strlen($data->lampirans) > 0)
+        {
+            foreach (unserialize($data->lampirans) as $row)
+            {
+                $this->_row_pengesahan($row);
+            }
+        }
+        else
+        {
+            $this->_row_pengesahan();
+        }
+
+        return $this->_ci->table->generate();
+    }
+
+    // -------------------------------------------------------------------------
+
+    private function _row_pengesahan( $data = FALSE )
+    {
+        $cols = array(
+            'tempat'  => 'Lokasi',
+            'panjang' => 'Panjang (M)',
+            'lebar'   => 'Lebar (M)',
+            );
+
+        foreach ($cols as $name => $label)
+        {
+            $column[] = array(
+                'data'  => form_input( array(
+                    'name'  => $this->alias.'_lampirans_'.$name.'[]',
+                    'type'  => 'text',
+                    'value' => $data ? $data[$name] : '',
+                    'class' => 'form-control bs-tooltip input-sm',
+                    'placeholder'=> $label ), '', ''),
+                'class' => 'data-id',
+                'width' => '10%' );
+        }
+
+        $column[] = array(
+            'data'  => form_button( array(
+                'name'  => $this->alias.'_lampirans_remove-btn',
+                'type'  => 'button',
+                'class' => 'btn btn-danger bs-tooltip btn-block btn-sm remove-btn',
+                'tabindex' => '-1',
+                'content'=> '&times;' ) ),
+            'class' => '',
+            'width' => '10%' );
+
+        $this->_ci->table->add_row( $column );
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Prepost form data hooks
+     *
+     * @return  mixed
+     */
+    public function _pre_post( $form_data )
+    {
+        $pengesahan_fn = $this->alias.'_lampirans';
+
+        if (isset($_POST[$pengesahan_fn.'_tempat']))
+        {
+            $i = 0;
+
+            foreach ($_POST[$pengesahan_fn.'_tempat'] as $no)
+            {
+                foreach (array('tempat', 'panjang', 'lebar') as $name)
+                {
+                    $pengesahan_name = $pengesahan_fn.'_'.$name;
+                    $pengesahan[$i][$name] = isset($_POST[$pengesahan_name][$i]) ? $_POST[$pengesahan_name][$i] : 0;
+                    unset($_POST[$pengesahan_name][$i]);
+                }
+
+                $i++;
+            }
+
+            $form_data[$pengesahan_fn] = $pengesahan;
+        }
+
+        return $form_data;
     }
 }
 
