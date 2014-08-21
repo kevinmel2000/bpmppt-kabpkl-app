@@ -39,6 +39,7 @@ class Bpmppt_b3 extends CI_Driver
         'usaha_tps_ukuran'  => '',
         'usaha_tps_koor_s'  => '',
         'usaha_tps_koor_e'  => '',
+        'ketentuan_teknis'  => '',
         );
 
     // -------------------------------------------------------------------------
@@ -66,7 +67,6 @@ class Bpmppt_b3 extends CI_Driver
         $fields[] = array(
             'name'  => 'fieldset_data_pemohon',
             'label' => 'Data Pemohon',
-            // 'attr'  => ( $data_obj ? 'disabled' : '' ),
             'type'  => 'fieldset' );
 
         $fields[] = array(
@@ -93,7 +93,6 @@ class Bpmppt_b3 extends CI_Driver
         $fields[] = array(
             'name'  => 'fieldset_data_daftar',
             'label' => 'Data Pendaftaran',
-            // 'attr'  => ( $data_obj ? 'disabled' : '' ),
             'type'  => 'fieldset' );
 
         $fields[] = array(
@@ -113,7 +112,6 @@ class Bpmppt_b3 extends CI_Driver
         $fields[] = array(
             'name'  => 'fieldset_data_usaha',
             'label' => 'Data Perusahaan',
-            // 'attr'  => ( $data_obj ? 'disabled' : '' ),
             'type'  => 'fieldset' );
 
         $fields[] = array(
@@ -193,6 +191,18 @@ class Bpmppt_b3 extends CI_Driver
                     'validation'=> ( !$data_obj ? 'required' : '' ) ),
                 )
             );
+
+        $fields[] = array(
+            'name'  => 'fieldset_ketentuan',
+            'label' => 'Ketentuan',
+            'type'  => 'fieldset' );
+
+        $fields[] = array(
+            'name'  => 'ketentuan_teknis',
+            'label' => 'Ketentuan Teknis',
+            'type'  => 'editor',
+            'std'   => ( $data_obj ? $data_obj->ketentuan_teknis : $this->_ci->bakaigniter->get_setting('b3_teknis')),
+            'validation'=> ( !$data_obj ? 'required' : '' ) );
 
         return $fields;
     }

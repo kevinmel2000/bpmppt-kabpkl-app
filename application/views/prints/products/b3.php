@@ -5,7 +5,7 @@
     <td colspan="7" style="width:100%">
         <p>KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN</p>
         <p>PELAYANAN PERIZINAN TERPADU KABUPATEN PEKALONGAN</p>
-        <p>NOMOR : <?php echo '660.3 / '.$surat_nomor.' / BPMPPT / B3 / '.strtoupper(format_roman(bdate('m', $surat_tanggal)).' / '.bdate('Y')) ?></p>
+        <p>NOMOR : <?php echo '660.3 / '.$surat_nomor.' / BPMPPT / LB3 / '.strtoupper(format_roman(bdate('m', $surat_tanggal)).' / '.bdate('Y')) ?></p>
     </td>
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>
@@ -40,7 +40,7 @@
                 <td width="35%"><?php echo $daftar_nomor ?></td>
                 <td width="10%">Tanggal</td>
                 <td width="2%">:</td>
-                <td width="35%"><?php echo $daftar_tanggal ?></td>
+                <td width="35%"><?php echo format_date($daftar_tanggal) ?></td>
             </tr><tr>
                 <td colspan="6">Yang memuat permohonan :</td>
             </tr><tr>
@@ -98,9 +98,9 @@
 </tr>
 <tr>
     <td colspan="2"></td>
-    <td colspan="2" style="width:30%">b. Lokasi Kegiatan</td>
+    <td colspan="2" style="width:30%">b. Bidang Usaha</td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:47%"><?php echo $usaha_lokasi ?></td>
+    <td colspan="2" style="width:47%"><?php echo $usaha_bidang ?></td>
 </tr>
 <tr>
     <td colspan="2"></td>
@@ -129,37 +129,7 @@
         <ol class="lower-alpha">
             <li>
                 <p>Ketentuan Teknis</p>
-                <p>Izin Penyimpanan Sementara Limbah Bahan Berbahaya dan Beracun (B3) harus memenuhi persyaratan sebagai berikut :</p>
-                <ol class="decimal">
-                    <li>Jenis Limbah Bahan Berbahaya dan Beracun yang Disimpan
-                        <ol class="lower-alpha">
-                            <li>Penanggungjawab Kegiatan tidak diperkenankan menyimpan dan menerima limbah bahan berbahaya dan beracun dari pihak atau sumber lain, hanya menyimpan fly ash batubara, bottom ash batubara, kertas saring bekas, kemasan bekas (drum, jerigen bekas obat), aki bekas, kain majun terkontaminasi oli, jarum suntik bekas, kain kassa bekas, sarung tangan bekas, minyak pelumas bekas/oli bekas, slude IPAL yang berasal dari kegiatannya.</li>
-                            <li>Jika menyimpan jenis limbah bahan berbahaya dan beracun di luar fly ash batubara, bottom ash batubara, kertas saring bekas, kemasan bekas (drum, jerigen bekas obat), aki bekas, kain majun terkontaminasi oli, jarum suntik bekas, kain kassa bekas, sarung tangan bekas, minyak pelumas bekas/oli bekas,  sludge IPAL, maka Penanggungjawab Kegiatan wajib melaporkan atau konsultasi ke Bupati Pekalongan cq. Kantor Lingkungan Hidup Kabupaten Pekalongan;</li>
-                            <li>Simbol dan label disesuaikan dengan jenis dan karakteristik limbah bahan berbahaya dan beracun.</li>
-                        </ol>
-                    </li>
-                    <li>Bangunan Penyimpanan
-                        <ol class="lower-alpha">
-                            <li>Rancang bangun dan luas penyimpanan sesuai dengan jenis, jumlah dan karakteristik limbah bahan berbahaya dan beracun yang dimiliki :
-                                <ol>
-                                    <li>Tempat Penyimpanan Sementara (TPS) :
-                                        <ol>
-                                            <li><?php echo $usaha_tps_fungsi.' berukuran : '.$usaha_tps_ukuran.', terletak di titik koordinat S : '.$usaha_tps_koor_s.' dan E : '.$usaha_tps_koor_e ?></li>
-                                        </ol>
-                                    </li>
-                                    <li>Lay out tempat penyimpanan seperti pada lampiran I;</li>
-                                    <li>Desain tempat penyimpanan seperti pada lampiran II.</li>
-                                </ol>
-                            </li>
-                            <li>Kondisi tempat penyimpanan tersebut dibutir 2).a) di atas tidak dapat diubah ataupun dipindah tanpa seizin Bupati Pekalongan Cq. Kantor Lingkungan Hidup Kabupaten Pekalongan;</li>
-                            <li>Tidak diperkenankan menyimpan sementara limbah bahan berbahaya dan beracun di tempat lain selain tempat penyimpanan sebagaimana butir 2).a);</li>
-                            <li>Butir 2).a) diatas harus mengacu pada Keputusan Kepala Bapedal Nomor : Kep-01/Bapedal/09/1995 tentang Tata Cara dan Persyaratan Teknis Penyimpanan dan Pengumpulan Limbah Bahan Berbahaya dan Beracun dalam Lampiran 3.2 dan Peraturan Menteri Negara Lingkungan Hidup Nomor 30 Tahun 2009 tentang Tata Laksana Perizinan dan Pengawasan Pengelolaan Limbah Bahan Berbahaya dan Beracun serta Pengawasan Pemulihan akibat Pencemaran Limbah Bahan Berbahaya dan Beracun Lampiran II poin II.C.</li>
-                        </ol>
-                    </li>
-                    <li>Keselamatan dan Kesehatan Kerja (K3)
-                        <p>Peralatan keselamatan dan kesehatan kerja yang umum (standar) harus dimiliki oleh penanggungjawab kegiatan, termasuk antara lain alarm, peralatan pemadam kebakaran, shower / eye wash dan fasilitas tanggap darurat.</p>
-                    </li>
-                </ol>
+                <?php echo $ketentuan_teknis ?>
             </li>
             <li>
                 <p>Kewajiban Pihak Perusahaan</p>
