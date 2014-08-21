@@ -5,7 +5,7 @@
  *
  * @subpackage  Controller
  */
-class Layanan extends BAKA_Controller
+class Layanan extends BI_Controller
 {
     public function __construct()
     {
@@ -13,7 +13,7 @@ class Layanan extends BAKA_Controller
 
         $this->verify_login(uri_string());
 
-        $this->themee->add_navbar( 'data_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
+        $this->bitheme->add_navbar( 'data_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
         $this->data_navbar( 'data_sidebar', 'side' );
 
         $this->set_panel_title('Administrasi data');
@@ -137,11 +137,11 @@ class Layanan extends BAKA_Controller
                     break;
             }
 
-            $this->load->library('gridr', array(
+            $this->load->library('bitable', array(
                 'base_url' => $this->data['page_link'],
                 ));
 
-            $grid = $this->gridr->set_column('Pengajuan',
+            $grid = $this->bitable->set_column('Pengajuan',
                                     'callback_anchor:id|no_agenda, callback_format_datetime:created_on',
                                     '30%',
                                     '<strong>%s</strong><br><small class="text-muted">Diajukan pada: %s</small>')
@@ -259,9 +259,9 @@ class Layanan extends BAKA_Controller
                 'label' => 'Cetak sekarang',
                 'class' => 'btn-primary pull-right' );
 
-            $this->load->library('former');
+            $this->load->library('biform');
 
-            $form = $this->former->init( array(
+            $form = $this->biform->initialize( array(
                 'name'      => 'print-'.$data_type,
                 'action'    => current_url(),
                 'extras'    => array('target' => 'Popup_Window'),

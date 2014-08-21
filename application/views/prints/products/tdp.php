@@ -31,17 +31,19 @@ TENTANG PERSEROAN TERBATAS
     <td colspan="3" style="width:55%; border-right: 1px solid #000;">BERLAKU S/D TANGGAL<br><?php echo format_date($tgl_berlaku) ?></td>
     <td colspan="2" style="width:35%; border-right: 2px solid #000;">PENDAFTARAN / PEMBAHARUAN KE : <?php echo $pembaruan_ke ?></td>
 </tr>
+<?php if ($usaha_jenis == 'Perseroan Terbatas (PT)') : ?>
 <tr><td colspan="6" style="width:100%; line-height: 5px"></td></tr>
 <tr style="border: 2px solid #000">
     <td colspan="4" style="width:65%"><span class="underline bold">AGENDA PENDAFTARAN</span><br>NOMOR: <?php echo $daftar_no ?></td>
     <td colspan="2" style="width:35%; border-right: 2px solid #000;">TANGGAL : <?php echo format_date($daftar_tgl) ?></td>
 </tr>
+<?php endif; ?>
 <tr><td colspan="6" style="width:100%; line-height: 5px"></td></tr>
 <tr class="bold" style="border: 2px solid #000; border-bottom-width: 1px;">
     <td style="width:20%">NAMA PERUSAHAAN</td>
     <td style="width:5%">:</td>
     <td colspan="3" style="width:55%"><?php echo strtoupper($usaha_nama) ?></td>
-    <td style="width:20%; border-left: 1px solid #000; border-right: 2px solid #000;">STATUS TANGGAL</td>
+    <td style="width:20%; border-left: 1px solid #000; border-right: 2px solid #000;">STATUS <?php echo strtoupper($usaha_status) ?></td>
 </tr>
 <tr class="bold" style="border: 2px solid #000; border-top-width: 0; border-bottom-width: 1px;">
     <td style="width:20%">NAMA PENGURUS / PENANGGUNG JAWAB</td>
@@ -70,34 +72,26 @@ TENTANG PERSEROAN TERBATAS
     <td colspan="3" style="width:55%;"><?php echo strtoupper($usaha_pokok) ?></td>
     <td class="align-center" style="width:20%; border-left: 1px solid #000; border-right: 2px solid #000;">KBLI :<br><?php echo strtoupper($usaha_kbli) ?></td>
 </tr>
-<?php if (isset($usaha_data_pengesahan) and strlen($usaha_data_pengesahan) > 0): foreach (unserialize($usaha_data_pengesahan) as $pengesahan) : ?>
+<?php if (strlen($usaha_data_pengesahan) > 0): foreach (unserialize($usaha_data_pengesahan) as $pengesahan) : if (strlen($pengesahan['uraian']) > 0) : ?>
 <tr style="border: 2px solid #000; border-top-width: 0; border-bottom: 1px solid #ccc">
     <td colspan="6" style="width:100%; border-right: 2px solid #000;" class="bold underline"><?php echo $pengesahan['uraian'] ?></td>
 </tr>
 <tr style="border: 2px solid #000; border-top-width: 0;">
     <td colspan="4" style="width:70%; border-right: 1px solid #ccc;">NOMOR : <?php echo $pengesahan['no'] ?></td>
-    <td colspan="2" style="width:30%; border-right: 2px solid #000;">TANGGAL : <?php echo $pengesahan['tgl'] ?></td>
+    <td colspan="2" style="width:30%; border-right: 2px solid #000;">TANGGAL : <?php echo format_date($pengesahan['tgl']) ?></td>
 </tr>
-<?php endforeach; endif; ?>
+<?php endif; endforeach; endif; ?>
 
 <tr><td colspan="6" style="width:100%"></td></tr>
 <tr style="">
     <td colspan="3"></td>
     <td colspan="3" style="border-bottom: 2px solid #000">Dikeluarkan di : KAJEN<br>
-    Pada Tanggal : <?php echo nbs(6).bdate('F', $surat_tanggal).' '.bdate('Y') ?></td>
+    Pada Tanggal : <?php echo bdate('%d %F', $surat_tanggal).' '.bdate('%Y') ?></td>
 </tr>
 <tr><td colspan="6" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="3"></td>
-    <td colspan="3">
-    A.n. BUPATI PEKALONGAN<br>
-    KEPALA <?php echo strtoupper($skpd_name) ?><br>
-    <?php echo strtoupper($skpd_city) ?><br><br><br>
-    <span class="underline"><?php echo strtoupper($skpd_lead_name) ?></span><br>
-    <?php echo strtoupper($skpd_lead_jabatan) ?><br>
-    NIP. <?php echo strtoupper($skpd_lead_nip) ?>
-    </td>
+    <td colspan="3"><?php print_ttd_kadin() ?></td>
 </tr>
-
     </tbody>
 </table>

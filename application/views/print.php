@@ -16,14 +16,14 @@
 <?php echo img( array(
     'src'   =>  $skpd_logo,
     'alt'   => 'Logo cetak',
-    'class' => 'img',
-    'width' => '62',
+    'class' => 'img logo-skpd',
+    'width' => '60',
     'height'=> 'auto',
-    'style' => 'position:absolute; top:0; left:5px;')); ?>
-<p class="align-center bold" style="margin-top: 5px">
+    'style' => 'position:absolute; left:5px;')); ?>
+<p class="align-center bold" style="margin-top: 5px; line-height: 1.5em;">
 PEMERINTAH KABUPATEN PEKALONGAN<br>
-<span style="font-size: 16px"><?php echo strtoupper($skpd_name) ?></span><br>
-<span style="font-size: 10px;"><?php echo strtoupper($skpd_address.', telp. '.$skpd_telp.' '.$skpd_city.' '.$skpd_pos) ?></span></p>
+<span style="font-size: 16px; line-height:1.4em;"><?php echo strtoupper($skpd_name) ?></span><br>
+<span style="font-size: 11px; line-height:1.4em;"><?php echo $skpd_address.', telp. '.$skpd_telp.' '.$skpd_city.' '.$skpd_pos ?></span></p>
         </td>
     </tr>
     <?php echo (in_array($type, $types) ? '<tr><td>'.nbs(1).'</td></tr>' : '') ?>

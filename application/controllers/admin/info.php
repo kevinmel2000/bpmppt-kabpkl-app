@@ -5,7 +5,7 @@
  *
  * @subpackage  Controller
  */
-class Info extends BAKA_Controller
+class Info extends BI_Controller
 {
     public function __construct()
     {
@@ -13,12 +13,12 @@ class Info extends BAKA_Controller
 
         $this->verify_login(uri_string());
 
-        if ( !$this->authr->is_permited('sys_manage') )
+        if ( !is_user_can('setting_application') )
         {
             $this->_notice( 'access-denied' );
         }
 
-        $this->themee->add_navbar( 'admin_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
+        $this->bitheme->add_navbar( 'admin_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
         $this->admin_navbar( 'admin_sidebar', 'side' );
 
         $this->set_panel_title('Informasi sistem');
@@ -26,7 +26,7 @@ class Info extends BAKA_Controller
 
     public function index()
     {
-        if ( !$this->authr->is_permited('sys_logs_manage') )
+        if ( !is_user_can('debug_application') )
         {
             $this->_notice( 'access-denied' );
         }
@@ -158,9 +158,9 @@ class Info extends BAKA_Controller
             'label' => 'Module Apache',
             'value' => $this->table->generate() );
 
-        $this->load->library('former');
+        $this->load->library('biform');
 
-        $form = $this->former->init( array(
+        $form = $this->biform->initialize( array(
             'name'      => 'info',
             'action'    => current_url(),
             'fields'    => $fields,

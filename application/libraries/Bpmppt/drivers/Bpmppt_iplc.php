@@ -16,6 +16,7 @@ class Bpmppt_iplc extends CI_Driver
     public $code = 'IPLC';
     public $alias = 'izin_pembuangan_air_limbah';
     public $name = 'Izin Pembuangan Air Limbah ke Air atau Sumber Air';
+    public $prefield_label = 'No. &amp; Tgl. Input';
 
     /**
      * Default field
@@ -27,6 +28,7 @@ class Bpmppt_iplc extends CI_Driver
         'pemohon_jabatan'           => '',
         'pemohon_usaha'             => '',
         'pemohon_alamat'            => '',
+        'ketentuan_teknis'          => '',
         'limbah_kapasitas_produksi' => '',
         'limbah_debit_max_proses'   => '',
         'limbah_debit_max_kond'     => '',
@@ -90,98 +92,13 @@ class Bpmppt_iplc extends CI_Driver
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
         $fields[] = array(
-            'name'  => 'fieldset_data_lokasi',
-            'label' => 'Data Lokasi',
-            // 'attr'  => ( $data_obj ? 'disabled' : '' ),
-            'type'  => 'fieldset' );
-
-        $fields[] = array(
-            'name'  => 'limbah_kapasitas_produksi',
-            'label' => 'Kapasitas Produksi',
-            'type'  => 'text',
-            'std'   => ( $data_obj ? $data_obj->limbah_kapasitas_produksi : ''),
-            'validation'=> ( !$data_obj ? 'required' : '' ) );
-
-        $fields[] = array(
-            'name'  => 'limbah_debit_max',
-            'label' => 'Debit max limbah',
-            'type'  => 'subfield',
-            'fields'=> array(
-                array(
-                    'name'  => 'proses',
-                    'label' => 'proses',
-                    'type'  => 'text',
-                    'std'   => ( $data_obj ? $data_obj->limbah_debit_max_proses : ''),
-                    'validation'=> ( !$data_obj ? 'required' : '' ) ),
-                array(
-                    'name'  => 'kond',
-                    'label' => 'kondensor',
-                    'type'  => 'text',
-                    'std'   => ( $data_obj ? $data_obj->limbah_debit_max_kond : ''),
-                    'validation'=> ( !$data_obj ? 'required' : '' ) ),
-                )
-            );
-
-        $fields[] = array(
-            'name'  => 'limbah_kadar_max_proses',
-            'label' => 'Kadar max proses',
-            'type'  => 'subfield',
-            'fields'=> $this->subfield_limbah( 'limbah_kadar_max_proses_', $data_obj ) );
-
-        $fields[] = array(
-            'name'  => 'limbah_beban_max_proses',
-            'label' => 'Beban pencemaran proses',
-            'type'  => 'subfield',
-            'fields'=> $this->subfield_limbah( 'limbah_beban_max_proses_', $data_obj ) );
-
-        $fields[] = array(
-            'name'  => 'limbah_kadar_max_kond',
-            'label' => 'Kadar max kondensor',
-            'type'  => 'subfield',
-            'fields'=> $this->subfield_limbah( 'limbah_kadar_max_kond_', $data_obj ) );
-
-        $fields[] = array(
-            'name'  => 'limbah_beban_max_kond',
-            'label' => 'Beban pencemaran kondensor',
-            'type'  => 'subfield',
-            'fields'=> $this->subfield_limbah( 'limbah_beban_max_kond_', $data_obj ) );
-
-        $fields[] = array(
-            'name'  => 'limbah_target_buang',
-            'label' => 'Target pembuangan',
-            'type'  => 'text',
-            'std'   => ( $data_obj ? $data_obj->limbah_target_buang : ''),
+            'name'  => 'data_teknis',
+            'label' => 'Data Teknis',
+            'type'  => 'editor',
+            'std'   => ( $data_obj ? $data_obj->data_teknis : get_setting('iplc_teknis') ),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
         return $fields;
-    }
-
-    // -------------------------------------------------------------------------
-
-    protected function subfield_limbah($parent, $data_obj = FALSE)
-    {
-        $subfields = array(
-            'bod'     => 'BOD',
-            'cod'     => 'COD',
-            'tts'     => 'TTS',
-            'minyak'  => 'Minyak',
-            'sulfida' => 'Sulfida',
-            'ph'      => 'pH',
-            );
-
-        foreach ($subfields as $name => $label)
-        {
-            $this->defaults[$parent.$name] = '';
-
-            $subs[] = array(
-                'name'  => $name,
-                'label' => $label,
-                'type'  => 'text',
-                'std'   => ( $data_obj ? $data_obj->{$parent.$name} : ''),
-                );
-        }
-
-        return $subs;
     }
 }
 

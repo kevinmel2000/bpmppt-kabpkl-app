@@ -6,7 +6,7 @@
         <p>BUPATI PEKALONGAN</p>
         <p></p>
         <p>SURAT IZIN BUPATI PEKALONGAN</p>
-        <p>NOMOR : <?php echo '510.4 / '.$surat_nomor.' / TAHUN '.bdate('Y') ?></p>
+        <p>NOMOR : <?php echo '510.4 / '.$surat_nomor.' / TAHUN '.bdate('%Y') ?></p>
     </td>
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>
@@ -71,6 +71,7 @@
         <p><?php echo $lokasi_tujuan ?></p>
     </td>
 </tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
     <td colspan="7" style="width:100%" class="align-justify">
         <p>Dengan ketentuan sebagai berikut :</p>
@@ -97,34 +98,15 @@
 <tr>
     <td colspan="6" style="width:60%"></td>
     <td style="width:40%">
-        <p>Ditetapkan di : Kajen</p>
-        <p class="underline">Pada Tanggal : <?php echo nbs(6).bdate('F', $surat_tanggal).' '.bdate('Y') ?></p>
+        <p>Ditetapkan di : <?php echo $skpd_kab ?></p>
+        <p class="underline">Pada Tanggal : <?php print_blnthn_foot($surat_tanggal) ?></p>
     </td>
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="5" style="width:60%"></td>
-    <td colspan="2" style="width:40%">
-    A.n. BUPATI PEKALONGAN<br>
-    KEPALA <?php echo strtoupper($skpd_name) ?><br>
-    <?php echo strtoupper($skpd_city) ?><br><br><br>
-    <span class="underline"><?php echo strtoupper($skpd_lead_name) ?></span><br>
-    <?php echo strtoupper($skpd_lead_jabatan) ?><br>
-    NIP. <?php echo strtoupper($skpd_lead_nip) ?>
-    </td>
+    <td colspan="2" style="width:40%"><?php print_ttd_kadin() ?></td>
 </tr>
-<?php if (strlen($data_tembusan) > 0): ?>
-<tr>
-    <td colspan="7">
-        <p>Tembusan :</p>
-        <ol>
-        <?php foreach (unserialize($data_tembusan) as $tembusan) : ?>
-            <li><?php echo $tembusan ?>;</li>
-        <?php endforeach ?>
-        </ol>
-    </td>
-</tr>
-<?php endif ?>
-
+<tr><td colspan="7" style="width:100%"><?php print_tembusan($data_tembusan) ?></td></tr>
     </tbody>
 </table>

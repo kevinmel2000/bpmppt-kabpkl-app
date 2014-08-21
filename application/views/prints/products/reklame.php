@@ -4,7 +4,7 @@
 <tr class="align-center bold">
     <td colspan="5" style="width:100%">
         <p>SURAT IZIN BUPATI PEKALONGAN</p>
-        <p>NOMOR : <?php echo $surat_nomor.'/'.nbs(6).'/ BPM PPT / Rekl /'.strtoupper(format_roman(bdate('m', $surat_tanggal)).' / '.bdate('Y')) ?></p>
+        <p>NOMOR : <?php echo '510.8/'.nbs(6).'/ BPM PPT / Rekl / '.print_blnthn_head($surat_tanggal) ?></p>
         <p>IZIN PEMASANGAN REKLAME</p>
     </td>
 </tr>
@@ -84,21 +84,14 @@
 <tr>
     <td colspan="4" style="width:60%"></td>
     <td colspan="1" style="width:40%">
-        <p>Ditetapkan di : Kajen</p>
-        <p class="underline">Pada Tanggal : <?php echo nbs(6).bdate('F', $surat_tanggal).' '.bdate('Y') ?></p>
+        <p>Ditetapkan di : <?php echo $skpd_kab ?></p>
+        <p class="underline">Pada Tanggal : <?php print_blnthn_foot($surat_tanggal) ?></p>
     </td>
 </tr>
 <tr><td colspan="5" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="3" style="width:60%"></td>
-    <td colspan="2" style="width:40%">
-    A.n. BUPATI PEKALONGAN<br>
-    KEPALA <?php echo strtoupper($skpd_name) ?><br>
-    <?php echo strtoupper($skpd_city) ?><br><br><br>
-    <span class="underline"><?php echo strtoupper($skpd_lead_name) ?></span><br>
-    <?php echo strtoupper($skpd_lead_jabatan) ?><br>
-    NIP. <?php echo strtoupper($skpd_lead_nip) ?>
-    </td>
+    <td colspan="2" style="width:40%"><?php print_ttd_kadin() ?></td>
 </tr>
 <tr><td colspan="5" style="width:100%"></td></tr>
 <?php if (strlen($data_tembusan) > 0): ?>
@@ -137,14 +130,7 @@
     <tr><td colspan="4" style="width:100%"></td></tr>
     <tr class="align-center bold">
         <td colspan="2" style="width:60%"></td>
-        <td colspan="2" style="width:40%">
-        A.n. BUPATI PEKALONGAN<br>
-        KEPALA <?php echo strtoupper($skpd_name) ?><br>
-        <?php echo strtoupper($skpd_city) ?><br><br><br>
-        <span class="underline"><?php echo strtoupper($skpd_lead_name) ?></span><br>
-        <?php echo strtoupper($skpd_lead_jabatan) ?><br>
-        NIP. <?php echo strtoupper($skpd_lead_nip) ?>
-        </td>
+        <td colspan="2" style="width:40%"><?php print_ttd_kadin() ?></td>
     </tr>
 </table>
 <?php endif; ?>

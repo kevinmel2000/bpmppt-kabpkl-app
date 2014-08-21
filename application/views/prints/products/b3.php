@@ -5,7 +5,7 @@
     <td colspan="7" style="width:100%">
         <p>KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN</p>
         <p>PELAYANAN PERIZINAN TERPADU KABUPATEN PEKALONGAN</p>
-        <p>NOMOR : <?php echo '660.3 / '.$surat_nomor.' / BPMPPT / LB3 / '.strtoupper(format_roman(bdate('m', $surat_tanggal)).' / '.bdate('Y')) ?></p>
+        <p>NOMOR : <?php echo '660.3 / '.nbs(6).' / BPMPPT / LB3 / '.print_blnthn_head($surat_tanggal) ?></p>
     </td>
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>
@@ -15,7 +15,7 @@
 <tr><td colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="7" style="width:100%">
-        <p>PEMBERIAN IZIN PENYIMPANAN SEMENTARAs</p>
+        <p>PEMBERIAN IZIN PENYIMPANAN SEMENTARA</p>
         <p>LIMBAH BAHAN BERBAHAYA DAN BERACUN</p>
         <p><?php echo strtoupper($usaha_nama) ?></p>
     </td>
@@ -23,8 +23,8 @@
 <tr><td colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="7" style="width:100%">
-        <p>KEPALA BADAN PENANAMAN MODAL DAN PELAYANAN PERIZINAN TERPADU</p>
-        <p>KABUPATEN PEKALONGAN</p>
+        <p>KEPALA <?php echo strtoupper($skpd_name) ?></p>
+        <p><?php echo strtoupper($skpd_city) ?></p>
     </td>
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>
@@ -56,6 +56,7 @@
         </ol>
     </td>
 </tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>Mengingat</p></td>
     <td style="width:2%"><p>:</p></td>
@@ -71,7 +72,7 @@
             <li>Keputusan Menteri Negara Lingkungan Hidup Nomor 7 Tahun 2001 tentang Pejabat Pengawas Lingkungan Hidup dan Pejabat Pengawas Lingkungan Hidup Daerah;</li>
             <li>Keputusan Menteri Negara Lingkungan Hidup Nomor 58 Tahun 2002 tentang Tata Kerja Pejabat Pengawas Lingkungan Hidup di Provinsi/Kabupaten/Kota;</li>
             <li>Peraturan Daerah Kabupaten Pekalongan Nomor 15 Tahun 2008 tentang Organisasi dan Tata Kerja Lembaga Teknis Daerah, Satuan Polisi Pamong Praja dan Kantor Pelayanan Perizinan Terpadu (Lembaran Daerah Kabupaten Pekalongan Tahun 2008 Nomor 15, Tambahan Lembaran Daerah Kabupaten Pekalongan Nomor 14);</li>
-            <li>Peraturan Bupati Pekalongan Nomor 24 Tahun 2011 tentang Izin Penyimpanan Sementara dan Pengumpulan Limbah Bahan Beracun dan Berbahaya (B3).</li>
+            <li>Peraturan Bupati Pekalongan Nomor 24 Tahun 2011 tentang Izin Penyimpanan Sementara dan Pengumpulan Limbah Bahan Beracun dan Berbahaya (B3).</li><li>assdg</li>
         </ol>
     </td>
 </tr>
@@ -85,6 +86,7 @@
     <td style="width:2%">:</td>
     <td colspan="5" style="width:78%">KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN PELAYANAN PERIZINAN TERPADU KABUPATEN PEKALONGAN TENTANG IZIN PENYIMPANAN SEMENTARA LIMBAH BAHAN BERBAHAYA DAN BERACUN <?php echo strtoupper($usaha_nama) ?></td>
 </tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%">PERTAMA</td>
     <td style="width:2%">:</td>
@@ -184,34 +186,15 @@
 <tr>
     <td colspan="6" style="width:60%"></td>
     <td style="width:40%">
-        <p>Ditetapkan di : Kajen</p>
-        <p class="underline">Pada Tanggal : <?php echo nbs(6).bdate('F', $surat_tanggal).' '.bdate('Y') ?></p>
+        <p>Ditetapkan di : <?php echo $skpd_kab ?></p>
+        <p class="underline">Pada Tanggal : <?php print_blnthn_foot($surat_tanggal) ?></p>
     </td>
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="5" style="width:60%"></td>
-    <td colspan="2" style="width:40%">
-    A.n. BUPATI PEKALONGAN<br>
-    KEPALA <?php echo strtoupper($skpd_name) ?><br>
-    <?php echo strtoupper($skpd_city) ?><br><br><br>
-    <span class="underline"><?php echo strtoupper($skpd_lead_name) ?></span><br>
-    <?php echo strtoupper($skpd_lead_jabatan) ?><br>
-    NIP. <?php echo strtoupper($skpd_lead_nip) ?>
-    </td>
-
+    <td colspan="2" style="width:40%"><?php print_ttd_kadin() ?></td>
 </tr>
-<?php if (strlen($data_tembusan) > 0): ?>
-<tr>
-    <td colspan="7">
-        <p>Tembusan :</p>
-        <ol>
-        <?php foreach (unserialize($data_tembusan) as $tembusan) : ?>
-            <li><?php echo $tembusan ?>;</li>
-        <?php endforeach ?>
-        </ol>
-    </td>
-</tr>
-<?php endif ?>
+<tr><td colspan="7" style="width:100%"><?php print_tembusan($data_tembusan) ?></td></tr>
     </tbody>
 </table>

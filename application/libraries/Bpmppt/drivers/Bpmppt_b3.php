@@ -17,6 +17,7 @@ class Bpmppt_b3 extends CI_Driver
     public $code = 'B3';
     public $alias = 'izin_pengelolaan_b3';
     public $name = 'Izin Penyimpanan Sementara dan Pengumpulan Limbah Bahan Berbahaya dan Beracun';
+    public $prefield_label = 'No. &amp; Tgl. Input';
 
     /**
      * Default field
@@ -24,6 +25,7 @@ class Bpmppt_b3 extends CI_Driver
      * @var  array
      */
     public $defaults = array(
+        'pemohon_tanggal'      => '',
         'pemohon_nama'      => '',
         'pemohon_alamat'    => '',
         'pemohon_jabatan'   => '',
@@ -64,6 +66,13 @@ class Bpmppt_b3 extends CI_Driver
      */
     public function form( $data_obj = FALSE )
     {
+        // $fields[] = array(
+        //     'name'  => 'pemohon_tanggal',
+        //     'label' => 'Tanggal Permohonan',
+        //     'type'  => 'datepicker',
+        //     'std'   => ( $data_obj ? $data_obj->pemohon_tanggal : ''),
+        //     'validation'=> ( !$data_obj ? 'required' : '' ) );
+
         $fields[] = array(
             'name'  => 'fieldset_data_pemohon',
             'label' => 'Data Pemohon',
@@ -97,14 +106,14 @@ class Bpmppt_b3 extends CI_Driver
 
         $fields[] = array(
             'name'  => 'daftar_nomor',
-            'label' => 'Nomor Daftar Permohonan.',
+            'label' => 'Nomor Surat Permohonan.',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->daftar_nomor : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
         $fields[] = array(
             'name'  => 'daftar_tanggal',
-            'label' => 'Tanggal Daftar Permohonan.',
+            'label' => 'Tanggal Surat Permohonan.',
             'type'  => 'datepicker',
             'std'   => ( $data_obj ? $data_obj->daftar_tanggal : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
@@ -160,37 +169,37 @@ class Bpmppt_b3 extends CI_Driver
                 )
             );
 
-        $fields[] = array(
-            'name'  => 'usaha_tps',
-            'label' => 'Tempat Pembuangan Sementara',
-            'type'  => 'subfield',
-            'fields'=> array(
-                array(
-                    'name'  => 'fungsi',
-                    'label' => 'Keterangan fungsi',
-                    'type'  => 'text',
-                    'std'   => ( $data_obj ? $data_obj->usaha_tps_fungsi : ''),
-                    'validation'=> ( !$data_obj ? 'required' : '' ) ),
-                array(
-                    'name'  => 'ukuran',
-                    'label' => 'Ukuran',
-                    'type'  => 'text',
-                    'std'   => ( $data_obj ? $data_obj->usaha_tps_ukuran : ''),
-                    'validation'=> ( !$data_obj ? 'required' : '' ) ),
-                array(
-                    'name'  => 'koor_s',
-                    'label' => 'Koor. S',
-                    'type'  => 'text',
-                    'std'   => ( $data_obj ? $data_obj->usaha_tps_koor_s : ''),
-                    'validation'=> ( !$data_obj ? 'required' : '' ) ),
-                array(
-                    'name'  => 'koor_e',
-                    'label' => 'Koor. E',
-                    'type'  => 'text',
-                    'std'   => ( $data_obj ? $data_obj->usaha_tps_koor_e : ''),
-                    'validation'=> ( !$data_obj ? 'required' : '' ) ),
-                )
-            );
+        // $fields[] = array(
+        //     'name'  => 'usaha_tps',
+        //     'label' => 'Tempat Pembuangan Sementara',
+        //     'type'  => 'subfield',
+        //     'fields'=> array(
+        //         array(
+        //             'name'  => 'fungsi',
+        //             'label' => 'Keterangan fungsi',
+        //             'type'  => 'text',
+        //             'std'   => ( $data_obj ? $data_obj->usaha_tps_fungsi : ''),
+        //             'validation'=> ( !$data_obj ? 'required' : '' ) ),
+        //         array(
+        //             'name'  => 'ukuran',
+        //             'label' => 'Ukuran',
+        //             'type'  => 'text',
+        //             'std'   => ( $data_obj ? $data_obj->usaha_tps_ukuran : ''),
+        //             'validation'=> ( !$data_obj ? 'required' : '' ) ),
+        //         array(
+        //             'name'  => 'koor_s',
+        //             'label' => 'Koor. S',
+        //             'type'  => 'text',
+        //             'std'   => ( $data_obj ? $data_obj->usaha_tps_koor_s : ''),
+        //             'validation'=> ( !$data_obj ? 'required' : '' ) ),
+        //         array(
+        //             'name'  => 'koor_e',
+        //             'label' => 'Koor. E',
+        //             'type'  => 'text',
+        //             'std'   => ( $data_obj ? $data_obj->usaha_tps_koor_e : ''),
+        //             'validation'=> ( !$data_obj ? 'required' : '' ) ),
+        //         )
+        //     );
 
         $fields[] = array(
             'name'  => 'fieldset_ketentuan',
@@ -201,7 +210,7 @@ class Bpmppt_b3 extends CI_Driver
             'name'  => 'ketentuan_teknis',
             'label' => 'Ketentuan Teknis',
             'type'  => 'editor',
-            'std'   => ( $data_obj ? $data_obj->ketentuan_teknis : $this->_ci->bakaigniter->get_setting('b3_teknis')),
+            'std'   => ( $data_obj ? $data_obj->ketentuan_teknis : get_setting('b3_teknis')),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
         return $fields;

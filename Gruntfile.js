@@ -1,10 +1,19 @@
+/* global module, require */
 module.exports = function(grunt) {
   'use strict';
 
+  // Force use of Unix newlines
+  grunt.util.linefeed = '\n';
+  // Load all grunt development dependencies
+  require('load-grunt-tasks')(grunt, {scope: 'devDependencies'});
+  // Let see total execution times
+  require('time-grunt')(grunt);
+
   grunt.initConfig({
-    // Metadata.
+    pkg: grunt.file.readJSON('package.json'),
+
     php: {
-      cores: {
+      dev: {
         options: {
           open: true,
           port: 8088
@@ -13,20 +22,26 @@ module.exports = function(grunt) {
     },
 
     phplint: {
-      cores: [
+      dev: [
         'application/core/*.php',
         'application/controllers/**/*.php',
         'application/libraries/**/*.php',
         'application/models/**/*.php',
-        'application/views/**/*.php',
+        'application/views/**/*.php'
+      ],
+      bi: [
+        'application/bootigniter/*.php',
+        'application/bootigniter/**/*.php',
+        '!application/bootigniter/_*.php',
+        '!application/bootigniter/_vendor/'
       ]
     },
 
     phpunit: {
       options: {
-        bin: 'vendor/bin/phpunit',
+        bin: 'vendor/bin/phpunit'
       },
-      base: {
+      dev: {
         dir: './application/tests'
       }
     },
@@ -36,7 +51,7 @@ module.exports = function(grunt) {
         strictMath: true,
         outputSourceFiles: true
       },
-      core: {
+      dev: {
         files: {
           "asset/css/style.css": "asset/less/style.less",
           "asset/css/print.css": "asset/less/print.less"
@@ -46,7 +61,16 @@ module.exports = function(grunt) {
 
     autoprefixer: {
       options: {
-        browsers: ['last 2 versions', 'ie 8', 'ie 9', 'android 2.3', 'android 4', 'opera 12'],
+        browsers: [
+          'Android 2.3',
+          'Android >= 4',
+          'Chrome >= 20',
+          'Firefox >= 24',
+          'Explorer >= 8',
+          'iOS >= 6',
+          'Opera >= 12',
+          'Safari >= 6'
+        ],
         map: true
       },
       style: {
@@ -63,33 +87,30 @@ module.exports = function(grunt) {
       options: {
         config: 'asset/less/.csscomb.json'
       },
-      core: {
+      dev: {
         expand: true,
         cwd: 'asset/css/',
         dest: 'asset/css/',
-        src: [
-          '*.css',
-          '!*.min.css'
-        ]
+        src: [ '*.css', '!*.min.css' ]
       }
     },
 
     csslint: {
-      options: grunt.file.readJSON('asset/less/.csslintrc'),
-      core: [
-        'asset/css/*.css',
-        '!asset/css/*.min.css',
-        '!asset/css/install.css'
-      ]
+      dev: {
+        options: {
+          csslintrc: 'asset/less/.csslintrc'
+        },
+        src: [ 'asset/css/*.css', '!asset/css/*.min.css' ]
+      }
     },
 
     cssmin: {
-      core: {
+      dev: {
         expand: true,
         report: 'gzip',
         cwd: 'asset/css/',
-        src: ['style.css', 'print.css'],
         dest: 'asset/css/',
+        src: ['style.css', 'print.css'],
         ext: '.min.css'
       }
     },
@@ -100,37 +121,23 @@ module.exports = function(grunt) {
         livereload: true
       },
       less: {
-        files: [
-          'asset/less/**/*.less',
-          'asset/less/*.less'
-        ],
-        tasks: [
-          'cssdist',
-          'csstest'
-        ]
+        files: [ 'asset/less/**/*.less', 'asset/less/*.less' ],
+        tasks: [ 'cssdist' ]
       },
       phpTest: {
         files: '<%= phpunit.base.dir %>/**/*Test.php',
         tasks: 'phpunit'
       },
       phpCore: {
-        files: '<%= phplint.cores %>',
+        files: '<%= phplint.dev %>',
         tasks: 'phplint'
       }
     }
 
   });
 
-  require('load-grunt-tasks')(grunt, {scope: 'devDependencies'});
-  require('time-grunt')(grunt);
-
-  grunt.registerTask('build', ['cssdist', 'csstest', 'phptest']);
-
-  grunt.registerTask('phptest', ['phplint', 'phpunit']);
-
-  grunt.registerTask('cssdist', ['less', 'autoprefixer', 'csscomb']);
-
-  grunt.registerTask('csstest', ['csslint', 'cssmin']);
-
-  grunt.registerTask('default', ['php:cores', 'watch']);
+  grunt.registerTask('build',   ['cssdist', 'phpdist']);
+  grunt.registerTask('phpdist', ['phplint', 'phpunit']);
+  grunt.registerTask('cssdist', ['less', 'autoprefixer', 'csscomb', 'csslint', 'cssmin']);
+  grunt.registerTask('default', ['php:dev', 'watch']);
 }

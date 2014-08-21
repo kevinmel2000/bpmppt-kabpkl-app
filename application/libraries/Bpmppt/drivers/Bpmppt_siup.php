@@ -31,8 +31,8 @@ class Bpmppt_siup extends CI_Driver
         'pemohon_nama'                      => '',
         'pemilik_ktp'                       => '',
         'pemilik_alamat'                    => '',
-        'pemilik_lahir_tmpt'                => '',
-        'pemilik_lahir_tgl'                 => '',
+        // 'pemilik_lahir_tmpt'                => '',
+        // 'pemilik_lahir_tgl'                 => '',
         'pemilik_no_telp'                   => '',
         'pemilik_no_fax'                    => '',
         'pemilik_usaha'                     => '',
@@ -57,9 +57,9 @@ class Bpmppt_siup extends CI_Driver
         'usaha_siup_lama_tgl'               => '',
         'usaha_saham_status'                => '',
         'usaha_modal_awal'                  => '',
-        'usaha_saham_nilai_total'           => '',
-        'usaha_saham_nilai_nasional'        => '',
-        'usaha_saham_nilai_tgl'             => '',
+        // 'usaha_saham_nilai_total'           => '',
+        // 'usaha_saham_nilai_nasional'        => '',
+        // 'usaha_saham_nilai_tgl'             => '',
         );
 
     // -------------------------------------------------------------------------
@@ -138,25 +138,25 @@ class Bpmppt_siup extends CI_Driver
             'type'  => 'textarea',
             'std'   => ( $data_obj ? $data_obj->pemilik_alamat : '') );
 
-        $fields[] = array(
-            'name'  => 'pemilik_lahir',
-            'label' => 'Tempat &amp; Tgl. Lahir',
-            'type'  => 'subfield',
-            'fields'=> array(
-                array(
-                    'name'  => 'tmpt',
-                    'label' => 'Tempat Lahir',
-                    'type'  => 'text',
-                    'std'   => ( $data_obj ? $data_obj->pemilik_lahir_tmpt : '' ),
-                    ),
-                array(
-                    'name'  => 'tgl',
-                    'label' => 'Tanggal Lahir',
-                    'type'  => 'datepicker',
-                    'std'   => ( $data_obj ? format_date($data_obj->pemilik_lahir_tgl) : ''),
-                    'callback'=> 'string_to_date',
-                    ),
-                ));
+        // $fields[] = array(
+        //     'name'  => 'pemilik_lahir',
+        //     'label' => 'Tempat &amp; Tgl. Lahir',
+        //     'type'  => 'subfield',
+        //     'fields'=> array(
+        //         array(
+        //             'name'  => 'tmpt',
+        //             'label' => 'Tempat Lahir',
+        //             'type'  => 'text',
+        //             'std'   => ( $data_obj ? $data_obj->pemilik_lahir_tmpt : '' ),
+        //             ),
+        //         array(
+        //             'name'  => 'tgl',
+        //             'label' => 'Tanggal Lahir',
+        //             'type'  => 'datepicker',
+        //             'std'   => ( $data_obj ? format_date($data_obj->pemilik_lahir_tgl) : ''),
+        //             'callback'=> 'string_to_date',
+        //             ),
+        //         ));
 
         $fields[] = array(
             'name'  => 'pemilik_no',
@@ -286,35 +286,35 @@ class Bpmppt_siup extends CI_Driver
             'std'   => ( $data_obj ? $data_obj->usaha_modal_awal : ''),
             'validation'=> ( !$data_obj ? 'required|numeric' : '' ) );
 
-        $fields[] = array(
-            'name'  => 'usaha_saham_nilai',
-            'label' => 'Nilai Saham',
-            'type'  => 'subfield',
-            'fields'=> array(
-                array(
-                    'col'   => '6',
-                    'name'  => 'total',
-                    'label' => 'Total Nilai Saham (Rp.)',
-                    'type'  => 'text',
-                    'std'   => ( $data_obj ? $data_obj->usaha_saham_nilai_total : ''),
-                    'validation'=> ( !$data_obj ? 'required|numeric' : '' ) ),
-                array(
-                    'col'   => '3',
-                    'name'  => 'nasional',
-                    'label' => 'Nasional (%)',
-                    'type'  => 'number',
-                    'max'   => 100,
-                    'std'   => ( $data_obj ? $data_obj->usaha_saham_nilai_nasional : ''),
-                    'validation'=> ( !$data_obj ? 'required|numeric' : '' ) ),
-                array(
-                    'col'   => '3',
-                    'name'  => 'tgl',
-                    'label' => 'Asing (%)',
-                    'type'  => 'number',
-                    'max'   => 100,
-                    'std'   => ( $data_obj ? $data_obj->usaha_saham_nilai_tgl : ''),
-                    'validation'=> ( !$data_obj ? 'required|numeric' : '' ) ),
-                ));
+        // $fields[] = array(
+        //     'name'  => 'usaha_saham_nilai',
+        //     'label' => 'Nilai Saham',
+        //     'type'  => 'subfield',
+        //     'fields'=> array(
+        //         array(
+        //             'col'   => '6',
+        //             'name'  => 'total',
+        //             'label' => 'Total Nilai Saham (Rp.)',
+        //             'type'  => 'text',
+        //             'std'   => ( $data_obj ? $data_obj->usaha_saham_nilai_total : ''),
+        //             'validation'=> ( !$data_obj ? 'required|numeric' : '' ) ),
+        //         array(
+        //             'col'   => '3',
+        //             'name'  => 'nasional',
+        //             'label' => 'Nasional (%)',
+        //             'type'  => 'number',
+        //             'max'   => 100,
+        //             'std'   => ( $data_obj ? $data_obj->usaha_saham_nilai_nasional : ''),
+        //             'validation'=> ( !$data_obj ? 'required|numeric' : '' ) ),
+        //         array(
+        //             'col'   => '3',
+        //             'name'  => 'tgl',
+        //             'label' => 'Asing (%)',
+        //             'type'  => 'number',
+        //             'max'   => 100,
+        //             'std'   => ( $data_obj ? $data_obj->usaha_saham_nilai_tgl : ''),
+        //             'validation'=> ( !$data_obj ? 'required|numeric' : '' ) ),
+        //         ));
 
         return $fields;
     }

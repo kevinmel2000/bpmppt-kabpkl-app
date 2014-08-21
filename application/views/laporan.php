@@ -13,21 +13,11 @@
 <p class="align-center bold" style="display: block">
 <?php echo strtoupper($skpd_name.' '.$skpd_city) ?><br><br>
 <span class="align-left" style="display: inline-block; width: 20%;"><?php echo strtoupper($skpd_city) ?></span><span class="align-left" style="display: inline-block; width:80%;"><?php echo ': '.strtoupper($layanan) ?></span><br>
-<span class="align-left" style="display: inline-block; width: 20%;">BULAN</span><span class="align-left" style="display: inline-block; width:80%;"><?php echo ': '.strtoupper(bdate('F Y')) ?></span>
+<span class="align-left" style="display: inline-block; width: 20%;">BULAN</span><span class="align-left" style="display: inline-block; width:80%;"><?php echo ': '.strtoupper(bdate('%F %Y')) ?></span>
 </p>
 <br>
-
 <?php echo $contents; ?>
-
 <br><br>
-<p style="margin-left: 70%; width: 30%" class="align-center">
-Kajen, <?php echo format_date() ?><br>
-Kepala <?php echo $skpd_name ?><br>
-<?php echo $skpd_city ?><br>
-<br><br><br>
-<span class="bold"><?php echo $skpd_lead_name ?></span><br>
-NIP. <?php echo $skpd_lead_nip ?>
-</p>
-
+<p style="margin-left: 70%; width: 30%" class="align-center bold"><?php print_ttd_kadin() ?></p>
 </body>
 </html>

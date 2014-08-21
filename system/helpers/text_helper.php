@@ -440,7 +440,7 @@ if ( ! function_exists('word_wrap'))
 			// If so we'll join it to the output and continue
 			if (strlen($line) <= $charlim)
 			{
-				$output .= $line."\n";
+				$output .= $line."<br>";
 				continue;
 			}
 

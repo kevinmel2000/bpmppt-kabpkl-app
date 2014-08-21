@@ -69,9 +69,11 @@ class Bpmppt_model extends CI_Model
     {
         parent::__construct();
 
-        foreach ( array('data', 'data_meta') as $table )
+        $this->config->load('bpmppt');
+
+        foreach ( array('data', 'datameta') as $table )
         {
-            $this->_table[$table] = $table;
+            $this->_table[$table] = config_item('bpmppt_'.$table.'_table');
         }
 
         log_message('debug', "#BPMPPT: model Class Initialized");
@@ -82,14 +84,14 @@ class Bpmppt_model extends CI_Model
     public function skpd_properties()
     {
         $prop = array(
-                'skpd_name', 'skpd_address', 'skpd_city', 'skpd_prov',
+                'skpd_name', 'skpd_address', 'skpd_kab', 'skpd_city', 'skpd_prov',
                 'skpd_telp', 'skpd_fax', 'skpd_pos', 'skpd_web', 'skpd_email',
                 'skpd_logo', 'skpd_lead_name', 'skpd_lead_nip', 'skpd_lead_jabatan'
                 );
 
         foreach ( $prop as $property )
         {
-            $data[$property] = $this->bakaigniter->get_setting( $property );
+            $data[$property] = get_setting( $property );
         }
 
         return $data;
@@ -264,7 +266,7 @@ class Bpmppt_model extends CI_Model
                         ->where('meta_key', $datameta_key)
                         ->like('meta_value', $datameta_value)
                         ->group_by('data_id')
-                        ->get($this->_table['data_meta']);
+                        ->get($this->_table['datameta']);
     }
 
     // -------------------------------------------------------------------------
@@ -293,7 +295,7 @@ class Bpmppt_model extends CI_Model
     // get datameta
     public function get_datameta( $data_id, $module_alias )
     {
-        if ($query = $this->db->get_where( $this->_table['data_meta'], array( 'data_id' => $data_id, 'data_type' => $module_alias ) ))
+        if ($query = $this->db->get_where( $this->_table['datameta'], array( 'data_id' => $data_id, 'data_type' => $module_alias ) ))
         {
             $obj = new stdClass;
 
@@ -385,7 +387,7 @@ class Bpmppt_model extends CI_Model
     {
         if ( $data = $this->db->delete( $this->_table['data'], array( 'id' => $data_id, 'type' => $module_name ) ) )
         {
-            if ( $this->db->delete( $this->_table['data_meta'], array( 'data_id' => $data_id, 'data_type' => $module_name ) ) )
+            if ( $this->db->delete( $this->_table['datameta'], array( 'data_id' => $data_id, 'data_type' => $module_name ) ) )
             {
                 return TRUE;
             }
@@ -428,7 +430,7 @@ class Bpmppt_model extends CI_Model
         }
 
         return $this->db->update(
-            $this->_table['data_meta'],
+            $this->_table['datameta'],
             array(  'meta_value' => $meta_value ),
             array(  'data_id'   => $data_id,
                     'data_type' => $module_name,
@@ -455,7 +457,7 @@ class Bpmppt_model extends CI_Model
                 $meta_value = serialize($meta_value);
             }
 
-            $this->db->insert( $this->_table['data_meta'], array(
+            $this->db->insert( $this->_table['datameta'], array(
                 'data_id'   => $data_id,
                 'data_type' => $module_name,
                 'meta_key'  => $meta_key,
@@ -474,7 +476,7 @@ class Bpmppt_model extends CI_Model
         $data = $this->db->get_where( $this->_table['data'], array('id' => $data_id) )->row();
 
         $log[] = array(
-            'user_id'   => $this->authr->get_user_id(),
+            'user_id'   => $this->biauth->get_user_id(),
             'date'      => string_to_datetime(),
             'message'   => $log_message,
             );

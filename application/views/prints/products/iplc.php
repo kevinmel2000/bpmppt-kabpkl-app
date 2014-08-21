@@ -5,7 +5,7 @@
     <td colspan="7" style="width:100%">
         <p>KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN</p>
         <p>PELAYANAN PERIZINAN TERPADU KABUPATEN PEKALONGAN</p>
-        <p>NOMOR : <?php echo '658.31 /'.nbs(6).'/ BPMPPT / IPLC / '.strtoupper(format_roman(bdate('m', $surat_tanggal)).' / '.bdate('Y')) ?></p>
+        <p>NOMOR : <?php echo '658.31 /'.nbs(6).'/ BPMPPT / IPLC / '.print_blnthn_head($surat_tanggal) ?></p>
     </td>
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>
@@ -106,98 +106,7 @@
     <td style="width:2%"><p>:</p></td>
     <td colspan="5" style="width:78%" class="align-justify">
         <p>Kepada pemegang izin sebagaimana dimaksud dalam Diktum KESATU, wajib memenuhi ketentuan sebagai berikut :</p>
-        <ol class="lower-alpha">
-            <li>
-                <p>Ketentuan Teknis</p>
-                <p>Pembuangan air limbah pabrik Pengolahan Karet Mentah dengan kapasitas produksi <?php echo $limbah_kapasitas_produksi ?> Ton/hari harus memenuhi persyaratan :</p>
-                <ol class="decimal">
-                    <li>
-                        <p>Debit maksimum air limbah yang dibuang <?php echo $limbah_debit_max_proses ?> m3/hari (Proses pengolahan getah karet menjadi karet kering) harus memenuhi persyaratan baku mutu air limbah sesuai dengan Peraturan Daerah Provinsi Jawa Tengah Nomor 5 Tahun 2012. Dengan kualitas air limbah, yaitu konsentrasi dan beban pencemaran maksimum sebagai berikut :</p>
-                        <table class="bordered">
-                            <tr>
-                                <td>NO</td>
-                                <td>Parameter</td>
-                                <td>Kadar Maksimum (Mg/l)</td>
-                                <td>Beban Maksimum (Mg/l)</td>
-                                <?php if ($limbah_kadar_max_kond_bod) : ?>
-                                    <td>Kadar max kondensor (Mg/l)</td>
-                                    <td>Beban pencemaran kondensor (Mg/l)</td>
-                                <?php endif; ?>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>BOD<sub>5</sub></td>
-                                <td><?php echo $limbah_kadar_max_proses_bod ?></td>
-                                <td><?php echo $limbah_beban_max_proses_bod ?></td>
-                                <?php if ($limbah_kadar_max_kond_bod) : ?>
-                                    <td><?php echo $limbah_kadar_max_kond_bod ?></td>
-                                    <td><?php echo $limbah_beban_max_proses_bod ?></td>
-                                <?php endif; ?>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>COD</td>
-                                <td><?php echo $limbah_kadar_max_proses_cod ?></td>
-                                <td><?php echo $limbah_beban_max_proses_cod ?></td>
-                                <?php if ($limbah_kadar_max_kond_cod) : ?>
-                                    <td><?php echo $limbah_kadar_max_kond_cod ?></td>
-                                    <td><?php echo $limbah_beban_max_proses_cod ?></td>
-                                <?php endif; ?>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>TTS</td>
-                                <td><?php echo $limbah_kadar_max_proses_tts ?></td>
-                                <td><?php echo $limbah_beban_max_proses_tts ?></td>
-                                <?php if ($limbah_kadar_max_kond_tts) : ?>
-                                    <td><?php echo $limbah_kadar_max_kond_tts ?></td>
-                                    <td><?php echo $limbah_beban_max_proses_tts ?></td>
-                                <?php endif; ?>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Amonia (MH3/N)</td>
-                                <td><?php echo $limbah_kadar_max_proses_minyak ?></td>
-                                <td><?php echo $limbah_beban_max_proses_minyak ?></td>
-                                <?php if ($limbah_kadar_max_kond_minyak) : ?>
-                                    <td><?php echo $limbah_kadar_max_kond_minyak ?></td>
-                                    <td><?php echo $limbah_beban_max_proses_minyak ?></td>
-                                <?php endif; ?>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>pH</td>
-                                <td colspan="2"><?php echo $limbah_kadar_max_proses_sulfida ?></td>
-                                <?php if ($limbah_kadar_max_kond_sulfida) : ?>
-                                    <td colspan="2"><?php echo $limbah_kadar_max_kond_sulfida ?></td>
-                                <?php endif; ?>
-                            </tr>
-                            <tr>
-                                <td>6</td>
-                                <td>Debit Maksimum</td>
-                                <td colspan="2"><?php echo $limbah_kadar_max_proses_ph ?></td>
-                                <?php if ($limbah_kadar_max_kond_ph) : ?>
-                                    <td colspan="2"><?php echo $limbah_kadar_max_kond_ph ?></td>
-                                <?php endif; ?>
-                            </tr>
-                        </table>
-                    </li>
-                    <li>Pembuangan air limbah dimaksud dibuang ke Sungai Kawung Dukuh Blimbing Desa Pedawang Kecamatan Karanganyar Kabupaten Pekalongan.</li>
-                    <li>Melakukan pemantauan dan pencatatan harian debit air limbah yang dibuang ke air atau sumber air.</li>
-                    <li>Tidak menggabungkan saluran pembuangan air limbah dengan saluran drainase atau saluran lainnya.</li>
-                    <li>Melakukan pemantauan pada titik-titik pantau di inlet dan outlet Instalasi Pengolahan Air Limbah (IPAL) setiap satu bulan sekali dan pemantauan air / badan air penerima sebelum dan sesudah bercampur air limbah setiap 6 (enam) bulan sekali dengan biaya ditanggung perusahaan.</li>
-                    <li>Tidak melakukan pengenceran air limbah dan apabila air limbah tersebut akan dimanfaatkan untuk kegiatan lain harus dilakukan penelitian terlebih dahulu sesuai dengan ketentuan yang berlaku.</li>
-                </ol>
-            </li>
-            <li>
-                <p>Kewajiban Pihak Perusahaan</p>
-                <ol>
-                    <li>Melaporkan hasil pemantauan analisa air limbah di inlet dan outlet IPAL setiap 1 (satu) bulan sekali dan hasil analisa kualitas air di badan air penerima sebelum dan sesudah bercampur air limbah setiap 6 (enam) bulan sekali kepada Bupati Pekalongan Cq. Kepala Kantor Lingkungan Hidup Kabupaten Pekalongan.</li>
-                    <li>Mendaftarkan ulang perpanjangan izin secara tertulis kepada Bupati Pekalongan Cq. Kepala Kantor Lingkungan Hidup Kabupaten Pekalongan selambat-lambatnya 3 (tiga) bulan sebelum masa berlakunya Izin Pembuangan Air Limbah berakhir.</li>
-                    <li>Melaksanakan dan memenuhi semua ketentuan yang ditetapkan oleh Pemerintah Pusat maupun Pemerintah Daerah dalam kaitannya dengan Pembuangan Air Limbah</li>
-                </ol>
-            </li>
-        </ol>
+        <?php echo $data_teknis ?>
     </td>
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>
@@ -222,38 +131,21 @@
 <tr>
     <td style="width:20%"><p>KEENAM</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%" class="align-justify">Keputusan ini mulai berlaku sejak tanggal ditetapkan ( <?php echo bdate('F', $surat_tanggal).' '.bdate('Y') ?> s/d <?php echo bdate('F', $surat_tanggal).' '.(bdate('Y') + 5) ?> )</td>
+    <td colspan="5" style="width:78%" class="align-justify">Keputusan ini mulai berlaku sejak tanggal ditetapkan ( <?php echo bdate('%F', $surat_tanggal).' '.bdate('%Y') ?> s/d <?php echo bdate('%F', $surat_tanggal).' '.(bdate('%Y') + 5) ?> )</td>
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
     <td colspan="6" style="width:60%"></td>
     <td style="width:40%">
-        <p>Ditetapkan di : Kajen</p>
-        <p class="underline">Pada Tanggal : <?php echo nbs(6).bdate('F', $surat_tanggal).' '.bdate('Y') ?></p>
+        <p>Ditetapkan di : <?php echo $skpd_kab ?></p>
+        <p class="underline">Pada Tanggal : <?php print_blnthn_foot($surat_tanggal) ?></p>
     </td>
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="5" style="width:60%"></td>
-    <td colspan="2" style="width:40%">
-    A.n. BUPATI PEKALONGAN<br>
-    KEPALA <?php echo strtoupper($skpd_name) ?><br>
-    <?php echo strtoupper($skpd_city) ?><br><br><br>
-    <span class="underline"><?php echo strtoupper($skpd_lead_name) ?></span><br>
-    <?php echo strtoupper($skpd_lead_jabatan) ?><br>
-    NIP. <?php echo strtoupper($skpd_lead_nip) ?>
-    </td>
+    <td colspan="2" style="width:40%"><?php print_ttd_kadin() ?></td>
 </tr>
-<?php if (strlen($data_tembusan) > 0): ?>
-<tr>
-    <td colspan="7">
-        <p>Tembusan :</p>
-        <ol>
-        <?php foreach (unserialize($data_tembusan) as $tembusan) : ?>
-            <li><?php echo $tembusan ?>;</li>
-        <?php endforeach ?>
-        </ol>
-    </td>
-</tr><?php endif ?>
+<tr><td colspan="7" style="width:100%"><?php print_tembusan($data_tembusan) ?></td></tr>
     </tbody>
 </table>

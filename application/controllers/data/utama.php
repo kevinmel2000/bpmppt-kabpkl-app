@@ -5,7 +5,7 @@
  *
  * @subpackage  Controller
  */
-class Utama extends BAKA_Controller
+class Utama extends BI_Controller
 {
     public function __construct()
     {
@@ -13,7 +13,7 @@ class Utama extends BAKA_Controller
 
         $this->verify_login(uri_string());
 
-        $this->themee->add_navbar( 'data_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
+        $this->bitheme->add_navbar( 'data_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
         $this->data_navbar( 'data_sidebar', 'side' );
 
         $this->set_panel_title('Dashboard');
@@ -48,8 +48,8 @@ class Utama extends BAKA_Controller
                     'done'     => $this->bpmppt->count_data($layanan['alias'], array('status' => 'done')),
                     );
             }
-            
-            set_script('chartjs', 'lib/chart.min.js', '', 'master');
+
+            set_script('chartjs', 'js/lib/chart.min.js', 'jquery', 'master');
 
             $script = "$('.charts').each(function () {\n"
                     . "    var el = $(this),\n"

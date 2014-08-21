@@ -74,8 +74,38 @@
 body {
   padding: 2px;
   margin: 0;
+  font-family: Arial, sans-serif;
   font-size: 11px;
   line-height: 1.2em;
+}
+p,
+span,
+ol,
+ul,
+sub,
+sup,
+table {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: 1.2em;
+}
+p,
+ol,
+ul {
+  margin: 0;
+}
+sub,
+sup {
+  position: relative;
+  font-size: 75%;
+  line-height: 0;
+  vertical-align: baseline;
+}
+sup {
+  top: -.5em;
+}
+sub {
+  bottom: -.25em;
 }
 ol,
 ul {
@@ -123,7 +153,8 @@ ul.square {
 }
 table {
   min-width: 100%;
-  font-size: 11pt;
+  font-family: 'Arial' !important;
+  font-size: 11px;
   border-collapse: collapse;
   border-color: transparent;
   border-width: 0;
@@ -134,9 +165,6 @@ table.bordered td {
 }
 table.pagebreak {
   page-break-before: always;
-}
-table p {
-  font-size: inherit;
 }
 table tr.t-header td {
   border-bottom: 2px solid #000;
@@ -164,34 +192,14 @@ table.tanda_daftar_perusahaan p,
 table.surat_izin_usaha_perdagangan p {
   font-family: 'Arial' !important;
 }
-table.izin_reklame,
+table .logo-skpd {
+  top: 0;
+}
 table.izin_gangguan {
-  font-size: 11px;
-  line-height: 1.2em;
+  margin-top: 40px;
 }
-sub,
-sup {
-  position: relative;
-  font-size: 75%;
-  line-height: 0;
-  vertical-align: baseline;
-}
-sup {
-  top: -.5em;
-}
-sub {
-  bottom: -.25em;
-}
-span {
-  font-size: inherit;
-}
-p,
-ol,
-ul {
-  margin: 0;
-  font-family: "Times New Roman";
-  font-size: 11pt;
-  line-height: 1.2em;
+table.izin_gangguan .logo-skpd {
+  top: 40px;
 }
 .align-center {
   text-align: center;
@@ -211,3 +219,5 @@ ul {
 .underline {
   text-decoration: underline;
 }
+
+/*# sourceMappingURL=print.css.map */

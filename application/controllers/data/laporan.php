@@ -5,7 +5,7 @@
  *
  * @subpackage  Controller
  */
-class Laporan extends BAKA_Controller
+class Laporan extends BI_Controller
 {
     public function __construct()
     {
@@ -13,7 +13,7 @@ class Laporan extends BAKA_Controller
 
         $this->verify_login(uri_string());
 
-        $this->themee->add_navbar( 'data_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
+        $this->bitheme->add_navbar( 'data_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
         $this->data_navbar( 'data_sidebar', 'side' );
 
         $this->set_panel_title('Laporan');
@@ -74,9 +74,9 @@ class Laporan extends BAKA_Controller
             'label' => 'Cetak sekarang',
             'class' => 'btn-primary pull-right' );
 
-        $this->load->library('former');
+        $this->load->library('biform');
 
-        $form = $this->former->init( array(
+        $form = $this->biform->initialize( array(
             'name'      => 'print-all',
             'action'    => current_url(),
             'extras'    => array('target' => 'Popup_Window'),

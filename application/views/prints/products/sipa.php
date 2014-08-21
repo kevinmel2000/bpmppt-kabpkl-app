@@ -3,7 +3,9 @@
         <tr><td colspan="5" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="5" style="width:100%">
-        <p>KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN PELAYANAN PERIZINAN TERPADU<br>KABUPATEN PEKALONGAN<br>NOMOR : <?php echo $surat_nomor.'/'.nbs(6).'/'.strtoupper(format_roman(bdate('m', $surat_tanggal)).'/'.bdate('Y')) ?></p>
+<p>KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN PELAYANAN PERIZINAN TERPADU<br>
+KABUPATEN PEKALONGAN<br>
+NOMOR : <?php echo $surat_nomor.'/'.nbs(6).'/'.print_blnthn_head($surat_tanggal) ?></p>
     </td>
 </tr>
 <tr><td colspan="5" style="width:100%"></td></tr>
@@ -83,35 +85,15 @@
 <tr>
     <td colspan="4" style="width:60%"></td>
     <td style="width: 40%; border-bottom: 2px solid #000">
-        <p>Ditetapkan di : Kajen</p>
-        <p class="underline">Pada Tanggal : <?php echo nbs(6).bdate('F', $surat_tanggal).' '.bdate('Y') ?></p>
+        <p>Ditetapkan di : <?php echo $skpd_kab ?></p>
+        <p class="underline">Pada Tanggal : <?php print_blnthn_foot($surat_tanggal) ?></p>
     </td>
 </tr>
 <tr><td colspan="5" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="3" style="width:60%"></td>
-    <td colspan="2" style="width:40%">
-    A.n. BUPATI PEKALONGAN<br>
-    KEPALA <?php echo strtoupper($skpd_name) ?><br>
-    <?php echo strtoupper($skpd_city) ?><br><br><br>
-    <span class="underline"><?php echo strtoupper($skpd_lead_name) ?></span><br>
-    <?php echo strtoupper($skpd_lead_jabatan) ?><br>
-    NIP. <?php echo strtoupper($skpd_lead_nip) ?>
-    </td>
+    <td colspan="2" style="width:40%"><?php print_ttd_kadin() ?></td>
 </tr>
-<tr><td colspan="5" style="width:100%"></td></tr>
-<?php if (strlen($data_tembusan) > 0): ?>
-<tr>
-    <td colspan="7">
-        <p>Tembusan :</p>
-        <ol>
-        <?php foreach (unserialize($data_tembusan) as $tembusan) : ?>
-            <li><?php echo $tembusan ?>;</li>
-        <?php endforeach ?>
-        </ol>
-    </td>
-</tr>
-<?php endif ?>
-
+<tr><td colspan="5" style="width:100%"><?php print_tembusan($data_tembusan) ?></td></tr>
     </tbody>
 </table>

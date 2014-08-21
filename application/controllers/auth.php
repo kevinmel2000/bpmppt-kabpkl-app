@@ -5,15 +5,15 @@
  *
  * @subpackage  Controller
  */
-class Auth extends BAKA_Controller
+class Auth extends BI_Controller
 {
     public function __construct()
     {
         parent::__construct();
 
-        $this->data['desc_title'] = $this->bakaigniter->get_setting('welcome_title');
+        $this->data['desc_title'] = get_setting('welcome_title');
 
-        $this->load->library('former');
+        $this->load->library('biform');
         $this->set_panel_title('User Authentication');
     }
 
@@ -27,12 +27,12 @@ class Auth extends BAKA_Controller
         $this->verify_status();
         $this->set_panel_title('Login Pengguna');
 
-        $attempts = ( $this->bakaigniter->get_setting('auth_login_count_attempts') AND ($attempts = $this->input->post('username'))) ? $this->security->xss_clean($attempts) : '';
+        $attempts = ( get_setting('auth_login_count_attempts') AND ($attempts = $this->input->post('username'))) ? $this->security->xss_clean($attempts) : '';
 
         $fields[]   = array(
             'name'  => 'username',
             'type'  => 'text',
-            'label' => _x('auth_login_by_'.login_by()),
+            'label' => _x('biauth_login_by_'.get_setting('auth_login_by')),
             'validation'=> 'required' );
 
         $fields[]   = array(
@@ -47,9 +47,9 @@ class Auth extends BAKA_Controller
             'label' => '',
             'option'=> array( 1 => 'Ingat saya dikomputer ini.' ) );
 
-        if ( $this->authr->login_attempt->is_max_exceeded( $attempts ) )
+        if ( $this->biauth->login_attempt->is_max_exceeded( $attempts ) )
         {
-            $captcha = (bool) $this->bakaigniter->get_setting('auth_use_recaptcha') ? 'recaptcha' : 'captcha';
+            $captcha = (bool) get_setting('auth_use_recaptcha') ? 'recaptcha' : 'captcha';
 
             $fields[]   = array(
                 'name'  => $captcha,
@@ -71,7 +71,7 @@ class Auth extends BAKA_Controller
             'url'   => 'forgot',
             'class' => 'btn-default pull-right' );
 
-        if ( (bool) $this->bakaigniter->get_setting('auth_allow_registration') )
+        if ( (bool) get_setting('auth_allow_registration') )
         {
             $buttons[]  = array(
                 'name'  => 'register',
@@ -81,7 +81,7 @@ class Auth extends BAKA_Controller
                 'class' => 'btn-default pull-right' );
         }
 
-        $form = $this->former->init( array(
+        $form = $this->biform->initialize( array(
             'name'     => 'login',
             'action'   => current_url(),
             'fields'   => $fields,
@@ -96,7 +96,7 @@ class Auth extends BAKA_Controller
 
         if ( $input = $form->validate_submition() )
         {
-            $goto = $this->authr->login( $input['username'], $input['password'], $input['remember'] ) ? $input['goto'] : current_url();
+            $goto = $this->biauth->login( $input['username'], $input['password'], $input['remember'] ) ? $input['goto'] : current_url();
 
             foreach ( get_message() as $level => $item )
             {
@@ -113,7 +113,7 @@ class Auth extends BAKA_Controller
 
         $this->set_panel_body($form->generate());
 
-        $this->data['desc_body'] = $this->bakaigniter->get_setting('welcome_login');
+        $this->data['desc_body'] = get_setting('welcome_login');
 
         $this->load->theme('pages/auth', $this->data, 'auth');
     }
@@ -124,12 +124,14 @@ class Auth extends BAKA_Controller
 
         $this->set_panel_title('Register Pengguna');
 
-        if ( !$this->bakaigniter->get_setting('auth_allow_registration') )
+        if ( !get_setting('auth_allow_registration') )
         {
             $this->_notice('registration-disabled');
         }
 
-        if ( (bool) $this->bakaigniter->get_setting('auth_use_username') )
+        $login_by = get_setting('auth_login_by');
+
+        if ( $login_by == 'login' or $login_by == 'username' )
         {
             $fields[]   = array(
                 'name'  => 'username',
@@ -156,14 +158,15 @@ class Auth extends BAKA_Controller
             'label' => 'Ulangi Password',
             'validation'=> 'required|matches[password]' );
 
-        if ( (bool) $this->bakaigniter->get_setting('auth_captcha_registration') )
+        if ( (bool) get_setting('auth_captcha_registration') )
         {
-            $captcha = (bool) $this->bakaigniter->get_setting('auth_use_recaptcha') ? 'recaptcha' : 'captcha';
+            $captcha = (bool) get_setting('auth_use_recaptcha') ? 'recaptcha' : 'captcha';
 
             $fields[]   = array(
                 'name'  => $captcha,
-                'type'  => $captcha,
+                'type'  => 'captcha',
                 'label' => 'Validasi',
+                'mode'  => $captcha,
                 'validation'=> 'required|valid_'.$captcha);
         }
 
@@ -187,7 +190,7 @@ class Auth extends BAKA_Controller
             'url'   => 'forgot',
             'class' => 'btn-default pull-right' );
 
-        $form = $this->former->init( array(
+        $form = $this->biform->initialize( array(
             'name'      => 'register',
             'action'    => current_url(),
             'fields'    => $fields,
@@ -197,7 +200,13 @@ class Auth extends BAKA_Controller
 
         if ( $form_data = $form->validate_submition() )
         {
-            $goto = $this->authr->create_user( $form_data['username'], $form_data['email'], $form_data['password'] ) ? 'notice/registration-success' : current_url();
+            $user_data = array(
+                'username' => $form_data['username'],
+                'email'    => $form_data['email'],
+                'password' => $form_data['password'],
+                );
+
+            $goto = $this->biauth->create_user($user_data) ? 'notice/registration-success' : current_url();
 
             foreach ( get_message() as $level => $item )
             {
@@ -207,7 +216,7 @@ class Auth extends BAKA_Controller
             redirect( $goto );
         }
 
-        $this->data['desc_body'] = $this->bakaigniter->get_setting('welcome_register');
+        $this->data['desc_body'] = get_setting('welcome_register');
 
         $this->set_panel_body($form->generate());
 
@@ -216,13 +225,13 @@ class Auth extends BAKA_Controller
 
     public function resend()
     {
-        if ( $this->authr->is_logged_in() )
+        if ( $this->biauth->is_logged_in() )
         {
             redirect('data/utama');
         }
 
         // not logged in or activated
-        if ( !$this->authr->is_logged_in(FALSE) )
+        if ( !$this->biauth->is_logged_in(FALSE) )
         {
             redirect('login');
         }
@@ -233,7 +242,7 @@ class Auth extends BAKA_Controller
             'name'  => 'resend',
             'type'  => 'email',
             'label' => 'Email',
-            'validation'=> 'required|valid_email',
+            'validation'=> 'required|valid_email|is_email_exists',
             'desc'  => 'Masukan alamat email yang anda gunakan untuk aplikasi ini.' );
 
         $buttons[]  = array(
@@ -249,7 +258,7 @@ class Auth extends BAKA_Controller
             'url'   => 'auth/forgot',
             'class' => 'btn-default pull-right' );
 
-        $form = $this->former->init( array(
+        $form = $this->biform->initialize( array(
             'name'      => 'resend',
             'action'    => current_url(),
             'fields'    => $fields,
@@ -259,24 +268,18 @@ class Auth extends BAKA_Controller
 
         if ( $form_data = $form->validate_submition() )
         {
-            if ( $data = $this->authr->change_email( $form_data['email'] ) )
+            if ( $data = $this->biauth->resend($form_data['email']) )
             {
-                // success
-                $data['activation_period'] = $this->bakaigniter->get_setting('auth_email_activation_expire') / 3600;
-
-                $this->bakaigniter->send_email( $form_data['email'], 'lang:activate', $data );
-
                 $this->_notice('activation-sent');
             }
             else
             {
                 $this->session->set_flashdata( 'error', get_message('error') );
-
                 redirect(current_url());
             }
         }
 
-        $this->data['desc_body'] = $this->bakaigniter->get_setting('welcome_resend');
+        $this->data['desc_body'] = get_setting('welcome_resend');
 
         $this->set_panel_body($form->generate());
 
@@ -285,7 +288,7 @@ class Auth extends BAKA_Controller
 
     public function forgot()
     {
-        if ( $this->authr->is_logged_in() )
+        if ( $this->biauth->is_logged_in() )
         {
             redirect('data/utama');
         }
@@ -312,7 +315,7 @@ class Auth extends BAKA_Controller
             'url'   => 'login',
             'class' => 'btn-default pull-right' );
 
-        $form = $this->former->init( array(
+        $form = $this->biform->initialize( array(
             'name'      => 'forgot',
             'action'    => current_url(),
             'fields'    => $fields,
@@ -323,10 +326,10 @@ class Auth extends BAKA_Controller
         if ( $form_data = $form->validate_submition() )
         {
 
-            if ( $data = $this->authr->forgot_password( $form_data['forgot_login']) )
+            if ( $data = $this->biauth->forgot_password( $form_data['forgot_login']) )
             {
                 // Send email with password activation link
-                $this->bakaigniter->send_email( $data['email'], 'lang:forgot_password', $data );
+                $this->bootigniter->send_email( $data['email'], 'lang:forgot_password', $data );
 
                 $this->_notice('password-sent');
             }
@@ -338,7 +341,7 @@ class Auth extends BAKA_Controller
             }
         }
 
-        $this->data['desc_body'] = $this->bakaigniter->get_setting('welcome_forgot');
+        $this->data['desc_body'] = get_setting('welcome_forgot');
 
         $this->set_panel_body($form->generate());
 
@@ -353,10 +356,10 @@ class Auth extends BAKA_Controller
         }
 
         // Activate user
-        if ( $this->authr->activate( $user_id, $email_key ) )
+        if ( $this->biauth->activate( $user_id, $email_key ) )
         {
             // success
-            $this->authr->logout();
+            $this->biauth->logout();
             $this->_notice('activation-complete');
         }
         else
@@ -401,7 +404,7 @@ class Auth extends BAKA_Controller
             'url'   => 'login',
             'class' => 'btn-default pull-right' );
 
-        $form = $this->former->init( array(
+        $form = $this->biform->initialize( array(
             'name'      => 'reset',
             'action'    => current_url(),
             'fields'    => $fields,
@@ -411,10 +414,10 @@ class Auth extends BAKA_Controller
 
         if ( $form_data = $form->validate_submition() )
         {
-            if ( $data = $this->authr->reset_password( $user_id, $email_key, $form_data['reset_password'] ) )
+            if ( $data = $this->biauth->reset_password( $user_id, $email_key, $form_data['reset_password'] ) )
             {
                 // success
-                if ( $this->bakaigniter->send_email( $data['email'], 'lang:activate', $data ) )
+                if ( $this->bootigniter->send_email( $data['email'], 'lang:activate', $data ) )
                 {
                     $this->_notice('password-reset');
                 }
@@ -435,7 +438,7 @@ class Auth extends BAKA_Controller
 
     public function logout()
     {
-        $this->authr->logout();
+        $this->biauth->logout();
 
         redirect('login');
     }

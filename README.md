@@ -15,10 +15,13 @@ Aplikasi ini ditujukan untuk Badan Penanaman Modal dan Pelayanan Perijinan Terba
 + [Codeigniter](http://ellislab.com/codeigniter)
 + [CI Tank Auth Enchance (modified)](http://github.com/TankAuth/Tank-Auth/tree/enchance)
 + [Codeigniter PHPUnit (modified)](https://github.com/fmalk/codeigniter-phpunit)
++ [Cool PHP Captcha](https://code.google.com/p/cool-php-captcha/)
++ [Google ReCaptcha (optional)](http://recaptcha.net/plugins/php/)
 + [jQuery](http://jquery.com)
 + [jQuery UI](http://jqueryui.com)
 + [jQuery Autosize](http://www.jacklmoore.com/autosize)
 + [FineUploader](http://fineuploader.com)
++ [Datatables](http://datatables.net/)
 + [Select2](http://ivaynberg.github.io/select2/)
 + [Twitter Bootstrap](http://getbootstrap.com)
 + [Bootstrap Datepicker](http://www.eyecon.ro/bootstrap-datepicker)
@@ -26,9 +29,6 @@ Aplikasi ini ditujukan untuk Badan Penanaman Modal dan Pelayanan Perijinan Terba
 + [Summernote](http://hackerwins.github.io/summernote/)
 + [CodeMirror](http://codemirror.net)
 + [Font Awesome](http://fortawesome.github.io/Font-Awesome/)
-+ [Cool PHP Captcha](https://code.google.com/p/cool-php-captcha/)
-+ [Google ReCaptcha (optional)](http://recaptcha.net/plugins/php/)
-+ [Datatables](http://datatables.net/)
 
 ## Copyright and license
 

@@ -5,15 +5,20 @@
  *
  * @subpackage  Controller
  */
-class Internal extends BAKA_Controller
+class Internal extends BI_Controller
 {
     public function __construct()
     {
         parent::__construct();
 
+        if ( !is_user_can('admin_application') && !is_user_can('setting_application') )
+        {
+            $this->_notice( 'access-denied' );
+        }
+
         $this->verify_login(uri_string());
 
-        $this->themee->add_navbar( 'admin_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
+        $this->bitheme->add_navbar( 'admin_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
         $this->admin_navbar( 'admin_sidebar', 'side' );
 
         $this->data['page_link'] = 'admin/internal/skpd';
@@ -29,11 +34,6 @@ class Internal extends BAKA_Controller
 
     public function skpd()
     {
-        if ( !$this->authr->is_permited('internal_skpd_manage') )
-        {
-            $this->_notice( 'access-denied' );
-        }
-
         $this->set_panel_title('Properti data SKPD');
 
         /** --------------------------------------------------------------------
@@ -44,35 +44,35 @@ class Internal extends BAKA_Controller
             'name'  => 'skpd_name',
             'type'  => 'text',
             'label' => 'Nama SKPD',
-            'std'   => $this->bakaigniter->get_setting('skpd_name'),
+            'std'   => get_setting('skpd_name'),
             'validation'=>'required' );
 
         $fields[]   = array(
             'name'  => 'skpd_address',
             'type'  => 'textarea',
             'label' => 'Alamat',
-            'std'   => $this->bakaigniter->get_setting('skpd_address'),
+            'std'   => get_setting('skpd_address'),
             'validation'=>'required' );
 
         $fields[]   = array(
             'name'  => 'skpd_kab',
             'type'  => 'text',
             'label' => 'Lokasi',
-            'std'   => $this->bakaigniter->get_setting('skpd_kab'),
+            'std'   => get_setting('skpd_kab'),
             'validation'=>'required' );
 
         $fields[]   = array(
             'name'  => 'skpd_city',
             'type'  => 'text',
             'label' => 'Kota',
-            'std'   => $this->bakaigniter->get_setting('skpd_city'),
+            'std'   => get_setting('skpd_city'),
             'validation'=>'required' );
 
         $fields[]   = array(
             'name'  => 'skpd_prov',
             'type'  => 'text',
             'label' => 'Propinsi',
-            'std'   => $this->bakaigniter->get_setting('skpd_prov'),
+            'std'   => get_setting('skpd_prov'),
             'validation'=>'required' );
 
         $fields[]   = array(
@@ -84,13 +84,13 @@ class Internal extends BAKA_Controller
                     'name'  => 'telp',
                     'type'  => 'tel',
                     'label' => 'No. Telp.',
-                    'std'   => $this->bakaigniter->get_setting('skpd_telp'),
+                    'std'   => get_setting('skpd_telp'),
                     'validation'=>'required|min_length[6]|max_length[15]' ),
                 array(
                     'name'  => 'fax',
                     'type'  => 'tel',
                     'label' => 'Faksimili',
-                    'std'   => $this->bakaigniter->get_setting('skpd_fax'),
+                    'std'   => get_setting('skpd_fax'),
                     'validation'=>'required|min_length[6]|max_length[15]' )
                 ),
             );
@@ -99,20 +99,20 @@ class Internal extends BAKA_Controller
             'name'  => 'skpd_pos',
             'type'  => 'text',
             'label' => 'Kode Pos',
-            'std'   => $this->bakaigniter->get_setting('skpd_pos'),
+            'std'   => get_setting('skpd_pos'),
             'validation'=>'numeric|exact_length[5]' );
 
         $fields[]   = array(
             'name'  => 'skpd_web',
             'type'  => 'url',
             'label' => 'Alamat Web',
-            'std'   => $this->bakaigniter->get_setting('skpd_web')  );
+            'std'   => get_setting('skpd_web')  );
 
         $fields[]   = array(
             'name'  => 'skpd_email',
             'type'  => 'email',
             'label' => 'Alamat Email',
-            'std'   => $this->bakaigniter->get_setting('skpd_email'),
+            'std'   => get_setting('skpd_email'),
             'validation'=>'valid_email' );
 
         /** --------------------------------------------------------------------
@@ -128,21 +128,21 @@ class Internal extends BAKA_Controller
             'name'  => 'skpd_lead_name',
             'type'  => 'text',
             'label' => 'Nama Pimpinan',
-            'std'   => $this->bakaigniter->get_setting('skpd_lead_name'),
+            'std'   => get_setting('skpd_lead_name'),
             'validation'=>'required' );
 
         $fields[]   = array(
             'name'  => 'skpd_lead_jabatan',
             'type'  => 'text',
             'label' => 'Nama Pimpinan',
-            'std'   => $this->bakaigniter->get_setting('skpd_lead_jabatan'),
+            'std'   => get_setting('skpd_lead_jabatan'),
             'validation'=>'required' );
 
         $fields[]   = array(
             'name'  => 'skpd_lead_nip',
             'type'  => 'text',
             'label' => 'NIP Pimpinan',
-            'std'   => $this->bakaigniter->get_setting('skpd_lead_nip'),
+            'std'   => get_setting('skpd_lead_nip'),
             'validation'=>'required' );
 
         $this->_option_form( $fields );
@@ -150,11 +150,6 @@ class Internal extends BAKA_Controller
 
     public function app()
     {
-        if ( !$this->authr->is_permited('internal_application_manage') )
-        {
-            $this->_notice( 'access-denied' );
-        }
-
         $this->set_panel_title('Pengaturan Aplikasi');
 
         /** --------------------------------------------------------------------
@@ -165,7 +160,7 @@ class Internal extends BAKA_Controller
             'name'  => 'app_data_show_limit',
             'type'  => 'number',
             'label' => 'Jumlah data ditampilkan',
-            'std'   => $this->bakaigniter->get_setting('app_data_show_limit'),
+            'std'   => get_setting('app_data_show_limit'),
             'desc'  => 'Jumlah data yang ditampilkan ditiap halaman',
             'validation'=>'required|numeric' );
 
@@ -175,7 +170,7 @@ class Internal extends BAKA_Controller
             'name'  => 'app_date_format',
             'type'  => 'text',
             'label' => 'Format Tanggal',
-            'std'   => $this->bakaigniter->get_setting('app_date_format'),
+            'std'   => get_setting('app_date_format'),
             'desc'  => 'Format tanggal menggunakan dasar '.$php_link,
             'validation'=>'required' );
 
@@ -183,7 +178,7 @@ class Internal extends BAKA_Controller
             'name'  => 'app_datetime_format',
             'type'  => 'text',
             'label' => 'Format Waktu &amp; Tanggal',
-            'std'   => $this->bakaigniter->get_setting('app_datetime_format'),
+            'std'   => get_setting('app_datetime_format'),
             'desc'  => 'Format tanggal dan waktu menggunakan dasar '.$php_link,
             'validation'=>'required' );
 
@@ -196,7 +191,7 @@ class Internal extends BAKA_Controller
             'type'  => 'fieldset',
             'label' => 'Email' );
 
-        $email_protocol = $this->bakaigniter->get_setting('email_protocol');
+        $email_protocol = get_setting('email_protocol');
 
         $fields[]   = array(
             'name'  => 'email_protocol',
@@ -215,7 +210,7 @@ class Internal extends BAKA_Controller
             'fold'  => array(
                 'key'   => 'email_protocol',
                 'value' => 'sendmail' ),
-            'std'   => $this->bakaigniter->get_setting('email_mailpath') );
+            'std'   => get_setting('email_mailpath') );
 
         $fields[]   = array(
             'name'  => 'email_smtp_host',
@@ -224,7 +219,7 @@ class Internal extends BAKA_Controller
             'fold'  => array(
                 'key'   => 'email_protocol',
                 'value' => 'smtp' ),
-            'std'   => $this->bakaigniter->get_setting('email_smtp_host') );
+            'std'   => get_setting('email_smtp_host') );
 
         $fields[]   = array(
             'name'  => 'email_smtp_user',
@@ -233,7 +228,7 @@ class Internal extends BAKA_Controller
             'fold'  => array(
                 'key'   => 'email_protocol',
                 'value' => 'smtp' ),
-            'std'   => $this->bakaigniter->get_setting('email_smtp_user'),
+            'std'   => get_setting('email_smtp_user'),
             );
 
         $fields[]   = array(
@@ -243,7 +238,7 @@ class Internal extends BAKA_Controller
             'fold'  => array(
                 'key'   => 'email_protocol',
                 'value' => 'smtp' ),
-            'std'   => $this->bakaigniter->get_setting('email_smtp_pass') );
+            'std'   => get_setting('email_smtp_pass') );
 
         $fields[]   = array(
             'name'  => 'email_smtp_port',
@@ -252,7 +247,7 @@ class Internal extends BAKA_Controller
             'fold'  => array(
                 'key'   => 'email_protocol',
                 'value' => 'smtp' ),
-            'std'   => $this->bakaigniter->get_setting('email_smtp_port'),
+            'std'   => get_setting('email_smtp_port'),
             'validation'=> 'numeric' );
 
         $fields[]   = array(
@@ -262,7 +257,7 @@ class Internal extends BAKA_Controller
             'fold'  => array(
                 'key'   => 'email_protocol',
                 'value' => 'smtp' ),
-            'std'   => $this->bakaigniter->get_setting('email_smtp_timeout'),
+            'std'   => get_setting('email_smtp_timeout'),
             'validation'=> 'numeric' );
 
         $fields[]   = array(
@@ -270,7 +265,7 @@ class Internal extends BAKA_Controller
             'type'  => 'switch',
             'label' => 'Wordwrap',
             'desc'  => 'Membatasi jumlah huruf ditiap baris dalam kiriman email sebanyak 80 karakter dan sisanya dilanjutkan pada baris berikutnya.',
-            'std'   => $this->bakaigniter->get_setting('email_wordwrap') );
+            'std'   => get_setting('email_wordwrap') );
 
         $fields[]   = array(
             'name'  => 'email_mailtype',
@@ -280,7 +275,7 @@ class Internal extends BAKA_Controller
                 0  => 'Teks',
                 1  => 'HTML' ),
             'desc'  => 'Format kiriman email. Disarankan menggunakan format HTML agar tampilan lebih baik.',
-            'std'   => $this->bakaigniter->get_setting('email_mailtype') );
+            'std'   => get_setting('email_mailtype') );
 
         $fields[]   = array(
             'name'  => 'email_priority',
@@ -288,7 +283,7 @@ class Internal extends BAKA_Controller
             'label' => 'Prioritas',
             'min'   => 1,
             'max'   => 5,
-            'std'   => $this->bakaigniter->get_setting('email_priority'),
+            'std'   => get_setting('email_priority'),
             'desc'  => 'Prioritas email diisi dengan angka 1-5, angka 1 untuk paling tinggi dan 5 untuk paling rendah.',
             'validation'=> 'numeric|greater_than[0]|less_than[6]' );
 
@@ -305,7 +300,7 @@ class Internal extends BAKA_Controller
             'name'  => 'auth_allow_registration',
             'type'  => 'switch',
             'label' => 'Ijinkan registrasi Umum',
-            'std'   => $this->bakaigniter->get_setting('auth_allow_registration'),
+            'std'   => get_setting('auth_allow_registration'),
             'desc'  => 'Ijinkan registrasi umum',
             'validation'=>'numeric' );
 
@@ -316,9 +311,9 @@ class Internal extends BAKA_Controller
             'fold'  => array(
                 'key'   => 'auth_allow_registration',
                 'value' => 1 ),
-            'std'   => $this->bakaigniter->get_setting('auth_email_activation'));
+            'std'   => get_setting('auth_email_activation'));
 
-        $auth_email_act_expire = second_to_day($this->bakaigniter->get_setting('auth_email_act_expire'));
+        $auth_email_act_expire = second_to_day(get_setting('auth_email_act_expire'));
 
         $fields[]   = array(
             'name'  => 'auth_email_act_expire',
@@ -339,7 +334,7 @@ class Internal extends BAKA_Controller
             'fold'  => array(
                 'key'   => 'auth_allow_registration',
                 'value' => 1 ),
-            'std'   => $this->bakaigniter->get_setting('auth_use_username'),
+            'std'   => get_setting('auth_use_username'),
             'desc'  => 'Gunakan username untuk setiap pengguna.');
 
         /** --------------------------------------------------------------------
@@ -355,46 +350,41 @@ class Internal extends BAKA_Controller
             'name'  => 'welcome_title',
             'type'  => 'text',
             'label' => 'Judul Pembuka',
-            'std'   => $this->bakaigniter->get_setting('welcome_title') );
+            'std'   => get_setting('welcome_title') );
 
         $fields[]   = array(
             'name'  => 'welcome_login',
             'type'  => 'editor',
             'height'=> 200,
             'label' => 'Pembuka Halaman Login',
-            'std'   => $this->bakaigniter->get_setting('welcome_login') );
+            'std'   => get_setting('welcome_login') );
 
         $fields[]   = array(
             'name'  => 'welcome_resend',
             'type'  => 'editor',
             'height'=> 200,
             'label' => 'Pembuka Resend',
-            'std'   => $this->bakaigniter->get_setting('welcome_resend') );
+            'std'   => get_setting('welcome_resend') );
 
         $fields[]   = array(
             'name'  => 'welcome_register',
             'type'  => 'editor',
             'height'=> 200,
             'label' => 'Pembuka Register',
-            'std'   => $this->bakaigniter->get_setting('welcome_register') );
+            'std'   => get_setting('welcome_register') );
 
         $fields[]   = array(
             'name'  => 'welcome_forgot',
             'type'  => 'editor',
             'height'=> 200,
             'label' => 'Isi Pembuka',
-            'std'   => $this->bakaigniter->get_setting('welcome_forgot') );
+            'std'   => get_setting('welcome_forgot') );
 
         $this->_option_form( $fields );
     }
 
     public function security()
     {
-        if ( !$this->authr->is_permited('internal_security_manage') )
-        {
-            $this->_notice( 'access-denied' );
-        }
-
         $this->set_panel_title('Pengaturan Keamanan');
 
         /** --------------------------------------------------------------------
@@ -416,8 +406,8 @@ class Internal extends BAKA_Controller
             'min'   => $user_min,
             'max'   => $user_max,
             'std'   => array(
-                'min' => $this->bakaigniter->get_setting('auth_username_length_min'),
-                'max' => $this->bakaigniter->get_setting('auth_username_length_max'),
+                'min' => get_setting('auth_username_length_min'),
+                'max' => get_setting('auth_username_length_max'),
                 ),
             'desc'  => 'Jumlah minimal dan maksimal karakter Username.' );
 
@@ -428,8 +418,8 @@ class Internal extends BAKA_Controller
             'min'   => $user_min,
             'max'   => $user_max,
             'std'   => array(
-                'min' => $this->bakaigniter->get_setting('auth_password_length_min'),
-                'max' => $this->bakaigniter->get_setting('auth_password_length_max'),
+                'min' => get_setting('auth_password_length_min'),
+                'max' => get_setting('auth_password_length_max'),
                 ),
             'desc'  => 'Jumlah minimal dan maksimal karakter Password.' );
 
@@ -446,25 +436,25 @@ class Internal extends BAKA_Controller
             'name'  => 'auth_login_by_username',
             'type'  => 'switch',
             'label' => 'Gunakan username saat login',
-            'std'   => $this->bakaigniter->get_setting('auth_login_by_username'));
+            'std'   => get_setting('auth_login_by_username'));
 
         $fields[]   = array(
             'name'  => 'auth_login_by_email',
             'type'  => 'switch',
             'label' => 'Gunakan email saat login',
-            'std'   => $this->bakaigniter->get_setting('auth_login_by_email'));
+            'std'   => get_setting('auth_login_by_email'));
 
         $fields[]   = array(
             'name'  => 'auth_login_record_ip',
             'type'  => 'switch',
             'label' => 'Rekam IP',
-            'std'   => $this->bakaigniter->get_setting('auth_login_record_ip'));
+            'std'   => get_setting('auth_login_record_ip'));
 
         $fields[]   = array(
             'name'  => 'auth_login_count_attempts',
             'type'  => 'switch',
             'label' => 'Hitung kegagalan login',
-            'std'   => $this->bakaigniter->get_setting('auth_login_count_attempts'));
+            'std'   => get_setting('auth_login_count_attempts'));
 
         $fields[]   = array(
             'name'  => 'auth_login_max_attempts',
@@ -472,10 +462,10 @@ class Internal extends BAKA_Controller
             'label' => 'Maksimum login',
             'min'   => 1,
             'max'   => 10,
-            'std'   => $this->bakaigniter->get_setting('auth_login_max_attempts'),
+            'std'   => get_setting('auth_login_max_attempts'),
             'desc'  => 'Batas maksimum login untuk tiap pengguna.' );
 
-        $auth_login_attempt_expire = second_to_day($this->bakaigniter->get_setting('auth_login_attempt_expire'));
+        $auth_login_attempt_expire = second_to_day(get_setting('auth_login_attempt_expire'));
 
         $fields[]   = array(
             'name'  => 'auth_login_attempt_expire',
@@ -499,7 +489,7 @@ class Internal extends BAKA_Controller
             'name'  => 'auth_captcha_registration',
             'type'  => 'switch',
             'label' => 'Gunakan captcha',
-            'std'   => $this->bakaigniter->get_setting('auth_captcha_registration') );
+            'std'   => get_setting('auth_captcha_registration') );
 
         $fields[]   = array(
             'name'  => 'auth_use_recaptcha',
@@ -509,7 +499,7 @@ class Internal extends BAKA_Controller
                 'key' => 'auth_captcha_registration',
                 'value' => 1
                 ),
-            'std'   => $this->bakaigniter->get_setting('auth_use_recaptcha'),
+            'std'   => get_setting('auth_use_recaptcha'),
             'desc'  => 'Gunakan '.anchor('https://www.google.com/recaptcha', 'google reCaptcha', 'target="_blank"').' untuk validasi.' );
 
         $fields[]   = array(
@@ -520,7 +510,7 @@ class Internal extends BAKA_Controller
                 'key'   => 'auth_use_recaptcha',
                 'value' => 1
                 ),
-            'std'   => $this->bakaigniter->get_setting('auth_recaptcha_public_key') );
+            'std'   => get_setting('auth_recaptcha_public_key') );
 
         $fields[]   = array(
             'name'  => 'auth_recaptcha_private_key',
@@ -530,7 +520,7 @@ class Internal extends BAKA_Controller
                 'key'   => 'auth_use_recaptcha',
                 'value' => 1
                 ),
-            'std'   => $this->bakaigniter->get_setting('auth_recaptcha_private_key') );
+            'std'   => get_setting('auth_recaptcha_private_key') );
 
         /** --------------------------------------------------------------------
          * Pengaturan Username
@@ -545,21 +535,21 @@ class Internal extends BAKA_Controller
             'name'  => 'auth_username_blacklist',
             'type'  => 'text',
             'label' => 'Nama pengguna',
-            'std'   => $this->bakaigniter->get_setting('auth_username_blacklist'),
+            'std'   => get_setting('auth_username_blacklist'),
             'desc'  => 'Daftar username yang tidak diijinkan, dipisahkan dengan tanda koma (,)' );
 
         $fields[]   = array(
             'name'  => 'auth_username_blacklist_prepend',
             'type'  => 'text',
             'label' => 'Awalan Nama Pengguna',
-            'std'   => $this->bakaigniter->get_setting('auth_username_blacklist_prepend'),
+            'std'   => get_setting('auth_username_blacklist_prepend'),
             'desc'  => 'Daftar kata awalan username yang tidak diijinkan, dipisahkan dengan tanda koma (,)' );
 
         $fields[]   = array(
             'name'  => 'auth_username_exceptions',
             'type'  => 'text',
             'label' => 'Username Pengecualian',
-            'std'   => $this->bakaigniter->get_setting('auth_username_exceptions'),
+            'std'   => get_setting('auth_username_exceptions'),
             'desc'  => 'Daftar pengecualian username yang diijinkan, dipisahkan dengan tanda koma (,)' );
 
         $this->_option_form( $fields );
@@ -567,9 +557,9 @@ class Internal extends BAKA_Controller
 
     private function _option_form( $fields )
     {
-        $this->load->library('former');
+        $this->load->library('biform');
 
-        $form = $this->former->init( array(
+        $form = $this->biform->initialize( array(
             'name'   => 'app-settings',
             'action' => current_url(),
             'fields' => $fields,
@@ -577,7 +567,7 @@ class Internal extends BAKA_Controller
 
         if ( $form_data = $form->validate_submition() )
         {
-            if ( $this->bakaigniter->edit_setting( $form_data ) )
+            if ( $this->bootigniter->edit_setting( $form_data ) )
             {
                 $this->session->set_flashdata('error', array('Terjadi masalah penyimpanan konfigurasi.'));
             }

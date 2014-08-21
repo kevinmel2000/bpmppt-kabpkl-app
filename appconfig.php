@@ -33,5 +33,5 @@ define('APP_BASE_URL', isset($env_config) ? $env_config['base_url'] : $hostname)
 define('APP_HOSTNAME', isset($env_config) ? $env_config['hostname'] : 'localhost' );
 define('APP_USERNAME', isset($env_config) ? $env_config['username'] : 'root' );
 define('APP_PASSWORD', isset($env_config) ? $env_config['password'] : 'password' );
-define('APP_DATABASE', isset($env_config) ? $env_config['name']     : 'bpmppt' );
+define('APP_DATABASE', isset($env_config) ? $env_config['name']     : 'bpmppt_dev' );
 define('APP_DBPREFIX', 'baka_');

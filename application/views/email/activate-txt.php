@@ -1,6 +1,6 @@
-Welcome to <?php echo $get_app_config('skpd_name') ?>,
+Welcome to <?php echo get_app_config('skpd_name') ?>,
 
-Thanks for joining <?php echo $get_app_config('skpd_name') ?>. We listed your sign in details below, make sure you keep them safe.
+Thanks for joining <?php echo get_app_config('skpd_name') ?>. We listed your sign in details below, make sure you keep them safe.
 To verify your email address, please follow this link:
 
 <?php echo site_url('/auth/activate/'.$user_id.'/'.$new_email_key); ?>
@@ -21,4 +21,4 @@ Your password: <?php echo $password; ?>
 
 
 Have fun!
-The <?php echo $get_app_config('skpd_name') ?> Team
+The <?php echo get_app_config('skpd_name') ?> Team

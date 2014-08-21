@@ -5,7 +5,7 @@
  *
  * @subpackage  Controller
  */
-class Error extends BAKA_Controller
+class Error extends BI_Controller
 {
     public function __construct()
     {
@@ -21,7 +21,7 @@ class Error extends BAKA_Controller
 
     public function e404()
     {
-        $this->data['heading'] = $this->themee->set_title('404 Halaman tidak ditemukan');
+        $this->data['heading'] = $this->bitheme->set_title('404 Halaman tidak ditemukan');
         $this->data['message'] = '';
 
         log_message('error', '404 Page Not Found --> '.current_url());

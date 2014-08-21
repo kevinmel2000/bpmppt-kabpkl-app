@@ -84,12 +84,12 @@ class Bpmppt_reklame extends CI_Driver
             'std'   => ( $data_obj ? $data_obj->pemohon_nama : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[] = array(
-            'name'  => 'pemohon_kerja',
-            'label' => 'Pekerjaan',
-            'type'  => 'text',
-            'std'   => ( $data_obj ? $data_obj->pemohon_kerja : ''),
-            'validation'=> ( !$data_obj ? 'required' : '' ) );
+        // $fields[] = array(
+        //     'name'  => 'pemohon_kerja',
+        //     'label' => 'Pekerjaan',
+        //     'type'  => 'text',
+        //     'std'   => ( $data_obj ? $data_obj->pemohon_kerja : ''),
+        //     'validation'=> ( !$data_obj ? 'required' : '' ) );
 
         $fields[] = array(
             'name'  => 'pemohon_alamat',

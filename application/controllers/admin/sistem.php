@@ -5,7 +5,7 @@
  *
  * @subpackage  Controller
  */
-class Sistem extends BAKA_Controller
+class Sistem extends BI_Controller
 {
     public function __construct()
     {
@@ -13,15 +13,15 @@ class Sistem extends BAKA_Controller
 
         $this->verify_login(uri_string());
 
-        if ( !$this->authr->is_permited('sys_manage') )
+        if ( !is_user_can('setting_application') )
         {
             $this->_notice( 'access-denied' );
         }
 
-        $this->themee->add_navbar( 'admin_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
+        $this->bitheme->add_navbar( 'admin_sidebar', 'nav-tabs nav-stacked nav-tabs-right', 'side' );
         $this->admin_navbar( 'admin_sidebar', 'side' );
 
-        $this->themee->set_title('Pemeliharaan Sistem');
+        $this->bitheme->set_title('Pemeliharaan Sistem');
     }
 
     public function index()
@@ -31,7 +31,7 @@ class Sistem extends BAKA_Controller
 
     public function info()
     {
-        if ( !$this->authr->is_permited('sys_logs_manage') )
+        if ( !is_user_can('debug_application') )
         {
             $this->_notice( 'access-denied' );
         }
@@ -72,7 +72,7 @@ class Sistem extends BAKA_Controller
             'name'  => 'server-info',
             'type'  => 'custom',
             'label' => 'Mesin Server',
-            'value' => $this->table->generate() );
+            'std'   => $this->table->generate() );
 
         $this->table->set_heading(array(
             array(
@@ -94,7 +94,7 @@ class Sistem extends BAKA_Controller
             'name'  => 'db-info',
             'type'  => 'custom',
             'label' => 'Database',
-            'value' => $this->table->generate() );
+            'std'   => $this->table->generate() );
 
         $this->table->set_heading(array(
             array(
@@ -116,7 +116,7 @@ class Sistem extends BAKA_Controller
             'name'  => 'php-extensions',
             'type'  => 'custom',
             'label' => 'Extensi Dibutuhkan',
-            'value' => $this->table->generate() );
+            'std'   => $this->table->generate() );
 
         $this->table->set_heading(array(
             array(
@@ -148,7 +148,7 @@ class Sistem extends BAKA_Controller
             'name'  => 'php-configs',
             'type'  => 'custom',
             'label' => 'Konfigurasi',
-            'value' => $this->table->generate() );
+            'std'   => $this->table->generate() );
 
         $this->table->set_heading('Nama');
 
@@ -161,11 +161,11 @@ class Sistem extends BAKA_Controller
             'name'  => 'apache-mods',
             'type'  => 'custom',
             'label' => 'Module Apache',
-            'value' => $this->table->generate() );
+            'std'   => $this->table->generate() );
 
-        $this->load->library('former');
+        $this->load->library('biform');
 
-        $form = $this->former->init( array(
+        $form = $this->biform->initialize( array(
             'name'      => 'info',
             'action'    => current_url(),
             'fields'    => $fields,
@@ -177,9 +177,88 @@ class Sistem extends BAKA_Controller
         $this->load->theme('pages/panel_info', $this->data);
     }
 
+    public function logs( $file = '' )
+    {
+        if ( !is_user_can('debug_application') )
+        {
+            $this->_notice( 'access-denied' );
+        }
+
+        $this->load->helper('directory');
+        $this->set_panel_title('Aktifitas Sistem');
+        $this->bitheme->add_navbar( 'log_sidebar', 'nav-tabs nav-stacked nav-tabs-left', 'panel' );
+
+        $latest   = '';
+        $log_path = config_item('log_path');
+        $scan_dir = directory_map($log_path);
+
+        arsort( $scan_dir );
+
+        foreach ( $scan_dir as $log )
+        {
+            if ( $log != 'index.html' and $log != 'view.php' )
+            {
+                $log   = strtolower(str_replace(EXT, '', $log));
+                $label = format_date(str_replace('log-', '', $log));
+                $link  = 'admin/sistem/logs/';
+
+                $this->bitheme->add_navmenu( 'log_sidebar', $log, 'link', $link.$log, $label, array(), 'panel' );
+            }
+        }
+
+        if ( $file != '' )
+        {
+            if ( !$this->load->is_loaded('file') )
+            {
+                $this->load->helper('file');
+            }
+
+            $this->data['panel_title'] .= ' Tanggal '.format_date(str_replace('log-', '', $file));
+
+            foreach ( file( $log_path.$file.EXT, FILE_IGNORE_NEW_LINES ) as $log_line )
+            {
+                if ( strlen($log_line) > 0 AND !is_null($log_line) AND $log_line != '' )
+                {
+                    $state = explode(' - ', $log_line);
+
+                    if ( isset($state[1]) )
+                    {
+                        $state[1] = str_replace(FCPATH, '', $state[1]);
+                        $date = explode(' --> ', $state[1]);
+                        $line[] = array(
+                            'time'  => format_time( $date[0] ),
+                            'state' => twbs_label( $state[0], strtolower( $state[0] ) ),
+                            'msg'   => ( strpos( $date[1], 'Severity: ' ) === false)
+                                ? $date[1] : twbs_label( $date[1], strtolower( $state[0] ) ).' '.$date[2] );
+                    }
+                }
+            }
+
+            $this->data['count_log'] = 'Terdapat '.count( $line ).' catatan error.';
+
+            $this->load->library('table');
+
+            $this->table->set_heading('Waktu', 'Status', 'Pesan');
+            $this->table->set_template( array(
+                'table_open' => '<table class="table table-striped table-bordered table-hover table-condensed">' ) );
+
+            arsort( $line );
+
+            $panel_body = $this->table->generate( $line );
+        }
+        else
+        {
+            $panel_body = 'Pilih tanggal.';
+        }
+
+        $this->data['panel_body'] = $panel_body;
+
+        $this->load->theme('pages/syslogs', $this->data);
+    }
+
     public function backup()
     {
-        if ( !$this->authr->is_permited('sys_backstore_manage') )
+        if ( !is_user_can('backstore_application') )
         {
             $this->_notice( 'access-denied' );
         }
@@ -231,7 +310,7 @@ class Sistem extends BAKA_Controller
             'name'  => 'backup-list',
             'type'  => 'custom',
             'label' => 'Daftar backup',
-            'value' => $backup_list );
+            'std'   => $backup_list );
 
         $buttons[]= array(
             'name'  => 'do-backup',
@@ -239,9 +318,9 @@ class Sistem extends BAKA_Controller
             'label' => 'lang:backup_btn',
             'class' => 'btn-primary pull-right' );
 
-        $this->load->library('former');
+        $this->load->library('biform');
 
-        $form = $this->former->init(array(
+        $form = $this->biform->initialize(array(
             'name'    => 'backup',
             'action'  => current_url(),
             'fields'  => $fields,
@@ -283,7 +362,7 @@ class Sistem extends BAKA_Controller
 
     public function restore()
     {
-        if ( !$this->authr->is_permited('sys_backstore_manage') )
+        if ( !is_user_can('backstore_application') )
         {
             $this->_notice( 'access-denied' );
         }
@@ -343,9 +422,9 @@ class Sistem extends BAKA_Controller
             'label' => 'lang:restore_btn',
             'class' => 'btn-primary pull-right' );
 
-        $this->load->library('former');
+        $this->load->library('biform');
 
-        $form = $this->former->init( array(
+        $form = $this->biform->initialize( array(
             'name'    => 'restore',
             'action'  => current_url(),
             'fields'  => $fields,
@@ -381,85 +460,6 @@ class Sistem extends BAKA_Controller
         $this->data['panel_body'] = $form->generate();
 
         $this->load->theme('pages/panel_form', $this->data);
-    }
-
-    public function logs( $file = '' )
-    {
-        if ( !$this->authr->is_permited('sys_logs_manage') )
-        {
-            $this->_notice( 'access-denied' );
-        }
-
-        $this->load->helper('directory');
-        $this->set_panel_title('Aktifitas Sistem');
-        $this->themee->add_navbar( 'log_sidebar', 'nav-tabs nav-stacked nav-tabs-left', 'panel' );
-
-        $latest   = '';
-        $log_path = config_item('log_path');
-        $scan_dir = directory_map($log_path);
-
-        arsort( $scan_dir );
-
-        foreach ( $scan_dir as $log )
-        {
-            if ( $log != 'index.html' and $log != 'view.php' )
-            {
-                $log   = strtolower(str_replace(EXT, '', $log));
-                $label = format_date(str_replace('log-', '', $log));
-                $link  = 'admin/sistem/logs/';
-
-                $this->themee->add_navmenu( 'log_sidebar', $log, 'link', $link.$log, $label, array(), 'panel' );
-            }
-        }
-
-        if ( $file != '' )
-        {
-            if ( !$this->load->is_loaded('file') )
-            {
-                $this->load->helper('file');
-            }
-            
-            $this->data['panel_title'] .= ' Tanggal '.format_date(str_replace('log-', '', $file));
-
-            foreach ( file( $log_path.$file.EXT, FILE_IGNORE_NEW_LINES ) as $log_line )
-            {
-                if ( strlen($log_line) > 0 AND !is_null($log_line) AND $log_line != '' )
-                {
-                    $state = explode(' - ', $log_line);
-
-                    if ( isset($state[1]) )
-                    {
-                        $date = explode(' --> ', $state[1]);
-
-                        $line[] = array(
-                            'time'  => format_time( $date[0] ),
-                            'state' => twb_label( $state[0], strtolower( $state[0] ) ),
-                            'msg'   => ( strpos( $date[1], 'Severity: ' ) === false)
-                                ? $date[1] : twb_label( $date[1], strtolower( $state[0] ) ).' '.$date[2] );
-                    }
-                }
-            }
-
-            $this->data['count_log'] = 'Terdapat '.count( $line ).' catatan error.';
-
-            $this->load->library('table');
-
-            $this->table->set_heading('Waktu', 'Status', 'Pesan');
-            $this->table->set_template( array(
-                'table_open' => '<table class="table table-striped table-bordered table-hover table-condensed">' ) );
-
-            arsort( $line );
-
-            $panel_body = $this->table->generate( $line );
-        }
-        else
-        {
-            $panel_body = 'Pilih tanggal.';
-        }
-
-        $this->data['panel_body'] = $panel_body;
-
-        $this->load->theme('pages/syslogs', $this->data);
     }
 }
 

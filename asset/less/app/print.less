@@ -1,8 +1,28 @@
-body {
-  padding: 2px;
-  margin: 0;
-  font-size: 11px;
+p, span, ol, ul,
+sub, sup,
+table {
+  font-family: inherit;
+  font-size: inherit;
   line-height: 1.2em;
+}
+
+p, ol, ul {
+  margin: 0;
+}
+
+sub, sup {
+  position: relative;
+  font-size: 75%;
+  line-height: 0;
+  vertical-align: baseline;
+}
+
+sup {
+  top: -.5em;
+}
+
+sub {
+  bottom: -.25em;
 }
 
 ol, ul {
@@ -57,7 +77,8 @@ ul {
 
 table {
   min-width: 100%;
-  font-size: 11pt;
+  font-family: 'Arial' !important;
+  font-size: 11px;
   border-collapse: collapse;
   border-color: transparent;
   border-width: 0;
@@ -70,11 +91,6 @@ table {
   &.pagebreak {
     page-break-before: always;
   }
-
-  p {
-    font-size: inherit;
-  }
-
   tr.t-header {
     td {
       border-bottom: 2px solid #000;
@@ -111,54 +127,41 @@ table {
     }
   }
 
-  &.izin_reklame,
+  .logo-skpd {
+    top: 0;
+  }
+
+  // &.izin_reklame,
+  // &.izin_gangguan {
+  //   font-size: 11px;
+  //   line-height: 1.2em;
+  // }
+
   &.izin_gangguan {
-    font-size: 11px;
-    line-height: 1.2em;
+    margin-top: 40px;
+
+    .logo-skpd {
+      top: 40px;
+    }
   }
 }
 
-sub,
-sup {
-  position: relative;
-  font-size: 75%;
-  line-height: 0;
-  vertical-align: baseline;
-}
+.align {
+  &-center {
+    text-align: center;
+  }
 
-sup {
-  top: -.5em;
-}
+  &-left {
+    text-align: left;
+  }
 
-sub {
-  bottom: -.25em;
-}
+  &-right {
+    text-align: right;
+  }
 
-span {
-  font-size: inherit;
-}
-
-p, ol, ul {
-  margin: 0;
-  font-family: "Times New Roman";
-  font-size: 11pt;
-  line-height: 1.2em;
-}
-
-.align-center {
-  text-align: center;
-}
-
-.align-left {
-  text-align: left;
-}
-
-.align-right {
-  text-align: right;
-}
-
-.align-justify {
-  text-align: justify;
+  &-justify {
+    text-align: justify;
+  }
 }
 
 .bold {

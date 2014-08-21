@@ -81,19 +81,19 @@ class Bpmppt extends CI_Driver_Library
         $this->_ci =& get_instance();
 
         $this->_ci->load->model('bpmppt_model');
+        $this->_ci->load->helpers(array('bpmppt', 'text'));
+        $this->_ci->lang->load('bpmppt');
 
         $self = get_class( $this );
 
         foreach ( $this->available_drivers as $module )
         {
-            if ( $this->_ci->authr->is_permited( 'doc_'.$module.'_manage' ) )
+            if ( is_user_can('manage_data_'.$module) )
             {
                 $this->valid_drivers[] = $self.'_'.$module;
 
                 $child = $this->$module;
-                $code  = ( property_exists( $this->$module, 'code' ) )
-                    ? $child->code
-                    : FALSE;
+                $code  = ( property_exists( $this->$module, 'code' ) ) ? $child->code : FALSE;
 
                 $this->modules[$module] = array(
                     'name'  => $child->name,
@@ -283,7 +283,7 @@ class Bpmppt extends CI_Driver_Library
                 );
         }
 
-        $this->_ci->load->library('former');
+        $this->_ci->load->library('biform');
 
         foreach ( $this->$driver->form( $data_obj ) as $form_field )
         {
@@ -292,14 +292,14 @@ class Bpmppt extends CI_Driver_Library
             $this->fields[] = $form_field;
         }
 
-        if (!isset($this->$driver->tembusan) or (isset($this->$driver->tembusan) and $this->$driver->tembusan !== FALSE))
+        if ( !isset($this->$driver->tembusan) or (isset($this->$driver->tembusan) and $this->$driver->tembusan !== FALSE) )
         {
             $this->field_tembusan($data_obj);
         }
 
         // $no_buttons = $data_obj ? TRUE : FALSE ;
 
-        $form = $this->_ci->former->init(array(
+        $form = $this->_ci->biform->initialize(array(
             'name'       => $this->$driver->alias,
             'action'     => current_url(),
             'fields'     => $this->fields,
@@ -397,7 +397,7 @@ class Bpmppt extends CI_Driver_Library
 
         $data['no_agenda']  = $form_data[$this->$driver->alias.'_surat_nomor'];
         $data['created_on'] = string_to_datetime();
-        $data['created_by'] = $this->_ci->authr->get_user_id();
+        $data['created_by'] = $this->_ci->biauth->get_user_id();
         $data['type']       = $this->$driver->alias;
         $data['label']      = '-';
         $data['petitioner'] = $form_data[$this->$driver->alias.'_pemohon_nama'];
@@ -475,9 +475,9 @@ class Bpmppt extends CI_Driver_Library
                     .  'Jika anda hendak memindahkan posisi, cut dan paste keseluruhan text termasuk kurung kurawalnya <i>misal: {text}</i> ke posisi baru yang anda inginkan.',
             );
 
-        $this->_ci->load->library('former');
+        $this->_ci->load->library('biform');
 
-        $form = $this->_ci->former->init(array(
+        $form = $this->_ci->biform->initialize(array(
             'name'      => 'template-'.$this->get_alias( $data_type ),
             'action'    => current_url(),
             'fields'    => $fields,
@@ -547,7 +547,7 @@ class Bpmppt extends CI_Driver_Library
             ));
 
         $tembusan = isset($data->data_tembusan) ? unserialize($data->data_tembusan) : $this->_ci->input->post( $this->$driver->alias.'_data_tembusan' );
-        $method = $this->_ci->former->_attrs['method'];
+        $method = $this->_ci->biform->_attrs['method'];
 
         if ( !empty( $tembusan ) )
         {
@@ -565,7 +565,7 @@ class Bpmppt extends CI_Driver_Library
             'name'  => $this->$driver->alias.'_data_tembusan',
             'label' => 'Daftar Tembusan',
             'type'  => 'custom',
-            'value' => $this->_ci->table->generate(),
+            'std'   => $this->_ci->table->generate(),
             'validation'=> ( !$data ? '' : '' ) );
     }
 

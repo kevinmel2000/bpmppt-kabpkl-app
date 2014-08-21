@@ -36,8 +36,8 @@ class Bpmppt_tdp extends CI_Driver
         'pemilik_ktp'                       => '',
         'pemilik_alamat'                    => '',
         'pemilik_kwn'                       => '',
-        'pemilik_lahir_tmpt'                => '',
-        'pemilik_lahir_tgl'                 => '',
+        // 'pemilik_lahir_tmpt'                => '',
+        // 'pemilik_lahir_tgl'                 => '',
         'pemilik_no_telp'                   => '',
         'pemilik_no_fax'                    => '',
         'usaha_nama'                        => '',
@@ -62,9 +62,9 @@ class Bpmppt_tdp extends CI_Driver
         'usaha_npwp'                        => '',
         'usaha_saham_status'                => '',
         'usaha_modal_awal'                  => '',
-        'usaha_saham_nilai_total'           => '',
-        'usaha_saham_nilai_nasional'        => '',
-        'usaha_saham_nilai_tgl'             => '',
+        // 'usaha_saham_nilai_total'           => '',
+        // 'usaha_saham_nilai_nasional'        => '',
+        // 'usaha_saham_nilai_tgl'             => '',
         'usaha_data_pengesahan'             => '',
         );
 
@@ -89,24 +89,6 @@ class Bpmppt_tdp extends CI_Driver
      */
     public function form( $data_obj = FALSE )
     {
-        $fields[] = array(
-            'name'  => 'daftar',
-            'label' => 'Nomor &amp; Tgl. Pendaftaran',
-            'type'  => 'subfield',
-            'fields'=> array(
-                array(
-                    'name'  => 'no',
-                    'label' => 'Nomor Pendaftaran',
-                    'type'  => 'text',
-                    'std'   => ( $data_obj ? $data_obj->daftar_no : '') ),
-                array(
-                    'name'  => 'tgl',
-                    'label' => 'Tanggal Pendaftaran',
-                    'type'  => 'datepicker',
-                    'std'   => ( $data_obj ? format_date($data_obj->daftar_tgl) : '') ,
-                    'callback'=> 'string_to_date' ),
-                ));
-
         $fields[] = array(
             'name'  => 'no_tdp',
             'label' => 'Nomor TDP',
@@ -172,23 +154,23 @@ class Bpmppt_tdp extends CI_Driver
                 'wni' => 'Warga Negara Indonesia',
                 'wna' => 'Warga Negara Asing' ));
 
-        $fields[] = array(
-            'name'  => 'pemilik_lahir',
-            'label' => 'Tempat &amp; Tgl. Lahir',
-            'type'  => 'subfield',
-            'fields'=> array(
-                array(
-                    'name'  => 'tmpt',
-                    'label' => 'Tempat Lahir',
-                    'type'  => 'text',
-                    'std'   => ( $data_obj ? $data_obj->pemilik_lahir_tmpt : '') ),
-                array(
-                    'name'  => 'tgl',
-                    'label' => 'Tanggal Lahir',
-                    'type'  => 'datepicker',
-                    'std'   => ( $data_obj ? format_date($data_obj->pemilik_lahir_tgl) : '') ,
-                    'callback'=> 'string_to_date' ),
-                ));
+        // $fields[] = array(
+        //     'name'  => 'pemilik_lahir',
+        //     'label' => 'Tempat &amp; Tgl. Lahir',
+        //     'type'  => 'subfield',
+        //     'fields'=> array(
+        //         array(
+        //             'name'  => 'tmpt',
+        //             'label' => 'Tempat Lahir',
+        //             'type'  => 'text',
+        //             'std'   => ( $data_obj ? $data_obj->pemilik_lahir_tmpt : '') ),
+        //         array(
+        //             'name'  => 'tgl',
+        //             'label' => 'Tanggal Lahir',
+        //             'type'  => 'datepicker',
+        //             'std'   => ( $data_obj ? format_date($data_obj->pemilik_lahir_tgl) : '') ,
+        //             'callback'=> 'string_to_date' ),
+        //         ));
 
         $fields[] = array(
             'name'  => 'pemilik_no',
@@ -241,6 +223,28 @@ class Bpmppt_tdp extends CI_Driver
             'option'=> $jns_opt );
 
         $fields[] = array(
+            'name'  => 'daftar',
+            'label' => 'Nomor &amp; Tgl. Pendaftaran',
+            'type'  => 'subfield',
+            'fold'  => array(
+                'key' => $this->alias.'_usaha_jenis',
+                'value' => 'Perseroan Terbatas (PT)',
+                ),
+            'fields'=> array(
+                array(
+                    'name'  => 'no',
+                    'label' => 'Nomor Pendaftaran',
+                    'type'  => 'text',
+                    'std'   => ( $data_obj ? $data_obj->daftar_no : '') ),
+                array(
+                    'name'  => 'tgl',
+                    'label' => 'Tanggal Pendaftaran',
+                    'type'  => 'datepicker',
+                    'std'   => ( $data_obj ? format_date($data_obj->daftar_tgl) : '') ,
+                    'callback'=> 'string_to_date' ),
+                ));
+
+        $fields[] = array(
             'name'  => 'usaha_skala',
             'label' => 'Skala Perusahaan',
             'type'  => 'radio',
@@ -277,14 +281,12 @@ class Bpmppt_tdp extends CI_Driver
                     'name'  => 'telp',
                     'label' => 'Telpon',
                     'type'  => 'tel',
-                    'std'   => ( $data_obj ? $data_obj->usaha_no_telp : ''),
-                    'validation'=> 'numeric' ),
+                    'std'   => ( $data_obj ? $data_obj->usaha_no_telp : '') ),
                 array(
                     'name'  => 'fax',
                     'label' => 'Faksimili',
                     'type'  => 'tel',
-                    'std'   => ( $data_obj ? $data_obj->usaha_no_fax : ''),
-                    'validation'=> 'numeric' ),
+                    'std'   => ( $data_obj ? $data_obj->usaha_no_fax : '') ),
                 ));
 
         /**
@@ -334,38 +336,37 @@ class Bpmppt_tdp extends CI_Driver
             'name'  => 'usaha_modal_awal',
             'label' => 'Modal awal',
             'type'  => 'text',
-            'std'   => ( $data_obj ? $data_obj->usaha_modal_awal : ''),
-            'validation'=> ( !$data_obj ? 'numeric' : '' ) );
+            'std'   => ( $data_obj ? $data_obj->usaha_modal_awal : '') );
 
-        $fields[] = array(
-            'name'  => 'usaha_saham_nilai',
-            'label' => 'Nilai Saham',
-            'type'  => 'subfield',
-            'fields'=> array(
-                array(
-                    'col'   => '6',
-                    'name'  => 'total',
-                    'label' => 'Total Nilai Saham (Rp.)',
-                    'type'  => 'text',
-                    'std'   => ( $data_obj ? $data_obj->usaha_saham_nilai_total : ''),
-                    'validation'=> ( !$data_obj ? 'numeric' : '' ) ),
-                array(
-                    'col'   => '3',
-                    'name'  => 'nasional',
-                    'label' => 'Nasional (%)',
-                    'type'  => 'number',
-                    'max'   => 100,
-                    'std'   => ( $data_obj ? $data_obj->usaha_saham_nilai_nasional : ''),
-                    'validation'=> ( !$data_obj ? 'numeric' : '' ) ),
-                array(
-                    'col'   => '3',
-                    'name'  => 'tgl',
-                    'label' => 'Asing (%)',
-                    'type'  => 'number',
-                    'max'   => 100,
-                    'std'   => ( $data_obj ? $data_obj->usaha_saham_nilai_tgl : ''),
-                    'validation'=> ( !$data_obj ? 'numeric' : '' ) ),
-                ));
+        // $fields[] = array(
+        //     'name'  => 'usaha_saham_nilai',
+        //     'label' => 'Nilai Saham',
+        //     'type'  => 'subfield',
+        //     'fields'=> array(
+        //         array(
+        //             'col'   => '6',
+        //             'name'  => 'total',
+        //             'label' => 'Total Nilai Saham (Rp.)',
+        //             'type'  => 'text',
+        //             'std'   => ( $data_obj ? $data_obj->usaha_saham_nilai_total : ''),
+        //             'validation'=> ( !$data_obj ? 'numeric' : '' ) ),
+        //         array(
+        //             'col'   => '3',
+        //             'name'  => 'nasional',
+        //             'label' => 'Nasional (%)',
+        //             'type'  => 'number',
+        //             'max'   => 100,
+        //             'std'   => ( $data_obj ? $data_obj->usaha_saham_nilai_nasional : ''),
+        //             'validation'=> ( !$data_obj ? 'numeric' : '' ) ),
+        //         array(
+        //             'col'   => '3',
+        //             'name'  => 'tgl',
+        //             'label' => 'Asing (%)',
+        //             'type'  => 'number',
+        //             'max'   => 100,
+        //             'std'   => ( $data_obj ? $data_obj->usaha_saham_nilai_tgl : ''),
+        //             'validation'=> ( !$data_obj ? 'numeric' : '' ) ),
+        //         ));
 
         $fields[] = array(
             'name'  => 'fieldset_data_usaha_akta',

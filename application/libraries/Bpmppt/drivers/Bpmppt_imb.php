@@ -16,6 +16,7 @@ class Bpmppt_imb extends CI_Driver
     public $code = 'IMB';
     public $alias = 'izin_mendirikan_bangunan';
     public $name = 'Izin Mendirikan Bangunan';
+    public $tembusan = FALSE;
 
     /**
      * Default field

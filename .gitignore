@@ -6,34 +6,16 @@ Icon?
 _*
 .*
 *.bak
-*.lock
-*.tmproj
-*.tmproject
-*.diff
-*.err
+*.old
 *.orig
+*.lock
+*.diff
+*.patch
+*.err
 *.log
-*.rej
-*.swo
 *.swp
-*.vi
 *~
 *.zip
-
-# IDEs project files/settings
-nbproject/
-nbactions.xml
-.settings/
-.project
-.metadata
-.properties
-.tmproj
-*.esproj
-.codeintel
-*.sublime-*
-*.komodoproject
-.komodotools
-.idea/
 
 # Dependencies Folder
 /node_modules/

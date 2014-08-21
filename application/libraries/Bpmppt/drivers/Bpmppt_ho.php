@@ -16,6 +16,7 @@ class Bpmppt_ho extends CI_Driver
     public $code = 'HO';
     public $alias = 'izin_gangguan';
     public $name = 'Izin Gangguan';
+    public $prefield_label = 'No. &amp; Tgl. Input';
 
     /**
      * Default field
@@ -26,11 +27,12 @@ class Bpmppt_ho extends CI_Driver
         'surat_jenis_pengajuan'     => '',
         'pembaruan_ke'              => '',
         'pemohon_nama'              => '',
-        'pemohon_kerja'             => '',
+        'pemohon_jabatan'           => '',
         'pemohon_alamat'            => '',
         'pemohon_telp'              => '',
         'usaha_nama'                => '',
         'usaha_jenis'               => '',
+        'usaha_skala'               => '',
         'usaha_alamat'              => '',
         'usaha_tanah_milik'         => '',
         'usaha_lokasi'              => '',
@@ -74,24 +76,40 @@ class Bpmppt_ho extends CI_Driver
             'std'   => ( $data_obj ? $data_obj->surat_jenis_pengajuan : ''),
             'option'=> array(
                 'Pendaftaran Baru' => 'Pendaftaran Baru',
-                'Perubahan'        => 'Perubahan',
+                'Balik Nama'        => 'Balik Nama',
                 'Daftar Ulang'     => 'Daftar Ulang' ),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
         $fields[] = array(
-            'name'  => 'pembaruan_ke',
-            'label' => 'Daftar ulang Ke',
-            'type'  => 'text',
+            'name'  => 'ho_lama',
+            'label' => 'HO Lama',
+            'type'  => 'subfield',
             'fold'  => array(
                 'key'   => $this->alias.'_surat_jenis_pengajuan',
                 'value' => 'Daftar Ulang'
+                ),
+            'fields' => array(
+                array(
+                    'name'  => 'no',
+                    'label' => 'No. HO Lama',
+                    'type'  => 'text',
+                    'std'   => ( $data_obj ? $data_obj->ho_lama_no : '') ),
+                array(
+                    'name'  => 'tgl',
+                    'label' => 'Tanggal HO Lama',
+                    'type'  => 'text',
+                    'std'   => ( $data_obj ? $data_obj->ho_lama_tgl : '') ),
+                array(
+                    'name'  => 'ho',
+                    'label' => 'Keterangan',
+                    'type'  => 'text',
+                    'std'   => ( $data_obj ? $data_obj->ho_lama_ho : '') ),
                 ),
             'std'   => ( $data_obj ? $data_obj->pembaruan_ke : '') );
 
         $fields[] = array(
             'name'  => 'fieldset_data_pemohon',
             'label' => 'Data Pemohon',
-            // 'attr'  => ( $data_obj ? array('disabled'=>'') : '' ),
             'type'  => 'fieldset' );
 
         $fields[] = array(
@@ -101,12 +119,18 @@ class Bpmppt_ho extends CI_Driver
             'std'   => ( $data_obj ? $data_obj->pemohon_nama : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
+        // $fields[] = array(
+        //     'name'  => 'pemohon_kerja',
+        //     'label' => 'Pekerjaan',
+        //     'type'  => 'text',
+        //     'std'   => ( $data_obj ? $data_obj->pemohon_kerja : ''),
+        //     'validation'=> ( !$data_obj ? 'required' : '' ) );
+
         $fields[] = array(
-            'name'  => 'pemohon_kerja',
-            'label' => 'Pekerjaan',
+            'name'  => 'pemohon_jabatan',
+            'label' => 'Jabatan Pemohon',
             'type'  => 'text',
-            'std'   => ( $data_obj ? $data_obj->pemohon_kerja : ''),
-            'validation'=> ( !$data_obj ? 'required' : '' ) );
+            'std'   => ( $data_obj ? $data_obj->pemohon_jabatan : '') );
 
         $fields[] = array(
             'name'  => 'pemohon_alamat',
@@ -125,7 +149,6 @@ class Bpmppt_ho extends CI_Driver
         $fields[] = array(
             'name'  => 'fieldset_data_perusahaan',
             'label' => 'Data Perusahaan',
-            // 'attr'  => ( $data_obj ? array('disabled'=>'') : '' ),
             'type'  => 'fieldset' );
 
         $fields[] = array(
@@ -133,6 +156,25 @@ class Bpmppt_ho extends CI_Driver
             'label' => 'Nama Perusahaan',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->usaha_nama : ''),
+            'validation'=> ( !$data_obj ? 'required' : '' ) );
+
+        $u_skala = array(
+            'Perseroan Terbatas (PT)',
+            'Perseroan Komanditer (CV)',
+            'Perorangan (PO)',
+            );
+
+        foreach ( $u_skala as $skala )
+        {
+            $jns_opt[$skala] = $skala;
+        }
+
+        $fields[] = array(
+            'name'  => 'usaha_skala',
+            'label' => 'Skala Perusahaan',
+            'type'  => 'radio',
+            'std'   => ( $data_obj ? $data_obj->usaha_skala : ''),
+            'option'=> $jns_opt,
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
         $fields[] = array(
@@ -168,19 +210,11 @@ class Bpmppt_ho extends CI_Driver
             'label' => 'Luas perusahaan (M<sup>2</sup>)',
             'type'  => 'number',
             'std'   => ( $data_obj ? $data_obj->usaha_luas : ''),
-            'validation'=> ( !$data_obj ? 'required' : '' ) );
-
-        $fields[] = array(
-            'name'  => 'usaha_pekerja',
-            'label' => 'Jumlah pekerja',
-            'type'  => 'number',
-            'std'   => ( $data_obj ? $data_obj->usaha_pekerja : ''),
-            'validation'=> ( !$data_obj ? 'required' : '' ) );
+            'validation'=> ( !$data_obj ? 'required' : ''  ) );
 
         $fields[] = array(
             'name'  => 'fieldset_data_tetangga',
             'label' => 'Data Tetangga',
-            // 'attr'  => ( $data_obj ? array('disabled'=>'') : '' ),
             'type'  => 'fieldset' );
 
         $fields[] = array(

@@ -24,4 +24,6 @@ $lang['db_column_name_required']        = 'Nama kolom di butuhkan untuk operasi 
 $lang['db_column_definition_required']  = 'Definisi kolom di butuhkan untuk operasi tersebut.';
 $lang['db_unable_to_set_charset']       = 'Tidak dapat mengisi client connection dengan karakter set: %s';
 $lang['db_error_heading']               = 'Terjadi problem database';
-?>
+
+/* End of file db_lang.php */
+/* Location: ./system/language/indonesian/db_lang.php */

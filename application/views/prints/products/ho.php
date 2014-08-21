@@ -1,3 +1,22 @@
+<?php if ($ho_lama_no) : ?>
+<table style="position: absolute; top: 0; left: 70%; min-width: 0; width: auto; float: right; font-size: 9px; line-height: 1.2em; border: 1px solid #000;">
+    <tr>
+        <td width="45%">Daftar ulang HO Nomor</td>
+        <td width="10%">:</td>
+        <td width="45%"><?php echo $ho_lama_no ?></td>
+    </tr>
+    <tr>
+        <td>Tanggal</td>
+        <td>:</td>
+        <td><?php echo $ho_lama_tgl ?></td>
+    </tr>
+    <tr>
+        <td>Izin Gangguan (HO)</td>
+        <td>:</td>
+        <td><?php echo $ho_lama_ho ?></td>
+    </tr>
+</table>
+<?php endif; ?>
 <table>
     <tbody>
         <tr><td colspan="7" style="width:100%"></td></tr>
@@ -5,21 +24,21 @@
     <td colspan="7" style="width:100%" class="align-center bold">IZIN GANGGUAN ( HO )</td>
 </tr>
 <tr>
-    <td colspan="7" style="width:100%" class="align-center bold">NOMOR : <?php echo '510.8 /'.nbs(6).'/ BPMPPT / '.$usaha_jenis.' / '.strtoupper(format_roman(bdate('m', $surat_tanggal)).' / '.bdate('Y')) ?></td>
+    <td colspan="7" style="width:100%" class="align-center bold">NOMOR : <?php echo '510.8 /'.nbs(6).'/ BPMPPT / '.$usaha_jenis.' / '.print_blnthn_head($surat_tanggal) ?></td>
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
-    <td colspan="2" style="width:30%"></td>
-    <td style="width:10%">JENIS USAHA / KEGIATAN</td>
+    <!-- <td colspan="2" style="width:30%"></td> -->
+    <td colspan="2" style="width:40%">JENIS USAHA / KEGIATAN</td>
     <td style="width:2%">:</td>
-    <td colspan="3" style="width:47%" class="bold"><?php echo $usaha_jenis.' * '.$usaha_nama ?> *</td>
+    <td colspan="4" style="width:47%" class="bold"><?php echo $usaha_jenis.'<br>* '.$usaha_nama ?> *</td>
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
-    <td colspan="2" style="width:30%"></td>
-    <td style="width:10%"><p>An. SAUDARA</p></td>
+    <!-- <td colspan="2" style="width:30%"></td> -->
+    <td colspan="2" style="width:40%"><p>An. SAUDARA</p></td>
     <td style="width:2%">:</td>
-    <td colspan="3" style="width:47%" class="bold"><?php echo strtoupper($pemohon_nama) ?></td>
+    <td colspan="4" style="width:47%" class="bold"><?php echo strtoupper($pemohon_nama) ?></td>
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
@@ -29,8 +48,9 @@
 <tr>
     <td style="width:20%"><p>Membaca</p></td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%" class="align-justify"><p>Surat Permohonan Saudara <?php echo $pemohon_nama ?> selaku <strong><?php echo $pemohon_kerja.' '.$usaha_nama ?></strong>, Alamat di <strong><?php echo $usaha_alamat ?></strong>, tanggal <?php echo format_date($surat_tanggal) ?> untuk Izin tempat usaha <?php echo $usaha_jenis ?>, yang terletak di <?php echo $usaha_lokasi ?>.</p></td>
+    <td colspan="5" style="width:78%" class="align-justify"><p>Surat Permohonan Saudara <strong><?php echo $pemohon_nama ?></strong> <?php echo (strtolower($pemohon_jabatan) == 'atas nama' ? 'atas nama <strong>'.$usaha_nama.'</strong>' : 'selaku '.$pemohon_jabatan)?>, Alamat di <strong><?php echo $usaha_alamat ?></strong>, tanggal <?php echo format_date($surat_tanggal) ?> untuk Izin tempat usaha <?php echo $usaha_jenis ?>, yang terletak di <?php echo $usaha_lokasi ?>.</p></td>
 </tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>Menimbang</p></td>
     <td style="width:2%">:</td>
@@ -42,6 +62,7 @@
         </ol>
     </td>
 </tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>Mengingat</p></td>
     <td style="width:2%">:</td>
@@ -73,8 +94,9 @@
 <tr>
     <td style="width:20%"><p>KESATU</p></td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%" class="align-justify"><p>Memberi Izin Gangguan ( HO ) kepada Saudara <strong><?php echo $pemohon_nama ?></strong> selaku <?php echo $pemohon_kerja ?><strong><?php echo $usaha_nama ?></strong>, Alamat Kantor di <?php echo $usaha_alamat ?>, untuk Izin tempat usaha <?php echo $usaha_jenis ?> yang terletak <?php echo $usaha_lokasi ?> di atas tanah milik <?php echo $usaha_tanah_milik ?> dengan luas tempat usaha ± <?php echo $usaha_luas ?> M<sup>2</sup>.Adapun persil tersebut berbatasan :</p></td>
+    <td colspan="5" style="width:78%" class="align-justify"><p>Memberi Izin Gangguan ( HO ) kepada Saudara <strong><?php echo $pemohon_nama ?></strong> <?php echo (strtolower($pemohon_jabatan) == 'atas nama' ? 'atas nama <strong>'.$usaha_nama.'</strong>' : 'selaku '.$pemohon_jabatan)?>, Alamat Kantor di <?php echo $usaha_alamat ?>, untuk Izin tempat usaha <?php echo $usaha_jenis ?> yang terletak <?php echo $usaha_lokasi ?> di atas tanah milik <?php echo $usaha_tanah_milik ?> dengan luas tempat usaha ± <?php echo $usaha_luas ?> M<sup>2</sup>.<br>Adapun persil tersebut berbatasan :</p></td>
 </tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
     <td colspan="2"></td>
     <td colspan="2" style="width:35%">Sebelah Utara</td>
@@ -99,6 +121,7 @@
     <td style="width:2%">:</td>
     <td colspan="2" style="width:42%"><?php echo $usaha_tetangga_barat ?></td>
 </tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
     <td colspan="2"></td>
     <td colspan="5" style="width:78%" class="align-justify">
@@ -146,35 +169,15 @@
 <tr>
     <td colspan="6" style="width:60%"></td>
     <td style="width:40%">
-        <p>Ditetapkan di : Kajen</p>
-        <p class="underline">Pada Tanggal : <?php echo nbs(16).bdate('Y') ?></p>
+        <p>Ditetapkan di : <?php echo $skpd_kab ?></p>
+        <p class="underline">Pada Tanggal : <?php print_blnthn_foot($surat_tanggal) ?></p>
     </td>
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="5" style="width:60%"></td>
-    <td colspan="2" style="width:40%">
-    A.n. BUPATI PEKALONGAN<br>
-    KEPALA <?php echo strtoupper($skpd_name) ?><br>
-    <?php echo strtoupper($skpd_city) ?><br><br><br>
-    <span class="underline"><?php echo strtoupper($skpd_lead_name) ?></span><br>
-    <?php echo strtoupper($skpd_lead_jabatan) ?><br>
-    NIP. <?php echo strtoupper($skpd_lead_nip) ?>
-    </td>
+    <td colspan="2" style="width:40%"><?php print_ttd_kadin() ?></td>
 </tr>
-<?php if (strlen($data_tembusan) > 0): ?>
-<tr>
-    <td colspan="7">
-        <p>Tembusan :</p>
-        <ol>
-        <?php foreach (unserialize($data_tembusan) as $tembusan) : ?>
-            <li><?php echo $tembusan ?>;</li>
-        <?php endforeach ?>
-        </ol>
-    </td>
-</tr>
-<?php endif ?>
-
-
+<tr><td colspan="7" style="width:100%"><?php print_tembusan($data_tembusan) ?></td></tr>
     </tbody>
 </table>

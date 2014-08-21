@@ -1,3 +1,4 @@
+</div> <!-- .wrapper -->
 <footer id="foots">
     <div class="container">
         <p class="text-muted pull-left"><?php echo $footer_left ?></p>
