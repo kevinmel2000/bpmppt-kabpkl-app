@@ -61,6 +61,7 @@
         </ol>
     </td>
 </tr>
+<tr><td colspan="7" style="width:100%"></td></tr>
 <tr>
     <td colspan="7" style="width:100%"><p style="text-align:center"><strong>M E M U T U S K A N :</strong></p></td>
 </tr>
@@ -138,7 +139,7 @@
                                 <td>COD</td>
                                 <td><?php echo $limbah_kadar_max_proses_cod ?></td>
                                 <td><?php echo $limbah_beban_max_proses_cod ?></td>
-                                <?php if ($limbah_kadar_max_kond_bod) : ?>
+                                <?php if ($limbah_kadar_max_kond_cod) : ?>
                                     <td><?php echo $limbah_kadar_max_kond_cod ?></td>
                                     <td><?php echo $limbah_beban_max_proses_cod ?></td>
                                 <?php endif; ?>
@@ -148,7 +149,7 @@
                                 <td>TTS</td>
                                 <td><?php echo $limbah_kadar_max_proses_tts ?></td>
                                 <td><?php echo $limbah_beban_max_proses_tts ?></td>
-                                <?php if ($limbah_kadar_max_kond_bod) : ?>
+                                <?php if ($limbah_kadar_max_kond_tts) : ?>
                                     <td><?php echo $limbah_kadar_max_kond_tts ?></td>
                                     <td><?php echo $limbah_beban_max_proses_tts ?></td>
                                 <?php endif; ?>
@@ -158,7 +159,7 @@
                                 <td>Amonia (MH3/N)</td>
                                 <td><?php echo $limbah_kadar_max_proses_minyak ?></td>
                                 <td><?php echo $limbah_beban_max_proses_minyak ?></td>
-                                <?php if ($limbah_kadar_max_kond_bod) : ?>
+                                <?php if ($limbah_kadar_max_kond_minyak) : ?>
                                     <td><?php echo $limbah_kadar_max_kond_minyak ?></td>
                                     <td><?php echo $limbah_beban_max_proses_minyak ?></td>
                                 <?php endif; ?>
@@ -167,16 +168,16 @@
                                 <td>5</td>
                                 <td>pH</td>
                                 <td colspan="2"><?php echo $limbah_kadar_max_proses_sulfida ?></td>
-                                <?php if ($limbah_kadar_max_kond_bod) : ?>
-                                    <td colspan="2"><?php echo $limbah_kadar_max_kond_bod ?></td>
+                                <?php if ($limbah_kadar_max_kond_sulfida) : ?>
+                                    <td colspan="2"><?php echo $limbah_kadar_max_kond_sulfida ?></td>
                                 <?php endif; ?>
                             </tr>
                             <tr>
                                 <td>6</td>
                                 <td>Debit Maksimum</td>
                                 <td colspan="2"><?php echo $limbah_kadar_max_proses_ph ?></td>
-                                <?php if ($limbah_kadar_max_kond_bod) : ?>
-                                    <td colspan="2"><?php echo $limbah_kadar_max_kond_bod ?></td>
+                                <?php if ($limbah_kadar_max_kond_ph) : ?>
+                                    <td colspan="2"><?php echo $limbah_kadar_max_kond_ph ?></td>
                                 <?php endif; ?>
                             </tr>
                         </table>

@@ -158,57 +158,28 @@ class Bpmppt_iplc extends CI_Driver
 
     // -------------------------------------------------------------------------
 
-    protected function subfield_limbah( $parent, $data_obj = FALSE )
+    protected function subfield_limbah($parent, $data_obj = FALSE)
     {
+        $subfields = array(
+            'bod'     => 'BOD',
+            'cod'     => 'COD',
+            'tts'     => 'TTS',
+            'minyak'  => 'Minyak',
+            'sulfida' => 'Sulfida',
+            'ph'      => 'pH',
+            );
 
-        $this->defaults[$parent.'bod']        = '';
-        $this->defaults[$parent.'cod']        = '';
-        $this->defaults[$parent.'tts']        = '';
-        $this->defaults[$parent.'minyak']     = '';
-        $this->defaults[$parent.'sulfida']    = '';
-        $this->defaults[$parent.'ph']         = '';
+        foreach ($subfields as $name => $label)
+        {
+            $this->defaults[$parent.$name] = '';
 
-        $subs[] = array(
-            'name'  => 'bod',
-            'label' => 'BOD',
-            'type'  => 'text',
-            'std'   => ( $data_obj ? $data_obj->{$parent.'bod'} : ''),
-            'validation'=> ( !$data_obj ? 'required' : '' ) );
-
-        $subs[] = array(
-            'name'  => 'cod',
-            'label' => 'COD',
-            'type'  => 'text',
-            'std'   => ( $data_obj ? $data_obj->{$parent.'cod'} : ''),
-            'validation'=> ( !$data_obj ? 'required' : '' ) );
-
-        $subs[] = array(
-            'name'  => 'tts',
-            'label' => 'TTS',
-            'type'  => 'text',
-            'std'   => ( $data_obj ? $data_obj->{$parent.'tts'} : ''),
-            'validation'=> ( !$data_obj ? 'required' : '' ) );
-
-        $subs[] = array(
-            'name'  => 'minyak',
-            'label' => 'Minyak',
-            'type'  => 'text',
-            'std'   => ( $data_obj ? $data_obj->{$parent.'minyak'} : ''),
-            'validation'=> ( !$data_obj ? 'required' : '' ) );
-
-        $subs[] = array(
-            'name'  => 'sulfida',
-            'label' => 'Silfida',
-            'type'  => 'text',
-            'std'   => ( $data_obj ? $data_obj->{$parent.'sulfida'} : ''),
-            'validation'=> ( !$data_obj ? 'required' : '' ) );
-
-        $subs[] = array(
-            'name'  => 'ph',
-            'label' => 'pH',
-            'type'  => 'text',
-            'std'   => ( $data_obj ? $data_obj->{$parent.'ph'} : ''),
-            'validation'=> ( !$data_obj ? 'required' : '' ) );
+            $subs[] = array(
+                'name'  => $name,
+                'label' => $label,
+                'type'  => 'text',
+                'std'   => ( $data_obj ? $data_obj->{$parent.$name} : ''),
+                );
+        }
 
         return $subs;
     }
