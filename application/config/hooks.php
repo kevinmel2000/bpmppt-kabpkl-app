@@ -11,9 +11,9 @@
 */
 
 $conf = array(
-    'class'    => 'Bakahooks',
-    'filename' => 'Bakahooks.php',
-    'filepath' => 'bakaigniter/libraries',
+    'class'    => 'Bihooks',
+    'filename' => 'Bihooks.php',
+    'filepath' => 'bootigniter/libraries',
     'function' => '',
     );
 

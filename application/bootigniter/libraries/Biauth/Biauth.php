@@ -394,7 +394,7 @@ class Biauth extends CI_Driver_Library
 
     public function get_user($term, $field = '')
     {
-        if ($user =& $this->users->get($term, $field))
+        if ($user = $this->users->get($term, $field))
         {
             $user->groups = $this->users->get_groups($user->id);
             $user->perms = $this->users->get_perms($user->id, TRUE);

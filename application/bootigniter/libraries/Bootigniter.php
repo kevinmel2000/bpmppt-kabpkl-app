@@ -135,14 +135,15 @@ class Bootigniter
 	 */
 	protected function initialize()
 	{
-		$query = $this->_ci->db->get($this->_table_name);
-
-		foreach ($query->result() as $row)
+		if ($query = $this->_ci->db->get($this->_table_name))
 		{
-			$this->_settings[$row->key] = $row->value;
-		}
+			foreach ($query->result() as $row)
+			{
+				$this->_settings[$row->key] = $row->value;
+			}
 
-		$query->free_result();
+			$query->free_result();
+		}
 	}
 
 	// -------------------------------------------------------------------------

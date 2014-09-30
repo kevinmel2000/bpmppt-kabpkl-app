@@ -18,23 +18,7 @@
  *
  */
 
-if ($vcap_services = getenv("VCAP_SERVICES"))
-{
-	define('VCAP_SERVICES', $vcap_services);
-}
-else
-{
-	define('VCAP_SERVICES', FALSE);
-}
-
-if (defined('PROJECT_DIR') or VCAP_SERVICES)
-{
-	define('ENVIRONMENT', 'testing');
-}
-else
-{
-	define('ENVIRONMENT', 'development');
-}
+!defined('ENVIRONMENT') and define('ENVIRONMENT', 'development');
 
 /*
  *---------------------------------------------------------------
@@ -194,7 +178,7 @@ if (defined('ENVIRONMENT'))
 	// Name of the "system folder"
 	define('SYSDIR', trim(strrchr(trim(BASEPATH, '/'), '/'), '/'));
 
-	if ( file_exists(FCPATH.'appconfig'.EXT) )
+	if (file_exists(FCPATH.'appconfig'.EXT))
 	{
 		require FCPATH.'appconfig'.EXT;
 	}

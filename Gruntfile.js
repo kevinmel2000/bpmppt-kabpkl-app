@@ -125,7 +125,7 @@ module.exports = function(grunt) {
         tasks: [ 'cssdist' ]
       },
       phpTest: {
-        files: '<%= phpunit.base.dir %>/**/*Test.php',
+        files: '<%= phpunit.dev.dir %>/**/*Test.php',
         tasks: 'phpunit'
       },
       phpCore: {

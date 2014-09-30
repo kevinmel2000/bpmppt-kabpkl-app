@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-
 <phpunit
     bootstrap="application/tests/bootstrap.php"
     colors="true"
@@ -18,13 +17,13 @@
     </php>
     <testsuites>
         <testsuite name="Baka Pack Test Suite">
-            <directory surfix="Test.php">application/tests/core</directory>
+            <directory surfix="Test.php">application/tests/</directory>
         </testsuite>
     </testsuites>
     <filter>
         <blacklist>
-            <directory suffix=".php">system</directory>
-            <directory suffix=".php">vendor</directory>
+            <directory suffix=".php">system/</directory>
+            <directory suffix=".php">vendor/</directory>
         </blacklist>
     </filter>
 </phpunit>

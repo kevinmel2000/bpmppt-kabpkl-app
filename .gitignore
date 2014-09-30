@@ -19,7 +19,6 @@ _*
 
 # Dependencies Folder
 /node_modules/
-/bower_components/
 /vendor/
 
 # Ignore Application Specifics
@@ -32,5 +31,5 @@ _*
 !.git*
 !.travis.yml
 !.editorconfig
-!.csslintrc
-!.csscomb.json
+!.css*
+!/application/storage/logs/view.php

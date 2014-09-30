@@ -4,11 +4,11 @@
  * CodeIgniter Baka Pack
  *
  * My very own Codeigniter Boilerplate Library that used on all of my projects
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * Licensed under the Open Software License version 3.0
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0) that is
  * bundled with this package in the files license.txt / license.rst.  It is
  * also available through the world wide web at this URL:
@@ -29,30 +29,26 @@
  * @subpackage  Core
  * @category    Controller
  */
-class BakaControllerTest extends PHPUnit_Framework_TestCase
+class BakaControllerTest extends Bpmppt_TestCase
 {
-    private $_ci;
     private $_bc = FALSE;
 
     public function setUp()
     {
-        $this->_ci =& get_instance();
-
-        if (class_exists('BAKA_Controller'))
+        if (class_exists('BI_Controller'))
         {
-            $this->_bc = new BAKA_Controller;
+            $this->_bc = new BI_Controller;
         }
     }
 
     public function testInstance()
     {
-        $this->assertNotFalse($this->_bc);
+        // $this->assertNotFalse($this->_bc);
 
-        $this->assertContainsOnlyInstancesOf('BAKA_Controller', array($this->_bc));
+        $this->assertContainsOnlyInstancesOf('BI_Controller', array($this->_bc));
 
         $this->assertContainsOnlyInstancesOf('CI_Controller', array($this->_bc));
 
-        $this->assertNotCount(0, $this->_bc->data);
     }
 
     public function testPanelContent()

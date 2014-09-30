@@ -1,20 +1,22 @@
 <?php
 
-if (VCAP_SERVICES)
+$base_url = function_exists('apache_getenv') == true ? 'http://bpmppt.local/' : 'http://localhost:8088/';
+$hostname = 'localhost';
+$username = 'root';
+$password = 'password';
+$name     = 'bpmppt';
+
+if ($vcap_services = getenv("VCAP_SERVICES"))
 {
-	$service_json = json_decode(VCAP_SERVICES, true);
+	$service_json = json_decode($vcap_services, true);
 	$env_config   = $service_json['mysql-5.1'][0]['credentials'];
 
-	$env_config['base_url'] = 'http://bpmppt.ap01.aws.af.cm/';
-}
-elseif (getenv("TRAVIS") == true)
-{
-	$env_config['hostname'] = '127.0.0.1';
-	$env_config['username'] = 'travis';
-	$env_config['password'] = '';
-	$env_config['name']     = 'bpmppt_test';
+	foreach (array('hostname', 'username', 'password', 'name') as $service)
+	{
+		$$service = $env_config[$service];
+	}
 
-	$env_config['base_url'] = 'http://localhost/';
+	$base_url = 'http://bpmppt.ap01.aws.af.cm/';
 }
 
 /*
@@ -22,16 +24,16 @@ elseif (getenv("TRAVIS") == true)
 | BASE SITE URL
 |--------------------------------------------------------------------
 */
-$hostname = function_exists('apache_getenv') == true ? 'http://bpmppt.local/' : 'http://localhost:8088/';
-define('APP_BASE_URL', isset($env_config) ? $env_config['base_url'] : $hostname);
+// $base_url = function_exists('apache_getenv') == true ? 'http://bpmppt.local/' : 'http://localhost:8088/';
+!defined('APP_BASE_URL') and define('APP_BASE_URL', $base_url);
 
 /*
 | -------------------------------------------------------------------
 | DATABASE CONNECTIVITY SETTINGS
 | -------------------------------------------------------------------
 */
-define('APP_HOSTNAME', isset($env_config) ? $env_config['hostname'] : 'localhost' );
-define('APP_USERNAME', isset($env_config) ? $env_config['username'] : 'root' );
-define('APP_PASSWORD', isset($env_config) ? $env_config['password'] : 'password' );
-define('APP_DATABASE', isset($env_config) ? $env_config['name']     : 'bpmppt_dev' );
-define('APP_DBPREFIX', 'baka_');
+!defined('APP_HOSTNAME') and define('APP_HOSTNAME', $hostname );
+!defined('APP_USERNAME') and define('APP_USERNAME', $username );
+!defined('APP_PASSWORD') and define('APP_PASSWORD', $password );
+!defined('APP_DATABASE') and define('APP_DATABASE', $name );
+!defined('APP_DBPREFIX') and define('APP_DBPREFIX', 'baka_');
