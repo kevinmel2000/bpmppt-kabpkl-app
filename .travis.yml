@@ -31,4 +31,4 @@ matrix:
   fast_finish: true
 branches:
   only:
-    - master
+    - bpmppt
