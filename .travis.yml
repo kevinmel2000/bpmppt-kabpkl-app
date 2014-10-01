@@ -11,15 +11,13 @@ before_install:
   - export APP_DATABASE='bpmppt_test'
   - export APP_DBPREFIX='baka_'
 install:
-  - npm install -g grunt-cli
-  - npm install
   - composer install --dev --no-progress
 before_script:
   - mysql -e 'drop database if exists bpmppt_test;'
   - mysql -e 'create database bpmppt_test;'
   - mysql -utravis bpmppt_test < database.sql
 script:
-  - grunt build
+  - phpunit -c phpunit.xml
 deploy:
   provider: appfog
   email: ferywardiyanto@gmail.com
