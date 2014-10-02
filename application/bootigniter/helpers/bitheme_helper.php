@@ -75,8 +75,6 @@ function get_page_title()
  */
 function get_navbar()
 {
-    $bitheme =& get_instance()->bitheme;
-
     if ( is_user_can('login'))
     {
         return get_nav('top');
@@ -102,8 +100,8 @@ function get_nav($position, $responsivable = FALSE)
         return make_menu( $navbar[$position], $responsivable);
     }
 
-    log_message('error', '#BootIgniter: Bitheme->navbar '.$position.' doesn\'t exists.');
-    return FALSE;
+    // log_message('error', '#BootIgniter: Bitheme->navbar '.$position.' doesn\'t exists.');
+    // return FALSE;
 }
 
 // -----------------------------------------------------------------------------

@@ -6,12 +6,10 @@
         <?php $nav = get_nav('side', TRUE) ?>
 
         <div class="row">
-
             <section id="main-content" class="<?php echo ($nav ? twbs_set_columns(9, 9, 12, 12, 12) : twbs_set_columns(12, 12, 12)) ?>">
                 <button id="sidebar-toggle" type="button" class="btn btn-default">
                     <span class="fa fa-bars">
                 </button> <!-- .sidebar-toggle -->
-
                 <?php echo $contents ?>
             </section> <!-- #main-content -->
 
@@ -21,7 +19,6 @@
                 <?php echo $nav ?>
             </aside> <!-- #sidebar -->
         <?php endif ?>
-
         </div> <!-- .row -->
     </div> <!-- .container-->
 </section> <!-- #contents -->

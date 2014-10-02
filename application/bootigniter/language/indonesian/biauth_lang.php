@@ -6,7 +6,7 @@
  * @author      Fery Wardiyanto
  * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
  * @license     https://github.com/feryardiant/bootigniter/blob/master/license.md
- * @since       Version 1.0.1
+ * @since       Version 0.1.5
  */
 
 // -----------------------------------------------------------------------------

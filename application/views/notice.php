@@ -2,7 +2,6 @@
 
 <section id="contents">
     <div class="container">
-        <?php echo form_alert() ?>
         <div class="row">
             <?php echo $contents ?>
         </div> <!-- .row -->

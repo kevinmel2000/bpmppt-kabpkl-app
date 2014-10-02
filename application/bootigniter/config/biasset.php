@@ -20,6 +20,23 @@ $config['biasset_path_prefix'] = 'asset/';
 
 /*
 |--------------------------------------------------------------------------
+| Registering Stylesheets and Javascripts
+|--------------------------------------------------------------------------
+*/
+
+$config['biasset_register_styles'] = array(
+    'lato-gfonts' => '//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic',
+    'bootigniter'  => 'css/style.min.css',
+    );
+
+$config['biasset_register_scripts'] = array(
+    'jquery'       => 'js/lib/jquery.min.js',
+    'bootstrap'    => 'js/lib/bootstrap.min.js',
+    'bootigniter'  => 'js/script.js',
+    );
+
+/*
+|--------------------------------------------------------------------------
 | Asset autoloader
 |--------------------------------------------------------------------------
 */
