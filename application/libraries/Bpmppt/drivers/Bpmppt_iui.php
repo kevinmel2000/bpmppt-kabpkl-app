@@ -45,7 +45,7 @@ class Bpmppt_iui extends CI_Driver
         'usaha_akta_nomor'  => '',
         'usaha_direksi'     => '',
         'usaha_lokasi'      => '',
-        'usaha_nama'        => '',
+        'luas_tanah'        => '',
         );
 
     // -------------------------------------------------------------------------
@@ -163,16 +163,17 @@ class Bpmppt_iui extends CI_Driver
             'std'   => ( $data_obj ? $data_obj->usaha_nama : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $fields[] = array(
-            'name'  => 'usaha_skala',
-            'label' => 'Skala',
-            'type'  => 'dropdown',
-            'std'   => ( $data_obj ? $data_obj->usaha_skala : ''),
-            'option'=> add_placeholder(array(
-                'kecil'     => 'Perusahaan Kecil',
-                'menengah'  => 'Perusahaan Menengah',
-                'besar'     => 'Perusahaan Besar' )) ,
-            'validation'=> ( !$data_obj ? 'required' : '' ) );
+        // $fields[] = array(
+        //     'name'  => 'usaha_skala',
+        //     'label' => 'Skala',
+        //     'type'  => 'dropdown',
+        //     'std'   => ( $data_obj ? $data_obj->usaha_skala : ''),
+        //     'option'=> add_placeholder(array(
+        //         'kecil'     => 'Perusahaan Kecil',
+        //         'menengah'  => 'Perusahaan Menengah',
+        //         'besar'     => 'Perusahaan Besar'
+        //         ))
+        //     );
 
         $fields[] = array(
             'name'  => 'usaha_npwp',
@@ -218,7 +219,7 @@ class Bpmppt_iui extends CI_Driver
 
         $fields[] = array(
             'name'  => 'usaha_jenis',
-            'label' => 'Jenis Perusahaan',
+            'label' => 'Jenis Industri',
             'type'  => 'subfield',
             'fields'=> array(
                 array(
@@ -274,11 +275,11 @@ class Bpmppt_iui extends CI_Driver
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
         $fields[] = array(
-            'name'  => 'usaha_nama',
+            'name'  => 'luas_tanah',
             'label' => 'Luas Tanah (M<sup>2</sup>)',
             'type'  => 'number',
             // 'attr'  => ( $data_obj ? 'disabled' : '' ),
-            'std'   => ( $data_obj ? $data_obj->usaha_nama : ''),
+            'std'   => ( $data_obj ? $data_obj->luas_tanah : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
         return $fields;

@@ -166,7 +166,6 @@ class Bpmppt_iup extends CI_Driver
 
     private function custom_field( $data = FALSE )
     {
-        // if ( ! $this->load->is_loaded('table'))
         if (!$this->_ci->load->is_loaded('table'))
         {
             $this->_ci->load->library('table');

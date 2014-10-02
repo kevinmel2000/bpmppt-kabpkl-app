@@ -44,14 +44,14 @@ class Biauth_users extends CI_Driver
         }
 
         return $this->_ci->db->select("a.*")
-                             ->select("group_concat(distinct c.id) group_id")
-                             ->select("group_concat(distinct c.name) group_name")
-                             ->select("group_concat(distinct c.description) group_desc")
-                             ->from($this->table['users'].' a')
-                             ->join($this->table['user_group'].' b','b.user_id = a.id', 'inner')
-                             ->join($this->table['groups'].' c','c.id = b.group_id', 'inner')
-                             ->where('a.'.$status, 1)
-                             ->group_by('a.id');
+            ->select("group_concat(distinct c.id) group_id")
+            ->select("group_concat(distinct c.name) group_name")
+            ->select("group_concat(distinct c.description) group_desc")
+            ->from($this->table['users'].' a')
+            ->join($this->table['user_group'].' b','b.user_id = a.id', 'inner')
+            ->join($this->table['groups'].' c','c.id = b.group_id', 'inner')
+            ->where('a.'.$status, 1)
+            ->group_by('a.id');
     }
 
     // -------------------------------------------------------------------------
@@ -203,20 +203,17 @@ class Biauth_users extends CI_Driver
         $this->edit_meta($user_id, $meta_data);
         $this->edit_groups($user_id, $group_data);
 
+        $this->_ci->db->trans_complete();
+
         if ($this->_ci->db->trans_status() === FALSE)
         {
-            log_message('error', '#Biauth: Users->edit failed updating existing user.');
             $this->_ci->db->trans_rollback();
-
+            log_message('error', '#Biauth: Users->edit failed updating existing user.');
             return FALSE;
         }
-        else
-        {
-            log_message('info', '#Biauth: Users->edit existing user has been updated.');
-            $this->_ci->db->trans_commit();
 
-            return TRUE;
-        }
+        log_message('info', '#Biauth: Users->edit existing user has been updated.');
+        return TRUE;
     }
 
     // -------------------------------------------------------------------------
@@ -433,16 +430,15 @@ class Biauth_users extends CI_Driver
                 $this->edit_meta($user_id, $key, $value);
             }
 
+            $this->_ci->db->trans_complete();
+
             if ($this->_ci->db->trans_status() === FALSE)
             {
                 $this->_ci->db->trans_rollback();
                 $return = FALSE;
             }
-            else
-            {
-                $this->_ci->db->trans_commit();
-                $return = TRUE;
-            }
+
+            $return = TRUE;
         }
         else
         {
@@ -455,7 +451,7 @@ class Biauth_users extends CI_Driver
 
         if ($return)
         {
-            log_message('success', '#Biauth: Users->edit_meta success updating existing usermeta.');
+            log_message('info', '#Biauth: Users->edit_meta success updating existing usermeta.');
         }
         else
         {
@@ -584,7 +580,6 @@ class Biauth_users extends CI_Driver
         foreach (array_diff($old_groups, $new_groups) as $key => $old_id)
         {
             unset($old_groups[$key]);
-
             $this->_ci->db->delete($this->table['user_group'], array(
                 'user_id' => $user_id,
                 'group_id' => $old_id
@@ -604,21 +599,15 @@ class Biauth_users extends CI_Driver
 
         $this->_ci->db->trans_complete();
 
-        if (($return = $this->_ci->db->trans_status()) === FALSE)
+        if ($this->_ci->db->trans_status() === FALSE)
         {
             $this->_ci->db->trans_rollback();
-        }
-
-        if ($return)
-        {
-            log_message('success', '#Biauth: Users->edit_groups success updating existing usergroup.');
-        }
-        else
-        {
             log_message('error', '#Biauth: Users->edit_groups failed updating existing usergroup.');
+            return FALSE;
         }
 
-        return $return;
+        log_message('info', '#Biauth: Users->edit_groups success updating existing usergroup.');
+        return TRUE;
     }
 
     // -------------------------------------------------------------------------
@@ -655,12 +644,12 @@ class Biauth_users extends CI_Driver
     public function get_perms($user_id, $is_assoc = FALSE)
     {
         $query = $this->_ci->db->select("d.*")
-                               ->from($this->table['user_group'].' a')
-                               ->join($this->table['groups'].' b', 'b.id = a.group_id')
-                               ->join($this->table['group_perms'].' c', 'c.group_id = b.id')
-                               ->join($this->table['permissions'].' d', 'd.id = c.perms_id')
-                               ->where('a.user_id', $user_id)
-                               ->get();
+            ->from($this->table['user_group'].' a')
+            ->join($this->table['groups'].' b', 'b.id = a.group_id')
+            ->join($this->table['group_perms'].' c', 'c.group_id = b.id')
+            ->join($this->table['permissions'].' d', 'd.id = c.perms_id')
+            ->where('a.user_id', $user_id)
+            ->get();
 
         if ($query && $query->num_rows() > 0)
         {

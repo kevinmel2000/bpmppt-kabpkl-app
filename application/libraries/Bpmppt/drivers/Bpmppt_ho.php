@@ -108,6 +108,13 @@ class Bpmppt_ho extends CI_Driver
             'std'   => ( $data_obj ? $data_obj->pembaruan_ke : '') );
 
         $fields[] = array(
+            'name'  => 'pemohon_tanggal',
+            'label' => 'Tanggal Permohonan',
+            'type'  => 'datepicker',
+            'std'   => ( $data_obj ? $data_obj->pemohon_tanggal : ''),
+            'validation'=> ( !$data_obj ? 'required' : '' ) );
+
+        $fields[] = array(
             'name'  => 'fieldset_data_pemohon',
             'label' => 'Data Pemohon',
             'type'  => 'fieldset' );
@@ -208,7 +215,7 @@ class Bpmppt_ho extends CI_Driver
         $fields[] = array(
             'name'  => 'usaha_luas',
             'label' => 'Luas perusahaan (M<sup>2</sup>)',
-            'type'  => 'number',
+            'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->usaha_luas : ''),
             'validation'=> ( !$data_obj ? 'required' : ''  ) );
 

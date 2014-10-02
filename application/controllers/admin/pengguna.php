@@ -483,6 +483,13 @@ class Pengguna extends BI_Controller
             'desc'  => 'Nama singkat untuk kelompok pengguna, tidak diperbolehkan menggunakan spasi.' );
 
         $fields[]   = array(
+            'name'  => 'group-desc',
+            'type'  => 'textarea',
+            'label' => 'Keterangan',
+            'std'   => ( $group ? $group->description : '' ),
+            'desc'  => 'Keterangan singkat mengenai kelompok pengguna.' );
+
+        $fields[]   = array(
             'name'  => 'group-default',
             'type'  => 'switch',
             'label' => 'Jadikan default',
@@ -490,7 +497,6 @@ class Pengguna extends BI_Controller
                 1 => 'Ya',
                 0 => 'Tidak' ),
             'std'   => ( $group ? $group->default : 0 ),
-            'validation'=> 'required',
             'desc'  => 'Pilih <em>Ya</em> untuk menjadikna group ini sebagai group bawaan setiap mendambahkan pengguna baru, atau pilih <em>Tidak</em> untuk sebaliknya.' );
 
         $fields[]   = array(
@@ -511,12 +517,15 @@ class Pengguna extends BI_Controller
 
         if ( $form_data = $form->validate_submition() )
         {
-            $role_data['key']     = $form_data['group-key'];
-            $role_data['name']    = $form_data['group-name'];
-            $role_data['default'] = $form_data['group-default'];
-            $perm_data            = $form_data['group-perms'];
+            $group_data = array(
+                'key'         => $form_data['group-key'],
+                'name'        => $form_data['group-name'],
+                'default'     => $form_data['group-default'],
+                'description' => ($form_data['group-desc'] ?: '-'),
+                'perms'       => $form_data['group-perms'],
+                );
 
-            $result = $this->biauth->groups->update( $role_data, $group_id, $perm_data );
+            $result = $this->biauth->edit_group( $group_id, $group_data );
 
             foreach ( get_message() as $level => $message )
             {
@@ -548,8 +557,7 @@ class Pengguna extends BI_Controller
 
         $grid = $this->bitable->set_column('Kelompok', 'name, perm_count, callback_make_tag:perm_desc', '65%', '<strong>%s</strong> <small class="text-muted">Dengan %s wewenang, antara lain:</small><br>%s')
                               ->set_column('Default', 'callback_bool_to_str:default', '20%', '<span class="badge">%s</span>')
-                              ->set_button('form', 'Lihat data')
-                              ->set_button('delete', 'Hapus data');
+                              ->set_button('form', 'Lihat data');
 
         $this->data['panel_body'] = $grid->generate( $this->biauth->groups->fetch() );
 

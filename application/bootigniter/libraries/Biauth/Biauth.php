@@ -847,6 +847,40 @@ class Biauth extends CI_Driver_Library
     }
 
     // -------------------------------------------------------------------------
+    // Groups
+    // -------------------------------------------------------------------------
+
+    public function get_group($group_id)
+    {
+        if ($group = $this->groups->get($group_id))
+        {
+            return $group;
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    public function edit_group($group_id, $group_data)
+    {
+        if ($group_id == 1 and $group_data['default'] == 1)
+        {
+            set_message('error', $group_data['name'].' tidak dapat dijadikan default.');
+            return FALSE;
+        }
+
+        if ($this->groups->edit($group_id, $group_data))
+        {
+            set_message('success', 'Berhasil mengubah data pengguna '.$group_data['name']);
+            return TRUE;
+        }
+        else
+        {
+            set_message('error', 'Terjadi kesalahan dalam mengubah data pengguna '.$group_data['name']);
+            return FALSE;
+        }
+    }
+
+    // -------------------------------------------------------------------------
     // Cookie helper
     // -------------------------------------------------------------------------
 
