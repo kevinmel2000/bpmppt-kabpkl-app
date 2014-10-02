@@ -90,7 +90,6 @@ class Bootigniter
 		// Load database
 		$this->_ci->load->database();
 
-		// $this->_ci->load->library('migration');
 		// $this->_ci->migration->current();
 
 		// Load helpers

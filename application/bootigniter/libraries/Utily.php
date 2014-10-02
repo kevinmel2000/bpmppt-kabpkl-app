@@ -398,7 +398,7 @@ class Utily
     {
         if ($upload == TRUE)
         {
-            $this->_destination = get_conf('upload_path');
+            $this->_destination = config_item('bi_upload_path');
 
             // Load the zip helper
             $this->_ci->load->driver('arsip');

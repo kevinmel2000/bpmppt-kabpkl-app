@@ -1290,7 +1290,7 @@ class Biform
         }
         else
         {
-            $captcha     = str_replace(FCPATH, '', get_conf('base_path'));
+            $captcha     = str_replace(FCPATH, '', config_item('bi_base_path'));
             $captcha_url = base_url($captcha.'libraries/vendor/captcha/captcha'.EXT);
             $image_id    = 'captcha-'.$field_attrs['id'].'-img';
             $input_id    = 'captcha-'.$field_attrs['id'].'-input';
