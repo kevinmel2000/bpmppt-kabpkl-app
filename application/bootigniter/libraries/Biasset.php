@@ -177,15 +177,21 @@ class Biasset
      */
     public function get_loaded($type)
     {
-        if (!isset($this->_loaded[$type]))
+        $load = $this->_loaded;
+
+        if (!isset($load[$type]))
         {
             return;
         }
-        // print_pre($this->_loaded[$type]);
+
+        if ($compiled = $this->compile($type))
+        {
+            $load = $compiled;
+        }
 
         $output = '';
 
-        foreach ($this->_loaded[$type] as $id => $asset)
+        foreach ($load[$type] as $id => $asset)
         {
             $attrs = array(
                 'id' => $id,
@@ -194,8 +200,9 @@ class Biasset
 
             if (isset($asset['url']))
             {
-                $mark = strpos($asset['url'], '?') ? '&' : '?';
+                $mark = strpos($asset['url'], '?') !== FALSE ? '&' : '?';
                 $ver = !empty($asset['ver']) ? $mark.'v='.$asset['ver'] : '';
+                $asset['url'] = strpos($asset['url'], 'http://') !== FALSE ? str_replace('http://', '//', $asset['url']) : $asset['url'];
             }
 
             if ($type == 'scripts')
@@ -233,9 +240,58 @@ class Biasset
             }
         }
 
-        // print_pre($output);
-
         return $output;
+    }
+
+    public function compile($type)
+    {
+        // $file_name = uri_string();
+        $file_name = url_title(uri_string(), '-', TRUE);
+        $ext = $type == 'scripts' ? '.js' : '.css';
+
+        if (!file_exists(config_item('cache_path').$file_name.$ext))
+        {
+            $this->_ci->load->helper('file');
+            $contents = '';
+
+            foreach ($this->_loaded[$type] as $id => $asset)
+            {
+                if (isset($asset['url']))
+                {
+                    $path = str_replace(base_url(), '', $asset['url']);
+                    if (strpos($asset['url'], base_url()) !== FALSE and file_exists($path))
+                    {
+                        // and file_exists($path)
+                        $contents .= "\n"
+                                  .  '// '.$id."\n"
+                                  .  '// ---------------------------'."\n"
+                                  .  read_file($path)
+                                  .  "\n";
+                    }
+                }
+                elseif (isset($asset['src']))
+                {
+                    $contents .= "\n"
+                              .  '// '.$id."\n"
+                              .  '// ---------------------------'."\n"
+                              .  $asset['src']
+                              .  "\n";
+                }
+            }
+
+            if (!write_file(config_item('cache_path').$file_name.$ext, $contents))
+            {
+                log_message('error', 'Unable to compile '.$type);
+            }
+        }
+
+        $path = str_replace(FCPATH, base_url(), config_item('cache_path'));
+        $compiled[$type][$file_name] = array(
+            'url' => base_url($path.$file_name.$ext),
+            'ver' => Bootigniter::VERSION,
+            );
+
+        return $compiled;
     }
 }
 

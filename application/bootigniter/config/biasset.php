@@ -26,7 +26,7 @@ $config['biasset_path_prefix'] = 'asset/';
 
 $config['biasset_register_styles'] = array(
     'gfonts' => array(
-        'src' => '//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic',
+        'src' => '//fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700,400,600,300',
         ),
     'fineuploader' => array(
         'src' => 'js/lib/fineuploader.min.css',
