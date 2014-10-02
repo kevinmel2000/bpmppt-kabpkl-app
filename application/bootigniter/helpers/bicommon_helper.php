@@ -11,24 +11,22 @@
 
 // -----------------------------------------------------------------------------
 
-function _x( $lang_line, $replacement = '' )
+function _x( $line, $reps = '' )
 {
     $CI_lang =& get_instance()->lang;
+    $line = $CI_lang->line($line);
 
-    $lang_line = $CI_lang->line($lang_line);
+    if (!empty($reps))
+    {
+        if (!is_array($reps))
+        {
+            $reps = array($reps);
+        }
 
-    if (is_array($replacement) and count($replacement) > 0)
-    {
-        return vsprintf($lang_line, $replacement);
+        return vsprintf($line, $reps);
     }
-    else if (is_string($replacement) and strlen($replacement) > 0)
-    {
-        return sprintf($lang_line, $replacement);
-    }
-    else
-    {
-        return $lang_line;
-    }
+
+    return $line;
 }
 
 // -----------------------------------------------------------------------------
@@ -92,20 +90,6 @@ function is_valid_email( $email )
     $email_pattern = "/([a-zA-Z0-9_\.\-\+]+)@([a-zA-Z0-9\-]+)\.([a-zA-Z0-9\-\.]*)/i";
 
     return (bool) preg_match($email_pattern, $email);
-}
-
-// -----------------------------------------------------------------------------
-
-/**
- * CI default get spesific config item with 'bi_' prefix
- *
- * @param   string  $name  Config name
- *
- * @return  mixed
- */
-function get_conf( $name )
-{
-    return config_item( 'bi_'.$name );
 }
 
 // -----------------------------------------------------------------------------
@@ -225,8 +209,7 @@ function print_pre( $debug = null )
 {
     if ( !empty( $debug ) )
     {
-        $debug = print_r( $debug, TRUE );
-        echo '<pre>'.$debug.'</pre>';
+        echo '<pre>'.print_r( $debug, TRUE ).'</pre>';
     }
 }
 
