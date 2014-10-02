@@ -6,6 +6,6 @@
     </div> <!-- .container-->
 </footer> <!-- #foots-->
 
-<?php echo load_scripts('foot') ?>
+<?php echo get_scripts() ?>
 </body>
 </html>

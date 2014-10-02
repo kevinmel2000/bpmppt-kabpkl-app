@@ -108,12 +108,7 @@ class Biupload
 
     protected function _scripts()
     {
-        // Load the JS
-        set_script('jq-fineuploader', 'js/lib/jquery.fineuploader.min.js', 'bootstrap', '5.0.3');
-        set_style('jq-fineuploader', 'js/lib/fineuploader.min.css', 'bootstrap', '5.0.3');
-
         $upload_path = str_replace(FCPATH, '', $this->_ci->upload->upload_path);
-
         // Uploader trigger
         $script = "$('.fine-uploader').each(function() {\n"
                 . "    var fu = $(this),\n"
@@ -190,7 +185,10 @@ class Biupload
                 . "    });\n"
                 . "});";
 
-        set_script('jq-fineuploader-trigger', $script, 'jq-fineuploader');
+        // Load the JS
+        // load_script('jq-fineuploader', 'js/lib/jquery.fineuploader.min.js', 'bootstrap', '5.0.3');
+        // load_style('fineuploader');
+        load_script('jq-fineuploader-trigger', $script, Bootigniter::VERSION, 'jq-fineuploader');
     }
 
     /**

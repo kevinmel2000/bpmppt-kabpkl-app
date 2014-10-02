@@ -52,7 +52,7 @@ $autoload['packages'] = array(APPPATH.'bootigniter');
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array( 'migration', 'bootigniter' );
+$autoload['libraries'] = array( 'bootigniter' );
 
 
 /*

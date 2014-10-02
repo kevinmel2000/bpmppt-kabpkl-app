@@ -65,17 +65,17 @@ class Bitable
             $this->initialize($configs);
         }
 
-        set_script('datatable',            'js/lib/jquery.dataTables.min.js', 'jquery', '2.0.3');
-        set_script('dataTables.bootstrap', 'js/lib/bootstrap.datatables.js', 'datatable', '2.0.3');
-        // Biasset::set_style('datatable', 'js/lib/jquery.dataTables.css');
 
         $script = "$('.table-dt').dataTable({"
                 . "    'dom': '<\'dt-header\'lf>t<\'dt-footer\'ip>'"
                 . "});";
 
-        set_script('datatable-trigger', $script, 'datatable');
+        // load_script('datatable',            'js/lib/jquery.dataTables.min.js', 'jquery', '2.0.3');
+        // load_script('dataTables.bootstrap', 'js/lib/bootstrap.datatables.js', 'datatable', '2.0.3');
+        // load_style('datatable', 'js/lib/jquery.dataTables.css');
+        load_script('datatable-trigger', $script, Bootigniter::VERSION, array('bs-datatables'));
 
-        log_message('debug', "#BootIgniter: Gridr Library Class Initialized");
+        log_message('debug', "#BootIgniter: Bitable Library Class Initialized");
     }
 
     public function initialize( array $configs = array() )
@@ -394,5 +394,5 @@ class Bitable
     }
 }
 
-/* End of file Gridr.php */
-/* Location: ./bootigniter/libraries/Gridr.php */
+/* End of file Bitable.php */
+/* Location: ./bootigniter/libraries/Bitable.php */

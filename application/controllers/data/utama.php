@@ -33,9 +33,6 @@ class Utama extends BI_Controller
 
         if ( !empty($modules) )
         {
-            // $this->data['load_toolbar'] = TRUE;
-            // $this->data['search_form']   = TRUE;
-
             foreach($modules as $link => $layanan)
             {
                 $this->data['panel_body'][$link] = array(
@@ -48,8 +45,6 @@ class Utama extends BI_Controller
                     'done'     => $this->bpmppt->count_data($layanan['alias'], array('status' => 'done')),
                     );
             }
-
-            set_script('chartjs', 'js/lib/chart.min.js', 'jquery', 'master');
 
             $script = "$('.charts').each(function () {\n"
                     . "    var el = $(this),\n"
@@ -66,7 +61,7 @@ class Utama extends BI_Controller
                     . "        myNewChart = new Chart(ctx).Doughnut(data, options);\n"
                     . "});";
 
-            set_script('chartjs-trigger', $script, 'chartjs');
+            load_script('chartjs-trigger', $script, '', 'chartjs');
 
             $this->load->theme('pages/panel_alldata', $this->data);
         }

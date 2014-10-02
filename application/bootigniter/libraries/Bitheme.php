@@ -43,8 +43,8 @@ class Bitheme
         // Load This Lib Configuration
         $this->_ci->config->load('bitheme');
         $this->_ci->config->load('lang_codes');
-        $this->_ci->load->library('biasset');
         $this->_ci->load->helpers(array( 'bitheme', 'html', 'biform' ));
+        $this->_ci->load->library('biasset');
 
         // Setup body classes & id
         $this->set_body_attr('id', $this->_ci->router->fetch_class() );

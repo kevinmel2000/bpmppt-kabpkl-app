@@ -238,14 +238,16 @@ function get_charset($uppercase = FALSE)
 function parse_attrs(array $attributes)
 {
     $attr = '';
-    $i    = 0;
 
     foreach ($attributes as $key => $val)
     {
-        $attr .= $key.'="'.$val.'" ';
+        if (!empty($val))
+        {
+            $attr .= $key.'="'.$val.'" ';
+        }
     }
 
-    return $attr;
+    return trim($attr);
 }
 
 

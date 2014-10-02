@@ -87,10 +87,14 @@ class Bootigniter
 		// Loading base language translation
 		$this->_ci->lang->load('bootigniter');
 
+		if (config_item('migration_enabled') === TRUE)
+		{
+			$this->_ci->load->library('migration');
+			$this->_ci->migration->current();
+		}
+
 		// Load database
 		$this->_ci->load->database();
-
-		// $this->_ci->migration->current();
 
 		// Load helpers
 		$this->_ci->load->helpers(array('url', 'date', 'array', 'form', 'biarray', 'bidata'));

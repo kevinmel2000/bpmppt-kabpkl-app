@@ -88,7 +88,7 @@ class Laporan extends BI_Controller
                 . "new Baka.popup('".current_url()."', 'Popup_Window', 800, 600);"
                 . "});";
 
-        set_script('print-popup', $script, 'baka-pack');
+        load_script('print-popup', $script, '', 'bootigniter');
 
         if ( $form_data = $form->validate_submition() )
         {

@@ -24,28 +24,22 @@ class Biasset
     protected $_ci;
 
     /**
-     * Configurations
+     * Registered Scripts and Styles
      * @var  array
      */
-    protected $configs   = array();
+    protected $_registered = array(
+        'scripts' => array(),
+        'styles' => array(),
+        );
 
     /**
-     * Datas
+     * Registered Scripts and Styles
      * @var  array
      */
-    protected $_data     = array();
-
-    /**
-     * Scripts Wrapper
-     * @var  array
-     */
-    protected $_scripts  = array();
-
-    /**
-     * Styles Wrapper
-     * @var  array
-     */
-    protected $_styles   = array();
+    protected $_loaded = array(
+        'scripts' => array(),
+        'styles' => array(),
+        );
 
     /**
      * Class Constructor
@@ -58,8 +52,7 @@ class Biasset
         $this->_ci->config->load('biasset');
         $this->_ci->load->helper('biasset');
 
-        $this->initialize('style');
-        $this->initialize('script');
+        $this->initialize();
 
         log_message('debug', "#BootIgniter: Biasset Class Initialized");
     }
@@ -67,21 +60,112 @@ class Biasset
     // -------------------------------------------------------------------------
 
     /**
-     * Initializing
+     * Registering all assets (Scripts and Styles)
      *
-     * @param   string  $type  Asset type
      * @return  void
      */
-    protected function initialize( $type )
+    protected function initialize()
     {
-        if ( $assets = config_item('biasset_autoload_'.$type) )
+        foreach ($this->_registered as $type => $asset)
         {
-            foreach ( $assets as $name => $path )
+            foreach (config_item('biasset_register_'.$type) as $id => $meta)
             {
-                $callback = 'set_'.$type;
-                $this->$callback( $name, $path );
+                $meta = array_set_defaults($meta, array(
+                    'src' => '',
+                    'ver' => '',
+                    'dep' => array(),
+                    ));
+
+                $asset[$id] = $meta;
+            }
+
+            $this->_registered[$type] = $asset;
+
+            foreach (config_item('biasset_autoload_'.$type) as $asset_id)
+            {
+                $this->load($type, $asset_id);
             }
         }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Loading required Scripts or Styles
+     *
+     * @return  void
+     */
+    protected function load($type, $id, $src = '', $ver = '', $dep = array())
+    {
+        if (!isset($this->_registered[$type]))
+        {
+            return;
+        }
+
+        if (!empty($src))
+        {
+            $this->_registered[$type][$id] = array(
+                'src' => $src,
+                'ver' => !empty($ver) ? $ver : config_item('application_version'),
+                'dep' => !is_array($dep) ? array($dep) : $dep,
+                );
+        }
+
+        $asset = $this->_registered[$type][$id];
+
+        if (!empty($asset['dep']))
+        {
+            foreach ($asset['dep'] as $dep_id)
+            {
+                if (isset($this->_registered[$type][$dep_id]))
+                {
+                    $this->load($type, $dep_id);
+                }
+            }
+
+        }
+
+        if (file_exists(config_item('biasset_path_prefix').$asset['src']))
+        {
+            $asset['src'] = base_url(config_item('biasset_path_prefix').$asset['src']);
+        }
+
+        // if (preg_match("/^(http(s?):\/\/|(\/\/?)|(www.?))/i", $asset['src']))
+        if (is_valid_url($asset['src']))
+        {
+            // $attrs['src'] = $asset['src'].$ver;
+            $asset['url'] = $asset['src'];
+            unset($asset['src']);
+        }
+
+        unset($asset['dep']);
+        $this->_loaded[$type][$id] = $asset;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Loading required script
+     *
+     * @param   string  $id  Script ID
+     * @return  void
+     */
+    public function load_script($id, $src = '', $ver = '', $dep = array())
+    {
+        $this->load('scripts', $id, $src, $ver, $dep);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Loading required style
+     *
+     * @param   string  $id  Style ID
+     * @return  void
+     */
+    public function load_style($id, $src = '', $ver = '', $dep = array())
+    {
+        $this->load('styles', $id, $src, $ver, $dep);
     }
 
     // -------------------------------------------------------------------------
@@ -91,156 +175,65 @@ class Biasset
      *
      * @return  array
      */
-    public function get_script( $pos )
+    public function get_loaded($type)
     {
-        if ( isset( $this->_scripts[$pos] ) )
+        if (!isset($this->_loaded[$type]))
         {
-            return $this->_scripts[$pos];
+            return;
         }
+        // print_pre($this->_loaded[$type]);
 
-        return FALSE;
-    }
+        $output = '';
 
-    // -------------------------------------------------------------------------
-
-    /**
-     * Get all styles you need on the page
-     *
-     * @return  array
-     */
-    public function get_styles()
-    {
-        if ( isset( $this->_styles ) )
+        foreach ($this->_loaded[$type] as $id => $asset)
         {
-            return $this->_styles;
-        }
+            $attrs = array(
+                'id' => $id,
+                'charset' => strtolower(config_item('charset')),
+                );
 
-        return FALSE;
-    }
-
-    // -------------------------------------------------------------------------
-
-    public function load_script( $name, $path = '', array $depend = array() )
-    {
-        //
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Setup the scripts that you want to loaded on the page
-     *
-     * @param   string  $id           Script Identifier
-     * @param   string  $source_path  Script Path
-     * @param   string  $depend       Id of script depend on
-     * @param   string  $version      Version number of the script
-     * @param   bool    $in_foot      load in foot or head
-     * @return  void
-     */
-    public function set_script( $id, $source_path, $depend = '', $version = '', $in_foot = TRUE )
-    {
-        $pos = ( !$in_foot ? 'head' : 'foot' );
-
-        $source_file = $this->_get_asset( $source_path, $version );
-
-        if ( is_valid_url( $source_file ) )
-        {
-            if ( isset( $this->_scripts[$pos][$depend] ) )
+            if (isset($asset['url']))
             {
-                foreach ( $this->_scripts[$pos] as $dep_id => $dep_url )
-                {
-                    $temp_scripts[$dep_id] = $dep_url;
+                $mark = strpos($asset['url'], '?') ? '&' : '?';
+                $ver = !empty($asset['ver']) ? $mark.'v='.$asset['ver'] : '';
+            }
 
-                    if ( $dep_id === $depend )
-                    {
-                        $temp_scripts[$id] = $source_file;
-                    }
+            if ($type == 'scripts')
+            {
+                $attrs['type'] = 'text/javascript';
+
+                if (isset($asset['url']))
+                {
+                    $attrs['src'] = $asset['url'].$ver;
+                    $output .= '<script '.parse_attrs($attrs).'></script>';
+                }
+                else
+                {
+                    $attribute = parse_attrs($attrs);
+                    $output .= "<script $attribute>\n$(function() {\n".$asset['src']."\n});\n</script>";
                 }
 
-                $this->_scripts[$pos] = $temp_scripts;
+                $output .= "\n";
             }
-            else
+            elseif ($type == 'styles')
             {
-                $this->_scripts[$pos][$id] = $source_file;
-            }
-        }
-        else
-        {
-            $this->_scripts['src'][$id] = $source_file;
-        }
-    }
+                $attrs['type'] = 'text/css';
 
-    // -------------------------------------------------------------------------
-
-    /**
-     * Setup the styles that you want to loaded on the page
-     *
-     * @param   string  $id           Style Identifier
-     * @param   string  $source_path  Style Path
-     * @param   string  $depend       Id of style depend on
-     * @param   string  $version      Version number of the style
-     * @return  void
-     */
-    public function set_style( $id, $source_path, $depend = '', $version = NULL )
-    {
-        $source_file = $this->_get_asset( $source_path, $version );
-
-        if ( is_valid_url( $source_file ) )
-        {
-            if ( isset( $this->_styles[$depend] ) )
-            {
-                foreach ( $this->_styles as $dep_id => $dep_url )
+                if (isset($asset['url']))
                 {
-                    $temp_styles[$dep_id] = $dep_url;
-
-                    if ( $dep_id === $depend )
-                    {
-                        $temp_styles[$id] = $source_file;
-                    }
+                    $attrs['rel'] = 'stylesheet';
+                    $attrs['href'] = $asset['url'].$ver;
+                    $output .= '<link '.parse_attrs($attrs).'></link>'."\n";
                 }
-
-                $this->_styles = $temp_styles;
+                else
+                {
+                    $attribute = parse_attrs($attrs);
+                    $output .= "<style $attribute>\n".$asset['src']."\n</style>\n";
+                }
             }
-            else
-            {
-                $this->_styles[$id] = $source_file;
-            }
         }
-        else
-        {
-            $this->_styles['src'][$id] = $source_file;
-        }
-    }
 
-    // -------------------------------------------------------------------------
-
-    /**
-     * Make sure the required assets are in right place :P
-     *
-     * @param   string  $id           Asset Identifier which can't be redundant
-     * @param   string  $source_path  Asset path
-     * @param   string  $version      Asset Version number
-     * @return  string
-     */
-    protected function _get_asset( $source_path, $version = '' )
-    {
-        $version || $version = config_item( 'application_version' );
-        $path    = config_item( 'biasset_path_prefix' );
-        $output  = '';
-        $version = ( strpos( $source_path, '?' ) !== FALSE ? '&' :  '?' ).'ver='.$version;
-
-        if ( file_exists( FCPATH.$path.$source_path ) )
-        {
-            $output = base_url( $path.$source_path );
-        }
-        else if ( is_valid_url( $source_path ) )
-        {
-            $output = $source_path;
-        }
-        else
-        {
-            $output = $source_path;
-        }
+        // print_pre($output);
 
         return $output;
     }

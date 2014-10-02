@@ -37,7 +37,8 @@ class BI_Exceptions extends CI_Exceptions
         $heading = $heading;
         $message = '<p>'.implode('</p><p>', ( ! is_array($message)) ? array($message) : $message).'</p>';
 
-        $alt = ( IS_CLI ) ? '-cli' : '' ;
+        $template = strpos($template, 'error_') == 0 ? str_replace('error_', '', $template) : $template;
+        $template = ( IS_CLI ) ? 'cli' : $template ;
 
         set_status_header( $status_code );
 
@@ -47,7 +48,7 @@ class BI_Exceptions extends CI_Exceptions
         }
 
         ob_start();
-        include( $this->_template_path.$template.$alt.EXT );
+        include $this->_template_path.$template.EXT;
         $buffer = ob_get_contents();
         ob_end_clean();
 
@@ -70,7 +71,6 @@ class BI_Exceptions extends CI_Exceptions
     function show_php_error( $severity, $message, $filepath, $line )
     {
         $severity = ( ! isset($this->levels[$severity])) ? $severity : $this->levels[$severity];
-
         $filepath = str_replace("\\", "/", $filepath);
 
         // For safety reasons we do not show the full file path
@@ -80,7 +80,7 @@ class BI_Exceptions extends CI_Exceptions
             $filepath = $x[count($x)-2].'/'.end($x);
         }
 
-        $alt = ( IS_CLI ? '_cli' : '_php' );
+        $template = IS_CLI ? 'cli' : 'php';
 
         if ( ob_get_level() > $this->ob_level + 1 )
         {
@@ -88,7 +88,7 @@ class BI_Exceptions extends CI_Exceptions
         }
 
         ob_start();
-        include( $this->_template_path.'error'.$alt.EXT );
+        include $this->_template_path.$template.EXT;
         $buffer = ob_get_contents();
         ob_end_clean();
 

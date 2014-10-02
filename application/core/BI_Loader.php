@@ -8,7 +8,21 @@
  */
 class BI_Loader extends CI_Loader
 {
-    function theme($view, $vars = array(), $file = '', $return = FALSE)
+    public function script($id, $src = '', $ver = '', $dep = array())
+    {
+        $CI =& get_instance();
+
+        $CI->biasset->load_script($id, $src, $ver, $dep);
+    }
+
+    public function style($id, $src = '', $ver = '', $dep = array())
+    {
+        $CI =& get_instance();
+
+        $CI->biasset->load_style($id, $src, $ver, $dep);
+    }
+
+    public function theme($view, $vars = array(), $file = '', $return = FALSE)
     {
         $file || $file = 'index';
 
@@ -16,7 +30,7 @@ class BI_Loader extends CI_Loader
         {
             log_message('debug', "#BootIgniter: Core Loader->theme File \"$file\" loaded as view via cli.");
 
-            echo json_encode($var);
+            echo json_encode($vars);
         }
         else if (IS_AJAX)
         {
@@ -27,8 +41,6 @@ class BI_Loader extends CI_Loader
         else
         {
             $data['contents'] = $this->view($view, $vars, TRUE);
-
-            log_message('debug', "#BootIgniter: Core Loader->theme File \"$file\" loaded as view.");
 
             return $this->view($file, $data, $return);
         }

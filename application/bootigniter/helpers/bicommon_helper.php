@@ -72,7 +72,8 @@ function redirect( $uri = '', $method = 'location', $http_response_code = 302 )
  */
 function is_valid_url( $url )
 {
-    $url_pattern = "/^(http(s?):\/\/|(\/\/?))/";
+    $url_pattern = "/^(http(s?):\/\/|(\/\/?)|(www.?))/i";
+    // $url_pattern = "#(^|\s|\()((http(s?)://)|(www\.))(\w+[^\s\)\<]+)#i";
 
     return (bool) preg_match($url_pattern, $url);
 }

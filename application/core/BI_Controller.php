@@ -19,21 +19,17 @@ class BI_Controller extends CI_Controller
     {
         parent::__construct();
 
-        $script = "$('.twbs-tooltip').tooltip();";
-        set_script('bootstrap-tooltip-trigger', $script, 'bootstrap');
-
-        $this->current_user = $this->biauth->get_current_user();
-
-        if ( isset($this->current_user['status']) and $this->current_user['status'] == 1 )
+        if ($current_user = $this->biauth->get_current_user())
         {
-            // Adding sub of main and user navbar
-            $this->navbar();
+            $this->current_user = $current_user;
+
+            if ( isset($this->current_user['status']) and $this->current_user['status'] == 1 )
+            {
+                $this->navbar();
+            }
         }
 
-        // var_dump( preg_split('/(%\w+|\s+)/i', '%Y-%m-%d %H:%i:%s', -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY) );
-
         $app_name = config_item('application_name');
-
         $this->data['brand_link']  = anchor(base_url(), $app_name, 'class="navbar-brand"');
 
         $this->data['load_toolbar'] = FALSE;

@@ -197,7 +197,7 @@ class Biform
         if (isset($attrs['fields']) and is_array($attrs['fields']) and !empty($attrs['fields']))
         {
             $this->set_fields($attrs['fields']);
-            set_script('former-script', $this->_scripts($attrs['fields']), 'baka-pack');
+            load_script('biform-script', $this->_scripts($attrs['fields']), Bootigniter::VERSION);
         }
 
         // if buttons is already declarated in the config, just make it happen ;)
@@ -707,14 +707,14 @@ class Biform
 
             if ($this->has_jqueryui)
             {
-                set_script('jquery-mousewheel', 'js/lib/jquery.mousewheel.min.js', 'jquery', '3.1.12');
-                set_script('jqui-core',         'js/lib/jquery-ui/core.min.js', 'jquery', '1.11.0');
-                set_script('jqui-widget',       'js/lib/jquery-ui/widget.min.js', 'jqui-core', '1.11.0');
-                set_script('jqui-button',       'js/lib/jquery-ui/button.min.js', 'jqui-widget', '1.11.0');
-                set_script('jqui-mouse',        'js/lib/jquery-ui/mouse.min.js', 'jqui-widget', '1.11.0');
-                set_script('jqui-position',     'js/lib/jquery-ui/position.min.js', 'jqui-widget', '1.11.0');
-                set_script('jqui-touch',        'js/lib/jquery.ui.touch-punch.min.js', 'jqui-mouse', '0.2.3');
-                // set_style('jqui-theme',         'bower/jqueryui/themes/smoothness/jquery-ui.min.css', 'jquery', '1.11.0');
+                // load_script('jquery-mousewheel', 'js/lib/jquery.mousewheel.min.js', 'jquery', '3.1.12');
+                // load_script('jqui-core',         'js/lib/jquery-ui/core.min.js', 'jquery', '1.11.0');
+                // load_script('jqui-widget',       'js/lib/jquery-ui/widget.min.js', 'jqui-core', '1.11.0');
+                // load_script('jqui-button',       'js/lib/jquery-ui/button.min.js', 'jqui-widget', '1.11.0');
+                // load_script('jqui-mouse',        'js/lib/jquery-ui/mouse.min.js', 'jqui-widget', '1.11.0');
+                // load_script('jqui-position',     'js/lib/jquery-ui/position.min.js', 'jqui-widget', '1.11.0');
+                // load_script('jqui-touch',        'js/lib/jquery.ui.touch-punch.min.js', 'jqui-mouse', '0.2.3');
+                // load_style('jqui-theme',         'bower/jqueryui/themes/smoothness/jquery-ui.min.css', 'jquery', '1.11.0');
             }
 
             if (isset($input))
@@ -934,8 +934,8 @@ class Biform
      */
     protected function _set_input_textarea(array $field_attrs)
     {
-        set_script('jquery-autosize', 'js/lib/jquery.autosize.min.js', 'jquery', '1.18.0');
-        set_script('autosize-trigger', "$('textarea').autosize();\n", 'jquery-autosize');
+        // load_script('jquery-autosize', 'js/lib/jquery.autosize.min.js', 'jquery', '1.18.0');
+        load_script('autosize-trigger', "$('textarea').autosize();", Bootigniter::VERSION, 'jq-autosize');
 
         $field_attrs = array_set_defaults($field_attrs, array(
             'std'   => '',
@@ -1050,8 +1050,8 @@ class Biform
                 . "    }\n"
                 . "});";
 
-        set_script('jqui-spinner', 'js/lib/jquery-ui/spinner.min.js', 'jqui-core', '1.11.0');
-        set_script('jqui-spinner-trigger', $script, 'jqui-spinner');
+        // load_script('jqui-spinner', 'js/lib/jquery-ui/spinner.min.js', 'jqui-core', '1.11.0');
+        load_script('jqui-spinner-trigger', $script, Bootigniter::VERSION, 'jqueryui-spinner');
 
         return form_input(array(
             'name'              => $field_attrs['name'],
@@ -1073,7 +1073,6 @@ class Biform
     protected function _set_input_slider(array $field_attrs)
     {
         $this->has_jqueryui = TRUE;
-        set_script('jqui-slider', 'js/lib/jquery-ui/slider.min.js', 'jqui-core', '1.11.0');
 
         $field_attrs = array_set_defaults( $field_attrs, array(
             'min' => 0,
@@ -1156,7 +1155,8 @@ class Biform
 
         $script .= "});";
 
-        set_script('jqui-'.$field_attrs['type'].'-trigger', $script, 'jqui-slider');
+        // load_script('jqui-slider', 'js/lib/jquery-ui/slider.min.js', 'jqui-core', '1.11.0');
+        load_script('jqui-'.$field_attrs['type'].'-trigger', $script, Bootigniter::VERSION, 'jqueryui-slider');
 
         $slider_attrs = array(
             'class'            => 'jqui-'.$field_attrs['type'],
@@ -1220,11 +1220,11 @@ class Biform
      */
     protected function _set_input_textrich(array $field_attrs)
     {
-        set_script('summernote',     'js/lib/summernote.min.js', 'bootstrap', '0.5.2');
-        // set_script('codemirror',     'js/lib/codemirror.js', 'jquery', '4.1');
-        // set_script('codemirror.xml', 'js/lib/codemirror.mode.xml.js', 'codemirror', '4.1');
-        // set_script('jquery-mousewheel', 'js/lib/jquery.mousewheel.min.js', 'jquery', '3.1.0');
-        // set_script('perfectscrollbar', 'js/lib/perfect-scrollbar.js', 'jquery', '0.4.10');
+        // load_script('summernote',     'js/lib/summernote.min.js', 'bootstrap', '0.5.2');
+        // load_script('codemirror',     'js/lib/codemirror.js', 'jquery', '4.1');
+        // load_script('codemirror.xml', 'js/lib/codemirror.mode.xml.js', 'codemirror', '4.1');
+        // load_script('jquery-mousewheel', 'js/lib/jquery.mousewheel.min.js', 'jquery', '3.1.0');
+        // load_script('perfectscrollbar', 'js/lib/perfect-scrollbar.js', 'jquery', '0.4.10');
 
         if (!isset($field_attrs['height'])) $field_attrs['height'] = 200;
 
@@ -1236,7 +1236,7 @@ class Biform
 
         if ( $locale = (($lang = get_lang_code()) != 'en' ? $lang.'-'.strtoupper($lang) : '') )
         {
-            set_script('summernote-id',  'js/lib/summernote.'.$locale.'.js', 'summernote', '0.5.2');
+            // load_script('summernote-id',  'js/lib/summernote.'.$locale.'.js', 'summernote', '0.5.2');
             $script .="        lang: '".$locale."',\n";
         }
 
@@ -1262,7 +1262,7 @@ class Biform
                 . "    $('.summernote').val($('.summernote').code());\n"
                 . "});";
 
-        set_script('summernote-trigger', $script, 'summernote');
+        load_script('summernote-trigger', $script, Bootigniter::VERSION, 'summernote-'.get_lang_code());
 
         return form_textarea(array(
                 'name'  => $field_attrs['name'],
@@ -1323,7 +1323,7 @@ class Biform
                     . "    e.preventDefault();\n"
                     . "});";
 
-            set_script('collcaptha-trigger', $script);
+            load_script('collcaptha-trigger', $script, Bootigniter::VERSION);
 
             if (!extension_loaded('gd'))
             {
@@ -1345,8 +1345,9 @@ class Biform
      */
     protected function _set_input_switch(array $field_attrs)
     {
-        set_script('bs-switch', 'js/lib/bootstrap.switch.min.js', 'bootstrap', '3.0.2');
-        // set_style('bs-switch', 'bower/bootstrap.switch/dist/css/bootstrap3/bootstrap-switch.min.css', 'bootstrap', '3.0.2');
+        // load_script('bs-switch', 'js/lib/bootstrap.switch.min.js', 'bootstrap', '3.0.2');
+        // load_style('bs-switch', 'bower/bootstrap.switch/dist/css/bootstrap3/bootstrap-switch.min.css', 'bootstrap', '3.0.2');
+        load_script('bs-switch-trigger', "$('.bs-switch').bootstrapSwitch();", Bootigniter::VERSION, 'bs-switch');
 
         if (!isset($field_attrs['option']))
         {
@@ -1360,8 +1361,6 @@ class Biform
         {
             return '<span class="form-control form-control-static">Pilihan tidak boleh lebih dari 2 (dua)!!</span>';
         }
-
-        set_script('bs-switch-trigger', "$('.bs-switch').bootstrapSwitch();", 'bs-switch');
 
         $_id = str_replace('-', '-', $field_attrs['name']);
         $field_attrs['std'] = (int) $field_attrs['std'];
@@ -1400,10 +1399,10 @@ class Biform
 
         if ($native == FALSE)
         {
-            set_script('select2',         'js/lib/select2.min.js', 'jquery', '3.4.5');
-            set_script('select2-locale',  'js/lib/select2.'.(($code = get_lang_code()) != 'en' ? $code : '').'.js', 'jquery', '3.4.5');
-            set_script('select2-trigger', "$('.form-control-select2').select2();\n", 'select2');
-            set_style('select2',          'js/lib/select2.css', 'bootstrap', '3.4.5');
+            // load_script('select2',         'js/lib/select2.min.js', 'jquery', '3.4.5');
+            // load_script('select2-locale',  'js/lib/select2.'.(($code = get_lang_code()) != 'en' ? $code : '').'.js', 'jquery', '3.4.5');
+            load_script('select2-trigger', "$('.form-control-select2').select2();\n", Bootigniter::VERSION, 'select2-'.get_lang_code());
+            // load_style('select2');
 
             $control_class = 'form-control-select2 ';
         }
@@ -1475,31 +1474,31 @@ class Biform
 
         if ($field_attrs['mode'] == 'jqueryui')
         {
-            set_script('jqui-datepicker', 'js/lib/jquery-ui/datepicker.min.js', 'jqui-core', '1.11.0');
+            // load_script('jqui-datepicker', 'js/lib/jquery-ui/datepicker.min.js', 'jqui-core', '1.11.0');
 
-            if ($locale = (($code = get_lang_code()) != 'en' ? $code : ''))
-            {
-                set_script('jqui-datepicker-'.$code, 'js/lib/jquery-ui/i18n/datepicker-'.$locale.'.min.js', 'jqui-datepicker', '1.11.0');
-            }
+            // if ($locale = (($code = get_lang_code()) != 'en' ? $code : ''))
+            // {
+            //     load_script('jqui-datepicker-'.$code, 'js/lib/jquery-ui/i18n/datepicker-'.$locale.'.min.js', 'jqui-datepicker', '1.11.0');
+            // }
 
             $script = "$('.jqui-datepicker').datepicker({\n"
                     . "    dateFormat: 'dd-mm-yyyy'\n"
                     . "});";
 
-            set_script('jqui-datepicker-trigger', $script, 'jqui-datepicker');
+            load_script('jqui-datepicker-trigger', $script, Bootigniter::VERSION, 'jqueryui-datepicker-'.get_lang_code());
 
             $this->has_jqueryui = TRUE;
             $field_attrs['class'] = 'jqui-datepicker';
         }
         elseif ($field_attrs['mode'] == 'bootstrap')
         {
-            set_script('bs-datepicker', 'js/lib/bootstrap.datepicker.js', 'bootstrap', '1.3.0');
-            // set_style('bs-datepicker', 'bower/bootstrap-datepicker/css/datepicker3.css', 'bootstrap', '1.3.0');
+            // load_script('bs-datepicker', 'js/lib/bootstrap.datepicker.js', 'bootstrap', '1.3.0');
+            // load_style('bs-datepicker', 'bower/bootstrap-datepicker/css/datepicker3.css', 'bootstrap', '1.3.0');
 
-            if ($locale = (($code = get_lang_code()) != 'en' ? '.'.$code : ''))
-            {
-                set_script('bs-datepicker-'.$code, 'js/lib/bootstrap.datepicker'.$locale.'.js', 'bs-datepicker', '1.3.0');
-            }
+            // if ($locale = (($code = get_lang_code()) != 'en' ? '.'.$code : ''))
+            // {
+            //     load_script('bs-datepicker-'.$code, 'js/lib/bootstrap.datepicker'.$locale.'.js', 'bs-datepicker', '1.3.0');
+            // }
 
             $script = "$.fn.bsDatepicker = $.fn.datepicker.noConflict();\n"
                     . "$('.bs-datepicker').bsDatepicker({\n"
@@ -1509,7 +1508,7 @@ class Biform
                     . "    todayBtn: true\n"
                     . "});\n";
 
-            set_script('bs-datepicker-trigger', $script, 'bs-datepicker');
+            load_script('bs-datepicker-trigger', $script, 'bs-datepicker-'.get_lang_code());
 
             $field_attrs['class'] = 'bs-datepicker';
         }
