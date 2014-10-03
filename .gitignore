@@ -19,7 +19,8 @@ _*
 
 # Dependencies Folder
 /node_modules/
-/vendor/
+/application/vendor/
+/asset/bower/
 
 # Ignore Application Specifics
 /application/storage/*/*

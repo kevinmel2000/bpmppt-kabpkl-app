@@ -21,6 +21,10 @@
       "url": "https://github.com/feryardiant/bpmppt"
     }
   ],
+  "config": {
+    "preferred-install": "dist",
+    "vendor-dir": "application/vendor"
+  },
   "require": {
     "php": ">=5.2.4"
   },

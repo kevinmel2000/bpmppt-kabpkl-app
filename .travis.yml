@@ -11,8 +11,8 @@ before_install:
   - export APP_DATABASE='bpmppt_test'
   - export APP_DBPREFIX='baka_'
 install:
-  - npm install -g grunt-cli
-  - npm install
+  - npm install -g grunt-cli --silent
+  - npm install --silent
   - composer install --dev --no-progress
 before_script:
   - mysql -e 'drop database if exists bpmppt_test;'

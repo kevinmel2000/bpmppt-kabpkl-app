@@ -26,7 +26,7 @@ class BI_Loader extends CI_Loader
     {
         $file || $file = 'index';
 
-        if (IS_CLI)
+        if (IS_CLI and !defined('PHPUNIT_TEST'))
         {
             log_message('debug', "#BootIgniter: Core Loader->theme File \"$file\" loaded as view via cli.");
 

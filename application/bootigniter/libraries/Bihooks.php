@@ -62,39 +62,39 @@ class Bihooks
     public function error_handler_hooks()
     {
         // var_dump(APPPATH);
-        if ( !class_exists('\php_error\ErrorHandler') )
-        {
-            require_once(dirname(__FILE__).'/vendor/php_error'.EXT);
-        }
+        // if ( !class_exists('\php_error\ErrorHandler') )
+        // {
+        //     require_once(dirname(__FILE__).'/vendor/php_error'.EXT);
+        // }
 
-        $handler = new \php_error\ErrorHandler(array(
-            'application_folders'       => 'application',
-            'application_root'          => FCPATH,
-            'background_text'           => '',
-            'catch_ajax_errors'         => TRUE,
-            'catch_supressed_errors'    => FALSE,
-            'catch_class_not_found'     => TRUE,
-            'display_line_numbers'      => TRUE,
-            'enable_saving'             => FALSE,
-            // 'error_reporting_on'        => -1,
-            // 'error_reporting_off'       => '',
-            'ignore_folders'            => 'system',
-            'save_url'                  => '',
-            'server_name'               => '',
-            'wordpress'                 => FALSE,
-            ));
+        // $handler = new \php_error\ErrorHandler(array(
+        //     'application_folders'       => 'application',
+        //     'application_root'          => FCPATH,
+        //     'background_text'           => '',
+        //     'catch_ajax_errors'         => TRUE,
+        //     'catch_supressed_errors'    => FALSE,
+        //     'catch_class_not_found'     => TRUE,
+        //     'display_line_numbers'      => TRUE,
+        //     'enable_saving'             => FALSE,
+        //     // 'error_reporting_on'        => -1,
+        //     // 'error_reporting_off'       => '',
+        //     'ignore_folders'            => 'system',
+        //     'save_url'                  => '',
+        //     'server_name'               => '',
+        //     'wordpress'                 => FALSE,
+        //     ));
 
-        switch (ENVIRONMENT)
-        {
-            case 'development':
-                $handler->turnOn();
-                break;
+        // switch (ENVIRONMENT)
+        // {
+        //     case 'development':
+        //         $handler->turnOn();
+        //         break;
 
-            case 'testing':
-            case 'production':
-                $handler->turnOff();
-                break;
-        }
+        //     case 'testing':
+        //     case 'production':
+        //         $handler->turnOff();
+        //         break;
+        // }
     }
 }
 

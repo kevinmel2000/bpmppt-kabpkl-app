@@ -184,7 +184,7 @@ class Biasset
             return;
         }
 
-        if ($compiled = $this->compile($type))
+        if (ENVIRONMENT == 'production' and ($compiled = $this->compile($type)))
         {
             $load = $compiled;
         }

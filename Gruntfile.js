@@ -32,17 +32,16 @@ module.exports = function(grunt) {
       bi: [
         'application/bootigniter/*.php',
         'application/bootigniter/**/*.php',
-        '!application/bootigniter/_*.php',
-        '!application/bootigniter/_vendor/'
+        '!application/bootigniter/_*.php'
       ]
     },
 
     phpunit: {
       options: {
-        bin: 'vendor/bin/phpunit'
+        bin: 'application/vendor/bin/phpunit -c application/tests/phpunit.xml'
       },
       dev: {
-        dir: './application/tests'
+        dir: 'application/tests'
       }
     },
 
