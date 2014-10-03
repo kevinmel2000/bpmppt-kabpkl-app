@@ -1,10 +1,16 @@
-<?php if ( ! defined('BASEPATH')) exit ('No direct script access allowed');
-
+<?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
 /**
- * Laporan Class
- *
- * @subpackage  Controller
+ * @package     BPMPPT
+ * @subpackage  Laporan
+ * @category    Controller
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) BPMPPT Kab. Pekalongan
+ * @license     http://github.com/feryardiant/bpmppt/blob/master/LICENSE
+ * @since       Version 0.1.5
  */
+
+// -----------------------------------------------------------------------------
+
 class Laporan extends BI_Controller
 {
     public function __construct()
@@ -103,7 +109,7 @@ class Laporan extends BI_Controller
         {
             $this->data['panel_body'] = $form->generate();
 
-            $this->load->theme('pages/panel_form', $this->data);
+            $this->load->theme('dataform', $this->data);
         }
     }
 }

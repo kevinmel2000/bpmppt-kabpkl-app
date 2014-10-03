@@ -1,11 +1,11 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
 /**
  * @package     BootIgniter Pack
  * @subpackage  Biasset
  * @category    Configurations
  * @author      Fery Wardiyanto
  * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
- * @license     https://github.com/feryardiant/bootigniter/blob/master/license.md
+ * @license     http://github.com/feryardiant/bootigniter/blob/master/LICENSE
  * @since       Version 0.1.5
  */
 
@@ -25,6 +25,11 @@ $config['biasset_path_prefix'] = 'asset/';
 */
 
 $config['biasset_register_styles'] = array(
+    'bootigniter' => array(
+        'src' => 'css/bpmppt-app.min.css',
+        'ver' => Bootigniter::VERSION,
+        'dep' => array('gfonts'),
+        ),
     'gfonts' => array(
         'src' => '//fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700,400,600,300',
         ),
@@ -36,11 +41,6 @@ $config['biasset_register_styles'] = array(
         'src' => 'js/lib/select2.css',
         'ver' => '3.4.5',
         ),
-    'bootigniter' => array(
-        'src' => 'css/style.min.css',
-        'ver' => Bootigniter::VERSION,
-        'dep' => array('gfonts'),
-        ),
     );
 
 $vendor_path = 'js/lib/';
@@ -48,6 +48,11 @@ $jqueryui_path = $vendor_path.'jquery-ui/';
 $jqueryui_version = '1.10.4';
 
 $config['biasset_register_scripts'] = array(
+    'bootigniter' => array(
+        'src' => 'js/bpmppt-app.min.js',
+        'ver' => Bootigniter::VERSION,
+        'dep' => array('jquery', 'bootstrap'),
+        ),
     'jquery' => array(
         'src' => $vendor_path.'jquery.min.js',
         'ver' => '2.0.3',
@@ -314,11 +319,6 @@ $config['biasset_register_scripts'] = array(
     'respond' => array(
         'src' => $vendor_path.'respond.min.js',
         'ver' => '1.3.0',
-        ),
-    'bootigniter' => array(
-        'src' => 'js/script.js',
-        'ver' => Bootigniter::VERSION,
-        'dep' => array('jquery', 'bootstrap'),
         ),
     );
 

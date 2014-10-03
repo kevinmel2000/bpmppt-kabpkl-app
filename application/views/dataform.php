@@ -1,4 +1,3 @@
-<?php load_view('toolbar') ?>
 <section class="panel panel-default">
 	<header class="panel-heading">
 		<h3 class="panel-title"><?php echo $panel_title ?></h3>

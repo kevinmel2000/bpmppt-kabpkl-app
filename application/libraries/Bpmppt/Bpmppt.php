@@ -1,11 +1,16 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+<?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
 /**
- * BPMPPT Driver
- *
- * @subpackage  Drivers
- * @category    Application
+ * @package     BPMPPT
+ * @subpackage  Bpmppt Driver
+ * @category    Drivers
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) BPMPPT Kab. Pekalongan
+ * @license     http://github.com/feryardiant/bpmppt/blob/master/LICENSE
+ * @since       Version 0.1.5
  */
+
+// -----------------------------------------------------------------------------
+
 class Bpmppt extends CI_Driver_Library
 {
     /**

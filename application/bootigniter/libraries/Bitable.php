@@ -1,20 +1,16 @@
-<?php if (! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
 /**
  * @package     BootIgniter Pack
+ * @subpackage  Bitable
+ * @category    Libraries
  * @author      Fery Wardiyanto
  * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
- * @license     https://github.com/feryardiant/bootigniter/blob/master/license.md
+ * @license     http://github.com/feryardiant/bootigniter/blob/master/LICENSE
  * @since       Version 0.1.5
  */
 
 // -----------------------------------------------------------------------------
 
-/**
- * BootIgniter Table Class
- *
- * @subpackage  Libraries
- * @category    Table
- */
 class Bitable
 {
     /**
@@ -58,7 +54,7 @@ class Bitable
         $this->_ci =& get_instance();
 
         $this->offset = $this->_ci->uri->segment($this->segment);
-        $this->limit  = get_setting('app_data_show_limit');
+        $this->limit  = Bootigniter::get_setting('app_data_show_limit');
 
         if (!empty($configs))
         {

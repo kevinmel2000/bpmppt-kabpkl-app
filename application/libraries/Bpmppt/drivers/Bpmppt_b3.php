@@ -1,10 +1,20 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
 /**
- * BPMPPT Izin Penyimpanan Sementara dan Pengumpulan Limbah Bahan Berbahaya dan
- * Beracun Driver
- *
- * @subpackage  Drivers
+ * @package     BPMPPT
+ * @subpackage  Bpmppt_b3 Driver
+ * @category    Drivers
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) BPMPPT Kab. Pekalongan
+ * @license     http://github.com/feryardiant/bpmppt/blob/master/LICENSE
+ * @since       Version 0.1.5
  */
+
+/*
+| ------------------------------------------------------------------------------
+| Izin Penyimpanan Sementara dan Pengumpulan Limbah Bahan Berbahaya dan Beracun
+| ------------------------------------------------------------------------------
+*/
+
 class Bpmppt_b3 extends CI_Driver
 {
     /**
@@ -210,7 +220,7 @@ class Bpmppt_b3 extends CI_Driver
             'name'  => 'ketentuan_teknis',
             'label' => 'Ketentuan Teknis',
             'type'  => 'editor',
-            'std'   => ( $data_obj ? $data_obj->ketentuan_teknis : get_setting('b3_teknis')),
+            'std'   => ( $data_obj ? $data_obj->ketentuan_teknis : Bootigniter::get_setting('b3_teknis')),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
         return $fields;

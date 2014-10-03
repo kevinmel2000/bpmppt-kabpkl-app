@@ -1,10 +1,11 @@
-<?php if (! defined('BASEPATH')) exit('No direct script access allowed');
-
+<?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
 /**
  * @package     BootIgniter Pack
+ * @subpackage  Biauth
+ * @category    Drivers
  * @author      Fery Wardiyanto
  * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
- * @license     https://github.com/feryardiant/bootigniter/blob/master/license.md
+ * @license     http://github.com/feryardiant/bootigniter/blob/master/LICENSE
  * @since       Version 0.1.5
  */
 
@@ -13,12 +14,6 @@
 // Requiring PHPASS-0.3 file
 require_once config_item('bi_base_path').'libraries/vendor/PasswordHash.php';
 
-/**
- * Biauth Driver
- *
- * @subpackage  Drivers
- * @category    Security
- */
 class Biauth extends CI_Driver_Library
 {
     /**
@@ -93,7 +88,10 @@ class Biauth extends CI_Driver_Library
         }
 
         // Trying autologin user
-        $this->_autologin();
+        if (!$this->is_logged_in() and !$this->is_logged_in(FALSE))
+        {
+            $this->_autologin();
+        }
 
         log_message('debug', "#Biauth: Driver Class Initialized");
     }
@@ -222,20 +220,22 @@ class Biauth extends CI_Driver_Library
         {
             // grab all permissions
             $user_data['user_perms'] = $this->users->get_perms($user->id, TRUE);
-            $return = TRUE;
         }
 
         $this->_ci->session->set_userdata($user_data);
 
-        // update login info
-        $login_data = array('last_login' => date('Y-m-d H:i:s'));
-
-        if (get_setting('auth_login_record_ip'))
+        if ($return !== FALSE)
         {
-            $login_data['last_ip'] = $this->_ci->input->ip_address();
-        }
+            // update login info
+            $login_data = array('last_login' => date('Y-m-d H:i:s'));
 
-        $this->users->edit($user->id, $login_data);
+            if (Bootigniter::get_setting('auth_login_record_ip'))
+            {
+                $login_data['last_ip'] = $this->_ci->input->ip_address();
+            }
+
+            $this->users->edit($user->id, $login_data);
+        }
 
         return $return;
     }
@@ -347,18 +347,13 @@ class Biauth extends CI_Driver_Library
      */
     private function _autologin()
     {
-        if ($this->is_logged_in() and $this->is_logged_in(FALSE))
-        {
-            return;
-        }
-
         // not logged in (as any user)
-        if (($cookie = $this->_get_cookie()) and isset($cookie['key']) and isset($cookie['user_id']))
+        if (($cookie = biauth_get_cookie()) and isset($cookie['key']) and isset($cookie['user_id']))
         {
             if ($user = $this->autologin->get($cookie['user_id'], md5($cookie['key'])))
             {
                 $this->_validate_user($user);
-                $this->_set_cookie($cookie['user_id'], $cookie['key']);
+                biauth_set_cookie($cookie['user_id'], $cookie['key']);
             }
         }
     }
@@ -373,7 +368,7 @@ class Biauth extends CI_Driver_Library
      */
     public function create_autologin($user_id)
     {
-        // somehow i need to use $this->generate_random_key()
+        // somehow i need to use biauth_keygen()
         $key = substr(md5(uniqid(mt_rand().get_cookie(config_item('sess_cookie_name')))), 0, 16);
         // var_dump($key);
 
@@ -381,7 +376,7 @@ class Biauth extends CI_Driver_Library
 
         if ($this->autologin->set($user_id, md5($key)))
         {
-            $this->_set_cookie($user_id, $key);
+            biauth_set_cookie($user_id, $key);
             return TRUE;
         }
 
@@ -594,7 +589,7 @@ class Biauth extends CI_Driver_Library
             {
                 $user_data['request_type'] = serialize($type);
                 $user_data['request_time'] = date('Y-m-d H:i:s');
-                $user_data['request_key'] = $this->generate_random_key();
+                $user_data['request_key'] = biauth_keygen();
 
                 $this->_ci->bootigniter->send_email($user_data['email'], 'lang:'.implode('+', $type), $user_data);
                 break;
@@ -706,7 +701,7 @@ class Biauth extends CI_Driver_Library
     {
         foreach (array('blacklist', 'blacklist_prepend', 'exceptions') as $setting)
         {
-            $$setting  = array_map('trim', explode(',', get_setting('auth_username_'.$setting)));
+            $$setting  = array_map('trim', explode(',', Bootigniter::get_setting('auth_username_'.$setting)));
         }
 
         // Generate complete list of blacklisted names
@@ -803,7 +798,7 @@ class Biauth extends CI_Driver_Library
             $user_data['username'] = $user->username;
             $user_data['request_type'] = $user->request_type;
             $user_data['request_time'] = date('Y-m-d H:i:s');
-            $user_data['request_key'] = $this->generate_random_key();
+            $user_data['request_key'] = biauth_keygen();
             $user_data['request_value'] = $user->request_value;
 
             $this->_ci->bootigniter->send_email($user->email, 'lang:'.$user->request_type, $user_data);
@@ -878,52 +873,6 @@ class Biauth extends CI_Driver_Library
             set_message('error', 'Terjadi kesalahan dalam mengubah data pengguna '.$group_data['name']);
             return FALSE;
         }
-    }
-
-    // -------------------------------------------------------------------------
-    // Cookie helper
-    // -------------------------------------------------------------------------
-
-    protected function _set_cookie($user_id, $key)
-    {
-        set_cookie(array(
-            'name'   => (config_item('biauth_autologin_cookie_name') ?: 'autologin'),
-            'value'  => serialize(array('user_id' => $user_id, 'key' => $key)),
-            'expire' => (config_item('biauth_autologin_cookie_life') ?: config_item('sess_expiration'))
-            ));
-    }
-
-    // -------------------------------------------------------------------------
-
-    protected function _get_cookie()
-    {
-        $cookie_name = config_item('biauth_autologin_cookie_name') ?: 'autologin';
-
-        return unserialize(get_cookie($cookie_name, TRUE));
-    }
-
-    // -------------------------------------------------------------------------
-    // String helper
-    // -------------------------------------------------------------------------
-
-    /**
-     * Generate a random string based on kernel's random number generator
-     *
-     * @return string
-     */
-    public function generate_random_key()
-    {
-        if (function_exists('openssl_random_pseudo_bytes'))
-        {
-            $key = openssl_random_pseudo_bytes(1024, $cstrong).microtime().mt_rand();
-        }
-        else
-        {
-            $randomizer = file_exists('/dev/urandom') ? '/dev/urandom' : '/dev/random';
-            $key = file_get_contents($randomizer, NULL, NULL, 0, 1024).microtime().mt_rand();
-        }
-
-        return md5($key);
     }
 }
 

@@ -1,10 +1,16 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+<?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
 /**
- * Notice Controller
- *
- * @subpackage  Controller
+ * @package     BootIgniter Pack
+ * @subpackage  Notice
+ * @category    Controller
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
+ * @license     http://github.com/feryardiant/bootigniter/blob/master/LICENSE
+ * @since       Version 0.1.5
  */
+
+// -----------------------------------------------------------------------------
+
 class Notice extends BI_Controller
 {
     public function index( $page = '' )

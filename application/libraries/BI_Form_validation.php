@@ -1,24 +1,16 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+<?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
 /**
  * @package     BootIgniter Pack
+ * @subpackage  BI_Form_validation
+ * @category    Libraries
  * @author      Fery Wardiyanto
  * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
- * @license     http://dbad-license.org
- * @since       Version 0.1.3
+ * @license     http://github.com/feryardiant/bootigniter/blob/master/LICENSE
+ * @since       Version 0.1.5
  */
 
 // -----------------------------------------------------------------------------
 
-/**
- * BAKA Form Validation Class
- *
- * Pre-processes global input data for security
- * Extending native CI Form Validation
- *
- * @subpackage  Libraries
- * @category    Validation
- */
 class BI_Form_validation extends CI_Form_validation
 {
     /**
@@ -32,7 +24,7 @@ class BI_Form_validation extends CI_Form_validation
     {
         parent::__construct( $rules );
 
-        log_message('debug', "#BootIgniter: Core Form_validation Class Initialized");
+        log_message('debug', "#BootIgniter: Form_validation Class Initialized");
     }
 
     // -------------------------------------------------------------------------

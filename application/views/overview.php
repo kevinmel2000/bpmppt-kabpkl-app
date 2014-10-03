@@ -1,10 +1,9 @@
-<?php load_view('toolbar') ?>
 <div id="dashboard-callout" class="row">
 <?php $widget_col = twbs_set_columns(6, 6, 6, 6, 12) ?>
 	<div class="<?php echo $widget_col ?>">
 	<?php $i = 1; $c = count($panel_body); ?>
 	<?php foreach ( $panel_body as $link => $izin ) : ?>
-		<article id="panel-<?php echo $link ?>" class="panel panel-default">
+		<section id="panel-<?php echo $link ?>" class="panel panel-default">
 			<header class="panel-heading">
 				<h3 class="panel-title"><?php echo anchor('data/layanan/'.$link, $izin['label']) ?></h3>
 			</header>
@@ -34,7 +33,7 @@
 					</div>
 				</div>
 			</div>
-		</article>
+		</section>
 
 	<?php echo ($i == ceil($c/2) ? '</div><div class="'.$widget_col.'">' : ''); $i++; ?>
 	<?php endforeach; ?>

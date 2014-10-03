@@ -1,9 +1,20 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
 /**
- * BPMPPT Izin Pengobatan Tradisional Driver
- *
- * @subpackage  Drivers
+ * @package     BPMPPT
+ * @subpackage  Bpmppt_obat Driver
+ * @category    Drivers
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) BPMPPT Kab. Pekalongan
+ * @license     http://github.com/feryardiant/bpmppt/blob/master/LICENSE
+ * @since       Version 0.1.5
  */
+
+/*
+| ------------------------------------------------------------------------------
+| Izin Pengobatan Tradisional
+| ------------------------------------------------------------------------------
+*/
+
 class Bpmppt_obat extends CI_Driver
 {
     /**

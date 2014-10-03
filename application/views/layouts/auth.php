@@ -26,3 +26,24 @@
             </div> <!-- .nav-collapse -->
         </div> <!-- .container -->
     </header> <!-- #top -->
+
+	<section id="contents">
+	    <div class="container">
+	        <?php echo form_alert() ?>
+	        <div class="row">
+	            <?php echo $contents ?>
+	        </div> <!-- .row -->
+	    </div> <!-- .container-->
+	</section> <!-- #contents -->
+</div> <!-- .wrapper -->
+
+<footer id="foots">
+    <div class="container">
+        <p class="text-muted pull-left"><?php echo $footer_left ?></p>
+        <p class="text-muted pull-right"><?php echo $footer_right ?></p>
+    </div> <!-- .container-->
+</footer> <!-- #foots-->
+
+<?php echo get_scripts() ?>
+</body>
+</html>

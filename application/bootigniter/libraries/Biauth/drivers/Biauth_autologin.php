@@ -1,21 +1,16 @@
-<?php if (! defined('BASEPATH')) exit('No direct script access allowed');
-
+<?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
 /**
  * @package     BootIgniter Pack
+ * @subpackage  Biauth_autologin
+ * @category    Drivers
  * @author      Fery Wardiyanto
  * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
- * @license     https://github.com/feryardiant/bootigniter/blob/master/license.md
+ * @license     http://github.com/feryardiant/bootigniter/blob/master/LICENSE
  * @since       Version 0.1.5
  */
 
 // -----------------------------------------------------------------------------
 
-/**
- * Biauth Autologin Driver
- *
- * @subpackage  Drivers
- * @category    Security
- */
 class Biauth_autologin extends CI_Driver
 {
     /**

@@ -1,21 +1,16 @@
-<?php if (! defined('BASEPATH')) exit('No direct script access allowed');
-
+<?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
 /**
  * @package     BootIgniter Pack
+ * @subpackage  Biauth_users
+ * @category    Drivers
  * @author      Fery Wardiyanto
  * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
- * @license     https://github.com/feryardiant/bootigniter/blob/master/license.md
+ * @license     http://github.com/feryardiant/bootigniter/blob/master/LICENSE
  * @since       Version 0.1.5
  */
 
 // -----------------------------------------------------------------------------
 
-/**
- * Biauth Users Driver
- *
- * @subpackage  Drivers
- * @category    Security
- */
 class Biauth_users extends CI_Driver
 {
     /**
@@ -156,11 +151,13 @@ class Biauth_users extends CI_Driver
         if (!$this->set_meta($user_id, $meta_data))
         {
             log_message('error', '#Biauth: Users->add failed creating new usermeta.');
+            return FALSE;
         }
 
         if (!$this->set_groups($user_id, $group_data))
         {
             log_message('error', '#Biauth: Users->add failed creating new usergroup.');
+            return FALSE;
         }
 
         return $user_id;
@@ -199,20 +196,24 @@ class Biauth_users extends CI_Driver
 
         $this->_ci->db->trans_start();
 
-        $this->_ci->db->update($this->table['users'], $user_data, array('id' => $user_id));
-        $this->edit_meta($user_id, $meta_data);
-        $this->edit_groups($user_id, $group_data);
 
-        $this->_ci->db->trans_complete();
-
-        if ($this->_ci->db->trans_status() === FALSE)
+        if (!$this->_ci->db->update($this->table['users'], $user_data, array('id' => $user_id)))
         {
-            $this->_ci->db->trans_rollback();
-            log_message('error', '#Biauth: Users->edit failed updating existing user.');
+            log_message('error', '#Biauth: Users->edit failed updating user data');
             return FALSE;
         }
 
-        log_message('info', '#Biauth: Users->edit existing user has been updated.');
+        if (!$this->edit_meta($user_id, $meta_data))
+        {
+            return FALSE;
+        }
+
+        if (!$this->edit_groups($user_id, $group_data))
+        {
+            log_message('error', '#Biauth: Users->edit_groups failed updating user data');
+            return FALSE;
+        }
+
         return TRUE;
     }
 
@@ -281,7 +282,7 @@ class Biauth_users extends CI_Driver
      */
     public function purge_na()
     {
-        $expired = time() - get_setting('auth_email_act_expire');
+        $expired = time() - Bootigniter::get_setting('auth_email_act_expire');
 
         $this->_ci->db->delete($this->table['users'], array(
             'activated' => 0,
@@ -427,7 +428,11 @@ class Biauth_users extends CI_Driver
 
             foreach ($meta_key as $key => $value)
             {
-                $this->edit_meta($user_id, $key, $value);
+                if (!$this->edit_meta($user_id, $key, $value))
+                {
+                    log_message('error', '#Biauth: Users->edit_meta failed updating existing usermeta key: '.$key.' value: '.$value);
+                    break;
+                }
             }
 
             $this->_ci->db->trans_complete();
@@ -449,11 +454,7 @@ class Biauth_users extends CI_Driver
                 );
         }
 
-        if ($return)
-        {
-            log_message('info', '#Biauth: Users->edit_meta success updating existing usermeta.');
-        }
-        else
+        if (!$return)
         {
             log_message('error', '#Biauth: Users->edit_meta failed updating existing usermeta.');
         }

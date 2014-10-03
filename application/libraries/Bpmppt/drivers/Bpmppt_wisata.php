@@ -1,9 +1,20 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
 /**
- * BPMPPT Izin Usaha Pariwisata Driver
- *
- * @subpackage  Drivers
+ * @package     BPMPPT
+ * @subpackage  Bpmppt_wisata Driver
+ * @category    Drivers
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) BPMPPT Kab. Pekalongan
+ * @license     http://github.com/feryardiant/bpmppt/blob/master/LICENSE
+ * @since       Version 0.1.5
  */
+
+/*
+| ------------------------------------------------------------------------------
+| Izin Usaha Pariwisata
+| ------------------------------------------------------------------------------
+*/
+
 class Bpmppt_wisata extends CI_Driver
 {
     /**

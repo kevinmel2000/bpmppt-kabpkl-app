@@ -1,21 +1,16 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+<?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
 /**
  * @package     BootIgniter Pack
+ * @subpackage  Bitheme
+ * @category    Libraries
  * @author      Fery Wardiyanto
  * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
- * @license     https://github.com/feryardiant/bootigniter/blob/master/license.md
+ * @license     http://github.com/feryardiant/bootigniter/blob/master/LICENSE
  * @since       Version 0.1.5
  */
 
 // -----------------------------------------------------------------------------
 
-/**
- * BootIgniter Theme Class
- *
- * @subpackage  Libraries
- * @category    Theme
- */
 class Bitheme
 {
     /**
@@ -43,8 +38,7 @@ class Bitheme
         // Load This Lib Configuration
         $this->_ci->config->load('bitheme');
         $this->_ci->config->load('lang_codes');
-        $this->_ci->load->helpers(array( 'bitheme', 'html', 'biform' ));
-        $this->_ci->load->library('biasset');
+        $this->_ci->load->helpers(array('form', 'html', 'bitheme'));
 
         // Setup body classes & id
         $this->set_body_attr('id', $this->_ci->router->fetch_class() );

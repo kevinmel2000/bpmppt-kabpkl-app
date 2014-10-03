@@ -1,12 +1,21 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+<?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
 /**
- * Internal Class
- *
- * @subpackage  Controller
+ * @package     BootIgniter Pack
+ * @subpackage  Internal
+ * @category    Controller
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
+ * @license     http://github.com/feryardiant/bootigniter/blob/master/LICENSE
+ * @since       Version 0.1.5
  */
+
+// -----------------------------------------------------------------------------
+
 class Internal extends BI_Controller
 {
+
+    private $_settings = array();
+
     public function __construct()
     {
         parent::__construct();
@@ -15,6 +24,8 @@ class Internal extends BI_Controller
         {
             $this->_notice( 'access-denied' );
         }
+
+        $this->_settings = Bootigniter::get_settings();
 
         $this->verify_login(uri_string());
 
@@ -44,35 +55,35 @@ class Internal extends BI_Controller
             'name'  => 'skpd_name',
             'type'  => 'text',
             'label' => 'Nama SKPD',
-            'std'   => get_setting('skpd_name'),
+            'std'   => $this->_settings['skpd_name'],
             'validation'=>'required' );
 
         $fields[]   = array(
             'name'  => 'skpd_address',
             'type'  => 'textarea',
             'label' => 'Alamat',
-            'std'   => get_setting('skpd_address'),
+            'std'   => $this->_settings['skpd_address'],
             'validation'=>'required' );
 
         $fields[]   = array(
             'name'  => 'skpd_kab',
             'type'  => 'text',
             'label' => 'Lokasi',
-            'std'   => get_setting('skpd_kab'),
+            'std'   => $this->_settings['skpd_kab'],
             'validation'=>'required' );
 
         $fields[]   = array(
             'name'  => 'skpd_city',
             'type'  => 'text',
             'label' => 'Kota',
-            'std'   => get_setting('skpd_city'),
+            'std'   => $this->_settings['skpd_city'],
             'validation'=>'required' );
 
         $fields[]   = array(
             'name'  => 'skpd_prov',
             'type'  => 'text',
             'label' => 'Propinsi',
-            'std'   => get_setting('skpd_prov'),
+            'std'   => $this->_settings['skpd_prov'],
             'validation'=>'required' );
 
         $fields[]   = array(
@@ -84,13 +95,13 @@ class Internal extends BI_Controller
                     'name'  => 'telp',
                     'type'  => 'tel',
                     'label' => 'No. Telp.',
-                    'std'   => get_setting('skpd_telp'),
+                    'std'   => $this->_settings['skpd_telp'],
                     'validation'=>'required|min_length[6]|max_length[15]' ),
                 array(
                     'name'  => 'fax',
                     'type'  => 'tel',
                     'label' => 'Faksimili',
-                    'std'   => get_setting('skpd_fax'),
+                    'std'   => $this->_settings['skpd_fax'],
                     'validation'=>'required|min_length[6]|max_length[15]' )
                 ),
             );
@@ -99,20 +110,20 @@ class Internal extends BI_Controller
             'name'  => 'skpd_pos',
             'type'  => 'text',
             'label' => 'Kode Pos',
-            'std'   => get_setting('skpd_pos'),
+            'std'   => $this->_settings['skpd_pos'],
             'validation'=>'numeric|exact_length[5]' );
 
         $fields[]   = array(
             'name'  => 'skpd_web',
             'type'  => 'url',
             'label' => 'Alamat Web',
-            'std'   => get_setting('skpd_web')  );
+            'std'   => $this->_settings['skpd_web']  );
 
         $fields[]   = array(
             'name'  => 'skpd_email',
             'type'  => 'email',
             'label' => 'Alamat Email',
-            'std'   => get_setting('skpd_email'),
+            'std'   => $this->_settings['skpd_email'],
             'validation'=>'valid_email' );
 
         /** --------------------------------------------------------------------
@@ -128,21 +139,21 @@ class Internal extends BI_Controller
             'name'  => 'skpd_lead_name',
             'type'  => 'text',
             'label' => 'Nama Pimpinan',
-            'std'   => get_setting('skpd_lead_name'),
+            'std'   => $this->_settings['skpd_lead_name'],
             'validation'=>'required' );
 
         $fields[]   = array(
             'name'  => 'skpd_lead_jabatan',
             'type'  => 'text',
             'label' => 'Nama Pimpinan',
-            'std'   => get_setting('skpd_lead_jabatan'),
+            'std'   => $this->_settings['skpd_lead_jabatan'],
             'validation'=>'required' );
 
         $fields[]   = array(
             'name'  => 'skpd_lead_nip',
             'type'  => 'text',
             'label' => 'NIP Pimpinan',
-            'std'   => get_setting('skpd_lead_nip'),
+            'std'   => $this->_settings['skpd_lead_nip'],
             'validation'=>'required' );
 
         $this->_option_form( $fields );
@@ -160,7 +171,7 @@ class Internal extends BI_Controller
             'name'  => 'app_data_show_limit',
             'type'  => 'number',
             'label' => 'Jumlah data ditampilkan',
-            'std'   => get_setting('app_data_show_limit'),
+            'std'   => $this->_settings['app_data_show_limit'],
             'desc'  => 'Jumlah data yang ditampilkan ditiap halaman',
             'validation'=>'required|numeric' );
 
@@ -170,7 +181,7 @@ class Internal extends BI_Controller
             'name'  => 'app_date_format',
             'type'  => 'text',
             'label' => 'Format Tanggal',
-            'std'   => get_setting('app_date_format'),
+            'std'   => $this->_settings['app_date_format'],
             'desc'  => 'Format tanggal menggunakan dasar '.$php_link,
             'validation'=>'required' );
 
@@ -178,7 +189,7 @@ class Internal extends BI_Controller
             'name'  => 'app_datetime_format',
             'type'  => 'text',
             'label' => 'Format Waktu &amp; Tanggal',
-            'std'   => get_setting('app_datetime_format'),
+            'std'   => $this->_settings['app_datetime_format'],
             'desc'  => 'Format tanggal dan waktu menggunakan dasar '.$php_link,
             'validation'=>'required' );
 
@@ -191,7 +202,7 @@ class Internal extends BI_Controller
             'type'  => 'fieldset',
             'label' => 'Email' );
 
-        $email_protocol = get_setting('email_protocol');
+        $email_protocol = $this->_settings['email_protocol'];
 
         $fields[]   = array(
             'name'  => 'email_protocol',
@@ -210,7 +221,7 @@ class Internal extends BI_Controller
             'fold'  => array(
                 'key'   => 'email_protocol',
                 'value' => 'sendmail' ),
-            'std'   => get_setting('email_mailpath') );
+            'std'   => $this->_settings['email_mailpath'] );
 
         $fields[]   = array(
             'name'  => 'email_smtp_host',
@@ -219,7 +230,7 @@ class Internal extends BI_Controller
             'fold'  => array(
                 'key'   => 'email_protocol',
                 'value' => 'smtp' ),
-            'std'   => get_setting('email_smtp_host') );
+            'std'   => $this->_settings['email_smtp_host'] );
 
         $fields[]   = array(
             'name'  => 'email_smtp_user',
@@ -228,7 +239,7 @@ class Internal extends BI_Controller
             'fold'  => array(
                 'key'   => 'email_protocol',
                 'value' => 'smtp' ),
-            'std'   => get_setting('email_smtp_user'),
+            'std'   => $this->_settings['email_smtp_user'],
             );
 
         $fields[]   = array(
@@ -238,7 +249,7 @@ class Internal extends BI_Controller
             'fold'  => array(
                 'key'   => 'email_protocol',
                 'value' => 'smtp' ),
-            'std'   => get_setting('email_smtp_pass') );
+            'std'   => $this->_settings['email_smtp_pass'] );
 
         $fields[]   = array(
             'name'  => 'email_smtp_port',
@@ -247,7 +258,7 @@ class Internal extends BI_Controller
             'fold'  => array(
                 'key'   => 'email_protocol',
                 'value' => 'smtp' ),
-            'std'   => get_setting('email_smtp_port'),
+            'std'   => $this->_settings['email_smtp_port'],
             'validation'=> 'numeric' );
 
         $fields[]   = array(
@@ -257,7 +268,7 @@ class Internal extends BI_Controller
             'fold'  => array(
                 'key'   => 'email_protocol',
                 'value' => 'smtp' ),
-            'std'   => get_setting('email_smtp_timeout'),
+            'std'   => $this->_settings['email_smtp_timeout'],
             'validation'=> 'numeric' );
 
         $fields[]   = array(
@@ -265,7 +276,7 @@ class Internal extends BI_Controller
             'type'  => 'switch',
             'label' => 'Wordwrap',
             'desc'  => 'Membatasi jumlah huruf ditiap baris dalam kiriman email sebanyak 80 karakter dan sisanya dilanjutkan pada baris berikutnya.',
-            'std'   => get_setting('email_wordwrap') );
+            'std'   => $this->_settings['email_wordwrap'] );
 
         $fields[]   = array(
             'name'  => 'email_mailtype',
@@ -275,7 +286,7 @@ class Internal extends BI_Controller
                 0  => 'Teks',
                 1  => 'HTML' ),
             'desc'  => 'Format kiriman email. Disarankan menggunakan format HTML agar tampilan lebih baik.',
-            'std'   => get_setting('email_mailtype') );
+            'std'   => $this->_settings['email_mailtype'] );
 
         $fields[]   = array(
             'name'  => 'email_priority',
@@ -283,7 +294,7 @@ class Internal extends BI_Controller
             'label' => 'Prioritas',
             'min'   => 1,
             'max'   => 5,
-            'std'   => get_setting('email_priority'),
+            'std'   => $this->_settings['email_priority'],
             'desc'  => 'Prioritas email diisi dengan angka 1-5, angka 1 untuk paling tinggi dan 5 untuk paling rendah.',
             'validation'=> 'numeric|greater_than[0]|less_than[6]' );
 
@@ -300,7 +311,7 @@ class Internal extends BI_Controller
             'name'  => 'auth_allow_registration',
             'type'  => 'switch',
             'label' => 'Ijinkan registrasi Umum',
-            'std'   => get_setting('auth_allow_registration'),
+            'std'   => $this->_settings['auth_allow_registration'],
             'desc'  => 'Ijinkan registrasi umum',
             'validation'=>'numeric' );
 
@@ -311,9 +322,9 @@ class Internal extends BI_Controller
             'fold'  => array(
                 'key'   => 'auth_allow_registration',
                 'value' => 1 ),
-            'std'   => get_setting('auth_email_activation'));
+            'std'   => $this->_settings['auth_email_activation']);
 
-        $auth_email_act_expire = second_to_day(get_setting('auth_email_act_expire'));
+        $auth_email_act_expire = second_to_day($this->_settings['auth_email_act_expire']);
 
         $fields[]   = array(
             'name'  => 'auth_email_act_expire',
@@ -334,7 +345,7 @@ class Internal extends BI_Controller
             'fold'  => array(
                 'key'   => 'auth_allow_registration',
                 'value' => 1 ),
-            'std'   => get_setting('auth_use_username'),
+            'std'   => $this->_settings['auth_use_username'],
             'desc'  => 'Gunakan username untuk setiap pengguna.');
 
         /** --------------------------------------------------------------------
@@ -350,35 +361,35 @@ class Internal extends BI_Controller
             'name'  => 'welcome_title',
             'type'  => 'text',
             'label' => 'Judul Pembuka',
-            'std'   => get_setting('welcome_title') );
+            'std'   => $this->_settings['welcome_title'] );
 
         $fields[]   = array(
             'name'  => 'welcome_login',
             'type'  => 'editor',
             'height'=> 200,
             'label' => 'Pembuka Halaman Login',
-            'std'   => get_setting('welcome_login') );
+            'std'   => $this->_settings['welcome_login'] );
 
         $fields[]   = array(
             'name'  => 'welcome_resend',
             'type'  => 'editor',
             'height'=> 200,
             'label' => 'Pembuka Resend',
-            'std'   => get_setting('welcome_resend') );
+            'std'   => $this->_settings['welcome_resend'] );
 
         $fields[]   = array(
             'name'  => 'welcome_register',
             'type'  => 'editor',
             'height'=> 200,
             'label' => 'Pembuka Register',
-            'std'   => get_setting('welcome_register') );
+            'std'   => $this->_settings['welcome_register'] );
 
         $fields[]   = array(
             'name'  => 'welcome_forgot',
             'type'  => 'editor',
             'height'=> 200,
             'label' => 'Isi Pembuka',
-            'std'   => get_setting('welcome_forgot') );
+            'std'   => $this->_settings['welcome_forgot'] );
 
         $this->_option_form( $fields );
     }
@@ -406,8 +417,8 @@ class Internal extends BI_Controller
             'min'   => $user_min,
             'max'   => $user_max,
             'std'   => array(
-                'min' => get_setting('auth_username_length_min'),
-                'max' => get_setting('auth_username_length_max'),
+                'min' => $this->_settings['auth_username_length_min'],
+                'max' => $this->_settings['auth_username_length_max'],
                 ),
             'desc'  => 'Jumlah minimal dan maksimal karakter Username.' );
 
@@ -418,8 +429,8 @@ class Internal extends BI_Controller
             'min'   => $user_min,
             'max'   => $user_max,
             'std'   => array(
-                'min' => get_setting('auth_password_length_min'),
-                'max' => get_setting('auth_password_length_max'),
+                'min' => $this->_settings['auth_password_length_min'],
+                'max' => $this->_settings['auth_password_length_max'],
                 ),
             'desc'  => 'Jumlah minimal dan maksimal karakter Password.' );
 
@@ -436,25 +447,25 @@ class Internal extends BI_Controller
             'name'  => 'auth_login_by_username',
             'type'  => 'switch',
             'label' => 'Gunakan username saat login',
-            'std'   => get_setting('auth_login_by_username'));
+            'std'   => $this->_settings['auth_login_by_username']);
 
         $fields[]   = array(
             'name'  => 'auth_login_by_email',
             'type'  => 'switch',
             'label' => 'Gunakan email saat login',
-            'std'   => get_setting('auth_login_by_email'));
+            'std'   => $this->_settings['auth_login_by_email']);
 
         $fields[]   = array(
             'name'  => 'auth_login_record_ip',
             'type'  => 'switch',
             'label' => 'Rekam IP',
-            'std'   => get_setting('auth_login_record_ip'));
+            'std'   => $this->_settings['auth_login_record_ip']);
 
         $fields[]   = array(
             'name'  => 'auth_login_count_attempts',
             'type'  => 'switch',
             'label' => 'Hitung kegagalan login',
-            'std'   => get_setting('auth_login_count_attempts'));
+            'std'   => $this->_settings['auth_login_count_attempts']);
 
         $fields[]   = array(
             'name'  => 'auth_login_max_attempts',
@@ -462,10 +473,10 @@ class Internal extends BI_Controller
             'label' => 'Maksimum login',
             'min'   => 1,
             'max'   => 10,
-            'std'   => get_setting('auth_login_max_attempts'),
+            'std'   => $this->_settings['auth_login_max_attempts'],
             'desc'  => 'Batas maksimum login untuk tiap pengguna.' );
 
-        $auth_login_attempt_expire = second_to_day(get_setting('auth_login_attempt_expire'));
+        $auth_login_attempt_expire = second_to_day($this->_settings['auth_login_attempt_expire']);
 
         $fields[]   = array(
             'name'  => 'auth_login_attempt_expire',
@@ -489,7 +500,7 @@ class Internal extends BI_Controller
             'name'  => 'auth_captcha_registration',
             'type'  => 'switch',
             'label' => 'Gunakan captcha',
-            'std'   => get_setting('auth_captcha_registration') );
+            'std'   => $this->_settings['auth_captcha_registration'] );
 
         $fields[]   = array(
             'name'  => 'auth_use_recaptcha',
@@ -499,7 +510,7 @@ class Internal extends BI_Controller
                 'key' => 'auth_captcha_registration',
                 'value' => 1
                 ),
-            'std'   => get_setting('auth_use_recaptcha'),
+            'std'   => $this->_settings['auth_use_recaptcha'],
             'desc'  => 'Gunakan '.anchor('https://www.google.com/recaptcha', 'google reCaptcha', 'target="_blank"').' untuk validasi.' );
 
         $fields[]   = array(
@@ -510,7 +521,7 @@ class Internal extends BI_Controller
                 'key'   => 'auth_use_recaptcha',
                 'value' => 1
                 ),
-            'std'   => get_setting('auth_recaptcha_public_key') );
+            'std'   => $this->_settings['auth_recaptcha_public_key'] );
 
         $fields[]   = array(
             'name'  => 'auth_recaptcha_private_key',
@@ -520,7 +531,7 @@ class Internal extends BI_Controller
                 'key'   => 'auth_use_recaptcha',
                 'value' => 1
                 ),
-            'std'   => get_setting('auth_recaptcha_private_key') );
+            'std'   => $this->_settings['auth_recaptcha_private_key'] );
 
         /** --------------------------------------------------------------------
          * Pengaturan Username
@@ -535,21 +546,21 @@ class Internal extends BI_Controller
             'name'  => 'auth_username_blacklist',
             'type'  => 'text',
             'label' => 'Nama pengguna',
-            'std'   => get_setting('auth_username_blacklist'),
+            'std'   => $this->_settings['auth_username_blacklist'],
             'desc'  => 'Daftar username yang tidak diijinkan, dipisahkan dengan tanda koma (,)' );
 
         $fields[]   = array(
             'name'  => 'auth_username_blacklist_prepend',
             'type'  => 'text',
             'label' => 'Awalan Nama Pengguna',
-            'std'   => get_setting('auth_username_blacklist_prepend'),
+            'std'   => $this->_settings['auth_username_blacklist_prepend'],
             'desc'  => 'Daftar kata awalan username yang tidak diijinkan, dipisahkan dengan tanda koma (,)' );
 
         $fields[]   = array(
             'name'  => 'auth_username_exceptions',
             'type'  => 'text',
             'label' => 'Username Pengecualian',
-            'std'   => get_setting('auth_username_exceptions'),
+            'std'   => $this->_settings['auth_username_exceptions'],
             'desc'  => 'Daftar pengecualian username yang diijinkan, dipisahkan dengan tanda koma (,)' );
 
         $this->_option_form( $fields );
@@ -569,11 +580,11 @@ class Internal extends BI_Controller
         {
             if ( $this->bootigniter->edit_setting( $form_data ) )
             {
-                $this->session->set_flashdata('error', array('Terjadi masalah penyimpanan konfigurasi.'));
+                $this->session->set_flashdata('success', array('Konfigurasi berhasil disimpan.'));
             }
             else
             {
-                $this->session->set_flashdata('success', array('Konfigurasi berhasil disimpan.'));
+                $this->session->set_flashdata('error', array('Terjadi masalah penyimpanan konfigurasi.'));
             }
 
             redirect( current_url() );
@@ -581,7 +592,7 @@ class Internal extends BI_Controller
 
         $this->data['panel_body'] = $form->generate();
 
-        $this->load->theme('pages/panel_form', $this->data);
+        $this->load->theme('dataform', $this->data);
     }
 }
 

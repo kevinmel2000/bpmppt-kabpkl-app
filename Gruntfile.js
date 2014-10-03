@@ -1,4 +1,5 @@
 /* global module, require */
+
 module.exports = function(grunt) {
   'use strict';
 
@@ -11,6 +12,29 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+
+    usebanner: {
+      options: {
+        position: 'top',
+        banner: '/*!\n' +
+                ' * BPMPPT App v<%= pkg.version %> (<%= pkg.homepage %>)\n' +
+                ' * <%= pkg.description %>\n' +
+                ' * Copyright 2014 <%= pkg.author.name %> (<%= pkg.author.email %>)\n' +
+                ' * Licensed under <%= pkg.license.type %> (<%= pkg.license.url %>)\n' +
+                ' */\n'
+      },
+      css: {
+        src: 'asset/css/<%= pkg.name %>*.css'
+      },
+      js: {
+        src: 'asset/js/<%= pkg.name %>*.js'
+      }
+    },
+
+    clean: {
+      css: 'asset/css/<%= pkg.name %>*',
+      js: 'asset/js/<%= pkg.name %>*'
+    },
 
     php: {
       dev: {
@@ -52,8 +76,21 @@ module.exports = function(grunt) {
       },
       dev: {
         files: {
-          "asset/css/style.css": "asset/less/style.less",
-          "asset/css/print.css": "asset/less/print.less"
+          "asset/css/<%= pkg.name %>.css": "asset/less/style.less",
+          "asset/css/<%= pkg.name %>-print.css": "asset/less/print.less"
+        }
+      },
+      build: {
+        options: {
+          compress: true,
+          cleancss: true,
+          sourceMap: true,
+          sourceMapRootpath: 'asset/less/',
+          report: 'gzip'
+        },
+        files: {
+          "asset/css/<%= pkg.name %>.min.css": "asset/less/style.less",
+          "asset/css/<%= pkg.name %>-print.min.css": "asset/less/print.less"
         }
       }
     },
@@ -69,48 +106,87 @@ module.exports = function(grunt) {
           'iOS >= 6',
           'Opera >= 12',
           'Safari >= 6'
-        ],
-        map: true
+        ]
       },
-      style: {
-        src: 'asset/css/style.css',
-        dest: 'asset/css/style.css'
-      },
-      print: {
-        src: 'asset/css/print.css',
-        dest: 'asset/css/print.css'
+      dev: {
+        src: [
+          'asset/css/<%= pkg.name %>.min.css',
+          'asset/css/<%= pkg.name %>-print.min.css',
+          'asset/css/<%= pkg.name %>.css',
+          'asset/css/<%= pkg.name %>-print.css'
+        ]
       }
     },
 
     csscomb: {
       options: {
-        config: 'asset/less/.csscomb.json'
+        config: '.csscombrc'
       },
       dev: {
         expand: true,
         cwd: 'asset/css/',
         dest: 'asset/css/',
-        src: [ '*.css', '!*.min.css' ]
+        src: [ '<%= pkg.name %>.css', '<%= pkg.name %>-print.css' ]
       }
     },
 
     csslint: {
       dev: {
         options: {
-          csslintrc: 'asset/less/.csslintrc'
+          csslintrc: '.csslintrc'
         },
-        src: [ 'asset/css/*.css', '!asset/css/*.min.css' ]
+        src: [ 'asset/css/<%= pkg.name %>.css', 'asset/css/<%= pkg.name %>-print.css' ]
       }
     },
 
-    cssmin: {
+    // concat: {
+    //   dev: {
+    //     src: [ 'asset/js/src/intro.js', 'asset/js/src/smof-*.js', 'asset/js/src/outro.js' ],
+    //     dest: 'asset/js/<%= pkg.name %>.js'
+    //   }
+    // },
+
+    // jshint: {
+    //   options: {
+    //     jshintrc: '.jshintrc'
+    //   },
+    //   dev: {
+    //     src: 'asset/js/script.js'
+    //   }
+    // },
+
+    // jscs: {
+    //   options: {
+    //     config: '.jscsrc'
+    //   },
+    //   dev: {
+    //     src: 'asset/js/script.js'
+    //   }
+    // },
+
+    uglify: {
+      options: {
+        preserveComments: 'some'
+      },
       dev: {
-        expand: true,
-        report: 'gzip',
-        cwd: 'asset/css/',
-        dest: 'asset/css/',
-        src: ['style.css', 'print.css'],
-        ext: '.min.css'
+        src: 'asset/js/script.js',
+        dest: 'asset/js/<%= pkg.name %>.min.js'
+      }
+    },
+
+    imagemin: {
+      options: {
+        optimizationLevel: 3,
+        progressive: true,
+        interlaced: true
+      },
+      dev: {
+        files: [{
+          expand: true,
+          cwd: 'asset/img/',
+          dest: 'asset/img/',
+          src: [ '**/*.{png,jpg,gif}' ]
+        }]
       }
     },
 
@@ -135,8 +211,27 @@ module.exports = function(grunt) {
 
   });
 
-  grunt.registerTask('build',   ['cssdist', 'phpdist']);
-  grunt.registerTask('phpdist', ['phplint', 'phpunit']);
-  grunt.registerTask('cssdist', ['less', 'autoprefixer', 'csscomb', 'csslint', 'cssmin']);
-  grunt.registerTask('default', ['php:dev', 'watch']);
+
+  grunt.registerTask('build', [
+    'cssdist',
+    'phpdist',
+    'imagemin'
+  ]);
+
+  grunt.registerTask('phpdist', [
+    'phplint',
+    'phpunit'
+  ]);
+
+  grunt.registerTask('cssdist', [
+    'less',
+    'autoprefixer',
+    'csscomb',
+    'csslint'
+  ]);
+
+  grunt.registerTask('default', [
+    'php:dev',
+    'watch'
+  ]);
 }

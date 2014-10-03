@@ -1,11 +1,11 @@
-<?php if (! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
 /**
  * @package     BootIgniter Pack
- * @subpackage  HTML
- * @category    Helper
+ * @subpackage  Biasset
+ * @category    Asset Helpers
  * @author      Fery Wardiyanto
  * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
- * @license     https://github.com/feryardiant/bootigniter/blob/master/license.md
+ * @license     http://github.com/feryardiant/bootigniter/blob/master/LICENSE
  * @since       Version 0.1.5
  */
 
@@ -46,5 +46,5 @@ function load_style($id, $src = '', $ver = '', $dep = array())
 }
 
 
-/* End of file biassets_helper.php */
-/* Location: ./bootigniter/helpers/biassets_helper.php */
+/* End of file biasset_helper.php */
+/* Location: ./bootigniter/helpers/biasset_helper.php */

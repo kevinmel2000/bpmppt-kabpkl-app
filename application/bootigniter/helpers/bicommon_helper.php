@@ -1,11 +1,11 @@
 <?php if ( !defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * @package     BootIgniter Pack
- * @subpackage  Common
- * @category    Helper
+ * @subpackage  Bicommons
+ * @category    Common Helpers
  * @author      Fery Wardiyanto
  * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
- * @license     https://github.com/feryardiant/bootigniter/blob/master/license.md
+ * @license     http://github.com/feryardiant/bootigniter/blob/master/LICENSE
  * @since       Version 0.1.5
  */
 
@@ -96,21 +96,6 @@ function is_valid_email( $email )
 // -----------------------------------------------------------------------------
 
 /**
- * Get default application setting
- *
- * @param   string  $name  Setting name
- * @return  mixed
- */
-function get_setting( $name )
-{
-    $bootigniter =& Bootigniter::get_instance();
-
-    return $bootigniter->get_setting( $name );
-}
-
-// -----------------------------------------------------------------------------
-
-/**
  * Get application message(s)
  *
  * @param   string  $level  Message level
@@ -118,7 +103,7 @@ function get_setting( $name )
  */
 function get_message( $level = FALSE )
 {
-    $bootigniter =& Bootigniter::get_instance();
+    $bootigniter =& get_instance()->bootigniter;
 
     return $bootigniter->get_message( $level );
 }
@@ -134,7 +119,7 @@ function get_message( $level = FALSE )
  */
 function set_message( $level, $msg_item )
 {
-    $bootigniter =& Bootigniter::get_instance();
+    $bootigniter =& get_instance()->bootigniter;
 
     return $bootigniter->set_message( $level, $msg_item );
 }

@@ -1,4 +1,15 @@
-<?php if ( !defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
+/**
+ * @package     BPMPPT
+ * @subpackage  Bpmppt Helper
+ * @category    Helpers
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) BPMPPT Kab. Pekalongan
+ * @license     http://github.com/feryardiant/bpmppt/blob/master/LICENSE
+ * @since       Version 0.1.5
+ */
+
+// -----------------------------------------------------------------------------
 
 function print_tembusan($data_tembusan)
 {

@@ -1,10 +1,16 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+<?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
 /**
- * Info Class
- *
- * @subpackage  Controller
+ * @package     BootIgniter Pack
+ * @subpackage  Info
+ * @category    Controller
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
+ * @license     http://github.com/feryardiant/bootigniter/blob/master/LICENSE
+ * @since       Version 0.1.5
  */
+
+// -----------------------------------------------------------------------------
+
 class Info extends BI_Controller
 {
     public function __construct()
@@ -169,7 +175,7 @@ class Info extends BI_Controller
 
         $this->set_panel_body($form->generate());
 
-        $this->load->theme('pages/panel_info', $this->data);
+        $this->load->theme('dataform', $this->data);
     }
 }
 

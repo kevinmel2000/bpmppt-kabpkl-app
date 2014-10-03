@@ -1,11 +1,16 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+<?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
 /**
- * BAKA Exceptions Class
- *
- * @subpackage  Core
- * @category    Exceptions
+ * @package     BootIgniter Pack
+ * @subpackage  BI_Exceptions
+ * @category    Core
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
+ * @license     http://github.com/feryardiant/bootigniter/blob/master/LICENSE
+ * @since       Version 0.1.5
  */
+
+// -----------------------------------------------------------------------------
+
 class BI_Exceptions extends CI_Exceptions
 {
     private $_template_path;

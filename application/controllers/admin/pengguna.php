@@ -1,10 +1,16 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+<?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
 /**
- * Pengguna Class
- *
- * @subpackage  Controller
+ * @package     BootIgniter Pack
+ * @subpackage  Pengguna
+ * @category    Controller
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
+ * @license     http://github.com/feryardiant/bootigniter/blob/master/LICENSE
+ * @since       Version 0.1.5
  */
+
+// -----------------------------------------------------------------------------
+
 class Pengguna extends BI_Controller
 {
     public function __construct()
@@ -141,7 +147,7 @@ class Pengguna extends BI_Controller
         $this->set_panel_title('Semua data penggunas: '._x($status));
         $this->data['panel_body'] = $grid->generate( $this->biauth->users->fetch($status) );
 
-        $this->load->theme('pages/panel_data', $this->data);
+        $this->load->theme('dataform', $this->data);
     }
 
     public function profile()
@@ -219,10 +225,10 @@ class Pengguna extends BI_Controller
             'desc'  => 'Mohon untuk menggunakan nama asli.',
             'validation'=> 'required' );
 
-        if ( (bool) get_setting('auth_use_username') )
+        if ( (bool) Bootigniter::get_setting('auth_use_username') )
         {
-            $username_min_length = get_setting('auth_username_length_min');
-            $username_max_length = get_setting('auth_username_length_max');
+            $username_min_length = Bootigniter::get_setting('auth_username_length_min');
+            $username_max_length = Bootigniter::get_setting('auth_username_length_max');
 
             $fields[]   = array(
                 'name'  => 'user-username',
@@ -254,8 +260,8 @@ class Pengguna extends BI_Controller
                 'label' => 'Password lama' );
         }
 
-        $password_min_length = get_setting('auth_password_length_min');
-        $password_max_length = get_setting('auth_password_length_max');
+        $password_min_length = Bootigniter::get_setting('auth_password_length_min');
+        $password_max_length = Bootigniter::get_setting('auth_password_length_max');
 
         $fields[]   = array(
             'name'  => 'user-new-password',
@@ -384,7 +390,7 @@ class Pengguna extends BI_Controller
 
         $this->data['panel_body'] = $form->generate();
 
-        $this->load->theme('pages/panel_form', $this->data);
+        $this->load->theme('dataform', $this->data);
     }
 
     private function _user_ban( $user_id )
@@ -431,7 +437,7 @@ class Pengguna extends BI_Controller
 
         $this->data['panel_body'] = $form->generate();
 
-        $this->load->theme('pages/panel_form', $this->data);
+        $this->load->theme('dataform', $this->data);
     }
 
     public function groups( $page = '', $group_id = NULL )
@@ -543,7 +549,7 @@ class Pengguna extends BI_Controller
 
         // $this->data['panel_body'] = $form->generate();
 
-        $this->load->theme('pages/panel_form', $this->data);
+        $this->load->theme('dataform', $this->data);
     }
 
     private function _group_table()
@@ -561,7 +567,7 @@ class Pengguna extends BI_Controller
 
         $this->data['panel_body'] = $grid->generate( $this->biauth->groups->fetch() );
 
-        $this->load->theme('pages/panel_data', $this->data);
+        $this->load->theme('dataform', $this->data);
     }
 
     public function permission( $page = '', $perm_id = '' )
@@ -656,7 +662,7 @@ class Pengguna extends BI_Controller
 
         $this->data['panel_body'] = $form->generate();
 
-        $this->load->theme('pages/panel_form', $this->data);
+        $this->load->theme('dataform', $this->data);
     }
 
     private function _perm_table()
@@ -677,7 +683,7 @@ class Pengguna extends BI_Controller
 
         $this->data['panel_body'] = $grid->generate( $this->biauth->permissions->fetch() );
 
-        $this->load->theme('pages/panel_data', $this->data);
+        $this->load->theme('dataform', $this->data);
     }
 }
 

@@ -16,7 +16,7 @@ var Baka = {
 $(document).ready( function () {
 
     $('#toolbar-btn-cetak').on('click', function(e) {
-        var url = $(this).attr('href')
+        var url = $(this).attr('href'),
             title = $(this).attr('title');
 
         new Baka.popup(url, title, 800, 600);

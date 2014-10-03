@@ -1,20 +1,16 @@
-<?php if (! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
 /**
  * @package     BootIgniter Pack
+ * @subpackage  Biform
+ * @category    Libraries
  * @author      Fery Wardiyanto
  * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
- * @license     https://github.com/feryardiant/bootigniter/blob/master/license.md
+ * @license     http://github.com/feryardiant/bootigniter/blob/master/LICENSE
  * @since       Version 0.1.5
  */
 
 // -----------------------------------------------------------------------------
 
-/**
- * Form Generator Library Class
- *
- * @subpackage  Libraries
- * @category    Forms
- */
 class Biform
 {
     /**
@@ -139,9 +135,10 @@ class Biform
         $this->_ci =& get_instance();
 
         // Load dependencies
-        $this->_ci->load->library('form_validation');
-        $this->_ci->lang->load('biform');
         $this->_ci->config->load('biform');
+        $this->_ci->lang->load('biform');
+        $this->_ci->load->library('form_validation');
+        $this->_ci->load->helper('biform');
 
         if ($template = config_item('biform_template'))
         {
@@ -518,7 +515,7 @@ class Biform
             // you form, be sure to close it befor call the new one.
             if ($this->_counts['feildsets'] >= 1)
             {
-                $html .= form_fieldset_close();
+                $html .= form_fieldset_close()."\n";
             }
 
             $field_attrs['id'] = 'fieldset-'.$field_attrs['id'];
@@ -530,7 +527,7 @@ class Biform
             }
 
             // Call the fieldset and give it an ID with 'fieldset-' prefix
-            $html .= form_fieldset($field_attrs['label'], $field_attrs);
+            $html .= form_fieldset($field_attrs['label'], $field_attrs)."\n";
 
             // indicate you have an opened fieldset
             $this->has_fieldset = TRUE;
@@ -540,7 +537,7 @@ class Biform
         {
             $errors            = array();
             $field_attrs['id'] = 'sub'.$field_attrs['id'];
-            $input             = '<div id="'.$field_attrs['id'].'" class="row">';
+            $input             = '<div id="'.$field_attrs['id'].'" class="row">'."\n";
 
             if (isset($field_attrs['fields']) and !empty($field_attrs['fields']))
             {
@@ -562,7 +559,7 @@ class Biform
                         $field['col'] = floor( 12/$c_fields );
                     }
 
-                    $input .= '<div class="'.twbs_set_columns($field['col'], $field['col'], $field['col'], 12).'">';
+                    $input .= '<div class="'.twbs_set_columns($field['col'], $field['col'], $field['col'], 12).'">'."\n";
                     $field_attrs['validation'] = '';
 
                     if ( !empty( $field['validation'] ) )
@@ -579,7 +576,7 @@ class Biform
                     $field['id']   = 'sub'.str_replace('_', '-', 'input-'.$field['name']);
                     $field['attr'] = !empty($field['attr']) ? $field['attr'] : $field_attrs['attr'];
 
-                    $input .= $this->_compile( $field, TRUE ).'</div>';
+                    $input .= $this->_compile( $field, TRUE ).'</div>'."\n";
 
                     if ( $is_error = form_error( $field['name'], $this->_template['desc_open'], $this->_template['desc_close'] ) )
                     {
@@ -588,7 +585,7 @@ class Biform
                 }
             }
 
-            $input .= '</div>';
+            $input .= '</div>'."\n";
 
             if (count($errors) > 0)
             {
@@ -611,9 +608,9 @@ class Biform
 
             $html .= '<div class="form-info '.$field_attrs['class'].'" id="'.$field_attrs['id'].'">'
                   .  '<h3 class="info-heading">'.$label.'</h3>'
-                  .  '<div class="info-content">'
-                  .  '<p>'.(is_array($field_attrs['std']) ? implode('</p><p>', $field_attrs['std']) : $field_attrs['std']).'</p>'
-                  .  '</div></div>';
+                  .  '<div class="info-content"><p>'
+                  .  (is_array($field_attrs['std']) ? implode('</p><p>', $field_attrs['std']) : $field_attrs['std'])
+                  .  '</p></div></div>'."\n";
         }
         else
         {
@@ -629,52 +626,52 @@ class Biform
                 case 'number':
                 case 'date':
                 case 'text':
-                    $input = $this->_set_input_text($field_attrs);
+                    $input = $this->_set_input_text($field_attrs)."\n";
                     break;
 
                 // Radiocheckbox field
                 case 'radio':
                 case 'checkbox':
-                    $input = $this->_set_input_radiocheck($field_attrs);
+                    $input = $this->_set_input_radiocheck($field_attrs)."\n";
                     break;
 
                 // Textarea field
                 // Using CI form_textarea() function.
                 // adding jquery-autosize.js to make it more useful
                 case 'textarea':
-                    $input = $this->_set_input_textarea($field_attrs);
+                    $input = $this->_set_input_textarea($field_attrs)."\n";
                     break;
 
                 // Captcha field
                 case 'captcha':
-                    $input = $this->_set_input_captcha($field_attrs);
+                    $input = $this->_set_input_captcha($field_attrs)."\n";
                     break;
 
                 // Selectbox field
                 case 'multiselect':
                 case 'dropdown':
-                    $input = $this->_set_input_selectbox($field_attrs);
+                    $input = $this->_set_input_selectbox($field_attrs)."\n";
                     break;
 
                 // Bootstrap Switch field
                 case 'switch':
-                    $input = $this->_set_input_switch($field_attrs);
+                    $input = $this->_set_input_switch($field_attrs)."\n";
                     break;
 
                 // Date picker field
                 case 'datepicker':
-                    $input = $this->_set_input_datepicker($field_attrs);
+                    $input = $this->_set_input_datepicker($field_attrs)."\n";
                     break;
 
                 // Jquery-ui Slider
                 case 'slider':
                 case 'rangeslider':
-                    $input = $this->_set_input_slider($field_attrs);
+                    $input = $this->_set_input_slider($field_attrs)."\n";
                     break;
 
                 // Jquery-UI Spinner
                 case 'spinner':
-                    $input = $this->_set_input_spinner($field_attrs);
+                    $input = $this->_set_input_spinner($field_attrs)."\n";
                     break;
 
                 // Upload field
@@ -682,17 +679,17 @@ class Biform
                 // Ajax Upload using FineUploader.JS
                 case 'file':
                 case 'upload':
-                    $input = $this->_set_input_upload($field_attrs);
+                    $input = $this->_set_input_upload($field_attrs)."\n";
                     break;
 
                 // Summernote editor
                 case 'editor':
-                    $input = $this->_set_input_textrich($field_attrs);
+                    $input = $this->_set_input_textrich($field_attrs)."\n";
                     break;
 
                 // Static field
                 case 'static':
-                    $input = $this->_set_input_static($field_attrs);
+                    $input = $this->_set_input_static($field_attrs)."\n";
                     break;
 
                 // Custom field
@@ -705,17 +702,17 @@ class Biform
                     break;
             }
 
-            if ($this->has_jqueryui)
-            {
-                // load_script('jquery-mousewheel', 'js/lib/jquery.mousewheel.min.js', 'jquery', '3.1.12');
-                // load_script('jqui-core',         'js/lib/jquery-ui/core.min.js', 'jquery', '1.11.0');
-                // load_script('jqui-widget',       'js/lib/jquery-ui/widget.min.js', 'jqui-core', '1.11.0');
-                // load_script('jqui-button',       'js/lib/jquery-ui/button.min.js', 'jqui-widget', '1.11.0');
-                // load_script('jqui-mouse',        'js/lib/jquery-ui/mouse.min.js', 'jqui-widget', '1.11.0');
-                // load_script('jqui-position',     'js/lib/jquery-ui/position.min.js', 'jqui-widget', '1.11.0');
-                // load_script('jqui-touch',        'js/lib/jquery.ui.touch-punch.min.js', 'jqui-mouse', '0.2.3');
-                // load_style('jqui-theme',         'bower/jqueryui/themes/smoothness/jquery-ui.min.css', 'jquery', '1.11.0');
-            }
+            // if ($this->has_jqueryui)
+            // {
+            //     load_script('jquery-mousewheel', 'js/lib/jquery.mousewheel.min.js', 'jquery', '3.1.12');
+            //     load_script('jqui-core',         'js/lib/jquery-ui/core.min.js', 'jquery', '1.11.0');
+            //     load_script('jqui-widget',       'js/lib/jquery-ui/widget.min.js', 'jqui-core', '1.11.0');
+            //     load_script('jqui-button',       'js/lib/jquery-ui/button.min.js', 'jqui-widget', '1.11.0');
+            //     load_script('jqui-mouse',        'js/lib/jquery-ui/mouse.min.js', 'jqui-widget', '1.11.0');
+            //     load_script('jqui-position',     'js/lib/jquery-ui/position.min.js', 'jqui-widget', '1.11.0');
+            //     load_script('jqui-touch',        'js/lib/jquery.ui.touch-punch.min.js', 'jqui-mouse', '0.2.3');
+            //     load_style('jqui-theme',         'bower/jqueryui/themes/smoothness/jquery-ui.min.css', 'jquery', '1.11.0');
+            // }
 
             if (isset($input))
             {
@@ -1072,7 +1069,7 @@ class Biform
      */
     protected function _set_input_slider(array $field_attrs)
     {
-        $this->has_jqueryui = TRUE;
+        // $this->has_jqueryui = TRUE;
 
         $field_attrs = array_set_defaults( $field_attrs, array(
             'min' => 0,
@@ -1286,7 +1283,7 @@ class Biform
         if (isset($field_attrs['mode']) and $field_attrs['mode'] == 'recaptcha')
         {
             $this->_ci->load->helper('recaptcha');
-            $output = recaptcha_get_html(get_setting('auth_recaptcha_public_key'));
+            $output = recaptcha_get_html(Bootigniter::get_setting('auth_recaptcha_public_key'));
         }
         else
         {
@@ -1487,7 +1484,7 @@ class Biform
 
             load_script('jqui-datepicker-trigger', $script, Bootigniter::VERSION, 'jqueryui-datepicker-'.get_lang_code());
 
-            $this->has_jqueryui = TRUE;
+            // $this->has_jqueryui = TRUE;
             $field_attrs['class'] = 'jqui-datepicker';
         }
         elseif ($field_attrs['mode'] == 'bootstrap')
@@ -1500,15 +1497,16 @@ class Biform
             //     load_script('bs-datepicker-'.$code, 'js/lib/bootstrap.datepicker'.$locale.'.js', 'bs-datepicker', '1.3.0');
             // }
 
-            $script = "$.fn.bsDatepicker = $.fn.datepicker.noConflict();\n"
-                    . "$('.bs-datepicker').bsDatepicker({\n"
+            $code = get_lang_code();
+            $script = " // $.fn.bsDatepicker = $.fn.datepicker.noConflict();\n"
+                    . "$('.bs-datepicker').datepicker({\n"
                     . "    format: 'dd-mm-yyyy',\n"
                     . "    language: '{$code}',\n"
                     . "    autoclose: true,\n"
                     . "    todayBtn: true\n"
                     . "});\n";
 
-            load_script('bs-datepicker-trigger', $script, 'bs-datepicker-'.get_lang_code());
+            load_script('bs-datepicker-trigger', $script, 'bs-datepicker-'.$code);
 
             $field_attrs['class'] = 'bs-datepicker';
         }
@@ -1707,7 +1705,7 @@ class Biform
         $this->is_multipart = FALSE;
         $this->no_buttons   = FALSE;
         $this->has_fieldset = FALSE;
-        $this->has_jqueryui = FALSE;
+        // $this->has_jqueryui = FALSE;
         $this->_fields      = array();
         $this->_buttons     = array();
         $this->_errors      = array();

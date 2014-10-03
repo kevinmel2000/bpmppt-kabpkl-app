@@ -1,11 +1,16 @@
-<?php if (! defined('BASEPATH')) exit('No direct script access allowed');
-
+<?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
 /**
- * BAKA Controller Class
- *
- * @subpackage  Core
- * @category    Controller
+ * @package     BootIgniter Pack
+ * @subpackage  BI_Controller
+ * @category    Core
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
+ * @license     http://github.com/feryardiant/bootigniter/blob/master/LICENSE
+ * @since       Version 0.1.5
  */
+
+// -----------------------------------------------------------------------------
+
 class BI_Controller extends CI_Controller
 {
     protected $current_user;
@@ -44,7 +49,7 @@ class BI_Controller extends CI_Controller
         $this->data['panel_title']  = '';
         $this->data['panel_body']   = '';
 
-        $this->data['footer_left']  = '&copy; '.get_setting('skpd_name').' '.get_setting('skpd_city');
+        $this->data['footer_left']  = '&copy; '.Bootigniter::get_setting('skpd_name').' '.Bootigniter::get_setting('skpd_city');
         $this->data['footer_right'] = $app_name.' Ver. '.config_item('application_version');
 
         log_message('debug', "#BootIgniter: Core Controller Class Initialized");

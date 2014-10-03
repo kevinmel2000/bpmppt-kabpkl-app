@@ -1,4 +1,20 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
+/**
+ * @package     BPMPPT
+ * @subpackage  Bpmppt_iplc Driver
+ * @category    Drivers
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) BPMPPT Kab. Pekalongan
+ * @license     http://github.com/feryardiant/bpmppt/blob/master/LICENSE
+ * @since       Version 0.1.5
+ */
+
+/*
+| ------------------------------------------------------------------------------
+| Izin Pembuangan Air Limbah ke Air atau Sumber Air
+| ------------------------------------------------------------------------------
+*/
+
 /**
  * BPMPPT Izin Pembuangan Air Limbah ke Air atau Sumber Air Driver
  *
@@ -95,7 +111,7 @@ class Bpmppt_iplc extends CI_Driver
             'name'  => 'data_teknis',
             'label' => 'Data Teknis',
             'type'  => 'editor',
-            'std'   => ( $data_obj ? $data_obj->data_teknis : get_setting('iplc_teknis') ),
+            'std'   => ( $data_obj ? $data_obj->data_teknis : Bootigniter::get_setting('iplc_teknis') ),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
         return $fields;

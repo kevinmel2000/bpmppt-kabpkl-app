@@ -1,4 +1,16 @@
 <?php
+/**
+ * @package     BootIgniter Pack
+ * @subpackage  Bootstrap
+ * @category    Unit Test
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
+ * @license     http://github.com/feryardiant/bootigniter/blob/master/LICENSE
+ * @since       Version 0.1.5
+ */
+
+// -----------------------------------------------------------------------------
+
 
 /*
  *---------------------------------------------------------------
@@ -8,7 +20,7 @@
  * This will "override" later functions meant to be defined
  * in core\Common.php, so they throw erros instead of output strings
  */
- 
+
 function show_error($message, $status_code = 500, $heading = 'An Error Was Encountereds')
 {
 	throw new PHPUnit_Framework_Exception('CI Error: '.$heading.' -> '.$message, $status_code);
@@ -62,5 +74,5 @@ if (file_exists(PROJECT_DIR . 'vendor/autoload.php'))
  *
  * Bootstrap CodeIgniter from index.php as usual
  */
- 
+
 require_once $dir.'index.php';

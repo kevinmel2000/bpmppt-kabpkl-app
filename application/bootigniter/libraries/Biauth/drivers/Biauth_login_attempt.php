@@ -1,21 +1,16 @@
-<?php if (! defined('BASEPATH')) exit('No direct script access allowed');
-
+<?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
 /**
  * @package     BootIgniter Pack
+ * @subpackage  Biauth_login_attempt
+ * @category    Drivers
  * @author      Fery Wardiyanto
  * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
- * @license     https://github.com/feryardiant/bootigniter/blob/master/license.md
+ * @license     http://github.com/feryardiant/bootigniter/blob/master/LICENSE
  * @since       Version 0.1.5
  */
 
 // -----------------------------------------------------------------------------
 
-/**
- * Biauth Login Attempt Driver
- *
- * @subpackage  Drivers
- * @category    Security
- */
 class Biauth_login_attempt extends CI_Driver
 {
     /**
@@ -39,7 +34,7 @@ class Biauth_login_attempt extends CI_Driver
      */
     public function increase($login)
     {
-        if (get_setting('auth_login_count_attempts'))
+        if (Bootigniter::get_setting('auth_login_count_attempts'))
         {
             if (!$this->is_max_exceeded($login))
             {
@@ -77,7 +72,7 @@ class Biauth_login_attempt extends CI_Driver
      */
     public function is_max_exceeded($login)
     {
-        return $this->get_num($login) >= get_setting('auth_login_max_attempts');
+        return $this->get_num($login) >= Bootigniter::get_setting('auth_login_max_attempts');
     }
 
     // -------------------------------------------------------------------------
@@ -95,7 +90,7 @@ class Biauth_login_attempt extends CI_Driver
     {
         // Purge obsolete login attempts
         $this->_ci->db->where(array('ip_address' => $this->_ci->input->ip_address(), 'login' => $login))
-                      ->or_where('unix_timestamp(time) <', (time() - get_setting('auth_login_attempt_expire')))
+                      ->or_where('unix_timestamp(time) <', (time() - Bootigniter::get_setting('auth_login_attempt_expire')))
                       ->delete($this->table['login_attempts']);
     }
 }
