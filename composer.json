@@ -23,7 +23,7 @@
     "vendor-dir": "application/vendor"
   },
   "require": {
-    "php": ">=5.2.4"
+    "php": ">=5.2.10"
   },
   "require-dev": {
     "phpunit/phpunit": "3.7.*",

@@ -24,7 +24,7 @@ _*
 
 # Ignore Application Specifics
 /application/storage/*/*
-/application/bakaigniter/samples/
+/application/bootigniter/samples/
 
 # but leave there Application Specifics
 !.htaccess
@@ -33,4 +33,5 @@ _*
 !.travis.yml
 !.editorconfig
 !.css*
+!.js*
 !/application/storage/logs/view.php
