@@ -1,9 +1,6 @@
 {
   "name": "feryardiant/bpmppt",
-  "version": "0.1.5",
-  "homepage": "http://feryardiant.github.com/bpmppt",
   "description": "Aplikasi Pengelolaan Dokumen Perijinan di BPMPPT Kab. Pekalongan",
-  "keywords": [ "codeigniter", "application", "package" ],
   "license": "MIT",
   "authors": [
     {
