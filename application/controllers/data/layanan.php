@@ -230,6 +230,8 @@ class Layanan extends BI_Controller
             $this->data['tool_buttons']['data'] = 'Kembali|default';
             $this->set_panel_title('Laporan data '.$this->bpmppt->get_label( $data_type ));
 
+            $this->load->library('biform');
+
             $fields[] = array(
                 'name'  => 'data_status',
                 'label' => 'Status Pengajuan',
@@ -264,8 +266,6 @@ class Layanan extends BI_Controller
                 'type'  => 'submit',
                 'label' => 'Cetak sekarang',
                 'class' => 'btn-primary pull-right' );
-
-            $this->load->library('biform');
 
             $form = $this->biform->initialize( array(
                 'name'      => 'print-'.$data_type,

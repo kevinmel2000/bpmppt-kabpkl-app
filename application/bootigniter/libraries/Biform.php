@@ -137,8 +137,8 @@ class Biform
         // Load dependencies
         $this->_ci->config->load('biform');
         $this->_ci->lang->load('biform');
-        $this->_ci->load->library('form_validation');
         $this->_ci->load->helper('biform');
+        $this->_ci->load->library('form_validation');
 
         if ($template = config_item('biform_template'))
         {

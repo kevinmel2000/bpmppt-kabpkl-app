@@ -12,26 +12,6 @@
 // -----------------------------------------------------------------------------
 
 /**
- * Converting an array into object
- *
- * @param   array   $array  Source
- * @return  object
- */
-// function array_to_object( array $array )
-// {
-//     $obj = new stdClass;
-
-//     foreach ( $array as $key => $val )
-//     {
-//         $obj->$key = ( is_array( $val ) ? array_to_object( $val ) : $val );
-//     }
-
-//     return $obj;
-// }
-
-// -----------------------------------------------------------------------------
-
-/**
  * Update array value by array key
  *
  * @param  array
@@ -125,6 +105,26 @@
 
 //     return $result;
 // }
+
+// -----------------------------------------------------------------------------
+
+/**
+ * Converting an array into object
+ *
+ * @param   array   $array  Source
+ * @return  object
+ */
+function array_to_object( array $array )
+{
+    $obj = new stdClass;
+
+    foreach ( $array as $key => $val )
+    {
+        $obj->$key = ( is_array( $val ) ? array_to_object( $val ) : $val );
+    }
+
+    return $obj;
+}
 
 // -------------------------------------------------------------------------
 
