@@ -19,7 +19,7 @@ before_script:
   - mysql -e 'create database if not exists bpmppt_test;'
   - mysql -utravis bpmppt_test < database.sql
 script:
-  - grunt build
+  - grunt
 after script:
   - mysql -e 'drop database if exists bpmppt_test;'
 matrix:

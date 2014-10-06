@@ -1,0 +1,93 @@
+.ps-container {
+  @ps-border-radius: 3px;
+  @ps-width: (@ps-border-radius * 2);
+  @ps-indent: 3px;
+
+  overflow: hidden !important;
+  position: relative !important;
+
+  .ps-scrollbar-x-rail,
+  .ps-scrollbar-y-rail,
+  .ps-scrollbar-x,
+  .ps-scrollbar-y  {
+    cursor: default;
+    position: absolute; /* please don't change 'position' */
+    -webkit-border-radius: @ps-border-radius;
+    -moz-border-radius: @ps-border-radius;
+    border-radius: @ps-border-radius;
+    -o-transition: background-color .2s linear, opacity .2s linear;
+    -webkit-transition: background-color.2s linear, opacity .2s linear;
+    -moz-transition: background-color .2s linear, opacity .2s linear;
+    transition: background-color .2s linear, opacity .2s linear;
+  }
+
+  .ps-scrollbar-x-rail,
+  .ps-scrollbar-y-rail {
+    .opacity(0);
+
+    &:hover,
+    &.hover,
+    &.in-scrolling {
+      background-color: @gray;
+      .opacity(.6);
+
+      .ps-scrollbar-x,
+      .ps-scrollbar-y {
+        background-color: @gray-light;
+        .opacity(.9);
+      }
+    }
+  }
+
+  .ps-scrollbar-x-rail {
+    bottom: @ps-indent;   // there must be 'bottom' for ps-scrollbar-x-rail
+    height: @ps-width;
+
+    .ps-scrollbar-x {
+      bottom: 0;          // there must be 'bottom' for ps-scrollbar-x
+      height: @ps-width;
+    }
+  }
+
+  .ps-scrollbar-y-rail {
+    right: @ps-indent;    // there must be 'right' for ps-scrollbar-y-rail
+    width: @ps-width;
+
+    .ps-scrollbar-y {
+      right: 0;           // there must be 'right' for ps-scrollbar-y
+      width: @ps-width;
+    }
+  }
+
+  &:hover,
+  &.hover {
+    .ps-scrollbar-x-rail,
+    .ps-scrollbar-y-rail {
+      .opacity(.6);
+
+      .ps-scrollbar-x,
+      .ps-scrollbar-y {
+        background-color: @gray-light;
+        .opacity(.9);
+      }
+    }
+  }
+
+  &.ie6 {
+    .ps-scrollbar-x,
+    .ps-scrollbar-y {
+      font-size: 0; // fixed scrollbar height in xp sp3 ie6
+    }
+  }
+
+  &.ie {
+    &,
+    &:hover,
+    &.hover {
+      .ps-scrollbar-x,
+      .ps-scrollbar-x {
+        visibility: visible;
+      }
+    }
+  }
+}

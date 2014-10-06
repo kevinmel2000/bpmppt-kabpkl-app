@@ -439,9 +439,6 @@ class Bpmppt extends CI_Driver_Library
         // Get data label
         $data_label = $this->get_label( $data_type );
 
-        // Load file helper to read the template file
-        $this->_ci->load->helper('file');
-
         // Getting started
         $file_path    = APPPATH.'views/prints/'.$product_type.'/'.$data_type.'.php';
         $file_content = read_file($file_path);

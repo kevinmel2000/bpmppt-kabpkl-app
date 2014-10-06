@@ -34,8 +34,7 @@ class BI_Controller extends CI_Controller
             }
         }
 
-        $app_name = config_item('application_name');
-        $this->data['brand_link']  = anchor(base_url(), $app_name, 'class="navbar-brand"');
+        $this->data['brand_link']  = anchor(base_url(), config_item('application_name'), 'class="navbar-brand"');
 
         $this->data['load_toolbar'] = FALSE;
         $this->data['search_form']  = FALSE;
@@ -50,7 +49,7 @@ class BI_Controller extends CI_Controller
         $this->data['panel_body']   = '';
 
         $this->data['footer_left']  = '&copy; '.Bootigniter::get_setting('skpd_name').' '.Bootigniter::get_setting('skpd_city');
-        $this->data['footer_right'] = $app_name.' Ver. '.config_item('application_version');
+        $this->data['footer_right'] = Bootigniter::app('name').' Ver. '.Bootigniter::app('version');
 
         log_message('debug', "#BootIgniter: Core Controller Class Initialized");
     }

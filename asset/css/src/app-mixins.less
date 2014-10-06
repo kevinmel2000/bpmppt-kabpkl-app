@@ -1,0 +1,57 @@
+//
+// Overwrite TWBS's Core mixins
+// ==========================================================================
+
+// TWBS .button-variant() overwrite
+.button-variant(@color; @background; @border) {
+  color: @color;
+  background-color: @background;
+  border-color: @border;
+
+  &:hover,
+  &:focus,
+  &:active,
+  &.active,
+  .open > .dropdown-toggle& {
+    color: @color;
+    outline: 0;
+  }
+
+  &:hover,
+  &:focus {
+    background-color: darken(@background, 10%);
+    border-color: darken(@border, 12%);
+    .box-shadow(~"inset 0 0 1px rgba(255, 255, 255, .6), 0 1px 3px rgba(0, 0, 0, .3)");
+  }
+
+  &:active,
+  &.active,
+  .open > .dropdown-toggle& {
+    background-image: none;
+    .box-shadow(~"inset 0 2px 3px rgba(0, 0, 0, .2)");
+  }
+
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    &,
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+      background-color: @background;
+          border-color: @border;
+    }
+  }
+
+  .badge {
+    color: @background;
+    background-color: @color;
+  }
+}
+
+// TWBS .tab-focus() overwrite
+.tab-focus() {
+  outline: 0;
+  // outline-offset: -2px;
+}

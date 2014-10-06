@@ -1,0 +1,591 @@
+// Select2 is a jQuery based replacement for select boxes.
+// It supports searching, remote data sets, and infinite scrolling of results.
+//
+// @License    GPL License V2 (http://www.apache.org/licenses/LICENSE-2.0 http://www.gnu.org/licenses/gpl-2.0.html)
+// @link       http://ivaynberg.github.com/select2/
+// @Version    3.4.5
+// @timestamp  Mon Nov  4 08:22:42 PST 2013
+
+.select2 {
+  @input-height-select2: ((@input-height-base - 2));
+
+  &-container,
+  &-drop,
+  &-search,
+  &-search input {
+   .box-sizing(border-box);
+  }
+
+  &-container {
+    margin: 0;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    .form-control-focus();
+    // inline-block for ie7
+    // zoom: 1;
+    // *display: inline;
+
+    .select2-choice {
+      display: block;
+      height: @input-height-select2;
+      padding: 0;
+      padding-left: @padding-base-horizontal;
+      overflow: hidden;
+      position: relative;
+      white-space: nowrap;
+      line-height: @line-height-base;
+      color: @input-color;
+      text-decoration: none;
+      border: 1px solid @input-border;
+      border-radius: @border-radius-base;
+      // background-clip: padding-box;
+      // background-color: @input-bg;
+      // background-image: none;
+      -webkit-touch-callout: none;
+      .user-select(none);
+      // #gradient .vertical(@body-bg; @gray-lighter);
+
+      abbr {
+        display: none;
+        width: 12px;
+        height: 12px;
+        position: absolute;
+        right: 24px;
+        top: 8px;
+        font-size: 1px;
+        text-decoration: none;
+        border: 0;
+        background: url('@{images-path}select2.png') right top no-repeat;
+        cursor: pointer;
+        outline: 0;
+
+        &:hover {
+          background-position: right -11px;
+          cursor: pointer;
+        }
+      }
+
+      .select2-chosen {
+        display: block;
+        height: @input-height-select2;
+        margin-right: 20px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        line-height: @input-height-select2;
+      }
+
+      .select2-arrow {
+        display: inline-block;
+        width: 20px;
+        height: @input-height-select2;
+        position: absolute;
+        right: 0;
+        top: 0;
+        background-clip: padding-box;
+        background: @input-border;
+        border-left: 1px solid @input-border;
+        .border-right-radius((@border-radius-base - 1px));
+        #gradient .vertical(@body-bg; @gray-lighter);
+
+        b {
+          display: inline-block;
+          width: 0;
+          height: 0;
+          margin-left: 4px;
+          margin-top: 6px;
+          vertical-align: middle;
+          border-top:   @caret-width-base solid;
+          border-right: @caret-width-base solid transparent;
+          border-left:  @caret-width-base solid transparent;
+        }
+      }
+    }
+
+    &.select2-drop-above .select2-choice {
+      border-bottom-color: @input-border;
+      .border-left-radius(@border-radius-base);
+      #gradient .vertical(@gray-lighter, @body-bg);
+    }
+
+    &.select2-allowclear .select2-choice {
+      .select2-chosen {
+        margin-right: 42px;
+      }
+
+      abbr {
+        display: inline-block;
+      }
+    }
+
+    &.form-control {
+      padding: 0;
+
+      .select2-choice {
+        border: 0;
+      }
+    }
+
+    &-active {
+      @color-rgba: rgba(red(@input-border-focus), green(@input-border-focus), blue(@input-border-focus), .6);
+      border-color: @input-border-focus;
+      outline: 0;
+      .box-shadow(~"inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px @{color-rgba}");
+
+      .select2-choise,
+      .select2-choises {
+        outline: none;
+      }
+    }
+
+    &-disabled {
+      .select2-choice {
+        background-color: @gray-light;
+        background-image: none;
+        border: 1px solid #ddd;
+        cursor: default;
+
+        .select2-arrow {
+          background-color: @gray-light;
+          background-image: none;
+          border-left: 0;
+        }
+
+        abbr {
+          display: none;
+        }
+      }
+    }
+
+    &-multi {
+      .select2-choices {
+        min-height: @input-height-base;
+        height: auto !important;
+        height: 1%;
+        margin: 0;
+        padding: 0;
+        position: relative;
+        border: 1px solid @input-border;
+        cursor: text;
+        overflow: hidden;
+        background-color: @body-bg;
+        border-radius: @border-radius-base;
+        #gradient .vertical(@gray-lighter; @body-bg);
+
+        li {
+          float: left;
+          list-style: none;
+        }
+
+        .select2-search {
+          &-field {
+            margin: 0;
+            padding: 0;
+            white-space: nowrap;
+
+            .select2-input {
+              padding: 0 @padding-base-horizontal;
+              margin: 0;
+              height: @input-height-base;
+              font-family: inherit;
+              font-size: inherit;
+              color: @input-color;
+              outline: 0;
+              background: transparent !important;
+              border: 0;
+              .box-shadow(none);
+
+              &.select2-active {
+                background: @body-bg url('@{images-path}select2-spinner.gif') no-repeat 100% !important;
+              }
+            }
+          }
+
+          &-choice {
+            padding: 1px 5px 1px 24px;
+            margin: 2px 0 2px 2px;
+            position: relative;
+            line-height: @line-height-base;
+            color: @input-color;
+            cursor: default;
+            border: 1px solid @input-border;
+            border-radius: @border-radius-base;
+            background-clip: padding-box;
+            -webkit-touch-callout: none;
+            .box-shadow(~"0 0 2px @{body-bg} inset, 0 1px 0 rgba(0, 0, 0, 0.05)");
+            .user-select(none);
+            #gradient .vertical(@body-bg; @gray-lighter);
+
+            .select2-chosen {
+              cursor: default;
+            }
+
+            &-focus {
+              background: #d4d4d4;
+            }
+
+            &-close {
+              top: 0;
+              left: 0;
+              display: inline-block;
+              width: 19px;
+              height: 20px;
+              position: absolute;
+              font-family: 'Glyphicons Halflings';
+              font-style: normal;
+              font-weight: normal;
+              line-height: 1;
+              outline: none;
+              background-color: #ddd;
+              border-right: 1px solid #ccc;
+              #gradient .vertical(@body-bg; @gray-lighter);
+
+              &:before {
+                content: "\e014";
+              }
+
+              &:hover {
+                #gradient .vertical(@gray-lighter; @gray-light);
+              }
+            }
+
+            &-focus .select2-search-choice-close {
+              background-position: right -11px;
+            }
+          }
+        }
+      }
+
+      &.form-control {
+        .select2-choices {
+          border: 0;
+          min-height: (@input-height-base - 2);
+          border-radius: (@border-radius-base - 1);
+          background-color: transparent;
+          background-image: none;
+        }
+      }
+    }
+  }
+
+  &-drop {
+    &-mask {
+      border: 0;
+      margin: 0;
+      padding: 0;
+      position: fixed;
+      left: 0;
+      top: 0;
+      min-height: 100%;
+      min-width: 100%;
+      height: auto;
+      width: auto;
+      z-index: 9998;
+      // styles required for IE to work
+      background-color: @input-bg;
+      .opacity(0);
+    }
+
+    width: 100%;
+    margin-top: -2px;
+    position: absolute;
+    z-index: 9999;
+    top: 100%;
+    background: @input-bg;
+    color: @input-color;
+    border: 1px solid @input-border;
+    border-top: 0;
+    .border-bottom-radius(@border-radius-base);
+    .box-shadow(0 4px 5px rgba(0, 0, 0, .15));
+
+    &-auto-width {
+      border-top: 1px solid @input-border;
+      width: auto;
+
+      .select2-search {
+        padding-top: 4px;
+      }
+    }
+
+    &-above {
+      .border-bottom-radius(@border-radius-base);
+      .box-shadow(0 -4px 5px rgba(0, 0, 0, .15));
+
+      &.select2-drop-active {
+        border-top: 1px solid @input-border;
+        border-radius: @border-radius-base;
+      }
+
+      .select2-search input {
+        margin-top: 4px;
+      }
+    }
+
+    &-active {
+      border: 1px solid @input-border;
+      border-top: none;
+    }
+  }
+
+  &-search {
+    display: inline-block;
+    width: 100%;
+    min-height: @input-height-select2;
+    margin: 0;
+    padding-left: 4px;
+    padding-right: 4px;
+    position: relative;
+    z-index: 10000;
+    white-space: nowrap;
+
+    .select2-input {
+      &:extend(.form-control all);
+      // width: 100%;
+      // padding: 0 20px 0 9px;
+      // margin: 0;
+      // outline: 0;
+      // font-family: inherit;
+      // font-size: 1em;
+      // border: 1px solid @input-border;
+      // border-radius: @border-radius-base;
+      // .box-shadow(none);
+      // background: @body-bg url('@{images-path}select2.png') no-repeat 100% -22px;
+      // background: url('@{images-path}select2.png') no-repeat 100% -22px, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, @body-bg), color-stop(0.99, @gray-lighter));
+      // background: url('@{images-path}select2.png') no-repeat 100% -22px, -webkit-linear-gradient(center bottom, @body-bg 85%, @gray-lighter 99%);
+      // background: url('@{images-path}select2.png') no-repeat 100% -22px, -moz-linear-gradient(center bottom, @body-bg 85%, @gray-lighter 99%);
+      // background: url('@{images-path}select2.png') no-repeat 100% -22px, linear-gradient(top, @body-bg 85%, @gray-lighter 99%);
+      min-height: @input-height-select2;
+
+      &.select2-active {
+        background: @body-bg url('@{images-path}select2-spinner.gif') no-repeat 100%;
+        // background: url('@{images-path}select2-spinner.gif') no-repeat 100%, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, @body-bg), color-stop(0.99, @gray-lighter));
+        // background: url('@{images-path}select2-spinner.gif') no-repeat 100%, -webkit-linear-gradient(center bottom, @body-bg 85%, @gray-lighter 99%);
+        // background: url('@{images-path}select2-spinner.gif') no-repeat 100%, -moz-linear-gradient(center bottom, @body-bg 85%, @gray-lighter 99%);
+        // background: url('@{images-path}select2-spinner.gif') no-repeat 100%, linear-gradient(top, @body-bg 85%, @gray-lighter 99%);
+      }
+    }
+  }
+
+  &-dropdown {
+    &-open {
+      .box-shadow(none);
+      border-color: @input-border;
+      // box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+
+      &.select2-drop-above {
+        .select2-choice,
+        .select2-choices {
+          border: 1px solid @input-border;
+          border-top-color: transparent;
+          #gradient .vertical(@body-bg; @gray-lighter);
+        }
+      }
+
+      .select2-choice {
+        border-bottom-color: transparent;
+        // .box-shadow(none);
+        .border-bottom-radius(0);
+        // background-color: @gray-lighter;
+        // background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, @body-bg), color-stop(0.5, @gray-lighter));
+        // background-image: -webkit-linear-gradient(center bottom, @body-bg 0%, @gray-lighter 50%);
+        // background-image: -moz-linear-gradient(center bottom, @body-bg 0%, @gray-lighter 50%);
+        // filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@gray-lighter', endColorstr='@body-bg', GradientType=0);
+        // background-image: linear-gradient(top, @body-bg 0%, @gray-lighter 50%);
+
+        .select2-arrow {
+          background: transparent;
+          border-left-color: transparent;
+          filter: none;
+
+          b {
+            background-position: -18px 1px;
+          }
+        }
+      }
+    }
+  }
+
+  &-results {
+    max-height: 200px;
+    padding: 0 0 0 4px;
+    margin: 4px 4px 4px 0;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+    ul.select2-result-sub {
+      margin: 0;
+      padding-left: 0;
+
+      > li .select2-result-label {
+        padding-left: 20px;
+
+        li .select2-result-label {
+          padding-left: 40px;
+
+          li .select2-result-label {
+            padding-left: 60px;
+
+            li .select2-result-label {
+              padding-left: 80px;
+
+              li .select2-result-label {
+                padding-left: 100px;
+
+                li .select2-result-label {
+                  padding-left: 110px;
+
+                  li .select2-result-label {
+                    padding-left: 120px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      li {
+        list-style: none;
+        display: list-item;
+        background-image: none;
+
+        &.select2-result-with-children > .select2-result-label {
+          font-weight: bold;
+        }
+
+        em {
+          background: #feffde;
+          font-style: normal;
+        }
+      }
+    }
+
+    .select2-result-label {
+      padding: 3px 7px 4px;
+      margin: 0;
+      cursor: pointer;
+      min-height: 1em;
+      -webkit-touch-callout: none;
+      .user-select(none);
+    }
+
+    .select2-highlighted {
+      background: @brand-primary;
+      color: @body-bg;
+      border-radius: @border-radius-base;
+
+      em {
+        background: transparent;
+      }
+
+      ul {
+        background: @body-bg;
+        color: #000;
+      }
+    }
+
+    .select2-no-results,
+    .select2-searching,
+    .select2-selection-limit {
+      background: @gray-lighter;
+      display: list-item;
+      padding: 3px 9px;
+      font-family: inherit;
+      line-height: inherit;
+    }
+
+
+    // disabled look for disabled choices in the results dropdown
+    .select2-disabled {
+      &,
+      &.select2-highlighted {
+        color: @input-color;
+        background: @gray-light;
+        display: list-item;
+        cursor: default;
+      }
+    }
+
+    .select2-selected {
+      display: none;
+    }
+  }
+
+  &-more-results {
+    background: @gray-light;
+    display: list-item;
+
+    &.select2-active {
+      background: @gray-light url('@{images-path}select2-spinner.gif') no-repeat 100%;
+    }
+  }
+
+  &-locked {
+    padding: 3px 5px 3px 5px !important;
+  }
+
+  &-default {
+    color: #999 !important;
+  }
+
+  &-result {
+    &-selectable .select2-match,
+    &-unselectable .select2-match {
+      text-decoration: underline;
+    }
+  }
+
+  &-offscreen,
+  &-offscreen:focus {
+    clip: rect(0 0 0 0) !important;
+    width: 1px !important;
+    height: 1px !important;
+    border: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    position: absolute !important;
+    outline: 0 !important;
+    left: 0px !important;
+    top: 0px !important;
+  }
+
+  &-display-none {
+    display: none;
+  }
+
+  &-measure-scrollbar {
+    position: absolute;
+    top: -10000px;
+    left: -10000px;
+    width: 100px;
+    height: 100px;
+    overflow: scroll;
+  }
+}
+
+@media
+  only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (   min--moz-device-pixel-ratio: 2),
+  only screen and (     -o-min-device-pixel-ratio: 2/1),
+  only screen and (        min-device-pixel-ratio: 2),
+  only screen and (                min-resolution: 192dpi),
+  only screen and (                min-resolution: 2dppx) {
+    .select2 {
+      &-search .select2-input,
+      &-search-choice-close,
+      &-container .select2-choice abbr,
+      &-container .select2-choice .select2-arrow b {
+        background-image: url('@{images-path}select2x2.png') !important;
+        background-repeat: no-repeat !important;
+        background-size: 60px 40px !important;
+      }
+
+      &-search .select2-input {
+        background-position: 100% -21px !important;
+      }
+    }
+}

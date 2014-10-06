@@ -1,5 +1,6 @@
 {
   "name": "bpmppt-app",
+  "license": "MIT",
   "private": true,
   "author": {
     "name": "Fery Wardiyanto",

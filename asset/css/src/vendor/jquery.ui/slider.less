@@ -1,0 +1,113 @@
+// jQuery UI Slider 1.10.4
+// http://jqueryui.com
+//
+// Copyright 2014 jQuery Foundation and other contributors
+// Released under the MIT license.
+// http://jquery.org/license
+//
+// http://api.jqueryui.com/slider/#theming
+
+@slider-height-base: floor((@input-height-base / 3));
+@slider-handle-height-base: (@slider-height-base * 2);
+@slider-handle-posotion: (floor((@slider-handle-height-base / 3)) - 1);
+
+.ui-slider {
+  position: relative;
+  text-align: left;
+  margin: @slider-height-base 0;
+  .box-shadow(inset 0 1px 1px rgba(0,0,0,.075));
+
+  &-handle {
+    background: @btn-default-bg; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
+    border: 1px solid @input-border;
+    position: absolute;
+    z-index: 2;
+    width: @slider-handle-height-base;
+    height: @slider-handle-height-base;
+    .user-select(none);
+    .box-shadow(0 1px 1px rgba(0,0,0,.075));
+
+    &:focus {
+      border-color: @input-border-focus;
+      outline: 0;
+      .box-shadow(~"inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px @{input-border-focus}");
+    }
+
+    &:hover,
+    &:focus {
+      .tab-focus();
+      color: @btn-default-color;
+      text-decoration: none;
+    }
+
+    &:active,
+    &.active {
+      outline: 0;
+      background-image: none;
+      .box-shadow(inset 0 3px 5px rgba(0,0,0,.125));
+    }
+  }
+
+  &-range {
+    position: absolute;
+    z-index: 1;
+    font-size: .7em;
+    display: block;
+    border: 0;
+    background-position: 0 0;
+  }
+
+  // For IE8 - See #6727 
+  &.ui-state-disabled {
+    .ui-slider-handle,
+    .ui-slider-range {
+      filter: inherit;
+    }
+  }
+
+  &-horizontal {
+    height: @slider-height-base;
+
+    .ui-slider-handle {
+      top: -@slider-handle-posotion;
+      margin-left: -.6em;
+    }
+
+    .ui-slider-range {
+      top: 0;
+      height: 100%;
+
+      &-min {
+        left: 0;
+      }
+
+      &-max {
+        right: 0;
+      }
+    }
+  }
+
+  &-vertical {
+    width: @slider-height-base;
+    height: 100px;
+
+    .ui-slider-handle {
+      left: -.3em;
+      margin-left: 0;
+      margin-bottom: -.6em;
+    }
+
+    .ui-slider-range {
+      left: 0;
+      width: 100%;
+
+      &-min {
+        bottom: 0;
+      }
+
+      &-max {
+        top: 0;
+      }
+    }
+  }
+}

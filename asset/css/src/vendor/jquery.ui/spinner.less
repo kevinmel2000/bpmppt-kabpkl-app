@@ -1,0 +1,115 @@
+// jQuery UI Spinner 1.10.4
+// http://jqueryui.com
+//
+// Copyright 2014 jQuery Foundation and other contributors
+// Released under the MIT license.
+// http://jquery.org/license
+//
+// http://api.jqueryui.com/spinner/#theming
+
+.ui-spinner {
+  // &:extend(.form-control all);
+
+  &.ui-widget {
+    border: none;
+    border-radius: 0;
+  }
+
+  position: relative;
+  display: inline-block;
+  // overflow: hidden;
+  padding: 0;
+  vertical-align: middle;
+  width: 100%;
+
+  &-input {
+    padding-right: 20px;
+    // height: (@input-height-base - 2);
+    // .border-left-radius((@border-radius-base - 1));
+  }
+
+  &-button {
+    // &:extend(.input-group-btn all);
+    // &:extend(.btn all);
+    // &:extend(.btn-default all);
+    margin-left: -1px;
+
+    width: 20px;
+    height: (@input-height-base / 2 - 1);
+    font-size: .7em;
+    // padding: @padding-base-vertical @padding-base-horizontal;
+    border-radius: 0;
+    // margin: 0;
+    text-align: center;
+    position: absolute;
+    cursor: pointer;
+    display: block;
+    overflow: hidden;
+    right: 1px;
+
+    .ui-icon {
+      display: inline-block;
+      width: 0;
+      height: 0;
+      margin-left: 2px;
+      vertical-align: middle;
+      border-right: @caret-width-base solid transparent;
+      border-left:  @caret-width-base solid transparent;
+      background: transparent;
+      content: "";
+      // height: 13px;
+      // vertical-align: middle;
+      // text-align: center;
+    }
+  }
+
+  &-up {
+    top: 1px;
+    border-top-right-radius: (@border-radius-base - 1);
+
+    .ui-icon {
+      border-top: 0;
+      border-bottom: @caret-width-base solid;
+    }
+
+    &:hover .ui-icon {
+      border-bottom-color: @input-border-focus;
+    }
+  }
+
+  &-down {
+    top: (@input-height-base / 2);
+    border-bottom-right-radius: (@border-radius-base - 1);
+
+    .ui-icon {
+      border-bottom: 0;
+      border-top: @caret-width-base solid;
+    }
+
+    &:hover .ui-icon {
+      border-top-color: @input-border-focus;
+    }
+  }
+
+  // more specificity required here to override default borders 
+  // a.ui-spinner-button {
+  //   border-top: none;
+  //   border-bottom: none;
+  //   border-right: none;
+  // }
+
+  // vertically center icon 
+  .ui-icon {
+    // position: absolute;
+    // .square(12px);
+    // margin-top: -8px;
+    // top: 50%;
+    // left: 0;
+  }
+
+  // TR overrides 
+  // .ui-icon-triangle-1-s {
+  //   // need to fix icons sprite 
+  //   background-position: -65px -16px;
+  // }
+}

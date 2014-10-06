@@ -15,25 +15,25 @@
 |--------------------------------------------------------------------------
 */
 
-// BootIgniter Application Name
+// Application Name
 $config['application_name']            = 'BPMPPT App';
 
-// BootIgniter Application Version
+// Application Version
 $config['application_version']         = Bootigniter::VERSION;
 
-// BootIgniter Application Author
+// Application Author
 $config['application_author']          = 'Fery Wardiyanto';
 
-// BootIgniter Application Author Email
+// Application Author Email
 $config['application_author_email']    = 'ferywardiyanto@gmail.com';
 
-// BootIgniter Application Author Url
+// Application Author Url
 $config['application_author_url']      = 'http://feryardiant.github.io';
 
-// BootIgniter Application Repository Url
+// Application Repository Url
 $config['application_repo_url']        = 'http://github.com/feryardiant/bpmppt';
 
-// BootIgniter Application Documentation
+// Application Documentation
 $config['application_doc_url']         = '';
 
 

@@ -68,6 +68,7 @@ class Biasset
             {
                 $meta = array_set_defaults($meta, array(
                     'src' => '',
+                    'min' => '',
                     'ver' => '',
                     'dep' => array(),
                     ));
@@ -102,7 +103,8 @@ class Biasset
         {
             $this->_registered[$type][$id] = array(
                 'src' => $src,
-                'ver' => !empty($ver) ? $ver : config_item('application_version'),
+                'min' => '',
+                'ver' => !empty($ver) ? $ver : Bootigniter::app('version'),
                 'dep' => !is_array($dep) ? array($dep) : $dep,
                 );
         }
@@ -121,17 +123,27 @@ class Biasset
 
         }
 
-        if (file_exists(config_item('biasset_path_prefix').$asset['src']))
+        if ($type == 'scripts' and isset($this->_registered['styles'][$id]))
         {
-            $asset['src'] = base_url(config_item('biasset_path_prefix').$asset['src']);
+            $this->load('styles', $id);
         }
 
-        // if (preg_match("/^(http(s?):\/\/|(\/\/?)|(www.?))/i", $asset['src']))
+        $_asset_path = config_item('biasset_path_prefix');
+
+        if (file_exists($_asset_path.$asset['src']))
+        {
+            $asset['src'] = base_url($_asset_path.$asset['src']);
+        }
+
         if (is_valid_url($asset['src']))
         {
-            // $attrs['src'] = $asset['src'].$ver;
             $asset['url'] = $asset['src'];
             unset($asset['src']);
+        }
+
+        if (!empty($asset['min']) and file_exists($_asset_path.$asset['min']))
+        {
+            $asset['min'] = base_url($_asset_path.$asset['min']);
         }
 
         unset($asset['dep']);
@@ -173,6 +185,14 @@ class Biasset
      */
     public function get_loaded($type)
     {
+        $_ext = $type == 'scripts' ? 'js' : 'css';
+        $src = $_ext.'/'.Bootigniter::app('name').'.min.'.$_ext;
+
+        if (file_exists(config_item('biasset_path_prefix').$src))
+        {
+            $this->load($type, Bootigniter::app('name'), $src, Bootigniter::app('version'), array_keys($this->_loaded[$type]));
+        }
+
         $load = $this->_loaded;
 
         if (!isset($load[$type]))
@@ -180,17 +200,12 @@ class Biasset
             return;
         }
 
-        if (ENVIRONMENT == 'production' and ($compiled = $this->compile($type)))
-        {
-            $load = $compiled;
-        }
-
         $output = '';
 
         foreach ($load[$type] as $id => $asset)
         {
             $attrs = array(
-                'id' => $id,
+                'id' => $id.'-'.$_ext,
                 'charset' => strtolower(config_item('charset')),
                 );
 
@@ -207,6 +222,11 @@ class Biasset
 
                 if (isset($asset['url']))
                 {
+                    if (!empty($asset['min']) and is_valid_url($asset['min']) and ENVIRONMENT == 'production')
+                    {
+                        $asset['url'] = $asset['min'];
+                    }
+
                     $attrs['src'] = $asset['url'].$ver;
                     $output .= '<script '.parse_attrs($attrs).'></script>';
                 }
@@ -247,7 +267,6 @@ class Biasset
 
         if (!file_exists(config_item('cache_path').$file_name.$ext))
         {
-            $this->_ci->load->helper('file');
             $contents = '';
 
             foreach ($this->_loaded[$type] as $id => $asset)

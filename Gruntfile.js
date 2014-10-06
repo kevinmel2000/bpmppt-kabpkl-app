@@ -10,6 +10,10 @@ module.exports = function(grunt) {
   // Let see total execution times
   require('time-grunt')(grunt);
 
+  RegExp.quote = function (string) {
+    return string.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
+  };
+
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
@@ -37,7 +41,7 @@ module.exports = function(grunt) {
     },
 
     php: {
-      dev: {
+      serve: {
         options: {
           open: true,
           port: 8088
@@ -46,17 +50,16 @@ module.exports = function(grunt) {
     },
 
     phplint: {
-      dev: [
+      app: [
         'application/core/*.php',
         'application/controllers/**/*.php',
         'application/libraries/**/*.php',
-        'application/models/**/*.php',
-        'application/views/**/*.php'
-      ],
-      bi: [
+        'application/helper/*.php',
+        'application/models/*.php',
+        'application/views/*.php',
+        'application/views/**/*.php',
         'application/bootigniter/*.php',
-        'application/bootigniter/**/*.php',
-        '!application/bootigniter/_*.php'
+        'application/bootigniter/**/*.php'
       ]
     },
 
@@ -64,39 +67,40 @@ module.exports = function(grunt) {
       options: {
         bin: 'application/vendor/bin/phpunit -c application/tests/phpunit.xml'
       },
-      dev: {
+      app: {
         dir: 'application/tests'
       }
     },
 
     less: {
       options: {
+        sourceMap: true,
         strictMath: true,
         outputSourceFiles: true
       },
-      dev: {
-        files: {
-          "asset/css/<%= pkg.name %>.css": "asset/less/style.less",
-          "asset/css/<%= pkg.name %>-print.css": "asset/less/print.less"
-        }
-      },
-      build: {
+      appScreen: {
         options: {
-          compress: true,
-          cleancss: true,
-          sourceMap: true,
-          sourceMapRootpath: 'asset/less/',
-          report: 'gzip'
+          sourceMapURL: '<%= pkg.name %>.css.map',
+          sourceMapFilename: 'asset/css/<%= pkg.name %>.css.map'
         },
         files: {
-          "asset/css/<%= pkg.name %>.min.css": "asset/less/style.less",
-          "asset/css/<%= pkg.name %>-print.min.css": "asset/less/print.less"
+          "asset/css/<%= pkg.name %>.css": "asset/css/src/app-screen.less"
+        }
+      },
+      appPrint: {
+        options: {
+          sourceMapURL: '<%= pkg.name %>-print.css.map',
+          sourceMapFilename: 'asset/css/<%= pkg.name %>-print.css.map'
+        },
+        files: {
+          "asset/css/<%= pkg.name %>-print.css": "asset/css/src/app-print.less"
         }
       }
     },
 
     autoprefixer: {
       options: {
+        map: true,
         browsers: [
           'Android 2.3',
           'Android >= 4',
@@ -108,10 +112,8 @@ module.exports = function(grunt) {
           'Safari >= 6'
         ]
       },
-      dev: {
+      app: {
         src: [
-          'asset/css/<%= pkg.name %>.min.css',
-          'asset/css/<%= pkg.name %>-print.min.css',
           'asset/css/<%= pkg.name %>.css',
           'asset/css/<%= pkg.name %>-print.css'
         ]
@@ -122,20 +124,38 @@ module.exports = function(grunt) {
       options: {
         config: '.csscombrc'
       },
-      dev: {
+      app: {
         expand: true,
         cwd: 'asset/css/',
         dest: 'asset/css/',
-        src: [ '<%= pkg.name %>.css', '<%= pkg.name %>-print.css' ]
+        src: [
+          '<%= pkg.name %>.css',
+          '<%= pkg.name %>-print.css'
+        ]
       }
     },
 
     csslint: {
-      dev: {
+      app: {
         options: {
           csslintrc: '.csslintrc'
         },
-        src: [ 'asset/css/<%= pkg.name %>.css', 'asset/css/<%= pkg.name %>-print.css' ]
+        src: [
+          'asset/css/<%= pkg.name %>.css',
+          'asset/css/<%= pkg.name %>-print.css'
+        ]
+      }
+    },
+
+    cssmin: {
+      options: {
+        report: 'gzip'
+      },
+      app: {
+        files: {
+          'asset/css/<%= pkg.name %>.min.css':       'asset/css/<%= pkg.name %>.css',
+          'asset/css/<%= pkg.name %>-print.min.css': 'asset/css/<%= pkg.name %>-print.css'
+        }
       }
     },
 
@@ -168,8 +188,8 @@ module.exports = function(grunt) {
       options: {
         preserveComments: 'some'
       },
-      dev: {
-        src: 'asset/js/script.js',
+      app: {
+        src: 'asset/js/src/script.js',
         dest: 'asset/js/<%= pkg.name %>.min.js'
       }
     },
@@ -180,7 +200,7 @@ module.exports = function(grunt) {
         progressive: true,
         interlaced: true
       },
-      dev: {
+      app: {
         files: [{
           expand: true,
           cwd: 'asset/img/',
@@ -190,21 +210,33 @@ module.exports = function(grunt) {
       }
     },
 
+    sed: {
+      versionNumber: {
+        path: 'application/*',
+        pattern: (function () {
+          var old = grunt.option('old');
+          return old ? RegExp.quote(old) : old;
+        })(),
+        replacement: grunt.option('new'),
+        recursive: true
+      }
+    },
+
     watch: {
       options: {
         nospawn: true,
         livereload: true
       },
       less: {
-        files: [ 'asset/less/**/*.less', 'asset/less/*.less' ],
-        tasks: [ 'cssdist' ]
+        files: [ 'asset/css/src/**/*.less', 'asset/css/src/*.less' ],
+        tasks: [ 'css-test' ]
       },
       phpTest: {
-        files: '<%= phpunit.dev.dir %>/**/*Test.php',
+        files: '<%= phpunit.app.dir %>/**/*Test.php',
         tasks: 'phpunit'
       },
-      phpCore: {
-        files: '<%= phplint.dev %>',
+      phpApp: {
+        files: '<%= phplint.app %>',
         tasks: 'phplint'
       }
     }
@@ -212,26 +244,17 @@ module.exports = function(grunt) {
   });
 
 
-  grunt.registerTask('build', [
-    'cssdist',
-    'phpdist',
-    'imagemin'
-  ]);
+  grunt.registerTask('php-test',    [ 'phplint', 'phpunit' ]);
 
-  grunt.registerTask('phpdist', [
-    'phplint',
-    'phpunit'
-  ]);
+  grunt.registerTask('css-build',   [ 'less', 'autoprefixer', 'csscomb' ]);
+  grunt.registerTask('css-test',    [ 'css-build', 'csslint', 'cssmin' ]);
+  grunt.registerTask('css-dist',    [ 'clean:css', 'css-test', 'usebanner:css' ]);
 
-  grunt.registerTask('cssdist', [
-    'less',
-    'autoprefixer',
-    'csscomb',
-    'csslint'
-  ]);
+  grunt.registerTask('js-build',    [ 'uglify' ]);
+  grunt.registerTask('js-dist',     [ 'clean:js', 'js-build', 'usebanner:js' ]);
 
-  grunt.registerTask('default', [
-    'php:dev',
-    'watch'
-  ]);
+  grunt.registerTask('build',       [ 'clean', 'php-test', 'css-test', 'js-build', 'imagemin', 'usebanner' ]);
+  grunt.registerTask('serve',       [ 'php:serve', 'watch' ]);
+
+  grunt.registerTask('default',     [ 'build' ]);
 }

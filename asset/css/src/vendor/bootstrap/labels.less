@@ -1,0 +1,105 @@
+//
+// Labels
+// --------------------------------------------------
+
+.label {
+  display: inline-block;
+  padding: .2em .6em .3em;
+  font-size: 75%;
+  font-weight: bold;
+  line-height: 1.2em;
+  color: @label-color;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
+  // background-color: #999;
+
+  // Add hover effects, but only for links
+  &[href] {
+    &:hover,
+    &:focus {
+      color: @label-link-hover-color;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  }
+
+  // Empty labels collapse automatically (not available in IE8)
+  &:empty {
+    display: none;
+  }
+
+  // Quick fix for labels in buttons
+  .btn & {
+    position: relative;
+    top: -1px;
+  }
+
+  // Colors
+  // Contextual variations (linked labels get darker on :hover)
+
+  &-default {
+    .label-variant(@label-default-bg);
+  }
+
+  &-primary,
+  &-printed,
+  &-done {
+    .label-variant(@label-primary-bg);
+  }
+
+  &-success,
+  &-approved {
+    .label-variant(@label-success-bg);
+  }
+
+  &-debug,
+  &-warning,
+  &-pending {
+    .label-variant(@label-warning-bg);
+  }
+
+  &-danger,
+  &-deleted,
+  &-error {
+    .label-variant(@label-danger-bg);
+  }
+
+  &-info {
+    .label-variant(@label-info-bg);
+  }
+  }
+
+  // Colors
+  // Contextual variations (linked labels get darker on :hover)
+
+  .label-default {
+    .label-variant(@label-default-bg);
+  }
+
+  .label-primary,
+  .label-printed,
+  .label-done {
+    .label-variant(@label-primary-bg);
+  }
+
+  .label-success,
+  .label-approved {
+    .label-variant(@label-success-bg);
+  }
+
+  .label-warning,
+  .label-pending {
+    .label-variant(@label-warning-bg);
+  }
+
+  .label-danger,
+  .label-deleted,
+  .label-error {
+    .label-variant(@label-danger-bg);
+  }
+
+  .label-info {
+    .label-variant(@label-info-bg);
+  }

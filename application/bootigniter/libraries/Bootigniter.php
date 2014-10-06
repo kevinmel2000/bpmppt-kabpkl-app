@@ -35,6 +35,13 @@ class Bootigniter
     protected $_ci;
 
     /**
+     * Package properties
+     *
+     * @var  object
+     */
+    protected static $_package;
+
+    /**
      * All application settings data
      *
      * @var  array
@@ -86,14 +93,18 @@ class Bootigniter
                 static::$_settings[$row->key] = $row->value;
             }
         }
-        // print_pre(static::$_settings);
+        // print_pre(static::$_settings);$this->_ci->load->helper('file');
 
         // Load helpers
-        $this->_ci->load->helpers(array('url', 'date', 'array', 'biarray', 'bidata'));
+        $this->_ci->load->helpers(array('url', 'date', 'file', 'array', 'biarray', 'bidata'));
         // Load Authentication Library
         $this->_ci->load->driver('biauth');
         $this->_ci->load->library('bitheme');
         $this->_ci->load->library('biasset');
+
+        $package = read_file(FCPATH.'package.json');
+        static::$_package = json_decode($package);
+        // print_pre(static::$_package);
 
         log_message('debug', "#BootIgniter: BootIgniter Class Initialized");
 
@@ -285,6 +296,16 @@ class Bootigniter
 
     // -------------------------------------------------------------------------
 
+    public static function app($key)
+    {
+        if (property_exists(static::$_package, $key))
+        {
+            return static::$_package->$key;
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
     /**
      * Setup messages
      *
@@ -368,9 +389,9 @@ class Bootigniter
             // Setup Reciever
             $email->to($reciever);
 
-            if ($author_email = config_item('application_author_email'))
+            if ($author = Bootigniter::app('author_email'))
             {
-                $email->cc($author_email);
+                $email->cc($author->email);
             }
 
             if (substr($subject, 0, 5) == 'lang:')

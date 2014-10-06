@@ -1,0 +1,44 @@
+//
+// Path declaration
+// ==========================================================================
+
+@bower-path:      '../../bower/';
+@images-path:     '../../img/';
+@fonts-path:      '../../fonts/';
+
+
+// Third-party's
+// ==========================================================================
+
+// Twitter Bootstrap
+@import     ~'@{bower-path}bootstrap/less/variables.less';
+@import     ~'@{bower-path}bootstrap/less/mixins.less';
+
+
+// Application's Cores Variables and Mixins
+// ==========================================================================
+
+@import     'app-variables.less';
+@import     'app-mixins.less';
+
+
+// Vendor Overwriter
+// ==========================================================================
+
+@import     'vendor/bootstrap.less';            // Twitter Bootstrap
+@import     'vendor/jquery.ui.less';            // Jquery UI
+@import     'vendor/datatables.less';           // Data Tables
+@import     'vendor/codemirror.less';           // Code Mirror
+@import     'vendor/summernote.less';           // Summernote
+@import     'vendor/fineuploader.less';         // FineUploader
+@import     'vendor/select2.less';              // Select2
+@import     'vendor/bs-datepicker.less';        // Bootstrap Datepicker
+@import     'vendor/bs-switch.less';            // Bootstrap Switch
+// @import     'vendor/perfect-scrollbar.less';    // Perfect Scrollbar
+
+
+//
+// Main Stylesheet
+// ==========================================================================
+
+@import     'app-main.less';
