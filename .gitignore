@@ -32,6 +32,7 @@ _*
 !.git*
 !.travis.yml
 !.editorconfig
+!.bowerrc
 !.css*
 !.js*
 !/application/storage/logs/view.php
