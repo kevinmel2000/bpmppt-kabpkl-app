@@ -73,9 +73,6 @@ class Bpmppt_tdp extends CI_Driver
         'usaha_npwp'                        => '',
         'usaha_saham_status'                => '',
         'usaha_modal_awal'                  => '',
-        // 'usaha_saham_nilai_total'           => '',
-        // 'usaha_saham_nilai_nasional'        => '',
-        // 'usaha_saham_nilai_tgl'             => '',
         'usaha_data_pengesahan'             => '',
         );
 
@@ -388,7 +385,7 @@ class Bpmppt_tdp extends CI_Driver
             'name'  => 'usaha_data_pengesahan',
             'label' => 'Data Pengesahan',
             'type'  => 'custom',
-            'value' => $this->custom_field( $data_obj ),
+            'std' => $this->custom_field( $data_obj ),
             'validation'=> ( !$data_obj ? '' : '' ) );
 
         return $fields;
@@ -436,7 +433,7 @@ class Bpmppt_tdp extends CI_Driver
 
         $this->_ci->table->set_heading( $head );
 
-        if (isset($data->usaha_data_pengesahan) and strlen($data->usaha_data_pengesahan) > 0)
+        if (isset($data->usaha_data_pengesahan) and !empty($data->usaha_data_pengesahan))
         {
             foreach (unserialize($data->usaha_data_pengesahan) as $row)
             {
