@@ -99,8 +99,6 @@ class Layanan extends BI_Controller
 
     public function data( $data_type, $id = FALSE )
     {
-        // $this->data['search_form'] = TRUE;
-
         if ($id == 'setting')
         {
             $this->data_out( $data_type );
@@ -111,6 +109,7 @@ class Layanan extends BI_Controller
         }
         else
         {
+            $this->data['data_page'] = TRUE;
             $this->data['tool_buttons']['form']              = 'Baru|primary';
             $this->data['tool_buttons']['cetak']             = 'Laporan|info';
             $this->data['tool_buttons'][] = array(
@@ -268,24 +267,24 @@ class Layanan extends BI_Controller
                 'class' => 'btn-primary pull-right' );
 
             $form = $this->biform->initialize( array(
-                'name'      => 'print-'.$data_type,
-                'action'    => current_url(),
-                'extras'    => array('target' => 'Popup_Window'),
-                'fields'    => $fields,
-                'buttons'   => $buttons,
+                'name'    => 'print-'.$data_type,
+                'action'  => current_url(),
+                'extras'  => array('target' => 'Popup_Window'),
+                'fields'  => $fields,
+                'buttons' => $buttons,
                 ));
 
             $script = "$('form[name=\"print-".$data_type."\"]').submit(function (e) {"
                     . "new Baka.popup('".current_url()."', 'Popup_Window', 800, 600);"
                     . "});";
 
-            set_script('print-popup', $script, 'baka-pack');
+            load_script('print-popup', $script);
 
             if ( $form_data = $form->validate_submition() )
             {
                 $data = $this->bpmppt->do_report( $data_type, $form_data );
 
-                $this->load->theme('prints/reports/'.$data_type, $data, 'laporan');
+                $this->load->theme('prints/reports/'.$data_type, $data, 'report');
             }
             else
             {

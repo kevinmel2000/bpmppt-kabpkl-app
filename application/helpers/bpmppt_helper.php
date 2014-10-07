@@ -37,14 +37,12 @@ function print_tembusan($data_tembusan)
 
 function print_ttd_kadin($atas_nama = '')
 {
-    $properties = array( 'skpd_name', 'skpd_city', 'skpd_lead_name', 'skpd_lead_jabatan', 'skpd_lead_nip' );
-    $atas_nama || $atas_nama = 'BUPATI PEKALONGAN';
-
-    foreach ($properties as $property)
+    foreach (array('skpd_name', 'skpd_city', 'skpd_lead_name', 'skpd_lead_jabatan', 'skpd_lead_nip') as $property)
     {
-        $$property = get_setting($property);
+        $$property = Bootigniter::get_setting($property);
     }
 
+    $atas_nama || $atas_nama = 'BUPATI PEKALONGAN';
     $output = 'A.n. '.$atas_nama.'<br>'
             . word_wrap('KEPALA '.strtoupper($skpd_name), 32)
             . ''.strtoupper($skpd_city).'<br><br><br>'
@@ -53,6 +51,29 @@ function print_ttd_kadin($atas_nama = '')
             . 'NIP. '.strtoupper($skpd_lead_nip).'';
 
     echo $output;
+}
+
+function print_cop()
+{
+    foreach (array('skpd_logo', 'skpd_name', 'skpd_address', 'skpd_telp', 'skpd_city', 'skpd_pos') as $property)
+    {
+        $$property = Bootigniter::get_setting($property);
+    }
+
+    $img_logo = img( array(
+        'src'   =>  $skpd_logo,
+        'alt'   => 'Logo cetak',
+        'class' => 'img logo-skpd',
+        'width' => '60',
+        'style' => 'position:absolute; left:5px;'));
+
+    $output = '<p class="align-center bold" style="margin-top: 5px; line-height: 1.5em;">'
+            . 'PEMERINTAH KABUPATEN PEKALONGAN<br>'
+            . '<span style="font-size: 16px; line-height:1.4em;">'.strtoupper($skpd_name).'</span><br>'
+            . '<span style="font-size: 12px; line-height:1.4em;">'.$skpd_address.', telp. '.$skpd_telp.' '.$skpd_city.' '.$skpd_pos.'</span>'
+            . '</p>';
+
+    return $img_logo.$output;
 }
 
 function print_blnthn_head($str_date)

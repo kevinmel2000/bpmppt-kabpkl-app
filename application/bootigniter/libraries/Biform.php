@@ -194,7 +194,7 @@ class Biform
         if (isset($attrs['fields']) and is_array($attrs['fields']) and !empty($attrs['fields']))
         {
             $this->set_fields($attrs['fields']);
-            load_script('biform-script', $this->_scripts($attrs['fields']), Bootigniter::VERSION);
+            load_script('biform-script', $this->_scripts($attrs['fields']), Bootigniter::app('version'));
         }
 
         // if buttons is already declarated in the config, just make it happen ;)
@@ -932,7 +932,7 @@ class Biform
     protected function _set_input_textarea(array $field_attrs)
     {
         // load_script('jquery-autosize', 'js/lib/jquery.autosize.min.js', 'jquery', '1.18.0');
-        load_script('autosize-trigger', "$('textarea').autosize();", Bootigniter::VERSION, 'jq-autosize');
+        load_script('autosize-trigger', "$('textarea').autosize();", Bootigniter::app('version'), 'jq-autosize');
 
         $field_attrs = array_set_defaults($field_attrs, array(
             'std'   => '',
@@ -1048,7 +1048,7 @@ class Biform
                 . "});";
 
         // load_script('jqui-spinner', 'js/lib/jquery-ui/spinner.min.js', 'jqui-core', '1.11.0');
-        load_script('jqui-spinner-trigger', $script, Bootigniter::VERSION, 'jqueryui-spinner');
+        load_script('jqui-spinner-trigger', $script, Bootigniter::app('version'), 'jqueryui-spinner');
 
         return form_input(array(
             'name'              => $field_attrs['name'],
@@ -1153,7 +1153,7 @@ class Biform
         $script .= "});";
 
         // load_script('jqui-slider', 'js/lib/jquery-ui/slider.min.js', 'jqui-core', '1.11.0');
-        load_script('jqui-'.$field_attrs['type'].'-trigger', $script, Bootigniter::VERSION, 'jqueryui-slider');
+        load_script('jqui-'.$field_attrs['type'].'-trigger', $script, Bootigniter::app('version'), 'jqueryui-slider');
 
         $slider_attrs = array(
             'class'            => 'jqui-'.$field_attrs['type'],
@@ -1259,7 +1259,7 @@ class Biform
                 . "    $('.summernote').val($('.summernote').code());\n"
                 . "});";
 
-        load_script('summernote-trigger', $script, Bootigniter::VERSION, 'summernote-'.get_lang_code());
+        load_script('summernote-trigger', $script, Bootigniter::app('version'), 'summernote-'.get_lang_code());
 
         return form_textarea(array(
                 'name'  => $field_attrs['name'],
@@ -1320,7 +1320,7 @@ class Biform
                     . "    e.preventDefault();\n"
                     . "});";
 
-            load_script('collcaptha-trigger', $script, Bootigniter::VERSION);
+            load_script('collcaptha-trigger', $script, Bootigniter::app('version'));
 
             if (!extension_loaded('gd'))
             {
@@ -1344,7 +1344,7 @@ class Biform
     {
         // load_script('bs-switch', 'js/lib/bootstrap.switch.min.js', 'bootstrap', '3.0.2');
         // load_style('bs-switch', 'bower/bootstrap.switch/dist/css/bootstrap3/bootstrap-switch.min.css', 'bootstrap', '3.0.2');
-        load_script('bs-switch-trigger', "$('.bs-switch').bootstrapSwitch();", Bootigniter::VERSION, 'bs-switch');
+        load_script('bs-switch-trigger', "$('.bs-switch').bootstrapSwitch();", Bootigniter::app('version'), 'bs-switch');
 
         if (!isset($field_attrs['option']))
         {
@@ -1398,7 +1398,7 @@ class Biform
         {
             // load_script('select2',         'js/lib/select2.min.js', 'jquery', '3.4.5');
             // load_script('select2-locale',  'js/lib/select2.'.(($code = get_lang_code()) != 'en' ? $code : '').'.js', 'jquery', '3.4.5');
-            load_script('select2-trigger', "$('.form-control-select2').select2();\n", Bootigniter::VERSION, 'select2-'.get_lang_code());
+            load_script('select2-trigger', "$('.form-control-select2').select2();\n", Bootigniter::app('version'), 'select2-'.get_lang_code());
             // load_style('select2');
 
             $control_class = 'form-control-select2 ';
@@ -1482,7 +1482,7 @@ class Biform
                     . "    dateFormat: 'dd-mm-yyyy'\n"
                     . "});";
 
-            load_script('jqui-datepicker-trigger', $script, Bootigniter::VERSION, 'jqueryui-datepicker-'.get_lang_code());
+            load_script('jqui-datepicker-trigger', $script, Bootigniter::app('version'), 'jqueryui-datepicker-'.get_lang_code());
 
             // $this->has_jqueryui = TRUE;
             $field_attrs['class'] = 'jqui-datepicker';
@@ -1506,7 +1506,7 @@ class Biform
                     . "    todayBtn: true\n"
                     . "});\n";
 
-            load_script('bs-datepicker-trigger', $script, 'bs-datepicker-'.$code);
+            load_script('bs-datepicker-trigger', $script, Bootigniter::app('version'), 'bs-datepicker-'.$code);
 
             $field_attrs['class'] = 'bs-datepicker';
         }

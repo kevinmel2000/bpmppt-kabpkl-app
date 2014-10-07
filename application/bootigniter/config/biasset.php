@@ -44,7 +44,7 @@ $config['biasset_register_styles'] = array(
         'ver' => '3.2.0',
         ),
     'bs-datepicker' => array(
-        'src' => $bower_path.'bootstrap-datepicker/css/bootstrap3.css',
+        'src' => $bower_path.'bootstrap-datepicker/css/datepicker3.css',
         'ver' => '1.3.0',
         'dep' => array('bootstrap'),
         ),
@@ -139,8 +139,8 @@ $config['biasset_register_styles'] = array(
         'dep' => array('jqueryui-core'),
         ),
     'jq-datatables' => array(
-        'src' => $bower_path.'Datatables/media/css/jquery.dataTables.css',
-        'min' => $bower_path.'Datatables/media/css/jquery.dataTables.min.css',
+        'src' => $bower_path.'DataTables/media/css/jquery.dataTables.css',
+        'min' => $bower_path.'DataTables/media/css/jquery.dataTables.min.css',
         'ver' => '1.10.2',
         ),
     'jq-fineuploader' => array(
@@ -172,8 +172,8 @@ $config['biasset_register_scripts'] = array(
         'dep' => array('jquery'),
         ),
     'jq-datatables' => array(
-        'src' => $bower_path.'Datatables/media/js/jquery.dataTables.js',
-        'min' => $bower_path.'Datatables/media/js/jquery.dataTables.min.js',
+        'src' => $bower_path.'DataTables/media/js/jquery.dataTables.js',
+        'min' => $bower_path.'DataTables/media/js/jquery.dataTables.min.js',
         'ver' => '1.10.2',
         'dep' => array('jquery'),
         ),

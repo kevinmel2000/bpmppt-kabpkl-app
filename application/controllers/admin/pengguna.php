@@ -115,6 +115,7 @@ class Pengguna extends BI_Controller
             'deleted/'   => 'Terhapus'
             );
 
+        $this->data['data_page'] = TRUE;
         $this->load->library('bitable', array(
             'base_url' => $this->data['page_link'],
             ));
@@ -556,6 +557,7 @@ class Pengguna extends BI_Controller
     {
         $this->data['panel_title'] = $this->bitheme->set_title('Semua data kelompok pengguna');
         $this->data['tool_buttons']['form'] = 'Baru|primary';
+        $this->data['data_page'] = TRUE;
 
         $this->load->library('bitable', array(
             'base_url'   => $this->data['page_link'],
@@ -667,10 +669,11 @@ class Pengguna extends BI_Controller
 
     private function _perm_table()
     {
-        $this->data['page_link']    = 'admin/pengguna/permission/';
-        $this->set_panel_title('Semua data hak akses pengguna');
+        $this->data['page_link'] = 'admin/pengguna/permission/';
         $this->data['tool_buttons']['form'] = 'Baru|primary';
+        $this->data['data_page'] = TRUE;
 
+        $this->set_panel_title('Semua data hak akses pengguna');
         $this->load->library('bitable', array(
             'identifier' => 'permission_id',
             'base_url'   => $this->data['page_link'],

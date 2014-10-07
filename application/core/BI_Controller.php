@@ -37,11 +37,9 @@ class BI_Controller extends CI_Controller
         $this->data['brand_link']  = anchor(base_url(), config_item('application_name'), 'class="navbar-brand"');
 
         $this->data['load_toolbar'] = FALSE;
-        $this->data['search_form']  = FALSE;
-        $this->data['single_page']  = TRUE;
-        $this->data['form_page']    = FALSE;
+        $this->data['data_page']    = FALSE;
 
-        $this->data['need_print']   = FALSE;
+        // $this->data['need_print']   = FALSE;
 
         $this->data['tool_buttons'] = array();
 

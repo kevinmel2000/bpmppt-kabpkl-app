@@ -50,6 +50,28 @@
   }
 }
 
+// TWBS .panel-variant() overwrite
+.panel-variant(@border; @heading-text-color; @heading-bg-color; @heading-border) {
+  border-color: @border;
+
+  & > .panel-heading {
+    // color: @heading-text-color;
+    // background-color: @heading-bg-color;
+    // border-color: @heading-border;
+    #gradient .vertical(lighten(@heading-bg-color, 10%);  @heading-bg-color);
+
+    + .panel-collapse > .panel-body {
+      border-top-color: @border;
+    }
+  }
+
+  & > .panel-footer {
+    + .panel-collapse > .panel-body {
+      border-bottom-color: @border;
+    }
+  }
+}
+
 // TWBS .tab-focus() overwrite
 .tab-focus() {
   outline: 0;

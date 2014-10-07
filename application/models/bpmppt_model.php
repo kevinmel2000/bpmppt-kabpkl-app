@@ -14,20 +14,13 @@
 class Bpmppt_model extends CI_Model
 {
     /**
-     * Direktori penyimpanan modul
-     *
-     * @var  string
-     */
-    public $module_dir = 'perijinan/';
-
-    /**
      * Nama table
      *
      * @var  array
      */
     private $_table = array();
 
-    private $_dashboard_view    = FALSE;
+    private $_dashboard_view = FALSE;
 
     public $app_modules = array();
 
@@ -62,7 +55,7 @@ class Bpmppt_model extends CI_Model
 
         foreach ( $prop as $property )
         {
-            $data[$property] = get_setting( $property );
+            $data[$property] = Bootigniter::get_setting( $property );
         }
 
         return $data;

@@ -1,16 +1,9 @@
-/*!
- * BPMPPT App v0.1.5 (http://feryardiant.github.com/bpmppt)
- * Aplikasi Pengelolaan Dokumen Perijinan di BPMPPT Kab. Pekalongan
- * Copyright 2014 Fery Wardiyanto (ferywardiyanto@gmail.com)
- * Licensed under MIT (https://github.com/feryardiant/bpmppt/blob/master/LICENSE)
- */
-
 body {
   padding: 2px;
   margin: 0;
   font-family: Arial, sans-serif;
   font-size: 12px;
-  line-height: 1.3;
+  line-height: 1.4;
 }
 p,
 span,
@@ -21,25 +14,12 @@ sup,
 table {
   font-family: inherit;
   font-size: inherit;
-  line-height: 1.2;
+  line-height: inherit;
 }
 p,
 ol,
 ul {
   margin: 0;
-}
-sub,
-sup {
-  position: relative;
-  font-size: 75%;
-  line-height: 0;
-  vertical-align: baseline;
-}
-sup {
-  top: -.5;
-}
-sub {
-  bottom: -.25;
 }
 ol,
 ul {
@@ -50,12 +30,14 @@ ul .none {
   padding-left: 0;
   list-style: none;
 }
-ol.upper-roman {
+ol.upper-roman,
+ol.lower-roman {
   padding-left: 30px;
+}
+ol.upper-roman {
   list-style-type: upper-roman;
 }
 ol.lower-roman {
-  padding-left: 30px;
   list-style-type: lower-roman;
 }
 ol.upper-alpha {
@@ -73,7 +55,7 @@ ol.lower-latin {
 ol.decimal {
   list-style-type: decimal;
 }
-ol.decimal-leading-zero {
+ol.decimal-lzero {
   list-style-type: decimal-leading-zero;
 }
 ul.circle {
@@ -85,20 +67,46 @@ ul.disc {
 ul.square {
   list-style-type: square;
 }
+sub,
+sup {
+  position: relative;
+  font-size: 75%;
+  line-height: 0;
+  vertical-align: baseline;
+}
+sup {
+  top: -.5;
+}
+sub {
+  bottom: -.25;
+}
 table {
   min-width: 100%;
-  font-family: 'Arial' !important;
-  font-size: 11px;
+  font-family: 'Times New Roman';
+  font-size: 12px;
   border-collapse: collapse;
   border-color: transparent;
   border-width: 0;
 }
-table.bordered th,
-table.bordered td {
-  border: 1px solid #000;
+table .logo-skpd {
+  top: 0;
+}
+table.tanda_daftar_perusahaan,
+table.surat_izin_usaha_perdagangan {
+  font-family: 'Arial';
+}
+table.izin_gangguan {
+  margin-top: 40px;
+}
+table.izin_gangguan .logo-skpd {
+  top: 40px;
 }
 table.pagebreak {
   page-break-before: always;
+}
+table.bordered th,
+table.bordered td {
+  border: 1px solid #000;
 }
 table tr.t-header td {
   border-bottom: 2px solid #000;
@@ -121,19 +129,6 @@ table th {
 table table {
   width: auto;
   margin-bottom: 10px;
-}
-table.tanda_daftar_perusahaan p,
-table.surat_izin_usaha_perdagangan p {
-  font-family: 'Arial' !important;
-}
-table .logo-skpd {
-  top: 0;
-}
-table.izin_gangguan {
-  margin-top: 40px;
-}
-table.izin_gangguan .logo-skpd {
-  top: 40px;
 }
 .align-center {
   text-align: center;

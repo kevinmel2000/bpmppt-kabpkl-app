@@ -5,9 +5,6 @@
 
 // Base class
 .panel {
-  margin-bottom: @line-height-computed;
-  background-color: @panel-bg;
-  border: 1px solid transparent;
   border-radius: @panel-border-radius;
   .box-shadow(~"0 1px 1px rgba(0,0,0,.05)");
 }
@@ -15,7 +12,11 @@
 // Panel contents
 .panel-body {
   padding: @panel-body-padding;
-  &:extend(.clearfix all);
+  // &:extend(.clearfix all);
+
+  &-data {
+    padding: 0;
+  }
 }
 
 // List groups in panels
@@ -36,12 +37,14 @@
         border-bottom: 0;
       }
     }
+
     // Add border top radius for first one
     &:first-child {
       .list-group-item:first-child {
         .border-top-radius((@panel-border-radius - 1));
       }
     }
+
     // Add border bottom radius for last one
     &:last-child {
       .list-group-item:last-child {
@@ -168,16 +171,15 @@
 
 // Optional heading
 .panel-heading {
-  position: relative;
-  border-bottom: 1px solid #DDD;
-  padding: 8px 10px;
-  min-height: 34px;
-  background-color: #F8F8F8;
-  #gradient .vertical(#fff;  #eee);
+  // position: relative;
+  // border-bottom: 1px solid #DDD;
+  padding: 10px;
+  // min-height: 34px;
+  // background-color: #F8F8F8;
+  // #gradient .vertical(#fff;  #eee);
   .box-shadow(~"0 1px 1px #fff inset");
   text-shadow: 0 1px 0 #fff;
-
-  .border-top-radius((@panel-border-radius - 1));
+  // .border-top-radius((@panel-border-radius - 1));
 
   > .dropdown .dropdown-toggle {
     color: inherit;
@@ -208,18 +210,21 @@
 
 // Within heading, strip any `h*` tag of its default margins for spacing.
 .panel-title {
-  margin-top: 0;
-  margin-bottom: 0;
-  font-size: ceil((@font-size-base * 1.125));
-  color: inherit;
+  // margin-top: 0;
+  // margin-bottom: 0;
+  // color: inherit;
 
-  line-height: 1.2em;
+  // line-height: 1.2em;
+  font-size: @font-size-base;
+  font-weight: 600;
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 
   > a {
+    font-size: inherit;
+    line-height: inherit;
     color: inherit;
   }
 }
@@ -228,21 +233,16 @@
 .panel-footer {
   background-color: @panel-footer-bg;
   border-top: 1px solid @panel-inner-border;
-  padding: 3px 10px;
+  padding: 5px 10px 0;
   text-shadow: 0 1px 0 #fff;
   vertical-align: middle;
   .border-bottom-radius((@panel-border-radius - 1));
   &:extend(.clearfix all);
 
-  .info {
-    float: left;
-    margin: 5px 0;
-  }
-
-  .pagination {
-    float: right;
-    margin: 5px 0;
-  }
+  .pagination,
+  .info       { margin: 5px 0; }
+  .info       { float: left; }
+  .pagination { float: right; }
 }
 
 
