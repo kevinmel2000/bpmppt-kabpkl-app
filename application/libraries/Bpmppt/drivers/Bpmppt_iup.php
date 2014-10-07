@@ -43,6 +43,7 @@ class Bpmppt_iup extends CI_Driver
         'tambang_jns_galian'    => '',
         'tambang_luas'          => '',
         'tambang_alamat'        => '',
+        'tambang_koor'          => '',
         );
 
     // -------------------------------------------------------------------------
@@ -167,7 +168,7 @@ class Bpmppt_iup extends CI_Driver
             'name'  => 'tambang_koor',
             'label' => 'Kode Koordinat',
             'type'  => 'custom',
-            'value' => $this->custom_field( $data_obj ),
+            'std' => $this->custom_field( $data_obj ),
             'validation'=> ( !$data_obj ? '' : '' ) );
 
         return $fields;
@@ -217,7 +218,7 @@ class Bpmppt_iup extends CI_Driver
 
         $this->_ci->table->set_heading( $head );
 
-        if ( isset( $data->tambang_koor ) and strlen( $data->tambang_koor ) > 0 )
+        if ( isset( $data->tambang_koor ) and !empty( $data->tambang_koor ) )
         {
             foreach ( unserialize( $data->tambang_koor ) as $row )
             {
