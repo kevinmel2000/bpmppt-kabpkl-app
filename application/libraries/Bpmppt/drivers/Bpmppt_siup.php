@@ -367,7 +367,7 @@ class Bpmppt_siup extends CI_Driver
 
         $this->_ci->table->set_heading( $head );
 
-        if (isset($data->siup_lama) and strlen($data->siup_lama) > 0)
+        if (isset($data->siup_lama) and !empty($data->siup_lama))
         {
             foreach (unserialize($data->siup_lama) as $row)
             {
