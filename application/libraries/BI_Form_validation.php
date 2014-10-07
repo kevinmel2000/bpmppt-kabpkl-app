@@ -39,7 +39,7 @@ class BI_Form_validation extends CI_Form_validation
     function valid_recaptcha( $code )
     {
         $resp = recaptcha_check_answer(
-                    get_setting('auth_recaptcha_public_key'),
+                    Bootigniter::get_setting('auth_recaptcha_public_key'),
                     $this->ip_address(),
                     $this->post('recaptcha_challenge_field'),
                     $code );
@@ -177,8 +177,8 @@ class BI_Form_validation extends CI_Form_validation
 
     function valid_username_length( $string )
     {
-        $min_length = get_setting('auth_username_length_min');
-        $max_length = get_setting('auth_username_length_max');
+        $min_length = Bootigniter::get_setting('auth_username_length_min');
+        $max_length = Bootigniter::get_setting('auth_username_length_max');
 
         if ( !$this->min_length( $string, $min_length ) )
         {
@@ -201,8 +201,8 @@ class BI_Form_validation extends CI_Form_validation
 
     function valid_password_length( $string )
     {
-        $min_length = get_setting('auth_password_length_min');
-        $max_length = get_setting('auth_password_length_max');
+        $min_length = Bootigniter::get_setting('auth_password_length_min');
+        $max_length = Bootigniter::get_setting('auth_password_length_max');
 
         if ( !$this->min_length( $string, $min_length ) )
         {
