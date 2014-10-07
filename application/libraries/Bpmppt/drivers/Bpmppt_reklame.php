@@ -44,9 +44,7 @@ class Bpmppt_reklame extends CI_Driver
         'reklame_range_tgl_selesai' => '',
         'reklame_tema'              => '',
         'reklame_ket'               => '',
-        'lampirans_tempat'          => '',
-        'lampirans_panjang'         => '',
-        'lampirans_lebar'           => '',
+        'lampirans'                 => '',
         );
 
     // -------------------------------------------------------------------------
@@ -180,10 +178,11 @@ class Bpmppt_reklame extends CI_Driver
             'name'  => 'lampirans',
             'label' => 'Data Lampiran',
             'type'  => 'custom',
-            'fold'  => array(
-                'key'   => 'reklame_lampiran',
-                'value' => 1 ),
-            'value' => $this->custom_field( $data_obj ),
+            'std' => $this->custom_field( $data_obj ),
+            // 'fold'  => array(
+            //     'key'   => 'reklame_lampiran',
+            //     'value' => 1
+            //     ),
             );
 
         return $fields;
@@ -231,7 +230,7 @@ class Bpmppt_reklame extends CI_Driver
 
         $this->_ci->table->set_heading( $head );
 
-        if (isset($data->lampirans) and strlen($data->lampirans) > 0)
+        if (isset($data->lampirans) and !empty($data->lampirans))
         {
             foreach (unserialize($data->lampirans) as $row)
             {
