@@ -32,13 +32,6 @@ class BakaControllerTest extends Bpmppt_TestCase
         $this->assertContainsOnlyInstancesOf('CI_Controller', array($this->_bc));
 
     }
-
-    public function testPanelContent()
-    {
-        $this->assertContains('panel_title', $this->_bc->data);
-
-        $this->assertContains('panel_body', $this->_bc->data);
-    }
 }
 
 /* End of file BAKA_Controller.php */

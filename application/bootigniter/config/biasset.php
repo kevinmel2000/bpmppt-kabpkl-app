@@ -25,7 +25,7 @@ $config['biasset_path_prefix'] = 'asset/';
 */
 
 $vendor_path = 'js/lib/';
-$bower_path = 'bower/';
+$bower_path = ENVIRONMENT == 'development' ? 'bower/' : 'vendor/';
 $jqueryui_version = '1.11.1';
 
 $config['biasset_register_styles'] = array(
@@ -139,8 +139,8 @@ $config['biasset_register_styles'] = array(
         'dep' => array('jqueryui-core'),
         ),
     'jq-datatables' => array(
-        'src' => $bower_path.'DataTables/media/css/jquery.dataTables.css',
-        'min' => $bower_path.'DataTables/media/css/jquery.dataTables.min.css',
+        'src' => $bower_path.'datatables/media/css/jquery.dataTables.css',
+        'min' => $bower_path.'datatables/media/css/jquery.dataTables.min.css',
         'ver' => '1.10.2',
         ),
     'jq-fineuploader' => array(
@@ -172,8 +172,8 @@ $config['biasset_register_scripts'] = array(
         'dep' => array('jquery'),
         ),
     'jq-datatables' => array(
-        'src' => $bower_path.'DataTables/media/js/jquery.dataTables.js',
-        'min' => $bower_path.'DataTables/media/js/jquery.dataTables.min.js',
+        'src' => $bower_path.'datatables/media/js/jquery.dataTables.js',
+        'min' => $bower_path.'datatables/media/js/jquery.dataTables.min.js',
         'ver' => '1.10.2',
         'dep' => array('jquery'),
         ),
@@ -444,8 +444,7 @@ $config['biasset_register_scripts'] = array(
         'dep' => array('select2'),
         ),
     'chartjs' => array(
-        'src' => $vendor_path.'chart.js',
-        'min' => $vendor_path.'chart.min.js',
+        'src' => $vendor_path.'chart.min.js',
         'dep' => array('jquery'),
         ),
     'codemirror' => array(
@@ -474,8 +473,7 @@ $config['biasset_register_scripts'] = array(
         'ver' => '3.6.2',
         ),
     'respond' => array(
-        'src' => $vendor_path.'respond.js',
-        'min' => $vendor_path.'respond.min.js',
+        'src' => $vendor_path.'respond.min.js',
         'ver' => '1.3.0',
         ),
     );

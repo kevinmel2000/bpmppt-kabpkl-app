@@ -13,24 +13,100 @@
     "asset/bower"
   ],
   "dependencies": {
-    "DataTables": "~1.10.2",
     "bootstrap": "~3.2.0",
     "bootstrap-datepicker": "~1.3.0",
     "bootstrap-switch": "~3.0.2",
+    "datatables": "~1.10.2",
+    "bootstrap3-datatables": "*",
+    "fineuploader-dist": "~5.0.7",
+    "fontawesome": "~4.2.0",
     "jquery": "~2.1.1",
-    "jqueryui-touch-punch": "*",
-    "jquery-mousewheel": "~3.1.12",
     "jquery-autosize": "~1.18.12",
-    "select2": "~3.5.1",
+    "jquery-mousewheel": "~3.1.12",
+    "jqueryui": "~1.11.1",
+    "jqueryui-touch-punch": "*",
     "morrisjs": "~0.5.1",
-    "summernote": "~0.5.9",
-    "fineuploader-dist": "~5.0.3"
+    "select2": "~3.5.1",
+    "summernote": "~0.5.9"
   },
   "devDependencies": {
     "codemirror": "~4.6.0",
-    "datatables-plugins": "*",
-    "jqueryui": "~1.11.1",
-    "pace": "~0.5.7",
-    "html5-boilerplate": "~4.3.0"
+    "datatables-plugins": "*"
+  },
+  "preen": {
+    "bootstrap": [
+      "dist/**/*",
+      "LICENSE"
+    ],
+    "bootstrap-datepicker": [
+      "css/*.css",
+      "js/**/*.js",
+      "LICENSE"
+    ],
+    "bootstrap-switch": [
+      "dist/**/*",
+      "LICENSE"
+    ],
+    "codemirror": [
+      "lib/*",
+      "mode/**/*.js",
+      "theme/*",
+      "LICENSE"
+    ],
+    "datatables": [
+      "media/css/*.css",
+      "media/images/*.png",
+      "media/js/*.js",
+      "license.txt"
+    ],
+    "bootstrap3-datatables": [
+      "BS3/assets/**/*.+(css|png|js)"
+    ],
+    "fineuploader-dist": [
+      "dist/**/*"
+    ],
+    "fontawesome": [
+      "css/*.css",
+      "fonts/*",
+      "license.txt"
+    ],
+    "jquery": [
+      "dist/*",
+      "MIT-LICENSE.txt"
+    ],
+    "jquery-autosize": [
+      "*.js"
+    ],
+    "jquery-mousewheel": [
+      "*.js",
+      "LICENSE.txt"
+    ],
+    "jqueryui": [
+      "themes/base/**/*",
+      "ui/**/*.js",
+      "MIT-LICENSE.txt"
+    ],
+    "jqueryui-touch-punch": [
+      "*.js"
+    ],
+    "morrisjs": [
+      "*.css",
+      "*.js"
+    ],
+    "raphael": [
+      "*.js",
+      "license.txt"
+    ],
+    "select2": [
+      "*.css",
+      "*.js",
+      "*.png",
+      "*.gif",
+      "LICENSE"
+    ],
+    "summernote": [
+      "dist/*",
+      "lang/*"
+    ]
   }
 }

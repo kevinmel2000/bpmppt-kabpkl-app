@@ -37,7 +37,58 @@ module.exports = function(grunt) {
 
     clean: {
       css: 'asset/css/<%= pkg.name %>*',
-      js: 'asset/js/<%= pkg.name %>*'
+      js: 'asset/js/<%= pkg.name %>*',
+      dist: [ '<%= clean.css %>', '<%= clean.js %>' ],
+      vendor: [ 'asset/bower' ]
+    },
+
+    copy: {
+      app: {
+        files: [
+          {
+            expand: true,
+            src: [
+              'system/**',
+              'application/**',
+              '!application/tests/**',
+              '!application/vendor/**',
+              '!application/storage/{backup,cache,logs,upload}/**',
+              'application/storage/{backup,cache,logs,upload}/index.html'
+            ],
+            dest: '_dist/'
+          },
+          {
+            expand: true,
+            src: [
+              'asset/{css,img,js,vendor}/**',
+              '!asset/{css,img,js}/src/**'
+            ],
+            dest: '_dist/'
+          },
+          {
+            expand: true,
+            src: [
+              '*.{php,sql,sh}',
+              '!.*',
+              '.htaccess',
+              '.gitignore',
+              'README.md',
+              'LICENSE'
+            ],
+            dest: '_dist/'
+          }
+        ]
+      },
+      vendor: {
+        files: [
+          {
+            expand: true,
+            cwd: 'asset/bower/',
+            src: [ '**' ],
+            dest: 'asset/vendor/'
+          }
+        ]
+      }
     },
 
     php: {
@@ -253,7 +304,8 @@ module.exports = function(grunt) {
   grunt.registerTask('js-build',    [ 'uglify' ]);
   grunt.registerTask('js-dist',     [ 'clean:js', 'js-build', 'usebanner:js' ]);
 
-  grunt.registerTask('build',       [ 'clean', 'php-test', 'css-test', 'js-build', 'imagemin', 'usebanner' ]);
+  grunt.registerTask('build',       [ 'clean:dist', 'php-test', 'css-test', 'js-build', 'imagemin', 'usebanner' ]);
+  grunt.registerTask('dist',        [ 'build', 'preen', 'copy:vendor', 'clean:vendor' ]);
   grunt.registerTask('serve',       [ 'php:serve', 'watch' ]);
 
   grunt.registerTask('default',     [ 'build' ]);
