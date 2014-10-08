@@ -53,29 +53,33 @@ module.exports = function(grunt) {
               '!application/tests/**',
               '!application/vendor/**',
               '!application/storage/{backup,cache,logs,upload}/**',
-              'application/storage/{backup,cache,logs,upload}/index.html'
+              'application/storage/{backup,cache,logs,upload}/index.html',
+              '!**/**.old',
+              '!**/_**'
             ],
-            dest: '_dist/'
+            dest: 'dist/'
           },
           {
             expand: true,
             src: [
               'asset/{css,img,js,vendor}/**',
-              '!asset/{css,img,js}/src/**'
+              '!asset/{css,img,js}/src/**',
+              '!**/_**'
             ],
-            dest: '_dist/'
+            dest: 'dist/'
           },
           {
             expand: true,
             src: [
               '*.{php,sql,sh}',
-              '!.*',
+              '!_*',
+              '!appconfig.php',
               '.htaccess',
               '.gitignore',
               'README.md',
               'LICENSE'
             ],
-            dest: '_dist/'
+            dest: 'dist/'
           }
         ]
       },
