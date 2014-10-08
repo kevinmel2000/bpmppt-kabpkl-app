@@ -57,7 +57,7 @@ module.exports = function(grunt) {
               '!**/**.old',
               '!**/_**'
             ],
-            dest: 'dist/'
+            dest: '_dist/'
           },
           {
             expand: true,
@@ -66,7 +66,7 @@ module.exports = function(grunt) {
               '!asset/{css,img,js}/src/**',
               '!**/_**'
             ],
-            dest: 'dist/'
+            dest: '_dist/'
           },
           {
             expand: true,
@@ -79,7 +79,7 @@ module.exports = function(grunt) {
               'README.md',
               'LICENSE'
             ],
-            dest: 'dist/'
+            dest: '_dist/'
           }
         ]
       },
