@@ -1,0 +1,53 @@
+{
+  "name": "bpmppt-app",
+  "version": "0.1.5",
+  "homepage": "http://feryardiant.github.com/bpmppt",
+  "description": "Aplikasi Pengelolaan Dokumen Perijinan di BPMPPT Kab. Pekalongan",
+  "private": true,
+  "author": {
+    "name": "Fery Wardiyanto",
+    "email": "ferywardiyanto@gmail.com"
+  },
+  "license": {
+    "type": "MIT",
+    "url": "https://github.com/feryardiant/bpmppt/blob/master/LICENSE"
+  },
+  "readmeFilename": "README.md",
+  "gitHead": "422678f64c379bd5329f708ae694d4eb9103a8c4",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/feryardiant/bpmppt.git"
+  },
+  "support": {
+    "issues": "https://github.com/feryardiant/bpmppt/issues"
+  },
+  "engines": {
+    "node": "~0.10.1"
+  },
+  "dependencies": {
+    "bower": "^1.3.11"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-autoprefixer": "^1.0.1",
+    "grunt-banner": "^0.2.3",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-concat": "^0.5.0",
+    "grunt-contrib-copy": "^0.6.0",
+    "grunt-contrib-csslint": "^0.3.1",
+    "grunt-contrib-cssmin": "^0.10.0",
+    "grunt-contrib-imagemin": "^0.8.1",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-less": "^0.11.4",
+    "grunt-contrib-uglify": "^0.6.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-csscomb": "^3.0.0",
+    "grunt-php": "^1.0.1",
+    "grunt-phplint": "0.0.5",
+    "grunt-phpunit": "^0.3.5",
+    "grunt-preen": "^1.0.0",
+    "grunt-sed": "^0.1.1",
+    "load-grunt-tasks": "^0.6.0",
+    "time-grunt": "^1.0.0"
+  }
+}
