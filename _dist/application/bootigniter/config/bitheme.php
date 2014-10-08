@@ -1,0 +1,26 @@
+<?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
+/**
+ * @package     BootIgniter Pack
+ * @subpackage  Bitheme
+ * @category    Configurations
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
+ * @license     http://github.com/feryardiant/bootigniter/blob/master/LICENSE
+ * @since       Version 0.1.5
+ */
+
+/*
+|--------------------------------------------------------------------------
+| Minimal Version of Web browser that allowed to run this app
+|--------------------------------------------------------------------------
+*/
+
+$config['bitheme_min_browser'] = array(
+    'Firefox'           => 4,
+    'Chrome'            => 8,
+    'Internet Explorer' => 8,
+    );
+
+
+/* End of file bitheme.php */
+/* Location: ./bootigniter/config/bitheme.php */
