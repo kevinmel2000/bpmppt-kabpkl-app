@@ -12,16 +12,7 @@
 				<div class="row">
 					<div class="<?php echo twbs_set_columns(4, 4, 4, 6, 4) ?>">
 						<p>Total Data</p>
-						<canvas <?php echo parse_attrs(array(
-							'id'             => $link.'-chart',
-							'class'          => 'charts',
-							'width'          => '100px',
-							'height'         => '100px',
-							'data-pending'   => $izin['pending'],
-							'data-approved'  => $izin['approved'],
-							'data-done'      => $izin['done'],
-							'data-deleted'   => $izin['deleted'],
-						)) ?>></canvas>
+						<div <?php echo parse_attrs($izin['chart']) ?>></div>
 						<h1 class="total-layanan"><?php echo $izin['total'] ?></h1>
 					</div>
 
