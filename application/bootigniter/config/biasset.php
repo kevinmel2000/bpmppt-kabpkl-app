@@ -25,7 +25,7 @@ $config['biasset_path_prefix'] = 'asset/';
 */
 
 $vendor_path = 'js/lib/';
-$bower_path = ENVIRONMENT == 'development' ? 'bower/' : 'vendor/';
+$bower_path = 'vendor/';
 $jqueryui_version = '1.11.1';
 
 $config['biasset_register_styles'] = array(
