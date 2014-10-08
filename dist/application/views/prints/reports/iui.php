@@ -6,10 +6,8 @@
             <th>Nama Perusahaan</th>
             <th>Alamat Perusahaan</th>
             <th>Nama Pemohon</th>
-            <th>Skala Usaha</th>
-            <th>Jenis KKI</th>
             <th>KBLI</th>
-            <th>Jenis Permohonan</th>
+            <th>Jenis KKI</th>
             <th>Tanggal Permohonan</th>
         </tr>
         <tr>
@@ -20,9 +18,7 @@
             <th>5</th>
             <th>6</th>
             <th>7</th>
-            <th>8</th>
             <th>9</th>
-            <th>10</th>
         </tr>
     </thead>
     <tbody>
@@ -33,10 +29,8 @@
             <td class="align-left"><?php echo $row->usaha_nama ?></td>
             <td class="align-left"><?php echo $row->usaha_alamat ?></td>
             <td class="align-left"><?php echo $row->pemohon_nama ?></td>
-            <td class="align-left"><?php echo $row->usaha_skala ?></td>
             <td class="align-left"><?php echo $row->usaha_jenis_kki ?></td>
             <td class="align-center"><?php echo $row->usaha_jenis_kbli ?></td>
-            <td class="align-left"><?php echo $row->permohonan_jenis ?></td>
             <td class="align-center"><?php echo format_date( $row->created_on ) ?></td>
         </tr>
     <?php $i++; endforeach; else : ?>

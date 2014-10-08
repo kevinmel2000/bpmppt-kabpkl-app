@@ -10,8 +10,4 @@ Your username: <?php echo $username; ?>
 Your email address: <?php echo $email; ?>
 
 <?php /* Your new password: <?php echo $new_password; ?>
-
 */ ?>
-
-Thank you,
-The <?php echo get_app_config('skpd_name') ?> Team

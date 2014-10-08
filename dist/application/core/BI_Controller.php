@@ -1,11 +1,16 @@
-<?php if (! defined('BASEPATH')) exit('No direct script access allowed');
-
+<?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
 /**
- * BAKA Controller Class
- *
- * @subpackage  Core
- * @category    Controller
+ * @package     BootIgniter Pack
+ * @subpackage  BI_Controller
+ * @category    Core
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
+ * @license     http://github.com/feryardiant/bootigniter/blob/master/LICENSE
+ * @since       Version 0.1.5
  */
+
+// -----------------------------------------------------------------------------
+
 class BI_Controller extends CI_Controller
 {
     protected $current_user;
@@ -19,37 +24,30 @@ class BI_Controller extends CI_Controller
     {
         parent::__construct();
 
-        $script = "$('.twbs-tooltip').tooltip();";
-        set_script('bootstrap-tooltip-trigger', $script, 'bootstrap');
-
-        $this->current_user = $this->biauth->get_current_user();
-
-        if ( isset($this->current_user['status']) and $this->current_user['status'] == 1 )
+        if ($current_user = $this->biauth->get_current_user())
         {
-            // Adding sub of main and user navbar
-            $this->navbar();
+            $this->current_user = $current_user;
+
+            if ( isset($this->current_user['status']) and $this->current_user['status'] == 1 )
+            {
+                $this->navbar();
+            }
         }
 
-        // var_dump( preg_split('/(%\w+|\s+)/i', '%Y-%m-%d %H:%i:%s', -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY) );
-
-        $app_name = config_item('application_name');
-
-        $this->data['brand_link']  = anchor(base_url(), $app_name, 'class="navbar-brand"');
+        $this->data['brand_link']  = anchor(base_url(), config_item('application_name'), 'class="navbar-brand"');
 
         $this->data['load_toolbar'] = FALSE;
-        $this->data['search_form']  = FALSE;
-        $this->data['single_page']  = TRUE;
-        $this->data['form_page']    = FALSE;
+        $this->data['data_page']    = FALSE;
 
-        $this->data['need_print']   = FALSE;
+        // $this->data['need_print']   = FALSE;
 
         $this->data['tool_buttons'] = array();
 
         $this->data['panel_title']  = '';
         $this->data['panel_body']   = '';
 
-        $this->data['footer_left']  = '&copy; '.get_setting('skpd_name').' '.get_setting('skpd_city');
-        $this->data['footer_right'] = $app_name.' Ver. '.config_item('application_version');
+        $this->data['footer_left']  = '&copy; '.Bootigniter::get_setting('skpd_name').' '.Bootigniter::get_setting('skpd_city');
+        $this->data['footer_right'] = Bootigniter::app('name').' Ver. '.Bootigniter::app('version');
 
         log_message('debug', "#BootIgniter: Core Controller Class Initialized");
     }

@@ -1,34 +1,32 @@
 <?php if ( !defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * @package     BootIgniter Pack
- * @subpackage  Common
- * @category    Helper
+ * @subpackage  Bicommons
+ * @category    Common Helpers
  * @author      Fery Wardiyanto
  * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
- * @license     https://github.com/feryardiant/bootigniter/blob/master/license.md
+ * @license     http://github.com/feryardiant/bootigniter/blob/master/LICENSE
  * @since       Version 0.1.5
  */
 
 // -----------------------------------------------------------------------------
 
-function _x( $lang_line, $replacement = '' )
+function _x( $line, $reps = '' )
 {
     $CI_lang =& get_instance()->lang;
+    $line = $CI_lang->line($line);
 
-    $lang_line = $CI_lang->line($lang_line);
+    if (!empty($reps))
+    {
+        if (!is_array($reps))
+        {
+            $reps = array($reps);
+        }
 
-    if (is_array($replacement) and count($replacement) > 0)
-    {
-        return vsprintf($lang_line, $replacement);
+        return vsprintf($line, $reps);
     }
-    else if (is_string($replacement) and strlen($replacement) > 0)
-    {
-        return sprintf($lang_line, $replacement);
-    }
-    else
-    {
-        return $lang_line;
-    }
+
+    return $line;
 }
 
 // -----------------------------------------------------------------------------
@@ -74,7 +72,8 @@ function redirect( $uri = '', $method = 'location', $http_response_code = 302 )
  */
 function is_valid_url( $url )
 {
-    $url_pattern = "/^(http(s?):\/\/|(\/\/?))/";
+    $url_pattern = "/^(http(s?):\/\/|(\/\/?)|(www.?))/i";
+    // $url_pattern = "#(^|\s|\()((http(s?)://)|(www\.))(\w+[^\s\)\<]+)#i";
 
     return (bool) preg_match($url_pattern, $url);
 }
@@ -97,35 +96,6 @@ function is_valid_email( $email )
 // -----------------------------------------------------------------------------
 
 /**
- * CI default get spesific config item with 'bi_' prefix
- *
- * @param   string  $name  Config name
- *
- * @return  mixed
- */
-function get_conf( $name )
-{
-    return config_item( 'bi_'.$name );
-}
-
-// -----------------------------------------------------------------------------
-
-/**
- * Get default application setting
- *
- * @param   string  $name  Setting name
- * @return  mixed
- */
-function get_setting( $name )
-{
-    $bootigniter =& Bootigniter::get_instance();
-
-    return $bootigniter->get_setting( $name );
-}
-
-// -----------------------------------------------------------------------------
-
-/**
  * Get application message(s)
  *
  * @param   string  $level  Message level
@@ -133,7 +103,7 @@ function get_setting( $name )
  */
 function get_message( $level = FALSE )
 {
-    $bootigniter =& Bootigniter::get_instance();
+    $bootigniter =& get_instance()->bootigniter;
 
     return $bootigniter->get_message( $level );
 }
@@ -149,7 +119,7 @@ function get_message( $level = FALSE )
  */
 function set_message( $level, $msg_item )
 {
-    $bootigniter =& Bootigniter::get_instance();
+    $bootigniter =& get_instance()->bootigniter;
 
     return $bootigniter->set_message( $level, $msg_item );
 }
@@ -225,8 +195,7 @@ function print_pre( $debug = null )
 {
     if ( !empty( $debug ) )
     {
-        $debug = print_r( $debug, TRUE );
-        echo '<pre>'.$debug.'</pre>';
+        echo '<pre>'.print_r( $debug, TRUE ).'</pre>';
     }
 }
 
