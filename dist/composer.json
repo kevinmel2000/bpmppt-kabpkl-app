@@ -1,0 +1,33 @@
+{
+  "name": "feryardiant/bpmppt",
+  "version": "0.1.5",
+  "homepage": "http://feryardiant.github.com/bpmppt",
+  "description": "Aplikasi Pengelolaan Dokumen Perijinan di BPMPPT Kab. Pekalongan",
+  "keywords": [ "codeigniter", "application", "package" ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Fery Wardiyanto",
+      "email": "ferywardiyanto@gmail.com"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/feryardiant/bpmppt/issues",
+    "source": "https://github.com/feryardiant/bpmppt/tree/master"
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/feryardiant/bpmppt"
+    }
+  ],
+  "require": {
+    "php": ">=5.2.4"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "3.7.*",
+    "phpunit/dbunit": "1.2.*"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}

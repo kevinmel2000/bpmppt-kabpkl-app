@@ -1,0 +1,33 @@
+# Ignore OS Related/Generic
+Thumbs.db
+Desktop.ini
+Icon?
+.DS_Store
+_*
+.*
+*.bak
+*.old
+*.orig
+*.lock
+*.diff
+*.patch
+*.err
+*.log
+*.swp
+*~
+*.zip
+
+# Dependencies Folder
+/node_modules/
+/vendor/
+
+# Ignore Application Specifics
+/application/storage/*/*
+
+# but leave there Application Specifics
+!.htaccess
+!index.html
+!.git*
+!.travis.yml
+!.editorconfig
+!.css*
