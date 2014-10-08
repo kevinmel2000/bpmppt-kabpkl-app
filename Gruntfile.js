@@ -75,7 +75,6 @@ module.exports = function(grunt) {
               '!_*',
               '!appconfig.php',
               '.htaccess',
-              '.gitignore',
               'package.json',
               'README.md',
               'LICENSE'
