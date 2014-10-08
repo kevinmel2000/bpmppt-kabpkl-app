@@ -43,7 +43,7 @@ module.exports = function(grunt) {
     },
 
     copy: {
-      app: {
+      dist: {
         files: [
           {
             expand: true,
@@ -76,6 +76,7 @@ module.exports = function(grunt) {
               '!appconfig.php',
               '.htaccess',
               '.gitignore',
+              'package.json',
               'README.md',
               'LICENSE'
             ],

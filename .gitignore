@@ -35,4 +35,5 @@ _*
 !.bowerrc
 !.css*
 !.js*
+!_dist/
 !/application/storage/logs/view.php
