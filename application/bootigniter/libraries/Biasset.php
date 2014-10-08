@@ -108,11 +108,24 @@ class Biasset
                 'dep' => !is_array($dep) ? array($dep) : $dep,
                 );
         }
+        elseif (!isset($this->_registered[$type][$id]) and ENVIRONMENT == 'development')
+        {
+            $this->_registered[$type][$id] = array(
+                'src' => 'js/src/'.$id.'.js',
+                'ver' => Bootigniter::app('version'),
+                'dep' => $dep,
+                );
+        }
 
         $asset = $this->_registered[$type][$id];
 
         if (!empty($asset['dep']))
         {
+            if (!is_array($asset['dep']))
+            {
+                $asset['dep'] = array($asset['dep']);
+            }
+
             foreach ($asset['dep'] as $dep_id)
             {
                 if (isset($this->_registered[$type][$dep_id]))

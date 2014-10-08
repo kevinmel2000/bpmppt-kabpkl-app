@@ -41,33 +41,49 @@ class Utama extends BI_Controller
         {
             foreach($modules as $link => $layanan)
             {
+                $pending  = $this->bpmppt->count_data($layanan['alias'], array('status' => 'pending')) ?: 0;
+                $approved = $this->bpmppt->count_data($layanan['alias'], array('status' => 'approved')) ?: 0;
+                $deleted  = $this->bpmppt->count_data($layanan['alias'], array('status' => 'deleted')) ?: 0;
+                $done     = $this->bpmppt->count_data($layanan['alias'], array('status' => 'done')) ?: 0;
+
                 $this->data['panel_body'][$link] = array(
                     'label'    => $layanan['label'],
                     'alias'    => $layanan['alias'],
                     'total'    => $this->bpmppt->count_data($layanan['alias']),
-                    'pending'  => $this->bpmppt->count_data($layanan['alias'], array('status' => 'pending')),
-                    'approved' => $this->bpmppt->count_data($layanan['alias'], array('status' => 'approved')),
-                    'deleted'  => $this->bpmppt->count_data($layanan['alias'], array('status' => 'deleted')),
-                    'done'     => $this->bpmppt->count_data($layanan['alias'], array('status' => 'done')),
+                    'pending'  => $pending,
+                    'approved' => $approved,
+                    'deleted'  => $deleted,
+                    'done'     => $done,
+                    'chart'    => array(
+                        'id'             => $link.'-chart',
+                        'class'          => 'charts',
+                        'width'          => '100px',
+                        'height'         => '100px',
+                        'data-pending'   => $pending,
+                        'data-approved'  => $approved,
+                        'data-done'      => $deleted,
+                        'data-deleted'   => $done,
+                        ),
                     );
             }
 
-            $script = "$('.charts').each(function () {\n"
-                    . "    var el = $(this),\n"
-                    . "        ctx = el.get(0).getContext('2d'),\n"
-                    . "        data = [\n"
-                    . "            { value: el.data('pending'),  color: '#f0ad4e'},\n"
-                    . "            { value: el.data('approved'), color: '#428bca'},\n"
-                    . "            { value: el.data('deleted'),  color: '#d9534f'},\n"
-                    . "            { value: el.data('done'),     color: '#5cb85c'},\n"
-                    . "        ],\n"
-                    . "        options = {\n"
-                    . "            segmentShowStroke : false\n"
-                    . "        },\n"
-                    . "        myNewChart = new Chart(ctx).Doughnut(data, options);\n"
-                    . "});";
+            // $script = "$('.charts').each(function () {\n"
+            //         . "    var el = $(this),\n"
+            //         . "        ctx = el.get(0).getContext('2d'),\n"
+            //         . "        data = [\n"
+            //         . "            { value: el.data('pending'),  color: '#f0ad4e'},\n"
+            //         . "            { value: el.data('approved'), color: '#428bca'},\n"
+            //         . "            { value: el.data('deleted'),  color: '#d9534f'},\n"
+            //         . "            { value: el.data('done'),     color: '#5cb85c'},\n"
+            //         . "        ],\n"
+            //         . "        options = {\n"
+            //         . "            segmentShowStroke : false\n"
+            //         . "        },\n"
+            //         . "        myNewChart = new Chart(ctx).Doughnut(data, options);\n"
+            //         . "});";
 
-            load_script('chartjs-trigger', $script, '', 'chartjs');
+            // load_script('morris');
+            // load_script('charts');
 
             $this->load->theme('overview', $this->data);
         }
