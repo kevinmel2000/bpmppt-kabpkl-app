@@ -15,7 +15,7 @@ fi
 wget -O - --progress=bar:force https://codeload.github.com/feryardiant/bpmppt/tar.gz/bpmppt | tar xz
 echo "\033[01;32m✔ \033[00mDownload and Extract new updates"
 
-for oldee in *; do
+for oldee in  application asset system index.php package.json database.sql LICENSE README.md; do
     if [ -d "$oldee" ] && [ "$oldee" != 'bpmppt-bpmppt' ] && [ "$oldee" != 'backups' ]; then
         cp -rf "$oldee" "$bdir"
         rm -rf "$oldee"
@@ -29,4 +29,5 @@ for oldee in *; do
     fi
 done
 unset oldee
+
 
