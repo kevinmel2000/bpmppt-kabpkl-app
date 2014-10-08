@@ -1,4 +1,20 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
+/**
+ * @package     BPMPPT
+ * @subpackage  Bpmppt_imb Driver
+ * @category    Drivers
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) BPMPPT Kab. Pekalongan
+ * @license     http://github.com/feryardiant/bpmppt/blob/master/LICENSE
+ * @since       Version 0.1.5
+ */
+
+/*
+| ------------------------------------------------------------------------------
+| Izin Mendirikan Bangunan
+| ------------------------------------------------------------------------------
+*/
+
 /**
  * BPMPPT Izin Mendirikan Bangunan Driver
  *

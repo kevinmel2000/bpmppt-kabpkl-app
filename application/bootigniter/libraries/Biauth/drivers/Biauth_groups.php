@@ -1,21 +1,16 @@
-<?php if (! defined('BASEPATH')) exit('No direct script access allowed');
-
+<?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
 /**
  * @package     BootIgniter Pack
+ * @subpackage  Biauth_groups
+ * @category    Drivers
  * @author      Fery Wardiyanto
  * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
- * @license     https://github.com/feryardiant/bootigniter/blob/master/license.md
+ * @license     http://github.com/feryardiant/bootigniter/blob/master/LICENSE
  * @since       Version 0.1.5
  */
 
 // -----------------------------------------------------------------------------
 
-/**
- * Biauth Groups Driver
- *
- * @subpackage  Drivers
- * @category    Security
- */
 class Biauth_groups extends CI_Driver
 {
     /**
@@ -33,13 +28,13 @@ class Biauth_groups extends CI_Driver
     public function fetch()
     {
         return $this->_ci->db->select("a.*")
-                             ->select("count(c.id) perm_count")
-                             ->select("group_concat(distinct c.id) perm_id")
-                             ->select("group_concat(distinct c.description) perm_desc")
-                             ->from($this->table['groups'].' a')
-                             ->join($this->table['group_perms'].' b','b.group_id = a.id', 'inner')
-                             ->join($this->table['permissions'].' c','c.id = b.perms_id', 'inner')
-                             ->group_by('a.id');
+            ->select("count(c.id) perm_count")
+            ->select("group_concat(distinct c.id) perm_id")
+            ->select("group_concat(distinct c.description) perm_desc")
+            ->from($this->table['groups'].' a')
+            ->join($this->table['group_perms'].' b','b.group_id = a.id', 'inner')
+            ->join($this->table['permissions'].' c','c.id = b.perms_id', 'inner')
+            ->group_by('a.id');
     }
 
     // -------------------------------------------------------------------------
@@ -72,15 +67,35 @@ class Biauth_groups extends CI_Driver
 
     // -------------------------------------------------------------------------
 
-    public function set($group_data = array(), $user_id)
+    public function add($group_data)
     {
-        return TRUE;
-    }
+        $group_perms = array();
+        $group_data = array_set_defaults($group_data, array(
+            'perms' => array(),
+            ));
 
-    // -------------------------------------------------------------------------
+        if (!empty($group_data['perms']))
+        {
+            $group_perms = $group_data['perms'];
+            unset($group_data['perms']);
+        }
 
-    public function add($group_data = array(), $user_id)
-    {
+        $this->_ci->db->trans_start();
+
+        $this->_ci->db->insert($this->table['groups'], $group_data);
+        $group_id = $this->_ci->db->insert_id();
+        $this->set_perms($group_id, $group_perms);
+
+        $this->_ci->db->trans_complete();
+
+        if ($this->_ci->db->trans_status() === FALSE)
+        {
+            $this->_ci->db->trans_rollback();
+            log_message('error', '#Biauth: Groups->add failed adding new group.');
+            return FALSE;
+        }
+
+        log_message('info', '#Biauth: Groups->add success adding new group.');
         return TRUE;
     }
 
@@ -95,39 +110,59 @@ class Biauth_groups extends CI_Driver
      *
      * @return  bool
      */
-    public function edit($group_data, $group_id = NULL, $perms = array())
+    public function edit($group_id, $group_data)
     {
+        $group_perms = array();
+        $group_data = array_set_defaults($group_data, array(
+            'perms' => array(),
+            ));
+
+        if (!empty($group_data['perms']))
+        {
+            $group_perms = $group_data['perms'];
+            unset($group_data['perms']);
+        }
+
         $this->_ci->db->trans_start();
 
-        if (!is_null($group_id))
-        {
-            $this->_ci->db->update($this->table['groups'], $group_data, array('id' => $group_id));
-        }
-        else
-        {
-            $this->_ci->db->insert($this->table['groups'], $group_data);
-            $group_id = $this->_ci->db->insert_id();
-        }
-
-        if (count($perms) > 0)
-        {
-            $return = $this->update_group_perm($perms, $group_id);
-        }
+        $this->_ci->db->update($this->table['groups'], $group_data, array('id' => $group_id));
+        $return = $this->edit_perms($group_id, $group_perms);
 
         $this->_ci->db->trans_complete();
 
-        if (!($return = $this->_ci->db->trans_status()))
+        if ($this->_ci->db->trans_status() === FALSE)
         {
             $this->_ci->db->trans_rollback();
+            log_message('error', '#Biauth: Groups->edit failed updating existing group.');
+            return FALSE;
         }
 
-        return $return;
+        log_message('info', '#Biauth: Groups->edit success updating existing group.');
+        return TRUE;
     }
 
     // -------------------------------------------------------------------------
 
-    public function change($group_id, $group_data = array())
+    /**
+     * Switch default groups
+     *
+     * @param  integer  $group_id  Group Id
+     */
+    public function set_default($group_id)
     {
+        if (!$this->_ci->db->update($this->table['groups'], array('default' => 0), array('default' => 1)))
+        {
+            log_message('error', '#Biauth: Groups->set_default failed unset existing default group.');
+            return FALSE;
+        }
+
+        if (!$this->_ci->db->update($this->table['groups'], array('default' => 1), array('id' => $group_id)))
+        {
+            log_message('error', '#Biauth: Groups->set_default failed setup new default group.');
+            return FALSE;
+        }
+
+        log_message('info', '#Biauth: Groups->set_default success setup new default group.');
         return TRUE;
     }
 
@@ -159,21 +194,54 @@ class Biauth_groups extends CI_Driver
     // -------------------------------------------------------------------------
 
     /**
-     * Get related permissions of group_id
+     * Set permissions of group_id relation
      *
      * @param   integer  $group_id  Group ID
      *
      * @return  array
      */
-    public function fetch_perms($group_id)
+    public function set_perms($group_id, $new_perms, $old_perms = array())
+    {
+        if (empty($old_perms) and ($perms = $this->_ci->db->get($this->table['permissions'])))
+        {
+            $old_perms = array();
+            foreach ($perms->result() as $perm)
+            {
+                $old_perms[] = $perm->id;
+            }
+        }
+
+        foreach ($new_perms as $perm_id)
+        {
+            if (in_array($perm_id, $old_perms))
+            {
+                $perms_data[] = array('group_id' => $group_id, 'perms_id' => $perm_id);
+            }
+
+            $this->_ci->db->insert_batch($this->table['group_perms'], $perms_data);
+        }
+
+        return FALSE;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Get permissions of group_id relation
+     *
+     * @param   integer  $group_id  Group ID
+     *
+     * @return  array
+     */
+    public function get_perms($group_id)
     {
         $query = $this->_ci->db->get_where($this->table['group_perms'], array('group_id' => $group_id));
 
-        if ($query->num_rows() > 0)
+        if ($query and $query->num_rows() > 0)
         {
             foreach ($query->result() as $row)
             {
-                $result[] = $row->permission_id;
+                $result[] = $row->perms_id;
             }
 
             return $result;
@@ -192,36 +260,43 @@ class Biauth_groups extends CI_Driver
      *
      * @return  mixed
      */
-    public function update_perms($permissions = array(), $group_id)
+    public function edit_perms($group_id, $new_perms = array())
     {
-        if (count($permissions) > 0)
+        if (empty($new_perms))
         {
-            $related_permission = $this->fetch($group_id);
-
-            foreach ($permissions as $perm_id)
-            {
-                if (!in_array($perm_id, $related_permission))
-                {
-                    $return = $this->_ci->db->insert($this->table['group_perms'], array(
-                        'group_id'       => $group_id,
-                        'permission_id' => $perm_id));
-                }
-            }
-
-            if ($related_permission)
-            {
-                foreach ($related_permission as $rel_id)
-                {
-                    if (!in_array($rel_id, $permissions))
-                    {
-                        $return = $this->_ci->db->delete($this->table['group_perms'], array(
-                            'permission_id' => $rel_id));
-                    }
-                }
-            }
-
-            return $return;
+            return FALSE;
         }
+
+        $old_perms = $this->get_perms($group_id);
+        $this->_ci->db->trans_start();
+
+        foreach (array_diff($old_perms, $new_perms) as $key => $old_id)
+        {
+            unset($old_perms[$key]);
+            $this->delete_perm($group_id, $old_id);
+        }
+
+        $this->set_perms($group_id, $new_perms, $old_perms);
+
+        $this->_ci->db->trans_complete();
+
+        if ($this->_ci->db->trans_status() === FALSE)
+        {
+            $this->_ci->db->trans_rollback();
+            log_message('error', '#Biauth: Groups->edit_perms failed updating existing groupperms.');
+            return FALSE;
+        }
+
+        log_message('info', '#Biauth: Groups->edit_perms success updating existing groupperms.');
+        return TRUE;
+    }
+
+    public function delete_perm($group_id, $perm_id)
+    {
+        return $this->_ci->db->delete($this->table['group_perms'], array(
+            'group_id' => $group_id,
+            'perm_id' => $perm_id
+            ));
     }
 }
 

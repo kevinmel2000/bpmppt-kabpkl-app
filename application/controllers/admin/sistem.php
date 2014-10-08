@@ -1,10 +1,16 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+<?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
 /**
- * Sistem Class
- *
- * @subpackage  Controller
+ * @package     BootIgniter Pack
+ * @subpackage  Sistem
+ * @category    Controller
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
+ * @license     http://github.com/feryardiant/bootigniter/blob/master/LICENSE
+ * @since       Version 0.1.5
  */
+
+// -----------------------------------------------------------------------------
+
 class Sistem extends BI_Controller
 {
     public function __construct()
@@ -174,7 +180,7 @@ class Sistem extends BI_Controller
 
         $this->set_panel_body($form->generate());
 
-        $this->load->theme('pages/panel_info', $this->data);
+        $this->load->theme('dataform', $this->data);
     }
 
     public function logs( $file = '' )
@@ -253,7 +259,7 @@ class Sistem extends BI_Controller
 
         $this->data['panel_body'] = $panel_body;
 
-        $this->load->theme('pages/syslogs', $this->data);
+        $this->load->theme('syslogs', $this->data);
     }
 
     public function backup()
@@ -357,7 +363,7 @@ class Sistem extends BI_Controller
 
         $this->data['panel_body'] = $form->generate();
 
-        $this->load->theme('pages/panel_form', $this->data);
+        $this->load->theme('dataform', $this->data);
     }
 
     public function restore()
@@ -459,7 +465,7 @@ class Sistem extends BI_Controller
 
         $this->data['panel_body'] = $form->generate();
 
-        $this->load->theme('pages/panel_form', $this->data);
+        $this->load->theme('dataform', $this->data);
     }
 }
 

@@ -1,9 +1,20 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
 /**
- * BPMPPT Persetujuan Prinsip Driver
- *
- * @subpackage  Drivers
+ * @package     BPMPPT
+ * @subpackage  Bpmppt_prinsip Driver
+ * @category    Drivers
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) BPMPPT Kab. Pekalongan
+ * @license     http://github.com/feryardiant/bpmppt/blob/master/LICENSE
+ * @since       Version 0.1.5
  */
+
+/*
+| ------------------------------------------------------------------------------
+| Persetujuan
+| ------------------------------------------------------------------------------
+*/
+
 class Bpmppt_prinsip extends CI_Driver
 {
     /**

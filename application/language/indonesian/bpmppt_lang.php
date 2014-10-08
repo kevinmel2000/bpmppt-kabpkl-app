@@ -1,12 +1,12 @@
 <?php if ( !defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * @package     BootIgniter Pack
- * @subpackage  Base Translation
- * @category    Languages
+ * @package     BPMPPT
+ * @subpackage  Bpmppt Language
+ * @category    Translation
  * @author      Fery Wardiyanto
- * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
- * @license     https://github.com/feryardiant/bootigniter/blob/master/license.md
- * @since       Version 1.0.1
+ * @copyright   Copyright (c) BPMPPT Kab. Pekalongan
+ * @license     http://github.com/feryardiant/bpmppt/blob/master/LICENSE
+ * @since       Version 0.1.5
  */
 
 // -----------------------------------------------------------------------------

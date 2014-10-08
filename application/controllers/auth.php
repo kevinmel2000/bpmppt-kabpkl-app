@@ -1,17 +1,23 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+<?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
 /**
- * Auth Class
- *
- * @subpackage  Controller
+ * @package     BootIgniter Pack
+ * @subpackage  Biauth
+ * @category    Controller
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
+ * @license     http://github.com/feryardiant/bootigniter/blob/master/LICENSE
+ * @since       Version 0.1.5
  */
+
+// -----------------------------------------------------------------------------
+
 class Auth extends BI_Controller
 {
     public function __construct()
     {
         parent::__construct();
 
-        $this->data['desc_title'] = get_setting('welcome_title');
+        $this->data['desc_title'] = Bootigniter::get_setting('welcome_title');
 
         $this->load->library('biform');
         $this->set_panel_title('User Authentication');
@@ -27,12 +33,12 @@ class Auth extends BI_Controller
         $this->verify_status();
         $this->set_panel_title('Login Pengguna');
 
-        $attempts = ( get_setting('auth_login_count_attempts') AND ($attempts = $this->input->post('username'))) ? $this->security->xss_clean($attempts) : '';
+        $attempts = ( Bootigniter::get_setting('auth_login_count_attempts') AND ($attempts = $this->input->post('username'))) ? $this->security->xss_clean($attempts) : '';
 
         $fields[]   = array(
             'name'  => 'username',
             'type'  => 'text',
-            'label' => _x('biauth_login_by_'.get_setting('auth_login_by')),
+            'label' => _x('biauth_login_by_'.Bootigniter::get_setting('auth_login_by')),
             'validation'=> 'required' );
 
         $fields[]   = array(
@@ -49,7 +55,7 @@ class Auth extends BI_Controller
 
         if ( $this->biauth->login_attempt->is_max_exceeded( $attempts ) )
         {
-            $captcha = (bool) get_setting('auth_use_recaptcha') ? 'recaptcha' : 'captcha';
+            $captcha = (bool) Bootigniter::get_setting('auth_use_recaptcha') ? 'recaptcha' : 'captcha';
 
             $fields[]   = array(
                 'name'  => $captcha,
@@ -71,7 +77,7 @@ class Auth extends BI_Controller
             'url'   => 'forgot',
             'class' => 'btn-default pull-right' );
 
-        if ( (bool) get_setting('auth_allow_registration') )
+        if ( (bool) Bootigniter::get_setting('auth_allow_registration') )
         {
             $buttons[]  = array(
                 'name'  => 'register',
@@ -113,9 +119,9 @@ class Auth extends BI_Controller
 
         $this->set_panel_body($form->generate());
 
-        $this->data['desc_body'] = get_setting('welcome_login');
+        $this->data['desc_body'] = Bootigniter::get_setting('welcome_login');
 
-        $this->load->theme('pages/auth', $this->data, 'auth');
+        $this->load->theme('auth', $this->data, 'auth');
     }
 
     public function register()
@@ -124,12 +130,12 @@ class Auth extends BI_Controller
 
         $this->set_panel_title('Register Pengguna');
 
-        if ( !get_setting('auth_allow_registration') )
+        if ( !Bootigniter::get_setting('auth_allow_registration') )
         {
             $this->_notice('registration-disabled');
         }
 
-        $login_by = get_setting('auth_login_by');
+        $login_by = Bootigniter::get_setting('auth_login_by');
 
         if ( $login_by == 'login' or $login_by == 'username' )
         {
@@ -158,9 +164,9 @@ class Auth extends BI_Controller
             'label' => 'Ulangi Password',
             'validation'=> 'required|matches[password]' );
 
-        if ( (bool) get_setting('auth_captcha_registration') )
+        if ( (bool) Bootigniter::get_setting('auth_captcha_registration') )
         {
-            $captcha = (bool) get_setting('auth_use_recaptcha') ? 'recaptcha' : 'captcha';
+            $captcha = (bool) Bootigniter::get_setting('auth_use_recaptcha') ? 'recaptcha' : 'captcha';
 
             $fields[]   = array(
                 'name'  => $captcha,
@@ -216,11 +222,11 @@ class Auth extends BI_Controller
             redirect( $goto );
         }
 
-        $this->data['desc_body'] = get_setting('welcome_register');
+        $this->data['desc_body'] = Bootigniter::get_setting('welcome_register');
 
         $this->set_panel_body($form->generate());
 
-        $this->load->theme('pages/auth', $this->data, 'auth');
+        $this->load->theme('auth', $this->data, 'auth');
     }
 
     public function resend()
@@ -279,11 +285,11 @@ class Auth extends BI_Controller
             }
         }
 
-        $this->data['desc_body'] = get_setting('welcome_resend');
+        $this->data['desc_body'] = Bootigniter::get_setting('welcome_resend');
 
         $this->set_panel_body($form->generate());
 
-        $this->load->theme('pages/auth', $this->data, 'auth');
+        $this->load->theme('auth', $this->data, 'auth');
     }
 
     public function forgot()
@@ -341,11 +347,11 @@ class Auth extends BI_Controller
             }
         }
 
-        $this->data['desc_body'] = get_setting('welcome_forgot');
+        $this->data['desc_body'] = Bootigniter::get_setting('welcome_forgot');
 
         $this->set_panel_body($form->generate());
 
-        $this->load->theme('pages/auth', $this->data, 'auth');
+        $this->load->theme('auth', $this->data, 'auth');
     }
 
     public function activate( $user_id = NULL, $email_key = NULL )
@@ -433,7 +439,7 @@ class Auth extends BI_Controller
 
         $this->set_panel_body($form->generate());
 
-        $this->load->theme('pages/auth', $this->data, 'auth');
+        $this->load->theme('auth', $this->data, 'auth');
     }
 
     public function logout()

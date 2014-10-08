@@ -12,8 +12,4 @@ Your username: <?php echo $username; ?>
 Your email address: <?php echo $email; ?>
 
 <?php /* Your password: <?php echo $password; ?>
-
 */ ?>
-
-Have fun!
-The <?php echo get_app_config('skpd_name') ?> Team

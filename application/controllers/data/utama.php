@@ -1,10 +1,16 @@
-<?php if ( ! defined('BASEPATH')) exit ('No direct script access allowed');
-
+<?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
 /**
- * Utama Class
- *
- * @subpackage  Controller
+ * @package     BPMPPT
+ * @subpackage  Utama
+ * @category    Controller
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) BPMPPT Kab. Pekalongan
+ * @license     http://github.com/feryardiant/bpmppt/blob/master/LICENSE
+ * @since       Version 0.1.5
  */
+
+// -----------------------------------------------------------------------------
+
 class Utama extends BI_Controller
 {
     public function __construct()
@@ -33,9 +39,6 @@ class Utama extends BI_Controller
 
         if ( !empty($modules) )
         {
-            // $this->data['load_toolbar'] = TRUE;
-            // $this->data['search_form']   = TRUE;
-
             foreach($modules as $link => $layanan)
             {
                 $this->data['panel_body'][$link] = array(
@@ -48,8 +51,6 @@ class Utama extends BI_Controller
                     'done'     => $this->bpmppt->count_data($layanan['alias'], array('status' => 'done')),
                     );
             }
-
-            set_script('chartjs', 'js/lib/chart.min.js', 'jquery', 'master');
 
             $script = "$('.charts').each(function () {\n"
                     . "    var el = $(this),\n"
@@ -66,9 +67,9 @@ class Utama extends BI_Controller
                     . "        myNewChart = new Chart(ctx).Doughnut(data, options);\n"
                     . "});";
 
-            set_script('chartjs-trigger', $script, 'chartjs');
+            load_script('chartjs-trigger', $script, '', 'chartjs');
 
-            $this->load->theme('pages/panel_alldata', $this->data);
+            $this->load->theme('overview', $this->data);
         }
         else
         {
@@ -82,7 +83,7 @@ class Utama extends BI_Controller
 
         // $data = array_merge( (array) $data, (array) $this->bpmppt->get_fulldata_by_id( $data_id ) );
 
-        $this->load->theme('prints/reports/'.$data_type, $data, 'laporan');
+        $this->load->theme('prints/reports/'.$data_type, $data, 'report');
     }
 }
 

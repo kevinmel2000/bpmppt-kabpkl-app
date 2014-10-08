@@ -48,7 +48,7 @@
 <tr>
     <td style="width:20%"><p>Membaca</p></td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%" class="align-justify"><p>Surat Permohonan Saudara <strong><?php echo $pemohon_nama ?></strong> <?php echo (strtolower($pemohon_jabatan) == 'atas nama' ? 'atas nama <strong>'.$usaha_nama.'</strong>' : 'selaku '.$pemohon_jabatan)?>, Alamat di <strong><?php echo $usaha_alamat ?></strong>, tanggal <?php echo format_date($surat_tanggal) ?> untuk Izin tempat usaha <?php echo $usaha_jenis ?>, yang terletak di <?php echo $usaha_lokasi ?>.</p></td>
+    <td colspan="5" style="width:78%" class="align-justify"><p>Surat Permohonan Saudara <strong><?php echo $pemohon_nama ?></strong> <?php echo (strtolower($pemohon_jabatan) == 'atas nama' ? 'atas nama <strong>'.$usaha_nama.'</strong>' : 'selaku '.$pemohon_jabatan)?>, Alamat di <strong><?php echo $usaha_alamat ?></strong>, tanggal <?php echo format_date($pemohon_tanggal) ?> untuk Izin tempat usaha <?php echo $usaha_jenis ?>, yang terletak di <?php echo $usaha_lokasi ?>.</p></td>
 </tr>
 <tr><td colspan="7" style="width:100%"></td></tr>
 <tr>

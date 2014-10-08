@@ -1,10 +1,16 @@
-<?php if ( ! defined('BASEPATH')) exit ('No direct script access allowed');
-
+<?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
 /**
- * Laporan Class
- *
- * @subpackage  Controller
+ * @package     BPMPPT
+ * @subpackage  Laporan
+ * @category    Controller
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) BPMPPT Kab. Pekalongan
+ * @license     http://github.com/feryardiant/bpmppt/blob/master/LICENSE
+ * @since       Version 0.1.5
  */
+
+// -----------------------------------------------------------------------------
+
 class Laporan extends BI_Controller
 {
     public function __construct()
@@ -24,6 +30,7 @@ class Laporan extends BI_Controller
     public function index()
     {
         $this->set_panel_title('Laporan data');
+        $this->load->library('biform');
 
         foreach ( $this->bpmppt->get_modules(TRUE) as $module => $prop )
         {
@@ -74,8 +81,6 @@ class Laporan extends BI_Controller
             'label' => 'Cetak sekarang',
             'class' => 'btn-primary pull-right' );
 
-        $this->load->library('biform');
-
         $form = $this->biform->initialize( array(
             'name'      => 'print-all',
             'action'    => current_url(),
@@ -88,7 +93,7 @@ class Laporan extends BI_Controller
                 . "new Baka.popup('".current_url()."', 'Popup_Window', 800, 600);"
                 . "});";
 
-        set_script('print-popup', $script, 'baka-pack');
+        load_script('print-popup', $script, '', 'bootigniter');
 
         if ( $form_data = $form->validate_submition() )
         {
@@ -97,13 +102,13 @@ class Laporan extends BI_Controller
 
             $data = $this->bpmppt->do_report( $data_type, $form_data );
 
-            $this->load->theme('prints/reports/'.$data_type, $data, 'laporan');
+            $this->load->theme('prints/reports/'.$data_type, $data, 'report');
         }
         else
         {
             $this->data['panel_body'] = $form->generate();
 
-            $this->load->theme('pages/panel_form', $this->data);
+            $this->load->theme('dataform', $this->data);
         }
     }
 }

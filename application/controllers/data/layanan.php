@@ -1,10 +1,16 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+<?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
 /**
- * Layanan Class
- *
- * @subpackage  Controller
+ * @package     BPMPPT
+ * @subpackage  Layanan
+ * @category    Controller
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) BPMPPT Kab. Pekalongan
+ * @license     http://github.com/feryardiant/bpmppt/blob/master/LICENSE
+ * @since       Version 0.1.5
  */
+
+// -----------------------------------------------------------------------------
+
 class Layanan extends BI_Controller
 {
     public function __construct()
@@ -48,7 +54,7 @@ class Layanan extends BI_Controller
                 $this->_notice( 'no-data-accessible' );
             }
 
-            $this->load->theme('pages/panel_alldata', $this->data);
+            $this->load->theme('overview', $this->data);
         }
         else
         {
@@ -93,8 +99,6 @@ class Layanan extends BI_Controller
 
     public function data( $data_type, $id = FALSE )
     {
-        // $this->data['search_form'] = TRUE;
-
         if ($id == 'setting')
         {
             $this->data_out( $data_type );
@@ -105,6 +109,7 @@ class Layanan extends BI_Controller
         }
         else
         {
+            $this->data['data_page'] = TRUE;
             $this->data['tool_buttons']['form']              = 'Baru|primary';
             $this->data['tool_buttons']['cetak']             = 'Laporan|info';
             $this->data['tool_buttons'][] = array(
@@ -161,7 +166,7 @@ class Layanan extends BI_Controller
 
             $this->data['panel_body'] = $grid->generate( $query );
 
-            $this->load->theme('pages/panel_data', $this->data);
+            $this->load->theme('dataform', $this->data);
         }
     }
 
@@ -205,7 +210,7 @@ class Layanan extends BI_Controller
 
         $this->data['panel_body'] = $this->bpmppt->get_form( $data_type, $data_obj, $data_id );
 
-        $this->load->theme('pages/panel_form', $this->data);
+        $this->load->theme('dataform', $this->data);
     }
 
     public function cetak( $data_type, $data_id = FALSE )
@@ -223,6 +228,8 @@ class Layanan extends BI_Controller
         {
             $this->data['tool_buttons']['data'] = 'Kembali|default';
             $this->set_panel_title('Laporan data '.$this->bpmppt->get_label( $data_type ));
+
+            $this->load->library('biform');
 
             $fields[] = array(
                 'name'  => 'data_status',
@@ -259,33 +266,31 @@ class Layanan extends BI_Controller
                 'label' => 'Cetak sekarang',
                 'class' => 'btn-primary pull-right' );
 
-            $this->load->library('biform');
-
             $form = $this->biform->initialize( array(
-                'name'      => 'print-'.$data_type,
-                'action'    => current_url(),
-                'extras'    => array('target' => 'Popup_Window'),
-                'fields'    => $fields,
-                'buttons'   => $buttons,
+                'name'    => 'print-'.$data_type,
+                'action'  => current_url(),
+                'extras'  => array('target' => 'Popup_Window'),
+                'fields'  => $fields,
+                'buttons' => $buttons,
                 ));
 
             $script = "$('form[name=\"print-".$data_type."\"]').submit(function (e) {"
                     . "new Baka.popup('".current_url()."', 'Popup_Window', 800, 600);"
                     . "});";
 
-            set_script('print-popup', $script, 'baka-pack');
+            load_script('print-popup', $script);
 
             if ( $form_data = $form->validate_submition() )
             {
                 $data = $this->bpmppt->do_report( $data_type, $form_data );
 
-                $this->load->theme('prints/reports/'.$data_type, $data, 'laporan');
+                $this->load->theme('prints/reports/'.$data_type, $data, 'report');
             }
             else
             {
                 $this->data['panel_body'] = $form->generate();
 
-                $this->load->theme('pages/panel_form', $this->data);
+                $this->load->theme('dataform', $this->data);
             }
         }
     }
@@ -340,7 +345,7 @@ class Layanan extends BI_Controller
             '?>'                                                            => '%}',
             ));
 
-        $this->load->theme( 'pages/panel_form', $this->data );
+        $this->load->theme( 'dataform', $this->data );
     }
 
     public function print_out( $data_type )
@@ -362,7 +367,7 @@ class Layanan extends BI_Controller
             '?>'                                                               => '%}',
             ));
 
-        $this->load->theme( 'pages/panel_form', $this->data );
+        $this->load->theme( 'dataform', $this->data );
     }
 }
 

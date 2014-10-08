@@ -1,20 +1,16 @@
-<?php if (! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
 /**
  * @package     BootIgniter Pack
+ * @subpackage  Biupload
+ * @category    Libraries
  * @author      Fery Wardiyanto
  * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
- * @license     https://github.com/feryardiant/bootigniter/blob/master/license.md
+ * @license     http://github.com/feryardiant/bootigniter/blob/master/LICENSE
  * @since       Version 0.1.5
  */
 
 // -----------------------------------------------------------------------------
 
-/**
- * BootIgniter Upload Class
- *
- * @subpackage  Libraries
- * @category    Media Manager
- */
 class Biupload
 {
     /**
@@ -108,12 +104,7 @@ class Biupload
 
     protected function _scripts()
     {
-        // Load the JS
-        set_script('jq-fineuploader', 'js/lib/jquery.fineuploader.min.js', 'bootstrap', '5.0.3');
-        set_style('jq-fineuploader', 'js/lib/fineuploader.min.css', 'bootstrap', '5.0.3');
-
         $upload_path = str_replace(FCPATH, '', $this->_ci->upload->upload_path);
-
         // Uploader trigger
         $script = "$('.fine-uploader').each(function() {\n"
                 . "    var fu = $(this),\n"
@@ -190,7 +181,10 @@ class Biupload
                 . "    });\n"
                 . "});";
 
-        set_script('jq-fineuploader-trigger', $script, 'jq-fineuploader');
+        // Load the JS
+        // load_script('jq-fineuploader', 'js/lib/jquery.fineuploader.min.js', 'bootstrap', '5.0.3');
+        // load_style('fineuploader');
+        load_script('jq-fineuploader-trigger', $script, Bootigniter::VERSION, 'jq-fineuploader');
     }
 
     /**
@@ -203,7 +197,7 @@ class Biupload
     {
         // Default qq-template
         $out = '<script type="text/template" id="qq-template">'
-             . $this->_ci->load->view( 'upload', array(), TRUE )
+             . $this->_ci->load->view('upload', array(), TRUE)
              . '</script>';
 
         return $out;

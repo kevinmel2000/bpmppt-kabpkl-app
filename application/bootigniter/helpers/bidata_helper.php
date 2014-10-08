@@ -1,11 +1,11 @@
 <?php if ( !defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * @package     BootIgniter Pack
- * @subpackage  Data
- * @category    Helper
+ * @subpackage  Bidata
+ * @category    Data Helpers
  * @author      Fery Wardiyanto
  * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
- * @license     https://github.com/feryardiant/bootigniter/blob/master/license.md
+ * @license     http://github.com/feryardiant/bootigniter/blob/master/LICENSE
  * @since       Version 0.1.5
  */
 
@@ -98,14 +98,14 @@ function format_roman( $num )
 
 function format_date( $string = '' )
 {
-    return bdate(get_setting('app_date_format'), $string);
+    return bdate(Bootigniter::get_setting('app_date_format'), $string);
 }
 
 // -----------------------------------------------------------------------------
 
 function format_datetime( $string = '' )
 {
-    return bdate(get_setting('app_datetime_format'), $string);
+    return bdate(Bootigniter::get_setting('app_datetime_format'), $string);
 }
 
 // -----------------------------------------------------------------------------
@@ -170,22 +170,6 @@ function bdate( $format = '', $strdate = '' )
     }
 
     return implode( '', $dates );
-}
-
-// -----------------------------------------------------------------------------
-
-function baka_get_umur( $lahir, $sampai = '' )
-{
-    $tgllahir = strtotime($lahir);
-    $sekarang = ($sampai == '') ? time() : strtotime($sampai) ;
-
-    $umur = ($tgllahir < 0) ? ($sekarang + ($tgllahir * -1)) : $sekarang - $tgllahir;
-
-    $tahun = 60 * 60 * 24 * 365;
-
-    $tahunlahir = $umur / $tahun;
-
-    return floor($tahunlahir);
 }
 
 // -----------------------------------------------------------------------------

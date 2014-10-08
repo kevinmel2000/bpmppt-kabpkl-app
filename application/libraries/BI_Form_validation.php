@@ -1,24 +1,16 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+<?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
 /**
  * @package     BootIgniter Pack
+ * @subpackage  BI_Form_validation
+ * @category    Libraries
  * @author      Fery Wardiyanto
  * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
- * @license     http://dbad-license.org
- * @since       Version 0.1.3
+ * @license     http://github.com/feryardiant/bootigniter/blob/master/LICENSE
+ * @since       Version 0.1.5
  */
 
 // -----------------------------------------------------------------------------
 
-/**
- * BAKA Form Validation Class
- *
- * Pre-processes global input data for security
- * Extending native CI Form Validation
- *
- * @subpackage  Libraries
- * @category    Validation
- */
 class BI_Form_validation extends CI_Form_validation
 {
     /**
@@ -32,7 +24,7 @@ class BI_Form_validation extends CI_Form_validation
     {
         parent::__construct( $rules );
 
-        log_message('debug', "#BootIgniter: Core Form_validation Class Initialized");
+        log_message('debug', "#BootIgniter: Form_validation Class Initialized");
     }
 
     // -------------------------------------------------------------------------
@@ -47,7 +39,7 @@ class BI_Form_validation extends CI_Form_validation
     function valid_recaptcha( $code )
     {
         $resp = recaptcha_check_answer(
-                    get_setting('auth_recaptcha_public_key'),
+                    Bootigniter::get_setting('auth_recaptcha_public_key'),
                     $this->ip_address(),
                     $this->post('recaptcha_challenge_field'),
                     $code );
@@ -185,8 +177,8 @@ class BI_Form_validation extends CI_Form_validation
 
     function valid_username_length( $string )
     {
-        $min_length = get_setting('auth_username_length_min');
-        $max_length = get_setting('auth_username_length_max');
+        $min_length = Bootigniter::get_setting('auth_username_length_min');
+        $max_length = Bootigniter::get_setting('auth_username_length_max');
 
         if ( !$this->min_length( $string, $min_length ) )
         {
@@ -209,8 +201,8 @@ class BI_Form_validation extends CI_Form_validation
 
     function valid_password_length( $string )
     {
-        $min_length = get_setting('auth_password_length_min');
-        $max_length = get_setting('auth_password_length_max');
+        $min_length = Bootigniter::get_setting('auth_password_length_min');
+        $max_length = Bootigniter::get_setting('auth_password_length_max');
 
         if ( !$this->min_length( $string, $min_length ) )
         {

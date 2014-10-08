@@ -1,9 +1,20 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
 /**
- * BPMPPT Izin Gangguan Driver
- *
- * @subpackage  Drivers
+ * @package     BPMPPT
+ * @subpackage  Bpmppt_ho Driver
+ * @category    Drivers
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) BPMPPT Kab. Pekalongan
+ * @license     http://github.com/feryardiant/bpmppt/blob/master/LICENSE
+ * @since       Version 0.1.5
  */
+
+/*
+| ------------------------------------------------------------------------------
+| Izin Gangguan
+| ------------------------------------------------------------------------------
+*/
+
 class Bpmppt_ho extends CI_Driver
 {
     /**
@@ -108,6 +119,13 @@ class Bpmppt_ho extends CI_Driver
             'std'   => ( $data_obj ? $data_obj->pembaruan_ke : '') );
 
         $fields[] = array(
+            'name'  => 'pemohon_tanggal',
+            'label' => 'Tanggal Permohonan',
+            'type'  => 'datepicker',
+            'std'   => ( $data_obj ? $data_obj->pemohon_tanggal : ''),
+            'validation'=> ( !$data_obj ? 'required' : '' ) );
+
+        $fields[] = array(
             'name'  => 'fieldset_data_pemohon',
             'label' => 'Data Pemohon',
             'type'  => 'fieldset' );
@@ -208,7 +226,7 @@ class Bpmppt_ho extends CI_Driver
         $fields[] = array(
             'name'  => 'usaha_luas',
             'label' => 'Luas perusahaan (M<sup>2</sup>)',
-            'type'  => 'number',
+            'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->usaha_luas : ''),
             'validation'=> ( !$data_obj ? 'required' : ''  ) );
 

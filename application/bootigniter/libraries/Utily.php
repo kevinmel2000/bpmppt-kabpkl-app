@@ -1,21 +1,16 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+<?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
 /**
  * @package     BootIgniter Pack
+ * @subpackage  Utily
+ * @category    Libraries
  * @author      Fery Wardiyanto
  * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
- * @license     https://github.com/feryardiant/bootigniter/blob/master/license.md
+ * @license     http://github.com/feryardiant/bootigniter/blob/master/LICENSE
  * @since       Version 0.1.5
  */
 
 // -----------------------------------------------------------------------------
 
-/**
- * BootIgniter Database Utility Class
- *
- * @subpackage  Libraries
- * @category    Database
- */
 class Utily
 {
     /**
@@ -74,7 +69,7 @@ class Utily
     {
         $this->_ci =& get_instance();
 
-        $this->_file_name   = 'backup_'.str_replace(' ', '_', strtolower(config_item('application_name').'_'.time()));
+        $this->_file_name   = Bootigniter::app('name').'-backup-'.time();
         $this->_destination = APPPATH.'storage/backup/';
 
         $this->db_info['driver']         = $this->_ci->db->dbdriver;
@@ -398,7 +393,7 @@ class Utily
     {
         if ($upload == TRUE)
         {
-            $this->_destination = get_conf('upload_path');
+            $this->_destination = config_item('bi_upload_path');
 
             // Load the zip helper
             $this->_ci->load->driver('arsip');

@@ -1,10 +1,16 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+<?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
 /**
- * Pengguna Class
- *
- * @subpackage  Controller
+ * @package     BootIgniter Pack
+ * @subpackage  Pengguna
+ * @category    Controller
+ * @author      Fery Wardiyanto
+ * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
+ * @license     http://github.com/feryardiant/bootigniter/blob/master/LICENSE
+ * @since       Version 0.1.5
  */
+
+// -----------------------------------------------------------------------------
+
 class Pengguna extends BI_Controller
 {
     public function __construct()
@@ -109,6 +115,7 @@ class Pengguna extends BI_Controller
             'deleted/'   => 'Terhapus'
             );
 
+        $this->data['data_page'] = TRUE;
         $this->load->library('bitable', array(
             'base_url' => $this->data['page_link'],
             ));
@@ -141,7 +148,7 @@ class Pengguna extends BI_Controller
         $this->set_panel_title('Semua data penggunas: '._x($status));
         $this->data['panel_body'] = $grid->generate( $this->biauth->users->fetch($status) );
 
-        $this->load->theme('pages/panel_data', $this->data);
+        $this->load->theme('dataform', $this->data);
     }
 
     public function profile()
@@ -219,10 +226,10 @@ class Pengguna extends BI_Controller
             'desc'  => 'Mohon untuk menggunakan nama asli.',
             'validation'=> 'required' );
 
-        if ( (bool) get_setting('auth_use_username') )
+        if ( (bool) Bootigniter::get_setting('auth_use_username') )
         {
-            $username_min_length = get_setting('auth_username_length_min');
-            $username_max_length = get_setting('auth_username_length_max');
+            $username_min_length = Bootigniter::get_setting('auth_username_length_min');
+            $username_max_length = Bootigniter::get_setting('auth_username_length_max');
 
             $fields[]   = array(
                 'name'  => 'user-username',
@@ -254,8 +261,8 @@ class Pengguna extends BI_Controller
                 'label' => 'Password lama' );
         }
 
-        $password_min_length = get_setting('auth_password_length_min');
-        $password_max_length = get_setting('auth_password_length_max');
+        $password_min_length = Bootigniter::get_setting('auth_password_length_min');
+        $password_max_length = Bootigniter::get_setting('auth_password_length_max');
 
         $fields[]   = array(
             'name'  => 'user-new-password',
@@ -384,7 +391,7 @@ class Pengguna extends BI_Controller
 
         $this->data['panel_body'] = $form->generate();
 
-        $this->load->theme('pages/panel_form', $this->data);
+        $this->load->theme('dataform', $this->data);
     }
 
     private function _user_ban( $user_id )
@@ -431,7 +438,7 @@ class Pengguna extends BI_Controller
 
         $this->data['panel_body'] = $form->generate();
 
-        $this->load->theme('pages/panel_form', $this->data);
+        $this->load->theme('dataform', $this->data);
     }
 
     public function groups( $page = '', $group_id = NULL )
@@ -483,6 +490,13 @@ class Pengguna extends BI_Controller
             'desc'  => 'Nama singkat untuk kelompok pengguna, tidak diperbolehkan menggunakan spasi.' );
 
         $fields[]   = array(
+            'name'  => 'group-desc',
+            'type'  => 'textarea',
+            'label' => 'Keterangan',
+            'std'   => ( $group ? $group->description : '' ),
+            'desc'  => 'Keterangan singkat mengenai kelompok pengguna.' );
+
+        $fields[]   = array(
             'name'  => 'group-default',
             'type'  => 'switch',
             'label' => 'Jadikan default',
@@ -490,7 +504,6 @@ class Pengguna extends BI_Controller
                 1 => 'Ya',
                 0 => 'Tidak' ),
             'std'   => ( $group ? $group->default : 0 ),
-            'validation'=> 'required',
             'desc'  => 'Pilih <em>Ya</em> untuk menjadikna group ini sebagai group bawaan setiap mendambahkan pengguna baru, atau pilih <em>Tidak</em> untuk sebaliknya.' );
 
         $fields[]   = array(
@@ -511,12 +524,15 @@ class Pengguna extends BI_Controller
 
         if ( $form_data = $form->validate_submition() )
         {
-            $role_data['key']     = $form_data['group-key'];
-            $role_data['name']    = $form_data['group-name'];
-            $role_data['default'] = $form_data['group-default'];
-            $perm_data            = $form_data['group-perms'];
+            $group_data = array(
+                'key'         => $form_data['group-key'],
+                'name'        => $form_data['group-name'],
+                'default'     => $form_data['group-default'],
+                'description' => ($form_data['group-desc'] ?: '-'),
+                'perms'       => $form_data['group-perms'],
+                );
 
-            $result = $this->biauth->groups->update( $role_data, $group_id, $perm_data );
+            $result = $this->biauth->edit_group( $group_id, $group_data );
 
             foreach ( get_message() as $level => $message )
             {
@@ -534,13 +550,14 @@ class Pengguna extends BI_Controller
 
         // $this->data['panel_body'] = $form->generate();
 
-        $this->load->theme('pages/panel_form', $this->data);
+        $this->load->theme('dataform', $this->data);
     }
 
     private function _group_table()
     {
         $this->data['panel_title'] = $this->bitheme->set_title('Semua data kelompok pengguna');
         $this->data['tool_buttons']['form'] = 'Baru|primary';
+        $this->data['data_page'] = TRUE;
 
         $this->load->library('bitable', array(
             'base_url'   => $this->data['page_link'],
@@ -548,12 +565,11 @@ class Pengguna extends BI_Controller
 
         $grid = $this->bitable->set_column('Kelompok', 'name, perm_count, callback_make_tag:perm_desc', '65%', '<strong>%s</strong> <small class="text-muted">Dengan %s wewenang, antara lain:</small><br>%s')
                               ->set_column('Default', 'callback_bool_to_str:default', '20%', '<span class="badge">%s</span>')
-                              ->set_button('form', 'Lihat data')
-                              ->set_button('delete', 'Hapus data');
+                              ->set_button('form', 'Lihat data');
 
         $this->data['panel_body'] = $grid->generate( $this->biauth->groups->fetch() );
 
-        $this->load->theme('pages/panel_data', $this->data);
+        $this->load->theme('dataform', $this->data);
     }
 
     public function permission( $page = '', $perm_id = '' )
@@ -648,15 +664,16 @@ class Pengguna extends BI_Controller
 
         $this->data['panel_body'] = $form->generate();
 
-        $this->load->theme('pages/panel_form', $this->data);
+        $this->load->theme('dataform', $this->data);
     }
 
     private function _perm_table()
     {
-        $this->data['page_link']    = 'admin/pengguna/permission/';
-        $this->set_panel_title('Semua data hak akses pengguna');
+        $this->data['page_link'] = 'admin/pengguna/permission/';
         $this->data['tool_buttons']['form'] = 'Baru|primary';
+        $this->data['data_page'] = TRUE;
 
+        $this->set_panel_title('Semua data hak akses pengguna');
         $this->load->library('bitable', array(
             'identifier' => 'permission_id',
             'base_url'   => $this->data['page_link'],
@@ -669,7 +686,7 @@ class Pengguna extends BI_Controller
 
         $this->data['panel_body'] = $grid->generate( $this->biauth->permissions->fetch() );
 
-        $this->load->theme('pages/panel_data', $this->data);
+        $this->load->theme('dataform', $this->data);
     }
 }
 
