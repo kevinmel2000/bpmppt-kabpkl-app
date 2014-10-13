@@ -79,6 +79,15 @@ module.exports = function(grunt) {
           }
         ]
       },
+      jsDev: {
+        files: [
+          {
+            // expand: true,
+            src: 'asset/js/src/script.js',
+            dest: 'asset/js/<%= pkg.name %>.js'
+          }
+        ]
+      },
       vendor: {
         files: [
           {
@@ -222,7 +231,7 @@ module.exports = function(grunt) {
         jshintrc: '.jshintrc'
       },
       dev: {
-        src: 'asset/js/<%= pkg.name %>.js'
+        src: 'asset/js/src/*.js'
       }
     },
 
@@ -231,7 +240,7 @@ module.exports = function(grunt) {
         config: '.jscsrc'
       },
       dev: {
-        src: 'asset/js/<%= pkg.name %>.js'
+        src: 'asset/js/src/*.js'
       }
     },
 
@@ -240,7 +249,7 @@ module.exports = function(grunt) {
         preserveComments: 'some'
       },
       app: {
-        src: 'asset/js/src/<%= pkg.name %>.js',
+        src: 'asset/js/<%= pkg.name %>.js',
         dest: 'asset/js/<%= pkg.name %>.min.js'
       }
     },
@@ -283,7 +292,7 @@ module.exports = function(grunt) {
         tasks: [ 'css-test' ]
       },
       js: {
-        files: 'asset/js/*.js',
+        files: 'asset/js/src/*.js',
         tasks: 'js-test'
       },
       phpApp: {
@@ -299,18 +308,19 @@ module.exports = function(grunt) {
   });
 
 
-  grunt.registerTask('php-test',    [ 'phplint', 'phpunit' ]);
+  grunt.registerTask('php-test',  [ 'phplint', 'phpunit' ]);
 
-  grunt.registerTask('css-build',   [ 'less', 'autoprefixer', 'csscomb' ]);
-  grunt.registerTask('css-test',    [ 'css-build', 'csslint', 'cssmin' ]);
-  grunt.registerTask('css-dist',    [ 'clean:css', 'css-test', 'usebanner:css' ]);
+  grunt.registerTask('css-build', [ 'less', 'autoprefixer', 'csscomb' ]);
+  grunt.registerTask('css-test',  [ 'css-build', 'csslint', 'cssmin' ]);
+  grunt.registerTask('css-dist',  [ 'clean:css', 'css-test', 'usebanner:css' ]);
 
-  grunt.registerTask('js-test',     [ 'jshint', 'jscs', 'uglify' ]);
-  grunt.registerTask('js-dist',     [ 'clean:js', 'js-test', 'usebanner:js' ]);
+  grunt.registerTask('js-build',  [ 'copy:jsDev' ]);
+  grunt.registerTask('js-test',   [ 'js-build', 'jshint', 'jscs', 'uglify' ]);
+  grunt.registerTask('js-dist',   [ 'clean:js', 'js-test', 'usebanner:js' ]);
 
-  grunt.registerTask('build',       [ 'clean:dist', 'php-test', 'css-test', 'js-build', 'imagemin', 'usebanner' ]);
-  grunt.registerTask('dist',        [ 'build', 'preen', 'copy:vendor', 'clean:vendor' ]);
-  grunt.registerTask('serve',       [ 'php:serve', 'watch' ]);
+  grunt.registerTask('build',     [ 'clean:dist', 'php-test', 'css-test', 'js-test', 'imagemin', 'usebanner' ]);
+  grunt.registerTask('dist',      [ 'build', 'preen', 'copy:vendor', 'clean:vendor' ]);
+  grunt.registerTask('serve',     [ 'php:serve', 'watch' ]);
 
-  grunt.registerTask('default',     [ 'build' ]);
+  grunt.registerTask('default',   [ 'build' ]);
 }
