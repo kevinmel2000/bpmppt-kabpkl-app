@@ -1,12 +1,11 @@
 <?php if ( !defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * @package     BootIgniter Pack
+ * @package     BPMPPT App v0.1.5 (http://feryardiant.github.com/bpmppt)
+ * @author      Fery Wardiyanto (ferywardiyanto@gmail.com)
+ * @copyright   Copyright (c) 2013-2014 BPMPPT Kab. Pekalongan, Fery Wardiyanto
+ * @license     MIT (https://github.com/feryardiant/bpmppt/blob/master/LICENSE)
  * @subpackage  Biarray
  * @category    Array Helpers
- * @author      Fery Wardiyanto
- * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
- * @license     http://github.com/feryardiant/bootigniter/blob/master/LICENSE
- * @since       Version 0.1.5
  */
 
 // -----------------------------------------------------------------------------
