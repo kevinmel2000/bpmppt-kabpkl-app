@@ -1,12 +1,11 @@
 <?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
 /**
- * @package     BootIgniter Pack
+ * @package     @PACKAGE
+ * @author      @AUTHOR
+ * @copyright   Copyright (c) @COPYRIGHT
+ * @license     @LICENSE
  * @subpackage  Bitable
  * @category    Libraries
- * @author      Fery Wardiyanto
- * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
- * @license     http://github.com/feryardiant/bootigniter/blob/master/LICENSE
- * @since       Version 0.1.5
  */
 
 // -----------------------------------------------------------------------------

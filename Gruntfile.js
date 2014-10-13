@@ -3,16 +3,16 @@
 module.exports = function(grunt) {
   'use strict';
 
-  // Force use of Unix newlines
-  grunt.util.linefeed = '\n';
-  // Load all grunt development dependencies
-  require('load-grunt-tasks')(grunt, {scope: 'devDependencies'});
-  // Let see total execution times
-  require('time-grunt')(grunt);
+  var packageName = 'BPMPPT App'
+  var copyrightHolder = 'BPMPPT Kab. Pekalongan'
+  var year = grunt.template.today("yyyy")
 
-  RegExp.quote = function (string) {
-    return string.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
-  };
+  // Force use of Unix newlines
+  grunt.util.linefeed = '\n'
+  // Load all grunt development dependencies
+  require('load-grunt-tasks')(grunt, {scope: 'devDependencies'})
+  // Let see total execution times
+  require('time-grunt')(grunt)
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -21,9 +21,9 @@ module.exports = function(grunt) {
       options: {
         position: 'top',
         banner: '/*!\n' +
-                ' * BPMPPT App v<%= pkg.version %> (<%= pkg.homepage %>)\n' +
+                ' * ' + packageName + ' v<%= pkg.version %> (<%= pkg.homepage %>)\n' +
                 ' * <%= pkg.description %>\n' +
-                ' * Copyright 2014 <%= pkg.author.name %> (<%= pkg.author.email %>)\n' +
+                ' * Copyright (c) 2013-' + year +' ' + copyrightHolder + ', <%= pkg.author.name %>\n' +
                 ' * Licensed under <%= pkg.license.type %> (<%= pkg.license.url %>)\n' +
                 ' */\n'
       },
@@ -41,6 +41,22 @@ module.exports = function(grunt) {
 
     copy: {
       dist: {
+        options: {
+          process: function (content) {
+            var home = grunt.config('pkg.homepage')
+            var name = grunt.config('pkg.author.name')
+            var email = grunt.config('pkg.author.email')
+            var lcnsType = grunt.config('pkg.license.type')
+            var lcnsUrl = grunt.config('pkg.license.url')
+            var version = grunt.config('pkg.version')
+
+            return content
+              .replace(/@PACKAGE/g,    packageName + ' v' + version + ' (' + home + ')')
+              .replace(/@AUTHOR/g,     name + ' (' + email + ')')
+              .replace(/@COPYRIGHT/g,  '2013-' + year + ' ' + copyrightHolder + ', ' + name)
+              .replace(/@LICENSE/g,    lcnsType + ' (' + lcnsUrl + ')')
+          }
+        },
         files: [
           {
             expand: true,
@@ -68,7 +84,9 @@ module.exports = function(grunt) {
             src: [
               'asset/{css,img,js,vendor}/**',
               '!asset/{css,img,js}/src/**',
-              '!**/_**'
+              '!**/**.old',
+              '!**/_**',
+              '!_**'
             ],
             dest: '_dist/'
           }
@@ -217,13 +235,6 @@ module.exports = function(grunt) {
       }
     },
 
-    // concat: {
-    //   dev: {
-    //     src: [ 'asset/js/src/intro.js', 'asset/js/src/smof-*.js', 'asset/js/src/outro.js' ],
-    //     dest: 'asset/js/<%= pkg.name %>.js'
-    //   }
-    // },
-
     jshint: {
       options: {
         jshintrc: '.jshintrc'
@@ -259,24 +270,16 @@ module.exports = function(grunt) {
         interlaced: true
       },
       app: {
-        files: [{
-          expand: true,
-          cwd: 'asset/img/',
-          dest: 'asset/img/',
-          src: [ '**/*.{png,jpg,gif}' ]
-        }]
-      }
-    },
-
-    sed: {
-      versionNumber: {
-        path: 'application/*',
-        pattern: (function () {
-          var old = grunt.option('old');
-          return old ? RegExp.quote(old) : old;
-        })(),
-        replacement: grunt.option('new'),
-        recursive: true
+        expand: true,
+        cwd: 'asset/img/',
+        dest: 'asset/img/',
+        src: [ '**/*.{png,jpg,gif,svg}' ]
+      },
+      vendor: {
+        expand: true,
+        cwd: 'asset/vendor/',
+        dest: 'asset/vendor/',
+        src: [ '**/*.{png,jpg,gif,svg}' ]
       }
     },
 
@@ -293,9 +296,17 @@ module.exports = function(grunt) {
         files: 'asset/js/src/*.js',
         tasks: 'js-test'
       },
+      imgApp: {
+        files: '<%= imagemin.app.cwd %>/**/*.{png,jpg,gif,svg}',
+        tasks: 'newer:imagemin:app'
+      },
+      imgVendor: {
+        files: '<%= imagemin.vendor.cwd %>/**/*.{png,jpg,gif,svg}',
+        tasks: 'newer:imagemin:vendor'
+      },
       phpApp: {
         files: '<%= phplint.app %>',
-        tasks: 'phplint'
+        tasks: 'newer:phplint'
       },
       phpTest: {
         files: '<%= phpunit.app.dir %>/**/*Test.php',
@@ -303,23 +314,25 @@ module.exports = function(grunt) {
       }
     }
 
-  });
+  })
 
 
-  grunt.registerTask('php-test',  [ 'phplint', 'phpunit' ]);
+  grunt.registerTask('php-test',  [ 'phplint', 'phpunit' ])
 
-  grunt.registerTask('css-build', [ 'less', 'autoprefixer', 'csscomb' ]);
-  grunt.registerTask('css-test',  [ 'css-build', 'csslint', 'cssmin' ]);
-  grunt.registerTask('css-dist',  [ 'clean:css', 'css-test', 'usebanner:css' ]);
+  grunt.registerTask('css-build', [ 'less', 'autoprefixer', 'csscomb' ])
+  grunt.registerTask('css-test',  [ 'css-build', 'csslint', 'cssmin' ])
+  grunt.registerTask('css-dist',  [ 'clean:css', 'css-test', 'usebanner:css' ])
 
-  grunt.registerTask('js-build',  [ 'copy:devJs' ]);
-  grunt.registerTask('js-test',   [ 'js-build', 'jshint', 'jscs', 'uglify' ]);
-  grunt.registerTask('js-dist',   [ 'clean:js', 'js-test', 'usebanner:js' ]);
+  grunt.registerTask('js-build',  [ 'copy:devJs' ])
+  grunt.registerTask('js-test',   [ 'js-build', 'jshint', 'jscs', 'uglify' ])
+  grunt.registerTask('js-dist',   [ 'clean:js', 'js-test', 'usebanner:js' ])
 
-  grunt.registerTask('build',     [ 'clean:dist', 'php-test', 'css-test', 'js-test', 'imagemin', 'usebanner' ]);
-  grunt.registerTask('dist',      [ 'build', 'bower', 'copy:dist' ]);
-  grunt.registerTask('bower',     [ 'clean:vendor', 'copy:vendorBackup', 'preen', 'copy:vendorDist', 'copy:vendorRestore', 'clean:backup' ]);
-  grunt.registerTask('serve',     [ 'php:serve', 'watch' ]);
+  grunt.registerTask('img-dist',  [ 'newer:imagemin:app', 'newer:imagemin:vendor' ])
 
-  grunt.registerTask('default',   [ 'build' ]);
+  grunt.registerTask('bower',     [ 'clean:vendor', 'copy:vendorBackup', 'preen', 'copy:vendorDist', 'copy:vendorRestore', 'clean:backup' ])
+  grunt.registerTask('build',     [ 'clean:dist', 'php-test', 'css-test', 'js-test', 'usebanner' ])
+  grunt.registerTask('dist',      [ 'build', 'bower', 'img-dist', 'copy:dist' ])
+  grunt.registerTask('serve',     [ 'php:serve', 'watch' ])
+
+  grunt.registerTask('default',   [ 'build' ])
 }

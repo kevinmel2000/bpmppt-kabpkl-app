@@ -1,12 +1,11 @@
 <?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
 /**
- * @package     BPMPPT
+ * @package     BPMPPT App v0.1.5 (http://feryardiant.github.com/bpmppt)
+ * @author      Fery Wardiyanto (ferywardiyanto@gmail.com)
+ * @copyright   Copyright (c) 2013-2014 BPMPPT Kab. Pekalongan, Fery Wardiyanto
+ * @license     MIT (https://github.com/feryardiant/bpmppt/blob/master/LICENSE)
  * @subpackage  Bpmppt_obat Driver
  * @category    Drivers
- * @author      Fery Wardiyanto
- * @copyright   Copyright (c) BPMPPT Kab. Pekalongan
- * @license     http://github.com/feryardiant/bpmppt/blob/master/LICENSE
- * @since       Version 0.1.5
  */
 
 /*

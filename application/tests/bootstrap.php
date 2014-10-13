@@ -1,12 +1,11 @@
 <?php
 /**
- * @package     BootIgniter Pack
+ * @package     @PACKAGE
+ * @author      @AUTHOR
+ * @copyright   Copyright (c) @COPYRIGHT
+ * @license     @LICENSE
  * @subpackage  Bootstrap
  * @category    Unit Test
- * @author      Fery Wardiyanto
- * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
- * @license     http://github.com/feryardiant/bootigniter/blob/master/LICENSE
- * @since       Version 0.1.5
  */
 
 // -----------------------------------------------------------------------------
@@ -23,22 +22,22 @@
 
 function show_error($message, $status_code = 500, $heading = 'An Error Was Encountereds')
 {
-	throw new PHPUnit_Framework_Exception('CI Error: '.$heading.' -> '.$message, $status_code);
+    throw new PHPUnit_Framework_Exception('CI Error: '.$heading.' -> '.$message, $status_code);
 }
 
 function show_404($page = '', $log_error = TRUE)
 {
-	throw new PHPUnit_Framework_Exception('CI Error: 404 Page '.$page.' not found.', 500);
+    throw new PHPUnit_Framework_Exception('CI Error: 404 Page '.$page.' not found.', 500);
 }
 
 function log_message($level, $message)
 {
-	return;
+    return;
 }
 
 function set_status_header($code = 200, $text = '')
 {
-	return;
+    return;
 }
 
 /**
@@ -64,7 +63,7 @@ define('PROJECT_DIR', $dir);
  */
 if (file_exists(PROJECT_DIR . 'vendor/autoload.php'))
 {
-	require_once PROJECT_DIR . 'vendor/autoload.php';
+    require_once PROJECT_DIR . 'vendor/autoload.php';
 }
 
 /*

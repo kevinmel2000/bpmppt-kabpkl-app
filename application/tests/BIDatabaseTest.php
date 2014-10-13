@@ -1,46 +1,45 @@
 <?php
 /**
- * @package     BootIgniter Pack
+ * @package     @PACKAGE
+ * @author      @AUTHOR
+ * @copyright   Copyright (c) @COPYRIGHT
+ * @license     @LICENSE
  * @subpackage  BIDatabaseTest
  * @category    Unit test
- * @author      Fery Wardiyanto
- * @copyright   Copyright (c) Fery Wardiyanto. <ferywardiyanto@gmail.com>
- * @license     http://github.com/feryardiant/bootigniter/blob/master/LICENSE
- * @since       Version 0.1.5
  */
 
 // -----------------------------------------------------------------------------
 
 abstract class BIDatabaseTest extends PHPUnit_Extensions_Database_TestCase
 {
-	/**
-	 * Reference to CodeIgniter
-	 *
-	 * @var resource
-	 */
-	protected $CI;
+    /**
+     * Reference to CodeIgniter
+     *
+     * @var resource
+     */
+    protected $CI;
 
-	/**
-	 * Only instantiate pdo once for test clean-up/fixture load
-	 *
-	 * @internal
-	 * @var resource
-	 */
+    /**
+     * Only instantiate pdo once for test clean-up/fixture load
+     *
+     * @internal
+     * @var resource
+     */
     static private $pdo = null;
 
-	/**
-	 * Only instantiate PHPUnit_Extensions_Database_DB_IDatabaseConnection once per test
-	 *
-	 * @internal
-	 * @var resource
-	 */
+    /**
+     * Only instantiate PHPUnit_Extensions_Database_DB_IDatabaseConnection once per test
+     *
+     * @internal
+     * @var resource
+     */
     private $conn = null;
 
-	/**
-	 * Call parent constructor and initialize reference to CodeIgniter
-	 *
-	 * @internal
-	 */
+    /**
+     * Call parent constructor and initialize reference to CodeIgniter
+     *
+     * @internal
+     */
 
     public function setUp()
     {
@@ -48,8 +47,8 @@ abstract class BIDatabaseTest extends PHPUnit_Extensions_Database_TestCase
     }
 
     /**
-	 * Initialize database connection (same one used by CodeIgniter)
-	 *
+     * Initialize database connection (same one used by CodeIgniter)
+     *
      * @return PHPUnit_Extensions_Database_DB_IDatabaseConnection
      */
     final public function getConnection()
@@ -58,7 +57,7 @@ abstract class BIDatabaseTest extends PHPUnit_Extensions_Database_TestCase
         {
             if (self::$pdo == null)
             {
-            	$dsn = $this->CI->db->dbdriver.':dbname='.$this->CI->db->database.';host='.$this->CI->db->hostname;
+                $dsn = $this->CI->db->dbdriver.':dbname='.$this->CI->db->database.';host='.$this->CI->db->hostname;
                 self::$pdo = new PDO($dsn,$this->CI->db->username, $this->CI->db->password);
             }
 
@@ -68,26 +67,26 @@ abstract class BIDatabaseTest extends PHPUnit_Extensions_Database_TestCase
         return $this->conn;
     }
 
-	/**
-	 * @internal
-	 */
-	public function __get($name)
-	{
-		if ($name == 'db')
-		{
-			return $this->getConnection();
-		}
-	}
+    /**
+     * @internal
+     */
+    public function __get($name)
+    {
+        if ($name == 'db')
+        {
+            return $this->getConnection();
+        }
+    }
 
     /**
-	 * Returns the DataSet
-	 *
-	 * Important: the returned DataSet is the current database state, meaning
-	 * this function does NOT behave as a fixture: the intended usage of this
-	 * current state connection is to do integration testing.
-	 * If you want to use fixtures, check PHPUnit's database manual.
-	 *
-	 * @link		https://github.com/fmalk/codeigniter-phpunit	 *
+     * Returns the DataSet
+     *
+     * Important: the returned DataSet is the current database state, meaning
+     * this function does NOT behave as a fixture: the intended usage of this
+     * current state connection is to do integration testing.
+     * If you want to use fixtures, check PHPUnit's database manual.
+     *
+     * @link        https://github.com/fmalk/codeigniter-phpunit     *
      * @return PHPUnit_Extensions_Database_DataSet_IDataSet
      */
     public function getDataSet()
