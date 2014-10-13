@@ -34,8 +34,9 @@ module.exports = function(grunt) {
     clean: {
       css: 'asset/css/<%= pkg.name %>*',
       js: 'asset/js/<%= pkg.name %>*',
-      dist: [ '<%= clean.css %>', '<%= clean.js %>' ],
-      vendor: [ 'asset/bower' ]
+      vendor: 'asset/vendor',
+      backup: 'asset/bower.old',
+      dist: [ '<%= clean.css %>', '<%= clean.js %>' ]
     },
 
     copy: {
@@ -50,8 +51,15 @@ module.exports = function(grunt) {
               '!application/vendor/**',
               '!application/storage/{backup,cache,logs,upload}/**',
               'application/storage/{backup,cache,logs,upload}/index.html',
+              '*.{php,sql,sh}',
+              '!appconfig.php',
+              '.htaccess',
+              'package.json',
+              'README.md',
+              'LICENSE',
               '!**/**.old',
-              '!**/_**'
+              '!**/_**',
+              '!_**'
             ],
             dest: '_dist/'
           },
@@ -63,40 +71,30 @@ module.exports = function(grunt) {
               '!**/_**'
             ],
             dest: '_dist/'
-          },
-          {
-            expand: true,
-            src: [
-              '*.{php,sql,sh}',
-              '!_*',
-              '!appconfig.php',
-              '.htaccess',
-              'package.json',
-              'README.md',
-              'LICENSE'
-            ],
-            dest: '_dist/'
           }
         ]
       },
-      jsDev: {
-        files: [
-          {
-            // expand: true,
-            src: 'asset/js/src/script.js',
-            dest: 'asset/js/<%= pkg.name %>.js'
-          }
-        ]
+      devJs: {
+        src: 'asset/js/src/script.js',
+        dest: 'asset/js/<%= pkg.name %>.js'
       },
-      vendor: {
-        files: [
-          {
-            expand: true,
-            cwd: 'asset/bower/',
-            src: [ '**' ],
-            dest: 'asset/vendor/'
-          }
-        ]
+      vendorBackup: {
+        expand: true,
+        cwd: 'asset/bower/',
+        src: [ '**' ],
+        dest: 'asset/bower.old/'
+      },
+      vendorDist: {
+        expand: true,
+        cwd: 'asset/bower/',
+        src: [ '**' ],
+        dest: 'asset/vendor/'
+      },
+      vendorRestore: {
+          expand: true,
+          cwd: 'asset/bower.old/',
+          src: [ '**' ],
+          dest: 'asset/bower/'
       }
     },
 
@@ -314,12 +312,13 @@ module.exports = function(grunt) {
   grunt.registerTask('css-test',  [ 'css-build', 'csslint', 'cssmin' ]);
   grunt.registerTask('css-dist',  [ 'clean:css', 'css-test', 'usebanner:css' ]);
 
-  grunt.registerTask('js-build',  [ 'copy:jsDev' ]);
+  grunt.registerTask('js-build',  [ 'copy:devJs' ]);
   grunt.registerTask('js-test',   [ 'js-build', 'jshint', 'jscs', 'uglify' ]);
   grunt.registerTask('js-dist',   [ 'clean:js', 'js-test', 'usebanner:js' ]);
 
   grunt.registerTask('build',     [ 'clean:dist', 'php-test', 'css-test', 'js-test', 'imagemin', 'usebanner' ]);
-  grunt.registerTask('dist',      [ 'build', 'preen', 'copy:vendor', 'clean:vendor' ]);
+  grunt.registerTask('dist',      [ 'build', 'bower', 'copy:dist' ]);
+  grunt.registerTask('bower',     [ 'clean:vendor', 'copy:vendorBackup', 'preen', 'copy:vendorDist', 'copy:vendorRestore', 'clean:backup' ]);
   grunt.registerTask('serve',     [ 'php:serve', 'watch' ]);
 
   grunt.registerTask('default',   [ 'build' ]);

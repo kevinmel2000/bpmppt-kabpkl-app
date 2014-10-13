@@ -1,3 +1,4 @@
 {
-  "directory": "asset/bower"
+  "directory": "asset/bower",
+  "postinstall": "grunt bower"
 }
