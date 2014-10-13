@@ -34,7 +34,7 @@ $(document).ready(function () {
     e.preventDefault()
   })
 
-  /*global Morris*/
+  /* global Morris */
   Morris.Donut({
     element: $(this).attr('id'),
     data: [

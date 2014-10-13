@@ -282,13 +282,17 @@ module.exports = function(grunt) {
         files: [ 'asset/css/src/**/*.less', 'asset/css/src/*.less' ],
         tasks: [ 'css-test' ]
       },
-      phpTest: {
-        files: '<%= phpunit.app.dir %>/**/*Test.php',
-        tasks: 'phpunit'
+      js: {
+        files: 'asset/js/*.js',
+        tasks: 'js-test'
       },
       phpApp: {
         files: '<%= phplint.app %>',
         tasks: 'phplint'
+      },
+      phpTest: {
+        files: '<%= phpunit.app.dir %>/**/*Test.php',
+        tasks: 'phpunit'
       }
     }
 
@@ -301,8 +305,8 @@ module.exports = function(grunt) {
   grunt.registerTask('css-test',    [ 'css-build', 'csslint', 'cssmin' ]);
   grunt.registerTask('css-dist',    [ 'clean:css', 'css-test', 'usebanner:css' ]);
 
-  grunt.registerTask('js-build',    [ 'uglify' ]);
-  grunt.registerTask('js-dist',     [ 'clean:js', 'js-build', 'usebanner:js' ]);
+  grunt.registerTask('js-test',     [ 'jshint', 'jscs', 'uglify' ]);
+  grunt.registerTask('js-dist',     [ 'clean:js', 'js-test', 'usebanner:js' ]);
 
   grunt.registerTask('build',       [ 'clean:dist', 'php-test', 'css-test', 'js-build', 'imagemin', 'usebanner' ]);
   grunt.registerTask('dist',        [ 'build', 'preen', 'copy:vendor', 'clean:vendor' ]);
