@@ -27,12 +27,8 @@ module.exports = function(grunt) {
                 ' * Licensed under <%= pkg.license.type %> (<%= pkg.license.url %>)\n' +
                 ' */\n'
       },
-      css: {
-        src: 'asset/css/<%= pkg.name %>*.css'
-      },
-      js: {
-        src: 'asset/js/<%= pkg.name %>*.js'
-      }
+      css: { src: 'asset/css/<%= pkg.name %>*.css' },
+      js: { src: 'asset/js/<%= pkg.name %>*.js' }
     },
 
     clean: {
@@ -221,30 +217,30 @@ module.exports = function(grunt) {
     //   }
     // },
 
-    // jshint: {
-    //   options: {
-    //     jshintrc: '.jshintrc'
-    //   },
-    //   dev: {
-    //     src: 'asset/js/script.js'
-    //   }
-    // },
+    jshint: {
+      options: {
+        jshintrc: '.jshintrc'
+      },
+      dev: {
+        src: 'asset/js/<%= pkg.name %>.js'
+      }
+    },
 
-    // jscs: {
-    //   options: {
-    //     config: '.jscsrc'
-    //   },
-    //   dev: {
-    //     src: 'asset/js/script.js'
-    //   }
-    // },
+    jscs: {
+      options: {
+        config: '.jscsrc'
+      },
+      dev: {
+        src: 'asset/js/<%= pkg.name %>.js'
+      }
+    },
 
     uglify: {
       options: {
         preserveComments: 'some'
       },
       app: {
-        src: 'asset/js/src/script.js',
+        src: 'asset/js/src/<%= pkg.name %>.js',
         dest: 'asset/js/<%= pkg.name %>.min.js'
       }
     },
