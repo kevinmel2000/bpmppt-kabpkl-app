@@ -17,7 +17,7 @@ fi
 wget -O - --progress=bar:force "https://codeload.github.com/feryardiant/$repo/tar.gz/$branch" | tar xz
 echo "\033[01;32m✔ \033[01;34mThe new updates \033[00mhas been downloaded and extracted"
 
-for oldee in application asset system index.php package.json database.sql LICENSE README.md; do
+for oldee in application asset system index.php package.json database.sql LICENSE README.md update.sh; do
     if [ -d "$oldee" ] && [ "$oldee" != "$repo-$branch" ] && [ "$oldee" != 'backups' ]; then
         cp -rf "$oldee" "$bdir"
         rm -rf "$oldee"
@@ -34,4 +34,7 @@ unset oldee
 
 rm -rf "$repo-$branch"
 echo "\033[01;32m✔ \033[00mClean up garbadges"
+
+chmod +x update.sh
+echo "\033[01;32m✔ \033[00mFix file permissions"
 
