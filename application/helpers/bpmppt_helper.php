@@ -54,7 +54,7 @@ function print_ttd_kadin($atas_nama = '')
 
 function print_cop()
 {
-    foreach (array('skpd_logo', 'skpd_name', 'skpd_address', 'skpd_telp', 'skpd_city', 'skpd_pos') as $property)
+    foreach (array('skpd_logo', 'skpd_name', 'skpd_address', 'skpd_telp', 'skpd_city', 'skpd_pos', 'skpd_email') as $property)
     {
         $$property = Bootigniter::get_setting($property);
     }
@@ -66,10 +66,11 @@ function print_cop()
         'width' => '60',
         'style' => 'position:absolute; left:5px;'));
 
-    $output = '<p class="align-center bold" style="margin-top: 5px; line-height: 1.5em;">'
+    $output = '<p class="align-center bold" style="margin-top: 5px; margin-left: 60px; line-height: 1.5em;">'
             . 'PEMERINTAH KABUPATEN PEKALONGAN<br>'
             . '<span style="font-size: 16px; line-height:1.4em;">'.strtoupper($skpd_name).'</span><br>'
-            . '<span style="font-size: 12px; line-height:1.4em;">'.$skpd_address.', telp. '.$skpd_telp.' '.$skpd_city.' '.$skpd_pos.'</span>'
+            . '<span style="font-size: 12px; line-height:1.4em;">'.$skpd_address.' '.$skpd_city.', Kode Pos '.$skpd_pos.'</span><br>'
+            . '<span style="font-size: 12px; line-height:1.4em;">Telepon./Faksimile : '.$skpd_telp.' e-mail : '.$skpd_email.'</span>'
             . '</p>';
 
     return $img_logo.$output;

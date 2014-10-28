@@ -1,6 +1,6 @@
 <table>
     <tbody>
-        <tr><td colspan="5" style="width:100%"></td></tr>
+        <tr><td class="empty" colspan="5" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="5" style="width:100%">
 <p>KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN PELAYANAN PERIZINAN TERPADU<br>
@@ -8,7 +8,7 @@ KABUPATEN PEKALONGAN<br>
 NOMOR : <?php echo $surat_nomor.'/'.nbs(6).'/'.print_blnthn_head($surat_tanggal) ?></p>
     </td>
 </tr>
-<tr><td colspan="5" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="5" style="width:100%"></td></tr>
 <tr>
     <td style="width:10%"><p>Dasar :</p></td>
     <td colspan="4" style="width:90%" class="align-justify">
@@ -19,11 +19,11 @@ NOMOR : <?php echo $surat_nomor.'/'.nbs(6).'/'.print_blnthn_head($surat_tanggal)
         </ol>
     </td>
 </tr>
-<tr><td colspan="5" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="5" style="width:100%"></td></tr>
 <tr class="align-center bold">
-    <td colspan="5">M E N G I Z I N  K A N</td>
+    <td colspan="5">M E N G I Z I N K A N</td>
 </tr>
-<tr><td colspan="5" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="5" style="width:100%"></td></tr>
 <tr>
     <td colspan="5" style="width:100%"><p>Kepada :</p></td>
 </tr>
@@ -62,7 +62,7 @@ NOMOR : <?php echo $surat_nomor.'/'.nbs(6).'/'.print_blnthn_head($surat_tanggal)
     <td style="width:2%">:</td>
     <td colspan="3" style="width:68%" class="align-justify"><?php echo '1 (satu) Bulan '.$reklame_range_tgl_mulai.' '.$reklame_range_tgl_selesai ?></td>
 </tr>
-<tr><td colspan="5" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="5" style="width:100%"></td></tr>
 <tr>
     <td colspan="5" style="width:100%"><p>Dengan Ketentuan :</p></td>
 </tr>
@@ -81,7 +81,7 @@ NOMOR : <?php echo $surat_nomor.'/'.nbs(6).'/'.print_blnthn_head($surat_tanggal)
         </ol>
     </td>
 </tr>
-<tr><td colspan="5" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="5" style="width:100%"></td></tr>
 <tr>
     <td colspan="4" style="width:60%"></td>
     <td style="width: 40%; border-bottom: 2px solid #000">
@@ -89,7 +89,7 @@ NOMOR : <?php echo $surat_nomor.'/'.nbs(6).'/'.print_blnthn_head($surat_tanggal)
         <p class="underline">Pada Tanggal : <?php print_blnthn_foot($surat_tanggal) ?></p>
     </td>
 </tr>
-<tr><td colspan="5" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="5" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="3" style="width:60%"></td>
     <td colspan="2" style="width:40%"><?php print_ttd_kadin() ?></td>

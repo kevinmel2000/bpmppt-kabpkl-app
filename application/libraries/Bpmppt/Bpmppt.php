@@ -275,14 +275,15 @@ class Bpmppt extends CI_Driver_Library
                         'label' => 'Nomor',
                         'type'  => 'text',
                         'std'   => ( $data_obj ? $data_obj->surat_nomor : ''),
-                        'validation'=> ( !$data_obj ? 'required' : '' ) ),
+                        'validation'=> ( !$data_obj ? 'required' : '' )
+                        ),
                     array(
                         'name'  => 'tanggal',
                         'label' => 'Tanggal',
                         'type'  => 'datepicker',
                         'std'   => ( $data_obj ? format_date( $data_obj->surat_tanggal ) : ''),
                         'validation'=> ( !$data_obj ? 'required' : '' ),
-                        'callback'=> 'string_to_date' ),
+                        ),
                     )
                 );
         }
@@ -441,27 +442,6 @@ class Bpmppt extends CI_Driver_Library
         // Getting started
         $file_path    = APPPATH.'views/prints/'.$product_type.'/'.$data_type.'.php';
         $file_content = read_file($file_path);
-        $new_patterns = array();
-
-        // Setup new patterns
-        foreach ( $paterns as $search => $replacement )
-        {
-            $new_patterns[] = array(
-                'search'      => $search,
-                'replacement' => $replacement,
-                );
-        }
-
-        // Remove the old one
-        unset( $paterns );
-        // Sorting low to hight
-        ksort( $new_patterns );
-
-        // Parsing file content by new patterns #lol
-        foreach ( $new_patterns as $pattern )
-        {
-            $file_content = str_replace( $pattern['search'], $pattern['replacement'], $file_content );
-        }
 
         // Setup field
         $fields[] = array(
@@ -470,7 +450,7 @@ class Bpmppt extends CI_Driver_Library
             'height'=> 300,
             'label' => 'Template Editor',
             'std'   => $file_content,
-            'left-desc'=> TRUE,
+            'filters' => $paterns,
             'desc'  => 'Ubah dan sesuaikan template Print out dokumen '.$data_label.' sesuai dengan keinginan anda.<br>'
                     .  '<b>CATATAN: jangan mengubah isi dari text yang diapit oleh kurung kurawal "{...}" karna itu merupakan variabel data untuk output dokumen ini.</b><br>'
                     .  'Jika anda hendak memindahkan posisi, cut dan paste keseluruhan text termasuk kurung kurawalnya <i>misal: {text}</i> ke posisi baru yang anda inginkan.',
@@ -487,14 +467,6 @@ class Bpmppt extends CI_Driver_Library
         // on Submition
         if ( $form_data = $form->validate_submition() )
         {
-            // Reverse sort order
-            krsort( $new_patterns );
-            // re-parsing
-            foreach ( $new_patterns as $pattern )
-            {
-                $form_data['tmpl-editor'] = str_replace( $pattern['replacement'], $pattern['search'], $form_data['tmpl-editor'] );
-            }
-
             // Save it to the file
             if ( write_file( $file_path.'', html_entity_decode( $form_data['tmpl-editor'] ) ) )
             {

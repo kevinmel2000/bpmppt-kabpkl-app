@@ -340,8 +340,6 @@ class Layanan extends BI_Controller
             '<?php endforeach ?>'                                           => '<!-- end loop -->',
             '<?php if (strlen($data_tembusan) > 0): ?>'                     => '<!-- start condition -->',
             '<?php endif ?>'                                                => '<!-- end condition -->',
-            '<?php'                                                         => '{%',
-            '?>'                                                            => '%}',
             ));
 
         $this->load->theme( 'dataform', $this->data );
@@ -362,8 +360,6 @@ class Layanan extends BI_Controller
             '<?php $i++; endforeach; else : ?>'                                => '<!-- conditional loop -->',
             '<?php endif ?>'                                                   => '<!-- end loop -->',
             '$row->'                                                           => '#',
-            '<?php'                                                            => '{%',
-            '?>'                                                               => '%}',
             ));
 
         $this->load->theme( 'dataform', $this->data );

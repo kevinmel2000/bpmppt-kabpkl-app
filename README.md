@@ -12,7 +12,7 @@ Aplikasi ini ditujukan untuk Badan Penanaman Modal dan Pelayanan Perijinan Terba
 
 ## Credits
 
-+ [Ellislab and all contributors of Codeigniter](http://ellislab.com/codeigniter) v2.2.0
++ [Codeigniter and all contributors](http://codeigniter.com/) v2.2.0
 + [CI Tank Auth Enchance (modified)](http://github.com/TankAuth/Tank-Auth/tree/enchance)
 + [Codeigniter PHPUnit (modified)](https://github.com/fmalk/codeigniter-phpunit)
 + [Cool PHP Captcha](https://code.google.com/p/cool-php-captcha/)
