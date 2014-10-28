@@ -331,7 +331,6 @@ module.exports = function(grunt) {
 
   })
 
-
   grunt.registerTask('php-test',  [ 'phplint', 'phpunit' ])
 
   grunt.registerTask('css-build', [ 'less', 'autoprefixer', 'csscomb' ])
