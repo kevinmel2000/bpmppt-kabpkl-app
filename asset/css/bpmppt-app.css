@@ -7146,6 +7146,11 @@ table.dataTable td {
 .note-editor .note-editable table th {
   font-weight: bold;
 }
+.note-editor .note-editable table .empty:after {
+  display: block;
+  height: 1em;
+  content: ' ';
+}
 .note-editor .note-editable table table {
   width: auto;
   margin-bottom: 10px;

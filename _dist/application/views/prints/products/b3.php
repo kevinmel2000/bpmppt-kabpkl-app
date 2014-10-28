@@ -1,6 +1,6 @@
 <table>
     <tbody>
-        <tr><td colspan="7" style="width:100%"></td></tr>
+        <tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="7" style="width:100%">
         <p>KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN</p>
@@ -8,11 +8,11 @@
         <p>NOMOR : <?php echo '660.3 / '.nbs(6).' / BPMPPT / LB3 / '.print_blnthn_head($surat_tanggal) ?></p>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="7" style="width:100%"><p>TENTANG</p></td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="7" style="width:100%">
         <p>PEMBERIAN IZIN PENYIMPANAN SEMENTARA</p>
@@ -20,14 +20,14 @@
         <p><?php echo strtoupper($usaha_nama) ?></p>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="7" style="width:100%">
         <p>KEPALA <?php echo strtoupper($skpd_name) ?></p>
         <p><?php echo strtoupper($skpd_city) ?></p>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>Menimbang</p></td>
     <td style="width:2%"><p>:</p></td>
@@ -56,7 +56,7 @@
         </ol>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>Mengingat</p></td>
     <td style="width:2%"><p>:</p></td>
@@ -76,17 +76,17 @@
         </ol>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td colspan="7" style="width:100%"><p style="text-align:center"><strong>M E M U T U S K A N :</strong></p></td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%">Menetapkan</td>
     <td style="width:2%">:</td>
     <td colspan="5" style="width:78%">KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN PELAYANAN PERIZINAN TERPADU KABUPATEN PEKALONGAN TENTANG IZIN PENYIMPANAN SEMENTARA LIMBAH BAHAN BERBAHAYA DAN BERACUN <?php echo strtoupper($usaha_nama) ?></td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%">PERTAMA</td>
     <td style="width:2%">:</td>
@@ -122,7 +122,7 @@
     <td style="width:2%">:</td>
     <td colspan="2" style="width:47%"><?php echo ($usaha_kontak_telp ? $usaha_kontak_telp : '').($usaha_kontak_fax ? ' / '.$usaha_kontak_fax : '') ?></td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>KEDUA</p></td>
     <td style="width:2%"><p>:</p></td>
@@ -144,7 +144,7 @@
         </ol>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%">KETIGA</td>
     <td style="width:2%">:</td>
@@ -158,7 +158,7 @@
         </ol>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%">KEEMPAT</td>
     <td style="width:2%">:</td>
@@ -170,7 +170,7 @@
         </ol>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%">KELIMA</td>
     <td style="width:2%">:</td>
@@ -182,7 +182,7 @@
         </ol>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td colspan="6" style="width:60%"></td>
     <td style="width:40%">
@@ -190,7 +190,7 @@
         <p class="underline">Pada Tanggal : <?php print_blnthn_foot($surat_tanggal) ?></p>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="5" style="width:60%"></td>
     <td colspan="2" style="width:40%"><?php print_ttd_kadin() ?></td>

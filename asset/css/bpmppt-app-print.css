@@ -133,6 +133,11 @@ table th {
 table th {
   font-weight: bold;
 }
+table .empty:after {
+  display: block;
+  height: 1em;
+  content: ' ';
+}
 table table {
   width: auto;
   margin-bottom: 10px;

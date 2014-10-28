@@ -1,6 +1,6 @@
 <table>
     <tbody>
-        <tr><td colspan="5" style="width:100%"></td></tr>
+        <tr><td class="empty" colspan="5" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="5" style="width:100%">
         <p>SURAT IZIN BUPATI PEKALONGAN</p>
@@ -8,7 +8,7 @@
         <p>IZIN PEMASANGAN REKLAME</p>
     </td>
 </tr>
-<tr><td colspan="5" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="5" style="width:100%"></td></tr>
 <tr>
     <td style="width:10%"><p>Dasar :</p></td>
     <td colspan="4" style="width:90%">
@@ -18,11 +18,11 @@
         </ol>
     </td>
 </tr>
-<tr><td colspan="5" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="5" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="5">M E N G I Z I N  K A N</td>
 </tr>
-<tr><td colspan="5" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="5" style="width:100%"></td></tr>
 <tr>
     <td colspan="5" style="width:100%"><p>Kepada :</p></td>
 </tr>
@@ -62,7 +62,7 @@
     <td style="width:2%">:</td>
     <td colspan="2" style="width:30%"><?php echo $reklame_range_tgl_text.' ( '.format_date($reklame_range_tgl_mulai).' s/d '.format_date($reklame_range_tgl_selesai).' )' ?></td>
 </tr>
-<tr><td colspan="5" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="5" style="width:100%"></td></tr>
 <tr>
     <td colspan="5" style="width:100%"><p>Dengan Ketentuan :</p></td>
 </tr>
@@ -80,7 +80,7 @@
         </ol>
     </td>
 </tr>
-<tr><td colspan="5" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="5" style="width:100%"></td></tr>
 <tr>
     <td colspan="4" style="width:60%"></td>
     <td colspan="1" style="width:40%">
@@ -88,12 +88,12 @@
         <p class="underline">Pada Tanggal : <?php print_blnthn_foot($surat_tanggal) ?></p>
     </td>
 </tr>
-<tr><td colspan="5" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="5" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="3" style="width:60%"></td>
     <td colspan="2" style="width:40%"><?php print_ttd_kadin() ?></td>
 </tr>
-<tr><td colspan="5" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="5" style="width:100%"></td></tr>
 <?php if (strlen($data_tembusan) > 0): ?>
 <tr>
     <td colspan="5" style="width:100%">
@@ -127,7 +127,7 @@
         <td style="border:1px solid #000"><?php echo $lampiran['panjang'].' x '.$lampiran['lebar'] ?> (M)</td>
     </tr>
     <?php $i++; endforeach; ?>
-    <tr><td colspan="4" style="width:100%"></td></tr>
+    <tr><td class="empty" colspan="4" style="width:100%"></td></tr>
     <tr class="align-center bold">
         <td colspan="2" style="width:60%"></td>
         <td colspan="2" style="width:40%"><?php print_ttd_kadin() ?></td>

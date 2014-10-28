@@ -10,14 +10,16 @@
 </head>
 <body onload="window.print()" <?php echo get_body_attrs() ?>>
 
-<?php $types = array('izin_reklame', 'izin_gangguan') ?>
-<table width="100%" class="<?php echo $type ?>">
-    <tr class="t-header"><td colspan="7" width="100%" <?php echo (in_array($type, $types) ? 'style="border: 1px solid #000"' : '') ?>>
-        <?php echo print_cop() ?>
-    </td></tr>
-    <?php echo (in_array($type, $types) ? '<tr><td>'.nbs(1).'</td></tr>' : '') ?>
-    <tr><td <?php echo (in_array($type, $types) ? 'style="border: 1px solid #000"' : '') ?>><?php echo $contents; ?></td></tr>
-</table>
+    <?php $types = array('izin_reklame', 'izin_gangguan') ?>
+    <table width="100%" class="<?php echo $type ?>">
+    <?php if ($type != 'izin_lokasi'): ?>
+        <tr class="t-header"><td colspan="7" width="100%" <?php echo (in_array($type, $types) ? 'style="border: 1px solid #000"' : '') ?>>
+            <?php echo print_cop() ?>
+        </td></tr>
+    <?php endif ?>
+        <?php echo (in_array($type, $types) ? '<tr><td>'.nbs(1).'</td></tr>' : '') ?>
+        <tr><td <?php echo (in_array($type, $types) ? 'style="border: 1px solid #000"' : '') ?>><?php echo $contents; ?></td></tr>
+    </table>
 
 </body>
 </html>

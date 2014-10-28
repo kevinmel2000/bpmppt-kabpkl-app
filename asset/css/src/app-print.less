@@ -119,6 +119,14 @@ table {
     font-weight: bold;
   }
 
+  .empty {
+    &:after {
+      content: ' ';
+      height: 1em;
+      display: block;
+    }
+  }
+
   table {
     width: auto;
     margin-bottom: 10px;

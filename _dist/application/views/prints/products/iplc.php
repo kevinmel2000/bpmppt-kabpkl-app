@@ -1,6 +1,6 @@
 <table>
     <tbody>
-        <tr><td colspan="7" style="width:100%"></td></tr>
+        <tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="7" style="width:100%">
         <p>KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN</p>
@@ -8,25 +8,25 @@
         <p>NOMOR : <?php echo '658.31 /'.nbs(6).'/ BPMPPT / IPLC / '.print_blnthn_head($surat_tanggal) ?></p>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="7" style="width:100%"><p>TENTANG</p></td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="7" style="width:100%">
         <p>PEMBERIAN IZIN PEMBUANGAN AIR LIMBAH KE AIR ATAU SUMBER AIR</p>
         <p><?php echo $pemohon_usaha ?></p>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="7" style="width:100%">
         <p>KEPALA BADAN PENANAMAN MODAL DAN PELAYANAN PERIZINAN TERPADU</p>
         <p>KABUPATEN PEKALONGAN</p>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>Menimbang</p></td>
     <td style="width:2%"><p>:</p></td>
@@ -61,11 +61,11 @@
         </ol>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td colspan="7" style="width:100%"><p style="text-align:center"><strong>M E M U T U S K A N :</strong></p></td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>Menetapkan</p></td>
     <td style="width:2%"><p>:</p></td>
@@ -100,7 +100,7 @@
     <td style="width:2%">:</td>
     <td colspan="2" style="width:52%"><?php echo $pemohon_jabatan ?></td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>KEDUA</p></td>
     <td style="width:2%"><p>:</p></td>
@@ -109,31 +109,31 @@
         <?php echo $data_teknis ?>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>KETIGA</p></td>
     <td style="width:2%"><p>:</p></td>
     <td colspan="5" style="width:78%" class="align-justify">Pemegang izin sebagaimana dimaksud dalam Diktum KESATU, apabila melanggar ketentuan sebagaimana dimaksud dalam Diktum KEDUA dikenakan sanksi dan atau diancam dengan pidana sesuai dengan ketentuan peraturan perundang-undangan yang berlaku</td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>KEEMPAT</p></td>
     <td style="width:2%"><p>:</p></td>
     <td colspan="5" style="width:78%" class="align-justify">Apabila pemegang izin diketahui melakukan pelanggaran terhadap ketentuan sebagaimana dimaksud dalam Diktum KEDUA, maka Pemerintah Kabupaten Pekalongan berhak mencabut izin yang telah diberikan.</td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>KELIMA</p></td>
     <td style="width:2%"><p>:</p></td>
     <td colspan="5" style="width:78%" class="align-justify">Masa berlakunya izin sebagaimana dimaksud dalam Diktum KESATU adalah 3 (tiga) tahun sejak ditetapkannya keputusan ini</td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>KEENAM</p></td>
     <td style="width:2%"><p>:</p></td>
     <td colspan="5" style="width:78%" class="align-justify">Keputusan ini mulai berlaku sejak tanggal ditetapkan ( <?php echo bdate('%F', $surat_tanggal).' '.bdate('%Y') ?> s/d <?php echo bdate('%F', $surat_tanggal).' '.(bdate('%Y') + 5) ?> )</td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td colspan="6" style="width:60%"></td>
     <td style="width:40%">
@@ -141,7 +141,7 @@
         <p class="underline">Pada Tanggal : <?php print_blnthn_foot($surat_tanggal) ?></p>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="5" style="width:60%"></td>
     <td colspan="2" style="width:40%"><?php print_ttd_kadin() ?></td>

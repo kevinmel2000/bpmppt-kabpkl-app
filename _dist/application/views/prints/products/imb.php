@@ -1,6 +1,6 @@
 <table>
     <tbody>
-        <tr><td colspan="7" style="width:100%"></td></tr>
+        <tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="7">KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN PELAYANAN PERIZINAN TERPADU<br>KABUPATEN PEKALONGAN</td>
 </tr>
@@ -39,11 +39,11 @@
         <p>dst ;</p>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td colspan="7" style="width:100%" class="align-center bold underline">M E M U T U S K A N :</td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%" class="bold">Menetapkan</td>
     <td style="width:2%">:</td>
@@ -108,7 +108,7 @@
     <td style="width:2%">:</td>
     <td colspan="2" style="width:47%"><p><?php echo '± '.$bangunan_luas.' M<sup>2</sup>' ?></p></td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>KEDUA</p></td>
     <td style="width:2%">:</td>
@@ -123,7 +123,7 @@
         </ol>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>KETIGA</p></td>
     <td style="width:2%">:</td>
@@ -151,7 +151,7 @@
         </ol>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>KEEMPAT</p></td>
     <td style="width:2%">:</td>
@@ -173,7 +173,7 @@
         </ol>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td colspan="6" style="width:60%"></td>
     <td style="width:40%" class="bold ">
@@ -181,7 +181,7 @@
         <p class="underline">Pada Tanggal : <?php echo nbs(6).bdate('%F', $created_on).' '.bdate('%Y') ?></p>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="5" style="width:60%"></td>
     <td colspan="2" style="width:40%"><?php print_ttd_kadin() ?></td>

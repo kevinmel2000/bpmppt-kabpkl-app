@@ -283,6 +283,17 @@ module.exports = function(grunt) {
       }
     },
 
+    lineending: {
+      vendor: {
+        files: [{
+          expand: true,
+          cwd: 'asset/vendor',
+          src: [ '**/*.{js,css,less}' ],
+          dest: 'asset/vendor/'
+        }]
+      }
+    },
+
     watch: {
       options: {
         nospawn: true,
@@ -331,7 +342,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('bower',     [ 'clean:vendor', 'copy:vendorBackup', 'preen', 'copy:vendorDist', 'copy:vendorRestore', 'clean:backup' ])
   grunt.registerTask('build',     [ 'clean:dist', 'php-test', 'css-test', 'js-test', 'usebanner' ])
-  grunt.registerTask('dist',      [ 'build', 'bower', 'img-dist', 'copy:dist' ])
+  grunt.registerTask('dist',      [ 'build', 'bower', 'newer:lineending', 'img-dist', 'copy:dist' ])
   grunt.registerTask('serve',     [ 'php:serve', 'watch' ])
 
   grunt.registerTask('default',   [ 'build' ])

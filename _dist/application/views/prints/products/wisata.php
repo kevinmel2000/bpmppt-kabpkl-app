@@ -1,18 +1,18 @@
 <table>
     <tbody>
-        <tr><td colspan="7" style="width:100%"></td></tr>
+        <tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="7" style="width:100%">IZIN USAHA KARAOKE</td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="7" style="width:100%">NOMOR : <?php echo '556.142 / '.$surat_nomor.'/ PAR / KAR / BPMPPT / '.print_blnthn_head($created_on) ?></td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="7" style="width:100%">BUPATI PEKALONGAN</td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td colspan="3" style="width:30%"></td>
     <td style="width:10%"><p>Membaca</p></td>
@@ -31,11 +31,11 @@
     <td style="width:2%"><p>:</p></td>
     <td colspan="2" style="width:47%"><p>dst ;</p></td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td colspan="7" style="width:100%"><p style="text-align:center"><strong>M E M U T U S K A N :</strong></p></td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>Menetapkan</p></td>
     <td style="width:2%"><p>:</p></td>
@@ -76,7 +76,7 @@
     <td style="width:2%"><p>:</p></td>
     <td colspan="2" style="width:47%"><p><?php echo $usaha_alamat ?></p></td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>KEDUA</p></td>
     <td style="width:2%"><p>:</p></td>
@@ -95,7 +95,7 @@
         </ol>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>KETIGA</p></td>
     <td style="width:2%"><p>:</p></td>
@@ -112,19 +112,19 @@
         </ol>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>KEEMPAT</p></td>
     <td style="width:2%"><p>:</p></td>
     <td colspan="5" style="width:78%" class="align-justify"><p>Pelanggaran terhadap ketentuan – ketentuan sebagaimana dimaksud dalam diktum KEDUA dan KETIGA dikenakan sanksi sesuai peraturan perundang-undangan yang berlaku dan atau dapat dicabutnya Izin Usaha Pariwisata sebagaimana dalam diktum PERTAMA.</p></td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>KELIMA</p></td>
     <td style="width:2%"><p>:</p></td>
     <td colspan="5" style="width:78%" class="align-justify"><p>Keputusan ini mulai berlaku pada tanggal ditetapkan.</p></td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td colspan="6" style="width:60%"></td>
     <td style="width:40%">
@@ -132,7 +132,7 @@
         <p class="underline">Pada Tanggal : <?php print_blnthn_foot($surat_tanggal) ?></p>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="5" style="width:60%"></td>
     <td colspan="2" style="width:40%"><?php print_ttd_kadin() ?></td>

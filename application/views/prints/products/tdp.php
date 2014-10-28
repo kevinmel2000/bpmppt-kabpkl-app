@@ -1,14 +1,14 @@
 <table>
     <tbody>
-        <tr><td colspan="6" style="width:100%"></td></tr>
+        <tr><td class="empty" colspan="6" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="6" style="width:100%; font-size: 30px; ">TANDA DAFTAR PERUSAHAAN</td>
 </tr>
-<tr><td colspan="6" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="6" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="6" style="width:100%"><?php echo strtoupper($usaha_jenis) ?></td>
 </tr>
-<tr><td colspan="6" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="6" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="6" style="width:100%">
         <p style="">BERDASARKAN<br>
@@ -25,7 +25,7 @@ TENTANG PERSEROAN TERBATAS
 <?php endif; ?></p>
     </td>
 </tr>
-<tr><td colspan="6" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="6" style="width:100%"></td></tr>
 <tr class="bold" style="border: 2px solid #000">
     <td style="width:20%; border-right: 1px solid #000;">NOMOR TDP<br><?php echo $no_tdp ?></td>
     <td colspan="3" style="width:55%; border-right: 1px solid #000;">BERLAKU S/D TANGGAL<br><?php echo format_date($tgl_berlaku) ?></td>
@@ -82,13 +82,13 @@ TENTANG PERSEROAN TERBATAS
 </tr>
 <?php endif; endforeach; endif; ?>
 
-<tr><td colspan="6" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="6" style="width:100%"></td></tr>
 <tr style="">
     <td colspan="3"></td>
     <td colspan="3" style="border-bottom: 2px solid #000">Dikeluarkan di : KAJEN<br>
     Pada Tanggal : <?php echo bdate('%d %F', $surat_tanggal).' '.bdate('%Y') ?></td>
 </tr>
-<tr><td colspan="6" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="6" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="3"></td>
     <td colspan="3"><?php print_ttd_kadin() ?></td>

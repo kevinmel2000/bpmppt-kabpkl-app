@@ -1,6 +1,6 @@
 <table>
     <tbody>
-        <tr><td colspan="7" style="width:100%"></td></tr>
+        <tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="7" style="width:100%">
         <p>KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN</p>
@@ -8,31 +8,31 @@
         <p>NOMOR : <?php echo $surat_nomor.' / '.nbs(6).' / BPMPPT / IUI / '.print_blnthn_head($created_on) ?></p>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="7" style="width:100%"><p>TENTANG</p></td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="7" style="width:100%">
         <p>IZIN USAHA INDUSTRI</p>
         <p>(TANPA MELALUI TAHAP PERSETUJUAN PRINSIP)</p>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="7" style="width:100%">
         <p>KEPALA BADAN PENANAMAN MODAL DAN PELAYANAN PERIZINAN TERPADU</p>
         <p>KABUPATEN PEKALONGAN</p>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>Membaca</p></td>
     <td style="width:2%"><p>:</p></td>
     <td colspan="5" style="width:78%" class="align-justify">Surat dari Perusahaan <?php echo $usaha_nama ?><br>Tanggal <?php echo $surat_nomor ?> Perihal Permohonan Izin Usaha Industri.</td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>Menimbang</p></td>
     <td style="width:2%"><p>:</p></td>
@@ -70,11 +70,11 @@
         </ol>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td colspan="7" style="width:100%"><p style="text-align:center"><strong>M E M U T U S K A N :</strong></p></td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%">Menetapkan</td>
     <td style="width:2%">:</td>
@@ -123,31 +123,31 @@
     <td colspan="2"></td>
     <td colspan="5">Dengan ketentuan dan persyaratan sebagaimana terlampir pada Izin Usaha Industri ini.</td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>KEDUA</p></td>
     <td style="width:2%"><p>:</p></td>
     <td colspan="5" style="width:78%" class="align-justify">Izin Usaha Industri ini berlaku selama perusahaan industri ini beroperasi, kecuali apabila dalam jangka waktu 4 (empat) tahun terhitung mulai tanggal Surat Pernyataan dibuat, tidak merealisasikan pembangunan pabrik dan sarana produksi serta tidak memenuhi kesanggupan yang tercantum dalam Surat Pernyataan, Izin Usaha Industri batal dengan sendirinya.</td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%">KETIGA</td>
     <td style="width:2%">:</td>
     <td colspan="5" style="width:78%" class="align-justify">Izin Usaha Industri ini merupakan bagian yang tidak terpisahkan dari Surat Pernyataan tertanggal <?php echo format_date($surat_tanggal) ?> yang dibuat oleh perusahaan yang bersangkutan.</td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%">KEEMPAT</td>
     <td style="width:2%">:</td>
     <td colspan="5" style="width:78%" class="align-justify">Izin Usaha Industri ini terlepas dari Izin-izin yang diharuskan berdasarkan peraturan perundang-undangan lain yang berlaku.</td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%">KELIMA</td>
     <td style="width:2%">:</td>
     <td colspan="5" style="width:78%" class="align-justify">Izin Usaha Industri ini mulai berlaku pada tanggal ditetapkan.</td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td colspan="6" style="width:60%"></td>
     <td style="width:40%">
@@ -155,7 +155,7 @@
         <p class="underline">Pada Tanggal : <?php print_blnthn_foot($surat_tanggal) ?></p>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="5" style="width:60%"></td>
     <td colspan="2" style="width:40%"><?php print_ttd_kadin() ?></td>

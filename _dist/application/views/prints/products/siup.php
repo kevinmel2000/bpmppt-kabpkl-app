@@ -1,13 +1,13 @@
 <table>
     <tbody>
-        <tr><td colspan="4"></td></tr>
+        <tr><td class="empty" colspan="4" style="width:100%"></td></tr>
 <tr style="font-family: 'Arial'" class="align-center bold">
     <td colspan="4">
         <span style="font-size: 24px">SURAT IZIN USAHA PERDAGANGAN</span><br>
         <span >NOMOR : <?php echo strtoupper($no_agenda.'/11.19/'.$usaha_skala.'/'.format_roman(bdate('%m', $surat_tanggal)).'/'.bdate('%Y')) ?></span>
     </td>
 </tr>
-<tr><td colspan="4" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="4" style="width:100%"></td></tr>
 <tr class="bold" style="border: 2px solid #000; border-bottom-width: 1px">
     <td style="width:25%">NAMA PERUSAHAAN</td>
     <td style="width:5%">:</td>
@@ -72,7 +72,7 @@ IZIN INI BERLAKU UNTUK MELAKUKAN KEGIATAN USAHA PERDAGANGAN DISELURUH WILAYAH RE
 PERUSAHAAN WAJIB MENDAFTARKAN ULANG SIUP PADA TANGGAL : <?php echo bdate('%d %F %Y', $surat_tanggal.'+5 years') ?>
     </td>
 </tr>
-<tr><td colspan="4" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="4" style="width:100%"></td></tr>
 <tr style="font-family: 'Arial'">
     <td colspan="3" style="width: 70%"></td>
     <td style="width: 40%; border-bottom: 2px solid #000">
@@ -80,7 +80,7 @@ PERUSAHAAN WAJIB MENDAFTARKAN ULANG SIUP PADA TANGGAL : <?php echo bdate('%d %F 
         <p class="underline">Pada Tanggal : <?php echo bdate('%d %F', $surat_tanggal).' '.bdate('%Y') ?></p>
     </td>
 </tr>
-<tr><td colspan="4" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="4" style="width:100%"></td></tr>
 <tr style="font-family: 'Arial'" class="align-center bold">
     <td colspan="3"></td>
     <td><?php print_ttd_kadin() ?></td>

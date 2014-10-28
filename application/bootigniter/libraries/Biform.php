@@ -116,6 +116,7 @@ class Biform
         'required_attr' => " <abbr title='Field ini harus diisi'>*</abbr>",
         'desc_open'     => "<span class='help-block'>",
         'desc_close'    => "</span>",
+        'editor_filters'=> array(),
         );
 
     /**
@@ -1074,6 +1075,14 @@ class Biform
             $attrs['data-edtr-locale'] = $locale;
         }
 
+        if (isset($this->_template['editor_filters'][$field_attrs['name']]))
+        {
+            foreach ($this->_template['editor_filters'][$field_attrs['name']] as $pattern => $replacement)
+            {
+                $field_attrs['std'] = str_replace($pattern, $replacement, $field_attrs['std']);
+            }
+        }
+
         return form_textarea($attrs, set_value($field_attrs['name'], $field_attrs['std']), $field_attrs['attr']);
     }
 
@@ -1284,6 +1293,7 @@ class Biform
         $field_attrs['class'] = 'form-datepicker';
         $field_attrs['type'] = 'text';
         $field_attrs['attr'] = 'data-lang="'.$lang.'" data-mode="'.$field_attrs['mode'].'" data-format="dd-mm-yyyy" ';
+        $field_attrs['std'] = format_date($field_attrs['std']);
 
         $output = '<div class="has-feedback">'
                     . $this->_set_input_text($field_attrs)
@@ -1346,6 +1356,23 @@ class Biform
                 $validation = (isset($field['validation']) ? $field['validation'] : '');
                 $callback   = (isset($field['callback'])   ? $field['callback']   : '');
 
+                if ($field['type'] == 'editor')
+                {
+                    $filters = isset($field['filters']) ? $field['filters'] : array();
+                    $defaults = array(
+                        '<?php echo' => '{%=',
+                        '<?php' => '{%',
+                        '?>' => '%}',
+                        );
+
+                    if (!empty($filters))
+                    {
+                        $defaults = array_merge($filters, $defaults);
+                    }
+
+                    $this->_template['editor_filters'][$field['name']] = $defaults;
+                }
+
                 $this->set_field_rules($field['name'], $field['label'], $field['type'], $validation, $callback);
             }
         }
@@ -1353,7 +1380,25 @@ class Biform
         // if is valid submissions
         if ($this->_ci->form_validation->run())
         {
-            return $this->submited_data();
+            foreach ($this->_fields as $field)
+            {
+                $name = $field['name'];
+                if ($field['type'] == 'editor' and isset($this->_template['editor_filters'][$name]))
+                {
+                    foreach ($this->_template['editor_filters'][$name] as $replacement => $pattern)
+                    {
+                        $this->form_data[$name] = str_replace($pattern, $replacement, $this->form_data[$name]);
+                    }
+                }
+                elseif ($field['type'] == 'datepicker')
+                {
+                    $this->form_data[$name] = string_to_date($this->form_data[$name]);
+                }
+            }
+
+            $data = $this->form_data;
+            $this->clear();
+            return $data;
         }
 
         // otherwise
@@ -1484,5 +1529,5 @@ class Biform
     }
 }
 
-/* End of file Former.php */
-/* Location: ./bootigniter/libraries/Former.php */
+/* End of file Biform.php */
+/* Location: ./bootigniter/libraries/Biform.php */

@@ -19,38 +19,38 @@
 <?php endif; ?>
 <table>
     <tbody>
-        <tr><td colspan="7" style="width:100%"></td></tr>
+        <tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td colspan="7" style="width:100%" class="align-center bold">IZIN GANGGUAN ( HO )</td>
 </tr>
 <tr>
     <td colspan="7" style="width:100%" class="align-center bold">NOMOR : <?php echo '510.8 /'.nbs(6).'/ BPMPPT / '.$usaha_jenis.' / '.print_blnthn_head($surat_tanggal) ?></td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <!-- <td colspan="2" style="width:30%"></td> -->
     <td colspan="2" style="width:40%">JENIS USAHA / KEGIATAN</td>
     <td style="width:2%">:</td>
     <td colspan="4" style="width:47%" class="bold"><?php echo $usaha_jenis.'<br>* '.$usaha_nama ?> *</td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <!-- <td colspan="2" style="width:30%"></td> -->
     <td colspan="2" style="width:40%"><p>An. SAUDARA</p></td>
     <td style="width:2%">:</td>
     <td colspan="4" style="width:47%" class="bold"><?php echo strtoupper($pemohon_nama) ?></td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td colspan="7" style="width:100%" class="align-center bold">BUPATI PEKALONGAN</td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>Membaca</p></td>
     <td style="width:2%">:</td>
     <td colspan="5" style="width:78%" class="align-justify"><p>Surat Permohonan Saudara <strong><?php echo $pemohon_nama ?></strong> <?php echo (strtolower($pemohon_jabatan) == 'atas nama' ? 'atas nama <strong>'.$usaha_nama.'</strong>' : 'selaku '.$pemohon_jabatan)?>, Alamat di <strong><?php echo $usaha_alamat ?></strong>, tanggal <?php echo format_date($pemohon_tanggal) ?> untuk Izin tempat usaha <?php echo $usaha_jenis ?>, yang terletak di <?php echo $usaha_lokasi ?>.</p></td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>Menimbang</p></td>
     <td style="width:2%">:</td>
@@ -62,7 +62,7 @@
         </ol>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>Mengingat</p></td>
     <td style="width:2%">:</td>
@@ -81,11 +81,11 @@
         </ol>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td colspan="7" style="width:100%" class="align-center bold">M E M U T U S K A N :</td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>Menetapkan</p></td>
     <td style="width:2%">:</td>
@@ -96,7 +96,7 @@
     <td style="width:2%">:</td>
     <td colspan="5" style="width:78%" class="align-justify"><p>Memberi Izin Gangguan ( HO ) kepada Saudara <strong><?php echo $pemohon_nama ?></strong> <?php echo (strtolower($pemohon_jabatan) == 'atas nama' ? 'atas nama <strong>'.$usaha_nama.'</strong>' : 'selaku '.$pemohon_jabatan)?>, Alamat Kantor di <?php echo $usaha_alamat ?>, untuk Izin tempat usaha <?php echo $usaha_jenis ?> yang terletak <?php echo $usaha_lokasi ?> di atas tanah milik <?php echo $usaha_tanah_milik ?> dengan luas tempat usaha ± <?php echo $usaha_luas ?> M<sup>2</sup>.<br>Adapun persil tersebut berbatasan :</p></td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td colspan="2"></td>
     <td colspan="2" style="width:35%">Sebelah Utara</td>
@@ -121,7 +121,7 @@
     <td style="width:2%">:</td>
     <td colspan="2" style="width:42%"><?php echo $usaha_tetangga_barat ?></td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td colspan="2"></td>
     <td colspan="5" style="width:78%" class="align-justify">
@@ -142,7 +142,7 @@
         </ol>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>KEDUA</p></td>
     <td style="width:2%">:</td>
@@ -159,13 +159,13 @@
         </ol>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>KETIGA</p></td>
     <td style="width:2%">:</td>
     <td colspan="5" style="width:78%" class="align-justify">Keputusan ini mulai berlaku pada tanggal ditetapkan.</td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td colspan="6" style="width:60%"></td>
     <td style="width:40%">
@@ -173,7 +173,7 @@
         <p class="underline">Pada Tanggal : <?php print_blnthn_foot($surat_tanggal) ?></p>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="5" style="width:60%"></td>
     <td colspan="2" style="width:40%"><?php print_ttd_kadin() ?></td>

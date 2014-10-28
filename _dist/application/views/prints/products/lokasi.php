@@ -1,19 +1,17 @@
 <table>
     <tbody>
-        <tr><td colspan="7" style="width:100%"></td></tr>
+        <tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="7" style="width:100%">
-        <p>BUPATI PEKALONGAN</p>
-        <p></p>
-        <p>SURAT IZIN BUPATI PEKALONGAN</p>
-        <p>NOMOR : <?php echo '510.4 / '.$surat_nomor.' / TAHUN '.bdate('%Y') ?></p>
+        <?php echo img(array('src' => base_url('asset/img/garuda.png'), 'alt' => 'Logo cetak', 'class' => 'img logo-skpd', 'width' => '60')) ?><br>
+        <p>BUPATI PEKALONGAN<br>SURAT IZIN BUPATI PEKALONGAN<br>NOMOR : <?php echo $surat_nomor.' / TAHUN '.bdate('%Y') ?></p>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="7" style="width:100%"><p>TENTANG</p></td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="7" style="width:100%">
         <p>PEMBERIAN IZIN LOKASI <?php echo $pemohon_usaha ?></p>
@@ -22,20 +20,20 @@
         <p>KABUPATEN PEKALONGAN</p>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="7" style="width:100%">
         <p>BUPATI PEKALONGAN</p>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>dasar</p></td>
     <td style="width:2%"><p>:</p></td>
     <td colspan="5" style="width:78%" class="align-justify">
         <ol>
             <li>Undang-undang Nomor 13 Tahun 950 tentang Pembentukan Daerah-daerah Kabupaten Dalam Lingkungan Propinsi Jawa Tengah;</li>
-            <li>Undang-undanga Nomor 9 Tahun 1965tengang Pembentukan Daerah Tingkat II Batang dengan mengubah Undang-Undang Nomoe 13 Tahun 1965 tentang Pembentukan Daerah-daerah Kabupaten Dalam Lingkungan Propinsi Jawa Tengah (Lembaran Negara Tahun 1965 Nomor 52, Tambahan Lembaran Negara Nomor 2757);</li>
+            <li>Undang-undang Nomor 9 Tahun 1965 tengang Pembentukan Daerah Tingkat II Batang dengan mengubah Undang-Undang Nomoe 13 Tahun 1965 tentang Pembentukan Daerah-daerah Kabupaten Dalam Lingkungan Propinsi Jawa Tengah (Lembaran Negara Tahun 1965 Nomor 52, Tambahan Lembaran Negara Nomor 2757);</li>
             <li>Undang-undang nomor 4 tahun 1992 tentang Perumahan dan Pemukiman (Lembaran Negara Tahun 1992 Nomor 23, Tambahnan Lembaran Negara Nomor 3469);</li>
             <li>Keputusan-keputusan Presiden Nomor 34 Tahun 2003 tentang Kebijakan Nasional di Bidang Pertanahan (Lembaran Negara Tahun 2003 Nomor 60);</li>
             <li>Peraturan-peraturan Menteri Negara Agraria / Kepala Badan Pertanahan Nasional Nomor 2 Tahun 1993 tentang Tata Cara Memperoleh Izin Lokasi dan Hak Atas Tanah Bagi Perusahaan Dalam Rangka Penanaman Modal;</li>
@@ -50,7 +48,7 @@
 <tr>
     <td colspan="7" style="width:100%">MENGIZINKAN</td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td style="width:20%"><p>Kepada</p></td>
     <td style="width:2%"><p>:</p></td>
@@ -71,7 +69,7 @@
         <p><?php echo $lokasi_tujuan ?></p>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td colspan="7" style="width:100%" class="align-justify">
         <p>Dengan ketentuan sebagai berikut :</p>
@@ -94,7 +92,7 @@
         </ol>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td colspan="6" style="width:60%"></td>
     <td style="width:40%">
@@ -102,7 +100,7 @@
         <p class="underline">Pada Tanggal : <?php print_blnthn_foot($surat_tanggal) ?></p>
     </td>
 </tr>
-<tr><td colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="5" style="width:60%"></td>
     <td colspan="2" style="width:40%"><?php print_ttd_kadin() ?></td>
