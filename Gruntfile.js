@@ -285,6 +285,10 @@ module.exports = function(grunt) {
 
     lineending: {
       vendor: {
+        options: {
+          overwrite: true,
+          eol: 'lf'
+        },
         files: [{
           expand: true,
           cwd: 'asset/vendor',
@@ -342,7 +346,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('bower',     [ 'clean:vendor', 'copy:vendorBackup', 'preen', 'copy:vendorDist', 'copy:vendorRestore', 'clean:backup' ])
   grunt.registerTask('build',     [ 'clean:dist', 'php-test', 'css-test', 'js-test', 'usebanner' ])
-  grunt.registerTask('dist',      [ 'build', 'bower', 'newer:lineending', 'img-dist', 'copy:dist' ])
+  grunt.registerTask('dist',      [ 'build', 'bower', 'lineending:vendor', 'img-dist', 'copy:dist' ])
   grunt.registerTask('serve',     [ 'php:serve', 'watch' ])
 
   grunt.registerTask('default',   [ 'build' ])

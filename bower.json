@@ -84,7 +84,7 @@
     "jqueryui": [
       "themes/base/**/*",
       "ui/**/*.js",
-      "MIT-LICENSE.txt"
+      "LICENSE.txt"
     ],
     "jqueryui-touch-punch": [
       "*.js"
