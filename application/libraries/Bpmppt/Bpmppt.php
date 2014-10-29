@@ -375,9 +375,9 @@ class Bpmppt extends CI_Driver_Library
     public function get_print( $driver, $data_id )
     {
         $data = array_merge(
-                    (array) $this->skpd_properties(),
-                    (array) $this->get_fulldata_by_id($data_id)
-                    );
+            (array) $this->skpd_properties(),
+            (array) $this->get_fulldata_by_id($data_id)
+            );
 
         $this->$driver->defaults['data_tembusan'] = '';
 
@@ -386,6 +386,17 @@ class Bpmppt extends CI_Driver_Library
             if( !isset( $data[$key] ) )
             {
                 $data[$key] = $value;
+            }
+
+            if ($driver == 'iplc' and $key == 'debits')
+            {
+                $_data = $data[$key];
+                unset($data[$key]);
+
+                $data[$key] = array(
+                    'head' => $this->$driver->_custom_fields,
+                    'body' => unserialize($_data),
+                    );
             }
         }
 

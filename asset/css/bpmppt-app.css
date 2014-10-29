@@ -7102,7 +7102,6 @@ table.dataTable td {
 }
 .note-editor .note-editable table {
   min-width: 100%;
-  font-family: 'Times New Roman';
   font-size: 12px;
   border-collapse: collapse;
   border-color: transparent;
