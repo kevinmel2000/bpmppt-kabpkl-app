@@ -61,36 +61,34 @@ module.exports = function(grunt) {
           {
             expand: true,
             src: [
-              'system/**',
-              'application/**',
-              '!application/tests/**',
-              '!application/vendor/**',
+              '{system,application}/**',
+              '!application/{tests,vendor}/**',
               '!application/storage/{backup,cache,logs,upload}/**',
               'application/storage/{backup,cache,logs,upload}/index.html',
+              'asset/{css,js,vendor}/**',
+              '!asset/{css,js}/src/**',
               '*.{php,sql,sh}',
               '!appconfig.php',
               '.htaccess',
               'package.json',
               'README.md',
               'LICENSE',
-              '!**/**.old',
-              '!**/_**',
-              '!_**'
-            ],
-            dest: '_dist/'
-          },
-          {
-            expand: true,
-            src: [
-              'asset/{css,img,js,vendor}/**',
-              '!asset/{css,img,js}/src/**',
-              '!**/**.old',
-              '!**/_**',
-              '!_**'
+              '!{**/**,**}.old',
+              '!_{**/**,**}'
             ],
             dest: '_dist/'
           }
         ]
+      },
+      distImg: {
+        expand: true,
+        cwd: 'asset/img/',
+        src: [
+          '**',
+          '!{**/**,**}.old',
+          '!_{**/**,**}'
+        ],
+        dest: '_dist/asset/img/'
       },
       devJs: {
         src: 'asset/js/src/script.js',
@@ -345,7 +343,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('bower',     [ 'clean:vendor', 'copy:vendorBackup', 'preen', 'copy:vendorDist', 'copy:vendorRestore', 'clean:backup' ])
   grunt.registerTask('build',     [ 'clean:dist', 'php-test', 'css-test', 'js-test', 'usebanner' ])
-  grunt.registerTask('dist',      [ 'build', 'bower', 'lineending:vendor', 'img-dist', 'copy:dist' ])
+  grunt.registerTask('dist',      [ 'build', 'bower', 'lineending:vendor', 'img-dist', 'copy:dist', 'copy:distImg' ])
   grunt.registerTask('serve',     [ 'php:serve', 'watch' ])
 
   grunt.registerTask('default',   [ 'build' ])
