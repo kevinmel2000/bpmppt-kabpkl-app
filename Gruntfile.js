@@ -43,50 +43,45 @@ module.exports = function(grunt) {
       dist: {
         options: {
           process: function (content) {
-            var home = grunt.config('pkg.homepage')
-            var name = grunt.config('pkg.author.name')
-            var email = grunt.config('pkg.author.email')
+            var home     = grunt.config('pkg.homepage')
+            var name     = grunt.config('pkg.author.name')
             var lcnsType = grunt.config('pkg.license.type')
-            var lcnsUrl = grunt.config('pkg.license.url')
-            var version = grunt.config('pkg.version')
+            var version  = grunt.config('pkg.version')
 
             return content
               .replace(/@PACKAGE/g,    packageName + ' v' + version + ' (' + home + ')')
-              .replace(/@AUTHOR/g,     name + ' (' + email + ')')
+              .replace(/@AUTHOR/g,     name + ' (' + grunt.config('pkg.author.email') + ')')
               .replace(/@COPYRIGHT/g,  '2013-' + year + ' ' + copyrightHolder + ', ' + name)
-              .replace(/@LICENSE/g,    lcnsType + ' (' + lcnsUrl + ')')
+              .replace(/@LICENSE/g,    lcnsType + ' (' + grunt.config('pkg.license.url') + ')')
           }
         },
-        files: [
-          {
-            expand: true,
-            src: [
-              '{system,application}/**',
-              '!application/{tests,vendor}/**',
-              '!application/storage/{backup,cache,logs,upload}/**',
-              'application/storage/{backup,cache,logs,upload}/index.html',
-              'asset/{css,js,vendor}/**',
-              '!asset/{css,js}/src/**',
-              '*.{php,sql,sh}',
-              '!appconfig.php',
-              '.htaccess',
-              'package.json',
-              'README.md',
-              'LICENSE',
-              '!{**/**,**}.old',
-              '!_{**/**,**}'
-            ],
-            dest: '_dist/'
-          }
-        ]
+        expand: true,
+        src: [
+          '{system,application}/**',
+          '!application/{tests,vendor}/**',
+          '!application/storage/{backup,cache,logs,upload}/**',
+          'application/storage/{backup,cache,logs,upload}/index.html',
+          'asset/{css,js,vendor}/**',
+          '!asset/{css,js}/src/**',
+          '*.{php,sql,sh}',
+          '!appconfig.php',
+          '.htaccess',
+          'package.json',
+          'README.md',
+          'LICENSE',
+          '!{**/*,*}.old',
+          '!{**/}_**',
+          '!_*'
+        ],
+        dest: '_dist/'
       },
       distImg: {
         expand: true,
         cwd: 'asset/img/',
         src: [
           '**',
-          '!{**/**,**}.old',
-          '!_{**/**,**}'
+          '!{**/*,*}.old',
+          '!_{**/*,*}'
         ],
         dest: '_dist/asset/img/'
       },
