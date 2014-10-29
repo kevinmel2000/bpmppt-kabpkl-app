@@ -221,12 +221,12 @@ class Bpmppt_iup extends CI_Driver
         {
             foreach ( unserialize( $data->tambang_koor ) as $row )
             {
-                $this->_row_koordinat( $row );
+                $this->_custom_row( $row );
             }
         }
         else
         {
-            $this->_row_koordinat();
+            $this->_custom_row();
         }
 
         return $this->_ci->table->generate();
@@ -234,7 +234,7 @@ class Bpmppt_iup extends CI_Driver
 
     // -------------------------------------------------------------------------
 
-    private function _row_koordinat( $data = FALSE )
+    private function _custom_row( $data = FALSE )
     {
         $cols = array(
             'no'   => 'No',

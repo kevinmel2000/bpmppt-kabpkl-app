@@ -106,7 +106,7 @@
     <td style="width:2%"><p>:</p></td>
     <td colspan="5" style="width:78%" class="align-justify">
         <p>Kepada pemegang izin sebagaimana dimaksud dalam Diktum KESATU, wajib memenuhi ketentuan sebagai berikut :</p>
-        <?php echo $data_teknis ?>
+        <?php echo preg_replace('/\{\{data_debit_limbah\}\}/', iplc_debits($debits), $data_teknis) ?>
     </td>
 </tr>
 <tr><td class="empty" colspan="7" style="width:100%"></td></tr>

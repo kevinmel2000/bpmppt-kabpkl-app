@@ -86,3 +86,34 @@ function print_blnthn_foot($str_date, $nbsp = null)
     $nbsp || $nbsp = 6;
     echo nbs($nbsp).bdate('%F %Y', $str_date);
 }
+
+function iplc_debits($debits = array())
+{
+    if (empty($debits)) return;
+
+    $html = '<table class="bordered"><thead><tr>'
+          . '<th>NO</th>';
+
+    foreach ($debits['head'] as $debit_head)
+    {
+        $html .= '<th>'.$debit_head.'</th>';
+    }
+
+    $html .= '</tr></thead><tbody>';
+
+    foreach ($debits['body'] as $i => $debit_data)
+    {
+        $html .= '<tr><td>'.($i + 1).'</td>';
+
+        foreach (array_keys($debits['head']) as $debit_key)
+        {
+            $html .= '<td>'.($debit_data[$debit_key] ?: '-').'</td>';
+        }
+
+        $html .= '</tr>';
+    }
+
+    $html .= '</tbody></table>';
+
+    return $html;
+}

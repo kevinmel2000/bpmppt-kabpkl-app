@@ -70,8 +70,7 @@ module.exports = function(grunt) {
           'README.md',
           'LICENSE',
           '!{**/*,*}.old',
-          '!{**/}_**',
-          '!_*'
+          '!{**/}_**'
         ],
         dest: '_dist/'
       },
@@ -81,7 +80,7 @@ module.exports = function(grunt) {
         src: [
           '**',
           '!{**/*,*}.old',
-          '!_{**/*,*}'
+          '!{**/}_**'
         ],
         dest: '_dist/asset/img/'
       },
