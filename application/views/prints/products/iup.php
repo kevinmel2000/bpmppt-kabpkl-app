@@ -261,14 +261,7 @@
 <tr><td colspan="2" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td style="width:50%"></td>
-    <td style="width:50%">
-A.n. BUPATI PEKALONGAN<br>
-KEPALA <?php echo strtoupper($skpd_name) ?><br>
-<?php echo strtoupper($skpd_city) ?><br><br><br>
-<span class="underline"><?php echo strtoupper($skpd_lead_name) ?></span><br>
-<?php echo strtoupper($skpd_lead_jabatan) ?><br>
-NIP. <?php echo strtoupper($skpd_lead_nip) ?>
-    </td>
+    <td style="width:50%"><?php print_ttd_kadin() ?></td>
 </tr>
     </tbody>
 </table>
