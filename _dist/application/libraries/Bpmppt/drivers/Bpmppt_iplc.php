@@ -32,6 +32,13 @@ class Bpmppt_iplc extends CI_Driver
     public $alias = 'izin_pembuangan_air_limbah';
     public $name = 'Izin Pembuangan Air Limbah ke Air atau Sumber Air';
     public $prefield_label = 'No. &amp; Tgl. Input';
+    public $_custom_fields = array(
+        'param'        => 'Parameter',
+        'proses_kadar' => 'Kadar max proses (Mg/l)',
+        'proses_beban' => 'Beban pencemaran proses (Mg/l)',
+        'kond_kadar'   => 'Kadar max kondensor (Mg/l)',
+        'kond_beban'   => 'Beban pencemaran kondensor (Mg/l)',
+        );
 
     /**
      * Default field
@@ -39,15 +46,13 @@ class Bpmppt_iplc extends CI_Driver
      * @var  array
      */
     public $defaults = array(
-        'pemohon_nama'              => '',
-        'pemohon_jabatan'           => '',
-        'pemohon_usaha'             => '',
-        'pemohon_alamat'            => '',
-        'ketentuan_teknis'          => '',
-        'limbah_kapasitas_produksi' => '',
-        'limbah_debit_max_proses'   => '',
-        'limbah_debit_max_kond'     => '',
-        'limbah_target_buang'       => '',
+        'pemohon_nama'        => '',
+        'pemohon_jabatan'     => '',
+        'pemohon_usaha'       => '',
+        'pemohon_alamat'      => '',
+        'data_teknis'         => '',
+        'limbah_target_buang' => '',
+        'debits'              => array(),
         );
 
     // -------------------------------------------------------------------------
@@ -113,7 +118,131 @@ class Bpmppt_iplc extends CI_Driver
             'std'   => ( $data_obj ? $data_obj->data_teknis : Bootigniter::get_setting('iplc_teknis') ),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
+        $fields[] = array(
+            'name'  => 'debits',
+            'label' => 'Data Debit Limbah',
+            'type'  => 'custom',
+            'std'   => $this->custom_field($data_obj)
+            );
+
+        // foreach ($this->_custom_fields2 as $l_key => $l_val)
+        // {
+        //     $this->_custom_parent = $l_key;
+        //     $fields[] = array(
+        //         'name'  => $l_key,
+        //         'label' => 'Data Debit '.($l_key == 'debit_proses' ? 'Proses' : 'Kondensor'),
+        //         'type'  => 'custom',
+        //         'std'   => $this->custom_field($l_val, $data_obj)
+        //         );
+        // }
+
         return $fields;
+    }
+
+    // -------------------------------------------------------------------------
+
+    private function custom_field($data = FALSE)
+    {
+        if (!$this->_ci->load->is_loaded('table'))
+        {
+            $this->_ci->load->library('table');
+        }
+
+        $this->_ci->table->set_template( $this->table_templ );
+        $width = ceil(90 / count($this->_custom_fields));
+
+        foreach ($this->_custom_fields as $name => $label)
+        {
+            $head[] = array(
+                'data'  => $label,
+                'class' => 'head-'.$name,
+                'width' => $width.'%'
+                );
+        }
+
+        $head[] = array(
+            'data'  => form_button( array(
+                'name'  => 'debits_add-btn',
+                'type'  => 'button',
+                'class' => 'btn btn-primary bs-tooltip btn-block btn-sm',
+                'tabindex' => '-1',
+                'title' => 'Tambahkan baris',
+                'content'=> 'Add' ) ),
+            'class' => 'head-action',
+            'width' => '10%' );
+
+        $this->_ci->table->set_heading( $head );
+
+        if ( isset( $data->debits ) and !empty( $data->debits ) )
+        {
+            foreach ( unserialize( $data->debits ) as $row )
+            {
+                $this->_custom_row($row);
+            }
+        }
+        else
+        {
+            $this->_custom_row();
+        }
+
+        return $this->_ci->table->generate();
+    }
+
+    // -------------------------------------------------------------------------
+
+    private function _custom_row($data = FALSE)
+    {
+        foreach ( $this->_custom_fields as $name => $label )
+        {
+            $column[] = array(
+                'data'  => form_input( array(
+                    'name'  => $this->alias.'_debits'.'['.$name.'][]',
+                    'type'  => 'text',
+                    'value' => $data && isset($data[$name]) ? $data[$name] : '',
+                    'class' => 'form-control bs-tooltip input-sm',
+                    'placeholder'=> $label ), '', ''),
+                'class' => 'data-id',
+                );
+        }
+
+        $column[] = array(
+            'data'  => form_button( array(
+                'name'  => $this->alias.'_debits'.'_remove-btn',
+                'type'  => 'button',
+                'class' => 'btn btn-danger bs-tooltip btn-block btn-sm remove-btn',
+                'tabindex' => '-1',
+                'content'=> '&times;' ) ),
+            'class' => '',
+            'width' => '10%'
+            );
+
+        $this->_ci->table->add_row( $column );
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Prepost form data hooks
+     *
+     * @return  mixed
+     */
+    public function _pre_post($form_data)
+    {
+        foreach (array_keys($this->_custom_fields) as $field)
+        {
+            $slug = $this->alias.'_debits';
+
+            if (isset($form_data[$slug][$field]))
+            {
+                foreach ($form_data[$slug][$field] as $i => $val)
+                {
+                    $form_data[$slug][$i][$field] = $val ?: '';
+                    unset($form_data[$slug][$field]);
+                }
+            }
+        }
+
+        return $form_data;
     }
 }
 
