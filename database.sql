@@ -1,19 +1,9 @@
 --
--- MySQL 5.5.38
--- Tue, 30 Sep 2014 21:17:22 +0000
+-- MySQL 5.5.40
+-- Tue, 04 Nov 2014 07:17:08 +0000
 --
 
-CREATE TABLE `baka_auth_autologin` (
-   `key_id` char(32) not null,
-   `user_id` int(11) not null default '0',
-   `user_agent` varchar(150) not null,
-   `last_ip` varchar(15) not null,
-   `last_login` timestamp not null default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-   PRIMARY KEY (`key_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- [Table `baka_auth_autologin` is empty]
-
+DROP TABLE `baka_auth_groupperms`;
 CREATE TABLE `baka_auth_groupperms` (
    `group_id` smallint(4) unsigned not null,
    `perms_id` smallint(4) unsigned not null,
@@ -84,6 +74,7 @@ INSERT INTO `baka_auth_groupperms` (`group_id`, `perms_id`) VALUES
 ('5', '31'),
 ('5', '32');
 
+DROP TABLE `baka_auth_groups`;
 CREATE TABLE `baka_auth_groups` (
    `id` int(11) not null auto_increment,
    `key` varchar(50) not null,
@@ -102,25 +93,7 @@ INSERT INTO `baka_auth_groups` (`id`, `key`, `name`, `description`, `default`, `
 ('4', 'bag_2', 'Bagian 2', 'Bagian Kedua', '0', '1', '1'),
 ('5', 'bag_3', 'Bagian 3', 'Bagian Ketiga', '0', '1', '1');
 
-CREATE TABLE `baka_auth_loginattempts` (
-   `id` int(11) not null auto_increment,
-   `ip_address` varchar(40) not null,
-   `login` varchar(50) not null,
-   `time` timestamp not null default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
--- [Table `baka_auth_loginattempts` is empty]
-
-CREATE TABLE `baka_auth_overrides` (
-   `user_id` int(11) unsigned not null,
-   `permission_id` smallint(5) unsigned not null,
-   `allow` tinyint(1) unsigned not null,
-   PRIMARY KEY (`user_id`,`permission_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- [Table `baka_auth_overrides` is empty]
-
+DROP TABLE `baka_auth_permissions`;
 CREATE TABLE `baka_auth_permissions` (
    `id` int(11) not null auto_increment,
    `name` varchar(100) not null,
@@ -163,6 +136,7 @@ INSERT INTO `baka_auth_permissions` (`id`, `name`, `description`, `status`) VALU
 ('31', 'manage_data_iui', 'Mengelola Dokumen ijin Usaha Industri', '1'),
 ('32', 'manage_data_iup', 'Mengelola Dokumen ijin Usaha Pertambangan', '1');
 
+DROP TABLE `baka_auth_usergroups`;
 CREATE TABLE `baka_auth_usergroups` (
    `user_id` int(11) unsigned not null,
    `group_id` int(11) unsigned not null,
@@ -179,94 +153,7 @@ INSERT INTO `baka_auth_usergroups` (`user_id`, `group_id`) VALUES
 ('4', '2'),
 ('4', '5');
 
-CREATE TABLE `baka_auth_usermeta` (
-   `id` int(11) unsigned not null auto_increment,
-   `user_id` int(11) not null,
-   `key` varchar(100) not null,
-   `name` varchar(225) not null,
-   `value` text,
-   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=9;
-
-INSERT INTO `baka_auth_usermeta` (`id`, `user_id`, `key`, `name`, `value`) VALUES
-('1', '1', 'first_name', 'First name', 'Admin'),
-('2', '1', 'last_name', 'Last name', 'Istrator'),
-('3', '2', 'first_name', 'First name', 'Pengguna'),
-('4', '2', 'last_name', 'Last name', 'Satu'),
-('5', '3', 'first_name', 'First name', 'Pengguna'),
-('6', '3', 'last_name', 'Last name', 'Dua'),
-('7', '4', 'first_name', 'First name', 'Pengguna'),
-('8', '4', 'last_name', 'Last name', 'Tiga');
-
-CREATE TABLE `baka_auth_users` (
-   `id` int(11) not null auto_increment,
-   `username` varchar(50) not null,
-   `password` varchar(255) not null,
-   `email` varchar(100) not null,
-   `display` varchar(100) not null,
-   `created` datetime not null,
-   `modified` timestamp not null default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-   `activated` tinyint(1) not null default '0',
-   `deleted` tinyint(1) not null default '0',
-   `banned` tinyint(1) not null default '0',
-   `ban_reason` varchar(255) not null,
-   `request_type` datetime not null default '0000-00-00 00:00:00',
-   `request_time` varchar(50) not null,
-   `request_key` varchar(50) not null,
-   `request_value` varchar(255) not null,
-   `last_ip` varchar(15) not null default '0.0.0.0',
-   `last_login` datetime not null default '0000-00-00 00:00:00',
-   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=5;
-
-INSERT INTO `baka_auth_users` (`id`, `username`, `password`, `email`, `display`, `created`, `modified`, `activated`, `deleted`, `banned`, `ban_reason`, `request_type`, `request_time`, `request_key`, `request_value`, `last_ip`, `last_login`) VALUES
-('1', 'admin', '$2a$08$LhuaYcUIVOy1tt7CJjyNh.2ECzQcJoeW44d/DSNVRUoFNriUtAyse', 'admin@example.com', 'Administrator', '2014-09-27 16:17:00', '2014-09-30 23:39:03', '1', '0', '0', '', '0000-00-00 00:00:00', '', '', '', '127.0.0.1', '2014-09-30 23:39:03'),
-('2', 'pengguna1', '$2a$08$N4sHvUfnm.BKvJxNf6oJEeOqME6J79wZRCBB1cugbDpxAhL7z3dWO', 'pengguna1@bpmppt.kab-pekalongan.go.id', 'Pengguna Satu', '2014-09-27 16:17:00', '2014-09-30 23:38:56', '1', '0', '0', '', '0000-00-00 00:00:00', '', '', '', '0.0.0.0', '0000-00-00 00:00:00'),
-('3', 'pengguna2', '$2a$08$N4sHvUfnm.BKvJxNf6oJEeOqME6J79wZRCBB1cugbDpxAhL7z3dWO', 'pengguna2@bpmppt.kab-pekalongan.go.id', 'Pengguna Dua', '2014-09-27 16:17:00', '2014-09-30 23:38:56', '1', '0', '0', '', '0000-00-00 00:00:00', '', '', '', '0.0.0.0', '0000-00-00 00:00:00'),
-('4', 'pengguna3', '$2a$08$N4sHvUfnm.BKvJxNf6oJEeOqME6J79wZRCBB1cugbDpxAhL7z3dWO', 'pengguna3@bpmppt.kab-pekalongan.go.id', 'Pengguna Tiga', '2014-09-27 16:17:00', '2014-09-30 23:38:56', '1', '0', '0', '', '0000-00-00 00:00:00', '', '', '', '0.0.0.0', '0000-00-00 00:00:00');
-
-CREATE TABLE `baka_bpmppt_data` (
-   `id` int(11) not null auto_increment,
-   `no_agenda` varchar(100) not null,
-   `created_on` datetime not null,
-   `created_by` int(11) not null,
-   `type` varchar(50) not null,
-   `label` varchar(225) not null,
-   `petitioner` varchar(45) not null,
-   `status` varchar(45) not null,
-   `approved_on` datetime not null default '0000-00-00 00:00:00',
-   `done_on` datetime not null default '0000-00-00 00:00:00',
-   `printed_on` datetime not null default '0000-00-00 00:00:00',
-   `deleted_on` datetime not null default '0000-00-00 00:00:00',
-   `logs` longtext not null,
-   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE `baka_bpmppt_meta` (
-   `id` int(11) unsigned not null auto_increment,
-   `data_id` int(11) not null,
-   `data_type` varchar(50) not null,
-   `meta_key` varchar(225) not null,
-   `meta_value` longtext,
-   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE `baka_ci_sessions` (
-   `session_id` varchar(40) not null default '0',
-   `ip_address` varchar(45) not null default '0',
-   `user_agent` varchar(120) not null,
-   `last_activity` int(10) unsigned not null default '0',
-   `user_data` text not null,
-   PRIMARY KEY (`session_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE `baka_migrations` (
-   `version` int(3) not null
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-INSERT INTO `baka_migrations` (`version`) VALUES
-('2');
-
+DROP TABLE `baka_system_settings`;
 CREATE TABLE `baka_system_settings` (
    `id` int(11) not null auto_increment,
    `key` varchar(100) not null,
@@ -310,16 +197,16 @@ INSERT INTO `baka_system_settings` (`id`, `key`, `value`) VALUES
 ('33', 'email_wordwrap', '0'),
 ('34', 'email_mailtype', '0'),
 ('35', 'email_priority', '2'),
-('36', 'skpd_name', 'Badan Penanaman Modal dan Pelayanan Perijinan Terpadus'),
-('37', 'skpd_address', 'Jalan Mandurejo'),
+('36', 'skpd_name', 'Badan Penanaman Modal dan Pelayanan Perizinan Terpadu'),
+('37', 'skpd_address', 'Jalan Sindoro No. 9 Kajen'),
 ('38', 'skpd_kab', 'Kajen'),
 ('39', 'skpd_city', 'Kabupaten Pekalongan'),
 ('40', 'skpd_prov', 'Jawa Tengah'),
 ('41', 'skpd_telp', '(0285) 381992'),
 ('42', 'skpd_fax', '(0285) 381992'),
-('43', 'skpd_pos', '54322'),
+('43', 'skpd_pos', '51161'),
 ('44', 'skpd_web', 'http://bpmppt.kab-pekalongan.go.id'),
-('45', 'skpd_email', 'contact@bpmppt.kab-pekalongan.go.id'),
+('45', 'skpd_email', 'bpmppt.kab.pekalongan@gmail.com'),
 ('46', 'skpd_logo', 'asset/img/logo.png'),
 ('47', 'skpd_lead_name', 'M. JANU HARYANTO,SH.MH'),
 ('48', 'skpd_lead_nip', '19570126 198007 1 001'),
@@ -330,4 +217,4 @@ INSERT INTO `baka_system_settings` (`id`, `key`, `value`) VALUES
 ('53', 'welcome_forgot', '<p>Aplikasi &copy; Badan Penanaman Modal dan Pelayanan Perijinan Terpadu Kabupaten Pekalongan</p>\n<p>Silahkan login untuk dapat menggunakan aplikasi ini.</p>'),
 ('54', 'welcome_resend', '<p>Aplikasi &copy; Badan Penanaman Modal dan Pelayanan Perijinan Terpadu Kabupaten Pekalongan</p>\n<p>Silahkan login untuk dapat menggunakan aplikasi ini.</p>'),
 ('55', 'b3_teknis', '<p>Izin Penyimpanan Sementara Limbah Bahan Berbahaya dan Beracun (B3) harus memenuhi persyaratan sebagai berikut :</p>\n<ol class=\"decimal\">\n<li>Jenis Limbah Bahan Berbahaya dan Beracun yang Disimpan <ol class=\"lower-alpha\">\n<li>Penanggungjawab Kegiatan tidak diperkenankan menyimpan dan menerima limbah bahan berbahaya dan beracun dari pihak atau sumber lain, hanya menyimpan fly ash batubara, bottom ash batubara, kertas saring bekas, kemasan bekas (drum, jerigen bekas obat), aki bekas, kain majun terkontaminasi oli, jarum suntik bekas, kain kassa bekas, sarung tangan bekas, minyak pelumas bekas/oli bekas, slude IPAL yang berasal dari kegiatannya.</li>\n<li>Jika menyimpan jenis limbah bahan berbahaya dan beracun di luar fly ash batubara, bottom ash batubara, kertas saring bekas, kemasan bekas (drum, jerigen bekas obat), aki bekas, kain majun terkontaminasi oli, jarum suntik bekas, kain kassa bekas, sarung tangan bekas, minyak pelumas bekas/oli bekas, sludge IPAL, maka Penanggungjawab Kegiatan wajib melaporkan atau konsultasi ke Bupati Pekalongan cq. Kantor Lingkungan Hidup Kabupaten Pekalongan;</li>\n<li>Simbol dan label disesuaikan dengan jenis dan karakteristik limbah bahan berbahaya dan beracun.</li>\n</ol>\n</li>\n<li>Bangunan Penyimpanan <ol class=\"lower-alpha\">\n<li>Rancang bangun dan luas penyimpanan sesuai dengan jenis, jumlah dan karakteristik limbah bahan berbahaya dan beracun yang dimiliki : <ol>\n<li>Tempat Penyimpanan Sementara (TPS) : <ol>\n<li>... berukuran : ..., terletak di titik koordinat S : ... dan E : ...\n</li>\n</ol>\n</li>\n<li>Lay out tempat penyimpanan seperti pada lampiran I;</li>\n<li>Desain tempat penyimpanan seperti pada lampiran II.</li>\n</ol>\n</li>\n<li>Kondisi tempat penyimpanan tersebut dibutir 2).a) di atas tidak dapat diubah ataupun dipindah tanpa seizin Bupati Pekalongan Cq. Kantor Lingkungan Hidup Kabupaten Pekalongan;</li>\n<li>Tidak diperkenankan menyimpan sementara limbah bahan berbahaya dan beracun di tempat lain selain tempat penyimpanan sebagaimana butir 2).a);</li>\n<li>Butir 2).a) diatas harus mengacu pada Keputusan Kepala Bapedal Nomor : Kep-01/Bapedal/09/1995 tentang Tata Cara dan Persyaratan Teknis Penyimpanan dan Pengumpulan Limbah Bahan Berbahaya dan Beracun dalam Lampiran 3.2 dan Peraturan Menteri Negara Lingkungan Hidup Nomor 30 Tahun 2009 tentang Tata Laksana Perizinan dan Pengawasan Pengelolaan Limbah Bahan Berbahaya dan Beracun serta Pengawasan Pemulihan akibat Pencemaran Limbah Bahan Berbahaya dan Beracun Lampiran II poin II.C.</li>\n</ol>\n</li>\n<li>Keselamatan dan Kesehatan Kerja (K3) <p>Peralatan keselamatan dan kesehatan kerja yang umum (standar) harus dimiliki oleh penanggungjawab kegiatan, termasuk antara lain alarm, peralatan pemadam kebakaran, shower / eye wash dan fasilitas tanggap darurat.</p>\n</li>\n</ol>'),
-('56', 'iplc_teknis', '<ol class=\"lower-alpha\">\n<li><p>Ketentuan Teknis</p>\n<p>Pembuangan air limbah pabrik Pengolahan Karet Mentah dengan kapasitas produksi [limbah_kapasitas_produksi] Ton/hari harus memenuhi persyaratan :</p>\n<ol class=\"decimal\">\n<li><p>Debit maksimum air limbah yang dibuang [limbah_debit_max_proses] m3/hari (Proses pengolahan getah karet menjadi karet kering) harus memenuhi persyaratan baku mutu air limbah sesuai dengan Peraturan Daerah Provinsi Jawa Tengah Nomor 5 Tahun 2012. Dengan kualitas air limbah, yaitu konsentrasi dan beban pencemaran maksimum sebagai berikut :</p>\n{{data_debit_limbah}}\n</li>\n<li>Pembuangan air limbah dimaksud dibuang ke Sungai Kawung Dukuh Blimbing Desa Pedawang Kecamatan Karanganyar Kabupaten Pekalongan.</li>\n<li>Melakukan pemantauan dan pencatatan harian debit air limbah yang dibuang ke air atau sumber air.</li>\n<li>Tidak menggabungkan saluran pembuangan air limbah dengan saluran drainase atau saluran lainnya.</li>\n<li>Melakukan pemantauan pada titik-titik pantau di inlet dan outlet Instalasi Pengolahan Air Limbah (IPAL) setiap satu bulan sekali dan pemantauan air / badan air penerima sebelum dan sesudah bercampur air limbah setiap 6 (enam) bulan sekali dengan biaya ditanggung perusahaan.</li>\n<li>Tidak melakukan pengenceran air limbah dan apabila air limbah tersebut akan dimanfaatkan untuk kegiatan lain harus dilakukan penelitian terlebih dahulu sesuai dengan ketentuan yang berlaku.</li>\n</ol>\n</li>\n<li><p>Kewajiban Pihak Perusahaan</p>\n<ol>\n<li>Melaporkan hasil pemantauan analisa air limbah di inlet dan outlet IPAL setiap 1 (satu) bulan sekali dan hasil analisa kualitas air di badan air penerima sebelum dan sesudah bercampur air limbah setiap 6 (enam) bulan sekali kepada Bupati Pekalongan Cq. Kepala Kantor Lingkungan Hidup Kabupaten Pekalongan.</li>\n<li>Mendaftarkan ulang perpanjangan izin secara tertulis kepada Bupati Pekalongan Cq. Kepala Kantor Lingkungan Hidup Kabupaten Pekalongan selambat-lambatnya 3 (tiga) bulan sebelum masa berlakunya Izin Pembuangan Air Limbah berakhir.</li>\n<li>Melaksanakan dan memenuhi semua ketentuan yang ditetapkan oleh Pemerintah Pusat maupun Pemerintah Daerah dalam kaitannya dengan Pembuangan Air Limbah</li>\n</ol>\n</li>\n</ol>');
+('56', 'iplc_teknis', '<ol class=\"lower-alpha\">\n<li><p>Ketentuan Teknis</p>\n<p>Pembuangan air limbah pabrik Pengolahan Karet Mentah dengan kapasitas produksi [limbah_kapasitas_produksi] Ton/hari harus memenuhi persyaratan :</p>\n<ol class=\"decimal\">\n<li><p>Debit maksimum air limbah yang dibuang [limbah_debit_max_proses] m3/hari (Proses pengolahan getah karet menjadi karet kering) harus memenuhi persyaratan baku mutu air limbah sesuai dengan Peraturan Daerah Provinsi Jawa Tengah Nomor 5 Tahun 2012. Dengan kualitas air limbah, yaitu konsentrasi dan beban pencemaran maksimum sebagai berikut :</p>\n{% echo iplc_debits($debits) %}\n</li>\n<li>Pembuangan air limbah dimaksud dibuang ke Sungai Kawung Dukuh Blimbing Desa Pedawang Kecamatan Karanganyar Kabupaten Pekalongan.</li>\n<li>Melakukan pemantauan dan pencatatan harian debit air limbah yang dibuang ke air atau sumber air.</li>\n<li>Tidak menggabungkan saluran pembuangan air limbah dengan saluran drainase atau saluran lainnya.</li>\n<li>Melakukan pemantauan pada titik-titik pantau di inlet dan outlet Instalasi Pengolahan Air Limbah (IPAL) setiap satu bulan sekali dan pemantauan air / badan air penerima sebelum dan sesudah bercampur air limbah setiap 6 (enam) bulan sekali dengan biaya ditanggung perusahaan.</li>\n<li>Tidak melakukan pengenceran air limbah dan apabila air limbah tersebut akan dimanfaatkan untuk kegiatan lain harus dilakukan penelitian terlebih dahulu sesuai dengan ketentuan yang berlaku.</li>\n</ol>\n</li>\n<li><p>Kewajiban Pihak Perusahaan</p>\n<ol>\n<li>Melaporkan hasil pemantauan analisa air limbah di inlet dan outlet IPAL setiap 1 (satu) bulan sekali dan hasil analisa kualitas air di badan air penerima sebelum dan sesudah bercampur air limbah setiap 6 (enam) bulan sekali kepada Bupati Pekalongan Cq. Kepala Kantor Lingkungan Hidup Kabupaten Pekalongan.</li>\n<li>Mendaftarkan ulang perpanjangan izin secara tertulis kepada Bupati Pekalongan Cq. Kepala Kantor Lingkungan Hidup Kabupaten Pekalongan selambat-lambatnya 3 (tiga) bulan sebelum masa berlakunya Izin Pembuangan Air Limbah berakhir.</li>\n<li>Melaksanakan dan memenuhi semua ketentuan yang ditetapkan oleh Pemerintah Pusat maupun Pemerintah Daerah dalam kaitannya dengan Pembuangan Air Limbah</li>\n</ol>\n</li>\n</ol>');
