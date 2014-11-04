@@ -176,13 +176,13 @@ class Bpmppt_siup extends CI_Driver
                 array(
                     'name'  => 'telp',
                     'label' => 'Telpon',
-                    'type'  => 'number',
+                    'type'  => 'text',
                     'std'   => ( $data_obj ? $data_obj->pemilik_no_telp : ''),
                     'validation'=> 'numeric' ),
                 array(
                     'name'  => 'fax',
                     'label' => 'Faksimili',
-                    'type'  => 'number',
+                    'type'  => 'text',
                     'std'   => ( $data_obj ? $data_obj->pemilik_no_fax : ''),
                     'validation'=> 'numeric' ),
                 ));
@@ -269,13 +269,13 @@ class Bpmppt_siup extends CI_Driver
                 array(
                     'name'  => 'telp',
                     'label' => 'Telpon',
-                    'type'  => 'number',
+                    'type'  => 'text',
                     'std'   => ( $data_obj ? $data_obj->usaha_no_telp : ''),
                     'validation'=> 'numeric' ),
                 array(
                     'name'  => 'fax',
                     'label' => 'Faksimili',
-                    'type'  => 'number',
+                    'type'  => 'text',
                     'std'   => ( $data_obj ? $data_obj->usaha_no_fax : ''),
                     'validation'=> 'numeric' ),
                 ));
@@ -312,7 +312,7 @@ class Bpmppt_siup extends CI_Driver
         //             'col'   => '3',
         //             'name'  => 'nasional',
         //             'label' => 'Nasional (%)',
-        //             'type'  => 'number',
+        //             'type'  => 'text',
         //             'max'   => 100,
         //             'std'   => ( $data_obj ? $data_obj->usaha_saham_nilai_nasional : ''),
         //             'validation'=> ( !$data_obj ? 'required|numeric' : '' ) ),
@@ -320,7 +320,7 @@ class Bpmppt_siup extends CI_Driver
         //             'col'   => '3',
         //             'name'  => 'tgl',
         //             'label' => 'Asing (%)',
-        //             'type'  => 'number',
+        //             'type'  => 'text',
         //             'max'   => 100,
         //             'std'   => ( $data_obj ? $data_obj->usaha_saham_nilai_tgl : ''),
         //             'validation'=> ( !$data_obj ? 'required|numeric' : '' ) ),

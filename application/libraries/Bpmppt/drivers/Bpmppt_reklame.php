@@ -129,7 +129,7 @@ class Bpmppt_reklame extends CI_Driver
         $fields[] = array(
             'name'  => 'reklame_juml',
             'label' => 'Jumlah',
-            'type'  => 'number',
+            'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->reklame_juml : ''),
             'validation'=> 'required|numeric' );
 

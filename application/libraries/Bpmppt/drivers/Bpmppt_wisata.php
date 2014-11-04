@@ -167,7 +167,7 @@ class Bpmppt_wisata extends CI_Driver
         $fields[] = array(
             'name'  => 'usaha_luas',
             'label' => 'Luas perusahaan (M<sup>2</sup>)',
-            'type'  => 'number',
+            'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->usaha_luas : '') );
 
         $fields[] = array(

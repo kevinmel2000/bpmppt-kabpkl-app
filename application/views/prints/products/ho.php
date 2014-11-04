@@ -98,28 +98,31 @@
 </tr>
 <tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
-    <td colspan="2"></td>
-    <td style="">Sebelah Utara</td>
-    <td style="width:2%">:</td>
-    <td colspan="3" style=""><?php echo $usaha_tetangga_utara ?></td>
-</tr>
-<tr>
-    <td colspan="2"></td>
-    <td style="">Sebelah Timur</td>
-    <td style="width:2%">:</td>
-    <td colspan="3" style=""><?php echo $usaha_tetangga_timur ?></td>
-</tr>
-<tr>
-    <td colspan="2"></td>
-    <td style="">Sebelah Selatan</td>
-    <td style="width:2%">:</td>
-    <td colspan="3" style=""><?php echo $usaha_tetangga_selatan ?></td>
-</tr>
-<tr>
-    <td colspan="2"></td>
-    <td style="">Sebelah Barat</td>
-    <td style="width:2%">:</td>
-    <td colspan="3" style=""><?php echo $usaha_tetangga_barat ?></td>
+    <td colspan="2" style="width:22%"></td>
+    <td class="empty" colspan="5">
+        <table style="min-width: 0;">
+            <tr>
+                <td style="20%">Sebelah Utara</td>
+                <td style="width:2%">:</td>
+                <td colspan="3" style="78%"><?php echo $usaha_tetangga_utara ?></td>
+            </tr>
+            <tr>
+                <td style="20%">Sebelah Timur</td>
+                <td style="width:2%">:</td>
+                <td colspan="3" style="78%"><?php echo $usaha_tetangga_timur ?></td>
+            </tr>
+            <tr>
+                <td style="20%">Sebelah Selatan</td>
+                <td style="width:2%">:</td>
+                <td colspan="3" style="78%"><?php echo $usaha_tetangga_selatan ?></td>
+            </tr>
+            <tr>
+                <td style="20%">Sebelah Barat</td>
+                <td style="width:2%">:</td>
+                <td colspan="3" style="78%"><?php echo $usaha_tetangga_barat ?></td>
+            </tr>
+        </table>
+    </td>
 </tr>
 <tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>

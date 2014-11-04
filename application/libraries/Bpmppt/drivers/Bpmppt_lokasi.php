@@ -120,7 +120,7 @@ class Bpmppt_lokasi extends CI_Driver
         $fields[] = array(
             'name'  => 'lokasi_luas',
             'label' => 'Luas Area (M<sup>2</sup>)',
-            'type'  => 'number',
+            'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->lokasi_luas : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 

@@ -144,7 +144,7 @@ class Bpmppt_imb extends CI_Driver
         $fields[] = array(
             'name'  => 'bangunan_tanah_luas',
             'label' => 'Luas Tanah Bangunan (M<sup>2</sup>)',
-            'type'  => 'number',
+            'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->bangunan_tanah_luas : ''),
             'validation'=> ( !$data_obj ? 'required|numeric' : '' ) );
 
@@ -186,7 +186,7 @@ class Bpmppt_imb extends CI_Driver
         $fields[] = array(
             'name'  => 'bangunan_luas',
             'label' => 'Luas bangunan (M<sup>2</sup>)',
-            'type'  => 'number',
+            'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->bangunan_luas : ''),
             'validation'=> 'required|numeric' );
 
