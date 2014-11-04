@@ -69,8 +69,10 @@ module.exports = function(grunt) {
           'package.json',
           'README.md',
           'LICENSE',
-          '!{**/*,*}.old',
-          '!{**/}_**'
+          '!**/*.old',
+          '!**/_**',
+          '!*.old',
+          '!_**'
         ],
         dest: '_dist/'
       },
@@ -79,8 +81,10 @@ module.exports = function(grunt) {
         cwd: 'asset/img/',
         src: [
           '**',
-          '!{**/*,*}.old',
-          '!{**/}_**'
+          '!**/*.old',
+          '!**/_**',
+          '!*.old',
+          '!_**'
         ],
         dest: '_dist/asset/img/'
       },

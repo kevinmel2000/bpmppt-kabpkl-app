@@ -287,7 +287,7 @@ class Bpmppt_iui extends CI_Driver
         $fields[] = array(
             'name'  => 'luas_tanah',
             'label' => 'Luas Tanah (M<sup>2</sup>)',
-            'type'  => 'number',
+            'type'  => 'text',
             // 'attr'  => ( $data_obj ? 'disabled' : '' ),
             'std'   => ( $data_obj ? $data_obj->luas_tanah : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );

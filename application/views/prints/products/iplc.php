@@ -131,7 +131,7 @@
 <tr>
     <td style="width:20%"><p>KEENAM</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%" class="align-justify">Keputusan ini mulai berlaku sejak tanggal ditetapkan ( <?php echo bdate('%F', $surat_tanggal).' '.bdate('%Y') ?> s/d <?php echo bdate('%F', $surat_tanggal).' '.(bdate('%Y') + 5) ?> )</td>
+    <td colspan="5" style="width:78%" class="align-justify">Keputusan ini mulai berlaku sejak tanggal ditetapkan ( <?php echo nbs(8).bdate('%F', $surat_tanggal).' '.bdate('%Y').' s/d '.nbs(8).bdate('%F', $surat_tanggal).' '.(bdate('%Y') + 3) ?> )</td>
 </tr>
 <tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
