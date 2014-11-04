@@ -127,7 +127,7 @@
 <tr>
     <td style="width:20%"><p>KEDUA</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%" class="align-justify">Izin Usaha Industri ini berlaku selama perusahaan industri ini beroperasi, kecuali apabila dalam jangka waktu 4 (empat) tahun terhitung mulai tanggal Surat Pernyataan dibuat, tidak merealisasikan pembangunan pabrik dan sarana produksi serta tidak memenuhi kesanggupan yang tercantum dalam Surat Pernyataan, Izin Usaha Industri batal dengan sendirinya.</td>
+    <td colspan="5" style="width:78%" class="align-justify">Izin Usaha Industri ini berlaku selama perusahaan industri ini beroperasi, kecuali apabila dalam jangka waktu 3 (tiga) tahun terhitung mulai tanggal Surat Pernyataan dibuat, tidak merealisasikan pembangunan pabrik dan sarana produksi serta tidak memenuhi kesanggupan yang tercantum dalam Surat Pernyataan, Izin Usaha Industri batal dengan sendirinya.</td>
 </tr>
 <tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>

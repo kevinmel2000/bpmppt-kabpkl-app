@@ -67,6 +67,13 @@ class Bpmppt_iup extends CI_Driver
      */
     public function form( $data_obj = FALSE )
     {
+        // $fields[] = array(
+        //     'name'  => 'surat_tanggal',
+        //     'label' => 'Tanggal Permohonan',
+        //     'type'  => 'datepicker',
+        //     'std'   => ( $data_obj ? $data_obj->surat_tanggal : ''),
+        //     'validation'=> ( !$data_obj ? 'required' : '' ) );
+
         $fields[] = array(
             'name'  => 'rekomendasi',
             'label' => 'Surat Rekomendasi',
