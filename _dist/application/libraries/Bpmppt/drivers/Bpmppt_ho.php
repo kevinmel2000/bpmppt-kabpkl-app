@@ -35,6 +35,7 @@ class Bpmppt_ho extends CI_Driver
      */
     public $defaults = array(
         'surat_jenis_pengajuan'     => '',
+        'surat_kode'                => '',
         'pembaruan_ke'              => '',
         'pemohon_nama'              => '',
         'pemohon_jabatan'           => '',
@@ -79,6 +80,13 @@ class Bpmppt_ho extends CI_Driver
     public function form( $data_obj = FALSE )
     {
         $fields[] = array(
+            'name'  => 'surat_kode',
+            'label' => 'Kode Nomor',
+            'type'  => 'text',
+            'std'   => ( $data_obj ? $data_obj->surat_kode : ''),
+            'validation'=> ( !$data_obj ? 'required' : '' ) );
+
+        $fields[] = array(
             'name'  => 'surat_jenis_pengajuan',
             'label' => 'Jenis Pengajuan',
             'type'  => 'radio',
@@ -107,7 +115,7 @@ class Bpmppt_ho extends CI_Driver
                 array(
                     'name'  => 'tgl',
                     'label' => 'Tanggal HO Lama',
-                    'type'  => 'text',
+                    'type'  => 'datepicker',
                     'std'   => ( $data_obj ? $data_obj->ho_lama_tgl : '') ),
                 array(
                     'name'  => 'ho',

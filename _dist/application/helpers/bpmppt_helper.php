@@ -107,7 +107,7 @@ function iplc_debits($debits = array())
 
         foreach (array_keys($debits['head']) as $debit_key)
         {
-            $html .= '<td>'.($debit_data[$debit_key] ?: '-').'</td>';
+            $html .= ($debit_data[$debit_key] ? '<td>'.$debit_data[$debit_key].'</td>' : '-');
         }
 
         $html .= '</tr>';
