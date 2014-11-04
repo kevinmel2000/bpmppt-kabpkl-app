@@ -5,7 +5,7 @@
     <td colspan="7" style="width:100%">
         <p>KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN</p>
         <p>PELAYANAN PERIZINAN TERPADU KABUPATEN PEKALONGAN</p>
-        <p>NOMOR : <?php echo '510.4  / '.$surat_nomor.' / BPMPPT / IUP /'.print_blnthn_head($surat_tanggal) ?></p>
+        <p>NOMOR : <?php echo '510.4  / '.nbs(8).' / BPMPPT / IUP /'.print_blnthn_head($surat_tanggal) ?></p>
     </td>
 </tr>
 <tr><td class="empty" colspan="7" style="width:100%"></td></tr>
@@ -109,7 +109,7 @@
     <td colspan="2"></td>
     <td>a. Jangka Waktu IUP</td>
     <td style="width:2%">:</td>
-    <td colspan="3" style="width:37%"><?php echo $tambang_waktu_mulai.' s/d '.$tambang_waktu_selesai ?></td>
+    <td colspan="3" style="width:37%"><?php echo format_date($tambang_waktu_mulai).' s/d '.format_date($tambang_waktu_selesai) ?></td>
 </tr>
 <tr>
     <td colspan="2"></td>
@@ -187,7 +187,7 @@
 </tr><?php endif ?></table><table class="pagebreak">
 <tr>
     <td width="20%">LAMPIRAN I</td>
-    <td width="80%" colspan="3">KOORDINAT WILAYAH IZIN USAHA PERTAMBANGAN I</td>
+    <td width="80%" colspan="3">KOORDINAT WILAYAH IZIN USAHA PERTAMBANGAN</td>
 </tr>
 <tr>
     <td width="20%"></td>

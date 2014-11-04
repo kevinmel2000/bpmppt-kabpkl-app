@@ -78,13 +78,13 @@ function print_cop()
 
 function print_blnthn_head($str_date)
 {
-    return strtoupper(format_roman(bdate('%m', $str_date)).' / '.bdate('%Y', $str_date));
+    return strtoupper(format_roman(bdate('%m' )).' / '.bdate('%Y'));
 }
 
 function print_blnthn_foot($str_date, $nbsp = null)
 {
     $nbsp || $nbsp = 6;
-    echo nbs($nbsp).bdate('%F %Y', $str_date);
+    echo nbs($nbsp).bdate('%F %Y');
 }
 
 function iplc_debits($debits = array())
