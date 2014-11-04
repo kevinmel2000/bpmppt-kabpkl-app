@@ -120,7 +120,7 @@ class Bpmppt_prinsip extends CI_Driver
         $fields[] = array(
             'name'  => 'lokasi_nama',
             'label' => 'Luas Area (M<sup>2</sup>)',
-            'type'  => 'number',
+            'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->lokasi_nama : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 

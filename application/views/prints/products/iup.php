@@ -16,7 +16,7 @@
 <tr class="align-center bold">
     <td colspan="7" style="width:100%">
         <p>PEMBERIAN IZIN USAHA PERTAMBANGAN ( IUP ) OPERASI PRODUKSI</p>
-        <p>BANTUAN (TANAH URUK) KEPADA SDR. <?php echo strtoupper($pemohon_nama) ?></p>
+        <p><?php echo strtoupper($tambang_jns_galian.' KEPADA SDR '.$pemohon_nama) ?></p>
     </td>
 </tr>
 <tr><td class="empty" colspan="7" style="width:100%"></td></tr>
@@ -32,7 +32,7 @@
     <td style="width:2%"><p>:</p></td>
     <td colspan="5" style="width:78%" class="align-justify">
         <ol class="lower-alpha">
-            <li>Surat Permohonan Izin Usaha Pertambangan (IUP) Operasi Produksi Bantuan (<?php echo $tambang_jns_galian ?>) A.n <?php echo $pemohon_nama ?> tanggal <?php echo format_date( $surat_tanggal) ?>.</li>
+            <li>Surat Permohonan Izin Usaha Pertambangan (IUP) Operasi Produksi <?php echo $tambang_jns_galian ?> A.n <?php echo $pemohon_nama ?> tanggal <?php echo format_date( $surat_tanggal) ?>.</li>
             <li>Rekomendasi Kepala Dinas Pengelolaan Sumber Daya Air, Energi dan SUmberdaya Mineral Kabupaten Pekalongan Nomor <?php echo $rekomendasi_nomor ?> tanggal <?php echo format_date( $rekomendasi_tanggal) ?> tentang Izin Usaha Pertambangan (IUP) Operasi Produksi Bantuan (<?php echo $tambang_jns_galian ?>) A.n <?php echo $pemohon_nama ?>.</li>
         </ol>
     </td>
@@ -217,11 +217,6 @@
     <td width="20%">Kabupaten / Kota</td>
     <td width="2%" class="align-center">:</td>
     <td width="78%" colspan="2">Kabupaten Pekalongan</td>
-</tr>
-<tr>
-    <td width="20%">Kode</td>
-    <td width="2%" class="align-center">:</td>
-    <td width="78%" colspan="2"><?php echo $tambang_jns_galian ?></td>
 </tr>
 <tr>
     <td width="20%">Luas (Ha)</td>
