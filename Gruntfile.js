@@ -34,7 +34,7 @@ module.exports = function(grunt) {
     clean: {
       css: 'asset/css/<%= pkg.name %>*',
       js: 'asset/js/<%= pkg.name %>*',
-      vendor: 'asset/vendor',
+      vendor: [ 'asset/vendor', '_dist/asset/vendor'],
       backup: 'asset/bower.old',
       dist: [ '<%= clean.css %>', '<%= clean.js %>' ]
     },
@@ -70,8 +70,8 @@ module.exports = function(grunt) {
           'README.md',
           'LICENSE',
           '!**/*.old',
+          '!**.old',
           '!**/_**',
-          '!*.old',
           '!_**'
         ],
         dest: '_dist/'
@@ -82,8 +82,8 @@ module.exports = function(grunt) {
         src: [
           '**',
           '!**/*.old',
+          '!**.old',
           '!**/_**',
-          '!*.old',
           '!_**'
         ],
         dest: '_dist/asset/img/'
