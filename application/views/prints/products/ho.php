@@ -24,7 +24,7 @@
     <td colspan="7" style="width:100%" class="align-center bold">IZIN GANGGUAN ( HO )</td>
 </tr>
 <tr>
-    <td colspan="7" style="width:100%" class="align-center bold">NOMOR : <?php echo '510.8 /'.nbs(6).'/ BPMPPT / '.$usaha_jenis.' / '.print_blnthn_head($surat_tanggal) ?></td>
+    <td colspan="7" style="width:100%" class="align-center bold">NOMOR : <?php echo '510.8 /'.nbs(8).'/ BPMPPT / '.$surat_kode.' / '.print_blnthn_head($surat_tanggal) ?></td>
 </tr>
 <tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
@@ -99,27 +99,27 @@
 <tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td colspan="2"></td>
-    <td colspan="2" style="width:35%">Sebelah Utara</td>
+    <td style="">Sebelah Utara</td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:42%"><?php echo $usaha_tetangga_utara ?></td>
+    <td colspan="3" style=""><?php echo $usaha_tetangga_utara ?></td>
 </tr>
 <tr>
     <td colspan="2"></td>
-    <td colspan="2" style="width:35%">Sebelah Timur</td>
+    <td style="">Sebelah Timur</td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:42%"><?php echo $usaha_tetangga_timur ?></td>
+    <td colspan="3" style=""><?php echo $usaha_tetangga_timur ?></td>
 </tr>
 <tr>
     <td colspan="2"></td>
-    <td colspan="2" style="width:35%">Sebelah Selatan</td>
+    <td style="">Sebelah Selatan</td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:42%"><?php echo $usaha_tetangga_selatan ?></td>
+    <td colspan="3" style=""><?php echo $usaha_tetangga_selatan ?></td>
 </tr>
 <tr>
     <td colspan="2"></td>
-    <td colspan="2" style="width:35%">Sebelah Barat</td>
+    <td style="">Sebelah Barat</td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:42%"><?php echo $usaha_tetangga_barat ?></td>
+    <td colspan="3" style=""><?php echo $usaha_tetangga_barat ?></td>
 </tr>
 <tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
