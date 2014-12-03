@@ -67,9 +67,9 @@ module.exports = function(grunt) {
           '!appconfig.php',
           '.htaccess',
           'package.json',
-          'README.md',
+          'composer.json',
           'LICENSE',
-          '!**/*.old',
+          '!**/**.old',
           '!**.old',
           '!**/_**',
           '!_**'
@@ -81,7 +81,7 @@ module.exports = function(grunt) {
         cwd: 'asset/img/',
         src: [
           '**',
-          '!**/*.old',
+          '!**/**.old',
           '!**.old',
           '!**/_**',
           '!_**'

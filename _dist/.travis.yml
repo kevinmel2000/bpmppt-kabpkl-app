@@ -1,0 +1,25 @@
+language: php
+php:
+- '5.5'
+- '5.4'
+- '5.3'
+install:
+- composer install --dev --no-progress
+before_script:
+- export APP_BASE_URL='http://localhost/'
+- export APP_HOSTNAME='127.0.0.1'
+- export APP_USERNAME='travis'
+- export APP_PASSWORD=''
+- export APP_DATABASE='bpmppt_test'
+- export APP_DBPREFIX='baka_'
+- mysql -e 'create database if not exists bpmppt_test;'
+- mysql -utravis bpmppt_test < database.sql
+script:
+- phpunit -c application/tests/phpunit.xml
+after script:
+- mysql -e 'drop database if exists bpmppt_test;'
+matrix:
+  fast_finish: true
+notifications:
+  slack:
+    secure: ukTxOzE9vKjWhYgkiam6SE1+2eatey5dO7pLx7Ra4S0s/G/EZ3/lB64MpKkoydMMKM1h/C/K5nUvxqrtdG/IuiY3ZJeaWHTlG9RHzs3EVinLviKYuDze09pWRt2aRcrE+G8NGoE0HiKPIG7a1zmGsceSb6qtxUWFMOeagt7jSJo=
