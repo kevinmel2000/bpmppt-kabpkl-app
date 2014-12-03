@@ -3,7 +3,7 @@
 -- Tue, 04 Nov 2014 07:17:08 +0000
 --
 
-DROP TABLE `baka_auth_groupperms`;
+DROP TABLE IF EXISTS `baka_auth_groupperms`;
 CREATE TABLE `baka_auth_groupperms` (
    `group_id` smallint(4) unsigned not null,
    `perms_id` smallint(4) unsigned not null,
@@ -74,7 +74,7 @@ INSERT INTO `baka_auth_groupperms` (`group_id`, `perms_id`) VALUES
 ('5', '31'),
 ('5', '32');
 
-DROP TABLE `baka_auth_groups`;
+DROP TABLE IF EXISTS `baka_auth_groups`;
 CREATE TABLE `baka_auth_groups` (
    `id` int(11) not null auto_increment,
    `key` varchar(50) not null,
@@ -93,7 +93,7 @@ INSERT INTO `baka_auth_groups` (`id`, `key`, `name`, `description`, `default`, `
 ('4', 'bag_2', 'Bagian 2', 'Bagian Kedua', '0', '1', '1'),
 ('5', 'bag_3', 'Bagian 3', 'Bagian Ketiga', '0', '1', '1');
 
-DROP TABLE `baka_auth_permissions`;
+DROP TABLE IF EXISTS `baka_auth_permissions`;
 CREATE TABLE `baka_auth_permissions` (
    `id` int(11) not null auto_increment,
    `name` varchar(100) not null,
@@ -136,7 +136,7 @@ INSERT INTO `baka_auth_permissions` (`id`, `name`, `description`, `status`) VALU
 ('31', 'manage_data_iui', 'Mengelola Dokumen ijin Usaha Industri', '1'),
 ('32', 'manage_data_iup', 'Mengelola Dokumen ijin Usaha Pertambangan', '1');
 
-DROP TABLE `baka_auth_usergroups`;
+DROP TABLE IF EXISTS `baka_auth_usergroups`;
 CREATE TABLE `baka_auth_usergroups` (
    `user_id` int(11) unsigned not null,
    `group_id` int(11) unsigned not null,
@@ -153,7 +153,7 @@ INSERT INTO `baka_auth_usergroups` (`user_id`, `group_id`) VALUES
 ('4', '2'),
 ('4', '5');
 
-DROP TABLE `baka_system_settings`;
+DROP TABLE IF EXISTS `baka_system_settings`;
 CREATE TABLE `baka_system_settings` (
    `id` int(11) not null auto_increment,
    `key` varchar(100) not null,
