@@ -94,9 +94,10 @@ function iplc_debits($debits = array())
     $html = '<table class="bordered"><thead><tr>'
           . '<th>NO</th>';
 
-    foreach ($debits['head'] as $debit_head)
+    foreach ($debits['head'] as $h_key => $h_label)
     {
-        $html .= '<th>'.$debit_head.'</th>';
+        // $html .= '<th>'.$h_label.'</th>';
+        $html .= $debits['body'][0][$h_key] ? '<th>'.$h_label.'</th>' : '';
     }
 
     $html .= '</tr></thead><tbody>';
@@ -105,9 +106,9 @@ function iplc_debits($debits = array())
     {
         $html .= '<tr><td>'.($i + 1).'</td>';
 
-        foreach (array_keys($debits['head']) as $debit_key)
+        foreach (array_keys($debits['head']) as $d_key)
         {
-            $html .= ($debit_data[$debit_key] ? '<td>'.$debit_data[$debit_key].'</td>' : '-');
+            $html .= $debit_data[$d_key] ? '<td>'.$debit_data[$d_key].'</td>' : '';
         }
 
         $html .= '</tr>';
