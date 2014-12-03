@@ -32,6 +32,7 @@ for oldee in application asset system index.php package.json database.sql LICENS
 done
 unset oldee
 
+rm -rf application/tests/
 rm -rf "$repo-$branch"
 echo "\033[01;32m✔ \033[00mClean up garbadges"
 

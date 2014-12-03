@@ -58,9 +58,9 @@ module.exports = function(grunt) {
         expand: true,
         src: [
           '{system,application}/**',
-          '!application/{tests,vendor}/**',
           '!application/storage/{backup,cache,logs,upload}/**',
           'application/storage/{backup,cache,logs,upload}/index.html',
+          '!application/vendor/**',
           'asset/{css,js,vendor}/**',
           '!asset/{css,js}/src/**',
           '{package,composer}.json',
