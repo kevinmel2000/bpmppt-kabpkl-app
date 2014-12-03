@@ -1055,8 +1055,9 @@ class Biform
 
         load_script('summernote-'.$lang);
 
+        $field_name = $field_attrs['name'];
         $attrs = array(
-            'name'  => $field_attrs['name'],
+            'name'  => $field_name,
             'rows'  => '',
             'cols'  => '',
             'id'    => $field_attrs['id'],
@@ -1075,15 +1076,20 @@ class Biform
             $attrs['data-edtr-locale'] = $locale;
         }
 
-        if (isset($this->_template['editor_filters'][$field_attrs['name']]))
+        if (isset($this->_template['editor_filters'][$field_name]))
         {
-            foreach ($this->_template['editor_filters'][$field_attrs['name']] as $pattern => $replacement)
+            $patterns = $replacements = array();
+
+            foreach ($this->_template['editor_filters'][$field_name] as $pattern => $replacement)
             {
-                $field_attrs['std'] = str_replace($pattern, $replacement, $field_attrs['std']);
+                $patterns[] = $pattern;
+                $replacements[] = $replacement;
             }
+
+            $field_attrs['std'] = str_replace($patterns, $replacements, $field_attrs['std']);
         }
 
-        return form_textarea($attrs, set_value($field_attrs['name'], $field_attrs['std']), $field_attrs['attr']);
+        return form_textarea($attrs, set_value($field_name, $field_attrs['std']), $field_attrs['attr']);
     }
 
     // -------------------------------------------------------------------------
@@ -1363,6 +1369,7 @@ class Biform
                         '<?php echo' => '{%=',
                         '<?php' => '{%',
                         '?>' => '%}',
+                        ' ' => '&nbsp;',
                         );
 
                     if (!empty($filters))
