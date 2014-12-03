@@ -23,7 +23,7 @@ _*
 /asset/bower/
 
 # Ignore Application Specifics
-/application/storage/*/*
+/application/storage/
 /application/bootigniter/samples/
 
 # but leave there Application Specifics
@@ -36,4 +36,3 @@ _*
 !.css*
 !.js*
 !_dist/
-!/application/storage/logs/view.php

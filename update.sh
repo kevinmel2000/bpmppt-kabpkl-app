@@ -7,7 +7,7 @@ fi
 now="$(date +'%Y-%m-%d')"
 bdir="backups/app-$now"
 repo='bpmppt'
-branch='bpmppt'
+branch='master'
 
 if [ ! -d "$bdir" ]; then
     echo "\033[01;32m✔ \033[00mCreating \033[01;34m$bdir \033[00mdirectory"
