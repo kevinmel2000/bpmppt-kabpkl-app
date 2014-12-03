@@ -224,7 +224,7 @@ $(document).ready(function () {
         ['color', ['color']],
         ['font', ['bold', 'italic', 'underline', 'clear']],
         ['para', ['ul', 'ol', 'paragraph']],
-        ['table', ['table']],
+        // ['table', ['table']],
         ['view', ['fullscreen', 'codeview', 'help']]
       ]
     })

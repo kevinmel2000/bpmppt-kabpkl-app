@@ -1,16 +1,17 @@
-/*! SearchHighlight for DataTables v1.0.0
+/*! SearchHighlight for DataTables v1.0.1
  * 2014 SpryMedia Ltd - datatables.net/license
  */
 
 /**
  * @summary     SearchHighlight
  * @description Search term highlighter for DataTables
- * @version     1.0.0
+ * @version     1.0.1
  * @file        dataTables.searchHighlight.js
  * @author      SpryMedia Ltd (www.sprymedia.co.uk)
  * @contact     www.sprymedia.co.uk/contact
  * @copyright   Copyright 2014 SpryMedia Ltd.
- * @license     MIT - http://datatables.net/license/mit
+ * 
+ * License      MIT - http://datatables.net/license/mit
  *
  * This feature plug-in for DataTables will highlight search terms in the
  * DataTable as they are entered into the main search input element, or via the
@@ -52,7 +53,7 @@ $(document).on( 'init.dt.dth', function (e, settings, json) {
 
 				// Don't highlight the "not found" row
 				if ( table.rows( { filter: 'applied' } ).data().length ) {
-					body.highlight( table.search() );
+					body.highlight( table.search().split(' ') );
 				}
 			} )
 			.on( 'destroy', function () {
