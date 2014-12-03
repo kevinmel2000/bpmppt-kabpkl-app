@@ -1369,7 +1369,6 @@ class Biform
                         '<?php echo' => '{%=',
                         '<?php' => '{%',
                         '?>' => '%}',
-                        ' ' => '&nbsp;',
                         );
 
                     if (!empty($filters))
@@ -1392,10 +1391,18 @@ class Biform
                 $name = $field['name'];
                 if ($field['type'] == 'editor' and isset($this->_template['editor_filters'][$name]))
                 {
+                    $replacements = $patterns = array();
+                    $filters = array_merge($this->_template['editor_filters'][$name], array(
+                        '&nbsp;' => ' '
+                        ));
+
                     foreach ($this->_template['editor_filters'][$name] as $replacement => $pattern)
                     {
-                        $this->form_data[$name] = str_replace($pattern, $replacement, $this->form_data[$name]);
+                        $replacements[] = $replacement;
+                        $patterns[] = $pattern;
                     }
+
+                    $this->form_data[$name] = str_replace($patterns, $replacements, $this->form_data[$name]);
                 }
                 elseif ($field['type'] == 'datepicker')
                 {
