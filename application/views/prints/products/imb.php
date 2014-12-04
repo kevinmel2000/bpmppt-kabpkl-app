@@ -6,7 +6,7 @@
 </tr>
 <tr><td colspan="7"></td></tr>
 <tr class="align-center bold">
-    <td colspan="7" style="width:100%">NOMOR : <?php echo '640 /'.nbs(6).'/ IMB / BPMPPT /'.print_blnthn_head($surat_tanggal) ?></td>
+    <td colspan="7" style="width:100%">NOMOR : <?php echo '640 /'.nbs(6).'/ IMB / BPMPPT /'.print_blnthn_head($created_on) ?></td>
 </tr>
 <tr><td colspan="7"></td></tr>
 <tr class="align-center bold">
