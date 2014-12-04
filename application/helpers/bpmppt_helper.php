@@ -110,8 +110,8 @@ function iplc_debits($debits = array())
 {
     if (empty($debits)) return;
 
-    $html = '<table class="bordered"><thead><tr>'
-          . '<th>NO</th>';
+    $html = '<table class="bordered" style="display: inline-block"><thead><tr>'
+          . '<th width="10%">NO</th>';
 
     foreach ($debits['head'] as $h_key => $h_label)
     {
@@ -123,7 +123,7 @@ function iplc_debits($debits = array())
 
     foreach ($debits['body'] as $i => $debit_data)
     {
-        $html .= '<tr><td>'.($i + 1).'</td>';
+        $html .= '<tr><td width="10%">'.($i + 1).'</td>';
 
         foreach (array_keys($debits['head']) as $d_key)
         {
