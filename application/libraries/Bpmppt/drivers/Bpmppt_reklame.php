@@ -32,19 +32,16 @@ class Bpmppt_reklame extends CI_Driver
      */
     public $defaults = array(
         'pemohon_nama'              => '',
-        'pemohon_kerja'             => '',
+        'pemohon_usaha'             => '',
         'pemohon_alamat'            => '',
         'pemohon_telp'              => '',
         'pengajuan_jenis'           => '',
-        'reklame_jenis'             => '',
         'reklame_juml_val'          => '',
         'reklame_juml_unit'         => '',
         'reklame_range_tgl_text'    => '',
         'reklame_range_tgl_mulai'   => '',
         'reklame_range_tgl_selesai' => '',
-        'reklame_tema'              => '',
-        'reklame_ket'               => '',
-        'lampirans'                 => '',
+        'reklame_data'              => '',
         );
 
     // -------------------------------------------------------------------------
@@ -94,11 +91,10 @@ class Bpmppt_reklame extends CI_Driver
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
         $fields[] = array(
-            'name'  => 'pemohon_kerja',
+            'name'  => 'pemohon_usaha',
             'label' => 'Nama Perusahaan',
             'type'  => 'text',
-            'std'   => ( $data_obj ? $data_obj->pemohon_kerja : ''),
-            'validation'=> ( !$data_obj ? 'required' : '' ) );
+            'std'   => ( $data_obj ? $data_obj->pemohon_usaha : '') );
 
         $fields[] = array(
             'name'  => 'pemohon_alamat',
@@ -119,13 +115,6 @@ class Bpmppt_reklame extends CI_Driver
             'label' => 'Data Reklame',
             // 'attr'  => ( $data_obj ? 'disabled' : '' ),
             'type'  => 'fieldset' );
-
-        $fields[] = array(
-            'name'  => 'reklame_jenis',
-            'label' => 'Jenis Reklame',
-            'type'  => 'text',
-            'std'   => ( $data_obj ? $data_obj->reklame_jenis : ''),
-            'validation'=> ( !$data_obj ? 'required' : '' ) );
 
         $fields[] = array(
             'name'  => 'reklame_juml',
@@ -175,28 +164,10 @@ class Bpmppt_reklame extends CI_Driver
             );
 
         $fields[] = array(
-            'name'  => 'reklame_tema',
-            'label' => 'Tema/Isi',
-            'type'  => 'text',
-            'std'   => ( $data_obj ? $data_obj->reklame_tema : ''),
-            'validation'=> ( !$data_obj ? 'required' : '' ) );
-
-        $fields[] = array(
-            'name'  => 'reklame_ket',
-            'label' => 'Keterangan',
-            'type'  => 'textarea',
-            'std'   => ( $data_obj ? $data_obj->reklame_ket : ''),
-            'validation'=> ( !$data_obj ? 'required' : '' ) );
-
-        $fields[] = array(
-            'name'  => 'lampirans',
-            'label' => 'Data Lampiran',
+            'name'  => 'reklame_data',
+            'label' => 'Data Reklame',
             'type'  => 'custom',
-            'std' => $this->custom_field( $data_obj ),
-            // 'fold'  => array(
-            //     'key'   => 'reklame_lampiran',
-            //     'value' => 1
-            //     ),
+            'std'   => $this->custom_field( $data_obj ),
             );
 
         return $fields;
@@ -212,41 +183,50 @@ class Bpmppt_reklame extends CI_Driver
         }
 
         $this->_ci->table->set_template($this->table_templ);
+        $data_mode = $data and !empty($data->reklame_data);
 
-        $data_mode = $data and !empty($data->lampirans);
-
-        // var_dump($this);
         $head[] = array(
-            'data'  => 'Lokasi Pemasangan',
-            'class' => 'head-id',
-            'width' => '60%' );
+            'data'  => 'Jenis',
+            'width' => '15%' );
+
+        $head[] = array(
+            'data'  => 'Tema',
+            'width' => '20%' );
+
+        $head[] = array(
+            'data'  => 'Lokasi',
+            'width' => '20%' );
 
         $head[] = array(
             'data'  => 'Panjang',
-            'class' => 'head-value',
-            'width' => '15%' );
+            'width' => '7%' );
 
         $head[] = array(
             'data'  => 'Lebar',
-            'class' => 'head-value',
-            'width' => '15%' );
+            'width' => '7%' );
+
+        $head[] = array(
+            'data'  => '2x',
+            'width' => '6%' );
+
+
 
         $head[] = array(
             'data'  => form_button( array(
-                'name'  => 'lampirans_add-btn',
-                'type'  => 'button',
-                'class' => 'btn btn-primary bs-tooltip btn-block btn-sm',
+                'name'     => 'reklame_data_add-btn',
+                'type'     => 'button',
+                'class'    => 'btn btn-primary bs-tooltip btn-block btn-sm',
                 'tabindex' => '-1',
-                'title' => 'Tambahkan baris',
-                'content'=> 'Add' ) ),
+                'title'    => 'Tambahkan baris',
+                'content'  => 'Add' ) ),
             'class' => 'head-action',
             'width' => '10%' );
 
         $this->_ci->table->set_heading( $head );
 
-        if (isset($data->lampirans) and !empty($data->lampirans))
+        if (isset($data->reklame_data) and !empty($data->reklame_data))
         {
-            foreach (unserialize($data->lampirans) as $row)
+            foreach (unserialize($data->reklame_data) as $row)
             {
                 $this->_row_pengesahan($row);
             }
@@ -264,27 +244,40 @@ class Bpmppt_reklame extends CI_Driver
     private function _row_pengesahan( $data = FALSE )
     {
         $cols = array(
+            'jenis'   => 'Jenis',
+            'tema'    => 'Tema',
             'tempat'  => 'Lokasi',
             'panjang' => 'Panjang (M)',
             'lebar'   => 'Lebar (M)',
-            );
+        );
+
+        $column = array();
 
         foreach ($cols as $name => $label)
         {
             $column[] = array(
                 'data'  => form_input( array(
-                    'name'  => $this->alias.'_lampirans_'.$name.'[]',
-                    'type'  => 'text',
+                    'name'  => $this->alias.'_reklame_data_'.$name.'[]',
                     'value' => $data ? $data[$name] : '',
                     'class' => 'form-control bs-tooltip input-sm',
                     'placeholder'=> $label ), '', ''),
-                'class' => 'data-id',
-                'width' => '10%' );
+                'class' => 'data-id'
+            );
         }
 
         $column[] = array(
+            'data'  => form_checkbox( array(
+                'name'  => $this->alias.'_reklame_data_2x[]',
+                'checked' => (isset($data['2x']) && $data['2x'] == 1),
+                'value' => 1,
+                'class' => 'form-control bs-tooltip input-sm',
+                'placeholder'=> $label ), '', ''),
+            'class' => 'data-id'
+        );
+
+        $column[] = array(
             'data'  => form_button( array(
-                'name'  => $this->alias.'_lampirans_remove-btn',
+                'name'  => $this->alias.'_reklame_data_remove-btn',
                 'type'  => 'button',
                 'class' => 'btn btn-danger bs-tooltip btn-block btn-sm remove-btn',
                 'tabindex' => '-1',
@@ -304,7 +297,7 @@ class Bpmppt_reklame extends CI_Driver
      */
     public function _pre_post( $form_data )
     {
-        $pengesahan_fn = $this->alias.'_lampirans';
+        $pengesahan_fn = $this->alias.'_reklame_data';
 
         if (isset($_POST[$pengesahan_fn.'_tempat']))
         {
@@ -312,7 +305,7 @@ class Bpmppt_reklame extends CI_Driver
 
             foreach ($_POST[$pengesahan_fn.'_tempat'] as $no)
             {
-                foreach (array('tempat', 'panjang', 'lebar') as $name)
+                foreach (array('jenis', 'tema', 'tempat', 'panjang', 'lebar') as $name)
                 {
                     $pengesahan_name = $pengesahan_fn.'_'.$name;
                     $pengesahan[$i][$name] = isset($_POST[$pengesahan_name][$i]) ? $_POST[$pengesahan_name][$i] : 0;

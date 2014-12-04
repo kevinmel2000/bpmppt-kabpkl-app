@@ -8,13 +8,14 @@
         <p>IZIN PEMASANGAN REKLAME</p>
     </td>
 </tr>
+<?php $reklame_data = unserialize($reklame_data) ?>
 <tr><td class="empty" colspan="5" style="width:100%"></td></tr>
 <tr>
     <td style="width:10%"><p>Dasar :</p></td>
     <td colspan="4" style="width:90%">
         <ol class="lower-alpha">
             <li>Peraturan Bupati Pekalongan No. 12 Tahun 2012 tentang Pendelegasian Kewenangan Penandatanganan Perizinan dan Non Perizinan Kepada Kepala Badan Penanaman Modal dan Pelayanan Perijinan Terpadu Kabupaten Pekalongan</li>
-            <li>Surat permohonan izin pemasangan reklame dari Sdr. <?php echo $pemohon_nama?> tanggal permohonan <?php echo format_date($surat_tanggal) ?> tentang Permohonan <?php echo ($pengajuan_jenis == 'Pendaftaran Baru' ?: 'Perpanjangan ') ?>Izin Reklame <b><?php echo $reklame_jenis ?></b>.</li>
+            <li>Surat permohonan izin pemasangan reklame dari Sdr. <?php echo $pemohon_nama?> tanggal permohonan <?php echo format_date($surat_tanggal) ?> tentang Permohonan <?php echo ($pengajuan_jenis == 'Pendaftaran Baru' ?: 'Perpanjangan ') ?>Izin Reklame <b><?php echo parse_reklamedata($reklame_data) ?></b>.</li>
         </ol>
     </td>
 </tr>
@@ -29,33 +30,32 @@
 <tr>
     <td colspan="2" style="width:30%">1. Nama</td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:30%"><?php echo $pemohon_nama.' ('.$pemohon_nama.')' ?></td>
+    <td colspan="2" style="width:30%"><?php echo $pemohon_nama.' ('.$pemohon_usaha.')' ?></td>
 </tr>
 <tr>
     <td colspan="2" style="width:30%">2. Alamat</td>
     <td style="width:2%">:</td>
     <td colspan="2" style="width:30%"><?php echo $pemohon_alamat ?></td>
 </tr>
-<?php $lampirans = unserialize($lampirans) ?>
 <tr>
     <td colspan="2" style="width:30%">3. Tempat/Lok. Pemasangan</td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:30%"><?php echo (count($lampirans) == 1 ? $lampirans[0]['tempat'] : 'Terlampir') ?></td>
+    <td colspan="2" style="width:30%"><?php echo (count($reklame_data) == 1 ? $reklame_data[0]['tempat'] : 'Terlampir') ?></td>
 </tr>
 <tr>
     <td colspan="2" style="width:30%">4. Tema Pemasangan</td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:30%"><?php echo $reklame_tema ?></td>
+    <td colspan="2" style="width:30%"><?php echo (count($reklame_data) == 1 ? $reklame_data[0]['tema'] : 'Terlampir') ?></td>
 </tr>
 <tr>
     <td colspan="2" style="width:30%">5. Ukuran</td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:30%"><?php echo (count($lampirans) == 1 ? $lampirans[0]['panjang'].' m x '.$lampirans[0]['lebar'].' m' : 'Terlampir') ?></td>
+    <td colspan="2" style="width:30%"><?php echo (count($reklame_data) == 1 ? $reklame_data[0]['panjang'].' m x '.$reklame_data[0]['lebar'].' m'.($lampiran['tempat'] == 1 ? ' Dua muka' : '' ) : 'Terlampir') ?></td>
 </tr>
 <tr>
     <td colspan="2" style="width:30%">6. Jumlah</td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:30%"><?php echo $reklame_juml.' Unit' ?></td>
+    <td colspan="2" style="width:30%"><?php echo $reklame_juml_val.' '.$reklame_juml_unit ?></td>
 </tr>
 <tr>
     <td colspan="2" style="width:30%">7. Jangka Waktu Pemasangan</td>
@@ -106,30 +106,32 @@
     </td>
 </tr>
 <?php endif ?>
-    </tbody>
 </table>
-<?php if (count($lampirans) > 1): ?>
-<table>
+</table>
+<?php if (count($reklame_data) > 1): ?>
+<table class="pagebreak">
     <tr>
-        <td colspan="4" class="bold"><?php echo strtoupper('Lampiran Izin Reklame '.$pemohon_nama) ?>.<br></td>
+        <td colspan="5" class="bold"><?php echo strtoupper('Lampiran Izin Reklame '.$pemohon_nama) ?>.<br></td>
     </tr>
     <tr style="border:1px solid #000" class="bold">
-        <td style="border:1px solid #000; width:10%">No.</td>
-        <td style="border:1px solid #000; width:20%">Jenis Reklame</td>
-        <td style="border:1px solid #000; width:50%">Lokasi</td>
-        <td style="border:1px solid #000; width:20%">Ukuran (M)</td>
+        <td class="align-center" style="border:1px solid #000; width:10%">No.</td>
+        <td class="align-center" style="border:1px solid #000; width:20%">Jenis Reklame</td>
+        <td class="align-center" style="border:1px solid #000; width:30%">Tema</td>
+        <td class="align-center" style="border:1px solid #000; width:30%">Lokasi</td>
+        <td class="align-center" style="border:1px solid #000; width:10%">Ukuran (M)</td>
     </tr>
-    <?php $i = 1; foreach ($lampirans as $lampiran): ?>
+    <?php $i = 1; foreach ($reklame_data as $lampiran): ?>
     <tr style="border:1px solid #000">
-        <td style="border:1px solid #000"><?php echo $i ?></td>
-        <td style="border:1px solid #000"><?php echo $reklame_jenis ?></td>
+        <td class="align-center" style="border:1px solid #000"><?php echo $i ?></td>
+        <td style="border:1px solid #000"><?php echo $lampiran['jenis'] ?></td>
+        <td style="border:1px solid #000"><?php echo $lampiran['tema'] ?></td>
         <td style="border:1px solid #000"><?php echo $lampiran['tempat'] ?></td>
-        <td style="border:1px solid #000"><?php echo $lampiran['panjang'].' x '.$lampiran['lebar'] ?> (M)</td>
+        <td class="align-center" style="border:1px solid #000"><?php echo $lampiran['panjang'].' x '.$lampiran['lebar'] ?> (M)</td>
     </tr>
     <?php $i++; endforeach; ?>
-    <tr><td class="empty" colspan="4" style="width:100%"></td></tr>
+    <tr><td class="empty" colspan="5" style="width:100%"></td></tr>
     <tr class="align-center bold">
-        <td colspan="2" style="width:60%"></td>
+        <td colspan="3" style="width:60%"></td>
         <td colspan="2" style="width:40%"><?php print_ttd_kadin() ?></td>
     </tr>
 </table>
