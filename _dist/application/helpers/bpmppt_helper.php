@@ -34,6 +34,25 @@ function print_tembusan($data_tembusan)
     echo $output;
 }
 
+function parse_reklamedata(array $reklame_data)
+{
+    $out = '';
+    $i = 0;
+    $total = count($reklame_data);
+
+    foreach ($reklame_data as $data)
+    {
+        $out .= $data['jenis'];
+        if ($total > 1 && $i != ($total - 1)) {
+            $out .= $i == $total - 2 ? ' dan ' : ', ';
+        }
+
+        $i++;
+    }
+
+    return $out;
+}
+
 function print_ttd_kadin($atas_nama = '')
 {
     foreach (array('skpd_name', 'skpd_city', 'skpd_lead_name', 'skpd_lead_jabatan', 'skpd_lead_nip') as $property)
@@ -91,20 +110,20 @@ function iplc_debits($debits = array())
 {
     if (empty($debits)) return;
 
-    $html = '<table class="bordered" style="width: auto;"><thead><tr>'
-          . '<th style="width:10%">NO</th>';
+    $html = '<table class="bordered"><thead><tr>'
+          . '<th>NO</th>';
 
     foreach ($debits['head'] as $h_key => $h_label)
     {
         // $html .= '<th>'.$h_label.'</th>';
-        $html .= $h_label ? '<th>'.$h_label.'</th>' : '';
+        $html .= $debits['body'][0][$h_key] ? '<th>'.$h_label.'</th>' : '';
     }
 
     $html .= '</tr></thead><tbody>';
 
     foreach ($debits['body'] as $i => $debit_data)
     {
-        $html .= '<tr><td style="width:10%">'.($i + 1).'</td>';
+        $html .= '<tr><td>'.($i + 1).'</td>';
 
         foreach (array_keys($debits['head']) as $d_key)
         {
