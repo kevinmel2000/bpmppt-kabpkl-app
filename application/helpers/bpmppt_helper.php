@@ -34,6 +34,25 @@ function print_tembusan($data_tembusan)
     echo $output;
 }
 
+function parse_reklamedata(array $reklame_data)
+{
+    $out = '';
+    $i = 0;
+    $total = count($reklame_data);
+
+    foreach ($reklame_data as $data)
+    {
+        $out .= $data['jenis'];
+        if ($total > 1 && $i != ($total - 1)) {
+            $out .= $i == $total - 2 ? ' dan ' : ', ';
+        }
+
+        $i++;
+    }
+
+    return $out;
+}
+
 function print_ttd_kadin($atas_nama = '')
 {
     foreach (array('skpd_name', 'skpd_city', 'skpd_lead_name', 'skpd_lead_jabatan', 'skpd_lead_nip') as $property)

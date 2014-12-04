@@ -390,13 +390,23 @@ class Bpmppt extends CI_Driver_Library
 
             if ($driver == 'iplc' and $key == 'debits')
             {
-                $_data = $data[$key];
+                $_data = unserialize($data[$key]);
                 unset($data[$key]);
 
-                $data[$key] = array(
-                    'head' => $this->$driver->_custom_fields,
-                    'body' => unserialize($_data),
-                    );
+                foreach ($this->$driver->_custom_fields as $name => $label) {
+                    if (isset($_data[$name.'_head'])) {
+                        $data[$key]['head'][$name] = $_data[$name.'_head'];
+                    }
+                }
+
+                $data[$key]['body'] = $_data['body'];
+
+                // $data[$key] = array(
+                //     'head' => $this->$driver->_custom_fields,
+                //     'body' => unserialize($_data),
+                //     );
+
+                // $data[$key] = unserialize($_data);
             }
         }
 

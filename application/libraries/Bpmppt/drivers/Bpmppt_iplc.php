@@ -150,11 +150,17 @@ class Bpmppt_iplc extends CI_Driver
 
         $this->_ci->table->set_template( $this->table_templ );
         $width = ceil(90 / count($this->_custom_fields));
+        $debits = unserialize( $data->debits );
 
         foreach ($this->_custom_fields as $name => $label)
         {
             $head[] = array(
-                'data'  => $label,
+                'data'  => form_input( array(
+                    'name'  => $this->alias.'_debits['.$name.'_head]',
+                    'type'  => 'text',
+                    'value' => $data && !empty($debits) ? $debits[$name.'_head'] : '',
+                    'class' => 'form-control bs-tooltip input-sm',
+                    'placeholder'=> $label ) ),
                 'class' => 'head-'.$name,
                 'width' => $width.'%'
                 );
@@ -173,9 +179,9 @@ class Bpmppt_iplc extends CI_Driver
 
         $this->_ci->table->set_heading( $head );
 
-        if ( isset( $data->debits ) and !empty( $data->debits ) )
+        if ( isset( $debits['body'] ) and !empty( $debits['body'] ) )
         {
-            foreach ( unserialize( $data->debits ) as $row )
+            foreach ( $debits['body'] as $row )
             {
                 $this->_custom_row($row);
             }
@@ -196,11 +202,11 @@ class Bpmppt_iplc extends CI_Driver
         {
             $column[] = array(
                 'data'  => form_input( array(
-                    'name'  => $this->alias.'_debits'.'['.$name.'][]',
+                    'name'  => $this->alias.'_debits['.$name.'][]',
                     'type'  => 'text',
                     'value' => $data && isset($data[$name]) ? $data[$name] : '',
                     'class' => 'form-control bs-tooltip input-sm',
-                    'placeholder'=> $label ), '', ''),
+                    'placeholder'=> $label ) ),
                 'class' => 'data-id',
                 );
         }
@@ -236,9 +242,14 @@ class Bpmppt_iplc extends CI_Driver
             {
                 foreach ($form_data[$slug][$field] as $i => $val)
                 {
-                    $form_data[$slug][$i][$field] = $val ?: '';
+                    $form_data[$slug]['body'][$i][$field] = $val ?: '';
                     unset($form_data[$slug][$field]);
                 }
+            }
+            elseif ($form_data[$slug][$field.'_head'])
+            {
+                $form_data[$slug]['head'][$field] = $form_data[$slug][$field.'_head'];
+                unset($form_data[$slug][$field.'_head']);
             }
         }
 

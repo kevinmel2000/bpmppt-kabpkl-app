@@ -4,7 +4,7 @@
 <tr class="align-center bold">
     <td colspan="7" style="width:100%">
         <?php echo img(array('src' => base_url('asset/img/garuda.png'), 'alt' => 'Logo cetak', 'class' => 'img logo-skpd', 'width' => '60')) ?><br>
-        <p>BUPATI PEKALONGAN<br>SURAT IZIN BUPATI PEKALONGAN<br>NOMOR : <?php echo nbs(20).' TAHUN '.bdate('%Y') ?></p>
+        <p>BUPATI PEKALONGAN<br>SURAT IZIN BUPATI PEKALONGAN<br>NOMOR <?php echo nbs(20).' TAHUN '.bdate('%Y') ?></p>
     </td>
 </tr>
 <tr><td class="empty" colspan="7" style="width:100%"></td></tr>
@@ -32,7 +32,7 @@
     <td style="width:2%">:</td>
     <td colspan="5" style="width:78%" class="align-justify">
         <ol>
-            <li>Undang-undang Nomor 13 Tahun 950 tentang Pembentukan Daerah-daerah Kabupaten Dalam Lingkungan Propinsi Jawa Tengah;</li>
+            <li>Undang-undang Nomor 13 Tahun 1950 tentang Pembentukan Daerah-daerah Kabupaten Dalam Lingkungan Propinsi Jawa Tengah;</li>
             <li>Undang-undang Nomor 9 Tahun 1965 tengang Pembentukan Daerah Tingkat II Batang dengan mengubah Undang-Undang Nomoe 13 Tahun 1965 tentang Pembentukan Daerah-daerah Kabupaten Dalam Lingkungan Propinsi Jawa Tengah (Lembaran Negara Tahun 1965 Nomor 52, Tambahan Lembaran Negara Nomor 2757);</li>
             <li>Undang-undang nomor 4 tahun 1992 tentang Perumahan dan Pemukiman (Lembaran Negara Tahun 1992 Nomor 23, Tambahnan Lembaran Negara Nomor 3469);</li>
             <li>Keputusan-keputusan Presiden Nomor 34 Tahun 2003 tentang Kebijakan Nasional di Bidang Pertanahan (Lembaran Negara Tahun 2003 Nomor 60);</li>
@@ -103,76 +103,8 @@
 <tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="5" style="width:60%"></td>
-    <td colspan="2" style="width:40%"><?php echo 'BUPATI PEKALONGAN'.br(4).'Drs. A. ANTONO, M.S' ?> </td>
+    <td colspan="2" style="width:40%; text-align: center"><?php echo 'BUPATI PEKALONGAN'.br(4).'Drs. A. ANTONO, M.S' ?> </td>
 </tr>
 <tr><td colspan="7" style="width:100%"><?php print_tembusan($data_tembusan) ?></td></tr>
     </tbody>
 </table>
-
-
-<table class="pagebreak">
-    <tr class="t-header"><td colspan="7" width="100%">
-        <?php echo print_cop() ?>
-    </td></tr>
-    <tr><td style="border: 1px solid #000"></td></tr>
-</table><table>
-    <tbody>
-<tr class="align-center bold">
-    <td colspan="7" style="width:100%" class="align-center bold underline">NOTA DINAS</td>
-</tr>
-<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
-<tr>
-    <td style="width:20%"><p>Kepada Yth</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%" class="align-justify">Bupati Pekalongan</td>
-</tr>
-<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
-<tr>
-    <td style="width:20%"><p>Lewat</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%" class="align-justify">
-        <ol>
-            <li>Sekretaris Daerah Kabupaten Pekalongan</li>
-            <li>Asisten Ekonomi, Pembangunan dan Kesejahteraan Rakyat Sekda Kabupaten Pekalongan</li>
-        </ol>
-    </td>
-</tr>
-<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
-<tr>
-    <td style="width:20%"><p>Dari</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%" class="align-justify">Kepala Badan Penanaman Modal dan Pelayanan Perizinan Terpadu Kabupaten Pekalongan</td>
-</tr>
-<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
-<tr>
-    <td style="width:20%"><p>Nomor</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%" class="align-justify"></td>
-</tr>
-<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
-<tr>
-    <td style="width:20%"><p>Perihal</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%" class="align-justify">Permohonan Izin Lokasi <?php echo $pemohon_usaha ?> untuk <?php echo $lokasi_tujuan ?> di <?php echo $lokasi_alamat ?></td>
-</tr>
-<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
-<tr>
-    <td style="width:20%"><p>Tanggal</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%" class="align-justify">
-        <p>Tanggal</p>
-        <p>Menindaklanjuti disposisi Bupati Pekalongan tanggal 15 Nopember 2013 perihal permohonan Pendirian Pembangunan Perumahan Graha Naya Residence berlokasi di Desa Kampil Kecamatan Wiradesa Kabupaten Pekalongan dengan ini kami sampaikan hal-hal sebagai berikut :</p>
-        <ol>
-            <li>Berdasar Risalah Pertimbangan Teknis Pertanahan dalam Penerbitan Izin Lokasi Nomor 4/R-400.33.26.9/VII/2014 tanggal 25 Juli 2014 dari Kantor Pertanahan Kabupaten Pekalongan bahwa tanah yang dimohon tersebut bisa disetujui;</li>
-            <li>Memperhatikan letak tanah lokasi yang diajukan pembangunan perumahan di Desa Kampil Kecamatan Wiradesa Kabupaten Pekalongan sesuai dengan Peraturan Daerah Kabupaten Pekalongan No.2 Tahun 2011 tentang Rencana Tata Ruang Wilayah Kabupaten Pekalongan (RT RW), Kecamatan Wiradesa masuk dalam sistem perkotaan yang merupakan simpul pelayanan sosial, budaya, ekonomi dan atau administrasi masyarakat;</li>
-            <li>Untuk Kecamatan Wiradesa sebagai Pusat Kegiatan Lokal (PKL) mempunyai fungsi pusat pemerintahan kabupaten, pusat pemukiman, pusat pendidikan, pusat pelayanan sosial dan ekonomi skala kabupaten, pusat transportasi wilayah, pengembangan pariwisata, pusat pengembangan permukiman perkotaan, pusat perdagangan dan jasa, industri besar, menengah, kecil dan mikro serta pengembangan pertanian tanaman pangan;</li>
-            <li>Areal yang disetujui seluruhnya seluas ± 11.622 m² (sebelas ribu enam ratus dua puluh dua meter persegi) terletak di Desa Kampil Kecamatan Wiradesa Kabupaten Pekalongan;</li>
-            <li>Demikian untuk menjadikan periksa, apabila Bapak Bupati Pekalongan berkenan dan tidak ada pertimbangan lain bersama ini kami sampaikan konsep Surat Izin lokasi pendirian pembangunan Perumahan Graha Naya Residence di Desa Kampil Kecamatan Wiradesa Kabupaten Pekalongan guna mendapatkan pengesahan.</li>
-        </ol>
-    </td>
-</tr>
-<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
-<tr class="align-center bold">
-    <td colspan="5" style="width:60%"></td>
-    <td colspan="2" style="width:40%"><?php print_ttd_kadin() ?></td>
-</tr></table>

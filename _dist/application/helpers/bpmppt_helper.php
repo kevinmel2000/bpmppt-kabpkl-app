@@ -91,20 +91,20 @@ function iplc_debits($debits = array())
 {
     if (empty($debits)) return;
 
-    $html = '<table class="bordered"><thead><tr>'
-          . '<th>NO</th>';
+    $html = '<table class="bordered" style="width: auto;"><thead><tr>'
+          . '<th style="width:10%">NO</th>';
 
     foreach ($debits['head'] as $h_key => $h_label)
     {
         // $html .= '<th>'.$h_label.'</th>';
-        $html .= $debits['body'][0][$h_key] ? '<th>'.$h_label.'</th>' : '';
+        $html .= $h_label ? '<th>'.$h_label.'</th>' : '';
     }
 
     $html .= '</tr></thead><tbody>';
 
     foreach ($debits['body'] as $i => $debit_data)
     {
-        $html .= '<tr><td>'.($i + 1).'</td>';
+        $html .= '<tr><td style="width:10%">'.($i + 1).'</td>';
 
         foreach (array_keys($debits['head']) as $d_key)
         {
