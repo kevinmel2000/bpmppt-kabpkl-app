@@ -1,3 +1,15 @@
+<table style="position: absolute; top: 0; left: 70%; min-width: 0; width: 30%; float: right; font-size: 9px; line-height: 1.2em; border: 1px solid #000;">
+    <tr>
+        <td width="45%">No. Agenda</td>
+        <td width="10%">:</td>
+        <td width="45%"><?php echo $no_agenda ?></td>
+    </tr>
+    <tr>
+        <td>Tanggal</td>
+        <td>:</td>
+        <td><?php echo $surat_tanggal ?></td>
+    </tr>
+</table>
 <table>
     <tbody>
         <tr><td class="empty" colspan="6" style="width:100%"></td></tr>

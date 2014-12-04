@@ -1,10 +1,3 @@
-/*!
- * BPMPPT App v0.1.5 (http://feryardiant.github.com/bpmppt)
- * Aplikasi Pengelolaan Dokumen Perijinan di BPMPPT Kab. Pekalongan
- * Copyright (c) 2013-2014 BPMPPT Kab. Pekalongan, Fery Wardiyanto
- * Licensed under MIT (https://github.com/feryardiant/bpmppt/blob/master/LICENSE)
- */
-
 html {
   font-size: 62.5%;
 
@@ -7114,10 +7107,12 @@ table.dataTable td {
 .note-editor .note-editable table.surat_izin_usaha_perdagangan {
   font-family: 'Arial';
 }
-.note-editor .note-editable table.izin_gangguan {
+.note-editor .note-editable table.izin_gangguan,
+.note-editor .note-editable table.tanda_daftar_perusahaan {
   margin-top: 40px;
 }
-.note-editor .note-editable table.izin_gangguan .logo-skpd {
+.note-editor .note-editable table.izin_gangguan .logo-skpd,
+.note-editor .note-editable table.tanda_daftar_perusahaan .logo-skpd {
   top: 40px;
 }
 .note-editor .note-editable table.pagebreak {
