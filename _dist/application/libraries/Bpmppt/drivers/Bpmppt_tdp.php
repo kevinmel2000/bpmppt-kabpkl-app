@@ -123,7 +123,7 @@ class Bpmppt_tdp extends CI_Driver
         $fields[] = array(
             'name'  => 'pembaruan_ke',
             'label' => 'Daftar ulang Ke',
-            'type'  => 'text',
+            'type'  => 'number',
             'fold'  => array(
                 'key'   => $this->alias.'_pengajuan_jenis',
                 'value' => 'daftar ulang' ),
@@ -187,13 +187,13 @@ class Bpmppt_tdp extends CI_Driver
                 array(
                     'name'  => 'telp',
                     'label' => 'Telpon',
-                    'type'  => 'tel',
+                    'type'  => 'text',
                     'std'   => ( $data_obj ? $data_obj->pemilik_no_telp : ''),
                     'validation'=> 'numeric' ),
                 array(
                     'name'  => 'fax',
                     'label' => 'Faksimili',
-                    'type'  => 'tel',
+                    'type'  => 'text',
                     'std'   => ( $data_obj ? $data_obj->pemilik_no_fax : ''),
                     'validation'=> 'numeric' ),
                 ));

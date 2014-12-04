@@ -4,7 +4,7 @@
 <tr class="align-center bold">
     <td colspan="5" style="width:100%">
         <p>SURAT IZIN BUPATI PEKALONGAN</p>
-        <p>NOMOR : <?php echo '510.8/'.nbs(6).'/ BPM PPT / Rekl / '.print_blnthn_head($surat_tanggal) ?></p>
+        <p>NOMOR : <?php echo '510.8/'.nbs(8).'/ BPM PPT / Rekl / '.print_blnthn_head($surat_tanggal) ?></p>
         <p>IZIN PEMASANGAN REKLAME</p>
     </td>
 </tr>
@@ -29,7 +29,7 @@
 <tr>
     <td colspan="2" style="width:30%">1. Nama</td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:30%"><?php echo $pemohon_nama ?></td>
+    <td colspan="2" style="width:30%"><?php echo $pemohon_nama.' ('.$pemohon_nama.')' ?></td>
 </tr>
 <tr>
     <td colspan="2" style="width:30%">2. Alamat</td>
@@ -82,8 +82,8 @@
 </tr>
 <tr><td class="empty" colspan="5" style="width:100%"></td></tr>
 <tr>
-    <td colspan="4" style="width:60%"></td>
-    <td colspan="1" style="width:40%">
+    <td colspan="3" style="width:60%"></td>
+    <td colspan="2" style="width:40%">
         <p>Ditetapkan di : <?php echo $skpd_kab ?></p>
         <p class="underline">Pada Tanggal : <?php print_blnthn_foot($surat_tanggal) ?></p>
     </td>

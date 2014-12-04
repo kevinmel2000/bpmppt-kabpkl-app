@@ -37,7 +37,8 @@ class Bpmppt_reklame extends CI_Driver
         'pemohon_telp'              => '',
         'pengajuan_jenis'           => '',
         'reklame_jenis'             => '',
-        'reklame_juml'              => '',
+        'reklame_juml_val'          => '',
+        'reklame_juml_unit'         => '',
         'reklame_range_tgl_text'    => '',
         'reklame_range_tgl_mulai'   => '',
         'reklame_range_tgl_selesai' => '',
@@ -92,12 +93,12 @@ class Bpmppt_reklame extends CI_Driver
             'std'   => ( $data_obj ? $data_obj->pemohon_nama : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        // $fields[] = array(
-        //     'name'  => 'pemohon_kerja',
-        //     'label' => 'Pekerjaan',
-        //     'type'  => 'text',
-        //     'std'   => ( $data_obj ? $data_obj->pemohon_kerja : ''),
-        //     'validation'=> ( !$data_obj ? 'required' : '' ) );
+        $fields[] = array(
+            'name'  => 'pemohon_kerja',
+            'label' => 'Nama Perusahaan',
+            'type'  => 'text',
+            'std'   => ( $data_obj ? $data_obj->pemohon_kerja : ''),
+            'validation'=> ( !$data_obj ? 'required' : '' ) );
 
         $fields[] = array(
             'name'  => 'pemohon_alamat',
@@ -135,23 +136,17 @@ class Bpmppt_reklame extends CI_Driver
                     'name'  => 'val',
                     'label' => 'Jumlah',
                     'type'  => 'number',
-                    'std'   => ( $data_obj ? $data_obj->reklame_reklame_juml_val : ''),
+                    'std'   => ( $data_obj ? $data_obj->reklame_juml_val : ''),
                     'validation'=> 'required|numerik' ),
                 array(
                     'name'  => 'unit',
-                    'label' => 'unit',
+                    'label' => 'Unit',
                     'type'  => 'dropdown',
                     'option'=> array('Unit', 'Buah'),
-                    'std'   => ( $data_obj ? $data_obj->reklame_reklame_juml_unit : ''),
+                    'std'   => ( $data_obj ? $data_obj->reklame_juml_unit : ''),
                     'validation'=> 'required|numerik' ),
-            ));
-
-        // $fields[] = array(
-        //     'name'  => 'reklame_juml',
-        //     'label' => 'Jumlah',
-        //     'type'  => 'text',
-        //     'std'   => ( $data_obj ? $data_obj->reklame_juml : ''),
-        //     'validation'=> 'required|numeric' );
+            )
+        );
 
         $fields[] = array(
             'name'  => 'reklame_range',
