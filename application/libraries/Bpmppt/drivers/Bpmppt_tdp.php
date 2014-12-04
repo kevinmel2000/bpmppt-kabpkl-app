@@ -257,9 +257,11 @@ class Bpmppt_tdp extends CI_Driver
             'type'  => 'radio',
             'std'   => ( $data_obj ? $data_obj->usaha_skala : ''),
             'option'=> array(
+                'PMK' => 'Perusahaan Mikro',
                 'PK' => 'Perusahaan Kecil',
                 'PM' => 'Menengah',
-                'PB' => 'Besar' ));
+                'PB' => 'Besar'
+            ));
 
         $fields[] = array(
             'name'  => 'usaha_status',

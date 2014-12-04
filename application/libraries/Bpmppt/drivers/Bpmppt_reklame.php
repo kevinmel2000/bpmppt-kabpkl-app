@@ -76,7 +76,7 @@ class Bpmppt_reklame extends CI_Driver
             'option'=> array(
                 'Pendaftaran Baru' => 'Pendaftaran Baru',
                 'Perpanjangan'     => 'Perpanjangan'
-                ),
+            ),
             'validation'=> ( !$data_obj ? 'required' : '' ));
 
         $fields[] = array(
@@ -129,9 +129,29 @@ class Bpmppt_reklame extends CI_Driver
         $fields[] = array(
             'name'  => 'reklame_juml',
             'label' => 'Jumlah',
-            'type'  => 'text',
-            'std'   => ( $data_obj ? $data_obj->reklame_juml : ''),
-            'validation'=> 'required|numeric' );
+            'type'  => 'subfield',
+            'fields'=> array(
+                array(
+                    'name'  => 'val',
+                    'label' => 'Jumlah',
+                    'type'  => 'number',
+                    'std'   => ( $data_obj ? $data_obj->reklame_reklame_juml_val : ''),
+                    'validation'=> 'required|numerik' ),
+                array(
+                    'name'  => 'unit',
+                    'label' => 'unit',
+                    'type'  => 'dropdown',
+                    'option'=> array('Unit', 'Buah'),
+                    'std'   => ( $data_obj ? $data_obj->reklame_reklame_juml_unit : ''),
+                    'validation'=> 'required|numerik' ),
+            ));
+
+        // $fields[] = array(
+        //     'name'  => 'reklame_juml',
+        //     'label' => 'Jumlah',
+        //     'type'  => 'text',
+        //     'std'   => ( $data_obj ? $data_obj->reklame_juml : ''),
+        //     'validation'=> 'required|numeric' );
 
         $fields[] = array(
             'name'  => 'reklame_range',
