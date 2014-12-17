@@ -41,7 +41,7 @@ class Bpmppt_reklame extends CI_Driver
         'reklame_range_tgl_text'    => '',
         'reklame_range_tgl_mulai'   => '',
         'reklame_range_tgl_selesai' => '',
-        'reklame_data'              => '',
+        'reklame_data'              => array(),
         );
 
     // -------------------------------------------------------------------------
@@ -228,12 +228,12 @@ class Bpmppt_reklame extends CI_Driver
         {
             foreach (unserialize($data->reklame_data) as $row)
             {
-                $this->_row_pengesahan($row);
+                $this->_row_data($row);
             }
         }
         else
         {
-            $this->_row_pengesahan();
+            $this->_row_data();
         }
 
         return $this->_ci->table->generate();
@@ -241,7 +241,7 @@ class Bpmppt_reklame extends CI_Driver
 
     // -------------------------------------------------------------------------
 
-    private function _row_pengesahan( $data = FALSE )
+    private function _row_data( $data = FALSE )
     {
         $cols = array(
             'jenis'   => 'Jenis',
@@ -297,25 +297,25 @@ class Bpmppt_reklame extends CI_Driver
      */
     public function _pre_post( $form_data )
     {
-        $pengesahan_fn = $this->alias.'_reklame_data';
+        $slug = $this->alias.'_reklame_data';
 
-        if (isset($_POST[$pengesahan_fn.'_tempat']))
+        if (isset($_POST[$slug.'_tempat']))
         {
             $i = 0;
 
-            foreach ($_POST[$pengesahan_fn.'_tempat'] as $no)
+            foreach ($_POST[$slug.'_tempat'] as $no)
             {
-                foreach (array('jenis', 'tema', 'tempat', 'panjang', 'lebar') as $name)
+                foreach (array('jenis', 'tema', 'tempat', 'panjang', 'lebar', '2x') as $name)
                 {
-                    $pengesahan_name = $pengesahan_fn.'_'.$name;
-                    $pengesahan[$i][$name] = isset($_POST[$pengesahan_name][$i]) ? $_POST[$pengesahan_name][$i] : 0;
-                    unset($_POST[$pengesahan_name][$i]);
+                    $slug_name = $slug.'_'.$name;
+                    $data[$i][$name] = isset($_POST[$slug_name][$i]) ? $_POST[$slug_name][$i] : 0;
+                    unset($_POST[$slug_name][$i]);
                 }
 
                 $i++;
             }
 
-            $form_data[$pengesahan_fn] = $pengesahan;
+            $form_data[$slug] = $data;
         }
 
         return $form_data;

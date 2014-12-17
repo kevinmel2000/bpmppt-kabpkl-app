@@ -50,7 +50,7 @@
 <tr>
     <td colspan="2" style="width:30%">5. Ukuran</td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:30%"><?php echo (count($reklame_data) == 1 ? $reklame_data[0]['panjang'].' m x '.$reklame_data[0]['lebar'].' m'.($lampiran['tempat'] == 1 ? ' Dua muka' : '' ) : 'Terlampir') ?></td>
+    <td colspan="2" style="width:30%"><?php echo (count($reklame_data) == 1 ? $reklame_data[0]['panjang'].' m x '.$reklame_data[0]['lebar'].' m'.($reklame_data[0]['2x'] == 1 ? ' (Dua muka)' : '' ) : 'Terlampir') ?></td>
 </tr>
 <tr>
     <td colspan="2" style="width:30%">6. Jumlah</td>
