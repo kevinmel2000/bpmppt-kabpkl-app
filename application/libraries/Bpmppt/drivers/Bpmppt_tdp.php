@@ -161,24 +161,6 @@ class Bpmppt_tdp extends CI_Driver
                 'wni' => 'Warga Negara Indonesia',
                 'wna' => 'Warga Negara Asing' ));
 
-        // $fields[] = array(
-        //     'name'  => 'pemilik_lahir',
-        //     'label' => 'Tempat &amp; Tgl. Lahir',
-        //     'type'  => 'subfield',
-        //     'fields'=> array(
-        //         array(
-        //             'name'  => 'tmpt',
-        //             'label' => 'Tempat Lahir',
-        //             'type'  => 'text',
-        //             'std'   => ( $data_obj ? $data_obj->pemilik_lahir_tmpt : '') ),
-        //         array(
-        //             'name'  => 'tgl',
-        //             'label' => 'Tanggal Lahir',
-        //             'type'  => 'datepicker',
-        //             'std'   => ( $data_obj ? format_date($data_obj->pemilik_lahir_tgl) : '') ,
-        //             'callback'=> 'string_to_date' ),
-        //         ));
-
         $fields[] = array(
             'name'  => 'pemilik_no',
             'label' => 'Nomor Telp/Fax',
@@ -235,7 +217,10 @@ class Bpmppt_tdp extends CI_Driver
             'type'  => 'subfield',
             'fold'  => array(
                 'key' => $this->alias.'_usaha_jenis',
-                'value' => 'Perseroan Terbatas (PT)',
+                'value' => array(
+                    'Perseroan Terbatas (PT)',
+                    'Koperasi'
+                    ),
                 ),
             'fields'=> array(
                 array(

@@ -80,27 +80,26 @@ $(document).ready(function () {
 
   // Folding functions
   $('.form-group').each(function () {
+    var el  = $(this)
+
     if ($(this).data('fold') == 1) {
-      var el  = $(this)
       var key = el.data('fold-key')
       var val = el.data('fold-value')
       var tgt = '[name=\"' + key + '\"]'
 
-      if ($(tgt).is(':radio')) {
-        showHide(el, ($(tgt).filter(':checked').val() == val))
-      } else if ($(tgt).is(':checkbox')) {
-        showHide(el, ($(tgt).is(':checked') == val))
-      } else {
-        showHide(el, ($(tgt).val() == val))
-      }
-
       if ($(tgt).hasClass('bs-switch')) {
         $(tgt).on('switchChange.bootstrapSwitch', function (event, state) {
-          showHide(el, (val == state))
+          showHide(el, val.indexOf(state) !== -1)
         })
       } else {
         $(tgt).change(function () {
-          showHide(el, ($(this).val() == val))
+          if ($(tgt).is(':radio')) {
+            showHide(el, val.indexOf($(tgt).filter(':checked').val()) !== -1)
+          } else if ($(tgt).is(':checkbox')) {
+            showHide(el, val.indexOf($(tgt).is(':checked')) !== -1)
+          } else {
+            showHide(el, val.indexOf($(tgt).val()) !== -1)
+          }
         })
       }
     }
