@@ -78,7 +78,7 @@ TENTANG PERSEROAN TERBATAS
     <td colspan="2" style="width:45%;"><?php echo strtoupper($usaha_no_telp) ?></td>
     <td colspan="2" style="width:30%; border-right: 2px solid #000;"><?php echo strlen(trim($usaha_no_fax)) > 0 ? 'FAX : '.strtoupper($usaha_no_fax) : '' ?></td>
 </tr>
-<tr class="bold" style="border: 2px solid #000; border-top-width: 0; border-bottom-width: 1px;">
+<tr class="bold" style="border: 2px solid #000; border-top-width: 0; border-bottom-width: 1px; line-height: 1em;">
     <td style="width:20%">KEGIATAN USAHA POKOK</td>
     <td style="width:5%">:</td>
     <td colspan="3" style="width:55%;"><?php echo strtoupper($usaha_pokok) ?></td>
