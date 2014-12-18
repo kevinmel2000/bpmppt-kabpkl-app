@@ -118,10 +118,10 @@ class Bpmppt_siup extends CI_Driver
             'name'  => 'siup_lama',
             'label' => 'Data SIUP Lama',
             'type'  => 'custom',
-            'value' => $this->custom_field($data_obj),
+            'std' => $this->custom_field($data_obj),
             'fold'  => array(
                 'key' => $this->alias.'_pengajuan_jenis',
-                'value' => 'Daftar Ulang|Perubahan'
+                'value' => array('Daftar Ulang', 'Perubahan')
                 ),
             'validation'=> ( !$data_obj ? '' : '' ) );
 
