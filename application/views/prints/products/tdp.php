@@ -25,15 +25,16 @@
     <td colspan="6" style="width:100%">
         <p style="">BERDASARKAN<br>
 UNDANG-UNDANG REPUBLIK INDONESIA NOMOR 3 TAHUN 1982<br>
-TENTANG WAJIB DAFTAR PERUSAHAAN<br>
+TENTANG WAJIB DAFTAR PERUSAHAAN
 <?php // koperasi ---------------------------------------------------------------
-if( strtolower($usaha_jenis) == 'koperasi' ) : ?>
+if( $usaha_jenis == 'Koperasi' ) : ?>DAN<br>
 UNDANG-UNDANG REPUBLIK INDONESIA NOMOR 25 TAHUN 1992<br>
 TENTANG PERKOPERASIAN
 <?php // Perseroan Terbatas (PT) -----------------------------------------------
-elseif( strtolower($usaha_jenis) == 'Perseroan Terbatas (PT)' ) : ?>
+elseif( $usaha_jenis == 'Perseroan Terbatas (PT)' ) : ?>DAN<br>
 UNDANG-UNDANG REPUBLIK INDONESIA NOMOR 40 TAHUN 2007<br>
 TENTANG PERSEROAN TERBATAS
+<?php else: ?>
 <?php endif; ?></p>
     </td>
 </tr>
@@ -43,7 +44,7 @@ TENTANG PERSEROAN TERBATAS
     <td colspan="3" style="width:55%; border-right: 1px solid #000;">BERLAKU S/D TANGGAL<br><?php echo format_date($tgl_berlaku) ?></td>
     <td colspan="2" style="width:35%; border-right: 2px solid #000;">PENDAFTARAN / PEMBAHARUAN KE : <?php echo $pembaruan_ke ?></td>
 </tr>
-<?php if ($usaha_jenis == 'Perseroan Terbatas (PT)') : ?>
+<?php if (in_array($usaha_jenis, array('Koperasi', 'Perseroan Terbatas (PT)'))) : ?>
 <tr><td colspan="6" style="width:100%; line-height: 5px"></td></tr>
 <tr style="border: 2px solid #000">
     <td colspan="4" style="width:65%"><span class="underline bold">AGENDA PENDAFTARAN</span><br>NOMOR: <?php echo $daftar_no ?></td>

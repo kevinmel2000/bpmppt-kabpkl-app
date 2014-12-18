@@ -709,7 +709,10 @@ class Biform
 
         if (isset($attrs['fold']) and !empty($attrs['fold']))
         {
-            $group_attr .= ' data-fold="1" data-fold-key="'.$attrs['fold']['key'].'" data-fold-value="'.$attrs['fold']['value'].'"';
+            $fold_value = !is_array($attrs['fold']['value']) ? array($attrs['fold']['value']) : $attrs['fold']['value'];
+            $fold_value = str_replace('"', '\'', json_encode($fold_value));
+
+            $group_attr .= ' data-fold="1" data-fold-key="'.$attrs['fold']['key'].'" data-fold-value="'.$fold_value.'"';
         }
 
         $html      = sprintf($group_open, trim($group_class), $group_attr);
