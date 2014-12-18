@@ -4,7 +4,7 @@
 <tr style="font-family: 'Arial'" class="align-center bold">
     <td colspan="4">
         <span style="font-size: 24px">SURAT IZIN USAHA PERDAGANGAN</span><br>
-        <span >NOMOR : <?php echo strtoupper($no_agenda.'/11.19/'.$usaha_skala.'/'.format_roman(bdate('%m', $surat_tanggal)).'/'.bdate('%Y')) ?></span>
+        <span >NOMOR : <?php echo strtoupper($no_agenda.'/11.19/'.$usaha_skala.'/'.format_roman(bdate('%m', $surat_tanggal)).'/'.bdate('%Y')).($pengajuan_jenis == 'Perubahan' ? '/P' : '') ?></span>
     </td>
 </tr>
 <tr><td class="empty" colspan="4" style="width:100%"></td></tr>
