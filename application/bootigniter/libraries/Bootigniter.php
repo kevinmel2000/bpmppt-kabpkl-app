@@ -1,6 +1,6 @@
 <?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
 /**
- * @package     BPMPPT App v0.1.5 (http://feryardiant.github.com/bpmppt)
+ * @package     BPMPPT App v0.1.6 (http://feryardiant.github.com/bpmppt)
  * @author      Fery Wardiyanto (ferywardiyanto@gmail.com)
  * @copyright   Copyright (c) 2013-2014 BPMPPT Kab. Pekalongan, Fery Wardiyanto
  * @license     MIT (https://github.com/feryardiant/bpmppt/blob/master/LICENSE)
@@ -17,7 +17,7 @@ class Bootigniter
      *
      * @var  resource
      */
-    const VERSION = '0.1.5';
+    const VERSION = '0.1.6';
 
     /**
      * Bakaigniter instance object
@@ -150,8 +150,6 @@ class Bootigniter
     /**
      * Get all application settings in array
      *
-     * @since   version 0.1.5
-     *
      * @return  array
      */
     public static function get_settings()
@@ -164,7 +162,6 @@ class Bootigniter
     /**
      * Is application setting is exists?
      *
-     * @since   version 0.1.5
      * @param   string  $key  Setting key name
      *
      * @return  bool
@@ -179,7 +176,6 @@ class Bootigniter
     /**
      * Get application setting
      *
-     * @since   version 0.1.5
      * @param   string  $key  Setting key name
      *
      * @return  mixed
@@ -197,7 +193,6 @@ class Bootigniter
     /**
      * Edit existing application setting by key
      *
-     * @since   version 0.1.5
      * @param   string  $key  Setting key name
      * @param   mixed   $val  Setting values
      *
@@ -247,7 +242,6 @@ class Bootigniter
     /**
      * Set up new application setting
      *
-     * @since   version 0.1.5
      * @param   string  $key  Setting key name
      * @param   mixed   $val  Setting values
      *

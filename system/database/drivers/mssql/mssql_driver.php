@@ -337,7 +337,7 @@ class CI_DB_mssql_driver extends CI_DB {
 	*/
 	function _version()
 	{
-		return "SELECT @@VERSION AS ver";
+		return "SELECT @0.1.6 AS ver";
 	}
 
 	// --------------------------------------------------------------------
