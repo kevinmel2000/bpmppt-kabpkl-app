@@ -257,7 +257,7 @@ class Bpmppt extends CI_Driver_Library
         'pendaftaran' => array(
             'baru'  => 'Pendaftaran Baru',
             'ubah'  => 'Balik Nama/Perubahan',
-            'ulang' => 'Daftar Ulang'
+            'ulang' => 'Daftar Ulang/Perpanjangan'
             ),
         'guna_bangunan' => array(
             'Rumah Tinggal', 'Kios', 'Toko', 'Gudang', 'Pabrik', 'Kantor'
@@ -439,13 +439,10 @@ class Bpmppt extends CI_Driver_Library
                 }
 
                 $data[$key]['body'] = $_data['body'];
+            }
 
-                // $data[$key] = array(
-                //     'head' => $this->$driver->_custom_fields,
-                //     'body' => unserialize($_data),
-                //     );
-
-                // $data[$key] = unserialize($_data);
+            if ($driver == 'reklame' and $key == 'reklame_data') {
+                $data[$key] = unserialize($data[$key]);
             }
         }
 

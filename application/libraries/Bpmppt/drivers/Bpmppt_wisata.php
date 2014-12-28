@@ -106,7 +106,6 @@ class Bpmppt_wisata extends CI_Driver
         $fields[] = array(
             'name'  => 'fieldset_data_pemohon',
             'label' => 'Data Pemohon',
-            // 'attr'  => ( $data_obj ? 'disabled' : '' ),
             'type'  => 'fieldset' );
 
         $fields[] = array(
@@ -143,7 +142,6 @@ class Bpmppt_wisata extends CI_Driver
         $fields[] = array(
             'name'  => 'fieldset_data_perusahaan',
             'label' => 'Data Perusahaan',
-            // 'attr'  => ( $data_obj ? 'disabled' : '' ),
             'type'  => 'fieldset' );
 
         $fields[] = array(

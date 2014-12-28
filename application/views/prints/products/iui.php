@@ -105,7 +105,7 @@
     <td colspan="2"></td>
     <td colspan="2" style="width:30%">Jenis Industri (KBLI)</td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:47%"><?php echo $usaha_jenis_kbli ?></td>
+    <td colspan="2" style="width:47%"><?php echo $usaha_komoditi_kbli ?></td>
 </tr>
 <tr>
     <td colspan="2"></td>
@@ -162,72 +162,92 @@
 </tr>
 <tr><td colspan="7" style="width:100%"><?php print_tembusan($data_tembusan) ?></td></tr>
     </tbody>
+</table><table class="pagebreak">
+<tr class="bold">
+    <td style="width:15%;">LAMPIRAN</td>
+    <td style="width:85%;" colspan="3">KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN PELAYANAN PERIZINAN TERPADU KABUPATEN PEKALONGAN</td>
+</tr>
+<tr>
+    <td style="width:15%;"></td>
+    <td style="width:85%;" colspan="3">NOMOR : <?php echo $surat_nomor.' / '.nbs(6).' / BPMPPT / IUI / '.print_blnthn_head($created_on) ?></td>
+</tr>
+<tr>
+    <td style="width:15%;"></td>
+    <td style="width:85%;" colspan="3">TANGGAL : <?php print_blnthn_foot($surat_tanggal) ?></td>
+</tr>
+<tr><td colspan="4"><br><br></td></tr>
+<tr><td colspan="4" class="align-center bold">BATASAN DAN KETENTUAN IZIN USAHA INDUSTRI</td></tr>
+<tr><td colspan="4"><br><br></td></tr>
+<tr><td colspan="4">
+    <p>HAK DAN KEWAJIBAN</p>
+    <ol class="upper-alpha">
+        <li>PENANGGUNG JAWAB, PRODUKSI, INVESTASI, TENAGA KERJA DAN MERK DAGANG
+            <ol class="numeric">
+                <li>Penanggung Jawab
+                    <ol class="lower-alpha">
+                        <li>Nama<span class="dd">: <?php echo $pemohon_nama ?></span></li>
+                        <li>Alamat<span class="dd">: <?php echo $pemohon_alamat ?></span></li>
+                        <li>Nama Pemilik<br>( Berdasarkan Akte Pendirian )<span class="dd">: <?php echo $pemilik_nama ?></span></li>
+                    </ol>
+                </li>
+                <li>Produksi
+                    <ol class="lower-alpha">
+                        <li>Komoditi Industri<span class="dd">: <?php echo $usaha_komoditi_kki ?></span></li>
+                        <li>Kapasitas Terpasang Pertahun<span class="dd">: <?php echo $usaha_komoditi_prod.' '.$usaha_komoditi_sat ?></span></li>
+                    </ol>
+                </li>
+                <li>Total Investasi<span class="dd">: <?php echo $usaha_investasi ?></span></li>
+                <li>Jumlah Tenaga Kerja
+                    <ol class="lower-alpha">
+                        <li>Indonesia<span class="dd">: <?php echo ($usaha_pekerja_wni ? $usaha_pekerja_wni.' Orang' : '-') ?></span></li>
+                        <li>Asing<span class="dd">: <?php echo ($usaha_pekerja_wna ? $usaha_pekerja_wna.' Orang' : '-') ?></span></li>
+                    </ol>
+                </li>
+            </ol><br>
+        </li>
+        <li>KETENTUAN
+            <ol class="numeric">
+                <li>Setiap perubahan terhadap lokasi jenis industri wajib mendapatkan persetujuan terlebih dahulu dari pejabat yang memberi izin.</li>
+                <li>Menyampaikan pemberitahuan tertulis apabila mengadakan perubahan terhadap nama, alamat dan atau penanggung jawab perusahaan selambat-lambatnya 1 (satu) bulan setelah perubahan dilakukan.</li>
+                <li>Wajib menyampaikan informasi industri setiap semester pertama paling lambat tanggal 31 Juli setahun sekali paling lambat tanggal 31 Januari tahun berikutnya.</li>
+                <li>Wajib mengajukan Izin Perluasan, jika perusahaan melakukan penambahan produksi melebihi 30 % diatas kapasitas izin yang diberikan.</li>
+                <li>Wajib melaksanakan upaya keseimbangan dan kelestarian sumber daya alam serta mencegah timbulnya kerusakan dan pencemaran terhadap lingkungan hidup serta yang menyangkut keamanan alat, proses serta hasil produksinya termasuk pengangkutannya dan keselamatan kerja.</li>
+                <li>Wajib mematuhi segala ketentuan-ketentuan / peraturan perundang-undangan yang berlaku.</li>
+            </ol><br>
+        </li>
+        <li>GUDANG<br>Izin Usaha Industri ini berlaku pula bagi gudang atau tempat penyimpanan yang berada dalam komplek industri yang digunakan untuk menyimpan peralatan, perlengkapan bahan baku, bahan penolong dan barang jadi untuk keperluan kegiatan usaha industri.<table style="border: 1px solid #000; display: inline-block; min-width: 50%;">
+            <tr>
+                <td style="width:18">Luas Gudang</td>
+                <td style="width:2">:</td>
+                <td style="width:80"><?php echo $luas_tanah ?> M<sup>2</sup></td>
+            </tr>
+        </table>
+        </li>
+        <li>RINCIAN PRODUKSI<br><table class="bordered">
+            <thead><tr class="align-center">
+                <th>No.</th>
+                <th>Komoditi</th>
+                <th>KBLI</th>
+                <th>Kapasitas Terpasang Pertahun</th>
+                <th>Satuan</th>
+            </tr></thead>
+            <tbody>
+                <tr>
+                    <td class="align-center">1</td>
+                    <td><?php echo $usaha_komoditi_kki ?></td>
+                    <td class="align-center"><?php echo $usaha_komoditi_kbli ?></td>
+                    <td class="align-center"><?php echo $usaha_komoditi_prod ?></td>
+                    <td class="align-center"><?php echo $usaha_komoditi_sat ?></td>
+                </tr>
+            </tbody>
+        </table>
+        </li>
+        <li>Apabila persyaratan pada butir II tersebut diatas tidak dipenuhi, Pemegang Izin Usaha Industri ini dapat dikenakan sanksi berdasarkan Ketentuan Pidana dan Undang-undang Nomor 5 Tahun 1984 dan Peraturan Pelaksanaannya serta Peraturan Daerah Nomor 2 Tahun 2005.</li>
+    </ol>
+</tr>
+<tr><td colspan="4"></td></tr>
+<tr class="align-center bold">
+    <td style="width:60%" colspan="3"></td>
+    <td style="width:40%"><?php print_ttd_kadin() ?></td>
+</tr>
 </table>
-
-
-<table class="pagebreak">
-    <tr class="t-header"><td colspan="7" width="100%">
-        <?php echo print_cop() ?>
-    </td></tr>
-    <tr><td style="border: 1px solid #000"></td></tr>
-</table><table>
-    <tbody>
-<tr class="align-center bold">
-    <td colspan="7" style="width:100%" class="align-center bold underline">NOTA DINAS</td>
-</tr>
-<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
-<tr>
-    <td style="width:20%"><p>Kepada Yth</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%" class="align-justify">Bupati Pekalongan</td>
-</tr>
-<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
-<tr>
-    <td style="width:20%"><p>Lewat</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%" class="align-justify">
-        <ol>
-            <li>Sekretaris Daerah Kabupaten Pekalongan</li>
-            <li>Asisten Ekonomi, Pembangunan dan Kesejahteraan Rakyat Sekda Kabupaten Pekalongan</li>
-        </ol>
-    </td>
-</tr>
-<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
-<tr>
-    <td style="width:20%"><p>Dari</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%" class="align-justify">Kepala Badan Penanaman Modal dan Pelayanan Perizinan Terpadu Kabupaten Pekalongan</td>
-</tr>
-<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
-<tr>
-    <td style="width:20%"><p>Nomor</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%" class="align-justify"></td>
-</tr>
-<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
-<tr>
-    <td style="width:20%"><p>Perihal</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%" class="align-justify">Permohonan Izin Lokasi <?php echo $pemohon_usaha ?> untuk <?php echo $lokasi_tujuan ?> di <?php echo $lokasi_alamat ?></td>
-</tr>
-<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
-<tr>
-    <td style="width:20%"><p>Tanggal</p></td>
-    <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%" class="align-justify">
-        <p>Tanggal</p>
-        <p>Menindaklanjuti disposisi Bupati Pekalongan tanggal 15 Nopember 2013 perihal permohonan Pendirian Pembangunan Perumahan Graha Naya Residence berlokasi di Desa Kampil Kecamatan Wiradesa Kabupaten Pekalongan dengan ini kami sampaikan hal-hal sebagai berikut :</p>
-        <ol>
-            <li>Berdasar Risalah Pertimbangan Teknis Pertanahan dalam Penerbitan Izin Lokasi Nomor 4/R-400.33.26.9/VII/2014 tanggal 25 Juli 2014 dari Kantor Pertanahan Kabupaten Pekalongan bahwa tanah yang dimohon tersebut bisa disetujui;</li>
-            <li>Memperhatikan letak tanah lokasi yang diajukan pembangunan perumahan di Desa Kampil Kecamatan Wiradesa Kabupaten Pekalongan sesuai dengan Peraturan Daerah Kabupaten Pekalongan No.2 Tahun 2011 tentang Rencana Tata Ruang Wilayah Kabupaten Pekalongan (RT RW), Kecamatan Wiradesa masuk dalam sistem perkotaan yang merupakan simpul pelayanan sosial, budaya, ekonomi dan atau administrasi masyarakat;</li>
-            <li>Untuk Kecamatan Wiradesa sebagai Pusat Kegiatan Lokal (PKL) mempunyai fungsi pusat pemerintahan kabupaten, pusat pemukiman, pusat pendidikan, pusat pelayanan sosial dan ekonomi skala kabupaten, pusat transportasi wilayah, pengembangan pariwisata, pusat pengembangan permukiman perkotaan, pusat perdagangan dan jasa, industri besar, menengah, kecil dan mikro serta pengembangan pertanian tanaman pangan;</li>
-            <li>Areal yang disetujui seluruhnya seluas ± 11.622 m² (sebelas ribu enam ratus dua puluh dua meter persegi) terletak di Desa Kampil Kecamatan Wiradesa Kabupaten Pekalongan;</li>
-            <li>Demikian untuk menjadikan periksa, apabila Bapak Bupati Pekalongan berkenan dan tidak ada pertimbangan lain bersama ini kami sampaikan konsep Surat Izin lokasi pendirian pembangunan Perumahan Graha Naya Residence di Desa Kampil Kecamatan Wiradesa Kabupaten Pekalongan guna mendapatkan pengesahan.</li>
-        </ol>
-    </td>
-</tr>
-<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
-<tr class="align-center bold">
-    <td colspan="5" style="width:60%"></td>
-    <td colspan="2" style="width:40%"><?php print_ttd_kadin() ?></td>
-</tr></table>

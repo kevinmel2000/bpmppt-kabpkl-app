@@ -41,8 +41,6 @@ class Bpmppt_siup extends CI_Driver
         'pemohon_nama'                      => '',
         'pemilik_ktp'                       => '',
         'pemilik_alamat'                    => '',
-        // 'pemilik_lahir_tmpt'                => '',
-        // 'pemilik_lahir_tgl'                 => '',
         'pemilik_no_telp'                   => '',
         'pemilik_no_fax'                    => '',
         'pemilik_usaha'                     => '',
@@ -67,9 +65,6 @@ class Bpmppt_siup extends CI_Driver
         'usaha_siup_lama_tgl'               => '',
         'usaha_saham_status'                => '',
         'usaha_modal_awal'                  => '',
-        // 'usaha_saham_nilai_total'           => '',
-        // 'usaha_saham_nilai_nasional'        => '',
-        // 'usaha_saham_nilai_tgl'             => '',
         );
 
     // -------------------------------------------------------------------------
@@ -107,7 +102,7 @@ class Bpmppt_siup extends CI_Driver
             'type'  => 'text',
             'fold'  => array(
                 'key' => $this->alias.'_pengajuan_jenis',
-                'value' => 'Daftar Ulang'
+                'value' => 'ulang'
                 ),
             'std'   => ( $data_obj ? $data_obj->pembaruan_ke : '') );
 
@@ -118,7 +113,7 @@ class Bpmppt_siup extends CI_Driver
             'std' => $this->custom_field($data_obj),
             'fold'  => array(
                 'key' => $this->alias.'_pengajuan_jenis',
-                'value' => array('Daftar Ulang', 'Perubahan')
+                'value' => array('ulang', 'ubah')
                 ),
             'validation'=> ( !$data_obj ? '' : '' ) );
 

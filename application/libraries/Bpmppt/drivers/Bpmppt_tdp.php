@@ -46,8 +46,6 @@ class Bpmppt_tdp extends CI_Driver
         'pemilik_ktp'                       => '',
         'pemilik_alamat'                    => '',
         'pemilik_kwn'                       => '',
-        // 'pemilik_lahir_tmpt'                => '',
-        // 'pemilik_lahir_tgl'                 => '',
         'pemilik_no_telp'                   => '',
         'pemilik_no_fax'                    => '',
         'usaha_nama'                        => '',
@@ -331,36 +329,6 @@ class Bpmppt_tdp extends CI_Driver
             'label' => 'Modal awal',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->usaha_modal_awal : '') );
-
-        // $fields[] = array(
-        //     'name'  => 'usaha_saham_nilai',
-        //     'label' => 'Nilai Saham',
-        //     'type'  => 'subfield',
-        //     'fields'=> array(
-        //         array(
-        //             'col'   => '6',
-        //             'name'  => 'total',
-        //             'label' => 'Total Nilai Saham (Rp.)',
-        //             'type'  => 'text',
-        //             'std'   => ( $data_obj ? $data_obj->usaha_saham_nilai_total : ''),
-        //             'validation'=> ( !$data_obj ? 'numeric' : '' ) ),
-        //         array(
-        //             'col'   => '3',
-        //             'name'  => 'nasional',
-        //             'label' => 'Nasional (%)',
-        //             'type'  => 'text',
-        //             'max'   => 100,
-        //             'std'   => ( $data_obj ? $data_obj->usaha_saham_nilai_nasional : ''),
-        //             'validation'=> ( !$data_obj ? 'numeric' : '' ) ),
-        //         array(
-        //             'col'   => '3',
-        //             'name'  => 'tgl',
-        //             'label' => 'Asing (%)',
-        //             'type'  => 'text',
-        //             'max'   => 100,
-        //             'std'   => ( $data_obj ? $data_obj->usaha_saham_nilai_tgl : ''),
-        //             'validation'=> ( !$data_obj ? 'numeric' : '' ) ),
-        //         ));
 
         $fields[] = array(
             'name'  => 'fieldset_data_usaha_akta',

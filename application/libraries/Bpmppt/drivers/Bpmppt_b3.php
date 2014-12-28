@@ -75,13 +75,6 @@ class Bpmppt_b3 extends CI_Driver
      */
     public function form( $data_obj = FALSE )
     {
-        // $fields[] = array(
-        //     'name'  => 'pemohon_tanggal',
-        //     'label' => 'Tanggal Permohonan',
-        //     'type'  => 'datepicker',
-        //     'std'   => ( $data_obj ? $data_obj->pemohon_tanggal : ''),
-        //     'validation'=> ( !$data_obj ? 'required' : '' ) );
-
         $fields[] = array(
             'name'  => 'fieldset_data_pemohon',
             'label' => 'Data Pemohon',

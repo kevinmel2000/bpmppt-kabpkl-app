@@ -80,7 +80,6 @@ class Bpmppt_iplc extends CI_Driver
         $fields[] = array(
             'name'  => 'fieldset_data_pemohon',
             'label' => 'Data Pemohon',
-            // 'attr'  => ( $data_obj ? 'disabled' : '' ),
             'type'  => 'fieldset' );
 
         $fields[] = array(
@@ -124,17 +123,6 @@ class Bpmppt_iplc extends CI_Driver
             'type'  => 'custom',
             'std'   => $this->custom_field($data_obj)
             );
-
-        // foreach ($this->_custom_fields2 as $l_key => $l_val)
-        // {
-        //     $this->_custom_parent = $l_key;
-        //     $fields[] = array(
-        //         'name'  => $l_key,
-        //         'label' => 'Data Debit '.($l_key == 'debit_proses' ? 'Proses' : 'Kondensor'),
-        //         'type'  => 'custom',
-        //         'std'   => $this->custom_field($l_val, $data_obj)
-        //         );
-        // }
 
         return $fields;
     }

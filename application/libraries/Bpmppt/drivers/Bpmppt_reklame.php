@@ -41,7 +41,7 @@ class Bpmppt_reklame extends CI_Driver
         'reklame_range_tgl_text'    => '',
         'reklame_range_tgl_mulai'   => '',
         'reklame_range_tgl_selesai' => '',
-        'reklame_data'              => array(),
+        'reklame_data'              => '',
         );
 
     // -------------------------------------------------------------------------
@@ -80,7 +80,6 @@ class Bpmppt_reklame extends CI_Driver
         $fields[] = array(
             'name'  => 'fieldset_data_pemohon',
             'label' => 'Data Pemohon',
-            // 'attr'  => ( $data_obj ? 'disabled' : '' ),
             'type'  => 'fieldset' );
 
         $fields[] = array(
@@ -113,7 +112,6 @@ class Bpmppt_reklame extends CI_Driver
         $fields[] = array(
             'name'  => 'fieldset_data_reklame',
             'label' => 'Data Reklame',
-            // 'attr'  => ( $data_obj ? 'disabled' : '' ),
             'type'  => 'fieldset' );
 
         $fields[] = array(
@@ -134,8 +132,8 @@ class Bpmppt_reklame extends CI_Driver
                     'option'=> array('Unit', 'Buah'),
                     'std'   => ( $data_obj ? $data_obj->reklame_juml_unit : ''),
                     'validation'=> 'required|numerik' ),
-            )
-        );
+                )
+            );
 
         $fields[] = array(
             'name'  => 'reklame_range',
@@ -208,8 +206,6 @@ class Bpmppt_reklame extends CI_Driver
         $head[] = array(
             'data'  => '2x',
             'width' => '6%' );
-
-
 
         $head[] = array(
             'data'  => form_button( array(

@@ -4,7 +4,7 @@
 <tr style="font-family: 'Arial'" class="align-center bold">
     <td colspan="4">
         <span style="font-size: 24px">SURAT IZIN USAHA PERDAGANGAN</span><br>
-        <span >NOMOR : <?php echo strtoupper($no_agenda.'/11.19/'.$usaha_skala.'/'.format_roman(bdate('%m', $surat_tanggal)).'/'.bdate('%Y')).($pengajuan_jenis == 'Perubahan' ? '/P' : '') ?></span>
+        <span >NOMOR : <?php echo strtoupper($no_agenda.'/11.19/'.$usaha_skala.'/'.format_roman(bdate('%m', $surat_tanggal)).'/'.bdate('%Y')).($pengajuan_jenis == 'ulang' ? '/P-'.$pembaruan_ke : '') ?></span>
     </td>
 </tr>
 <tr><td class="empty" colspan="4" style="width:100%"></td></tr>
@@ -55,7 +55,7 @@ echo $e;
     <td style="width:5%">:</td>
     <td colspan="2" style="width:70%; border-right: 2px solid #000;"><?php echo $usaha_komoditi ?></td>
 </tr>
-<?php if ($pengajuan_jenis != 'Pendaftaran Baru' and strlen($siup_lama) > 0) : ?>
+<?php if ($pengajuan_jenis != 'baru' and strlen($siup_lama) > 0) : ?>
 <tr class="bold" style="border: 2px solid #000; border-bottom-width: 1px; border-top-width: 1px">
     <td style="width:25%">SIUP LAMA NOMOR</td>
     <td style="width:5%">:</td>

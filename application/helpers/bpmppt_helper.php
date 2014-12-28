@@ -34,8 +34,18 @@ function print_tembusan($data_tembusan)
     echo $output;
 }
 
-function parse_reklamedata(array $reklame_data)
+function parse_reklamedata($reklame_data)
 {
+    if (empty($reklame_data))
+    {
+        return;
+    }
+
+    if (is_string($reklame_data) && strlen($reklame_data) > 0)
+    {
+        $reklame_data = unserialize($reklame_data);
+    }
+
     $out = '';
     $i = 0;
     $total = count($reklame_data);
