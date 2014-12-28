@@ -49,6 +49,7 @@ module.exports = function(grunt) {
             var version  = grunt.config('pkg.version')
 
             return content
+              .replace(/@VERSION/g,    version)
               .replace(/@PACKAGE/g,    packageName + ' v' + version + ' (' + home + ')')
               .replace(/@AUTHOR/g,     name + ' (' + grunt.config('pkg.author.email') + ')')
               .replace(/@COPYRIGHT/g,  '2013-' + year + ' ' + copyrightHolder + ', ' + name)
