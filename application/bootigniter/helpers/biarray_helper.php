@@ -127,6 +127,15 @@ function array_to_object( array $array )
 
 // -------------------------------------------------------------------------
 
+function is_array_assoc( array $array ) {
+    $array = array_keys($array);
+    $array = array_filter($array, 'is_string');
+
+    return (bool) count($array);
+}
+
+// -------------------------------------------------------------------------
+
 /**
  * Set default keys in an array, it's useful to prevent unseted array keys
  * but you'd use that in next code.

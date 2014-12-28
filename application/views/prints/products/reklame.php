@@ -8,14 +8,13 @@
         <p>IZIN PEMASANGAN REKLAME</p>
     </td>
 </tr>
-<?php $reklame_data = unserialize($reklame_data) ?>
 <tr><td class="empty" colspan="5" style="width:100%"></td></tr>
 <tr>
     <td style="width:10%"><p>Dasar :</p></td>
     <td colspan="4" style="width:90%">
         <ol class="lower-alpha">
             <li>Peraturan Bupati Pekalongan No. 12 Tahun 2012 tentang Pendelegasian Kewenangan Penandatanganan Perizinan dan Non Perizinan Kepada Kepala Badan Penanaman Modal dan Pelayanan Perijinan Terpadu Kabupaten Pekalongan</li>
-            <li>Surat permohonan izin pemasangan reklame dari Sdr. <?php echo $pemohon_nama?> tanggal permohonan <?php echo format_date($surat_tanggal) ?> tentang Permohonan <?php echo ($pengajuan_jenis == 'Pendaftaran Baru' ?: 'Perpanjangan ') ?>Izin Reklame <b><?php echo parse_reklamedata($reklame_data) ?></b>.</li>
+            <li>Surat permohonan izin pemasangan reklame dari Sdr. <?php echo $pemohon_nama?> tanggal permohonan <?php echo format_date($surat_tanggal) ?> tentang Permohonan <?php echo ($pengajuan_jenis == 'baru' ?: 'Perpanjangan ') ?> Izin Reklame <b><?php echo parse_reklamedata($reklame_data) ?></b>.</li>
         </ol>
     </td>
 </tr>
@@ -30,7 +29,7 @@
 <tr>
     <td colspan="2" style="width:30%">1. Nama</td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:30%"><?php echo $pemohon_nama.' ('.$pemohon_usaha.')' ?></td>
+    <td colspan="2" style="width:30%"><?php echo $pemohon_nama.( $pemohon_usaha ? ' ('.$pemohon_usaha.')' : '') ?></td>
 </tr>
 <tr>
     <td colspan="2" style="width:30%">2. Alamat</td>
@@ -82,16 +81,16 @@
 </tr>
 <tr><td class="empty" colspan="5" style="width:100%"></td></tr>
 <tr>
-    <td colspan="3" style="width:60%"></td>
-    <td colspan="2" style="width:40%">
+    <td colspan="4" style="width:60%"></td>
+    <td style="width:40%">
         <p>Ditetapkan di : <?php echo $skpd_kab ?></p>
         <p class="underline">Pada Tanggal : <?php print_blnthn_foot($surat_tanggal) ?></p>
     </td>
 </tr>
 <tr><td class="empty" colspan="5" style="width:100%"></td></tr>
 <tr class="align-center bold">
-    <td colspan="3" style="width:60%"></td>
-    <td colspan="2" style="width:40%"><?php print_ttd_kadin() ?></td>
+    <td colspan="4" style="width:60%"></td>
+    <td style="width:40%"><?php print_ttd_kadin() ?></td>
 </tr>
 <tr><td class="empty" colspan="5" style="width:100%"></td></tr>
 <?php if (strlen($data_tembusan) > 0): ?>

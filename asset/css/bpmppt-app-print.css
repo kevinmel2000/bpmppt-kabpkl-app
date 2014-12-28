@@ -82,10 +82,10 @@ sup {
   vertical-align: baseline;
 }
 sup {
-  top: -.5;
+  top: -.5em;
 }
 sub {
-  bottom: -.25;
+  bottom: -.25em;
 }
 table {
   min-width: 100%;
@@ -142,6 +142,13 @@ table .empty:after {
 table table {
   width: auto;
   margin-bottom: 10px;
+}
+.dt {
+  float: left;
+}
+.dd {
+  position: absolute;
+  left: 34%;
 }
 .align-center {
   text-align: center;
