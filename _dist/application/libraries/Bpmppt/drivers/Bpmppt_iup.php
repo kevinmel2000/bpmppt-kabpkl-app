@@ -36,6 +36,7 @@ class Bpmppt_iup extends CI_Driver
         'rekomendasi_nomor'     => '',
         'rekomendasi_tanggal'   => '',
         'pemohon_nama'          => '',
+        'pemohon_an'            => '',
         'pemohon_alamat'        => '',
         'tambang_waktu_mulai'   => '',
         'tambang_waktu_selesai' => '',
@@ -67,18 +68,10 @@ class Bpmppt_iup extends CI_Driver
      */
     public function form( $data_obj = FALSE )
     {
-        // $fields[] = array(
-        //     'name'  => 'surat_tanggal',
-        //     'label' => 'Tanggal Permohonan',
-        //     'type'  => 'datepicker',
-        //     'std'   => ( $data_obj ? $data_obj->surat_tanggal : ''),
-        //     'validation'=> ( !$data_obj ? 'required' : '' ) );
-
         $fields[] = array(
             'name'  => 'rekomendasi',
             'label' => 'Surat Rekomendasi',
             'type'  => 'subfield',
-            // 'attr'  => ( $data_obj ? 'disabled' : '' ),
             'fields'=> array(
                 array(
                     'name'  => 'nomor',
@@ -98,7 +91,6 @@ class Bpmppt_iup extends CI_Driver
         $fields[] = array(
             'name'  => 'fieldset_data_pemohon',
             'label' => 'Data Pemohon',
-            // 'attr'  => ( $data_obj ? array( 'disabled' => TRUE ) : '' ),
             'type'  => 'fieldset' );
 
         $fields[] = array(
@@ -107,6 +99,12 @@ class Bpmppt_iup extends CI_Driver
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->pemohon_nama : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
+
+        $fields[] = array(
+            'name'  => 'pemohon_an',
+            'label' => 'Atas Nama',
+            'type'  => 'text',
+            'std'   => ( $data_obj ? $data_obj->pemohon_an : '') );
 
         $fields[] = array(
             'name'  => 'pemohon_alamat',
@@ -118,7 +116,6 @@ class Bpmppt_iup extends CI_Driver
         $fields[] = array(
             'name'  => 'fieldset_perijinan',
             'label' => 'Ketentuan Perijinan',
-            // 'attr'  => ( $data_obj ? array( 'disabled' => TRUE ) : '' ),
             'type'  => 'fieldset' );
 
         $fields[] = array(
@@ -167,7 +164,6 @@ class Bpmppt_iup extends CI_Driver
         $fields[] = array(
             'name'  => 'fieldset_tambang',
             'label' => 'Data Pertambangan',
-            // 'attr'  => ( $data_obj ? 'disabled' : '' ),
             'type'  => 'fieldset' );
 
         $fields[] = array(

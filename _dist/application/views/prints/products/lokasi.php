@@ -3,7 +3,7 @@
         <tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="7" style="width:100%">
-        <?php echo img(array('src' => base_url('asset/img/garuda.png'), 'alt' => 'Logo cetak', 'class' => 'img logo-skpd', 'width' => '60')) ?><br>
+        <?php echo img(array('src' => base_url('asset/img/garuda.png'), 'alt' => 'Logo cetak', 'class' => 'img logo-skpd', 'width' => '90')) ?><br><br>
         <p>BUPATI PEKALONGAN<br>SURAT IZIN BUPATI PEKALONGAN<br>NOMOR <?php echo nbs(20).' TAHUN '.bdate('%Y') ?></p>
     </td>
 </tr>

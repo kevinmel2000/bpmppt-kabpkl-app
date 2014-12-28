@@ -63,8 +63,6 @@ class Bpmppt_ho extends CI_Driver
      */
     public function __construct()
     {
-        // $this->baka_auth->permit( 'manage_'.$this->alias );
-
         log_message('debug', "#BPMPPT_driver: Gangguan Class Initialized");
     }
 
@@ -94,7 +92,7 @@ class Bpmppt_ho extends CI_Driver
             'std'   => ( $data_obj ? $data_obj->surat_jenis_pengajuan : ''),
             'option'=> array(
                 'Pendaftaran Baru' => 'Pendaftaran Baru',
-                'Balik Nama'        => 'Balik Nama',
+                'Balik Nama'       => 'Balik Nama',
                 'Daftar Ulang'     => 'Daftar Ulang' ),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
@@ -144,13 +142,6 @@ class Bpmppt_ho extends CI_Driver
             'std'   => ( $data_obj ? $data_obj->pemohon_nama : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        // $fields[] = array(
-        //     'name'  => 'pemohon_kerja',
-        //     'label' => 'Pekerjaan',
-        //     'type'  => 'text',
-        //     'std'   => ( $data_obj ? $data_obj->pemohon_kerja : ''),
-        //     'validation'=> ( !$data_obj ? 'required' : '' ) );
-
         $fields[] = array(
             'name'  => 'pemohon_jabatan',
             'label' => 'Jabatan Pemohon',
@@ -183,23 +174,12 @@ class Bpmppt_ho extends CI_Driver
             'std'   => ( $data_obj ? $data_obj->usaha_nama : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
-        $u_skala = array(
-            'Perseroan Terbatas (PT)',
-            'Perseroan Komanditer (CV)',
-            'Perorangan (PO)',
-            );
-
-        foreach ( $u_skala as $skala )
-        {
-            $jns_opt[$skala] = $skala;
-        }
-
         $fields[] = array(
             'name'  => 'usaha_skala',
             'label' => 'Skala Perusahaan',
             'type'  => 'radio',
             'std'   => ( $data_obj ? $data_obj->usaha_skala : ''),
-            'option'=> $jns_opt,
+            'option'=> $this->get_field_prop('jenis_usaha'),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
         $fields[] = array(

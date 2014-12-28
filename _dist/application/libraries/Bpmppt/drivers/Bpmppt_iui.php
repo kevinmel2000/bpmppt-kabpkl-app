@@ -33,29 +33,34 @@ class Bpmppt_iui extends CI_Driver
      * @var  array
      */
     public $defaults = array(
-        'permohonan_jenis'  => '',
-        'pemohon_nama'      => '',
-        'pemohon_kerja'     => '',
-        'pemohon_alamat'    => '',
-        'pemohon_telp'      => '',
-        'pemilik_nama'      => '',
-        'pemilik_alamat'    => '',
-        'pemilik_telp'      => '',
-        'usaha_nama'        => '',
-        'usaha_skala'       => '',
-        'usaha_npwp'        => '',
-        'usaha_alamat'      => '',
-        'usaha_telp'        => '',
-        'usaha_kawasan'     => '',
-        'usaha_pj'          => '',
-        'usaha_npwp'        => '',
-        'usaha_jenis_kbli'  => '',
-        'usaha_jenis_kki'   => '',
-        'usaha_akta_ntrs'   => '',
-        'usaha_akta_nomor'  => '',
-        'usaha_direksi'     => '',
-        'usaha_lokasi'      => '',
-        'luas_tanah'        => '',
+        'permohonan_jenis'    => '',
+        'pemohon_nama'        => '',
+        'pemohon_kerja'       => '',
+        'pemohon_alamat'      => '',
+        'pemohon_telp'        => '',
+        'pemilik_nama'        => '',
+        'pemilik_alamat'      => '',
+        'pemilik_telp'        => '',
+        'usaha_nama'          => '',
+        'usaha_skala'         => '',
+        'usaha_npwp'          => '',
+        'usaha_alamat'        => '',
+        'usaha_telp'          => '',
+        'usaha_kawasan'       => '',
+        'usaha_pj'            => '',
+        'usaha_npwp'          => '',
+        'usaha_komoditi_kbli' => '',
+        'usaha_komoditi_kki'  => '',
+        'usaha_komoditi_prod' => '',
+        'usaha_komoditi_sat'  => '',
+        'usaha_pekerja_wni'   => '',
+        'usaha_pekerja_wna'   => '',
+        'usaha_akta_ntrs'     => '',
+        'usaha_akta_nomor'    => '',
+        'usaha_direksi'       => '',
+        'usaha_lokasi'        => '',
+        'usaha_investasi'     => '',
+        'luas_tanah'          => '',
         );
 
     // -------------------------------------------------------------------------
@@ -81,26 +86,13 @@ class Bpmppt_iui extends CI_Driver
     public function form( $data_obj = FALSE )
     {
         // $fields[] = array(
-        //     'name'  => 'permohonan_jenis',
-        //     'label' => 'Jenis Pengajuan',
-        //     'type'  => 'radio',
-        //     // 'attr'  => ( $data_obj ? 'disabled' : '' ),
-        //     'std'   => ( $data_obj ? $data_obj->permohonan_jenis : ''),
-        //     'option'=> array(
-        //         'Pendaftaran Baru' => 'Pendaftaran Baru',
-        //         'Balik Nama'       => 'Balik Nama',
-        //         'Daftar Ulang'     => 'Daftar Ulang' ),
-        //     'validation'=> ( !$data_obj ? 'required' : '' ) );
-
-        $fields[] = array(
-            'name'  => 'pembaruan_ke',
-            'label' => 'Daftar ulang Ke',
-            'type'  => 'text',
-            'fold'  => array(
-                'key'   => $this->alias.'_surat_jenis_pengajuan',
-                'value' => 'Daftar Ulang'
-                ),
-            'std'   => ( $data_obj ? $data_obj->pembaruan_ke : '') );
+        //     'name'  => 'pembaruan_ke',
+        //     'label' => 'Daftar ulang Ke',
+        //     'type'  => 'text',
+        //     'fold'  => array(
+        //         'key'   => $this->alias.'_surat_jenis_pengajuan',
+        //         'value' => 'Daftar Ulang' ),
+        //     'std'   => ( $data_obj ? $data_obj->pembaruan_ke : '') );
 
         $fields[] = array(
             'name'  => 'fieldset_data_pemohon',
@@ -157,7 +149,7 @@ class Bpmppt_iui extends CI_Driver
         $fields[] = array(
             'name'  => 'pemilik_telp',
             'label' => 'No. Telp',
-            'type'  => 'tel',
+            'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->pemilik_telp : ''),
             'validation'=> 'numeric' );
 
@@ -172,18 +164,6 @@ class Bpmppt_iui extends CI_Driver
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->usaha_nama : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
-
-        // $fields[] = array(
-        //     'name'  => 'usaha_skala',
-        //     'label' => 'Skala',
-        //     'type'  => 'dropdown',
-        //     'std'   => ( $data_obj ? $data_obj->usaha_skala : ''),
-        //     'option'=> add_placeholder(array(
-        //         'kecil'     => 'Perusahaan Kecil',
-        //         'menengah'  => 'Perusahaan Menengah',
-        //         'besar'     => 'Perusahaan Besar'
-        //         ))
-        //     );
 
         $fields[] = array(
             'name'  => 'usaha_npwp',
@@ -202,7 +182,7 @@ class Bpmppt_iui extends CI_Driver
         $fields[] = array(
             'name'  => 'usaha_telp',
             'label' => 'No. Telp',
-            'type'  => 'tel',
+            'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->usaha_telp : ''),
             'validation'=> 'numeric' );
 
@@ -228,30 +208,70 @@ class Bpmppt_iui extends CI_Driver
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
         $fields[] = array(
-            'name'  => 'usaha_jenis',
-            'label' => 'Jenis Industri',
+            'name'  => 'usaha_komoditi',
+            'label' => 'Komoditi Industri',
             'type'  => 'subfield',
             'fields'=> array(
-                array(
-                    'name'  => 'kbli',
-                    'label' => 'KBLI',
-                    'type'  => 'text',
-                    'std'   => ( $data_obj ? $data_obj->usaha_jenis_kbli : ''),
-                    'validation'=> ( !$data_obj ? 'required' : '' ) ),
                 array(
                     'name'  => 'kki',
                     'label' => 'KKI',
                     'type'  => 'text',
-                    'std'   => ( $data_obj ? $data_obj->usaha_jenis_kki : ''),
+                    'std'   => ( $data_obj ? $data_obj->usaha_komoditi_kki : ''),
+                    'validation'=> ( !$data_obj ? 'required' : '' ) ),
+                array(
+                    'name'  => 'kbli',
+                    'label' => 'KBLI',
+                    'type'  => 'text',
+                    'std'   => ( $data_obj ? $data_obj->usaha_komoditi_kbli : ''),
+                    'validation'=> ( !$data_obj ? 'required' : '' ) ),
+                array(
+                    'name'  => 'prod',
+                    'label' => 'Produksi per Tahun',
+                    'type'  => 'text',
+                    'std'   => ( $data_obj ? $data_obj->usaha_komoditi_prod : ''),
+                    'validation'=> ( !$data_obj ? 'required' : '' ) ),
+                array(
+                    'name'  => 'sat',
+                    'label' => 'Satuan',
+                    'type'  => 'dropdown',
+                    'std'   => ( $data_obj ? $data_obj->usaha_komoditi_sat : ''),
+                    'option'=> array('Lusin', 'Kodi', 'Unit'),
                     'validation'=> ( !$data_obj ? 'required' : '' ) ),
                 )
             );
 
         $fields[] = array(
+            'name'  => 'usaha_direksi',
+            'label' => 'Nama Direksi',
+            'type'  => 'text',
+            'std'   => ( $data_obj ? $data_obj->usaha_direksi : ''),
+            'validation'=> ( !$data_obj ? 'required' : '' ) );
+
+        $fields[] = array(
+            'name'  => 'usaha_lokasi',
+            'label' => 'Lokasi Pabrik',
+            'type'  => 'textarea',
+            'std'   => ( $data_obj ? $data_obj->usaha_lokasi : ''),
+            'validation'=> ( !$data_obj ? 'required' : '' ) );
+
+        $fields[] = array(
+            'name'  => 'luas_tanah',
+            'label' => 'Luas Tanah (M<sup>2</sup>)',
+            'type'  => 'text',
+            'std'   => ( $data_obj ? $data_obj->luas_tanah : ''),
+            'validation'=> ( !$data_obj ? 'required' : '' ) );
+
+        $fields[] = array(
+            'name'  => 'usaha_investasi',
+            'label' => 'Total Investasi',
+            'type'  => 'text',
+            'std'   => ( $data_obj ? $data_obj->usaha_investasi : ''),
+            'validation'=> ( !$data_obj ? 'required' : '' ) );
+
+        $fields[] = array(
             'name'  => 'usaha_akta',
             'label' => 'Pendirian',
             'type'  => 'subfield',
-            // 'attr'  => ( $data_obj ? 'disabled' : '' ),
             'fields'=> array(
                 array(
                     'name'  => 'ntrs',
@@ -269,28 +289,24 @@ class Bpmppt_iui extends CI_Driver
             );
 
         $fields[] = array(
-            'name'  => 'usaha_direksi',
-            'label' => 'Nama Direksi',
-            'type'  => 'text',
-            // 'attr'  => ( $data_obj ? 'disabled' : '' ),
-            'std'   => ( $data_obj ? $data_obj->usaha_direksi : ''),
-            'validation'=> ( !$data_obj ? 'required' : '' ) );
-
-        $fields[] = array(
-            'name'  => 'usaha_lokasi',
-            'label' => 'Lokasi Pabrik',
-            'type'  => 'textarea',
-            // 'attr'  => ( $data_obj ? 'disabled' : '' ),
-            'std'   => ( $data_obj ? $data_obj->usaha_lokasi : ''),
-            'validation'=> ( !$data_obj ? 'required' : '' ) );
-
-        $fields[] = array(
-            'name'  => 'luas_tanah',
-            'label' => 'Luas Tanah (M<sup>2</sup>)',
-            'type'  => 'text',
-            // 'attr'  => ( $data_obj ? 'disabled' : '' ),
-            'std'   => ( $data_obj ? $data_obj->luas_tanah : ''),
-            'validation'=> ( !$data_obj ? 'required' : '' ) );
+            'name'  => 'usaha_pekerja',
+            'label' => 'Jumlah Pekerja',
+            'type'  => 'subfield',
+            'fields'=> array(
+                array(
+                    'name'  => 'wni',
+                    'label' => 'Indonesia',
+                    'type'  => 'number',
+                    'std'   => ( $data_obj ? $data_obj->usaha_pekerja_wni : ''),
+                    'validation'=> ( !$data_obj ? 'required' : '' ) ),
+                array(
+                    'name'  => 'wna',
+                    'label' => 'Asing',
+                    'type'  => 'number',
+                    'std'   => ( $data_obj ? $data_obj->usaha_pekerja_wna : ''),
+                    'validation'=> ( !$data_obj ? 'required' : '' ) ),
+                )
+            );
 
         return $fields;
     }

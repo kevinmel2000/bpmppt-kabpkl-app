@@ -23,7 +23,7 @@
     "jquery": "~2.1.1",
     "jquery-autosize": "~1.18.12",
     "jquery-mousewheel": "~3.1.12",
-    "jqueryui": "~1.11.1",
+    "jquery-ui": "~1.11.1",
     "jqueryui-touch-punch": "*",
     "morrisjs": "~0.5.1",
     "select2": "~3.5.1",
@@ -81,7 +81,7 @@
       "*.js",
       "LICENSE.txt"
     ],
-    "jqueryui": [
+    "jquery-ui": [
       "themes/base/**/*",
       "ui/**/*.js",
       "LICENSE.txt"

@@ -241,6 +241,45 @@ class Bpmppt extends CI_Driver_Library
 
     // -------------------------------------------------------------------------
 
+    private $_properties = array(
+        'jenis_usaha' => array(
+            'Perseroan Terbatas (PT)', 'Perseroan Komanditer (CV)', 'Badan Usaha Milik Negara (BUMN)', 'Perorangan (PO)', 'Koperasi'
+            ),
+        'skala_usaha' => array(
+            'MK' => 'Mikro',
+            'PK' => 'Perusahaan Kecil',
+            'PM' => 'Menengah',
+            'PB' => 'Besar'
+            ),
+        'kelembagaan' => array(
+            'Pengecer', 'Penyalur', 'Pengumpul', 'Produsen', 'Sub Distributor', 'Distributor', 'Lainnya'
+            ),
+        'pendaftaran' => array(
+            'baru'  => 'Pendaftaran Baru',
+            'ubah'  => 'Balik Nama/Perubahan',
+            'ulang' => 'Daftar Ulang/Perpanjangan'
+            ),
+        'guna_bangunan' => array(
+            'Rumah Tinggal', 'Kios', 'Toko', 'Gudang', 'Pabrik', 'Kantor'
+            ),
+        );
+
+    /**
+     * Get Field Properties
+     *
+     * @param   string  $name
+     * @return  string
+     */
+    public function get_field_prop( $name )
+    {
+        if (isset($this->_properties[$name]))
+        {
+            return $this->_properties[$name];
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
     /**
      * Get form properties from child driver (if available)
      *
@@ -400,13 +439,10 @@ class Bpmppt extends CI_Driver_Library
                 }
 
                 $data[$key]['body'] = $_data['body'];
+            }
 
-                // $data[$key] = array(
-                //     'head' => $this->$driver->_custom_fields,
-                //     'body' => unserialize($_data),
-                //     );
-
-                // $data[$key] = unserialize($_data);
+            if ($driver == 'reklame' and $key == 'reklame_data') {
+                $data[$key] = unserialize($data[$key]);
             }
         }
 
