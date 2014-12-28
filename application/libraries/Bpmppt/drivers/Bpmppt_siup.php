@@ -99,10 +99,7 @@ class Bpmppt_siup extends CI_Driver
             'label' => 'Jenis Pengajuan',
             'type'  => 'radio',
             'std'   => ( $data_obj ? $data_obj->pengajuan_jenis : ''),
-            'option'=> array(
-                'Pendaftaran Baru' => 'Pendaftaran Baru',
-                'Perubahan'        => 'Perubahan',
-                'Daftar Ulang'     => 'Daftar Ulang' ) );
+            'option'=> $this->get_field_prop('pendaftaran') );
 
         $fields[] = array(
             'name'  => 'pembaruan_ke',
@@ -148,26 +145,6 @@ class Bpmppt_siup extends CI_Driver
             'type'  => 'textarea',
             'std'   => ( $data_obj ? $data_obj->pemilik_alamat : '') );
 
-        // $fields[] = array(
-        //     'name'  => 'pemilik_lahir',
-        //     'label' => 'Tempat &amp; Tgl. Lahir',
-        //     'type'  => 'subfield',
-        //     'fields'=> array(
-        //         array(
-        //             'name'  => 'tmpt',
-        //             'label' => 'Tempat Lahir',
-        //             'type'  => 'text',
-        //             'std'   => ( $data_obj ? $data_obj->pemilik_lahir_tmpt : '' ),
-        //             ),
-        //         array(
-        //             'name'  => 'tgl',
-        //             'label' => 'Tanggal Lahir',
-        //             'type'  => 'datepicker',
-        //             'std'   => ( $data_obj ? format_date($data_obj->pemilik_lahir_tgl) : ''),
-        //             'callback'=> 'string_to_date',
-        //             ),
-        //         ));
-
         $fields[] = array(
             'name'  => 'pemilik_no',
             'label' => 'Nomor Telp/Fax',
@@ -198,36 +175,19 @@ class Bpmppt_siup extends CI_Driver
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->usaha_nama : '') );
 
-        $u_jenis = array(
-            'Perseroan Terbatas (PT)',
-            'Perseroan Komanditer (CV)',
-            'Badan Usaha Milik Negara (BUMN)',
-            'Perorangan (PO)',
-            'Koperasi',
-            );
-
-        foreach ( $u_jenis as $jenis )
-        {
-            $jns_opt[$jenis] = $jenis;
-        }
-
         $fields[] = array(
             'name'  => 'usaha_jenis',
             'label' => 'Jenis Perusahaan',
             'type'  => 'radio',
             'std'   => ( $data_obj ? $data_obj->usaha_jenis : ''),
-            'option'=> $jns_opt );
+            'option'=> $this->get_field_prop('jenis_usaha') );
 
         $fields[] = array(
             'name'  => 'usaha_skala',
             'label' => 'Skala Perusahaan',
             'type'  => 'radio',
             'std'   => ( $data_obj ? $data_obj->usaha_skala : ''),
-            'option'=> array(
-                'MK' => 'Mikro',
-                'PK' => 'Perusahaan Kecil',
-                'PM' => 'Menengah',
-                'PB' => 'Besar' ) );
+            'option'=> $this->get_field_prop('skala_usaha') );
 
         $fields[] = array(
             'name'  => 'usaha_kegiatan',
@@ -235,19 +195,12 @@ class Bpmppt_siup extends CI_Driver
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->usaha_kegiatan : '') );
 
-        $lembs = array( 'Pengecer', 'Penyalur', 'Pengumpul', 'Produsen', 'Sub Distributor', 'Distributor', 'Distributor' );
-
-        foreach ( $lembs as $lemb )
-        {
-            $lemb_opt[$lemb] = $lemb;
-        }
-
         $fields[] = array(
             'name'  => 'usaha_lembaga',
             'label' => 'Kelembagaan',
             'type'  => 'checkbox',
             'std'   => ( $data_obj ? unserialize($data_obj->usaha_lembaga) : ''),
-            'option'=> $lemb_opt );
+            'option'=> $this->get_field_prop('kelembagaan') );
 
         $fields[] = array(
             'name'  => 'usaha_komoditi',
@@ -295,36 +248,6 @@ class Bpmppt_siup extends CI_Driver
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->usaha_modal_awal : ''),
             'validation'=> ( !$data_obj ? 'required|numeric' : '' ) );
-
-        // $fields[] = array(
-        //     'name'  => 'usaha_saham_nilai',
-        //     'label' => 'Nilai Saham',
-        //     'type'  => 'subfield',
-        //     'fields'=> array(
-        //         array(
-        //             'col'   => '6',
-        //             'name'  => 'total',
-        //             'label' => 'Total Nilai Saham (Rp.)',
-        //             'type'  => 'text',
-        //             'std'   => ( $data_obj ? $data_obj->usaha_saham_nilai_total : ''),
-        //             'validation'=> ( !$data_obj ? 'required|numeric' : '' ) ),
-        //         array(
-        //             'col'   => '3',
-        //             'name'  => 'nasional',
-        //             'label' => 'Nasional (%)',
-        //             'type'  => 'text',
-        //             'max'   => 100,
-        //             'std'   => ( $data_obj ? $data_obj->usaha_saham_nilai_nasional : ''),
-        //             'validation'=> ( !$data_obj ? 'required|numeric' : '' ) ),
-        //         array(
-        //             'col'   => '3',
-        //             'name'  => 'tgl',
-        //             'label' => 'Asing (%)',
-        //             'type'  => 'text',
-        //             'max'   => 100,
-        //             'std'   => ( $data_obj ? $data_obj->usaha_saham_nilai_tgl : ''),
-        //             'validation'=> ( !$data_obj ? 'required|numeric' : '' ) ),
-        //         ));
 
         return $fields;
     }

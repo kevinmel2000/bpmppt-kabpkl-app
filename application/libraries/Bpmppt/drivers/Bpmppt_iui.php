@@ -157,7 +157,7 @@ class Bpmppt_iui extends CI_Driver
         $fields[] = array(
             'name'  => 'pemilik_telp',
             'label' => 'No. Telp',
-            'type'  => 'tel',
+            'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->pemilik_telp : ''),
             'validation'=> 'numeric' );
 
@@ -202,7 +202,7 @@ class Bpmppt_iui extends CI_Driver
         $fields[] = array(
             'name'  => 'usaha_telp',
             'label' => 'No. Telp',
-            'type'  => 'tel',
+            'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->usaha_telp : ''),
             'validation'=> 'numeric' );
 

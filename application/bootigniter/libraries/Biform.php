@@ -914,6 +914,15 @@ class Biform
             $set_func  = 'set_'.$field_attrs['type'];
             $form_func = 'form_'.$field_attrs['type'];
 
+            if ( !is_array_assoc($field_attrs['option']) ) {
+                $_tmp = $field_attrs['option'];
+                $field_attrs['option'] = array();
+
+                foreach ($_tmp as $opt) {
+                    $field_attrs['option'][$opt] = $opt;
+                }
+            }
+
             foreach ($field_attrs['option'] as $value => $option)
             {
                 if (is_array($field_attrs['std']))
@@ -1226,12 +1235,21 @@ class Biform
         $field_attrs['attr'] = 'class="'.$control_class.$this->_template['field_class'].'" id="'.$field_attrs['id'].'" '.$field_attrs['attr'];
         $form_func = 'form_'.$field_attrs['type'];
 
+        if ( !is_array_assoc($field_attrs['option']) ) {
+            $_tmp = $field_attrs['option'];
+            $field_attrs['option'] = array();
+
+            foreach ($_tmp as $opt) {
+                $field_attrs['option'][$opt] = $opt;
+            }
+        }
+
         return call_user_func_array($form_func, array(
             $field_attrs['name'],
             $field_attrs['option'],
             set_value($field_attrs['name'], $field_attrs['std']),
             $field_attrs['attr']
-          ));
+            ));
     }
 
     // -------------------------------------------------------------------------

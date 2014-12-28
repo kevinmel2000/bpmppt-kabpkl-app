@@ -34,7 +34,7 @@ class Bpmppt_b3 extends CI_Driver
      * @var  array
      */
     public $defaults = array(
-        'pemohon_tanggal'      => '',
+        'pemohon_tanggal'   => '',
         'pemohon_nama'      => '',
         'pemohon_alamat'    => '',
         'pemohon_jabatan'   => '',
@@ -168,47 +168,15 @@ class Bpmppt_b3 extends CI_Driver
                 array(
                     'name'  => 'telp',
                     'label' => 'No. Telpon',
-                    'type'  => 'tel',
+                    'type'  => 'text',
                     'std'   => ( $data_obj ? $data_obj->usaha_kontak_telp : '') ),
                 array(
                     'name'  => 'fax',
                     'label' => 'No. Fax',
-                    'type'  => 'tel',
+                    'type'  => 'text',
                     'std'   => ( $data_obj ? $data_obj->usaha_kontak_fax : '') ),
                 )
             );
-
-        // $fields[] = array(
-        //     'name'  => 'usaha_tps',
-        //     'label' => 'Tempat Pembuangan Sementara',
-        //     'type'  => 'subfield',
-        //     'fields'=> array(
-        //         array(
-        //             'name'  => 'fungsi',
-        //             'label' => 'Keterangan fungsi',
-        //             'type'  => 'text',
-        //             'std'   => ( $data_obj ? $data_obj->usaha_tps_fungsi : ''),
-        //             'validation'=> ( !$data_obj ? 'required' : '' ) ),
-        //         array(
-        //             'name'  => 'ukuran',
-        //             'label' => 'Ukuran',
-        //             'type'  => 'text',
-        //             'std'   => ( $data_obj ? $data_obj->usaha_tps_ukuran : ''),
-        //             'validation'=> ( !$data_obj ? 'required' : '' ) ),
-        //         array(
-        //             'name'  => 'koor_s',
-        //             'label' => 'Koor. S',
-        //             'type'  => 'text',
-        //             'std'   => ( $data_obj ? $data_obj->usaha_tps_koor_s : ''),
-        //             'validation'=> ( !$data_obj ? 'required' : '' ) ),
-        //         array(
-        //             'name'  => 'koor_e',
-        //             'label' => 'Koor. E',
-        //             'type'  => 'text',
-        //             'std'   => ( $data_obj ? $data_obj->usaha_tps_koor_e : ''),
-        //             'validation'=> ( !$data_obj ? 'required' : '' ) ),
-        //         )
-        //     );
 
         $fields[] = array(
             'name'  => 'fieldset_ketentuan',

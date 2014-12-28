@@ -91,13 +91,7 @@ class Bpmppt_imb extends CI_Driver
             'label' => 'Penggunaan bangunan',
             'type'  => 'radio',
             // 'attr'  => ( $data_obj ? 'disabled' : '' ),
-            'option'=> array(
-                'Rumah Tinggal' => 'Rumah Tinggal',
-                'kios'          => 'Kios',
-                'toko'          => 'Toko',
-                'gudang'        => 'Gudang',
-                'pabrik'        => 'Pabrik',
-                'kantor'        => 'Kantor' ),
+            'option'=> $this->get_field_prop('guna_bangunan'),
             'std'   => ( $data_obj ? $data_obj->bangunan_guna : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
