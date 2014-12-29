@@ -245,15 +245,15 @@ $komoditi_prod = ltrim($_prod, ', ');
                 <th>Satuan</th>
             </tr></thead>
             <tbody>
-            <?php foreach ($komoditi as $_kom): ?>
+            <?php $i = 1; foreach ($komoditi as $_kom): ?>
                 <tr>
-                    <td class="align-center">1</td>
+                    <td class="align-center"><?php echo $i ?></td>
                     <td><?php echo $_kom['kki'] ?></td>
                     <td class="align-center"><?php echo $_kom['kbli'] ?></td>
                     <td class="align-center"><?php echo $_kom['prod'] ?></td>
                     <td class="align-center"><?php echo $_kom['sat'] ?></td>
                 </tr>
-            <?php endforeach ?>
+            <?php $i++; endforeach; ?>
             </tbody>
         </table>
         </li>
