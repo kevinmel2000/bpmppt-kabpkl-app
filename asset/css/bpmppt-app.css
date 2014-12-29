@@ -1639,19 +1639,12 @@ input[type=radio] {
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
-  -webkit-appearance: none;
-  padding: 0 !important;
-  margin: 0;
+  margin: 1px 0 0 0;
   clear: none;
-  font-family: 'FontAwesome';
-  font-size: 14px;
   line-height: 19px;
   vertical-align: middle;
   cursor: pointer;
   border: 0;
-
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 input[type=checkbox]:before,
 input[type=radio]:before {
@@ -1676,8 +1669,6 @@ input[type=radio]:checked:before {
   float: left;
   vertical-align: middle;
   outline: 0;
-
-  speak: none;
 }
 input[type=checkbox][disabled]:before,
 input[type=radio][disabled]:before,
@@ -1721,18 +1712,6 @@ input[type=radio][readonly]:active:before {
 .checkbox[readonly] label,
 .checkbox-inline[readonly] label {
   cursor: not-allowed;
-}
-input[type=checkbox]:before {
-  content: '\f096';
-}
-input[type=checkbox]:checked:before {
-  content: '\f046';
-}
-input[type=radio]:before {
-  content: '\f10c';
-}
-input[type=radio]:checked:before {
-  content: '\f192';
 }
 input[type="radio"][disabled],
 input[type="checkbox"][disabled],

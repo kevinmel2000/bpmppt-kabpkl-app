@@ -295,8 +295,8 @@ input[type="file"] {
 
 input[type=checkbox],
 input[type=radio] {
-  font-family: 'FontAwesome';
-  font-size: ceil((@font-size-base * 1.1));
+  // font-family: 'FontAwesome';
+  // font-size: ceil((@font-size-base * 1.1));
   line-height: @line-height-computed;
   width: ceil((@font-size-base * 1.2));
   height: ceil((@font-size-base * 1.2));
@@ -304,12 +304,12 @@ input[type=radio] {
   border: 0;
   clear: none;
   display: inline-block;
-  margin: 0px;
-  padding: 0 !important;
+  margin: 1px 0 0 0;
+  // padding: 0 !important;
   vertical-align: middle;
-  -webkit-appearance: none;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  // -webkit-appearance: none;
+  // -webkit-font-smoothing: antialiased;
+  // -moz-osx-font-smoothing: grayscale;
   .box-sizing(border-box);
 
   &:before {
@@ -334,7 +334,7 @@ input[type=radio] {
     outline: 0;
     // display: inline-block;
     vertical-align: middle;
-    speak: none;
+    // speak: none;
   }
 
   &[disabled],
@@ -363,25 +363,25 @@ input[type=radio] {
   }
 }
 
-input[type=checkbox] {
-  &:before {
-    content: '\f096';
-  }
+// input[type=checkbox] {
+//   &:before {
+//     content: '\f096';
+//   }
 
-  &:checked:before {
-    content: '\f046';
-  }
-}
+//   &:checked:before {
+//     content: '\f046';
+//   }
+// }
 
-input[type=radio] {
-  &:before {
-    content: '\f10c';
-  }
+// input[type=radio] {
+//   &:before {
+//     content: '\f10c';
+//   }
 
-  &:checked:before {
-    content: '\f192';
-  }
-}
+//   &:checked:before {
+//     content: '\f192';
+//   }
+// }
 
 // Apply same disabled cursor tweak as for inputs
 //
