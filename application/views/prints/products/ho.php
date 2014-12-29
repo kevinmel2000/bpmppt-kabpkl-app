@@ -1,5 +1,5 @@
 <?php if ($ho_lama_no) : ?>
-<table style="position: absolute; top: 0; left: 70%; min-width: 0; width: auto; float: right; font-size: 9px; line-height: 1.2em; border: 1px solid #000;">
+<table style="position: absolute; top: 0; right: 0; min-width: 0; width: auto; float: right; font-size: 9px; line-height: 1.2em; border: 1px solid #000;">
     <tr>
         <td width="45%">Daftar ulang HO Nomor</td>
         <td width="10%">:</td>
