@@ -85,15 +85,6 @@ class Bpmppt_iui extends CI_Driver
      */
     public function form( $data_obj = FALSE )
     {
-        // $fields[] = array(
-        //     'name'  => 'pembaruan_ke',
-        //     'label' => 'Daftar ulang Ke',
-        //     'type'  => 'text',
-        //     'fold'  => array(
-        //         'key'   => $this->alias.'_surat_jenis_pengajuan',
-        //         'value' => 'Daftar Ulang' ),
-        //     'std'   => ( $data_obj ? $data_obj->pembaruan_ke : '') );
-
         $fields[] = array(
             'name'  => 'fieldset_data_pemohon',
             'label' => 'Data Pemohon',
@@ -169,8 +160,7 @@ class Bpmppt_iui extends CI_Driver
             'name'  => 'usaha_npwp',
             'label' => 'No. NPWP',
             'type'  => 'text',
-            'std'   => ( $data_obj ? $data_obj->usaha_npwp : ''),
-            'validation'=> ( !$data_obj ? 'required' : '' ) );
+            'std'   => ( $data_obj ? $data_obj->usaha_npwp : '') );
 
         $fields[] = array(
             'name'  => 'usaha_alamat',
@@ -187,10 +177,10 @@ class Bpmppt_iui extends CI_Driver
             'validation'=> 'numeric' );
 
         $fields[] = array(
-            'name'  => 'usaha_kawasan',
-            'label' => 'Kawasan Industri',
+            'name'  => 'usaha_jenis',
+            'label' => 'Jenis Industri',
             'type'  => 'text',
-            'std'   => ( $data_obj ? $data_obj->usaha_kawasan : ''),
+            'std'   => ( $data_obj ? $data_obj->usaha_jenis : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
         $fields[] = array(
@@ -201,51 +191,16 @@ class Bpmppt_iui extends CI_Driver
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
         $fields[] = array(
-            'name'  => 'usaha_npwp',
-            'label' => 'No. NPWP',
-            'type'  => 'text',
-            'std'   => ( $data_obj ? $data_obj->usaha_npwp : ''),
-            'validation'=> ( !$data_obj ? 'required' : '' ) );
-
-        $fields[] = array(
             'name'  => 'usaha_komoditi',
             'label' => 'Komoditi Industri',
-            'type'  => 'subfield',
-            'fields'=> array(
-                array(
-                    'name'  => 'kki',
-                    'label' => 'KKI',
-                    'type'  => 'text',
-                    'std'   => ( $data_obj ? $data_obj->usaha_komoditi_kki : ''),
-                    'validation'=> ( !$data_obj ? 'required' : '' ) ),
-                array(
-                    'name'  => 'kbli',
-                    'label' => 'KBLI',
-                    'type'  => 'text',
-                    'std'   => ( $data_obj ? $data_obj->usaha_komoditi_kbli : ''),
-                    'validation'=> ( !$data_obj ? 'required' : '' ) ),
-                array(
-                    'name'  => 'prod',
-                    'label' => 'Produksi per Tahun',
-                    'type'  => 'text',
-                    'std'   => ( $data_obj ? $data_obj->usaha_komoditi_prod : ''),
-                    'validation'=> ( !$data_obj ? 'required' : '' ) ),
-                array(
-                    'name'  => 'sat',
-                    'label' => 'Satuan',
-                    'type'  => 'dropdown',
-                    'std'   => ( $data_obj ? $data_obj->usaha_komoditi_sat : ''),
-                    'option'=> array('Lusin', 'Kodi', 'Unit'),
-                    'validation'=> ( !$data_obj ? 'required' : '' ) ),
-                )
-            );
+            'type'  => 'custom',
+            'std'   => $this->custom_field( $data_obj ) );
 
         $fields[] = array(
             'name'  => 'usaha_direksi',
             'label' => 'Nama Direksi',
             'type'  => 'text',
-            'std'   => ( $data_obj ? $data_obj->usaha_direksi : ''),
-            'validation'=> ( !$data_obj ? 'required' : '' ) );
+            'std'   => ( $data_obj ? $data_obj->usaha_direksi : '') );
 
         $fields[] = array(
             'name'  => 'usaha_lokasi',
@@ -277,14 +232,12 @@ class Bpmppt_iui extends CI_Driver
                     'name'  => 'ntrs',
                     'label' => 'Nama Notaris',
                     'type'  => 'text',
-                    'std'   => ( $data_obj ? $data_obj->usaha_akta_ntrs : ''),
-                    'validation'=> ( !$data_obj ? 'required' : '' ) ),
+                    'std'   => ( $data_obj ? $data_obj->usaha_akta_ntrs : '') ),
                 array(
                     'name'  => 'nomor',
                     'label' => 'Nomor Akta',
                     'type'  => 'text',
-                    'std'   => ( $data_obj ? $data_obj->usaha_akta_nomor : ''),
-                    'validation'=> ( !$data_obj ? 'required' : '' ) ),
+                    'std'   => ( $data_obj ? $data_obj->usaha_akta_nomor : '') ),
                 )
             );
 
@@ -309,6 +262,138 @@ class Bpmppt_iui extends CI_Driver
             );
 
         return $fields;
+    }
+
+    // -------------------------------------------------------------------------
+
+    private function custom_field( $data = FALSE )
+    {
+        if (!$this->_ci->load->is_loaded('table'))
+        {
+            $this->_ci->load->library('table');
+        }
+
+        $this->_ci->table->set_template( $this->table_templ );
+
+        $data_mode = $data and !empty($data->komoditi);
+
+        $head[] = array(
+            'data'  => 'Komoditi',
+            'class' => 'head-id',
+            'width' => '30%' );
+
+        $head[] = array(
+            'data'  => 'KBLI',
+            'class' => 'head-value',
+            'width' => '20%' );
+
+        $head[] = array(
+            'data'  => 'Prod. /Tahun',
+            'class' => 'head-value',
+            'width' => '20%');
+
+        $head[] = array(
+            'data'  => 'Satuan',
+            'class' => 'head-value',
+            'width' => '20%');
+
+        $head[] = array(
+            'data'  => form_button( array(
+                'name'  => 'komoditi_add-btn',
+                'type'  => 'button',
+                'class' => 'btn btn-primary bs-tooltip btn-block btn-sm',
+                'tabindex' => '-1',
+                'title' => 'Tambahkan baris',
+                'content'=> 'Add' ) ),
+            'class' => 'head-action',
+            'width' => '10%' );
+
+        $this->_ci->table->set_heading( $head );
+
+        if ( isset( $data->komoditi ) and !empty( $data->komoditi ) )
+        {
+            foreach ( unserialize( $data->komoditi ) as $row )
+            {
+                $this->_custom_row( $row );
+            }
+        }
+        else
+        {
+            $this->_custom_row();
+        }
+
+        return $this->_ci->table->generate();
+    }
+
+    // -------------------------------------------------------------------------
+
+    private function _custom_row( $data = FALSE )
+    {
+        $cols = array(
+            'kki'  => 'KKI',
+            'kbli' => 'KBLI',
+            'prod' => 'Produksi pertahun',
+            'sat'  => 'Satuan',
+            );
+
+        foreach ( $cols as $name => $label )
+        {
+            $column[] = array(
+                'data'  => form_input( array(
+                    'name'  => $this->alias.'_komoditi_'.$name.'[]',
+                    'type'  => 'text',
+                    'value' => $data ? $data[$name] : '',
+                    'class' => 'form-control bs-tooltip input-sm',
+                    'placeholder'=> $label ), '', ''),
+                'class' => 'data-id',
+                'width' => '10%' );
+        }
+
+        $column[] = array(
+            'data'  => form_button( array(
+                'name'  => $this->alias.'_komoditi_remove-btn',
+                'type'  => 'button',
+                'class' => 'btn btn-danger bs-tooltip btn-block btn-sm remove-btn',
+                'tabindex' => '-1',
+                'content'=> '&times;' ) ),
+            'class' => '',
+            'width' => '10%' );
+
+        $this->_ci->table->add_row( $column );
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Prepost form data hooks
+     *
+     * @return  mixed
+     */
+    public function _pre_post( $form_data )
+    {
+        $koor_fn = $this->alias.'_komoditi';
+
+        if ( isset( $_POST[$koor_fn.'_kki'] ) )
+        {
+            $i = 0;
+            // $koor_fn = $this->alias.'_komoditi';
+
+            foreach ($_POST[$koor_fn.'_kki'] as $no)
+            {
+                foreach (array('kki', 'kbli', 'prod', 'sat') as $name)
+                {
+                    $koor_name = $koor_fn.'_'.$name;
+                    $koordinat[$i][$name] = isset($_POST[$koor_name][$i]) ? $_POST[$koor_name][$i] : 0;
+                    unset($_POST[$koor_name][$i]);
+                }
+
+                $i++;
+            }
+
+            $form_data[$koor_fn] = $koordinat;
+        }
+
+        return $form_data;
     }
 }
 
