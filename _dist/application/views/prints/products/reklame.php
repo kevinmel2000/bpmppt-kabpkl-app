@@ -4,7 +4,7 @@
 <tr class="align-center bold">
     <td colspan="5" style="width:100%">
         <p>SURAT IZIN BUPATI PEKALONGAN</p>
-        <p>NOMOR : <?php echo '510.8/'.nbs(8).'/ BPM PPT / Rekl / '.print_blnthn_head($surat_tanggal) ?></p>
+        <p>NOMOR : <?php echo '510.8 / '.$surat_nomor.' / BPM PPT / Rekl'.($pengajuan_jenis == 'Perpanjangan' ? '.P' : '').' / '.print_blnthn_head($surat_tanggal) ?></p>
         <p>IZIN PEMASANGAN REKLAME</p>
     </td>
 </tr>
@@ -14,7 +14,7 @@
     <td colspan="4" style="width:90%">
         <ol class="lower-alpha">
             <li>Peraturan Bupati Pekalongan No. 12 Tahun 2012 tentang Pendelegasian Kewenangan Penandatanganan Perizinan dan Non Perizinan Kepada Kepala Badan Penanaman Modal dan Pelayanan Perijinan Terpadu Kabupaten Pekalongan</li>
-            <li>Surat permohonan izin pemasangan reklame dari Sdr. <?php echo $pemohon_nama?> tanggal permohonan <?php echo format_date($surat_tanggal) ?> tentang Permohonan <?php echo ($pengajuan_jenis == 'baru' ?: 'Perpanjangan ') ?> Izin Reklame <b><?php echo parse_reklamedata($reklame_data) ?></b>.</li>
+            <li>Surat permohonan izin pemasangan reklame dari Sdr. <?php echo $pemohon_nama?> tanggal permohonan <?php echo format_date($surat_tanggal) ?> tentang Permohonan <?php echo ($pengajuan_jenis == 'Pendaftaran Baru' ? 'baru' : 'Perpanjangan ') ?> Izin Reklame <b><?php echo parse_reklamedata($reklame_data) ?></b>.</li>
         </ol>
     </td>
 </tr>
@@ -81,16 +81,16 @@
 </tr>
 <tr><td class="empty" colspan="5" style="width:100%"></td></tr>
 <tr>
-    <td colspan="4" style="width:60%"></td>
-    <td style="width:40%">
+    <td colspan="4" style="width:55%"></td>
+    <td style="width:45%">
         <p>Ditetapkan di : <?php echo $skpd_kab ?></p>
         <p class="underline">Pada Tanggal : <?php print_blnthn_foot($surat_tanggal) ?></p>
     </td>
 </tr>
 <tr><td class="empty" colspan="5" style="width:100%"></td></tr>
 <tr class="align-center bold">
-    <td colspan="4" style="width:60%"></td>
-    <td style="width:40%"><?php print_ttd_kadin() ?></td>
+    <td colspan="4" style="width:55%"></td>
+    <td style="width:45%"><?php print_ttd_kadin() ?></td>
 </tr>
 <tr><td class="empty" colspan="5" style="width:100%"></td></tr>
 <?php if (strlen($data_tembusan) > 0): ?>
@@ -106,18 +106,18 @@
 </tr>
 <?php endif ?>
 </table>
-</table>
 <?php if (count($reklame_data) > 1): ?>
 <table class="pagebreak">
     <tr>
-        <td colspan="5" class="bold"><?php echo strtoupper('Lampiran Izin Reklame '.$pemohon_nama) ?>.<br></td>
+        <td colspan="5" class="bold"><?php echo strtoupper('Lampiran Izin Reklame '.($pemohon_usaha ?: $pemohon_nama)) ?>.</td>
     </tr>
+    <tr><td class="empty" colspan="5" style="width:100%"></td></tr>
     <tr style="border:1px solid #000" class="bold">
-        <td class="align-center" style="border:1px solid #000; width:10%">No.</td>
-        <td class="align-center" style="border:1px solid #000; width:20%">Jenis Reklame</td>
-        <td class="align-center" style="border:1px solid #000; width:30%">Tema</td>
+        <td class="align-center" style="border:1px solid #000; width:5%">No.</td>
+        <td class="align-center" style="border:1px solid #000; width:25%">Jenis Reklame</td>
+        <td class="align-center" style="border:1px solid #000; width:25%">Tema</td>
         <td class="align-center" style="border:1px solid #000; width:30%">Lokasi</td>
-        <td class="align-center" style="border:1px solid #000; width:10%">Ukuran (M)</td>
+        <td class="align-center" style="border:1px solid #000; width:15%">Ukuran (M)</td>
     </tr>
     <?php $i = 1; foreach ($reklame_data as $lampiran): ?>
     <tr style="border:1px solid #000">
@@ -125,13 +125,15 @@
         <td style="border:1px solid #000"><?php echo $lampiran['jenis'] ?></td>
         <td style="border:1px solid #000"><?php echo $lampiran['tema'] ?></td>
         <td style="border:1px solid #000"><?php echo $lampiran['tempat'] ?></td>
-        <td class="align-center" style="border:1px solid #000"><?php echo $lampiran['panjang'].' x '.$lampiran['lebar'] ?> (M)</td>
+        <td class="align-center" style="border:1px solid #000"><?php echo $lampiran['panjang'].' x '.$lampiran['lebar'].($lampiran['2x'] ? ' ganda' : '') ?></td>
     </tr>
     <?php $i++; endforeach; ?>
     <tr><td class="empty" colspan="5" style="width:100%"></td></tr>
+    <tr><td class="empty" colspan="5" style="width:100%"></td></tr>
+    <tr><td class="empty" colspan="5" style="width:100%"></td></tr>
     <tr class="align-center bold">
-        <td colspan="3" style="width:60%"></td>
-        <td colspan="2" style="width:40%"><?php print_ttd_kadin() ?></td>
+        <td colspan="3" style="width:55%"></td>
+        <td colspan="2" style="width:45%"><?php print_ttd_kadin() ?></td>
     </tr>
 </table>
 <?php endif; ?>
