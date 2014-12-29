@@ -87,7 +87,6 @@ $(document).ready(function () {
       var val = el.data('fold-value')
       var tgt = '[name=\"' + key + '\"]'
 
-      showHide(el, false)
       if ($(tgt).hasClass('bs-switch')) {
         $(tgt).on('switchChange.bootstrapSwitch', function (event, state) {
           showHide(el, val.indexOf(state) !== -1)

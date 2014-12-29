@@ -18,7 +18,7 @@
         </td></tr>
     <?php endif ?>
         <?php echo (in_array($type, $types) ? '<tr><td>'.nbs(1).'</td></tr>' : '') ?>
-        <tr><td <?php echo (in_array($type, $types) ? 'style="border: 1px solid #000"' : '') ?>><?php echo $contents; ?></td></tr>
+        <tr><td><?php echo $contents; ?></td></tr>
     </table>
 
 </body>
