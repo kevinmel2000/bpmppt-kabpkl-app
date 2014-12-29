@@ -10,6 +10,13 @@ body {
   line-height: 1.4;
 }
 
+@media print {
+  @page {
+    size: 21cm 33cm;
+    margin: 1cm;
+  }
+}
+
 p, span, ol, ul,
 sub, sup,
 table {
@@ -140,7 +147,7 @@ table {
 
 .dd {
   position: absolute;
-  left: 34%;
+  left: 40%;
 }
 
 .align {

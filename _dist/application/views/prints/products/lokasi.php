@@ -108,3 +108,6 @@
 <tr><td colspan="7" style="width:100%"><?php print_tembusan($data_tembusan) ?></td></tr>
     </tbody>
 </table>
+<div style="position: fixed; right: 0; left: 0; bottom: 0; border-top: 1px solid #555;">
+    <?php echo $skpd_city ?>
+</div>

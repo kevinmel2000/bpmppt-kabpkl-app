@@ -104,7 +104,7 @@ $_kki = $_kbli = $_prod = '';
 foreach ($komoditi as $_kom) {
     $_kki  .= ', '.$_kom['kki'];
     $_kbli .= ', '.$_kom['kbli'];
-    $_prod .= ', '.format_number($_kom['prod']).' '.$_kom['sat'];
+    $_prod .= ', '.format_number($_kom['prod'], 0).' '.$_kom['sat'];
 }
 $komoditi_kki  = ltrim($_kki, ', ');
 $komoditi_kbli = ltrim($_kbli, ', ');
@@ -189,9 +189,9 @@ $komoditi_prod = ltrim($_prod, ', ');
     <td style="width:85%;" colspan="3">TANGGAL : <?php print_blnthn_foot($surat_tanggal) ?></td>
 </tr>
 <tr><td colspan="4"><br><br></td></tr>
-<tr><td colspan="4" class="align-center bold">BATASAN DAN KETENTUAN IZIN USAHA INDUSTRI</td></tr>
+<tr><td colspan="4" class="bold">BATASAN DAN KETENTUAN IZIN USAHA INDUSTRI</td></tr>
 <tr><td colspan="4"><br><br></td></tr>
-<tr><td colspan="4">
+<tr><td colspan="4" class="align-justify">
     <p>HAK DAN KEWAJIBAN</p>
     <ol class="upper-alpha">
         <li>PENANGGUNG JAWAB, PRODUKSI, INVESTASI, TENAGA KERJA DAN MERK DAGANG
@@ -240,7 +240,7 @@ $komoditi_prod = ltrim($_prod, ', ');
             <thead><tr class="align-center">
                 <th>No.</th>
                 <th>Komoditi</th>
-                <th>KB, 0LI</th>
+                <th>KBLI</th>
                 <th>Kapasitas Terpasang Pertahun</th>
                 <th>Satuan</th>
             </tr></thead>

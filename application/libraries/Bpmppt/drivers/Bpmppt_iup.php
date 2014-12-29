@@ -44,6 +44,7 @@ class Bpmppt_iup extends CI_Driver
         'tambang_luas'          => '',
         'tambang_alamat'        => '',
         'tambang_koor'          => '',
+        'data_teknis'           => '',
         );
 
     // -------------------------------------------------------------------------
@@ -165,6 +166,13 @@ class Bpmppt_iup extends CI_Driver
             'name'  => 'fieldset_tambang',
             'label' => 'Data Pertambangan',
             'type'  => 'fieldset' );
+
+        $fields[] = array(
+            'name'  => 'data_teknis',
+            'label' => 'Ketentuan Teknis',
+            'type'  => 'editor',
+            'std'   => ( $data_obj ? $data_obj->data_teknis : Bootigniter::get_setting('iup_teknis') ),
+            'validation'=> ( !$data_obj ? 'required' : '' ) );
 
         $fields[] = array(
             'name'  => 'tambang_koor',

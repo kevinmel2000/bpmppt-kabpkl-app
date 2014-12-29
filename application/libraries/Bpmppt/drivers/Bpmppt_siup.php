@@ -149,14 +149,12 @@ class Bpmppt_siup extends CI_Driver
                     'name'  => 'telp',
                     'label' => 'Telpon',
                     'type'  => 'text',
-                    'std'   => ( $data_obj ? $data_obj->pemilik_no_telp : ''),
-                    'validation'=> 'numeric' ),
+                    'std'   => ( $data_obj ? $data_obj->pemilik_no_telp : '') ),
                 array(
                     'name'  => 'fax',
                     'label' => 'Faksimili',
                     'type'  => 'text',
-                    'std'   => ( $data_obj ? $data_obj->pemilik_no_fax : ''),
-                    'validation'=> 'numeric' ),
+                    'std'   => ( $data_obj ? $data_obj->pemilik_no_fax : '') ),
                 ));
 
         $fields[] = array(
@@ -198,6 +196,16 @@ class Bpmppt_siup extends CI_Driver
             'option'=> $this->get_field_prop('kelembagaan') );
 
         $fields[] = array(
+            'name'  => 'usaha_lembaga_lain',
+            'label' => 'Kelembagaan Lain',
+            'type'  => 'text',
+            'fold'  => array(
+                'key' => $this->alias.'_usaha_lembaga[]',
+                'value' => array('Lainnya')
+                ),
+            'std'   => ( $data_obj ? $data_obj->usaha_kegiatan : '') );
+
+        $fields[] = array(
             'name'  => 'usaha_komoditi',
             'label' => 'Komoditi Usaha',
             'type'  => 'textarea',
@@ -218,14 +226,12 @@ class Bpmppt_siup extends CI_Driver
                     'name'  => 'telp',
                     'label' => 'Telpon',
                     'type'  => 'text',
-                    'std'   => ( $data_obj ? $data_obj->usaha_no_telp : ''),
-                    'validation'=> 'numeric' ),
+                    'std'   => ( $data_obj ? $data_obj->usaha_no_telp : '') ),
                 array(
                     'name'  => 'fax',
                     'label' => 'Faksimili',
                     'type'  => 'text',
-                    'std'   => ( $data_obj ? $data_obj->usaha_no_fax : ''),
-                    'validation'=> 'numeric' ),
+                    'std'   => ( $data_obj ? $data_obj->usaha_no_fax : '') ),
                 ));
 
         $fields[] = array(
@@ -240,7 +246,7 @@ class Bpmppt_siup extends CI_Driver
         $fields[] = array(
             'name'  => 'usaha_modal_awal',
             'label' => 'Modal awal',
-            'type'  => 'text',
+            'type'  => 'number',
             'std'   => ( $data_obj ? $data_obj->usaha_modal_awal : ''),
             'validation'=> ( !$data_obj ? 'required|numeric' : '' ) );
 

@@ -87,18 +87,19 @@ $(document).ready(function () {
       var val = el.data('fold-value')
       var tgt = '[name=\"' + key + '\"]'
 
+      showHide(el, false)
       if ($(tgt).hasClass('bs-switch')) {
         $(tgt).on('switchChange.bootstrapSwitch', function (event, state) {
           showHide(el, val.indexOf(state) !== -1)
         })
       } else {
         $(tgt).change(function () {
-          if ($(tgt).is(':radio')) {
-            showHide(el, val.indexOf($(tgt).filter(':checked').val()) !== -1)
-          } else if ($(tgt).is(':checkbox')) {
-            showHide(el, val.indexOf($(tgt).is(':checked')) !== -1)
+          if ($(this).is(':radio')) {
+            showHide(el, val.indexOf($(this).filter(':checked').val()) !== -1)
+          } else if ($(this).is(':checkbox')) {
+            showHide(el, (val.indexOf($(this).val()) !== -1) && $(this).is(':checked'))
           } else {
-            showHide(el, val.indexOf($(tgt).val()) !== -1)
+            showHide(el, val.indexOf($(this).val()) !== -1)
           }
         })
       }
