@@ -8,13 +8,23 @@ body {
   font-family: Arial, sans-serif;
   font-size: 12px;
   line-height: 1.4;
+  height: 100%;
+  min-height: 100%;
+  position: relative;
 }
 
-@media print {
-  @page {
-    size: 21cm 33cm;
-    margin: 1cm;
-  }
+@page {
+  size: 21cm 33cm;
+  margin: 1cm;
+}
+@page:last {
+    @bottom-center {
+        content: "…";
+    }
+}
+
+.pb {
+  display: table-footer-group;
 }
 
 p, span, ol, ul,
