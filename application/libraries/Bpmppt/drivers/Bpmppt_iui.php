@@ -43,6 +43,7 @@ class Bpmppt_iui extends CI_Driver
         'pemilik_telp'        => '',
         'usaha_nama'          => '',
         'usaha_skala'         => '',
+        'usaha_jenis'         => '',
         'usaha_npwp'          => '',
         'usaha_alamat'        => '',
         'usaha_telp'          => '',

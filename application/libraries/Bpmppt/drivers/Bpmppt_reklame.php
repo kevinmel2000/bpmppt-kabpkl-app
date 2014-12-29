@@ -71,10 +71,7 @@ class Bpmppt_reklame extends CI_Driver
             'label' => 'Jenis Pengajuan',
             'type'  => 'radio',
             'std'   => ( $data_obj ? $data_obj->pengajuan_jenis : ''),
-            'option'=> array(
-                'Pendaftaran Baru' => 'Pendaftaran Baru',
-                'Perpanjangan'     => 'Perpanjangan'
-            ),
+            'option'=> array( 'Pendaftaran Baru', 'Perpanjangan' ),
             'validation'=> ( !$data_obj ? 'required' : '' ));
 
         $fields[] = array(
