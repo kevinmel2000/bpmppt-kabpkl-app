@@ -29,7 +29,7 @@
 <tr>
     <td colspan="2" style="width:30%">1. Nama</td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:30%"><?php echo $pemohon_nama.( $pemohon_usaha ? ' ('.$pemohon_usaha.')' : '') ?></td>
+    <td colspan="2" style="width:30%"><?php echo strtoupper($pemohon_nama.( $pemohon_usaha ? ' ('.$pemohon_usaha.')' : '')) ?></td>
 </tr>
 <tr>
     <td colspan="2" style="width:30%">2. Alamat</td>
@@ -125,11 +125,15 @@
         <td style="border:1px solid #000"><?php echo $lampiran['jenis'] ?></td>
         <td style="border:1px solid #000"><?php echo $lampiran['tema'] ?></td>
         <td style="border:1px solid #000"><?php echo $lampiran['tempat'] ?></td>
-        <td class="align-center" style="border:1px solid #000"><?php echo $lampiran['panjang'].' x '.$lampiran['lebar'].($lampiran['2x'] ? ' ganda' : '') ?></td>
+        <td class="align-center" style="border:1px solid #000"><?php echo $lampiran['panjang'].' x '.$lampiran['lebar'].($lampiran['2x'] ? ' (2 Muka)' : '') ?></td>
     </tr>
     <?php $i++; endforeach; ?>
     <tr><td class="empty" colspan="5" style="width:100%"></td></tr>
     <tr><td class="empty" colspan="5" style="width:100%"></td></tr>
+    <tr class="align-center bold">
+        <td colspan="3" style="width:55%"></td>
+        <td colspan="2" style="width:45%"><p><?php echo $skpd_kab ?><?php print_blnthn_foot($surat_tanggal) ?></p></td>
+    </tr>
     <tr><td class="empty" colspan="5" style="width:100%"></td></tr>
     <tr class="align-center bold">
         <td colspan="3" style="width:55%"></td>

@@ -119,16 +119,16 @@ class Bpmppt_reklame extends CI_Driver
                 array(
                     'name'  => 'val',
                     'label' => 'Jumlah',
-                    'type'  => 'number',
+                    'type'  => 'text',
                     'std'   => ( $data_obj ? $data_obj->reklame_juml_val : ''),
-                    'validation'=> 'required|numerik' ),
+                    'validation'=> 'required' ),
                 array(
                     'name'  => 'unit',
                     'label' => 'Unit',
                     'type'  => 'dropdown',
                     'option'=> array('Unit', 'Buah'),
                     'std'   => ( $data_obj ? $data_obj->reklame_juml_unit : ''),
-                    'validation'=> 'required|numerik' ),
+                    'validation'=> 'required' ),
                 )
             );
 
