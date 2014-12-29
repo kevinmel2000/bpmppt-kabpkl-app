@@ -30,7 +30,7 @@
 <tr>
     <td style="width:20%"><p>Membaca</p></td>
     <td style="width:2%"><p>:</p></td>
-    <td colspan="5" style="width:78%" class="align-justify">Surat dari Perusahaan <?php echo $usaha_nama ?><br>Tanggal <?php echo $surat_nomor ?> Perihal Permohonan Izin Usaha Industri.</td>
+    <td colspan="5" style="width:78%" class="align-justify">Surat dari Perusahaan <?php echo $usaha_nama ?><br>Tanggal <?php echo format_date($surat_tanggal) ?> Perihal Permohonan Izin Usaha Industri.</td>
 </tr>
 <tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
@@ -96,7 +96,20 @@
     <td colspan="2" style="width:30%">Nomor Pokok Wajib Pajak (NPWP)</td>
     <td style="width:2%">:</td>
     <td colspan="2" style="width:47%"><?php echo $usaha_npwp ?></td>
-</tr>
+</tr><?php
+if ($komoditi) {
+    $komoditi = unserialize($komoditi);
+}
+$_kki = $_kbli = $_prod = '';
+foreach ($komoditi as $_kom) {
+    $_kki  .= ', '.$_kom['kki'];
+    $_kbli .= ', '.$_kom['kbli'];
+    $_prod .= ', '.$_kom['prod'].' '.$_kom['sat'];
+}
+$komoditi_kki  = ltrim($_kki, ', ');
+$komoditi_kbli = ltrim($_kbli, ', ');
+$komoditi_prod = ltrim($_prod, ', ');
+?>
 <tr>
     <td colspan="2"></td>
     <td colspan="5" style="">Untuk menjalankan Perusahaan Industri</td>
@@ -105,7 +118,7 @@
     <td colspan="2"></td>
     <td colspan="2" style="width:30%">Jenis Industri (KBLI)</td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:47%"><?php echo $usaha_komoditi_kbli ?></td>
+    <td colspan="2" style="width:47%"><?php echo $usaha_jenis.' ('.$komoditi_kbli.')' ?></td>
 </tr>
 <tr>
     <td colspan="2"></td>
@@ -192,8 +205,8 @@
                 </li>
                 <li>Produksi
                     <ol class="lower-alpha">
-                        <li>Komoditi Industri<span class="dd">: <?php echo $usaha_komoditi_kki ?></span></li>
-                        <li>Kapasitas Terpasang Pertahun<span class="dd">: <?php echo $usaha_komoditi_prod.' '.$usaha_komoditi_sat ?></span></li>
+                        <li>Komoditi Industri<span class="dd">: <?php echo $komoditi_kki ?></span></li>
+                        <li>Kapasitas Terpasang Pertahun<span class="dd">: <?php echo $komoditi_prod ?></span></li>
                     </ol>
                 </li>
                 <li>Total Investasi<span class="dd">: <?php echo $usaha_investasi ?></span></li>
@@ -232,13 +245,15 @@
                 <th>Satuan</th>
             </tr></thead>
             <tbody>
+            <?php foreach ($komoditi as $_kom): ?>
                 <tr>
                     <td class="align-center">1</td>
-                    <td><?php echo $usaha_komoditi_kki ?></td>
-                    <td class="align-center"><?php echo $usaha_komoditi_kbli ?></td>
-                    <td class="align-center"><?php echo $usaha_komoditi_prod ?></td>
-                    <td class="align-center"><?php echo $usaha_komoditi_sat ?></td>
+                    <td><?php echo $_kom['kki'] ?></td>
+                    <td class="align-center"><?php echo $_kom['kbli'] ?></td>
+                    <td class="align-center"><?php echo $_kom['prod'] ?></td>
+                    <td class="align-center"><?php echo $_kom['sat'] ?></td>
                 </tr>
+            <?php endforeach ?>
             </tbody>
         </table>
         </li>
