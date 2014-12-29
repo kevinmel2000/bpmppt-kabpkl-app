@@ -32,6 +32,19 @@ function return_bytes( $val )
 
 // -----------------------------------------------------------------------------
 
+function format_number($number, $desimal = 2, $bts_des = '', $bts_rbn = '') {
+    $bts_des || $bts_des = ',';
+    $bts_rbn || $bts_rbn = '.';
+
+    if (is_numeric($number) || is_double($number)) {
+        return number_format($number, $desimal, $bts_des, $bts_rbn);
+    }
+
+    return $number;
+}
+
+// -----------------------------------------------------------------------------
+
 function format_size( $size )
 {
     $sizes = Array('B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB');

@@ -104,7 +104,7 @@ $_kki = $_kbli = $_prod = '';
 foreach ($komoditi as $_kom) {
     $_kki  .= ', '.$_kom['kki'];
     $_kbli .= ', '.$_kom['kbli'];
-    $_prod .= ', '.$_kom['prod'].' '.$_kom['sat'];
+    $_prod .= ', '.format_number($_kom['prod']).' '.$_kom['sat'];
 }
 $komoditi_kki  = ltrim($_kki, ', ');
 $komoditi_kbli = ltrim($_kbli, ', ');
@@ -209,7 +209,7 @@ $komoditi_prod = ltrim($_prod, ', ');
                         <li>Kapasitas Terpasang Pertahun<span class="dd">: <?php echo $komoditi_prod ?></span></li>
                     </ol>
                 </li>
-                <li>Total Investasi<span class="dd">: <?php echo $usaha_investasi ?></span></li>
+                <li>Total Investasi<span class="dd">: Rp. <?php echo format_number($usaha_investasi) ?></span></li>
                 <li>Jumlah Tenaga Kerja
                     <ol class="lower-alpha">
                         <li>Indonesia<span class="dd">: <?php echo ($usaha_pekerja_wni ? $usaha_pekerja_wni.' Orang' : '-') ?></span></li>
@@ -228,7 +228,7 @@ $komoditi_prod = ltrim($_prod, ', ');
                 <li>Wajib mematuhi segala ketentuan-ketentuan / peraturan perundang-undangan yang berlaku.</li>
             </ol><br>
         </li>
-        <li>GUDANG<br>Izin Usaha Industri ini berlaku pula bagi gudang atau tempat penyimpanan yang berada dalam komplek industri yang digunakan untuk menyimpan peralatan, perlengkapan bahan baku, bahan penolong dan barang jadi untuk keperluan kegiatan usaha industri.<table style="border: 1px solid #000; display: inline-block; min-width: 50%;">
+        <li>GUDANG<br>Izin Usaha Industri ini berlaku pula bagi gudang atau tempat penyimpanan yang berada dalam komplek industri yang digunakan untuk menyimpan peralatan, perlengkapan bahan baku, bahan penolong dan barang jadi untuk keperluan kegiatan usaha industri.<br><table style="border: 1px solid #000; display: inline-block; min-width: 50%;">
             <tr>
                 <td style="width:18">Luas Gudang</td>
                 <td style="width:2">:</td>
@@ -240,7 +240,7 @@ $komoditi_prod = ltrim($_prod, ', ');
             <thead><tr class="align-center">
                 <th>No.</th>
                 <th>Komoditi</th>
-                <th>KBLI</th>
+                <th>KB, 0LI</th>
                 <th>Kapasitas Terpasang Pertahun</th>
                 <th>Satuan</th>
             </tr></thead>
@@ -250,7 +250,7 @@ $komoditi_prod = ltrim($_prod, ', ');
                     <td class="align-center"><?php echo $i ?></td>
                     <td><?php echo $_kom['kki'] ?></td>
                     <td class="align-center"><?php echo $_kom['kbli'] ?></td>
-                    <td class="align-center"><?php echo $_kom['prod'] ?></td>
+                    <td class="align-center"><?php echo format_number($_kom['prod'], 0) ?></td>
                     <td class="align-center"><?php echo $_kom['sat'] ?></td>
                 </tr>
             <?php $i++; endforeach; ?>
