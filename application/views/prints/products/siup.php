@@ -31,7 +31,7 @@
 <tr class="bold" style="border: 2px solid #000; border-bottom-width: 1px; border-top-width: 1px">
     <td style="width:25%">MODAL DAN KEKAYAAN BERSIH PERUSAHAAN (TIDAK TERMASUK TANAH DAN BANGUNAN)</td>
     <td style="width:5%">:</td>
-    <td colspan="2" style="width:70%; border-right: 2px solid #000;"><?php echo $usaha_modal_awal ?></td>
+    <td colspan="2" style="width:70%; border-right: 2px solid #000;">Rp. <?php echo format_number($usaha_modal_awal) ?></td>
 </tr>
 <tr class="bold" style="border: 2px solid #000; border-bottom-width: 1px; border-top-width: 1px">
     <td style="width:25%">KELEMBAGAAN</td>
@@ -39,10 +39,9 @@
     <td colspan="2" style="width:70%; border-right: 2px solid #000;"><?php
 $e = '';
 foreach ( ($lembs = unserialize($usaha_lembaga)) as $i => $lembaga ) {
-    $e .= $lembaga;
-    if ( $i != count($lembs)-1 ) $e .= ', ';
+    $e .= ', '.($lembaga != 'Lainnya' ? $lembaga : $usaha_lembaga_lain);
 }
-echo $e;
+echo ltrim($e, ', ');
 ?></td>
 </tr>
 <tr class="bold" style="border: 2px solid #000; border-bottom-width: 1px; border-top-width: 1px">

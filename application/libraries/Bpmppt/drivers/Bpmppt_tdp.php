@@ -168,14 +168,12 @@ class Bpmppt_tdp extends CI_Driver
                     'name'  => 'telp',
                     'label' => 'Telpon',
                     'type'  => 'text',
-                    'std'   => ( $data_obj ? $data_obj->pemilik_no_telp : ''),
-                    'validation'=> 'numeric' ),
+                    'std'   => ( $data_obj ? $data_obj->pemilik_no_telp : '') ),
                 array(
                     'name'  => 'fax',
                     'label' => 'Faksimili',
                     'type'  => 'text',
-                    'std'   => ( $data_obj ? $data_obj->pemilik_no_fax : ''),
-                    'validation'=> 'numeric' ),
+                    'std'   => ( $data_obj ? $data_obj->pemilik_no_fax : '') ),
                 ));
 
         $fields[] = array(

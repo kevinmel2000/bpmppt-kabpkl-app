@@ -188,7 +188,7 @@
 </tr>
 <tr>
     <td width="20%"></td>
-    <td width="80%" colspan="3">NOMOR :  <?php echo '510.4  / '.$surat_nomor.' / BPMPPT / IUP /'.print_blnthn_head($surat_tanggal) ?></td>
+    <td width="80%" colspan="3">NOMOR :  <?php echo '510.4  / '.nbs(8).' / BPMPPT / IUP /'.print_blnthn_head($surat_tanggal) ?></td>
 </tr>
 <tr>
     <td width="20%"></td>
@@ -259,22 +259,26 @@
 </table><table class="pagebreak">
 <tr>
     <td width="15%">LAMPIRAN III</td>
-    <td width="85%" colspan="3">KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN PELAYANAN PERIZINAN TERPADU. KABUPATEN PEKALONGAN</td>
+    <td width="2%"></td>
+    <td width="83%" colspan="2">KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN PELAYANAN PERIZINAN TERPADU. KABUPATEN PEKALONGAN</td>
 </tr>
 <tr>
     <td width="15%">Tentang</td>
-    <td width="85%" colspan="3"><?php echo strtoupper(': PEMBERIAN IZIN USAHA PERTAMBANGAN ( IUP ) OPERASI '.$tambang_jns_galian.' KEPADA SDR. '.$pemohon_nama) ?></td>
+    <td width="2%">:</td>
+    <td width="83%" colspan="2"><?php echo strtoupper('PEMBERIAN IZIN USAHA PERTAMBANGAN ( IUP ) OPERASI '.$tambang_jns_galian.' KEPADA SDR. '.$pemohon_nama) ?></td>
 </tr>
 <tr>
     <td width="15%">Nomor</td>
-    <td width="85%" colspan="3">:  <?php echo '510.4 / '.$surat_nomor.' / BPMPPT / IUP /'.print_blnthn_head($surat_tanggal) ?></td>
+    <td width="2%">:</td>
+    <td width="83%" colspan="2"><?php echo '510.4 / '.nbs(8).' / BPMPPT / IUP /'.print_blnthn_head($surat_tanggal) ?></td>
 </tr>
 <tr>
     <td width="15%">Tanggal</td>
-    <td width="85%" colspan="3">: <?php print_blnthn_foot($surat_tanggal) ?></td>
+    <td width="2%">:</td>
+    <td width="83%" colspan="2"><?php print_blnthn_foot($surat_tanggal) ?></td>
 </tr>
 <tr><td width="100%" colspan="4" class="align-center bold"><br><br><?php echo strtoupper('HAK, KEWAJIBAN DAN KETENTUAN PEMEGANG IZIN USAHA PERTAMBANGAN (IUP)<br>OPERASI '.$tambang_jns_galian) ?><br><br></td></tr>
-<tr><td width="100%" colspan="4">
+<tr><td width="100%" colspan="4" class="align-justify">
     <p>HAK DAN KEWAJIBAN</p>
     <ol class="upper-alpha">
         <li>HAK
@@ -311,28 +315,7 @@
             </ol><br>
         </li>
         <li>KETENTUAN KHUSUS DAN TEKNIS
-            <ol class="numeric">
-                <li>Luas WIUP adalah 4,73 Hektar, cadangan terhitung 483.899 m3, produksi maksimal 150.000 m3/th, jumlah excavator 2 buah, dumptruck 30 buah, jangka waktu maksimal 3,3 tahun, jam kerja 07.00 s/d 16.00 WIB.</li>
-                <li>Segera setelah IUP terbit wajib memasang papan nama dan patok batas wilayah penambangan sesuai ketentuan, didampingi Dinas PSDAESDM Kabupaten Pekalongan.</li>
-                <li>Kegiatan penambangan harus mengikuti ketentuan sebagai berikut :
-                    <ol class="lower-alpha">
-                        <li>Jarak antara pucuk tebing terluar penambangan dengan batas IUP minimal 5m, sebagai zona penyangga / batas aman agar lahan diluar batas IUP tidak terganggu oleh kegiatan penambangan. Penambangan dilakukan dengan sistem terasering, yaitu tinggi jenjang maksimal 3m dan lebar jenjang minimal 3m dengan kemiringan jenjang sekitar 30 % (kemiringan jenjang tidak boleh tegak lurus).</li>
-                        <li>Ketinggian lahan pada akhir penambangan 90 m dpl dengan relief dasar galian relatif rata, tidak boleh ada kubangan.</li>
-                        <li>Truk pengangkut material tidak melebihi kelas jalan yang dilalui, muatan tidak melebihi kapasitas truk, material harus tertutup rapat, roda bersih, pintu belakang dan bagian luar truk bersih agar tidak terjadi ceceran tanah di jalan umum.</li>
-                        <li>Lahan bekas tambang dimanfaatkan sesuai rencana reklamasi.</li>
-                        <li>Membuat saluran buangan / drainase menyesuaikan dengan kondisi lapangan agar air hujan tidak menyebabkan banjir dan kubangan air.</li>
-                    </ol>
-                </li>
-                <li>Tertib membayar pajak sesuai ketentuan.</li>
-                <li>Tidak memindahtangankan IUP kepada pihak lain.</li>
-                <li>Menjalin bina lingkungan sosial dengan baik.</li>
-                <li>Melaporkan kegiatan penambangan secara berkala (3 bulan sekali) kepada Bupati Pekalongan cq. Dinas PSDAESDM Kabupaten Pekalongan.</li>
-                <li>Melaksanakan pengelolaan lingkungan sesuai Dokumen UKL/UPL yang telah direkomendasi Kepala Kantor Lingkungan Hidup Kabupaten Pekalongan.</li>
-                <li>Bersedia dilakukan monitoring oleh Dinas PSDAESDM Kabupaten Pekalongan.</li>
-                <li>Apabila terjadi permasalahan dengan pihak lain dan lingkungan, sanggup menyelesaikan secara musyawarah sesuai ketentuan dan peraturan yang ada.</li>
-                <li>Melaksanakan kegiatan pertambangan sesuai rencana kerja dan rencana reklamasi yang telah disetujui dan mematuhi segala ketentuan dan peraturan yang ada terkait dengan kegiatan operasi produksi. </li>
-                <li>Apabila permasalahan dengan pihak lain telah tercapai kesepakatan dan pemegang rekomendasi ini ingkar, maka Bupati berhak mencabut rekomendasi dan mencabut IUP yang telah diterbitkan.</li>
-            </ol><br>
+            <?php echo $data_teknis ?: Bootigniter::get_setting('iup_teknis') ?><br>
         </li>
     </ol>
 </tr></table><table><tbody>
