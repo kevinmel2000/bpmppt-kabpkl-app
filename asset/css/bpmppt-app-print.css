@@ -1,24 +1,12 @@
 body {
+  position: relative;
+  height: 100%;
+  min-height: 100%;
   padding: 2px;
   margin: 0;
   font-family: Arial, sans-serif;
   font-size: 12px;
   line-height: 1.4;
-  height: 100%;
-  min-height: 100%;
-  position: relative;
-}
-@page {
-  size: 21cm 33cm;
-  margin: 1cm;
-}
-@page :last {
-  @bottom-center {
-    content: "…";
-  }
-}
-.pb {
-  display: table-footer-group;
 }
 p,
 span,
@@ -90,10 +78,10 @@ sup {
   vertical-align: baseline;
 }
 sup {
-  top: -0.5em;
+  top: -.5em;
 }
 sub {
-  bottom: -0.25em;
+  bottom: -.25em;
 }
 table {
   min-width: 100%;
@@ -132,20 +120,20 @@ table tr.t-header p {
 }
 table td,
 table th {
+  height: 1;
   padding: 0 5px;
   font-size: inherit;
   line-height: inherit;
   vertical-align: top;
   border: 0;
-  height: 1;
 }
 table th {
   font-weight: bold;
 }
 table .empty:after {
-  content: ' ';
-  height: 1em;
   display: block;
+  height: 1em;
+  content: ' ';
 }
 table table {
   width: auto;
