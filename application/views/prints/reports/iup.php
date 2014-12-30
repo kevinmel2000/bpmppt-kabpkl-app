@@ -8,7 +8,6 @@
             <th>Nomor Izin</th>
             <th>Tanggal Terbit</th>
             <th>Tanggal Berlaku</th>
-            <th>Keterangan</th>
         </tr>
         <tr>
             <th>1</th>
@@ -18,7 +17,6 @@
             <th>5</th>
             <th>6</th>
             <th>7</th>
-            <th>8</th>
         </tr>
     </thead>
     <tbody>
@@ -29,9 +27,8 @@
             <td class="align-left"><?php echo $row->pemohon_alamat ?></td>
             <td class="align-center"><?php echo $row->tambang_alamat ?></td>
             <td class="align-center"><?php echo $row->surat_nomor ?></td>
-            <td class="align-center"><?php echo format_date( $row->created_on ) ?></td>
-            <td class="align-center"><?php echo format_date( "+5 years {$row->created_on}" ) ?></td>
-            <td class="align-left"><?php echo '-' ?></td>
+            <td class="align-center"><?php echo format_date($row->surat_tanggal) ?></td>
+            <td class="align-center"><?php echo format_date($row->masa_berlaku) ?></td>
         </tr>
     <?php $i++; endforeach; else : ?>
         <tr><td colspan="15"><h1 style="text-align: center;">NIHIL</h1></td></tr>

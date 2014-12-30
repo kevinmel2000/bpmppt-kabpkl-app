@@ -21,9 +21,7 @@
                 </button> <!-- .navbar-toggle -->
                 <?php echo $brand_link ?>
             </div> <!-- .navbar-header -->
-            <div class="navbar-collapse collapse">
-                <?php echo get_navbar() ?>
-            </div> <!-- .nav-collapse -->
+            <div class="navbar-collapse collapse"><?php echo get_navbar() ?></div> <!-- .nav-collapse -->
         </div> <!-- .container -->
     </header> <!-- #top -->
 

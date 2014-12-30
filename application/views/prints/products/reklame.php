@@ -3,9 +3,9 @@
         <tr><td class="empty" colspan="5" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="5" style="width:100%">
-        <p>SURAT IZIN BUPATI PEKALONGAN</p>
-        <p>NOMOR : <?php echo '510.8 / '.$surat_nomor.' / BPM PPT / Rekl'.($pengajuan_jenis == 'Perpanjangan' ? '.P' : '').' / '.print_blnthn_head($surat_tanggal) ?></p>
-        <p>IZIN PEMASANGAN REKLAME</p>
+<p>SURAT IZIN BUPATI PEKALONGAN</p>
+<p>NOMOR : <?php echo '510.8 / '.$surat_nomor.' / BPM PPT / Rekl'.($pengajuan_jenis == 'Perpanjangan' ? '.P' : '').' / '.print_blnthn_head($surat_tanggal) ?></p>
+<p>IZIN PEMASANGAN REKLAME</p>
     </td>
 </tr>
 <tr><td class="empty" colspan="5" style="width:100%"></td></tr>

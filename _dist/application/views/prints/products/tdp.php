@@ -99,7 +99,7 @@ TENTANG PERSEROAN TERBATAS
 <tr style="">
     <td colspan="3"></td>
     <td colspan="3" style="border-bottom: 2px solid #000">Dikeluarkan di : KAJEN<br>
-    Pada Tanggal : <?php echo bdate('%d %F', $surat_tanggal).' '.bdate('%Y') ?></td>
+    Pada Tanggal : <?php echo bdate('%d %F %Y', $surat_tanggal) ?></td>
 </tr>
 <tr><td class="empty" colspan="6" style="width:100%"></td></tr>
 <tr class="align-center bold">

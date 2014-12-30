@@ -46,6 +46,7 @@ class Bpmppt_iplc extends CI_Driver
      * @var  array
      */
     public $defaults = array(
+        'masa_berlaku'        => '',
         'pemohon_nama'        => '',
         'pemohon_jabatan'     => '',
         'pemohon_usaha'       => '',
@@ -77,6 +78,13 @@ class Bpmppt_iplc extends CI_Driver
      */
     public function form( $data_obj = FALSE )
     {
+        $fields[] = array(
+            'name'  => 'masa_berlaku',
+            'label' => 'Masa Berlaku',
+            'type'  => 'datepicker',
+            'std'   => ( $data_obj ? $data_obj->masa_berlaku : ''),
+            'validation'=> ( !$data_obj ? 'required' : '' ) );
+
         $fields[] = array(
             'name'  => 'fieldset_data_pemohon',
             'label' => 'Data Pemohon',

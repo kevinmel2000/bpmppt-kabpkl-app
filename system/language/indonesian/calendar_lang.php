@@ -31,7 +31,7 @@ $lang['cal_jul']        = 'Jul';
 $lang['cal_aug']        = 'Agu';
 $lang['cal_sep']        = 'Sep';
 $lang['cal_oct']        = 'Okt';
-$lang['cal_nov']        = 'Nov';
+$lang['cal_nov']        = 'Nop';
 $lang['cal_dec']        = 'Des';
 $lang['cal_january']    = 'Januari';
 $lang['cal_february']   = 'Februari';
@@ -43,7 +43,7 @@ $lang['cal_july']       = 'Juli';
 $lang['cal_august']     = 'Agustus';
 $lang['cal_september']  = 'September';
 $lang['cal_october']    = 'Oktober';
-$lang['cal_november']   = 'November';
+$lang['cal_november']   = 'Nopember';
 $lang['cal_december']   = 'Desember';
 
 /* End of file calendar_lang.php */

@@ -1320,7 +1320,7 @@ class Biform
         $field_attrs['class'] = 'form-datepicker';
         $field_attrs['type'] = 'text';
         $field_attrs['attr'] = 'data-lang="'.$lang.'" data-mode="'.$field_attrs['mode'].'" data-format="dd-mm-yyyy" ';
-        $field_attrs['std'] = format_date($field_attrs['std']);
+        $field_attrs['std'] = bdate('%d-%m-%Y', $field_attrs['std']);
 
         $output = '<div class="has-feedback">'
                     . $this->_set_input_text($field_attrs)

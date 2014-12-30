@@ -97,6 +97,9 @@ table.tanda_daftar_perusahaan,
 table.surat_izin_usaha_perdagangan {
   font-family: 'Arial';
 }
+table.izin_reklame {
+  font-family: 'Times New Roman';
+}
 table.izin_gangguan,
 table.tanda_daftar_perusahaan {
   margin-top: 40px;

@@ -9,25 +9,13 @@
     <link href="<?php echo base_url('asset/css/bpmppt-app-print.css') ?>" type="text/css" rel="stylesheet" media="all">
 </head>
 <body onload="window.print()" <?php echo get_body_attrs() ?>>
-<?php if ($type == 'reklame'): ?>
-    <p class="align-center bold" style="display: block">DATA PENERBITAN IZIN PEMASANGAN REKLAME</p>
-<?php endif ?>
+    <p class="align-center bold" style="display: block">DATA PENERBITAN <?php echo strtoupper($layanan) ?></p>
     <p class="align-center bold" style="display: block"><?php echo strtoupper($skpd_name.' '.$skpd_city) ?></p>
-<?php if ($type == 'reklame'): ?>
     <p class="align-center bold" style="display: block"><?php echo strtoupper(bdate('BULAN %F TAHUN %Y', $date))?></p>
-<?php else: ?>
-    <br>
-    <p class="align-left bold" style="display:block;">
-        <span style="display:inline-block; width:19%;"><?php echo strtoupper($skpd_city) ?></span>
-        <span style="display:inline-block; width:80%;"><?php echo ': '.strtoupper($layanan) ?></span>
-    </p>
-    <p class="align-left bold" style="display:block;">
-        <span style="display:inline-block; width:19%;">BULAN</span>
-        <span style="display:inline-block; width:80%;"><?php echo ': '.strtoupper(bdate('%F %Y', $date)) ?></span>
-    </p>
-<?php endif ?>
     <br>
     <?php echo $contents; ?>
+    <br><br>
+    <p style="margin-left: 70%; width: 30%" class="align-center bold"><?php echo $skpd_kab.','.nbs(8).bdate('%F %Y', $date) ?></p>
     <br><br>
     <p style="margin-left: 70%; width: 30%" class="align-center bold"><?php print_ttd_kadin() ?></p>
 

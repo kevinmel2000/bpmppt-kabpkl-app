@@ -35,6 +35,7 @@ class Bpmppt_iup extends CI_Driver
     public $defaults = array(
         'rekomendasi_nomor'     => '',
         'rekomendasi_tanggal'   => '',
+        'masa_berlaku'          => '',
         'pemohon_nama'          => '',
         'pemohon_an'            => '',
         'pemohon_alamat'        => '',
@@ -88,6 +89,13 @@ class Bpmppt_iup extends CI_Driver
                     'validation'=> ( !$data_obj ? 'required' : '' ),
                     'callback'=> 'string_to_date' ),
                 ));
+
+        $fields[] = array(
+            'name'  => 'masa_berlaku',
+            'label' => 'Masa Berlaku',
+            'type'  => 'datepicker',
+            'std'   => ( $data_obj ? $data_obj->masa_berlaku : ''),
+            'validation'=> ( !$data_obj ? 'required' : '' ) );
 
         $fields[] = array(
             'name'  => 'fieldset_data_pemohon',
