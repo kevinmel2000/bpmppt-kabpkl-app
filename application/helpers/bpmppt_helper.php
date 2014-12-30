@@ -63,6 +63,31 @@ function parse_reklamedata($reklame_data)
     return $out;
 }
 
+function print_table_reklame($reklame_data)
+{
+    $i = 1;
+    $table = '<tr class="bold bordered align-center">'
+           . '<td style="width:5%">No.</td>'
+           . '<td style="width:25%">Jenis Reklame</td>'
+           . '<td style="width:25%">Tema</td>'
+           . '<td style="width:30%">Lokasi</td>'
+           . '<td style="width:15%">Ukuran (M)</td>'
+           . '</tr>';
+
+    foreach ($reklame_data as $lampiran) {
+        $table .= '<tr class="bordered">'
+                . '<td class="align-center">'.$i.'</td>'
+                . '<td>'.$lampiran['jenis'].'</td>'
+                . '<td>'.$lampiran['tema'].'</td>'
+                . '<td>'.$lampiran['tempat'].'</td>'
+                . '<td class="align-center">'.$lampiran['panjang'].' x '.$lampiran['lebar'].($lampiran['2x'] ? ' (2 Muka)' : '').'</td>'
+                . '</tr>';
+        $i++;
+    }
+
+    return $table;
+}
+
 function print_ttd_kadin($atas_nama = '')
 {
     foreach (array('skpd_name', 'skpd_city', 'skpd_lead_name', 'skpd_lead_jabatan', 'skpd_lead_nip') as $property)

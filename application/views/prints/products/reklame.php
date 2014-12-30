@@ -93,41 +93,13 @@
     <td style="width:45%"><?php print_ttd_kadin() ?></td>
 </tr>
 <tr><td class="empty" colspan="5" style="width:100%"></td></tr>
-<?php if (strlen($data_tembusan) > 0): ?>
-<tr>
-    <td colspan="5" style="width:100%">
-        <p>Tembusan :</p>
-        <ol>
-        <?php foreach (unserialize($data_tembusan) as $tembusan) : ?>
-            <li><?php echo $tembusan ?>;</li>
-        <?php endforeach ?>
-        </ol>
-    </td>
-</tr>
-<?php endif ?>
+<tr><td colspan="5" style="width:100%"><?php print_tembusan($data_tembusan) ?></td></tr>
 </table>
 <?php if (count($reklame_data) > 1): ?>
 <table class="pagebreak">
-    <tr>
-        <td colspan="5" class="bold"><?php echo strtoupper('Lampiran Izin Reklame '.($pemohon_usaha ?: $pemohon_nama)) ?>.</td>
-    </tr>
+    <tr><td colspan="5" class="bold">LAMPIRAN IZIN REKLAME <?php echo strtoupper($pemohon_usaha ?: $pemohon_nama) ?>.</td></tr>
     <tr><td class="empty" colspan="5" style="width:100%"></td></tr>
-    <tr style="border:1px solid #000" class="bold">
-        <td class="align-center" style="border:1px solid #000; width:5%">No.</td>
-        <td class="align-center" style="border:1px solid #000; width:25%">Jenis Reklame</td>
-        <td class="align-center" style="border:1px solid #000; width:25%">Tema</td>
-        <td class="align-center" style="border:1px solid #000; width:30%">Lokasi</td>
-        <td class="align-center" style="border:1px solid #000; width:15%">Ukuran (M)</td>
-    </tr>
-    <?php $i = 1; foreach ($reklame_data as $lampiran): ?>
-    <tr style="border:1px solid #000">
-        <td class="align-center" style="border:1px solid #000"><?php echo $i ?></td>
-        <td style="border:1px solid #000"><?php echo $lampiran['jenis'] ?></td>
-        <td style="border:1px solid #000"><?php echo $lampiran['tema'] ?></td>
-        <td style="border:1px solid #000"><?php echo $lampiran['tempat'] ?></td>
-        <td class="align-center" style="border:1px solid #000"><?php echo $lampiran['panjang'].' x '.$lampiran['lebar'].($lampiran['2x'] ? ' (2 Muka)' : '') ?></td>
-    </tr>
-    <?php $i++; endforeach; ?>
+    <?php echo print_table_reklame($reklame_data) ?>
     <tr><td class="empty" colspan="5" style="width:100%"></td></tr>
     <tr><td class="empty" colspan="5" style="width:100%"></td></tr>
     <tr class="align-center bold">
