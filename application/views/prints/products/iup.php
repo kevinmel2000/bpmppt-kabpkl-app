@@ -5,7 +5,7 @@
     <td colspan="7" style="width:100%">
         <p>KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN</p>
         <p>PELAYANAN PERIZINAN TERPADU KABUPATEN PEKALONGAN</p>
-        <p>NOMOR : <?php echo '510.4  / '.nbs(8).' / BPMPPT / IUP /'.print_blnthn_head($surat_tanggal) ?></p>
+        <p>NOMOR : <?php echo '510.4  / '.nbs(8).' / BPMPPT / IUP / '.print_blnthn_head($surat_tanggal) ?></p>
     </td>
 </tr>
 <tr><td class="empty" colspan="7" style="width:100%"></td></tr>

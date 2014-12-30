@@ -103,7 +103,7 @@ class Bpmppt_lokasi extends CI_Driver
 
         $fields[] = array(
             'name'  => 'lokasi_tujuan',
-            'label' => 'Tujuan Permohonan',
+            'label' => 'Jenis Permohonan',
             'type'  => 'text',
             'std'   => ( $data_obj ? $data_obj->lokasi_tujuan : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );

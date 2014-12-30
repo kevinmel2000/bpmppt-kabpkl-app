@@ -46,14 +46,17 @@ class Bpmppt_iplc extends CI_Driver
      * @var  array
      */
     public $defaults = array(
-        'masa_berlaku'        => '',
-        'pemohon_nama'        => '',
-        'pemohon_jabatan'     => '',
-        'pemohon_usaha'       => '',
-        'pemohon_alamat'      => '',
-        'data_teknis'         => '',
-        'limbah_target_buang' => '',
-        'debits'              => array(),
+        'masa_berlaku_text'      => '',
+        'masa_berlaku_mulai'     => '',
+        'masa_berlaku_selesai'   => '',
+        'pemohon_nama'           => '',
+        'pemohon_jabatan'        => '',
+        'pemohon_usaha'          => '',
+        'pemohon_alamat'         => '',
+        'pemohon_lokasi'         => '',
+        'data_teknis'            => '',
+        'limbah_target_buang'    => '',
+        'debits'                 => array(),
         );
 
     // -------------------------------------------------------------------------
@@ -81,9 +84,28 @@ class Bpmppt_iplc extends CI_Driver
         $fields[] = array(
             'name'  => 'masa_berlaku',
             'label' => 'Masa Berlaku',
-            'type'  => 'datepicker',
-            'std'   => ( $data_obj ? $data_obj->masa_berlaku : ''),
-            'validation'=> ( !$data_obj ? 'required' : '' ) );
+            'type'  => 'subfield',
+            'fields'=> array(
+                array(
+                    'name'  => 'text',
+                    'label' => 'Terbilang',
+                    'type'  => 'text',
+                    'std'   => ( $data_obj ? $data_obj->masa_berlaku_text : ''),
+                    'validation'=> ( !$data_obj ? 'required' : '' ) ),
+                array(
+                    'name'  => 'mulai',
+                    'label' => 'Mulai',
+                    'type'  => 'datepicker',
+                    'std'   => ( $data_obj ? $data_obj->masa_berlaku_mulai : ''),
+                    'validation'=> ( !$data_obj ? 'required' : '' ) ),
+                array(
+                    'name'  => 'selesai',
+                    'label' => 'Selesai',
+                    'type'  => 'datepicker',
+                    'std'   => ( $data_obj ? $data_obj->masa_berlaku_selesai : ''),
+                    'validation'=> ( !$data_obj ? 'required' : '' ),
+                    'callback'=> 'string_to_date' ),
+                ));
 
         $fields[] = array(
             'name'  => 'fieldset_data_pemohon',
@@ -119,6 +141,13 @@ class Bpmppt_iplc extends CI_Driver
             'validation'=> ( !$data_obj ? 'required' : '' ) );
 
         $fields[] = array(
+            'name'  => 'pemohon_lokasi',
+            'label' => 'Alamat',
+            'type'  => 'textarea',
+            'std'   => ( $data_obj ? $data_obj->pemohon_lokasi : ''),
+            'validation'=> ( !$data_obj ? 'required' : '' ) );
+
+        $fields[] = array(
             'name'  => 'data_teknis',
             'label' => 'Data Teknis',
             'type'  => 'editor',
@@ -146,7 +175,7 @@ class Bpmppt_iplc extends CI_Driver
 
         $this->_ci->table->set_template( $this->table_templ );
         $width = ceil(90 / count($this->_custom_fields));
-        $debits = unserialize( $data->debits );
+        $debits = isset($data->debits) ? unserialize( $data->debits ) : array();
 
         foreach ($this->_custom_fields as $name => $label)
         {

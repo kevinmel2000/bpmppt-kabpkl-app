@@ -91,13 +91,6 @@ class Bpmppt_iup extends CI_Driver
                 ));
 
         $fields[] = array(
-            'name'  => 'masa_berlaku',
-            'label' => 'Masa Berlaku',
-            'type'  => 'datepicker',
-            'std'   => ( $data_obj ? $data_obj->masa_berlaku : ''),
-            'validation'=> ( !$data_obj ? 'required' : '' ) );
-
-        $fields[] = array(
             'name'  => 'fieldset_data_pemohon',
             'label' => 'Data Pemohon',
             'type'  => 'fieldset' );
@@ -133,14 +126,12 @@ class Bpmppt_iup extends CI_Driver
             'type'  => 'subfield',
             'fields'=> array(
                 array(
-                    'col'   => '6',
                     'name'  => 'mulai',
                     'label' => 'Mulai',
                     'type'  => 'datepicker',
                     'std'   => ( $data_obj ? $data_obj->tambang_waktu_mulai : ''),
                     'validation'=> ( !$data_obj ? 'required' : '' ) ),
                 array(
-                    'col'   => '6',
                     'name'  => 'selesai',
                     'label' => 'Selesai',
                     'type'  => 'datepicker',

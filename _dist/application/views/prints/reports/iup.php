@@ -7,7 +7,7 @@
             <th>Lokasi</th>
             <th>Nomor Izin</th>
             <th>Tanggal Terbit</th>
-            <th>Tanggal Berlaku</th>
+            <th>Tgl. Berakhir Izin</th>
         </tr>
         <tr>
             <th>1</th>
@@ -26,9 +26,9 @@
             <td class="align-left"><?php echo $row->pemohon_nama ?></td>
             <td class="align-left"><?php echo $row->pemohon_alamat ?></td>
             <td class="align-center"><?php echo $row->tambang_alamat ?></td>
-            <td class="align-center"><?php echo $row->surat_nomor ?></td>
+            <td class="align-center"><?php echo '510.4  / '.$row->surat_nomor.' / BPMPPT / IUP / '.print_blnthn_head($row->surat_tanggal) ?></td>
             <td class="align-center"><?php echo format_date($row->surat_tanggal) ?></td>
-            <td class="align-center"><?php echo format_date($row->masa_berlaku) ?></td>
+            <td class="align-center"><?php echo format_date($row->tambang_waktu_selesai) ?></td>
         </tr>
     <?php $i++; endforeach; else : ?>
         <tr><td colspan="15"><h1 style="text-align: center;">NIHIL</h1></td></tr>
