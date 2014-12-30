@@ -142,7 +142,7 @@ class Bpmppt_iplc extends CI_Driver
 
         $fields[] = array(
             'name'  => 'pemohon_lokasi',
-            'label' => 'Alamat',
+            'label' => 'Lokasi',
             'type'  => 'textarea',
             'std'   => ( $data_obj ? $data_obj->pemohon_lokasi : ''),
             'validation'=> ( !$data_obj ? 'required' : '' ) );
