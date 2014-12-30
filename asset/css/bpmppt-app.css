@@ -7101,7 +7101,11 @@ table.dataTable td {
   page-break-before: always;
 }
 .note-editor .note-editable table.bordered th,
-.note-editor .note-editable table.bordered td {
+.note-editor .note-editable table.bordered td,
+.note-editor .note-editable table tr.bordered th,
+.note-editor .note-editable table tr.bordered td,
+.note-editor .note-editable table th.bordered,
+.note-editor .note-editable table td.bordered {
   border: 1px solid #000;
 }
 .note-editor .note-editable table tr.t-header td {

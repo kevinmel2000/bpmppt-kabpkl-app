@@ -172,16 +172,10 @@
 <tr class="align-center bold">
     <td colspan="5" style="width:60%"></td>
     <td colspan="2" style="width:40%"><?php print_ttd_kadin() ?></td>
-</tr><?php if (strlen($data_tembusan) > 0): ?><tr>
-    <td colspan="7">
-        <p>Tembusan :</p>
-        <ol>
-        <?php foreach (unserialize($data_tembusan) as $tembusan) : ?>
-            <li><?php echo $tembusan ?>;</li>
-        <?php endforeach ?>
-        </ol>
-    </td>
-</tr><?php endif ?></table><table class="pagebreak">
+</tr>
+<tr><td colspan="7"><?php print_tembusan($data_tembusan) ?></td></tr>
+</table>
+<table class="pagebreak">
 <tr>
     <td width="20%">LAMPIRAN I</td>
     <td width="80%" colspan="3">KOORDINAT WILAYAH IZIN USAHA PERTAMBANGAN</td>

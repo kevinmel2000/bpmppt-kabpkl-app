@@ -109,7 +109,11 @@ table.pagebreak {
   page-break-before: always;
 }
 table.bordered th,
-table.bordered td {
+table.bordered td,
+table tr.bordered th,
+table tr.bordered td,
+table th.bordered,
+table td.bordered {
   border: 1px solid #000;
 }
 table tr.t-header td {
