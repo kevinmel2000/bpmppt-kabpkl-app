@@ -88,6 +88,23 @@ function print_table_reklame($reklame_data)
     return $table;
 }
 
+function filter_reklamedata($reklame_data)
+{
+    $data = array();
+    $reklame_data = unserialize($reklame_data);
+    foreach ($reklame_data as $i => $reklame)
+    {
+        $data['jenis'][$i]   = $reklame['jenis'];
+        $data['tema'][$i]    = $reklame['tema'];
+        $data['tempat'][$i]  = $reklame['tempat'];
+        $data['panjang'][$i] = $reklame['panjang'];
+        $data['lebar'][$i]   = $reklame['lebar'];
+        $data['2x'][$i]      = $reklame['2x'];
+        $data['ukuran'][$i]  = $reklame['panjang'].' x '.$reklame['lebar'].($reklame['2x'] ? ' (2 Muka)' : '');
+    }
+    return $data;
+}
+
 function print_ttd_kadin($atas_nama = '')
 {
     foreach (array('skpd_name', 'skpd_city', 'skpd_lead_name', 'skpd_lead_jabatan', 'skpd_lead_nip') as $property)
@@ -132,13 +149,13 @@ function print_cop()
 
 function print_blnthn_head($str_date)
 {
-    return strtoupper(format_roman(bdate('%m' )).' / '.bdate('%Y'));
+    return strtoupper(format_roman(bdate('%m', $str_date)).' / '.bdate('%Y', $str_date));
 }
 
 function print_blnthn_foot($str_date, $nbsp = null)
 {
     $nbsp || $nbsp = 6;
-    echo nbs($nbsp).bdate('%F %Y');
+    echo nbs($nbsp).bdate('%F %Y', $str_date);
 }
 
 function iplc_debits($debits = array())

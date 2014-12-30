@@ -396,9 +396,11 @@ class Bpmppt extends CI_Driver_Library
             $wheres['status'] = $form_data['data_status'];
         }
 
+        $data['type'] = $driver;
+        $data['date'] = '25-'.$form_data['data_date_month'].'-'.$form_data['data_date_year'];
         $data['submited'] = $form_data;
-        $data['layanan']  = $this->get_label( $driver );
-        $data['results']  = $this->get_report( $wheres );
+        $data['layanan'] = $this->get_label( $driver );
+        $data['results'] = $this->get_report( $wheres );
 
         return $data;
     }
