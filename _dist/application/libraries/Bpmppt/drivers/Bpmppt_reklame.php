@@ -24,6 +24,14 @@ class Bpmppt_reklame extends CI_Driver
      */
     public $alias = 'izin_reklame';
     public $name  = 'Izin Reklame';
+    public $tembusan = array(
+        'Inspektur Kabupaten Pekalongan',
+        'Ka. DPU Kabupaten Pekalongan',
+        'Ka. DPPKD Kabupaten Pekalongan',
+        'Ka. Dinhub Kominfo Kabupaten Pekalongan',
+        'Ka. Satpol PP Kabupaten Pekalongan',
+        'Ka. Bag. Hukum Setda Kabupaten Pekalongan',
+        );
 
     /**
      * Default field

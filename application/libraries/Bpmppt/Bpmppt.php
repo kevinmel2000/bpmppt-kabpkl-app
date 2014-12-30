@@ -581,6 +581,11 @@ class Bpmppt extends CI_Driver_Library
         $tembusan = isset($data->data_tembusan) ? unserialize($data->data_tembusan) : $this->_ci->input->post( $this->$driver->alias.'_data_tembusan' );
         $method = $this->_ci->biform->_attrs['method'];
 
+        if ( empty($tembusan) && isset($this->$driver->tembusan) )
+        {
+            $tembusan = $this->$driver->tembusan;
+        }
+
         if ( !empty( $tembusan ) )
         {
             foreach ( $tembusan as $row )
