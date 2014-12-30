@@ -35,7 +35,7 @@
             <td class="align-left"><ul><?php if (isset($reklame_data['tema'])) foreach ($reklame_data['tema'] as $tema) echo '<li>'.$tema.'</li>' ?></ul></td>
 			<td class="align-center"><?php echo $row->reklame_juml_val ?></td>
             <td class="align-left"><ul><?php if (isset($reklame_data['ukuran'])) foreach ($reklame_data['ukuran'] as $ukuran) echo '<li>'.$ukuran.'</li>' ?></ul></td>
-			<td class="align-left"><?php echo $row->reklame_range_tgl_text.'<br>'.format_date($row->reklame_range_tgl_mulai).' - '.format_date( $row->reklame_range_tgl_selesai ) ?></td>
+			<td class="align-left"><?php echo $row->reklame_range_tgl_text.'<br>'.bdate('%d %M %Y', $row->reklame_range_tgl_mulai).' - '.bdate('%d %M %Y', $row->reklame_range_tgl_selesai ) ?></td>
 		</tr>
 	<?php $i++; endforeach; else : ?>
         <tr><td colspan="9"><h1 style="text-align: center;">NIHIL</h1></td></tr>

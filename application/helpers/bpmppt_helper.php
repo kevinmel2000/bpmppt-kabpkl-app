@@ -135,11 +135,11 @@ function print_cop()
         'alt'   => 'Logo cetak',
         'class' => 'img logo-skpd',
         'width' => '60',
-        'style' => 'position:absolute; left:5px;'));
+        'style' => 'position:absolute; top:1px; left:5px;'));
 
-    $output = '<p class="align-center bold" style="margin-top: 5px; margin-left: 60px; line-height: 1.5em;">'
-            . 'PEMERINTAH KABUPATEN PEKALONGAN<br>'
-            . '<span style="font-size: 16px; line-height:1.4em;">'.strtoupper($skpd_name).'</span><br>'
+    $output = '<p class="align-center" style="margin-top: 5px; margin-left: 60px;">'
+            . '<span class="bold" style="font-size: 12px; line-height:1.5em;">PEMERINTAH KABUPATEN PEKALONGAN</span><br>'
+            . '<span class="bold" style="font-size: 16px; line-height:1.4em;">'.strtoupper($skpd_name).'</span><br>'
             . '<span style="font-size: 12px; line-height:1.4em;">'.$skpd_address.' '.$skpd_city.', Kode Pos '.$skpd_pos.'</span><br>'
             . '<span style="font-size: 12px; line-height:1.4em;">Telepon./Faksimile : '.$skpd_telp.' e-mail : '.$skpd_email.'</span>'
             . '</p>';

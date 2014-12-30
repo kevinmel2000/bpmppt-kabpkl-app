@@ -2,12 +2,12 @@
     <thead>
         <tr>
             <th>No.</th>
-            <th>Nomor Permohonan</th>
-            <th>Nama Pemohon</th>
             <th>Nama Perusahaan</th>
-            <th>Jabatan</th>
-            <th>Alamat Pemohon</th>
-            <th>Tanggal Permohonan</th>
+            <th>Alamat Perusahaan</th>
+            <th>Nama Penanggungjawab</th>
+            <th>Lokasi</th>
+            <th>No. &amp; Tgl. Izin</th>
+            <th>Masa Berlaku</th>
         </tr>
         <tr>
             <th>1</th>
@@ -23,15 +23,15 @@
     <?php if ( $results ) : $i = 1; foreach( $results as $row ) : ?>
         <tr id="baris-<?php echo $row->id ?>" style="text-transform: uppercase;">
             <td class="align-center"><?php echo $i ?></td>
-            <td class="align-center"><?php echo $row->surat_nomor ?></td>
-            <td class="align-left"><?php echo $row->pemohon_nama ?></td>
-            <td class="align-left"><?php echo $row->pemohon_jabatan ?></td>
-            <td class="align-left"><?php echo $row->pemohon_usaha ?></td>
-            <td class="align-left"><?php echo $row->pemohon_alamat ?></td>
-            <td class="align-center"><?php echo format_date( $row->surat_tanggal ) ?></td>
+            <td class="align-left"><?php echo $row->usaha_nama ?></td>
+            <td class="align-left"><?php echo $row->usaha_alamat ?></td>
+            <td class="align-center"><?php echo $row->pemohon_nama ?></td>
+            <td class="align-center"><?php echo $row->usaha_lokasi ?></td>
+            <td class="align-center"><?php echo '658.31 / '.$row->surat_nomor.' / BPMPPT / IPLC / '.print_blnthn_head($row->surat_tanggal).'<br>'.format_date($row->surat_tanggal) ?></td>
+            <td class="align-center"><?php echo format_date($row->masa_berlaku) ?></td>
         </tr>
     <?php $i++; endforeach; else : ?>
-        <tr><td colspan="15"><h1 style="text-align: center;">NIHIL</h1></td></tr>
+        <tr><td colspan="7"><h1 style="text-align: center;">NIHIL</h1></td></tr>
     <?php endif ?>
     </tbody>
 </table>

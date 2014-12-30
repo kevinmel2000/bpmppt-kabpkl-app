@@ -41,7 +41,7 @@ $e = '';
 foreach ( ($lembs = unserialize($usaha_lembaga)) as $i => $lembaga ) {
     $e .= ', '.($lembaga != 'Lainnya' ? $lembaga : $usaha_lembaga_lain);
 }
-echo ltrim($e, ', ');
+echo ltrim(strtoupper($e), ', ');
 ?></td>
 </tr>
 <tr class="bold" style="border: 2px solid #000; border-bottom-width: 1px; border-top-width: 1px">
