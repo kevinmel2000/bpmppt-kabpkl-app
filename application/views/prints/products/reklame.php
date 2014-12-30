@@ -3,15 +3,17 @@
         <tr><td class="empty" colspan="5" style="width:100%"></td></tr>
 <tr class="align-center bold">
     <td colspan="5" style="width:100%">
-<p>SURAT IZIN BUPATI PEKALONGAN</p>
+<p>KEPUTUSAN BUPATI PEKALONGAN</p>
 <p>NOMOR : <?php echo '510.8 / '.$surat_nomor.' / BPM PPT / Rekl'.($pengajuan_jenis == 'Perpanjangan' ? '.P' : '').' / '.print_blnthn_head($surat_tanggal) ?></p>
+<p>TENTANG</p>
 <p>IZIN PEMASANGAN REKLAME</p>
+<p>BUPATI PEKALONGAN</p>
     </td>
 </tr>
 <tr><td class="empty" colspan="5" style="width:100%"></td></tr>
 <tr>
     <td style="width:10%"><p>Dasar :</p></td>
-    <td colspan="4" style="width:90%">
+    <td colspan="4" style="width:90%" class="align-justify">
         <ol class="lower-alpha">
             <li>Peraturan Bupati Pekalongan No. 12 Tahun 2012 tentang Pendelegasian Kewenangan Penandatanganan Perizinan dan Non Perizinan Kepada Kepala Badan Penanaman Modal dan Pelayanan Perijinan Terpadu Kabupaten Pekalongan</li>
             <li>Surat permohonan izin pemasangan reklame dari Sdr. <?php echo $pemohon_nama?> tanggal permohonan <?php echo format_date($surat_tanggal) ?> tentang Permohonan <?php echo ($pengajuan_jenis == 'Pendaftaran Baru' ? 'baru' : 'Perpanjangan ') ?> Izin Reklame <b><?php echo parse_reklamedata($reklame_data) ?></b>.</li>
@@ -75,7 +77,7 @@
             <li>Apabila masa berlaku izin sudah habis dan tidak diperbaharui, maka reklame tersebut harus dibongkar dengan biaya ditanggung oleh pemegang izin.</li>
             <li>Apabila dalam waktu 15 (lima belas) hari setelah masa berlaku izin berakhir, pemohon tidak melakukan pemboingkaran, maka Pemerintah Daerah akan melakukan pembongkaran terhadap papan reklame tersebut.</li>
             <li>Apabila terdapat kekeliruan/kesalahan maka diadakan perubahan sebagaimana mestinya atau dapat dicabut</li>
-            <li>Jeputusan ini mulai berlaku pada tanggal ditetapkan.</li>
+            <li>Keputusan ini mulai berlaku pada tanggal ditetapkan.</li>
         </ol>
     </td>
 </tr>
@@ -104,7 +106,7 @@
     <tr><td class="empty" colspan="5" style="width:100%"></td></tr>
     <tr class="align-center bold">
         <td colspan="3" style="width:55%"></td>
-        <td colspan="2" style="width:45%"><p><?php echo $skpd_kab ?><?php print_blnthn_foot($surat_tanggal) ?></p></td>
+        <td colspan="2" style="width:45%"><p><?php echo $skpd_kab ?>,<?php print_blnthn_foot($surat_tanggal) ?></p></td>
     </tr>
     <tr><td class="empty" colspan="5" style="width:100%"></td></tr>
     <tr class="align-center bold">

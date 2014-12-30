@@ -135,7 +135,7 @@ function print_cop()
         'alt'   => 'Logo cetak',
         'class' => 'img logo-skpd',
         'width' => '60',
-        'style' => 'position:absolute; top:1px; left:5px;'));
+        'style' => 'position:absolute; left:5px;'));
 
     $output = '<p class="align-center" style="margin-top: 5px; margin-left: 60px;">'
             . '<span class="bold" style="font-size: 12px; line-height:1.5em;">PEMERINTAH KABUPATEN PEKALONGAN</span><br>'

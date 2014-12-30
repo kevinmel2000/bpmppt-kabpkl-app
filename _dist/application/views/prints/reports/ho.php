@@ -29,7 +29,7 @@
             <td class="align-left"><?php echo $row->usaha_alamat ?></td>
             <td class="align-center"><?php echo $row->pemohon_nama ?></td>
             <td class="align-left"><?php echo $row->pemohon_alamat ?></td>
-            <td class="align-left"><?php echo $row->surat_nomor ?></td>
+            <td class="align-left"><?php echo '510.8 /'.$row->surat_nomor.'/ BPMPPT / '.$row->surat_kode.' / '.print_blnthn_head($row->surat_tanggal) ?></td>
             <td class="align-left"><?php echo format_date($row->surat_tanggal) ?></td>
             <td class="align-left"><?php echo $row->surat_jenis_pengajuan ?></td>
         </tr>
