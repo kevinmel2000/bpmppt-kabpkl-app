@@ -1,7 +1,7 @@
 <table>
     <tbody>
         <tr><td class="empty" colspan="5" style="width:100%"></td></tr>
-<tr class="align-center bold">
+<tr class="align-center">
     <td colspan="5" style="width:100%">
 <p>KEPUTUSAN BUPATI PEKALONGAN</p>
 <p>NOMOR : <?php echo '510.8 / '.$surat_nomor.' / BPM PPT / Rekl'.($pengajuan_jenis == 'Perpanjangan' ? '.P' : '').' / '.print_blnthn_head($surat_tanggal) ?></p>
@@ -21,7 +21,7 @@
     </td>
 </tr>
 <tr><td class="empty" colspan="5" style="width:100%"></td></tr>
-<tr class="align-center bold">
+<tr class="align-center">
     <td colspan="5">M E N G I Z I N  K A N</td>
 </tr>
 <tr><td class="empty" colspan="5" style="width:100%"></td></tr>
@@ -90,7 +90,7 @@
     </td>
 </tr>
 <tr><td class="empty" colspan="5" style="width:100%"></td></tr>
-<tr class="align-center bold">
+<tr class="align-center">
     <td colspan="4" style="width:55%"></td>
     <td style="width:45%"><?php print_ttd_kadin() ?></td>
 </tr>

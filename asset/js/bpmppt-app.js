@@ -88,10 +88,11 @@ $(document).ready(function () {
       var tgt = '[name=\"' + key + '\"]'
 
       if ($(tgt).hasClass('bs-switch')) {
-        $(tgt).on('switchChange.bootstrapSwitch', function (event, state) {
+        $(this).on('switchChange.bootstrapSwitch', function (event, state) {
           showHide(el, val.indexOf(state) !== -1)
         })
       } else {
+        showHide(el, false)
         $(tgt).change(function () {
           if ($(this).is(':radio')) {
             showHide(el, val.indexOf($(this).filter(':checked').val()) !== -1)

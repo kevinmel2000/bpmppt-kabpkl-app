@@ -7111,6 +7111,14 @@ table.dataTable td {
 .note-editor .note-editable table td.bordered {
   border: 1px solid #000;
 }
+.note-editor .note-editable table.unbordered th,
+.note-editor .note-editable table.unbordered td,
+.note-editor .note-editable table tr.unbordered th,
+.note-editor .note-editable table tr.unbordered td,
+.note-editor .note-editable table th.unbordered,
+.note-editor .note-editable table td.unbordered {
+  border: 0;
+}
 .note-editor .note-editable table tr.t-header td {
   border-bottom: 2px solid #000;
 }

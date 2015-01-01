@@ -119,6 +119,14 @@ table th.bordered,
 table td.bordered {
   border: 1px solid #000;
 }
+table.unbordered th,
+table.unbordered td,
+table tr.unbordered th,
+table tr.unbordered td,
+table th.unbordered,
+table td.unbordered {
+  border: 0;
+}
 table tr.t-header td {
   border-bottom: 2px solid #000;
 }

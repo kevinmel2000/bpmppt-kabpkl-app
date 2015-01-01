@@ -260,7 +260,7 @@ class Bpmppt extends CI_Driver_Library
             'ulang' => 'Daftar Ulang/Perpanjangan'
             ),
         'guna_bangunan' => array(
-            'Rumah Tinggal', 'Kios', 'Toko', 'Gudang', 'Pabrik', 'Kantor'
+            'Rumah Tinggal', 'Kios', 'Toko', 'Gudang', 'Pabrik', 'Kantor', 'Lainnya'
             ),
         );
 
@@ -302,30 +302,27 @@ class Bpmppt extends CI_Driver_Library
             }
         }
 
-        if ( $driver != 'imb' )
-        {
-            $this->fields[] = array(
-                'name'  => $this->$driver->alias.'_surat',
-                'label' => isset( $this->$driver->prefield_label ) ? $this->$driver->prefield_label : 'No. &amp; Tgl. Permohonan',
-                'type'  => 'subfield',
-                'fields'=> array(
-                    array(
-                        'name'  => 'nomor',
-                        'label' => 'Nomor',
-                        'type'  => 'text',
-                        'std'   => ( $data_obj ? $data_obj->surat_nomor : ''),
-                        'validation'=> ( !$data_obj ? 'required' : '' )
-                        ),
-                    array(
-                        'name'  => 'tanggal',
-                        'label' => 'Tanggal',
-                        'type'  => 'datepicker',
-                        'std'   => ( $data_obj ? format_date( $data_obj->surat_tanggal ) : ''),
-                        'validation'=> ( !$data_obj ? 'required' : '' ),
-                        ),
-                    )
-                );
-        }
+        $this->fields[] = array(
+            'name'  => $this->$driver->alias.'_surat',
+            'label' => isset( $this->$driver->prefield_label ) ? $this->$driver->prefield_label : 'No. &amp; Tgl. Permohonan',
+            'type'  => 'subfield',
+            'fields'=> array(
+                array(
+                    'name'  => 'nomor',
+                    'label' => 'Nomor',
+                    'type'  => 'text',
+                    'std'   => ( $data_obj ? $data_obj->surat_nomor : ''),
+                    'validation'=> ( !$data_obj ? 'required' : '' )
+                    ),
+                array(
+                    'name'  => 'tanggal',
+                    'label' => 'Tanggal',
+                    'type'  => 'datepicker',
+                    'std'   => ( $data_obj ? format_date( $data_obj->surat_tanggal ) : ''),
+                    'validation'=> ( !$data_obj ? 'required' : '' ),
+                    ),
+                )
+            );
 
         $this->_ci->load->library('biform');
 
@@ -341,13 +338,10 @@ class Bpmppt extends CI_Driver_Library
             $this->field_tembusan($data_obj);
         }
 
-        // $no_buttons = $data_obj ? TRUE : FALSE ;
-
         $form = $this->_ci->biform->initialize(array(
             'name'       => $this->$driver->alias,
             'action'     => current_url(),
             'fields'     => $this->fields,
-            // 'no_buttons' => $no_buttons,
             ));
 
         if ( $form_data = $form->validate_submition() )

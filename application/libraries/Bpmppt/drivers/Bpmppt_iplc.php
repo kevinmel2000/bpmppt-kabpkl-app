@@ -252,11 +252,6 @@ class Bpmppt_iplc extends CI_Driver
 
     // -------------------------------------------------------------------------
 
-    /**
-     * Prepost form data hooks
-     *
-     * @return  mixed
-     */
     public function _pre_post($form_data)
     {
         foreach (array_keys($this->_custom_fields) as $field)

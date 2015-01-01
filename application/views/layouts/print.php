@@ -8,7 +8,8 @@
     <meta name="author" content="<?php echo config_item('application_author') ?>">
     <link href="<?php echo base_url('asset/css/bpmppt-app-print.css') ?>" type="text/css" rel="stylesheet" media="all">
 </head>
-<body onload="window.print()" <?php echo get_body_attrs() ?>>
+<body <?php echo get_body_attrs() ?>>
+<!-- <body onload="window.print()" <?php echo get_body_attrs() ?>> -->
 
     <?php $types = array('izin_reklame', 'izin_gangguan') ?>
     <table width="100%" class="<?php echo $type ?>">

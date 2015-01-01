@@ -276,8 +276,6 @@ class Bpmppt_iui extends CI_Driver
 
         $this->_ci->table->set_template( $this->table_templ );
 
-        $data_mode = $data and !empty($data->komoditi);
-
         $head[] = array(
             'data'  => 'Komoditi',
             'class' => 'head-id',
