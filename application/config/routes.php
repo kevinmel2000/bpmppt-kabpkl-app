@@ -39,36 +39,26 @@
 */
 
 // $route['default_controller']	= "login";
-$route['default_controller']	= "data/utama";
+$route['default_controller'] = "data/utama";
 
 // Overiding 404 page not found
-$route['404_override']	        = 'notice/index/404';
+$route['404_override'] = 'notice/index/404';
 
 // notice route
-$route['notice/(:any)']         = "notice/index/$1";
+$route['notice/(:any)'] = "notice/index/$1";
 
-// Dashboard route
-$route['dashboard']             = "data/utama";
-// Dashboard route
-$route['data/layanan/(:any)']   = "data/layanan/index/$1";
+// Layanan route
+$route['layanan/(:any)'] = "layanan/index/$1";
 
-// login route
-$route['login']                 = "auth/login";
-// logout route
-$route['logout']                = "auth/logout";
-// register route
-$route['register']              = "auth/register";
-// resend route
-$route['resend']                = "auth/resend";
-// activate route
-$route['activate']              = "auth/activate";
-// forgot route
-$route['forgot']                = "auth/forgot";
+foreach (array('login', 'logout', 'register', 'resend', 'activate', 'forgot') as $_auth)
+{
+    $route[$_auth] = 'auth/'.$_auth;
+}
 
 // Profile route
-$route['admin']                 = "admin/internal/index";
+$route['admin'] = "admin/internal/index";
 // Profile route
-$route['profile']               = "admin/pengguna/profile";
+$route['profile'] = "admin/pengguna/profile";
 
 
 /* End of file routes.php */

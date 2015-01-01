@@ -14,7 +14,7 @@ class BI_Controller extends CI_Controller
 {
     protected $current_user;
 
-    protected $_modules_arr = array();
+    protected $_drivers_arr = array();
 
     /**
      * Default class constructor
@@ -140,10 +140,7 @@ class BI_Controller extends CI_Controller
         if ( is_user_can('manage_data') )
         {
             // Adding dashboard menu to main navbar
-            $this->bitheme->add_navmenu('main_navbar', 'dashboard', 'link', 'data', 'Data Layanan');
-            // Adding submenu to main_navbar-data
-            // $this->data_navbar('main_navbar-master', 'top');
-
+            $this->bitheme->add_navmenu('main_navbar', 'dashboard', 'link', 'layanan', 'Data Layanan');
         }
 
         if ( is_user_can('admin_application') )
@@ -155,50 +152,13 @@ class BI_Controller extends CI_Controller
         {
             $this->bitheme->add_navmenu('main_navbar', 'admin', 'link', 'profile/', 'Profil Saya');
         }
+
         // Adding account menu to user navbar
         $this->bitheme->add_navmenu('user_navbar', 'account', 'link', 'profile', $this->current_user['display']);
         // Adding submenu to main_navbar-admin
         // $this->admin_navbar('main_navbar-admin', 'top');
         // Adding submenu to user_navbar-account
         $this->account_navbar('user_navbar-account', 'top');
-    }
-
-    // -------------------------------------------------------------------------
-
-    protected function data_navbar($parent, $position = 'top')
-    {
-        $link   = 'data/layanan/';
-        $nama   = str_replace('/', '_', $link);
-
-        $this->load->driver('bpmppt');
-
-        $modules = $this->bpmppt->get_modules();
-
-        if (count($modules) > 0)
-        {
-            // Overview
-            $this->bitheme->add_navmenu($parent, 'overview', 'link', 'data/utama', 'Overview', array(), $position);
-            // Laporan
-            $this->bitheme->add_navmenu($parent, 'laporan', 'link', 'data/laporan', 'Laporan', array(), $position);
-            // Devider
-            $this->bitheme->add_navmenu($parent, $nama.'d', 'devider', '', '', array(), $position);
-            // Header
-            $this->bitheme->add_navmenu($parent, 'au_head', 'header', '', 'Data Perizinan', array(), $position);
-            // Datas
-            foreach ( $modules as $class => $prop )
-            {
-                $this->bitheme->add_navmenu(
-                    $parent,
-                    $nama.$prop['alias'],
-                    'link',
-                    $link.$class,
-                    $prop['label'],
-                    array(),
-                    $position);
-            }
-        }
-
-        $this->_modules_arr = $this->bpmppt->get_modules_assoc();
     }
 
     // -------------------------------------------------------------------------

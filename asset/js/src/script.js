@@ -78,29 +78,36 @@ $(document).ready(function () {
     }
   }
 
+  function folder(el, target, val) {
+    if (target.is(':radio')) {
+      showHide(el, val.indexOf(target.filter(':checked').val()) !== -1)
+    } else if (target.is(':checkbox')) {
+      $.each(val, function (i, v) {
+        showHide(el, target.filter('[value="' + v + '"]').is(':checked'))
+      })
+    } else {
+      showHide(el, val.indexOf(target.val()) !== -1)
+    }
+  }
+
   // Folding functions
   $('.form-group').each(function () {
-    var el  = $(this)
+    var el = $(this)
 
     if ($(this).data('fold') == 1) {
-      var key = el.data('fold-key')
-      var val = el.data('fold-value')
-      var tgt = '[name=\"' + key + '\"]'
+      var val = $.parseJSON(el.data('fold-value').replace(/\'/g, '"'))
+      var tgt = $('[name=\"' + el.data('fold-key') + '\"]')
 
-      if ($(tgt).hasClass('bs-switch')) {
-        $(this).on('switchChange.bootstrapSwitch', function (event, state) {
+      if (tgt.hasClass('bs-switch')) {
+        tgt.on('switchChange.bootstrapSwitch', function (event, state) {
           showHide(el, val.indexOf(state) !== -1)
         })
       } else {
-        showHide(el, false)
-        $(tgt).change(function () {
-          if ($(this).is(':radio')) {
-            showHide(el, val.indexOf($(this).filter(':checked').val()) !== -1)
-          } else if ($(this).is(':checkbox')) {
-            showHide(el, (val.indexOf($(this).val()) !== -1) && $(this).is(':checked'))
-          } else {
-            showHide(el, val.indexOf($(this).val()) !== -1)
-          }
+        // showHide(el, false)
+        folder(el, tgt, val)
+
+        tgt.change(function () {
+          folder(el, tgt, val)
         })
       }
     }
