@@ -1,7 +1,7 @@
 $(document).ready(function () {
   'use strict';
 
-  function biPopup(url, title, w, h) {
+  function biPopup(url, w, h) {
     var left = (screen.width / 2) - (w / 2)
     var top = (screen.height / 2) - (h / 2) - 20
 
@@ -10,8 +10,13 @@ $(document).ready(function () {
   }
 
   $('.btn-cetak').click(function (e) {
+    biPopup($(this).attr('href'), 800, 600)
     e.preventDefault()
-    biPopup($(this).attr('href'), $(this).attr('title'), 800, 600)
+  })
+
+  $('form[name="print-all"]').submit(function (e) {
+    biPopup($(this).attr('action'), 800, 600)
+    e.preventDefault()
   })
 
   $('.btn-hapus').click(function (e) {

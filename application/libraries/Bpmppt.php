@@ -41,16 +41,6 @@ class Bpmppt
         log_message('debug', '#BPMPPT: Library initialized.');
     }
 
-    // -------------------------------------------------------------------------
-
-    /**
-     * Acts as a simple way to call model methods without loads of stupid alias'
-     *
-     * @param   string  $method  Method name
-     * @param   mixed   $args    Method Arguments
-     *
-     * @return  mixed
-     */
     public function __call($method, $args)
     {
         if (!method_exists($this->_ci->bpmppt_model, $method))
@@ -61,8 +51,6 @@ class Bpmppt
         return call_user_func_array(array($this->_ci->bpmppt_model, $method), $args);
     }
 
-    // -------------------------------------------------------------------------
-
     public function get_buttons()
     {
         if (!empty($this->tool_buttons))
@@ -70,8 +58,6 @@ class Bpmppt
             return $this->tool_buttons;
         }
     }
-
-    // -------------------------------------------------------------------------
 
     public function get_navigation()
     {
@@ -98,8 +84,6 @@ class Bpmppt
             }
         }
     }
-
-    // -------------------------------------------------------------------------
 
     public function get_overview()
     {
@@ -136,16 +120,14 @@ class Bpmppt
         return FALSE;
     }
 
-    // -------------------------------------------------------------------------
-
     public function get_datatable($driver, $page_link)
     {
         $this->tool_buttons['data'] = 'Kembali|default';
         $this->tool_buttons['form']  = 'Baru|primary';
-        $this->tool_buttons['cetak'] = 'Laporan|info';
+        $this->tool_buttons['laporan'] = 'Laporan|info';
         $this->tool_buttons['Template|default'] = array(
             'data/setting'  => 'Data',
-            'cetak/setting' => 'Laporan',
+            'laporan/setting' => 'Laporan',
             );
         $this->tool_buttons[0] = array(
             'data/status/semua' => 'Semua',
@@ -197,8 +179,6 @@ class Bpmppt
         return $grid->generate($query);
     }
 
-    // -------------------------------------------------------------------------
-
     public function get_dataform($driver, $data_id = FALSE)
     {
         $this->_ci->load->library('biform');
@@ -209,7 +189,7 @@ class Bpmppt
         {
             $this->tool_buttons['form'] = 'Baru|primary';
             $this->tool_buttons[] = array(
-                'cetak/'.$data_id => 'Cetak|info',
+                'laporan/'.$data_id => 'Cetak|info',
                 $h_link.'/'.$data_id => $h_text.'|danger'
                 );
 
@@ -258,12 +238,81 @@ class Bpmppt
         return $form->generate();
     }
 
-    // -------------------------------------------------------------------------
-
-    public function get_printform()
+    public function get_printform($driver = NULL)
     {
         $this->tool_buttons['data'] = 'Kembali|default';
 
         $this->_ci->load->library('biform');
+
+        if (!$driver)
+        {
+            foreach ($this->izin->get_drivers(TRUE) as $module => $prop)
+            {
+                $modules[$module] = $prop->label;
+            }
+
+            $fields['data_type'] = array(
+                'label' => 'Pilih data perijinan',
+                'type'  => 'dropdown',
+                'option'=> $modules,
+                'desc'  => 'Pilih jenis dokumen yang ingin dicetak. Terdapat '.count($this->drivers).' yang dapat anda cetak.'
+                );
+        }
+
+        $option = array('all' => 'Semua');
+        foreach ($this->statuses as $s_link => $s_label)
+        {
+            if ($s_link != 'deleted')
+            {
+                $option[$s_link] = $s_label;
+            }
+        }
+
+        $fields['data_status'] = array(
+            'label' => 'Status Pengajuan',
+            'type' => 'radio',
+            'std' => 'all',
+            'option' => $option,
+            'desc' => 'tentukan status dokumennya, pilih <em>Semua</em> untuk mencetak semua dokumen dengan jenis dokumen diatas, atau anda dapat sesuaikan dengan kebutuhan.' );
+
+        $fields['data_date'] = array(
+            'label' => 'Bulan &amp; Tahun',
+            'type'  => 'subfield',
+            'fields'=> array(
+                'month' => array(
+                    'label' => 'Bulan',
+                    'type'  => 'dropdown',
+                    'option'=> add_placeholder( get_month_assoc(), 'Pilih Bulan')
+                    ),
+                'year' => array(
+                    'label' => 'Tahun',
+                    'type'  => 'dropdown',
+                    'option'=> add_placeholder( get_year_assoc(), 'Pilih Tahun')
+                    )
+                ),
+            'desc'  => 'Tentukan tanggal dan bulan dokumen.',
+            );
+
+        $buttons['do-print']= array(
+            'type'  => 'submit',
+            'label' => 'Cetak sekarang',
+            'class' => 'btn-primary pull-right'
+            );
+
+        $form = $this->_ci->biform->initialize( array(
+            'name'    => 'print-all',
+            'action'  => current_url(),
+            'fields'  => $fields,
+            'buttons' => $buttons,
+            ));
+
+        if ($form_data = $form->validate_submition())
+        {
+            return $form_data;
+        }
+        else
+        {
+            return $form->generate();
+        }
     }
 }

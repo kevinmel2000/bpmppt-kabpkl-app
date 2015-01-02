@@ -46,8 +46,8 @@ class Layanan extends BI_Controller
                     $this->_form($driver, $data_id);
                     break;
 
-                case 'cetak':
-                    $this->_print($driver, $data_id);
+                case 'laporan':
+                    $this->laporan($driver, $data_id);
                     break;
 
                 case 'hapus':
@@ -84,94 +84,45 @@ class Layanan extends BI_Controller
         }
     }
 
-    public function laporan()
+    public function laporan($driver = NULL, $data_id = NULL)
     {
-        $this->set_panel_title('Laporan data');
-        $this->load->library('biform');
-
-        foreach ( $this->izin->get_drivers(TRUE) as $module => $prop )
+        if (is_numeric($data_id))
         {
-            $modules[$module] = $prop->label;
+            $data = $this->izin->get_print($driver, $data_id);
+            $this->load->theme('prints/products/'.$driver, $data, 'print');
         }
-
-        $fields[]   = array(
-            'name'  => 'data_type',
-            'label' => 'Pilih data perijinan',
-            'type'  => 'dropdown',
-            'option'=> $modules,
-            'validation'=> 'required',
-            'desc'  => 'Pilih jenis dokumen yang ingin dicetak. Terdapat '.count( $this->_drivers_arr ).' yang dapat anda cetak.' );
-
-        $fields[]   = array(
-            'name'  => 'data_status',
-            'label' => 'Status Pengajuan',
-            'type'  => 'radio',
-            'std'  => 'all',
-            'option'=> array(
-                'all'       => 'Semua',
-                'pending'   => 'Tertunda',
-                'approved'  => 'Disetujui',
-                'done'      => 'Selesai' ),
-            'desc'  => 'tentukan status dokumennya, pilih <em>Semua</em> untuk mencetak semua dokumen dengan jenis dokumen diatas, atau anda dapat sesuaikan dengan kebutuhan.' );
-
-        $fields[]   = array(
-            'name'  => 'data_date',
-            'label' => 'Bulan &amp; Tahun',
-            'type'  => 'subfield',
-            'fields'=> array(
-                array(
-                    'name' => 'month',
-                    'label' => 'Bulan',
-                    'type'  => 'dropdown',
-                    'option'=> add_placeholder( get_month_assoc(), 'Pilih Bulan') ),
-                array(
-                    'name' => 'year',
-                    'label' => 'Tahun',
-                    'type'  => 'dropdown',
-                    'option'=> add_placeholder( get_year_assoc(), 'Pilih Tahun') )
-                ),
-            'desc'  => 'Tentukan tanggal dan bulan dokumen.' );
-
-        $buttons[]= array(
-            'name'  => 'do-print',
-            'type'  => 'submit',
-            'label' => 'Cetak sekarang',
-            'class' => 'btn-primary pull-right' );
-
-        $form = $this->biform->initialize( array(
-            'name'      => 'print-all',
-            'action'    => current_url(),
-            'extras'    => array('target' => 'Popup_Window'),
-            'fields'    => $fields,
-            'buttons'   => $buttons,
-            ));
-
-        $script = "$('form[name=\"print-all\"]').submit(function (e) {"
-                . "new Baka.popup('".current_url()."', 'Popup_Window', 800, 600);"
-                . "});";
-
-        load_script('print-popup', $script, '', 'bootigniter');
-
-        if ( $form_data = $form->validate_submition() )
+        else if ($data_id == 'setting')
         {
-            $data_type = $form_data['data_type'];
-            unset($form_data['data_type']);
-
-            $data = $this->izin->do_report( $data_type, $form_data );
-
-            $this->load->theme('prints/reports/'.$data_type, $data, 'report');
+            $this->_template($driver, 'reports');
         }
+        else
+        {
+            $this->set_panel_title('Laporan data');
+            $laporan = $this->bpmppt->get_printform($driver);
 
-        $this->data['panel_body'] = $form->generate();
+            if (is_array($laporan))
+            {
+                $data_type = $laporan['data_type'];
+                unset($laporan['data_type']);
 
-        $this->load->theme('dataform', $this->data);
+                $data = $this->izin->do_report($data_type, $laporan);
+                $this->load->theme('prints/reports/'.$data_type, $data, 'report');
+            }
+            else
+            {
+                $this->data['tool_buttons'] = $this->bpmppt->get_buttons();
+                $this->data['panel_body'] = $laporan;
+
+                $this->load->theme('dataform', $this->data);
+            }
+        }
     }
 
     private function _data($driver, $id = FALSE)
     {
         if ($id == 'setting')
         {
-            $this->data_out($driver);
+            $this->_template($driver, 'products');
         }
         else if (is_numeric($id))
         {
@@ -200,86 +151,6 @@ class Layanan extends BI_Controller
         $this->data['panel_body'] = $form;
 
         $this->load->theme('dataform', $this->data);
-    }
-
-    private function _print($driver, $data_id = FALSE)
-    {
-        if (is_numeric($data_id))
-        {
-            $data = $this->izin->get_print($driver, $data_id);
-            $this->load->theme('prints/products/'.$driver, $data, 'print');
-        }
-        else if ($data_id == 'setting')
-        {
-            $this->_print_out($driver);
-        }
-        else
-        {
-            $this->data['tool_buttons']['data'] = 'Kembali|default';
-            $this->set_panel_title('Laporan data '.$this->izin->get_label($driver));
-
-            $this->load->library('biform');
-
-            $fields['data_status'] = array(
-                'label' => 'Status Pengajuan',
-                'type'  => 'dropdown',
-                'option'=> array(
-                    'all'      => 'Semua',
-                    'pending'  => 'Tertunda',
-                    'approved' => 'Disetujui',
-                    'done'     => 'Selesai'),
-                'desc'  => 'tentukan status dokumennya, pilih <em>Semua</em> untuk mencetak semua dokumen dengan jenis dokumen diatas, atau anda dapat sesuaikan dengan kebutuhan.');
-
-            $fields['data_date'] = array(
-                'label' => 'Bulan &amp; Tahun',
-                'type'  => 'subfield',
-                'fields'=> array(
-                    array(
-                        'name'  => 'month',
-                        'label' => 'Bulan',
-                        'type'  => 'dropdown',
-                        'option'=> add_placeholder(get_month_assoc(), 'Pilih Bulan')),
-                    array(
-                        'name'  => 'year',
-                        'label' => 'Tahun',
-                        'type'  => 'dropdown',
-                        'option'=> add_placeholder(get_year_assoc(), 'Pilih Tahun'))
-                    ),
-                'desc'  => 'Tentukan tanggal dan bulan dokumen.');
-
-            $buttons[] = array(
-                'name'  => 'do-print',
-                'type'  => 'submit',
-                'label' => 'Cetak sekarang',
-                'class' => 'btn-primary pull-right');
-
-            $form = $this->biform->initialize(array(
-                'name'    => 'print-'.$driver,
-                'action'  => current_url(),
-                'extras'  => array('target' => 'Popup_Window'),
-                'fields'  => $fields,
-                'buttons' => $buttons,
-                ));
-
-            $script = "$('form[name=\"print-".$driver."\"]').submit(function (e) {"
-                    . "new Baka.popup('".current_url()."', 'Popup_Window', 800, 600);"
-                    . "});";
-
-            load_script('print-popup', $script);
-
-            if ($form_data = $form->validate_submition())
-            {
-                $data = $this->izin->do_report($driver, $form_data);
-
-                $this->load->theme('prints/reports/'.$driver, $data, 'report');
-            }
-            else
-            {
-                $this->data['panel_body'] = $form->generate();
-
-                $this->load->theme('dataform', $this->data);
-            }
-        }
     }
 
     private function _delete($driver, $data_id)
@@ -312,43 +183,41 @@ class Layanan extends BI_Controller
         redirect($this->data['page_link']);
     }
 
-    private function _data_out($driver)
+    private function _template($driver, $type = 'products')
     {
-        $this->set_panel_title('Editing template output '.$this->izin->get_label($driver));
+        $type = $type != 'products' ? 'reports' : $type;
+        $title = 'Editing template ';
+
+        if ($type == 'products')
+        {
+            $title .= 'data ';
+            $filter = array(
+                '<?php foreach (unserialize($data_tembusan) as $tembusan) : ?>' => '<!-- start loop -->',
+                '<?php endforeach ?>'                                           => '<!-- end loop -->',
+                '<?php if (strlen($data_tembusan) > 0): ?>'                     => '<!-- start condition -->',
+                '<?php endif ?>'                                                => '<!-- end condition -->',
+                );
+        }
+        elseif ($type == 'reports')
+        {
+            $title .= 'Laporan ';
+            $filter = array(
+                '<?php if ($results) : $i = 1; foreach($results as $row) : ?>' => '<!-- start loop -->',
+                '<?php $i++; endforeach; else : ?>'                            => '<!-- conditional loop -->',
+                '<?php endif ?>'                                               => '<!-- end loop -->',
+                '$row->'                                                       => '#',
+                );
+        }
+
+        $this->set_panel_title($title.$this->izin->get_label($driver));
         $this->data['tool_buttons']['data'] = 'Kembali|default';
 
         $this->data['tool_buttons'][] = array(
             'data/setting' => 'Produk Template|default',
-            'cetak/setting' => 'Laporan Template|default'
+            'laporan/setting' => 'Laporan Template|default'
             );
 
-        $this->data['panel_body'] = $this->izin->get_template_editor('products', $driver, array(
-            '<?php foreach (unserialize($tambang_koor) as $koor) : ?>'      => '<!-- start loop -->',
-            '<?php foreach (unserialize($data_tembusan) as $tembusan) : ?>' => '<!-- start loop -->',
-            '<?php endforeach ?>'                                           => '<!-- end loop -->',
-            '<?php if (strlen($data_tembusan) > 0): ?>'                     => '<!-- start condition -->',
-            '<?php endif ?>'                                                => '<!-- end condition -->',
-            ));
-
-        $this->load->theme('dataform', $this->data);
-    }
-
-    private function _print_out($driver)
-    {
-        $this->set_panel_title('Editing template output '.$this->izin->get_label($driver));
-        $this->data['tool_buttons']['data'] = 'Kembali|default';
-
-        $this->data['tool_buttons'][] = array(
-            'data/setting' => 'Produk Template|default',
-            'cetak/setting' => 'Laporan Template|default'
-            );
-
-        $this->data['panel_body'] = $this->izin->get_template_editor('reports', $driver, array(
-            '<?php if ($results) : $i = 1; foreach($results as $row) : ?>' => '<!-- start loop -->',
-            '<?php $i++; endforeach; else : ?>'                                => '<!-- conditional loop -->',
-            '<?php endif ?>'                                                   => '<!-- end loop -->',
-            '$row->'                                                           => '#',
-            ));
+        $this->data['panel_body'] = $this->izin->get_template_editor($type, $driver, $filter);
 
         $this->load->theme('dataform', $this->data);
     }
