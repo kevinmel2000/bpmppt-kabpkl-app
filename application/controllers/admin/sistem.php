@@ -2,7 +2,7 @@
 /**
  * @package     BPMPPT App v0.1.6 (http://feryardiant.github.com/bpmppt)
  * @author      Fery Wardiyanto (ferywardiyanto@gmail.com)
- * @copyright   Copyright (c) 2013-2014 BPMPPT Kab. Pekalongan, Fery Wardiyanto
+ * @copyright   Copyright (c) 2013-2015 BPMPPT Kab. Pekalongan, Fery Wardiyanto
  * @license     MIT (https://github.com/feryardiant/bpmppt/blob/master/LICENSE)
  * @subpackage  Sistem
  * @category    Controller
@@ -45,128 +45,104 @@ class Sistem extends BI_Controller
 
         $this->load->library('utily');
         $this->load->library('table');
+        $this->table->set_template(array('table_open' => '<table class="table table-striped table-bordered table-hover table-condensed">' ));
 
         $server_info = $this->utily->get_server_info();
+        $table_head = array(
+            array( 'data' => 'Nama',  'style' => 'width:26%' ),
+            array( 'data' => 'Nilai', 'style' => 'width:74%' )
+            );
 
-        // print_pre($this->db);
-
-        $fields[]   = array(
-            'name'  => 'php-version',
-            'type'  => 'static',
-            'label' => 'Versi PHP',
-            'std'   => $server_info['php_version'] );
-
-        $this->table->set_template(array('table_open' => '<table class="table table-striped table-bordered table-hover table-condensed">' ));
-        $this->table->set_heading(array(
-            array(
-                'data'  => 'Nama',
-                'width' => '26%',
-                ),
-            array(
-                'data'  => 'Nilai',
-                'width' => '74%',
-                )
-            ));
-
-        foreach ($server_info['server'] as $key => $val)
+        if ($php_version = $server_info['php_version'])
         {
-            $this->table->add_row($key, $val);
+            $fields['php-version'] = array(
+                'type'  => 'static',
+                'label' => 'Versi PHP',
+                'std'   => $php_version,
+                );
         }
 
-        $fields[]   = array(
-            'name'  => 'server-info',
-            'type'  => 'custom',
-            'label' => 'Mesin Server',
-            'std'   => $this->table->generate() );
-
-        $this->table->set_heading(array(
-            array(
-                'data'  => 'Nama',
-                'width' => '26%',
-                ),
-            array(
-                'data'  => 'Nilai',
-                'width' => '74%',
-                )
-            ));
-
-        foreach ($server_info['db'] as $key => $val)
+        if ($server = $server_info['server'])
         {
-            $this->table->add_row($key, $val);
+            $this->table->set_heading($table_head);
+            foreach ($server as $key => $val)
+            {
+                $this->table->add_row($key, $val);
+            }
+
+            $fields['server-info'] = array(
+                'type'  => 'custom',
+                'label' => 'Informasi Server',
+                'std'   => $this->table->generate()
+                );
         }
 
-        $fields[]   = array(
-            'name'  => 'db-info',
-            'type'  => 'custom',
-            'label' => 'Database',
-            'std'   => $this->table->generate() );
-
-        $this->table->set_heading(array(
-            array(
-                'data'  => 'Nama',
-                'width' => '26%',
-                ),
-            array(
-                'data'  => 'Versi',
-                'width' => '74%',
-                )
-            ));
-
-        foreach ($server_info['php_extensions'] as $key => $val)
+        if ($db = $server_info['db'])
         {
-            $this->table->add_row($key, $val);
+            $this->table->set_heading($table_head);
+            foreach ($db as $key => $val)
+            {
+                $this->table->add_row($key, $val);
+            }
+
+            $fields['db-info'] = array(
+                'type'  => 'custom',
+                'label' => 'Informasi Database',
+                'std'   => $this->table->generate()
+                );
         }
 
-        $fields[]   = array(
-            'name'  => 'php-extensions',
-            'type'  => 'custom',
-            'label' => 'Extensi Dibutuhkan',
-            'std'   => $this->table->generate() );
-
-        $this->table->set_heading(array(
-            array(
-                'data' => 'Nama',
-                'width' => '26%',
-                ),
-            array(
-                'data' => 'Nilai',
-                'width' => '74%',
-                ),
-            ));
-
-        foreach ($server_info['php_configs'] as $key => $val)
+        if ($php_extensions = $server_info['php_extensions'])
         {
-            // $class = ($val['global'] != $val['local'] ? 'danger' : '');
-
-            $this->table->add_row(array(
-                array(
-                    'data' => $val['name'],
-                    'id' => $key,
-                    ),
-                array(
-                    'data' => $val['value'],
-                    ),
+            $this->table->set_heading(array(
+                array( 'data'  => 'Nama',  'style' => 'width:26%' ),
+                array( 'data'  => 'Versi', 'style' => 'width:74%' )
                 ));
+
+            foreach ($php_extensions as $key => $val)
+            {
+                $this->table->add_row($key, $val);
+            }
+
+            $fields['php-extensions'] = array(
+                'type'  => 'custom',
+                'label' => 'Extensi Terinstall',
+                'std'   => $this->table->generate()
+                );
         }
 
-        $fields[]   = array(
-            'name'  => 'php-configs',
-            'type'  => 'custom',
-            'label' => 'Konfigurasi',
-            'std'   => $this->table->generate() );
-
-        $this->table->set_heading('Nama');
-
-        foreach ($server_info['apache_mods'] as $mod)
+        if ($php_configs = $server_info['php_configs'])
         {
-            $this->table->add_row($mod);
+            $this->table->set_heading($table_head);
+            foreach ($php_configs as $key => $val)
+            {
+                $this->table->add_row(array(
+                    array( 'data' => $val['name'], 'id' => $key ),
+                    array( 'data' => $val['value'] ),
+                    ));
+            }
+
+            $fields['php-configs'] = array(
+                'type'  => 'custom',
+                'label' => 'Konfigurasi',
+                'std'   => $this->table->generate()
+                );
         }
 
-        $fields[]   = array(
-            'name'  => 'apache-mods',
-            'type'  => 'custom',
-            'label' => 'Module Apache',
-            'std'   => $this->table->generate() );
+        if ($apache_mods = $server_info['apache_mods'])
+        {
+            $this->table->set_heading('Nama');
+            foreach ($apache_mods as $mod)
+            {
+                $this->table->add_row($mod);
+            }
+
+            $fields['apache-mods'] = array(
+                'type'  => 'custom',
+                'label' => 'Module Apache',
+                'std'   => $this->table->generate()
+                );
+        }
 
         $this->load->library('biform');
 

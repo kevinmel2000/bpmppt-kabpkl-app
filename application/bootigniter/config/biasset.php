@@ -2,7 +2,7 @@
 /**
  * @package     BPMPPT App v0.1.6 (http://feryardiant.github.com/bpmppt)
  * @author      Fery Wardiyanto (ferywardiyanto@gmail.com)
- * @copyright   Copyright (c) 2013-2014 BPMPPT Kab. Pekalongan, Fery Wardiyanto
+ * @copyright   Copyright (c) 2013-2015 BPMPPT Kab. Pekalongan, Fery Wardiyanto
  * @license     MIT (https://github.com/feryardiant/bpmppt/blob/master/LICENSE)
  * @subpackage  Biasset
  * @category    Configurations
@@ -360,7 +360,7 @@ $config['biasset_register_scripts'] = array(
         'dep' => array('jqueryui-core'),
         ),
     'jqueryui-touchpunch' => array(
-        'src' => $bower_path.'jquery-ui-touch-punch/jquery.ui.touch-punch.min.js',
+        'src' => $bower_path.'jqueryui-touch-punch/jquery.ui.touch-punch.min.js',
         'ver' => '0.2.3',
         'dep' => array('jqueryui-widget', 'jqueryui-mouse'),
         ),

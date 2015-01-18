@@ -2,7 +2,7 @@
 /**
  * @package     BPMPPT App v0.1.6 (http://feryardiant.github.com/bpmppt)
  * @author      Fery Wardiyanto (ferywardiyanto@gmail.com)
- * @copyright   Copyright (c) 2013-2014 BPMPPT Kab. Pekalongan, Fery Wardiyanto
+ * @copyright   Copyright (c) 2013-2015 BPMPPT Kab. Pekalongan, Fery Wardiyanto
  * @license     MIT (https://github.com/feryardiant/bpmppt/blob/master/LICENSE)
  * @subpackage  Bitheme
  * @category    Libraries

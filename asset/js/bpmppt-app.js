@@ -1,7 +1,14 @@
+/*!
+ * BPMPPT App v0.1.6 (http://feryardiant.github.com/bpmppt)
+ * Aplikasi Pengelolaan Dokumen Perijinan di BPMPPT Kab. Pekalongan
+ * Copyright (c) 2013-2015 BPMPPT Kab. Pekalongan, Fery Wardiyanto
+ * Licensed under MIT (https://github.com/feryardiant/bpmppt/blob/master/LICENSE)
+ */
+
 $(document).ready(function () {
   'use strict';
 
-  function biPopup(url, title, w, h) {
+  function biPopup(url, w, h) {
     var left = (screen.width / 2) - (w / 2)
     var top = (screen.height / 2) - (h / 2) - 20
 
@@ -10,8 +17,13 @@ $(document).ready(function () {
   }
 
   $('.btn-cetak').click(function (e) {
+    biPopup($(this).attr('href'), 800, 600)
     e.preventDefault()
-    biPopup($(this).attr('href'), $(this).attr('title'), 800, 600)
+  })
+
+  $('form[name="print-all"]').submit(function (e) {
+    biPopup($(this).attr('action'), 800, 600)
+    e.preventDefault()
   })
 
   $('.btn-hapus').click(function (e) {
@@ -78,28 +90,40 @@ $(document).ready(function () {
     }
   }
 
+  function folder(el, target, val) {
+    if (target.is(':radio')) {
+      showHide(el, val.indexOf(target.filter(':checked').val()) !== -1)
+    } else if (target.is(':checkbox')) {
+      $.each(val, function (i, v) {
+        showHide(el, target.filter('[value="' + v + '"]').is(':checked'))
+      })
+    } else {
+      showHide(el, val.indexOf(target.val()) !== -1)
+    }
+  }
+
   // Folding functions
   $('.form-group').each(function () {
-    var el  = $(this)
+    var el = $(this)
 
     if ($(this).data('fold') == 1) {
-      var key = el.data('fold-key')
+      var tgt = $('[name=\"' + el.data('fold-key') + '\"]')
       var val = el.data('fold-value')
-      var tgt = '[name=\"' + key + '\"]'
+      if (typeof val === 'string') {
+        val = val.replace(/\'/g, '"')
+      }
+      val = $.parseJSON(val)
 
-      if ($(tgt).hasClass('bs-switch')) {
-        $(tgt).on('switchChange.bootstrapSwitch', function (event, state) {
+      if (tgt.hasClass('bs-switch')) {
+        tgt.on('switchChange.bootstrapSwitch', function (event, state) {
           showHide(el, val.indexOf(state) !== -1)
         })
       } else {
-        $(tgt).change(function () {
-          if ($(this).is(':radio')) {
-            showHide(el, val.indexOf($(this).filter(':checked').val()) !== -1)
-          } else if ($(this).is(':checkbox')) {
-            showHide(el, (val.indexOf($(this).val()) !== -1) && $(this).is(':checked'))
-          } else {
-            showHide(el, val.indexOf($(this).val()) !== -1)
-          }
+        // showHide(el, false)
+        folder(el, tgt, val)
+
+        tgt.change(function () {
+          folder(el, tgt, val)
         })
       }
     }
