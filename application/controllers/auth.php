@@ -35,76 +35,72 @@ class Auth extends BI_Controller
         $this->set_panel_title('Login Pengguna');
 
         $attempts = ( Bootigniter::get_setting('auth_login_count_attempts') AND ($attempts = $this->input->post('username'))) ? $this->security->xss_clean($attempts) : '';
-
-        $fields[]   = array(
-            'name'  => 'username',
+        $fields['username'] = array(
             'type'  => 'text',
             'label' => _x('biauth_login_by_'.Bootigniter::get_setting('auth_login_by')),
-            'validation'=> 'required' );
+            'validation'=> 'required'
+            );
 
-        $fields[]   = array(
-            'name'  => 'password',
+        $fields['password'] = array(
             'type'  => 'password',
             'label' => 'Password',
-            'validation'=> 'required' );
+            'validation'=> 'required'
+            );
 
-        $fields[]   = array(
-            'name'  => 'remember',
+        $fields['remember'] = array(
             'type'  => 'checkbox',
             'label' => '',
-            'option'=> array( 1 => 'Ingat saya dikomputer ini.' ) );
+            'option'=> array( 1 => 'Ingat saya dikomputer ini.' )
+            );
 
         if ( $this->biauth->login_attempt->is_max_exceeded( $attempts ) )
         {
             $captcha = (bool) Bootigniter::get_setting('auth_use_recaptcha') ? 'recaptcha' : 'captcha';
-
-            $fields[]   = array(
-                'name'  => $captcha,
+            $fields[$captcha] = array(
                 'type'  => $captcha,
                 'label' => 'Validasi',
-                'validation'=> 'required|valid_'.$captcha);
+                'validation'=> 'required|valid_'.$captcha
+                );
         }
 
-        $buttons[]  = array(
-            'name'  => 'login',
+        $buttons['login'] = array(
             'type'  => 'submit',
             'label' => 'Login',
-            'class' => 'btn-primary pull-left' );
+            'class' => 'btn-primary pull-left'
+            );
 
-        $buttons[]  = array(
-            'name'  => 'forgot',
+        $buttons['forgot'] = array(
             'type'  => 'anchor',
             'label' => 'Lupa Login',
             'url'   => 'forgot',
-            'class' => 'btn-default pull-right' );
+            'class' => 'btn-default pull-right'
+            );
 
         if ( (bool) Bootigniter::get_setting('auth_allow_registration') )
         {
-            $buttons[]  = array(
-                'name'  => 'register',
+            $buttons['register'] = array(
                 'type'  => 'anchor',
                 'label' => 'Register',
                 'url'   => 'register',
-                'class' => 'btn-default pull-right' );
+                'class' => 'btn-default pull-right'
+                );
         }
 
         $form = $this->biform->initialize( array(
             'name'     => 'login',
             'action'   => current_url(),
             'fields'   => $fields,
+            'extras'   => array( 'autocomplete' => 'off' ),
+            'buttons'  => $buttons,
+            'is_hform' => FALSE,
             'hiddens'  => array(
                 'goto' => $this->input->get('from'),
-                ),
-            'extras'   => array(
-                'autocomplete' => 'off',
-                ),
-            'buttons'  => $buttons,
-            'is_hform' => FALSE ));
+                )
+            ));
 
         if ( $input = $form->validate_submition() )
         {
             $goto = $this->biauth->login( $input['username'], $input['password'], $input['remember'] ) ? $input['goto'] : current_url();
-
             foreach ( get_message() as $level => $item )
             {
                 $this->session->set_flashdata( $level, $item );
@@ -128,74 +124,70 @@ class Auth extends BI_Controller
     public function register()
     {
         $this->verify_status();
-
         $this->set_panel_title('Register Pengguna');
-
         if ( !Bootigniter::get_setting('auth_allow_registration') )
         {
             $this->_notice('registration-disabled');
         }
 
         $login_by = Bootigniter::get_setting('auth_login_by');
-
-        if ( $login_by == 'login' or $login_by == 'username' )
+        if ( in_array($login_by, array('login', 'username')) )
         {
-            $fields[]   = array(
-                'name'  => 'username',
+            $fields['username'] = array(
                 'type'  => 'text',
                 'label' => 'Username',
-                'validation'=> 'required|valid_username_length|is_username_blacklist|is_username_available' );
+                'validation'=> 'required|valid_username_length|is_username_blacklist|is_username_available'
+                );
         }
 
-        $fields[]   = array(
-            'name'  => 'email',
+        $fields['email'] = array(
             'type'  => 'text',
             'label' => 'Email',
-            'validation'=> 'required|valid_email' );
+            'validation'=> 'required|valid_email'
+            );
 
-        $fields[]   = array(
-            'name'  => 'password',
+        $fields['password'] = array(
             'type'  => 'password',
             'label' => 'Password',
-            'validation'=> 'required|valid_password_length' );
+            'validation'=> 'required|valid_password_length'
+            );
 
-        $fields[]   = array(
-            'name'  => 'confirm-password',
+        $fields['confirm-password'] = array(
             'type'  => 'password',
             'label' => 'Ulangi Password',
-            'validation'=> 'required|matches[password]' );
+            'validation'=> 'required|matches[password]'
+            );
 
         if ( (bool) Bootigniter::get_setting('auth_captcha_registration') )
         {
             $captcha = (bool) Bootigniter::get_setting('auth_use_recaptcha') ? 'recaptcha' : 'captcha';
-
-            $fields[]   = array(
-                'name'  => $captcha,
+            $fields[$captcha] = array(
                 'type'  => 'captcha',
                 'label' => 'Validasi',
                 'mode'  => $captcha,
-                'validation'=> 'required|valid_'.$captcha);
+                'validation'=> 'required|valid_'.$captcha
+                );
         }
 
-        $buttons[]  = array(
-            'name'  => 'register',
+        $buttons['register'] = array(
             'type'  => 'submit',
             'label' => 'Register',
-            'class' => 'btn-primary pull-left' );
+            'class' => 'btn-primary pull-left'
+            );
 
-        $buttons[]  = array(
-            'name'  => 'login',
+        $buttons['login'] = array(
             'type'  => 'anchor',
             'label' => 'Login',
             'url'   => 'login',
-            'class' => 'btn-default pull-right' );
+            'class' => 'btn-default pull-right'
+            );
 
-        $buttons[]  = array(
-            'name'  => 'forgot',
+        $buttons['forgot'] = array(
             'type'  => 'anchor',
             'label' => 'Lupa Login',
             'url'   => 'forgot',
-            'class' => 'btn-default pull-right' );
+            'class' => 'btn-default pull-right'
+            );
 
         $form = $this->biform->initialize( array(
             'name'      => 'register',
@@ -245,25 +237,25 @@ class Auth extends BI_Controller
 
         $this->set_panel_title('Kirim ulang aktivasi');
 
-        $fields[]   = array(
-            'name'  => 'resend',
+        $fields['resend'] = array(
             'type'  => 'email',
             'label' => 'Email',
             'validation'=> 'required|valid_email|is_email_exists',
-            'desc'  => 'Masukan alamat email yang anda gunakan untuk aplikasi ini.' );
+            'desc'  => 'Masukan alamat email yang anda gunakan untuk aplikasi ini.'
+            );
 
-        $buttons[]  = array(
-            'name'  => 'submit',
+        $buttons['submit'] = array(
             'type'  => 'submit',
             'label' => 'resend',
-            'class' => 'btn-primary pull-left' );
+            'class' => 'btn-primary pull-left'
+            );
 
-        $buttons[]  = array(
-            'name'  => 'forgot',
+        $buttons['forgot'] = array(
             'type'  => 'anchor',
             'label' => 'Lupa Login',
             'url'   => 'auth/forgot',
-            'class' => 'btn-default pull-right' );
+            'class' => 'btn-default pull-right'
+            );
 
         $form = $this->biform->initialize( array(
             'name'      => 'resend',
@@ -302,25 +294,25 @@ class Auth extends BI_Controller
 
         $this->set_panel_title('Lupa login');
 
-        $fields[]   = array(
-            'name'  => 'forgot_login',
+        $fields['forgot_login'] = array(
             'type'  => 'text',
             'label' => 'Email atau Username',
             'validation'=> 'required',
-            'desc'  => 'Masukan alamat email atau username yang anda gunakan untuk aplikasi ini.' );
+            'desc'  => 'Masukan alamat email atau username yang anda gunakan untuk aplikasi ini.'
+            );
 
-        $buttons[]  = array(
-            'name'  => 'submit',
+        $buttons['submit'] = array(
             'type'  => 'submit',
             'label' => 'Kirim',
-            'class' => 'btn-primary pull-left' );
+            'class' => 'btn-primary pull-left'
+            );
 
-        $buttons[]  = array(
-            'name'  => 'login',
+        $buttons['login'] = array(
             'type'  => 'anchor',
             'label' => 'Login',
             'url'   => 'login',
-            'class' => 'btn-default pull-right' );
+            'class' => 'btn-default pull-right'
+            );
 
         $form = $this->biform->initialize( array(
             'name'      => 'forgot',
@@ -332,7 +324,6 @@ class Auth extends BI_Controller
 
         if ( $form_data = $form->validate_submition() )
         {
-
             if ( $data = $this->biauth->forgot_password( $form_data['forgot_login']) )
             {
                 // Send email with password activation link
@@ -379,37 +370,36 @@ class Auth extends BI_Controller
     public function reset_password( $user_id = NULL, $email_key = NULL )
     {
         $this->set_panel_title('Kirim ulang aktivasi');
-
         // not logged in or activated
         if ( is_null($user_id) AND is_null($email_key) )
         {
             redirect('login');
         }
 
-        $fields[]   = array(
-            'name'  => 'reset_password',
+        $fields['reset_password'] = array(
             'type'  => 'password',
             'label' => 'Password baru',
-            'validation'=> 'required|valid_password_length' );
+            'validation'=> 'required|valid_password_length'
+            );
 
-        $fields[]   = array(
-            'name'  => 'confirm_reset_password',
+        $fields['confirm_reset_password'] = array(
             'type'  => 'password',
             'label' => 'Password Konfirmasi',
-            'validation'=> 'required|matches[reset_password]' );
+            'validation'=> 'required|matches[reset_password]'
+            );
 
-        $buttons[]  = array(
-            'name'  => 'submit',
+        $buttons['submit'] = array(
             'type'  => 'submit',
             'label' => 'Atur ulang',
-            'class' => 'btn-primary pull-left' );
+            'class' => 'btn-primary pull-left'
+            );
 
-        $buttons[]  = array(
-            'name'  => 'login',
+        $buttons['login'] = array(
             'type'  => 'anchor',
             'label' => 'Login',
             'url'   => 'login',
-            'class' => 'btn-default pull-right' );
+            'class' => 'btn-default pull-right'
+            );
 
         $form = $this->biform->initialize( array(
             'name'      => 'reset',
