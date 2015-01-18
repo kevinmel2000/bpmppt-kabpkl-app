@@ -25,12 +25,10 @@ $(document).ready(function () {
 
   $('.btn-cetak').click(function () {
     biPopup(this)
-    // e.preventDefault()
   })
 
   $('form[name="print-all"]').submit(function () {
     biPopup(this)
-    // e.preventDefault()
   })
 
   $('.btn-hapus').click(function (e) {

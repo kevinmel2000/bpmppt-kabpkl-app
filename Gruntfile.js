@@ -193,7 +193,7 @@ module.exports = function(grunt) {
 
     csscomb: {
       options: {
-        config: '.csscombrc'
+        config: 'asset/.csscombrc'
       },
       app: {
         expand: true,
@@ -209,7 +209,7 @@ module.exports = function(grunt) {
     csslint: {
       app: {
         options: {
-          csslintrc: '.csslintrc'
+          csslintrc: 'asset/.csslintrc'
         },
         src: [
           'asset/css/<%= pkg.name %>.css',
@@ -232,7 +232,7 @@ module.exports = function(grunt) {
 
     jshint: {
       options: {
-        jshintrc: '.jshintrc'
+        jshintrc: 'asset/.jshintrc'
       },
       dev: {
         src: 'asset/js/src/*.js'
@@ -241,7 +241,7 @@ module.exports = function(grunt) {
 
     jscs: {
       options: {
-        config: '.jscsrc'
+        config: 'asset/.jscsrc'
       },
       dev: {
         src: 'asset/js/src/*.js'

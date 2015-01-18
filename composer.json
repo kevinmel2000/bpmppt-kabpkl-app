@@ -7,16 +7,6 @@
       "email": "ferywardiyanto@gmail.com"
     }
   ],
-  "support": {
-    "issues": "https://github.com/creasico/bpmppt/issues",
-    "source": "https://github.com/creasico/bpmppt/tree/master"
-  },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/creasico/bpmppt"
-    }
-  ],
   "config": {
     "preferred-install": "dist",
     "vendor-dir": "application/vendor"
