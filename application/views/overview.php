@@ -5,7 +5,7 @@
 	<?php foreach ( $panel_body as $link => $izin ) : ?>
 		<section id="panel-<?php echo $link ?>" class="panel panel-default">
 			<header class="panel-heading">
-				<h3 class="panel-title"><?php echo anchor('data/layanan/'.$link, $izin['label']) ?></h3>
+				<h3 class="panel-title"><?php echo anchor($page_link.$link, $izin['label']) ?></h3>
 			</header>
 
 			<div class="panel-body">
