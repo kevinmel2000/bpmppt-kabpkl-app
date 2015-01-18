@@ -20,11 +20,6 @@ class Izin_obat extends CI_Driver
         $alias = 'izin_obat_tradisional',
         $name = 'Izin Pengobatan Tradisional';
 
-    public function __construct()
-    {
-        log_message('debug', '#Izin_driver: '.$this->name.' Class Initialized');
-    }
-
     public function _form()
     {
         $fields['fieldset_data_pemohon'] = array(

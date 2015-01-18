@@ -22,11 +22,6 @@ class Izin_ho extends CI_Driver
         $name = 'Izin Gangguan',
         $_prefield_label = 'No. &amp; Tgl. Input';
 
-    public function __construct()
-    {
-        log_message('debug', '#Izin_driver: '.$this->name.' Class Initialized');
-    }
-
     public function _form()
     {
         $fields['surat_kode'] = array(

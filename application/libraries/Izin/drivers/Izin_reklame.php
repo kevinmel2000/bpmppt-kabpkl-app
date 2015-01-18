@@ -28,11 +28,6 @@ class Izin_reklame extends CI_Driver
             'Ka. Bag. Hukum Setda Kabupaten Pekalongan',
             );
 
-    public function __construct()
-    {
-        log_message('debug', '#Izin_driver: '.$this->name.' Class Initialized');
-    }
-
     public function _form()
     {
         $fields['pengajuan_jenis'] = array(

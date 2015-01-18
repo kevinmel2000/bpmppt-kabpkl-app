@@ -25,7 +25,6 @@ class Izin_iup extends CI_Driver
     public function __construct()
     {
         $this->_defaults['data_teknis'] = Bootigniter::get_setting('iup_teknis');
-        log_message('debug', '#Izin_driver: '.$this->name.' Class Initialized');
     }
 
     public function _form()

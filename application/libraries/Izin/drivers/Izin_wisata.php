@@ -20,11 +20,6 @@ class Izin_wisata extends CI_Driver
         $alias = 'pariwisata',
         $name = 'Izin Usaha Pariwisata';
 
-    public function __construct()
-    {
-        log_message('debug', '#Izin_driver: '.$this->name.' Class Initialized');
-    }
-
     public function _form()
     {
         $fields['penetapan'] = array(

@@ -23,11 +23,6 @@ class Izin_tdp extends CI_Driver
         $_prefield_label = 'No. &amp; Tgl. Agenda',
         $_tembusan = FALSE;
 
-    public function __construct()
-    {
-        log_message('debug', '#Izin_driver: '.$this->name.' Class Initialized');
-    }
-
     public function _form()
     {
         $fields['no_tdp'] = array(

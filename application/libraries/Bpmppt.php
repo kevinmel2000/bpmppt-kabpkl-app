@@ -27,9 +27,7 @@ class Bpmppt
         $this->_ci =& get_instance();
         $this->izin =& $this->_ci->izin;
 
-        $this->_ci->load->model('bpmppt_model');
         $this->_ci->load->driver('izin');
-        $this->_ci->lang->load('bpmppt');
 
         foreach (array('pending', 'approved', 'deleted', 'done') as $status)
         {
@@ -39,16 +37,6 @@ class Bpmppt
         $this->drivers = $this->izin->get_drivers();
 
         log_message('debug', '#BPMPPT: Library initialized.');
-    }
-
-    public function __call($method, $args)
-    {
-        if (!method_exists($this->_ci->bpmppt_model, $method))
-        {
-            show_error('Undefined method Izin::'.$method.'() called', 500, 'An Error Eas Encountered');
-        }
-
-        return call_user_func_array(array($this->_ci->bpmppt_model, $method), $args);
     }
 
     public function get_buttons()

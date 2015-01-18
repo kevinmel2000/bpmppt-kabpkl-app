@@ -21,11 +21,6 @@ class Izin_iui extends CI_Driver
         $alias = 'izin_usaha_industri',
         $name = 'Izin Usaha Industri';
 
-    public function __construct()
-    {
-        log_message('debug', '#Izin_driver: '.$this->name.' Class Initialized');
-    }
-
     public function _form()
     {
         $fields['fieldset_data_pemohon'] = array(
