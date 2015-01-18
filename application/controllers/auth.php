@@ -12,6 +12,8 @@
 
 class Auth extends BI_Controller
 {
+    private $_defCon = 'layanan';
+
     public function __construct()
     {
         parent::__construct();
@@ -110,7 +112,7 @@ class Auth extends BI_Controller
 
             if (strlen($goto) == 0)
             {
-                $goto = 'data/utama/';
+                $goto = $this->_defCon;
             }
 
             redirect( $goto );
@@ -232,7 +234,7 @@ class Auth extends BI_Controller
     {
         if ( $this->biauth->is_logged_in() )
         {
-            redirect('data/utama');
+            redirect($this->_defCon);
         }
 
         // not logged in or activated
@@ -295,7 +297,7 @@ class Auth extends BI_Controller
     {
         if ( $this->biauth->is_logged_in() )
         {
-            redirect('data/utama');
+            redirect($this->_defCon);
         }
 
         $this->set_panel_title('Lupa login');
