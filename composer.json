@@ -1,5 +1,5 @@
 {
-  "name": "feryardiant/bpmppt",
+  "name": "creasico/bpmppt",
   "license": "MIT",
   "authors": [
     {
@@ -8,13 +8,13 @@
     }
   ],
   "support": {
-    "issues": "https://github.com/feryardiant/bpmppt/issues",
-    "source": "https://github.com/feryardiant/bpmppt/tree/master"
+    "issues": "https://github.com/creasico/bpmppt/issues",
+    "source": "https://github.com/creasico/bpmppt/tree/master"
   },
   "repositories": [
     {
       "type": "vcs",
-      "url": "https://github.com/feryardiant/bpmppt"
+      "url": "https://github.com/creasico/bpmppt"
     }
   ],
   "config": {

@@ -1,8 +1,8 @@
 /*!
- * BPMPPT App v0.1.6 (http://feryardiant.github.com/bpmppt)
+ * BPMPPT App v0.1.6 (http://creasico.github.com/bpmppt)
  * Aplikasi Pengelolaan Dokumen Perijinan di BPMPPT Kab. Pekalongan
  * Copyright (c) 2013-2015 BPMPPT Kab. Pekalongan, Fery Wardiyanto
- * Licensed under MIT (https://github.com/feryardiant/bpmppt/blob/master/LICENSE)
+ * Licensed under MIT (https://github.com/creasico/bpmppt/blob/master/LICENSE)
  */
 
 $(document).ready(function () {
