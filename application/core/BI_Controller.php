@@ -35,7 +35,7 @@ class BI_Controller extends CI_Controller
             }
         }
 
-        $this->data['brand_link']  = anchor(base_url(), Bootigniter::app('name'), 'class="navbar-brand"');
+        $this->data['brand_link']  = anchor('/', Bootigniter::app('name'), 'class="navbar-brand"');
 
         $this->data['load_toolbar'] = FALSE;
         $this->data['data_page']    = FALSE;
