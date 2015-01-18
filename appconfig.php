@@ -1,6 +1,6 @@
 <?php
 
-$base_url = function_exists('apache_getenv') == true ? 'http://bpmppt.local/' : 'http://localhost:8088/';
+$base_url = function_exists('apache_getenv') == true ? '//bpmppt.local/' : '//localhost:8088/';
 $hostname = 'localhost';
 $username = 'root';
 $password = 'password';
@@ -21,7 +21,7 @@ if ($clear_db = getenv("CLEARDB_DATABASE_URL"))
 | BASE SITE URL
 |--------------------------------------------------------------------
 */
-// $base_url = function_exists('apache_getenv') == true ? 'http://bpmppt.local/' : 'http://localhost:8088/';
+// $base_url = function_exists('apache_getenv') == true ? '//bpmppt.local/' : '//localhost:8088/';
 !defined('APP_BASE_URL') and define('APP_BASE_URL', $base_url);
 
 /*
