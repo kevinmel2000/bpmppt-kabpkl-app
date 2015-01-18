@@ -50,110 +50,109 @@ class Internal extends BI_Controller
          * Data kontak SKPD
          * ------------------------------------------------------------------ */
 
-        $fields[]   = array(
-            'name'  => 'skpd_name',
+        $fields['skpd_name'] = array(
             'type'  => 'text',
             'label' => 'Nama SKPD',
             'std'   => $this->_settings['skpd_name'],
-            'validation'=>'required' );
+            'validation'=>'required'
+            );
 
-        $fields[]   = array(
-            'name'  => 'skpd_address',
+        $fields['skpd_address'] = array(
             'type'  => 'textarea',
             'label' => 'Alamat',
             'std'   => $this->_settings['skpd_address'],
-            'validation'=>'required' );
+            'validation'=>'required'
+            );
 
-        $fields[]   = array(
-            'name'  => 'skpd_kab',
+        $fields['skpd_kab'] = array(
             'type'  => 'text',
             'label' => 'Lokasi',
             'std'   => $this->_settings['skpd_kab'],
-            'validation'=>'required' );
+            'validation'=>'required'
+            );
 
-        $fields[]   = array(
-            'name'  => 'skpd_city',
+        $fields['skpd_city'] = array(
             'type'  => 'text',
             'label' => 'Kota',
             'std'   => $this->_settings['skpd_city'],
-            'validation'=>'required' );
+            'validation'=>'required'
+            );
 
-        $fields[]   = array(
-            'name'  => 'skpd_prov',
+        $fields['skpd_prov'] = array(
             'type'  => 'text',
             'label' => 'Propinsi',
             'std'   => $this->_settings['skpd_prov'],
-            'validation'=>'required' );
+            'validation'=>'required'
+            );
 
-        $fields[]   = array(
-            'name'  => 'skpd_no',
+        $fields['skpd_no'] = array(
             'type'  => 'subfield',
             'label' => 'No. Telp dan Fax',
             'fields'=> array(
-                array(
-                    'name'  => 'telp',
-                    'type'  => 'tel',
+                'telp' => array(
+                    'type'  => 'text',
                     'label' => 'No. Telp.',
                     'std'   => $this->_settings['skpd_telp'],
-                    'validation'=>'required|min_length[6]|max_length[15]' ),
-                array(
-                    'name'  => 'fax',
-                    'type'  => 'tel',
+                    'validation'=>'required|min_length[6]|max_length[15]'
+                    ),
+                'fax' => array(
+                    'type'  => 'text',
                     'label' => 'Faksimili',
                     'std'   => $this->_settings['skpd_fax'],
-                    'validation'=>'required|min_length[6]|max_length[15]' )
+                    'validation'=>'required|min_length[6]|max_length[15]'
+                    )
                 ),
             );
 
-        $fields[]   = array(
-            'name'  => 'skpd_pos',
+        $fields['skpd_pos'] = array(
             'type'  => 'text',
             'label' => 'Kode Pos',
             'std'   => $this->_settings['skpd_pos'],
-            'validation'=>'numeric|exact_length[5]' );
+            'validation'=>'numeric|exact_length[5]'
+            );
 
-        $fields[]   = array(
-            'name'  => 'skpd_web',
+        $fields['skpd_web'] = array(
             'type'  => 'url',
             'label' => 'Alamat Web',
-            'std'   => $this->_settings['skpd_web']  );
+            'std'   => $this->_settings['skpd_web']
+            );
 
-        $fields[]   = array(
-            'name'  => 'skpd_email',
+        $fields['skpd_email'] = array(
             'type'  => 'email',
             'label' => 'Alamat Email',
             'std'   => $this->_settings['skpd_email'],
-            'validation'=>'valid_email' );
+            'validation'=>'valid_email'
+            );
 
         /** --------------------------------------------------------------------
          * Data Pimpinan SKPD
          * ------------------------------------------------------------------ */
 
-        $fields[]   = array(
-            'name'  => 'leader_fieldset',
+        $fields['leader_fieldset'] = array(
             'type'  => 'fieldset',
-            'label' => 'Data Pimpinan' );
+            'label' => 'Data Pimpinan'
+            );
 
-        $fields[]   = array(
-            'name'  => 'skpd_lead_name',
+        $fields['skpd_lead_name'] = array(
             'type'  => 'text',
             'label' => 'Nama Pimpinan',
             'std'   => $this->_settings['skpd_lead_name'],
-            'validation'=>'required' );
+            'validation'=>'required'
+            );
 
-        $fields[]   = array(
-            'name'  => 'skpd_lead_jabatan',
+        $fields['skpd_lead_jabatan'] = array(
             'type'  => 'text',
             'label' => 'Nama Pimpinan',
             'std'   => $this->_settings['skpd_lead_jabatan'],
-            'validation'=>'required' );
+            'validation'=>'required'
+            );
 
-        $fields[]   = array(
-            'name'  => 'skpd_lead_nip',
+        $fields['skpd_lead_nip'] = array(
             'type'  => 'text',
             'label' => 'NIP Pimpinan',
             'std'   => $this->_settings['skpd_lead_nip'],
-            'validation'=>'required' );
+            'validation'=>'required'
+            );
 
         $this->_option_form( $fields );
     }
@@ -166,8 +165,7 @@ class Internal extends BI_Controller
          * Pengaturan Data
          * ------------------------------------------------------------------ */
 
-        $fields[]   = array(
-            'name'  => 'app_data_show_limit',
+        $fields['app_data_show_limit'] = array(
             'type'  => 'number',
             'label' => 'Jumlah data ditampilkan',
             'std'   => $this->_settings['app_data_show_limit'],
@@ -176,16 +174,14 @@ class Internal extends BI_Controller
 
         $php_link = anchor('http://php.net/manual/en/function.date.php', 'pengformatan tanggal pada PHP');
 
-        $fields[]   = array(
-            'name'  => 'app_date_format',
+        $fields['app_date_format'] = array(
             'type'  => 'text',
             'label' => 'Format Tanggal',
             'std'   => $this->_settings['app_date_format'],
             'desc'  => 'Format tanggal menggunakan dasar '.$php_link,
             'validation'=>'required' );
 
-        $fields[]   = array(
-            'name'  => 'app_datetime_format',
+        $fields['app_datetime_format'] = array(
             'type'  => 'text',
             'label' => 'Format Waktu &amp; Tanggal',
             'std'   => $this->_settings['app_datetime_format'],
@@ -196,199 +192,179 @@ class Internal extends BI_Controller
          * Pengaturan Email
          * ------------------------------------------------------------------ */
 
-        $fields[]   = array(
-            'name'  => 'app_fieldset_email',
+        $fields['app_fieldset_email'] = array(
             'type'  => 'fieldset',
-            'label' => 'Email' );
+            'label' => 'Email'
+            );
 
-        $email_protocol = $this->_settings['email_protocol'];
-
-        $fields[]   = array(
-            'name'  => 'email_protocol',
+        $fields['email_protocol'] = array(
             'type'  => 'radio',
             'label' => 'Email Protocol',
+            'std'   => $this->_settings['email_protocol'],
             'option'=> array(
-                'mail'      => 'Mail',
-                'sendmail'  => 'Sendmail',
-                'smtp'      => 'SMPT'),
-            'std'   => $email_protocol );
+                'mail'     => 'Mail',
+                'sendmail' => 'Sendmail',
+                'smtp'     => 'SMPT'
+                ),
+            );
 
-        $fields[]   = array(
-            'name'  => 'email_mailpath',
+        $sendmail_fold = array( 'key' => 'email_protocol', 'value' => 'sendmail' );
+
+        $fields['email_mailpath'] = array(
             'type'  => 'text',
             'label' => 'Email path',
-            'fold'  => array(
-                'key'   => 'email_protocol',
-                'value' => 'sendmail' ),
-            'std'   => $this->_settings['email_mailpath'] );
+            'fold'  => $sendmail_fold,
+            'std'   => $this->_settings['email_mailpath'],
+            );
 
-        $fields[]   = array(
-            'name'  => 'email_smtp_host',
+        $fields['email_smtp_host'] = array(
             'type'  => 'text',
             'label' => 'Host SMTP',
-            'fold'  => array(
-                'key'   => 'email_protocol',
-                'value' => 'smtp' ),
-            'std'   => $this->_settings['email_smtp_host'] );
+            'fold'  => $sendmail_fold,
+            'std'   => $this->_settings['email_smtp_host']
+            );
 
-        $fields[]   = array(
-            'name'  => 'email_smtp_user',
+        $fields['email_smtp_user'] = array(
             'type'  => 'text',
             'label' => 'Pengguna SMTP',
-            'fold'  => array(
-                'key'   => 'email_protocol',
-                'value' => 'smtp' ),
+            'fold'  => $sendmail_fold,
             'std'   => $this->_settings['email_smtp_user'],
             );
 
-        $fields[]   = array(
-            'name'  => 'email_smtp_pass',
+        $fields['email_smtp_pass'] = array(
             'type'  => 'password',
             'label' => 'Password SMTP',
-            'fold'  => array(
-                'key'   => 'email_protocol',
-                'value' => 'smtp' ),
-            'std'   => $this->_settings['email_smtp_pass'] );
+            'fold'  => $sendmail_fold,
+            'std'   => $this->_settings['email_smtp_pass']
+            );
 
-        $fields[]   = array(
-            'name'  => 'email_smtp_port',
+        $fields['email_smtp_port'] = array(
             'type'  => 'number',
             'label' => 'Port SMTP',
-            'fold'  => array(
-                'key'   => 'email_protocol',
-                'value' => 'smtp' ),
+            'fold'  => $sendmail_fold,
             'std'   => $this->_settings['email_smtp_port'],
-            'validation'=> 'numeric' );
+            'validation'=> 'numeric'
+            );
 
-        $fields[]   = array(
-            'name'  => 'email_smtp_timeout',
+        $fields['email_smtp_timeout'] = array(
             'type'  => 'number',
             'label' => 'Batas waktu SMTP',
-            'fold'  => array(
-                'key'   => 'email_protocol',
-                'value' => 'smtp' ),
+            'fold'  => $sendmail_fold,
             'std'   => $this->_settings['email_smtp_timeout'],
-            'validation'=> 'numeric' );
+            'validation'=> 'numeric'
+            );
 
-        $fields[]   = array(
-            'name'  => 'email_wordwrap',
+        $fields['email_wordwrap'] = array(
             'type'  => 'switch',
             'label' => 'Wordwrap',
             'desc'  => 'Membatasi jumlah huruf ditiap baris dalam kiriman email sebanyak 80 karakter dan sisanya dilanjutkan pada baris berikutnya.',
-            'std'   => $this->_settings['email_wordwrap'] );
+            'std'   => $this->_settings['email_wordwrap']
+            );
 
-        $fields[]   = array(
-            'name'  => 'email_mailtype',
+        $fields['email_mailtype'] = array(
             'type'  => 'switch',
             'label' => 'Format kiriman email',
-            'option'=> array(
-                0  => 'Teks',
-                1  => 'HTML' ),
+            'option'=> array( 'Teks', 'HTML' ),
             'desc'  => 'Format kiriman email. Disarankan menggunakan format HTML agar tampilan lebih baik.',
-            'std'   => $this->_settings['email_mailtype'] );
+            'std'   => $this->_settings['email_mailtype']
+            );
 
-        $fields[]   = array(
-            'name'  => 'email_priority',
+        $fields['email_priority'] = array(
             'type'  => 'slider',
             'label' => 'Prioritas',
             'min'   => 1,
             'max'   => 5,
             'std'   => $this->_settings['email_priority'],
             'desc'  => 'Prioritas email diisi dengan angka 1-5, angka 1 untuk paling tinggi dan 5 untuk paling rendah.',
-            'validation'=> 'numeric|greater_than[0]|less_than[6]' );
+            'validation'=> 'numeric|greater_than[0]|less_than[6]'
+            );
 
         /** --------------------------------------------------------------------
          * Pengaturan Pendaftaran
          * ------------------------------------------------------------------ */
 
-        $fields[]   = array(
-            'name'  => 'auth_fieldset_register',
+        $fields['auth_fieldset_register'] = array(
             'type'  => 'fieldset',
-            'label' => 'Pendaftaran' );
+            'label' => 'Pendaftaran'
+            );
 
-        $fields[]   = array(
-            'name'  => 'auth_allow_registration',
+        $fields['auth_allow_registration'] = array(
             'type'  => 'switch',
             'label' => 'Ijinkan registrasi Umum',
             'std'   => $this->_settings['auth_allow_registration'],
             'desc'  => 'Ijinkan registrasi umum',
-            'validation'=>'numeric' );
+            'validation'=>'numeric'
+            );
 
-        $fields[]   = array(
-            'name'  => 'auth_email_activation',
+        $fields['auth_email_activation'] = array(
             'type'  => 'switch',
             'label' => 'Aktivasi via email',
-            'fold'  => array(
-                'key'   => 'auth_allow_registration',
-                'value' => 1 ),
-            'std'   => $this->_settings['auth_email_activation']);
+            'fold'  => array( 'key' => 'auth_allow_registration', 'value' => 1 ),
+            'std'   => $this->_settings['auth_email_activation']
+            );
 
         $auth_email_act_expire = second_to_day($this->_settings['auth_email_act_expire']);
 
-        $fields[]   = array(
-            'name'  => 'auth_email_act_expire',
+        $fields['auth_email_act_expire'] = array(
             'type'  => 'slider',
             'label' => 'Batas aktivasi email',
-            'fold'  => array(
-                'key'   => 'auth_email_activation',
-                'value' => 1 ),
+            'fold'  => array( 'key' => 'auth_email_activation', 'value' => 1 ),
             'min'   => 1,
             'max'   => 10,
             'std'   => $auth_email_act_expire,
-            'desc'  => 'Batas waktu aktivasi email dalam detik. Nilai '.$auth_email_act_expire.' hari.' );
+            'desc'  => 'Batas waktu aktivasi email dalam detik. Nilai '.$auth_email_act_expire.' hari.'
+            );
 
-        $fields[]   = array(
-            'name'  => 'auth_use_username',
+        $fields['auth_use_username'] = array(
             'type'  => 'switch',
             'label' => 'Gunakan username',
-            'fold'  => array(
-                'key'   => 'auth_allow_registration',
-                'value' => 1 ),
+            'fold'  => array( 'key' => 'auth_allow_registration', 'value' => 1 ),
             'std'   => $this->_settings['auth_use_username'],
-            'desc'  => 'Gunakan username untuk setiap pengguna.');
+            'desc'  => 'Gunakan username untuk setiap pengguna.'
+            );
 
         /** --------------------------------------------------------------------
          * Pengaturan Halaman depan
          * ------------------------------------------------------------------ */
 
-        $fields[]   = array(
-            'name'  => 'opening_fieldset',
+        $fields['opening_fieldset'] = array(
             'type'  => 'fieldset',
-            'label' => 'Opening Text' );
+            'label' => 'Opening Text'
+            );
 
-        $fields[]   = array(
-            'name'  => 'welcome_title',
+        $fields['welcome_title'] = array(
             'type'  => 'text',
             'label' => 'Judul Pembuka',
-            'std'   => $this->_settings['welcome_title'] );
+            'std'   => $this->_settings['welcome_title']
+            );
 
-        $fields[]   = array(
-            'name'  => 'welcome_login',
+        $fields['welcome_login'] = array(
             'type'  => 'editor',
             'height'=> 200,
             'label' => 'Pembuka Halaman Login',
-            'std'   => $this->_settings['welcome_login'] );
+            'std'   => $this->_settings['welcome_login']
+            );
 
-        $fields[]   = array(
-            'name'  => 'welcome_resend',
+        $fields['welcome_resend'] = array(
             'type'  => 'editor',
             'height'=> 200,
             'label' => 'Pembuka Resend',
-            'std'   => $this->_settings['welcome_resend'] );
+            'std'   => $this->_settings['welcome_resend']
+            );
 
-        $fields[]   = array(
-            'name'  => 'welcome_register',
+        $fields['welcome_register'] = array(
             'type'  => 'editor',
             'height'=> 200,
             'label' => 'Pembuka Register',
-            'std'   => $this->_settings['welcome_register'] );
+            'std'   => $this->_settings['welcome_register']
+            );
 
-        $fields[]   = array(
-            'name'  => 'welcome_forgot',
+        $fields['welcome_forgot'] = array(
             'type'  => 'editor',
             'height'=> 200,
             'label' => 'Isi Pembuka',
-            'std'   => $this->_settings['welcome_forgot'] );
+            'std'   => $this->_settings['welcome_forgot']
+            );
 
         $this->_option_form( $fields );
     }
@@ -401,166 +377,152 @@ class Internal extends BI_Controller
          * Pengaturan Kemanan
          * ------------------------------------------------------------------ */
 
-        $fields[]   = array(
-            'name'  => 'app_fieldset_security',
+        $fields['app_fieldset_security']   = array(
             'type'  => 'fieldset',
-            'label' => 'Keamanan' );
+            'label' => 'Keamanan',
+            );
 
         $user_min = 1;
         $user_max = 50;
 
-        $fields[]   = array(
-            'name'  => 'auth_username_length',
+        $fields['auth_username_length'] = array(
             'type'  => 'rangeslider',
             'label' => 'Jumlah karakter Username',
             'min'   => $user_min,
             'max'   => $user_max,
-            'std'   => array(
-                'min' => $this->_settings['auth_username_length_min'],
-                'max' => $this->_settings['auth_username_length_max'],
-                ),
-            'desc'  => 'Jumlah minimal dan maksimal karakter Username.' );
+            'std'   => array( 'min' => $this->_settings['auth_username_length_min'], 'max' => $this->_settings['auth_username_length_max'] ),
+            'desc'  => 'Jumlah minimal dan maksimal karakter Username.',
+            );
 
-        $fields[]   = array(
-            'name'  => 'auth_password_length',
+        $fields['auth_password_length'] = array(
             'type'  => 'rangeslider',
             'label' => 'Jumlah karakter Password',
             'min'   => $user_min,
             'max'   => $user_max,
-            'std'   => array(
-                'min' => $this->_settings['auth_password_length_min'],
-                'max' => $this->_settings['auth_password_length_max'],
-                ),
-            'desc'  => 'Jumlah minimal dan maksimal karakter Password.' );
+            'std'   => array( 'min' => $this->_settings['auth_password_length_min'], 'max' => $this->_settings['auth_password_length_max'] ),
+            'desc'  => 'Jumlah minimal dan maksimal karakter Password.',
+            );
 
         /** --------------------------------------------------------------------
          * Pengaturan Login
          * ------------------------------------------------------------------ */
 
-        $fields[]   = array(
-            'name'  => 'auth_fieldset_login',
+        $fields['auth_fieldset_login'] = array(
             'type'  => 'fieldset',
-            'label' => 'Login' );
+            'label' => 'Login',
+            );
 
-        $fields[]   = array(
-            'name'  => 'auth_login_by_username',
+        $fields['auth_login_by_username'] = array(
             'type'  => 'switch',
             'label' => 'Gunakan username saat login',
-            'std'   => $this->_settings['auth_login_by_username']);
+            'std'   => $this->_settings['auth_login_by_username'],
+            );
 
-        $fields[]   = array(
-            'name'  => 'auth_login_by_email',
+        $fields['auth_login_by_email'] = array(
             'type'  => 'switch',
             'label' => 'Gunakan email saat login',
-            'std'   => $this->_settings['auth_login_by_email']);
+            'std'   => $this->_settings['auth_login_by_email'],
+            );
 
-        $fields[]   = array(
-            'name'  => 'auth_login_record_ip',
+        $fields['auth_login_record_ip'] = array(
             'type'  => 'switch',
             'label' => 'Rekam IP',
-            'std'   => $this->_settings['auth_login_record_ip']);
+            'std'   => $this->_settings['auth_login_record_ip'],
+            );
 
-        $fields[]   = array(
-            'name'  => 'auth_login_count_attempts',
+        $fields['auth_login_count_attempts'] = array(
             'type'  => 'switch',
             'label' => 'Hitung kegagalan login',
-            'std'   => $this->_settings['auth_login_count_attempts']);
+            'std'   => $this->_settings['auth_login_count_attempts'],
+            );
 
-        $fields[]   = array(
-            'name'  => 'auth_login_max_attempts',
+        $fields['auth_login_max_attempts'] = array(
             'type'  => 'slider',
             'label' => 'Maksimum login',
             'min'   => 1,
             'max'   => 10,
             'std'   => $this->_settings['auth_login_max_attempts'],
-            'desc'  => 'Batas maksimum login untuk tiap pengguna.' );
+            'fold'  => array( 'key' => 'auth_login_count_attempts', 'value' => 1 ),
+            'desc'  => 'Batas maksimum login untuk tiap pengguna.'
+            );
 
-        $auth_login_attempt_expire = second_to_day($this->_settings['auth_login_attempt_expire']);
+        $auth_login_attempt_expire = second_to_day( $this->_settings['auth_login_attempt_expire'] );
 
-        $fields[]   = array(
-            'name'  => 'auth_login_attempt_expire',
+        $fields['auth_login_attempt_expire'] = array(
             'type'  => 'slider',
             'label' => 'Masa kadaluarsa login',
             'min'   => 1,
             'max'   => 10,
             'std'   => $auth_login_attempt_expire,
-            'desc'  => 'Batas waktu pengguna dapat login kembali dalam detik. Nilai '.$auth_login_attempt_expire.' hari.' );
+            'desc'  => 'Batas waktu pengguna dapat login kembali dalam detik. Nilai '.$auth_login_attempt_expire.' hari.',
+            );
 
         /** --------------------------------------------------------------------
          * Pengaturan Captcha
          * ------------------------------------------------------------------ */
 
-        $fields[]   = array(
-            'name'  => 'auth_fieldset_captcha',
+        $fields['auth_fieldset_captcha'] = array(
             'type'  => 'fieldset',
-            'label' => 'Validasi Tambahan' );
+            'label' => 'Validasi Tambahan',
+            );
 
-        $fields[]   = array(
-            'name'  => 'auth_captcha_registration',
+        $fields['auth_captcha_registration'] = array(
             'type'  => 'switch',
             'label' => 'Gunakan captcha',
-            'std'   => $this->_settings['auth_captcha_registration'] );
+            'std'   => $this->_settings['auth_captcha_registration'],
+            );
 
-        $fields[]   = array(
-            'name'  => 'auth_use_recaptcha',
+        $fields['auth_use_recaptcha'] = array(
             'type'  => 'switch',
             'label' => 'Gunakan reCaptcha',
-            'fold'  => array(
-                'key' => 'auth_captcha_registration',
-                'value' => 1
-                ),
+            'fold'  => array( 'key' => 'auth_captcha_registration', 'value' => 1 ),
             'std'   => $this->_settings['auth_use_recaptcha'],
-            'desc'  => 'Gunakan '.anchor('https://www.google.com/recaptcha', 'google reCaptcha', 'target="_blank"').' untuk validasi.' );
+            'desc'  => 'Gunakan '.anchor('https://www.google.com/recaptcha', 'google reCaptcha', 'target="_blank"').' untuk validasi.',
+            );
 
-        $fields[]   = array(
-            'name'  => 'auth_recaptcha_public_key',
+        $fields['auth_recaptcha_public_key'] = array(
             'type'  => 'text',
             'label' => 'reCaptcha public key',
-            'fold'  => array(
-                'key'   => 'auth_use_recaptcha',
-                'value' => 1
-                ),
-            'std'   => $this->_settings['auth_recaptcha_public_key'] );
+            'fold'  => array( 'key' => 'auth_use_recaptcha', 'value' => 1 ),
+            'std'   => $this->_settings['auth_recaptcha_public_key'],
+            );
 
-        $fields[]   = array(
-            'name'  => 'auth_recaptcha_private_key',
+        $fields['auth_recaptcha_private_key'] = array(
             'type'  => 'text',
             'label' => 'reCaptcha private key',
-            'fold'  => array(
-                'key'   => 'auth_use_recaptcha',
-                'value' => 1
-                ),
-            'std'   => $this->_settings['auth_recaptcha_private_key'] );
+            'fold'  => array( 'key' => 'auth_use_recaptcha', 'value' => 1 ),
+            'std'   => $this->_settings['auth_recaptcha_private_key'],
+            );
 
         /** --------------------------------------------------------------------
          * Pengaturan Username
          * ------------------------------------------------------------------ */
 
-        $fields[]   = array(
-            'name'  => 'auth_fieldset_blacklist',
+        $fields['auth_fieldset_blacklist'] = array(
             'type'  => 'fieldset',
-            'label' => 'Daftar hitam' );
+            'label' => 'Daftar hitam',
+            );
 
-        $fields[]   = array(
-            'name'  => 'auth_username_blacklist',
+        $fields['auth_username_blacklist'] = array(
             'type'  => 'text',
             'label' => 'Nama pengguna',
             'std'   => $this->_settings['auth_username_blacklist'],
-            'desc'  => 'Daftar username yang tidak diijinkan, dipisahkan dengan tanda koma (,)' );
+            'desc'  => 'Daftar username yang tidak diijinkan, dipisahkan dengan tanda koma (,)',
+            );
 
-        $fields[]   = array(
-            'name'  => 'auth_username_blacklist_prepend',
+        $fields['auth_username_blacklist_prepend'] = array(
             'type'  => 'text',
             'label' => 'Awalan Nama Pengguna',
             'std'   => $this->_settings['auth_username_blacklist_prepend'],
-            'desc'  => 'Daftar kata awalan username yang tidak diijinkan, dipisahkan dengan tanda koma (,)' );
+            'desc'  => 'Daftar kata awalan username yang tidak diijinkan, dipisahkan dengan tanda koma (,)',
+            );
 
-        $fields[]   = array(
-            'name'  => 'auth_username_exceptions',
+        $fields['auth_username_exceptions'] = array(
             'type'  => 'text',
             'label' => 'Username Pengecualian',
             'std'   => $this->_settings['auth_username_exceptions'],
-            'desc'  => 'Daftar pengecualian username yang diijinkan, dipisahkan dengan tanda koma (,)' );
+            'desc'  => 'Daftar pengecualian username yang diijinkan, dipisahkan dengan tanda koma (,)',
+            );
 
         $this->_option_form( $fields );
     }
@@ -568,7 +530,6 @@ class Internal extends BI_Controller
     private function _option_form( $fields )
     {
         $this->load->library('biform');
-
         $form = $this->biform->initialize( array(
             'name'   => 'app-settings',
             'action' => current_url(),

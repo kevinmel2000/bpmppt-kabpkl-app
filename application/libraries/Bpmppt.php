@@ -141,10 +141,10 @@ class Bpmppt
         $slug = $this->izin->get_alias($driver);
         $stat = FALSE;
 
-        switch ($this->_ci->uri->segment(5))
+        switch ($this->_ci->uri->segment(4))
         {
             case 'status':
-                $stat  = $this->_ci->uri->segment(6);
+                $stat  = $this->_ci->uri->segment(5);
                 $query = $this->izin->get_data_by_status($stat, $slug);
                 break;
 
@@ -187,12 +187,6 @@ class Bpmppt
 
         if ($data_obj)
         {
-            $this->tool_buttons['form'] = 'Baru|primary';
-            $this->tool_buttons[] = array(
-                'laporan/'.$data_id => 'Cetak|info',
-                $h_link.'/'.$data_id => $h_text.'|danger'
-                );
-
             if ($data_obj->status != 'deleted')
             {
                 $h_link = 'hapus';
@@ -203,6 +197,12 @@ class Bpmppt
                 $h_link = 'delete';
                 $h_text = 'Hapus Permanen';
             }
+
+            $this->tool_buttons['form'] = 'Baru|primary';
+            $this->tool_buttons[] = array(
+                'laporan/'.$data_id => 'Cetak|info',
+                $h_link.'/'.$data_id => $h_text.'|danger'
+                );
 
             foreach ($this->statuses as $_link => $_label)
             {
@@ -222,7 +222,7 @@ class Bpmppt
 
         if ($form_data = $form->validate_submition())
         {
-            if ($new_id = $this->simpan($form_data, $data_id))
+            if ($new_id = $this->izin->simpan($form_data, $data_id))
             {
                 $new_id = $data_id == FALSE ? '/'.$new_id : '' ;
             }
@@ -235,7 +235,7 @@ class Bpmppt
             redirect(current_url().$new_id);
         }
 
-        return $form->generate();
+        return $form;
     }
 
     public function get_printform($driver = NULL)
@@ -312,7 +312,7 @@ class Bpmppt
         }
         else
         {
-            return $form->generate();
+            return $form;
         }
     }
 }
