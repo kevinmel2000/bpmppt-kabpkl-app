@@ -1,9 +1,9 @@
 <?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
 /**
- * @package     BPMPPT App v0.1.6 (http://feryardiant.github.com/bpmppt)
+ * @package     BPMPPT App v0.1.6 (http://creasico.github.com/bpmppt)
  * @author      Fery Wardiyanto (ferywardiyanto@gmail.com)
  * @copyright   Copyright (c) 2013-2015 BPMPPT Kab. Pekalongan, Fery Wardiyanto
- * @license     MIT (https://github.com/feryardiant/bpmppt/blob/master/LICENSE)
+ * @license     MIT (https://github.com/creasico/bpmppt/blob/master/LICENSE)
  * @subpackage  Applications
  * @category    Configurations
  */
@@ -27,10 +27,10 @@ $config['application_author']          = 'Fery Wardiyanto';
 $config['application_author_email']    = 'ferywardiyanto@gmail.com';
 
 // Application Author Url
-$config['application_author_url']      = 'http://feryardiant.github.io';
+$config['application_author_url']      = 'http://creasico.github.io/bpmppt';
 
 // Application Repository Url
-$config['application_repo_url']        = 'http://github.com/feryardiant/bpmppt';
+$config['application_repo_url']        = 'http://github.com/creasico/bpmppt';
 
 // Application Documentation
 $config['application_doc_url']         = '';

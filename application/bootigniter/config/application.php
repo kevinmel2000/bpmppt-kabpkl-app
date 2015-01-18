@@ -27,10 +27,10 @@ $config['application_author']          = 'Fery Wardiyanto';
 $config['application_author_email']    = 'ferywardiyanto@gmail.com';
 
 // Application Author Url
-$config['application_author_url']      = 'http://feryardiant.github.io';
+$config['application_author_url']      = 'http://creasico.github.io/bpmppt';
 
 // Application Repository Url
-$config['application_repo_url']        = 'http://github.com/feryardiant/bpmppt';
+$config['application_repo_url']        = 'http://github.com/creasico/bpmppt';
 
 // Application Documentation
 $config['application_doc_url']         = '';
