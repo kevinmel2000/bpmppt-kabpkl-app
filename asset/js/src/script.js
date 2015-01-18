@@ -100,8 +100,12 @@ $(document).ready(function () {
     var el = $(this)
 
     if ($(this).data('fold') == 1) {
-      var val = $.parseJSON(el.data('fold-value').replace(/\'/g, '"'))
       var tgt = $('[name=\"' + el.data('fold-key') + '\"]')
+      var val = el.data('fold-value')
+      if (typeof val === 'string') {
+        val = val.replace(/\'/g, '"')
+      }
+      val = $.parseJSON(val)
 
       if (tgt.hasClass('bs-switch')) {
         tgt.on('switchChange.bootstrapSwitch', function (event, state) {

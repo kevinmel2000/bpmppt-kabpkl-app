@@ -2,7 +2,7 @@
 /**
  * @package     BPMPPT App v0.1.6 (http://feryardiant.github.com/bpmppt)
  * @author      Fery Wardiyanto (ferywardiyanto@gmail.com)
- * @copyright   Copyright (c) 2013-2014 BPMPPT Kab. Pekalongan, Fery Wardiyanto
+ * @copyright   Copyright (c) 2013-2015 BPMPPT Kab. Pekalongan, Fery Wardiyanto
  * @license     MIT (https://github.com/feryardiant/bpmppt/blob/master/LICENSE)
  * @subpackage  Biform
  * @category    Libraries
@@ -82,7 +82,7 @@ class Biform
         'desc'       => '',
         'attr'       => '',
         'validation' => ''
-      );
+        );
 
     /**
      * Form errors placeholder
@@ -247,19 +247,6 @@ class Biform
     {
         if (!empty($fields))
         {
-            if ($fields[0]['type'] == 'subfield')
-            {
-                $first_field = 'sub'.str_replace('_', '-', 'input-'.$fields[0]['name'].'-'.$fields[0]['fields'][0]['name']);
-            }
-            else
-            {
-                $first_field = $fields[0]['name'];
-            }
-
-            $first_field = 'field-'.str_replace('_', '-', $first_field);
-
-            load_script('biform-script', "$('#".$first_field."').focus();\n");
-
             foreach ($fields as $field_id => $attributes)
             {
                 $this->set_field($field_id, $attributes);
@@ -401,9 +388,9 @@ class Biform
         {
             $this->_counts['feildsets'] = 0;
 
-            foreach($this->_fields as $field_attrs)
+            foreach($this->_fields as $field_id => $field_attrs)
             {
-                $html .= $this->_compile($field_attrs);
+                $html .= $this->_compile($field_id, $field_attrs);
             }
         }
 
@@ -434,10 +421,10 @@ class Biform
      * @param   bool    $is_sub       Is it an sub-fields?
      * @return  string
      */
-    protected function _compile(array $field_attrs, $is_sub = FALSE)
+    protected function _compile($field_id, array $field_attrs, $is_sub = FALSE)
     {
-        $html              = '';
-        $field_id          = isset($field_attrs['id']) ? $field_attrs['id'] : $field_attrs['name'];
+        $html = '';
+        $field_id or $field_id = isset($field_attrs['id']) ? $field_attrs['id'] : $field_attrs['name'];
         $field_attrs['id'] = 'field-'.str_replace('_', '-', $field_id);
 
         if (!isset($field_attrs['attr']))
@@ -490,11 +477,21 @@ class Biform
 
             if (isset($field_attrs['fields']) and !empty($field_attrs['fields']))
             {
-                $field_attrs['for'] = 'field-sub'.str_replace('_', '-', 'input-'.$field_attrs['name'].'-'.$field_attrs['fields'][0]['name']);
-                $c_fields           = count($field_attrs['fields']);
+                $_sub_count = 0;
+                $c_fields = count($field_attrs['fields']);
 
-                foreach ($field_attrs['fields'] as $field)
+                foreach ($field_attrs['fields'] as $sub_name => $field)
                 {
+                    if (!isset($field['name']) and is_string($sub_name))
+                    {
+                        $field['name'] = $sub_name;
+                    }
+
+                    if ($_sub_count == 0)
+                    {
+                        $field_attrs['for'] = 'field-sub'.str_replace('_', '-', 'input-'.$field_attrs['name'].'-'.$field['name']);
+                    }
+
                     $field = array_set_defaults($field, array(
                         'name'       => '',
                         'std'        => '',
@@ -505,11 +502,15 @@ class Biform
 
                     if (empty($field['col']))
                     {
-                        $field['col'] = floor(12/$c_fields);
+                        $field['col'] = floor(12 / $c_fields);
                     }
 
                     $input .= '<div class="'.twbs_set_columns($field['col'], $field['col'], $field['col'], 12).'">'."\n";
-                    $field_attrs['validation'] = '';
+
+                    if (!empty($field_attrs['validation']))
+                    {
+                        $field['validation'] = $field_attrs['validation'];
+                    }
 
                     if (!empty($field['validation']))
                     {
@@ -525,12 +526,14 @@ class Biform
                     $field['id']   = 'sub'.str_replace('_', '-', 'input-'.$field['name']);
                     $field['attr'] = !empty($field['attr']) ? $field['attr'] : $field_attrs['attr'];
 
-                    $input .= $this->_compile($field, TRUE).'</div>'."\n";
+                    $input .= $this->_compile($field_id, $field, TRUE).'</div>'."\n";
 
                     if ($is_error = form_error($field['name'], $this->_template['desc_open'], $this->_template['desc_close']))
                     {
                         $errors[] = $is_error;
                     }
+
+                    $_sub_count++;
                 }
             }
 
@@ -939,7 +942,7 @@ class Biform
                     $actived = ($field_attrs['std'] == $value ? TRUE : FALSE);
                 }
 
-                $_id    = str_replace('-', '-', $field_attrs['name'].'-'.$value);
+                $_id    = str_replace(array(' ', '_'), array('-', '-'), $field_attrs['name'].'-'.strtolower($value));
                 $check  = '<div class="'.$field_attrs['type'].'" '.$field_attrs['attr'].'>'
                         . $form_func($field, $value, $set_func($field_attrs['name'], $value, $actived), 'id="'.$_id.'" '.$field_attrs['attr'])
                         . '<label for="'.$_id.'"> '.$option.'</label>'
@@ -1319,6 +1322,7 @@ class Biform
 
         $field_attrs['class'] = 'form-datepicker';
         $field_attrs['type'] = 'text';
+        $field_attrs['callback'] = 'string_to_date';
         $field_attrs['attr'] = 'data-lang="'.$lang.'" data-mode="'.$field_attrs['mode'].'" data-format="dd-mm-yyyy" ';
         $field_attrs['std'] = bdate('%d-%m-%Y', $field_attrs['std']);
 
@@ -1358,16 +1362,26 @@ class Biform
      */
     public function validate_submition()
     {
-        foreach ($this->_fields as $field)
+        foreach ($this->_fields as $name => $field)
         {
+            if (!isset($field['name']) and is_string($name) and strlen($name) > 0)
+            {
+                $field['name'] = $name;
+            }
+
             if ($field['type'] == 'subfield')
             {
-                foreach ($field['fields'] as $sub)
+                foreach ($field['fields'] as $sub_name => $sub_field)
                 {
-                    $sub_validation = (isset($sub['validation']) ? $sub['validation'] : '');
-                    $sub_callback   = (isset($sub['callback'])   ? $sub['callback']   : '');
+                    if (!isset($sub_field['name']) and is_string($sub_name) and strlen($sub_name) > 0)
+                    {
+                        $sub_field['name'] = $sub_name;
+                    }
 
-                    $this->set_field_rules($field['name'].'_'.$sub['name'], $sub['label'], $sub['type'], $sub_validation, $sub_callback);
+                    $sub_validation = isset($sub_field['validation']) ? $sub_field['validation'] : '';
+                    $sub_callback   = isset($sub_field['callback'])   ? $sub_field['callback']   : '';
+
+                    $this->set_field_rules($field['name'].'_'.$sub_field['name'], $sub_field['label'], $sub_field['type'], $sub_validation, $sub_callback);
                 }
             }
             elseif ($field['type'] == 'rangeslider')

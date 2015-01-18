@@ -6,7 +6,7 @@
 </tr>
 <tr><td colspan="7"></td></tr>
 <tr class="align-center bold">
-    <td colspan="7" style="width:100%">NOMOR : <?php echo '640 /'.nbs(6).'/ IMB / BPMPPT /'.print_blnthn_head($created_on) ?></td>
+    <td colspan="7" style="width:100%">NOMOR : <?php echo '614 /'.nbs(6).'/ IMB / BPMPPT /'.print_blnthn_head($surat_tanggal) ?></td>
 </tr>
 <tr><td colspan="7"></td></tr>
 <tr class="align-center bold">
@@ -78,11 +78,12 @@
     <td style="width:2%">:</td>
     <td colspan="2" style="width:47%"><p><?php echo $bangunan_maksud ? 'Mendirikan bangunan baru' : 'Merehab bangunan' ?></p></td>
 </tr>
+<?php $bangunan_area = unserialize($bangunan_area) ?>
 <tr>
     <td colspan="2"></td>
     <td colspan="2" style="width:30%"><p class="bold">Penggunaan Bangunan</p></td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:47%"><p class="bold"><?php echo strtoupper($bangunan_guna) ?></p></td>
+    <td colspan="2" style="width:47%"><p class="bold"><?php echo $bangunan_area[0]['guna'] ?></p></td>
 </tr>
 <tr>
     <td colspan="2"></td>
@@ -188,4 +189,183 @@
 </tr>
 <tr><td colspan="7" style="width:100%"><?php print_tembusan($data_tembusan) ?></td></tr>
     </tbody>
+</table>
+<table class="pagebreak bordered" style="font-size: 9px; border: 1px solid #000">
+<tr class="align-center">
+    <td colspan="4" style="width:35%"><?php echo '<span class="bold">pemerintah '.strtoupper($skpd_city).'</span><br>'.word_wrap('KEPALA '.strtoupper($skpd_name), 32).'<br>'.$skpd_address.' Telp. '.$skpd_telp.' '.$skpd_kab ?></td>
+    <td colspan="3" style="width:50%">SURAT KETETAPAN RETRIBUSI DAERAH<br><br><br>(SKRD)<br>Tahun <?php echo bdate('%Y', $created_on) ?></td>
+    <td style="width:15%">NO URUT :</td>
+</tr>
+<tr class="align-center unbordered">
+    <td colspan="6" style="width:70%"></td>
+    <td colspan="2" style="width:30%">Masa<br>Tahun</td>
+</tr>
+<tr class="unbordered">
+    <td style="width:5%"></td>
+    <td style="width:25%">Dasar<span class="rfloat">1.</span></td>
+    <td style="width:70%" colspan="6">Peraturan Daerah Kabupaten Pekalongan Nomor 1 Tahun 2012 tentang Retribusi Daerah BAB V Retribusi Perizinan Tertentu.</td>
+</tr>
+<tr class="unbordered"><td class="empty" colspan="8"></td></tr>
+<tr class="unbordered">
+    <td colspan="2" style="width:30%">Nama</td>
+    <td colspan="6" style="width:70%"><span style="float: left;">:</span><span style="margin-left: 10px;"><?php echo $pemohon_nama ?></span></td>
+</tr>
+<tr class="unbordered">
+    <td colspan="2" style="width:30%">Alamat</td>
+    <td colspan="6" style="width:70%"><span style="float: left;">:</span><span style="margin-left: 10px;"><?php echo $pemohon_alamat ?></span></td>
+</tr>
+<tr class="unbordered">
+    <td colspan="2" style="width:30%">Nomor Pokok Wajib Retribusi (NPWR)</td>
+    <td colspan="6" style="width:70%"><span style="float: left;">:</span><span style="margin-left: 10px;"><?php echo $pemohon_nama ?></span></td>
+</tr>
+<tr class="unbordered">
+    <td colspan="2" style="width:30%">Jenis IMB</td>
+    <td colspan="6" style="width:70%"><span style="float: left;">:</span><span style="margin-left: 10px;"><?php echo $bangunan_maksud ?></span></td>
+</tr>
+<tr class="unbordered">
+    <td colspan="2" style="width:30%">Lokasi Izin</td>
+    <td colspan="6" style="width:70%"><span style="float: left;">:</span><span style="margin-left: 10px;"><?php echo $bangunan_lokasi ?></span></td>
+</tr>
+<tr class="unbordered">
+    <td colspan="2" style="width:30%">Tanggal Jatuh Tempo</td>
+    <td colspan="6" style="width:70%"><span style="float: left;">:</span><span style="margin-left: 10px;"><?php echo $pemohon_nama ?></span></td>
+</tr>
+<tr class="unbordered"><td class="empty" colspan="8"></td></tr>
+<tr class="align-center">
+    <td style="whidth:5%">No</td>
+    <td>Kode Rekening</td>
+    <td colspan="5">URAIAN RETRIBUSI DAERAH</td>
+    <td rowspan="2">Jumlah<br>Rp</td>
+</tr>
+<tr class="align-center">
+    <td style="whidth:5%">1.</td>
+    <td>10301.1.2.03.01.03</td>
+    <td colspan="5">Retribusi Izin Mendirikan Bangunan (IMB)</td>
+</tr>
+<tr>
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td class="empty" colspan="5" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+</tr>
+<tr>
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td class="empty" colspan="5" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+</tr>
+<?php foreach ($bangunan_area as $area): ?>
+<tr class="unbordered">
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td style="width:20%" colspan="3">Luas Bang. <?php echo $area['guna'] ?></td>
+    <td style="width:35%">: <?php echo $area['panjang'].' &times; '.$area['lebar'] ?></td>
+    <td>= <?php $luas = (int) $area['panjang'] * (int) $area['lebar']; echo $luas ?> m<sup>2</sup></td>
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+</tr>
+<?php endforeach ?>
+<tr>
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td class="empty" colspan="5" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+</tr>
+<?php foreach (unserialize($bangunan_koefisien) as $i => $koef): ?>
+<tr class="unbordered">
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td style="width:20%" colspan="3">Koefisien <?php echo $bangunan_area[$i]['guna'] ?></td>
+    <td style="width:35%">: <?php echo $koef['bwk'].' &times; '.$koef['luas'].' &times; '.$koef['tinggi'].' &times; '.$koef['guna'].' &times; '.$koef['letak'].' &times; '.$koef['kons'] ?></td>
+    <td>= <?php $koefisien = (int) $koef['bwk'] * $koef['luas'] * $koef['tinggi'] * $koef['guna'] * $koef['letak'] * $koef['kons']; echo $koefisien ?></td>
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+</tr>
+<?php endforeach ?>
+<tr>
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td class="empty" colspan="5" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+</tr>
+<tr class="unbordered">
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td style="width:60%" colspan="5">Formulir</td>
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+</tr>
+<?php foreach ($bangunan_area as $area): ?>
+<tr class="unbordered">
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td style="width:20%" colspan="3">Sempadan <?php echo $area['guna'] ?></td>
+    <td style="width:35%">: 0,25 % &times; 1.000.000 &times; <?php echo $luas.' &times; '.$koefisien ?></td>
+    <td class="empty"></td>
+    <td class="align-right" style="border: solid #000; border-width: 0 1px 0 1px"><?php echo format_number((.25/100) * 1000000 * $luas * $koefisien, 0) ?></td>
+</tr>
+<tr class="unbordered">
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td style="width:20%" colspan="3">Pengawasan</td>
+    <td style="width:35%">: 0,02 % &times; 1.000.000 &times; <?php echo $luas.' &times; '.$koefisien ?></td>
+    <td class="empty"></td>
+    <td class="align-right" style="border: solid #000; border-width: 0 1px 0 1px"><?php echo format_number((.02/100) * 1000000 * $luas * $koefisien, 0) ?></td>
+</tr>
+<tr class="unbordered">
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td style="width:20%" colspan="3">Koreksi</td>
+    <td style="width:35%">: 0,01 % &times; 1.000.000 &times; <?php echo $luas.' &times; '.$koefisien ?></td>
+    <td class="empty"></td>
+    <td class="align-right" style="border: solid #000; border-width: 0 1px 0 1px"><?php echo format_number((.01/100) * 1000000 * $luas * $koefisien, 0) ?></td>
+</tr>
+<tr>
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td class="empty" colspan="5" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+</tr>
+<?php endforeach ?>
+<tr>
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td class="empty" colspan="5" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+</tr>
+<tr>
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td class="empty" colspan="5" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+</tr>
+<tr>
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td class="bordered" colspan="5">Jumlah Ketetapan Pokok Restribusi</td>
+    <td class="bordered">-</td>
+</tr>
+<tr>
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td class="bordered" colspan="5">Jumlah Sanksi</td>
+    <td class="bordered">-</td>
+</tr>
+<tr>
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
+    <td class="bordered" colspan="5">Jumlah Keseluruhan</td>
+    <td class="bordered">-</td>
+</tr>
+<tr>
+    <td colspan="8">
+        <p>Dengan Huruf :</p>
+        <p>PERHATIAN :</p>
+        <ol>
+            <li>Pembayaran harap dilakukan melalui bendaharawan khusus BPMPPT</li>
+            <li>Apabila SKRD ini tidak atau kurang dibayar lewat waktu 30 hari setelah diterima atau<br>( tanggal jatuh tempo ) dikenakan sanksi administrasi berupa bunga sebesar 2 % perbulan</li>
+        </ol>
+    </td>
+</tr>
+<tr class="unbordered">
+    <td colspan="5" style="width:60%"></td>
+    <td colspan="3" class="align-center" style="width:40%;"><?php print_ttd_kadin() ?></td>
+</tr>
 </table>

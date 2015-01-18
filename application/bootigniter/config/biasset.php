@@ -360,7 +360,7 @@ $config['biasset_register_scripts'] = array(
         'dep' => array('jqueryui-core'),
         ),
     'jqueryui-touchpunch' => array(
-        'src' => $bower_path.'jquery-ui-touch-punch/jquery.ui.touch-punch.min.js',
+        'src' => $bower_path.'jqueryui-touch-punch/jquery.ui.touch-punch.min.js',
         'ver' => '0.2.3',
         'dep' => array('jqueryui-widget', 'jqueryui-mouse'),
         ),

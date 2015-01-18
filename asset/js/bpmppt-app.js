@@ -1,3 +1,10 @@
+/*!
+ * BPMPPT App v0.1.6 (http://feryardiant.github.com/bpmppt)
+ * Aplikasi Pengelolaan Dokumen Perijinan di BPMPPT Kab. Pekalongan
+ * Copyright (c) 2013-2015 BPMPPT Kab. Pekalongan, Fery Wardiyanto
+ * Licensed under MIT (https://github.com/feryardiant/bpmppt/blob/master/LICENSE)
+ */
+
 $(document).ready(function () {
   'use strict';
 
@@ -100,8 +107,12 @@ $(document).ready(function () {
     var el = $(this)
 
     if ($(this).data('fold') == 1) {
-      var val = $.parseJSON(el.data('fold-value').replace(/\'/g, '"'))
       var tgt = $('[name=\"' + el.data('fold-key') + '\"]')
+      var val = el.data('fold-value')
+      if (typeof val === 'string') {
+        val = val.replace(/\'/g, '"')
+      }
+      val = $.parseJSON(val)
 
       if (tgt.hasClass('bs-switch')) {
         tgt.on('switchChange.bootstrapSwitch', function (event, state) {
