@@ -217,104 +217,96 @@ class Pengguna extends BI_Controller
             $this->data['tool_buttons'] = array();
         }
 
-        $fields[]   = array(
-            'name'  => 'user-display',
+        $fields['user-display'] = array(
             'type'  => 'text',
             'label' => 'Nama Lengkap',
             'std'   => ( $user ? $user->display : '' ),
             'desc'  => 'Mohon untuk menggunakan nama asli.',
-            'validation'=> 'required' );
+            'validation'=> 'required'
+            );
 
         if ( (bool) Bootigniter::get_setting('auth_use_username') )
         {
             $username_min_length = Bootigniter::get_setting('auth_username_length_min');
             $username_max_length = Bootigniter::get_setting('auth_username_length_max');
-
-            $fields[]   = array(
-                'name'  => 'user-username',
+            $fields['user-username'] = array(
                 'type'  => 'text',
                 'label' => 'Username',
                 'std'   => ( $user ? $user->username : '' ),
                 'desc'  => 'Username tidak boleh menggunakan spasi dan harus diisi dengan minimal '.$username_min_length.' dan maksimal '.$username_max_length.' karakter.',
-                'validation'=> ( !$user ? 'is_username_available|' : '' ).'required|valid_username_length|is_username_blacklist' );
+                'validation'=> ( !$user ? 'is_username_available|' : '' ).'required|valid_username_length|is_username_blacklist'
+                );
         }
 
-        $fields[]   = array(
-            'name'  => 'user-email',
+        $fields['user-email']   = array(
             'type'  => 'email',
             'label' => 'Email',
             'std'   => ( $user ? $user->email : '' ),
             'desc'  => 'Dengan alasan keamanan mohon gunakan email aktif anda.',
-            'validation'=> ( !$user ? 'is_email_available|' : '' ).'required|valid_email' );
+            'validation'=> ( !$user ? 'is_email_available|' : '' ).'required|valid_email'
+            );
 
         if ( $user )
         {
-            $fields[]   = array(
-                'name'  => 'app-fieldset-password',
+            $fields['app-fieldset-password'] = array(
                 'type'  => 'fieldset',
-                'label' => 'Ganti password' );
+                'label' => 'Ganti password'
+                );
 
-            $fields[]   = array(
-                'name'  => 'user-old-password',
+            $fields['user-old-password'] = array(
                 'type'  => 'password',
-                'label' => 'Password lama' );
+                'label' => 'Password lama'
+                );
         }
 
         $password_min_length = Bootigniter::get_setting('auth_password_length_min');
         $password_max_length = Bootigniter::get_setting('auth_password_length_max');
 
-        $fields[]   = array(
-            'name'  => 'user-new-password',
+        $fields['user-new-password'] = array(
             'type'  => 'password',
             'label' => ( !$user ? 'Password' : 'Password baru' ),
             'desc'  => 'Password harus diisi dengan minimal '.$password_min_length.' dan maksimal '.$password_max_length.' karakter.',
-            'validation'=> ( !$user ? 'required|' : '' ).'valid_password_length');
+            'validation'=> ( !$user ? 'required|' : '' ).'valid_password_length'
+            );
 
-        $fields[]   = array(
-            'name'  => 'user-confirm-password',
+        $fields['user-confirm-password'] = array(
             'type'  => 'password',
             'label' => 'Konfirmasi Password',
             'desc'  => 'Ulangi penulisan '.( !$user ? 'Password' : 'Password baru' ).' diatas.',
-            'validation'=> ( !$user ? 'required|' : '' ).'matches[user-new-password]');
+            'validation'=> ( !$user ? 'required|' : '' ).'matches[user-new-password]'
+            );
 
         if ( $user_id != $this->current_user['user_id'] and is_user_can('manage_groups') )
         {
-            $fields[]   = array(
-                'name'  => 'app-fieldset-groups',
+            $fields['app-fieldset-groups'] = array(
                 'type'  => 'fieldset',
-                'label' => 'Kelompok' );
+                'label' => 'Kelompok'
+                );
 
-            $fields[]   = array(
-                'name'  => 'user-groups',
+            $fields['user-groups'] = array(
                 'type'  => 'checkbox',
                 'label' => 'Kelompok pengguna',
                 'option'=> $this->biauth->groups->fetch_assoc(),
                 'std'   => ( $user ? $user->groups : '' ),
-                'validation'=> ( !$user ? 'required' : '' ) );
+                'validation'=> ( !$user ? 'required' : '' )
+                );
         }
 
         if ( $user and !$user->deleted )
         {
-            $fields[]   = array(
-                'name'  => 'app-fieldset-status',
+            $fields['app-fieldset-status']   = array(
                 'type'  => 'fieldset',
-                'label' => 'Status' );
+                'label' => 'Status'
+                );
 
             $this->load->library('table');
-
             $this->table->set_template(array(
                 'table_open' => '<table class="table table-striped table-bordered table-hover table-condensed">'
                 ));
 
             $this->table->set_heading(array(
-                array(
-                    'data' => 'Nama',
-                    'width' => '26%',
-                    ),
-                array(
-                    'data' => 'Nilai',
-                    'width' => '74%',
-                    )
+                array( 'data' => 'Nama',  'style' => 'width:26%', ),
+                array( 'data' => 'Nilai', 'style' => 'width:74%', )
                 ));
 
             $is_banned = (bool) $user->banned;
@@ -335,17 +327,16 @@ class Pengguna extends BI_Controller
                 $this->table->add_row($key, $val);
             }
 
-            $fields[]   = array(
-                'name'  => 'user-status',
+            $fields['user-status']   = array(
                 'type'  => 'custom',
                 'label' => 'Status Pengguna',
-                'std'   => $this->table->generate() );
+                'std'   => $this->table->generate()
+                );
 
             $this->table->clear();
         }
 
         $this->load->library('biform');
-
         $form = $this->biform->initialize( array(
             'name'   => 'user-form',
             'action' => current_url(),
@@ -399,22 +390,21 @@ class Pengguna extends BI_Controller
 
         $this->set_panel_title('Cekal pengguna: '.$username);
 
-        $fields[]   = array(
-            'name'  => 'ban-user',
+        $fields['ban-user'] = array(
             'type'  => 'text',
             'label' => 'Nama Pengguna',
             'attr'  => 'disabled',
-            'std'   => $username );
+            'std'   => $username
+            );
 
-        $fields[]   = array(
-            'name'  => 'ban-reason',
+        $fields['ban-reason'] = array(
             'type'  => 'textarea',
             'label' => 'Alasan pencekalan',
             'desc'  => 'Mohon tuliskan secara lengkap alasan pencekalan pengguna "'.$username.'".',
-            'validation'=> 'required' );
+            'validation'=> 'required'
+            );
 
         $this->load->library('biform');
-
         $form = $this->biform->initialize( array(
             'name' => 'user-ban',
             'action' => current_url(),
@@ -472,49 +462,49 @@ class Pengguna extends BI_Controller
         $this->data['panel_title'] = $this->bitheme->set_title( $group ? 'Ubah data Kelompok pengguna '.$group->name : 'Buat kelompok pengguna baru' );
         $this->data['tool_buttons']['data'] = 'Kembali|default';
 
-        $fields[]   = array(
-            'name'  => 'group-name',
+        $fields['group-name'] = array(
             'type'  => 'text',
             'label' => 'Nama lengkap',
             'std'   => ( $group ? $group->name : '' ),
             'validation'=> 'required',
-            'desc'  => 'Nama lengkap untuk kelompok pengguna, diperbolehkan menggunakan spasi.' );
+            'desc'  => 'Nama lengkap untuk kelompok pengguna, diperbolehkan menggunakan spasi.'
+            );
 
-        $fields[]   = array(
-            'name'  => 'group-key',
+        $fields['group-key'] = array(
             'type'  => 'text',
             'label' => 'Nama singkat',
             'std'   => ( $group ? $group->key : '' ),
             'validation'=> 'required',
-            'desc'  => 'Nama singkat untuk kelompok pengguna, tidak diperbolehkan menggunakan spasi.' );
+            'desc'  => 'Nama singkat untuk kelompok pengguna, tidak diperbolehkan menggunakan spasi.'
+            );
 
-        $fields[]   = array(
-            'name'  => 'group-desc',
+        $fields['group-desc'] = array(
             'type'  => 'textarea',
             'label' => 'Keterangan',
             'std'   => ( $group ? $group->description : '' ),
-            'desc'  => 'Keterangan singkat mengenai kelompok pengguna.' );
+            'desc'  => 'Keterangan singkat mengenai kelompok pengguna.'
+            );
 
-        $fields[]   = array(
-            'name'  => 'group-default',
+        $fields['group-default'] = array(
             'type'  => 'switch',
             'label' => 'Jadikan default',
             'option'=> array(
                 1 => 'Ya',
-                0 => 'Tidak' ),
+                0 => 'Tidak'
+                ),
             'std'   => ( $group ? $group->default : 0 ),
-            'desc'  => 'Pilih <em>Ya</em> untuk menjadikna group ini sebagai group bawaan setiap mendambahkan pengguna baru, atau pilih <em>Tidak</em> untuk sebaliknya.' );
+            'desc'  => 'Pilih <em>Ya</em> untuk menjadikna group ini sebagai group bawaan setiap mendambahkan pengguna baru, atau pilih <em>Tidak</em> untuk sebaliknya.'
+            );
 
-        $fields[]   = array(
-            'name'  => 'group-perms',
+        $fields['group-perms'] = array(
             'type'  => 'checkbox',
             'label' => 'Wewenang Kelompok',
             'option'=> $this->biauth->permissions->fetch( TRUE ),
             'std'   => ( $group ? explode(',', $group->perm_id) : 0 ),
-            'desc'  => '' );
+            'desc'  => ''
+            );
 
         $this->load->library('biform');
-
         $form = $this->biform->initialize( array(
             'name'   => 'user-roles',
             'action' => current_url(),
@@ -547,8 +537,6 @@ class Pengguna extends BI_Controller
             $this->data['panel_body'] = $form->generate();
         }
 
-        // $this->data['panel_body'] = $form->generate();
-
         $this->load->theme('dataform', $this->data);
     }
 
@@ -559,7 +547,7 @@ class Pengguna extends BI_Controller
         $this->data['data_page'] = TRUE;
 
         $this->load->library('bitable', array(
-            'base_url'   => $this->data['page_link'],
+            'base_url' => $this->data['page_link'],
             ));
 
         $grid = $this->bitable->set_column('Kelompok', 'name, perm_count, callback_make_tag:perm_desc', '65%', '<strong>%s</strong> <small class="text-muted">Dengan %s wewenang, antara lain:</small><br>%s')
@@ -603,30 +591,30 @@ class Pengguna extends BI_Controller
 
         $this->data['tool_buttons']['permission'] = 'Kembali|default';
 
-        $fields[]   = array(
-            'name'  => 'perm-sort',
+        $fields['perm-sort'] = array(
             'type'  => 'text',
             'label' => 'Nama singkat',
             'std'   => ( $perm ? $perm->permission : '' ),
             'desc'  => 'Nama singkan untuk Hak akses pengguna, tidak diperbolehkan menggunakan spasi.',
-            'validation'=> ( !$perm ? 'required' : '' ) );
+            'validation'=> ( !$perm ? 'required' : '' )
+            );
 
-        $fields[]   = array(
-            'name'  => 'perm-desc',
+        $fields['perm-desc'] = array(
             'type'  => 'text',
             'label' => 'Nama lengkap',
             'std'   => ( $perm ? $perm->description : '' ),
             'desc'  => 'Nama lengkap untuk Hak akses pengguna, diperbolehkan menggunakan spasi.',
-            'validation'=> ( !$perm ? 'required' : '' ) );
+            'validation'=> ( !$perm ? 'required' : '' )
+            );
 
-        $fields[]   = array(
-            'name'  => 'perm-parent',
+        $fields['perm-parent'] = array(
             'type'  => 'dropdown',
             'label' => 'Difisi',
             'option'=> $this->biauth->permissions->fetch_parents(),
             'std'   => ( $perm ? $perm->parent : 0 ),
             'desc'  => 'Pilih <em>Ya</em> untuk menjadikna perm ini sebagai perm bawaan setiap mendambahkan pengguna baru, atau pilih <em>Tidak</em> untuk sebaliknya.',
-            'validation'=> ( !$perm ? 'required' : '' ) );
+            'validation'=> ( !$perm ? 'required' : '' )
+            );
 
         $this->load->library('biform');
 
@@ -640,8 +628,6 @@ class Pengguna extends BI_Controller
         {
             if ( $perm_id == '' )
             {
-                $form_data =  $form->submited_data();
-
                 $user_data['role']    = $form_data['perm-role'];
                 $user_data['full']    = $form_data['perm-full'];
                 $user_data['default'] = $form_data['perm-default'];
