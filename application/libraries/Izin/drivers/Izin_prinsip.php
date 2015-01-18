@@ -20,11 +20,6 @@ class Izin_prinsip extends CI_Driver
         $alias = 'persetujuan_prinsip',
         $name = 'Persetujuan Prinsip';
 
-    public function __construct()
-    {
-        log_message('debug', '#Izin_driver: '.$this->name.' Class Initialized');
-    }
-
     public function _form()
     {
         $fields['fieldset_data_pemohon'] = array(

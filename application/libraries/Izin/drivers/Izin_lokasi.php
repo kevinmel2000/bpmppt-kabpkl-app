@@ -20,11 +20,6 @@ class Izin_lokasi extends CI_Driver
         $alias = 'izin_lokasi',
         $name = 'Izin Lokasi';
 
-    public function __construct()
-    {
-        log_message('debug', '#Izin_driver: '.$this->name.' Class Initialized');
-    }
-
     public function _form()
     {
         $fields['fieldset_data_pemohon'] = array(

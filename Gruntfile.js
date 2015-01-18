@@ -64,7 +64,7 @@ module.exports = function(grunt) {
           '!application/vendor/**',
           'asset/{css,js,vendor}/**',
           '!asset/{css,js}/src/**',
-          '{package,composer}.json',
+          'composer.json',
           '*.{php,sql}',
           '!appconfig.php',
           '.htaccess',

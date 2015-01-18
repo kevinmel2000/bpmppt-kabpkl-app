@@ -68,7 +68,7 @@ class Utily
     {
         $this->_ci =& get_instance();
 
-        $this->_file_name   = Bootigniter::app('name').'-backup-'.time();
+        $this->_file_name   = Bootigniter::app('slug').'-backup-'.time();
         $this->_destination = APPPATH.'storage/backup/';
 
         $this->db_info['driver']         = $this->_ci->db->dbdriver;

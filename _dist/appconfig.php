@@ -6,17 +6,14 @@ $username = 'root';
 $password = 'password';
 $name     = 'bpmppt';
 
-if ($vcap_services = getenv("VCAP_SERVICES"))
+if ($clear_db = getenv("CLEARDB_DATABASE_URL"))
 {
-    $service_json = json_decode($vcap_services, true);
-    $env_config   = $service_json['mysql-5.1'][0]['credentials'];
-
-    foreach (array('hostname', 'username', 'password', 'name') as $service)
-    {
-        $$service = $env_config[$service];
-    }
-
-    $base_url = 'http://bpmppt.ap01.aws.af.cm/';
+    $clear_db = $clear_db != '' ? parse_url($clear_db)                  : array();
+    $hostname = isset($clear_db['host']) ? $clear_db['host']            : '';
+    $username = isset($clear_db['user']) ? $clear_db['user']            : '';
+    $password = isset($clear_db['pass']) ? $clear_db['pass']            : '';
+    $name     = isset($clear_db['path']) ? substr($clear_db['path'], 1) : '';
+    $base_url = '//bpmppt.herokuapp.com/';
 }
 
 /*

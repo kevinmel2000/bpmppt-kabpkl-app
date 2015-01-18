@@ -69,21 +69,20 @@ class Bootigniter
         // Get instanciation of CI Super Object
         $this->_ci =& get_instance();
 
-        if (config_item('migration_enabled') === TRUE)
-        {
-            $this->_ci->load->library('migration');
-            $this->_ci->migration->current();
-        }
-
         // Load database
         $this->_ci->load->database();
 
+        $this->_ci->load->library('migration');
+        $this->_ci->migration->version(2);
+
         // Loading base configuration
         $this->_ci->config->load('bootigniter');
-        // Loading Application configuration
-        $this->_ci->config->load('application');
         // Loading base language translation
         $this->_ci->lang->load('bootigniter');
+        // Loading Application configuration
+        $this->_ci->config->load('application', TRUE);
+
+        static::$_package = $this->_ci->config->item('application');
 
         if ($query = $this->_ci->db->get(config_item('bi_setting_table')))
         {
@@ -100,10 +99,6 @@ class Bootigniter
         $this->_ci->load->driver('biauth');
         $this->_ci->load->library('bitheme');
         $this->_ci->load->library('biasset');
-
-        $package = read_file(FCPATH.'package.json');
-        static::$_package = json_decode($package);
-        // print_pre(static::$_package);
 
         log_message('debug', "#BootIgniter: BootIgniter Class Initialized");
 
@@ -291,9 +286,10 @@ class Bootigniter
 
     public static function app($key)
     {
-        if (property_exists(static::$_package, $key))
+        $key = 'application_'.$key;
+        if (isset(static::$_package[$key]))
         {
-            return static::$_package->$key;
+            return static::$_package[$key];
         }
     }
 

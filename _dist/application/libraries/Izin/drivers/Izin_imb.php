@@ -22,11 +22,6 @@ class Izin_imb extends CI_Driver
         $name = 'Izin Mendirikan Bangunan',
         $_tembusan = FALSE;
 
-    public function __construct()
-    {
-        log_message('debug', '#Izin_driver: '.$this->name.' Class Initialized');
-    }
-
     public function _form()
     {
         $fields['bangunan_maksud'] = array(

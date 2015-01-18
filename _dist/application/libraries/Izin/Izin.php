@@ -107,8 +107,10 @@ class Izin extends CI_Driver_Library
                     );
             }
         }
+        $drivers = implode(', ', $this->valid_drivers);
+        $drivers = rtrim($drivers, ', ');
 
-        log_message('debug', '#Izin: Drivers Library initialized.');
+        log_message('debug', '#Izin: Drivers Library initialized with '.count($this->valid_drivers).' available drivers, including: '.$drivers.'.');
     }
 
     // -------------------------------------------------------------------------

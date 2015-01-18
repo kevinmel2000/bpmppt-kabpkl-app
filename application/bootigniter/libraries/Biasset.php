@@ -102,7 +102,7 @@ class Biasset
         {
             $this->_registered[$type][$id] = array(
                 'src' => $src,
-                'ver' => !empty($ver) ? $ver : Bootigniter::app('version'),
+                'ver' => !empty($ver) ? $ver : Bootigniter::VERSION,
                 'dep' => !is_array($dep) ? array($dep) : $dep,
                 );
         }
@@ -190,11 +190,11 @@ class Biasset
     {
         $_ext = $type == 'scripts' ? 'js' : 'css';
         $_min = ENVIRONMENT == 'development' ? '.' : '.min.';
-        $src = $_ext.'/'.Bootigniter::app('name').$_min.$_ext;
+        $src = $_ext.'/'.Bootigniter::app('slug').$_min.$_ext;
 
         if (file_exists(config_item('biasset_path_prefix').$src))
         {
-            $this->load($type, Bootigniter::app('name'), $src, Bootigniter::app('version'), array_keys($this->_loaded[$type]));
+            $this->load($type, Bootigniter::app('slug'), $src, Bootigniter::VERSION, array_keys($this->_loaded[$type]));
         }
 
         $load = $this->_loaded;
