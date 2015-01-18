@@ -1,6 +1,6 @@
 <?php
 
-$base_url = function_exists('apache_getenv') == true ? 'http://bpmppt.local/' : 'http://localhost:8088/';
+$base_url = function_exists('apache_getenv') == true ? '//bpmppt.local/' : '//localhost:8088/';
 $hostname = 'localhost';
 $username = 'root';
 $password = 'password';
@@ -8,7 +8,7 @@ $name     = 'bpmppt';
 
 if ($clear_db = getenv("CLEARDB_DATABASE_URL"))
 {
-	$base_url = 'http://bpmppt.herokuapp.com/';
+	$base_url = '//bpmppt.herokuapp.com/';
     $clear_db = $clear_db != '' ? parse_url($clear_db)                  : array();
     $hostname = isset($clear_db['host']) ? $clear_db['host']            : '';
     $username = isset($clear_db['user']) ? $clear_db['user']            : '';
