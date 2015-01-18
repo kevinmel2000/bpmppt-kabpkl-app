@@ -1,22 +1,36 @@
 $(document).ready(function () {
   'use strict';
 
-  function biPopup(url, w, h) {
-    var left = (screen.width / 2) - (w / 2)
-    var top = (screen.height / 2) - (h / 2) - 20
+  function biPopup(el, w, h) {
+    var _w = w || 800
+    var _h = h || 600
+    var left = (screen.width / 2) - (_w / 2)
+    var top = (screen.height / 2) - (_h / 2) - 20
 
-    window.open(url, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,copyhistory=no,width=' + w + ',height=' + h + ',top=' + top + ',left=' + left)
-    // this.target = title
+    window.open('about:blank', 'popup', [
+      'toolbar=no',
+      'location=no',
+      'directories=no',
+      'status=no',
+      'menubar=no',
+      'resizable=no',
+      'copyhistory=no',
+      'width=' + _w,
+      'height=' + _h,
+      'top=' + top,
+      'left=' + left
+    ].join(','))
+    el.target = 'popup'
   }
 
-  $('.btn-cetak').click(function (e) {
-    biPopup($(this).attr('href'), 800, 600)
-    e.preventDefault()
+  $('.btn-cetak').click(function () {
+    biPopup(this)
+    // e.preventDefault()
   })
 
-  $('form[name="print-all"]').submit(function (e) {
-    biPopup($(this).attr('action'), 800, 600)
-    e.preventDefault()
+  $('form[name="print-all"]').submit(function () {
+    biPopup(this)
+    // e.preventDefault()
   })
 
   $('.btn-hapus').click(function (e) {
@@ -39,23 +53,23 @@ $(document).ready(function () {
     e.preventDefault()
   })
 
-  $('.charts').each(function () {
-    /*global Morris*/
-    Morris.Donut({
-      element: $(this).attr('id'),
-      data: [
-        { label: 'Pending', value: $(this).data('pending') },
-        { label: 'Approved', value: $(this).data('approved') },
-        { label: 'Deleted', value: $(this).data('deleted') },
-        { label: 'Done', value: $(this).data('done') }
-      ]
+  /* global Morris */
+  if (typeof Morris !== 'undefined') {
+    $('.charts').each(function () {
+      Morris.Donut({
+        element: $(this).attr('id'),
+        data: [
+          { label: 'Pending',  value: $(this).data('pending') },
+          { label: 'Approved', value: $(this).data('approved') },
+          { label: 'Deleted',  value: $(this).data('deleted') },
+          { label: 'Done',     value: $(this).data('done') }
+        ]
+      })
     })
-
-  })
+  }
 
   $('.table-exp').each(function () {
     var table = $(this)
-
     if (table.find('tbody > tr').length === 1) {
       table.find('.remove-btn').addClass('disabled')
     }
@@ -103,18 +117,16 @@ $(document).ready(function () {
       var tgt = $('[name=\"' + el.data('fold-key') + '\"]')
       var val = el.data('fold-value')
       if (typeof val === 'string') {
-        val = val.replace(/\'/g, '"')
+        val = $.parseJSON(val.replace(/\'/g, '"'))
       }
-      val = $.parseJSON(val)
+
+      folder(el, tgt, val)
 
       if (tgt.hasClass('bs-switch')) {
         tgt.on('switchChange.bootstrapSwitch', function (event, state) {
-          showHide(el, val.indexOf(state) !== -1)
+          showHide(el, val.indexOf(state ? 1 : 0) !== -1)
         })
       } else {
-        // showHide(el, false)
-        folder(el, tgt, val)
-
         tgt.change(function () {
           folder(el, tgt, val)
         })
@@ -162,7 +174,6 @@ $(document).ready(function () {
 
     input.on('change', function () {
       var val = +$(this).val()
-
       if (val > elmax) {
         val = elmax
       } else if (val < elmin) {
@@ -221,35 +232,6 @@ $(document).ready(function () {
     })
   })
 
-  // Summernote
-  $('.form-textrich').each(function () {
-    var snel = $(this)
-
-    snel.summernote({
-      lang: snel.data('edtr-locale'),
-      height: snel.data('edtr-height'),
-      defaultFontName: snel.data('edtr-fontname'),
-      fontSizes: ['5', '6', '7', '8', '9', '10', '11', '12', '14', '18', '24', '36'],
-      fontNames: [
-        'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New',
-        'Tahoma', 'Times New Roman', 'Verdana'
-      ],
-      toolbar: [
-        ['fontname', ['fontname']],
-        ['fontsize', ['fontsize']],
-        ['color', ['color']],
-        ['font', ['bold', 'italic', 'underline', 'clear']],
-        ['para', ['ul', 'ol', 'paragraph']],
-        // ['table', ['table']],
-        ['view', ['fullscreen', 'codeview', 'help']]
-      ]
-    })
-  })
-
-  $('.summernote').parents('form').on('submit', function () {
-    $('.summernote').val($('.summernote').code())
-  })
-
   // Bootstrap Switch
   $('.bs-switch').each(function () {
     $(this).bootstrapSwitch()
@@ -262,7 +244,34 @@ $(document).ready(function () {
 
   // jQuery Autosize
   $('textarea').each(function () {
-    $(this).autosize()
+    if ($(this).hasClass('form-textrich')) {
+      var snel = $(this)
+      snel.summernote({
+        lang: snel.data('edtr-locale'),
+        height: snel.data('edtr-height'),
+        defaultFontName: snel.data('edtr-fontname'),
+        fontSizes: ['5', '6', '7', '8', '9', '10', '11', '12', '14', '18', '24', '36'],
+        fontNames: [
+          'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New',
+          'Tahoma', 'Times New Roman', 'Verdana'
+        ],
+        toolbar: [
+          ['fontname', ['fontname']],
+          ['fontsize', ['fontsize']],
+          ['color', ['color']],
+          ['font', ['bold', 'italic', 'underline', 'clear']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          // ['table', ['table']],
+          ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+      })
+    } else {
+      $(this).autosize()
+    }
+  })
+
+  $('.summernote').parents('form').on('submit', function () {
+    $('.summernote').val($('.summernote').code())
   })
 
   // Form Datepicker (jquery-ui and bootstrap)

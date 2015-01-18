@@ -225,10 +225,10 @@ class Pengguna extends BI_Controller
             'validation'=> 'required'
             );
 
-        if ( (bool) Bootigniter::get_setting('auth_use_username') )
+        if ( (bool) $this->bi_setting('auth_use_username') )
         {
-            $username_min_length = Bootigniter::get_setting('auth_username_length_min');
-            $username_max_length = Bootigniter::get_setting('auth_username_length_max');
+            $username_min_length = $this->bi_setting('auth_username_length_min');
+            $username_max_length = $this->bi_setting('auth_username_length_max');
             $fields['user-username'] = array(
                 'type'  => 'text',
                 'label' => 'Username',
@@ -259,8 +259,8 @@ class Pengguna extends BI_Controller
                 );
         }
 
-        $password_min_length = Bootigniter::get_setting('auth_password_length_min');
-        $password_max_length = Bootigniter::get_setting('auth_password_length_max');
+        $password_min_length = $this->bi_setting('auth_password_length_min');
+        $password_max_length = $this->bi_setting('auth_password_length_max');
 
         $fields['user-new-password'] = array(
             'type'  => 'password',

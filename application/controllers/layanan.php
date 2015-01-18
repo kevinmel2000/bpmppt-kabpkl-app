@@ -39,6 +39,10 @@ class Layanan extends BI_Controller
         {
             $this->data['load_toolbar'] = TRUE;
             $this->data['page_link'] .= $driver.'/';
+            if ((is_numeric($page) && $page > 0) && $data_id === FALSE) {
+                $data_id = $page;
+                $page = 'form';
+            }
 
             switch ($page)
             {
@@ -111,7 +115,7 @@ class Layanan extends BI_Controller
             else
             {
                 $this->data['tool_buttons'] = $this->bpmppt->get_buttons();
-                $this->data['panel_body'] = $laporan;
+                $this->data['panel_body'] = $laporan->generate();
 
                 $this->load->theme('dataform', $this->data);
             }
@@ -148,7 +152,7 @@ class Layanan extends BI_Controller
         $form = $this->bpmppt->get_dataform($driver, $data_id);
 
         $this->data['tool_buttons'] = $this->bpmppt->get_buttons();
-        $this->data['panel_body'] = $form;
+        $this->data['panel_body'] = $form->generate();
 
         $this->load->theme('dataform', $this->data);
     }

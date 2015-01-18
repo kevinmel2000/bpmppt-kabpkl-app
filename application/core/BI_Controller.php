@@ -14,6 +14,8 @@ class BI_Controller extends CI_Controller
 {
     protected $current_user;
 
+    protected $_defCon = 'layanan';
+
     protected $_drivers_arr = array();
 
     /**
@@ -96,12 +98,19 @@ class BI_Controller extends CI_Controller
     {
         if ($this->biauth->is_logged_in())
         {
-            redirect('data');
+            redirect($this->_defCon);
         }
         elseif ($this->biauth->is_logged_in(FALSE))
         {
             redirect('resend');
         }
+    }
+
+    // -------------------------------------------------------------------------
+
+    protected function bi_setting($key)
+    {
+        return Bootigniter::get_setting($key);
     }
 
     // -------------------------------------------------------------------------

@@ -522,31 +522,32 @@ class Izin extends CI_Driver_Library
             (array) $this->get_fulldata_by_id($data_id)
             );
 
-        $this->$driver->_defaults['data_tembusan'] = '';
-
-        foreach ($this->$driver->_defaults as $key => $value)
-        {
-            if(!isset($data[$key]))
+        if (isset($this->$driver->_defaults)) {
+            // $this->$driver->_defaults['data_tembusan'] = '';
+            foreach ($this->$driver->_defaults as $key => $value)
             {
-                $data[$key] = $value;
-            }
-
-            if ($driver == 'iplc' and $key == 'debits')
-            {
-                $_data = unserialize($data[$key]);
-                unset($data[$key]);
-
-                foreach ($this->$driver->_custom_fields as $name => $label) {
-                    if (isset($_data[$name.'_head'])) {
-                        $data[$key]['head'][$name] = $_data[$name.'_head'];
-                    }
+                if(!isset($data[$key]))
+                {
+                    $data[$key] = $value;
                 }
 
-                $data[$key]['body'] = $_data['body'];
-            }
+                if ($driver == 'iplc' and $key == 'debits')
+                {
+                    $_data = unserialize($data[$key]);
+                    unset($data[$key]);
 
-            if ($driver == 'reklame' and $key == 'reklame_data') {
-                $data[$key] = unserialize($data[$key]);
+                    foreach ($this->$driver->_custom_fields as $name => $label) {
+                        if (isset($_data[$name.'_head'])) {
+                            $data[$key]['head'][$name] = $_data[$name.'_head'];
+                        }
+                    }
+
+                    $data[$key]['body'] = $_data['body'];
+                }
+
+                if ($driver == 'reklame' and $key == 'reklame_data') {
+                    $data[$key] = unserialize($data[$key]);
+                }
             }
         }
 
@@ -557,19 +558,18 @@ class Izin extends CI_Driver_Library
 
     public function simpan($form_data, $data_id = FALSE)
     {
-        $driver = $this->_current;
+        $driver_alias = $this->{$this->_current}->alias;
+        unset($form_data[$driver_alias]);
 
-        unset($form_data[$this->$driver->alias]);
-
-        $data['no_agenda']  = $form_data[$this->$driver->alias.'_surat_nomor'];
+        $data['no_agenda']  = $form_data['surat_nomor'];
         $data['created_on'] = string_to_datetime();
         $data['created_by'] = $this->_ci->biauth->get_user_id();
-        $data['type']       = $this->$driver->alias;
+        $data['type']       = $driver_alias;
         $data['label']      = '-';
-        $data['petitioner'] = $form_data[$this->$driver->alias.'_pemohon_nama'];
+        $data['petitioner'] = $form_data['pemohon_nama'];
         $data['status']     = 'pending';
 
-        if ($result = $this->save_data($this->$driver->alias, $data, $form_data, $data_id))
+        if ($result = $this->save_data($driver_alias, $data, $form_data, $data_id))
         {
             $this->_ci->session->set_flashdata('success', array(
                 'Permohonan dari saudara/i '.$data['petitioner'].' berhasil disimpan.',
@@ -697,9 +697,16 @@ class Izin extends CI_Driver_Library
 
         if (!empty($values))
         {
+            $i = 0;
             foreach ($values as $value)
             {
+                if (is_array($value) && isset($value[$i]))
+                {
+                    $value = $value[$i];
+                }
+
                 $this->_custom_exp_row($field_id, $columns, $value);
+                $i++;
             }
         }
         else

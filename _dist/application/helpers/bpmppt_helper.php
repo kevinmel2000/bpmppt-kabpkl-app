@@ -13,10 +13,10 @@
 function print_tembusan($data_tembusan)
 {
     $output = '';
+    $data_tembusan = unserialize($data_tembusan);
 
-    if (strlen($data_tembusan) > 0)
+    if (!empty($data_tembusan))
     {
-        $data_tembusan = unserialize($data_tembusan);
         $output .= '<p>Tembusan :</p><ol>';
 
         $i = 0;
@@ -24,7 +24,7 @@ function print_tembusan($data_tembusan)
 
         foreach ($data_tembusan as $tembusan)
         {
-            $output .= '<li>'.$tembusan.($i < ($c - 1) ? ';' : '.').'</li>';
+            $output .= '<li>'.$tembusan[$i].($i < ($c - 1) ? ';' : '.').'</li>';
             $i++;
         }
 
