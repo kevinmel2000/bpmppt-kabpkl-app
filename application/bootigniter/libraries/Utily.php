@@ -173,19 +173,87 @@ class Utily
             $out['php_extensions']['-'] = '-';
         }
 
-        $alloed_ini = array(
-            'date.timezone' => 'Zona waktu',
+        $allowed_ini = array(
             'allow_url_fopen',
+            'allow_url_include',
+            'always_populate_raw_post_data',
+            'date.default_latitude',
+            'date.default_longitude',
+            'date.sunrise_zenith',
+            'date.sunset_zenith',
+            'date.timezone',
+            'default_charset',
+            'default_mimetype',
+            'default_socket_timeout',
+            'display_errors',
+            'display_startup_errors',
+            'doc_root',
+            'error_append_string',
+            'error_log',
+            'error_prepend_string',
+            'error_reporting',
+            'html_errors',
+            'ignore_repeated_errors',
+            'ignore_repeated_source',
+            'log_errors',
+            'log_errors_max_len',
+            'track_errors',
+            'exif.decode_jis_intel',
+            'exif.decode_jis_motorola',
+            'exif.decode_unicode_intel',
+            'exif.decode_unicode_motorola',
+            'exif.encode_jis',
+            'exif.encode_unicode',
+            'exit_on_timeout',
+            'expose_php',
+            'extension_dir',
+            'file_uploads',
+            'filter.default',
+            'filter.default_flags',
+            'mail.add_x_header',
+            'mail.force_extra_parameters',
+            'mail.log',
+            'sendmail_from',
+            'sendmail_path',
+            'SMTP',
+            'smtp_port',
+            'max_execution_time',
+            'max_file_uploads',
+            'max_input_nesting_level',
+            'max_input_time',
+            'max_input_vars',
+            'upload_max_filesize',
+            'upload_tmp_dir',
+            'post_max_size',
+            'iconv.input_encoding',
+            'iconv.internal_encoding',
+            'iconv.output_encoding',
+            'mbstring.detect_order',
+            'mbstring.encoding_translation',
+            'mbstring.http_input',
+            'mbstring.http_output',
+            'mbstring.http_output_conv_mimetypes',
+            'mbstring.internal_encoding',
+            'mbstring.language',
+            'mbstring.strict_detection',
+            'mcrypt.algorithms_dir',
+            'mcrypt.modes_dir',
+            'open_basedir',
+            'output_buffering',
+            'output_handler',
             );
 
         foreach (ini_get_all(NULL, FALSE) as $ini_key => $ini_value)
         {
-            $name = str_replace('_', ' ', $ini_key);
-            $name = str_replace('.', ' ', $name);
-            $name = ucfirst($name);
-
-            $out['php_configs'][$ini_key]['name']   = $name;
-            $out['php_configs'][$ini_key]['value']  = $this->server_info_helper($ini_value);
+            if (in_array($ini_key, $allowed_ini))
+            {
+                $name = str_replace(array('_', '.'), array(' ', ' '), $ini_key);
+                $name = ucfirst($name);
+                $out['php_configs'][$ini_key] = array(
+                    'name'  => $name,
+                    'value' => $this->server_info_helper($ini_value),
+                    );
+            }
         }
 
         if (function_exists('apache_get_modules'))
@@ -238,6 +306,13 @@ class Utily
         }
         else if (strlen($value) > 0)
         {
+            if (strpos($value, ','))
+            {
+                $value = explode(',', $value);
+                $value = implode(', ', $value);
+                $value = rtrim($value, ', ');
+            }
+
             $return = '<pre>'.$value.'</pre>';
         }
         else
