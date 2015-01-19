@@ -1,4 +1,4 @@
-# BPMPPT App [![Build Status](https://travis-ci.org/creasico/bpmppt.svg?branch=master)](https://travis-ci.org/creasico/bpmppt)
+# BPMPPT App [![Build Status](https://travis-ci.org/creasico/bpmppt.svg?branch=develop)](https://travis-ci.org/creasico/bpmppt)
 
 Aplikasi ini ditujukan untuk Badan Penanaman Modal dan Pelayanan Perijinan Terbadu Kabupaten Pekalongan.
 
