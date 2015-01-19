@@ -43,6 +43,17 @@ class Ajaks extends BI_Controller
 
         echo json_encode($out);
     }
+
+    public function download()
+    {
+        if (!$this->load->is_loaded('biupdate'))
+        {
+            $this->load->library('biupdate');
+        }
+
+        $url = 'https://github.com/creasico/bpmppt/zipball/4ebea4095a67fd2503984b7d490b80cd5bae8075';
+        echo $this->biupdate->download($url) ? 'Sukses' : 'Error';
+    }
 }
 
 /* End of file ajaks.php */

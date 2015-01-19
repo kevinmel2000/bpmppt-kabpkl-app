@@ -424,8 +424,6 @@ class Sistem extends BI_Controller
                 $file_name = $form_data['restore-file-upload'];
             }
 
-            // var_dump($file_name);
-
             if ( $this->utily->restore($file_name, $upload) )
             {
                 $this->session->set_flashdata('success', get_message('success'));
@@ -436,6 +434,94 @@ class Sistem extends BI_Controller
             }
 
             redirect( current_url() );
+        }
+
+        $this->data['panel_body'] = $form->generate();
+
+        $this->load->theme('dataform', $this->data);
+    }
+
+    public function updates()
+    {
+        if ( !is_user_can('backstore_application') )
+        {
+            $this->_notice( 'access-denied' );
+        }
+
+        $this->set_panel_title('System Updater');
+        $this->load->library('biupdate');
+        $this->load->library('table');
+        $this->load->library('biform');
+        $this->table->set_template(array('table_open' => '<table class="table table-striped table-bordered table-hover table-condensed">' ));
+
+        $this->table->set_heading(array(
+            array( 'data'  => 'SHA',     'style' => 'width:12%' ),
+            array( 'data'  => 'Time',    'style' => 'width:23%' ),
+            array( 'data'  => 'Message', 'style' => 'width:65%' ),
+            ));
+
+        $new_update = $this->biupdate->is_new_available() ?: false;
+        $fields['latest'] = array(
+            'type'  => 'static',
+            'label' => 'Latest',
+            'std'   => $new_update ? twbs_badge('New version available, with message: '.$new_update['message'], 'danger') : 'You are using latest version',
+            // 'std'   => $new_update ? 'New version available, please update!' : 'You are using latest version',
+            );
+
+        if ($changelogs = $this->biupdate->get_all())
+        {
+            $emojis = read_file(FCPATH.'asset/github-emojis.json');
+            $emojis = json_decode($emojis);
+
+            foreach ($changelogs as $log)
+            {
+                $this->table->add_row(substr($log->sha, 0, 7), $log->timestamp, $log->message);
+            }
+        }
+        else
+        {
+            $this->table->add_row(array( 'data'  => 'Kosong', 'colspan' => '3' ));
+        }
+
+        $fields['changelogs'] = array(
+            'type'  => 'custom',
+            'label' => 'Change logs',
+            'std'   => $this->table->generate()
+            );
+
+        $buttons['do-update'] = array(
+            'type'  => 'submit',
+            'label' => 'Update sekarang',
+            'class' => 'btn-primary'
+            );
+
+        if ($new_update == FALSE)
+        {
+            $buttons['do-update']['disabled'] = TRUE;
+        }
+
+        $form = $this->biform->initialize(array(
+            'name'    => 'restore',
+            'action'  => current_url(),
+            'fields'  => $fields,
+            'buttons' => $buttons,
+            'hiddens' => $new_update ? array('archive-url' => $new_update['archive']) : array(),
+            ));
+
+        print_pre($this->biupdate->_do_update(APPPATH.'storage/tmp/creasico-bpmppt-4ebea40'));
+
+        if ( $form_data = $form->validate_submition() )
+        {
+            if ( $this->biupdate->download($form_data['archive-url']) )
+            {
+                $this->session->set_flashdata('success', 'Download Success');
+            }
+            else
+            {
+                $this->session->set_flashdata('error', get_message('error'));
+            }
+
+            redirect( uri_string() );
         }
 
         $this->data['panel_body'] = $form->generate();

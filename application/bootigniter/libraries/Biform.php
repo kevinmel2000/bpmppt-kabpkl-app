@@ -802,6 +802,11 @@ class Biform
                 $attr['label'] = _x(str_replace('lang:', '', $attr['label']));
             }
 
+            if (isset($attr['disabled']) && $attr['disabled'] === TRUE)
+            {
+                $button_attr['disabled'] = 'disabled';
+            }
+
             // $button_attr['data-loading-text']  = 'Loading...';
             // $button_attr['data-complete-text'] = 'Finished!';
 

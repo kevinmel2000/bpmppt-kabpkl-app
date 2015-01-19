@@ -64,7 +64,7 @@ module.exports = function(grunt) {
           '!application/vendor/**',
           'asset/{css,js,vendor}/**',
           '!asset/{css,js}/src/**',
-          'composer.json',
+          '{composer,asset/github-emojis}.json',
           '*.{php,sql}',
           '.htaccess',
           'LICENSE',

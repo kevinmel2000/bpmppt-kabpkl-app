@@ -72,17 +72,16 @@ class Bootigniter
         // Load database
         $this->_ci->load->database();
 
-        $this->_ci->load->library('migration');
-        $this->_ci->migration->version(2);
-
         // Loading base configuration
         $this->_ci->config->load('bootigniter');
         // Loading base language translation
         $this->_ci->lang->load('bootigniter');
         // Loading Application configuration
         $this->_ci->config->load('application', TRUE);
-
         static::$_package = $this->_ci->config->item('application');
+
+        $this->_ci->load->library('migration');
+        $this->_ci->migration->version(2);
 
         if ($query = $this->_ci->db->get(config_item('bi_setting_table')))
         {

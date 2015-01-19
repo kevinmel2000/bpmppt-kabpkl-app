@@ -21,17 +21,18 @@ class Arsip_zip extends CI_Driver
      */
     public function __construct()
     {
-        if (class_exists('ZipArsip'))
+        if (!class_exists('ZipArchive'))
         {
-            $this->_zip = new ZipArsip;
-
-            $this->_flags = array(
-                'overwrite' => ZipArsip::OVERWRITE,
-                'create'    => ZipArsip::CREATE,
-                'excl'      => ZipArsip::EXCL,
-                'checkcons' => ZipArsip::CHECKCONS
-                );
+            set_message('error', 'Zip feature is unavailable.');
         }
+
+        $this->_zip = new ZipArchive;
+        $this->_flags = array(
+            'overwrite' => ZipArchive::OVERWRITE,
+            'create'    => ZipArchive::CREATE,
+            'excl'      => ZipArchive::EXCL,
+            'checkcons' => ZipArchive::CHECKCONS
+            );
 
         log_message('debug', "#Arsip_driver: Zip Class Initialized");
     }
