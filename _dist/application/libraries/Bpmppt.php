@@ -296,6 +296,11 @@ class Bpmppt
 
         if ($form_data = $form->validate_submition())
         {
+            if ($driver)
+            {
+                $form_data['data_type'] = $driver;
+            }
+
             return $form_data;
         }
         else

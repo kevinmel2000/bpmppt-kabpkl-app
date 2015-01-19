@@ -42,7 +42,7 @@ class Izin_ho extends CI_Driver
             'type'  => 'subfield',
             'fold'  => array(
                 'key'   => 'surat_jenis_pengajuan',
-                'value' => 'Daftar Ulang'
+                'value' => array('Daftar Ulang', 'Balik Nama')
                 ),
             'validation' => 'required',
             'fields' => array(
