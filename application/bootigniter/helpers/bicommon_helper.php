@@ -45,7 +45,7 @@ function redirect( $uri = '', $method = 'location', $http_response_code = 302 )
         }
     }
 
-    if ( ! preg_match('#^https?://#i', $uri))
+    if ( ! is_valid_url($uri))
     {
         $uri = site_url($uri);
     }

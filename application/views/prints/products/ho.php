@@ -1,7 +1,7 @@
 <?php if ($ho_lama_no) : ?>
 <table style="position: absolute; top: 0; right: 0; min-width: 0; width: auto; float: right; font-size: 9px; line-height: 1.2em; border: 1px solid #000;">
     <tr>
-        <td width="45%">Daftar ulang HO Nomor</td>
+        <td width="45%"><?php echo $surat_jenis_pengajuan ?> HO Nomor</td>
         <td width="10%">:</td>
         <td width="45%"><?php echo $ho_lama_no ?></td>
     </tr>
@@ -172,8 +172,8 @@
 <tr>
     <td colspan="6" style="width:60%"></td>
     <td style="width:40%">
-        <p>Ditetapkan di : <?php echo $skpd_kab ?></p>
-        <p class="underline">Pada Tanggal : <?php print_blnthn_foot($surat_tanggal) ?></p>
+        <p>Ditetapkan di <?php echo $skpd_kab ?></p>
+        <p>Pada Tanggal <?php print_blnthn_foot($surat_tanggal) ?></p>
     </td>
 </tr>
 <tr><td class="empty" colspan="7" style="width:100%"></td></tr>
