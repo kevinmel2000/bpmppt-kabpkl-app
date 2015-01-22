@@ -48,7 +48,7 @@ TENTANG PERSEROAN TERBATAS
 <tr><td colspan="6" style="width:100%; line-height: 5px"></td></tr>
 <tr style="border: 2px solid #000">
     <td colspan="4" style="width:65%"><span class="underline bold">AGENDA PENDAFTARAN</span><br>NOMOR: <?php echo $daftar_no ?></td>
-    <td colspan="2" style="width:35%; border-right: 2px solid #000;">TANGGAL : <?php echo format_date($daftar_tgl) ?></td>
+    <td colspan="2" style="width:35%; border-right: 2px solid #000;">TANGGAL : <?php echo $daftar_tgl ? format_date($daftar_tgl) : '-' ?></td>
 </tr>
 <?php endif; ?>
 <tr><td colspan="6" style="width:100%; line-height: 5px"></td></tr>

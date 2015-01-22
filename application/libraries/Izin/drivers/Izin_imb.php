@@ -82,16 +82,15 @@ class Izin_imb extends CI_Driver
         $fields['bangunan_milik'] = array(
             'label' => 'Kepemilikan',
             'type'  => 'subfield',
+            'validation' => 'required',
             'fields'=> array(
                 'no' => array(
                     'label' => 'Nomor',
                     'type'  => 'text',
-                    'validation' => 'required',
                     ),
                 'an' => array(
                     'label' => 'Nomor',
                     'type'  => 'text',
-                    'validation' => 'required',
                     ),
                 )
             );
@@ -99,24 +98,22 @@ class Izin_imb extends CI_Driver
         $fields['bangunan_lokasi'] = array(
             'label' => 'Lokasi Bangunan',
             'type'  => 'subfield',
+            'validation' => 'required',
             'fields'=> array(
                 'almt' => array(
                     'col'  => 6,
                     'label' => 'Alamat',
                     'type'  => 'text',
-                    'validation' => 'required',
                     ),
                 'kel' => array(
                     'col'  => 3,
                     'label' => 'Desa/Kel.',
                     'type'  => 'text',
-                    'validation' => 'required',
                     ),
                 'kec' => array(
                     'col'  => 3,
                     'label' => 'Kec.',
                     'type'  => 'text',
-                    'validation' => 'required',
                     ),
                 )
             );

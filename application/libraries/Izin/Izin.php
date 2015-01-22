@@ -699,6 +699,11 @@ class Izin extends CI_Driver_Library
 
         if (!empty($values))
         {
+            if ($field_id == 'data_tembusan' and isset($values['kepada']))
+            {
+                $values = $values['kepada'];
+            }
+
             $i = 0;
             foreach ($values as $value)
             {
