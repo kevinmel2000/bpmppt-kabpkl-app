@@ -189,3 +189,25 @@ function iplc_debits($debits = array())
 
     return $html;
 }
+
+function bi_imploder(array $array)
+{
+    $i = 0;
+    $output = '';
+    $count = count($array);
+
+    foreach ($array as $string)
+    {
+        $output .= $string;
+
+        if ($count > 1 and $i != $count - 1)
+        {
+            $sep = ($i == $count - 2) ? ' dan ' : ', ' ;
+            $output .= $sep;
+        }
+
+        $i++;
+    }
+
+    return rtrim($output, $sep);
+}

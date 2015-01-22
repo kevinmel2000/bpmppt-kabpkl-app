@@ -852,6 +852,11 @@ class Biauth extends CI_Driver_Library
         }
     }
 
+    public function fetch_groups_assoc()
+    {
+        return $this->groups->fetch_assoc();
+    }
+
     // -------------------------------------------------------------------------
 
     public function edit_group($group_id, $group_data)

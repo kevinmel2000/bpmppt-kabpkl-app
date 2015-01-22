@@ -349,6 +349,7 @@ class Pengguna extends BI_Controller
                 'display'  => $form_data['user-display'],
                 'username' => $form_data['user-username'],
                 'email'    => $form_data['user-email'],
+                'groups'    => $form_data['user-groups'],
                 );
 
             if (isset($form_data['user-groups']))
