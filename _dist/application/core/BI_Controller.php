@@ -198,9 +198,9 @@ class BI_Controller extends CI_Controller {
             }
 
             // Adding Backup & Restore sub-menu (if permited)
-            if (is_user_can('backstore_application')) {
-                $this->bitheme->add_navmenu($parent, 'ad_updates', 'link', 'admin/sistem/updates', 'Pembaruan Sistem', array(), $position);
-            }
+            // if (is_user_can('backstore_application')) {
+            //     $this->bitheme->add_navmenu($parent, 'ad_updates', 'link', 'admin/sistem/updates', 'Pembaruan Sistem', array(), $position);
+            // }
 
             // Adding Backup & Restore sub-menu (if permited)
             if (is_user_can('backstore_application')) {
