@@ -45,27 +45,21 @@ class Izin_imb extends CI_Driver
             'validation' => 'required',
             );
 
-        $fields['pemohon_kerja'] = array(
-            'label' => 'Pekerjaan',
-            'type'  => 'text',
-            'validation' => 'required',
-            );
-
         $fields['pemohon_alamat'] = array(
             'label' => 'Alamat',
             'type'  => 'textarea',
             'validation' => 'required',
             );
 
-        $fields['fieldset_data_bangunan'] = array(
-            'label' => 'Data Bangunan',
+        $fields['fieldset_data_tanah'] = array(
+            'label' => 'Data Tanah',
             'type'  => 'fieldset'
             );
 
         $fields['bangunan_tanah_keadaan'] = array(
             'label' => 'Keadaan Tanah',
             'type'  => 'radio',
-            'option'=> array( 'D I', 'D II', 'D III' ),
+            'option'=> array( 'Pertanian', 'Non-Pertanian' ),
             'validation' => 'required',
             );
 
@@ -79,20 +73,19 @@ class Izin_imb extends CI_Driver
             'validation' => 'required',
             );
 
-        $fields['bangunan_milik'] = array(
-            'label' => 'Kepemilikan',
-            'type'  => 'subfield',
-            'validation' => 'required',
-            'fields'=> array(
-                'no' => array(
-                    'label' => 'Nomor',
-                    'type'  => 'text',
-                    ),
-                'an' => array(
-                    'label' => 'Nomor',
-                    'type'  => 'text',
-                    ),
-                )
+        $fields['bangunan_tanah'] = array(
+            'label' => 'Kepemilikan Tanah',
+            'type'  => 'custom',
+            'std'   => $this->_custom_exp_field('bangunan_tanah', array(
+                'no'   => 'Nomor Kepemilikan',
+                'an'   => 'Atas Nama Pemilik',
+                'luas' => 'Luas Tanah (M)',
+                ))
+            );
+
+        $fields['fieldset_data_bangunan'] = array(
+            'label' => 'Data Bangunan',
+            'type'  => 'fieldset'
             );
 
         $fields['bangunan_lokasi'] = array(
@@ -100,28 +93,15 @@ class Izin_imb extends CI_Driver
             'type'  => 'subfield',
             'validation' => 'required',
             'fields'=> array(
-                'almt' => array(
-                    'col'  => 6,
-                    'label' => 'Alamat',
-                    'type'  => 'text',
-                    ),
                 'kel' => array(
-                    'col'  => 3,
                     'label' => 'Desa/Kel.',
                     'type'  => 'text',
                     ),
                 'kec' => array(
-                    'col'  => 3,
                     'label' => 'Kec.',
                     'type'  => 'text',
                     ),
                 )
-            );
-
-        $fields['bangunan_tanah_luas'] = array(
-            'label' => 'Luas Tanah (M<sup>2</sup>)',
-            'type'  => 'text',
-            'validation' => 'numeric',
             );
 
         $fields['bangunan_area'] = array(

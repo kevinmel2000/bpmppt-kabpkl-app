@@ -48,7 +48,7 @@
 <tr>
     <td style="width:20%"><p>Membaca</p></td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%" class="align-justify"><p>Surat Permohonan Saudara <strong><?php echo $pemohon_nama ?></strong> <?php echo (strtolower($pemohon_jabatan) == 'atas nama' ? 'atas nama <strong>'.$usaha_nama.'</strong>' : 'selaku '.$pemohon_jabatan)?>, Alamat di <strong><?php echo $usaha_alamat ?></strong>, tanggal <?php echo format_date($pemohon_tanggal) ?> untuk Izin tempat usaha <?php echo $usaha_jenis ?>, yang terletak di <?php echo $usaha_lokasi ?>.</p></td>
+    <td colspan="5" style="width:78%" class="align-justify"><p>Surat Permohonan Saudara <strong><?php echo $pemohon_nama ?></strong> <?php echo (strtolower($pemohon_jabatan) == 'atas nama' ? 'atas nama <strong>'.$usaha_nama.'</strong>' : 'selaku '.$pemohon_jabatan)?>, Alamat di <strong><?php echo $pemohon_alamat ?></strong>, tanggal <?php echo format_date($pemohon_tanggal) ?> untuk Izin tempat usaha <?php echo $usaha_jenis ?>, yang terletak di <?php echo $usaha_alamat ?>.</p></td>
 </tr>
 <tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
@@ -94,7 +94,7 @@
 <tr>
     <td style="width:20%"><p>KESATU</p></td>
     <td style="width:2%">:</td>
-    <td colspan="5" style="width:78%" class="align-justify"><p>Memberi Izin Gangguan ( HO ) kepada Saudara <strong><?php echo $pemohon_nama ?></strong> <?php echo (strtolower($pemohon_jabatan) == 'atas nama' ? 'atas nama <strong>'.$usaha_nama.'</strong>' : 'selaku '.$pemohon_jabatan)?>, Alamat Kantor di <?php echo $usaha_alamat ?>, untuk Izin tempat usaha <?php echo $usaha_jenis ?> yang terletak <?php echo $usaha_lokasi ?> di atas tanah milik <?php echo $usaha_tanah_milik ?> dengan luas tempat usaha ± <?php echo $usaha_luas ?> M<sup>2</sup>.<br>Adapun persil tersebut berbatasan :</p></td>
+    <td colspan="5" style="width:78%" class="align-justify"><p>Memberi Izin Gangguan ( HO ) kepada Saudara <strong><?php echo $pemohon_nama ?></strong> <?php echo (strtolower($pemohon_jabatan) == 'atas nama' ? 'atas nama <strong>'.$usaha_nama.'</strong>' : 'selaku '.$pemohon_jabatan)?>, Alamat Kantor di <?php echo $pemohon_alamat ?>, untuk Izin tempat usaha <strong><?php echo $usaha_jenis ?></strong> yang terletak <?php echo $usaha_alamat ?> di atas tanah milik <?php echo $usaha_tanah_milik ?> di <?php echo $usaha_lokasi ?> dengan luas tempat usaha ± <?php echo $usaha_luas ?> M<sup>2</sup>.<br>Adapun persil tersebut berbatasan :</p></td>
 </tr>
 <tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
