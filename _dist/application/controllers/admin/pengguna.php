@@ -287,7 +287,7 @@ class Pengguna extends BI_Controller
                 'type'  => 'checkbox',
                 'label' => 'Kelompok pengguna',
                 'option'=> $this->biauth->groups->fetch_assoc(),
-                'std'   => ( $user ? $user->groups : '' ),
+                'std'   => ( $user ? array_shift($user->groups) : '' ),
                 'validation'=> ( !$user ? 'required' : '' )
                 );
         }

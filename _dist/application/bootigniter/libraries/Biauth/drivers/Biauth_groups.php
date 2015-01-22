@@ -46,7 +46,7 @@ class Biauth_groups extends CI_Driver
 
         foreach ($query->result() as $row)
         {
-            $ret[$row->id] = $row->description;
+            $ret[$row->id] = $row->name;
         }
 
         return $ret;

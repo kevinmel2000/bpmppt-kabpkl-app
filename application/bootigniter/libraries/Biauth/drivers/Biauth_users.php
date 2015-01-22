@@ -527,9 +527,9 @@ class Biauth_users extends CI_Driver
     {
         if (!empty($groups_id))
         {
-            foreach ($groups_id as $group_name)
+            foreach ($groups_id as $group_desc)
             {
-                if (($id = array_search($group_name, $this->fetch_groups_assoc())) !== false)
+                if (($id = array_search($group_desc, $this->fetch_groups_assoc())) !== false)
                 {
                     $group_id = $id;
                 }
@@ -538,8 +538,6 @@ class Biauth_users extends CI_Driver
                     'user_id' => $user_id,
                     'group_id' => $group_id,
                     );
-
-                log_message('debug', 'Assign user '.$user_id.' to group '.$group_id);
             }
 
             return $this->_ci->db->insert_batch($this->table['user_group'], $usergroup_data);
