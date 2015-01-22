@@ -1,26 +1,30 @@
+<?php
+$bangunan_area = unserialize($bangunan_area);
+$bangunan_tanah = unserialize($bangunan_tanah);;
+?>
 <table>
     <tbody>
         <tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr class="align-center bold">
-    <td colspan="7">KEPUTUSAN KEPALA BADAN PENANAMAN MODAL DAN PELAYANAN PERIZINAN TERPADU<br>KABUPATEN PEKALONGAN</td>
+    <td colspan="7">KEPUTUSAN BUPATI PEKALONGAN</td>
 </tr>
-<tr><td colspan="7"></td></tr>
+<tr><td colspan="7" class="empty"></td></tr>
 <tr class="align-center bold">
-    <td colspan="7" style="width:100%">NOMOR : <?php echo '614 /'.nbs(6).'/ IMB / BPMPPT /'.print_blnthn_head($surat_tanggal) ?></td>
+    <td colspan="7" style="width:100%">NOMOR : <?php echo '640 /'.nbs(6).'/ IMB / BPMPPT / '.print_blnthn_head($surat_tanggal) ?></td>
 </tr>
-<tr><td colspan="7"></td></tr>
+<tr><td colspan="7" class="empty"></td></tr>
 <tr class="align-center bold">
     <td colspan="7">TENTANG</td>
 </tr>
-<tr><td colspan="7"></td></tr>
+<tr><td colspan="7" class="empty"></td></tr>
 <tr class="align-center bold">
-    <td colspan="7">IZIN MENDIRIKAN / MEREHAB / MEROBOHKAN BANGUNAN</td>
+    <td colspan="7">IZIN MENDIRIKAN/MEREHAB/MEROBOHKAN BANGUNAN<br><?php echo strtoupper($bangunan_area['guna'][0].' atas nama '.$pemohon_nama) ?> </td>
 </tr>
-<tr><td colspan="7"></td></tr>
+<tr><td colspan="7" class="empty"></td></tr>
 <tr class="align-center bold">
     <td colspan="7">KEPALA <?php echo strtoupper($skpd_name) ?><br><?php echo strtoupper($skpd_city) ?></td>
 </tr>
-<tr><td colspan="7"></td></tr>
+<tr><td colspan="7" class="empty"></td></tr>
 <tr>
     <td colspan="3" style="width:30%"></td>
     <td style="width:10%">
@@ -68,46 +72,39 @@
 </tr>
 <tr>
     <td colspan="2"></td>
-    <td colspan="2" style="width:30%"><p>Pekerjaan</p></td>
-    <td style="width:2%">:</td>
-    <td colspan="2" style="width:47%"><p><?php echo $pemohon_kerja ?></p></td>
-</tr>
-<tr>
-    <td colspan="2"></td>
     <td colspan="2" style="width:30%"><p>Maksud Permohonan</p></td>
     <td style="width:2%">:</td>
     <td colspan="2" style="width:47%"><p><?php echo $bangunan_maksud ? 'Mendirikan bangunan baru' : 'Merehab bangunan' ?></p></td>
 </tr>
-<?php $bangunan_area = unserialize($bangunan_area) ?>
 <tr>
     <td colspan="2"></td>
     <td colspan="2" style="width:30%"><p class="bold">Penggunaan Bangunan</p></td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:47%"><p class="bold"><?php echo $bangunan_area[0]['guna'] ?></p></td>
+    <td colspan="2" style="width:47%"><p class="bold"><?php echo bi_imploder($bangunan_area['guna']) ?></p></td>
 </tr>
 <tr>
     <td colspan="2"></td>
     <td colspan="2" style="width:30%"><p>Lokasi Bangunan</p></td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:47%"><p><?php echo $bangunan_lokasi ?></p></td>
+    <td colspan="2" style="width:47%"><p><?php echo $bangunan_lokasi_kel.' '.$bangunan_lokasi_kec.'<br>'.'Kabupaten Pekalongan' ?></p></td>
 </tr>
 <tr>
     <td colspan="2"></td>
     <td colspan="2" style="width:30%"><p>Luas / Keadaan Tanah</p></td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:47%"><p><?php echo '± '.$bangunan_tanah_luas.' M<sup>2</sup> / '.strtoupper($bangunan_tanah_keadaan) ?></p></td>
+    <td colspan="2" style="width:47%"><p><?php echo '± '.$bangunan_tanah['luas'][0].' M<sup>2</sup> / '.strtoupper($bangunan_tanah_keadaan) ?></p></td>
 </tr>
 <tr>
     <td colspan="2"></td>
     <td colspan="2" style="width:30%"><p>Status Tanah</p></td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:47%"><p><?php echo ($bangunan_tanah_status == 'hm' ? 'Hak Milik, No, '.$bangunan_milik_no : 'Hak Guna Bangunan').', an. '.$bangunan_milik_an ?></p></td>
+    <td colspan="2" style="width:47%"><p><?php echo ($bangunan_tanah_status == 'hm' ? 'Hak Milik, No, '.$bangunan_tanah['no'][0] : 'Hak Guna Bangunan').', an. '.$bangunan_tanah['an'][0] ?></p></td>
 </tr>
 <tr>
     <td colspan="2"></td>
     <td colspan="2" style="width:30%"><p>Luas Bangunan</p></td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:47%"><p><?php echo '± '.$bangunan_luas.' M<sup>2</sup>' ?></p></td>
+    <td colspan="2" style="width:47%"><p><?php echo '± '.($bangunan_area['panjang'][0] * $bangunan_area['lebar'][0]).' M<sup>2</sup>' ?></p></td>
 </tr>
 <tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>

@@ -81,6 +81,8 @@ class Izin extends CI_Driver_Library
                 ),
             );
 
+    private $custom_field_ids = array();
+
     /**
      * Default class constructor
      */
@@ -524,13 +526,21 @@ class Izin extends CI_Driver_Library
             (array) $this->get_fulldata_by_id($data_id)
             );
 
-        if (isset($this->$driver->_defaults)) {
-            // $this->$driver->_defaults['data_tembusan'] = '';
+        if (isset($this->$driver->_defaults))
+        {
             foreach ($this->$driver->_defaults as $key => $value)
             {
                 if(!isset($data[$key]))
                 {
                     $data[$key] = $value;
+                }
+
+                foreach ($this->custom_field_ids as $custom_field)
+                {
+                    if (isset($data[$custom_field]))
+                    {
+                        $data[$custom_field] = unserialize($data[$custom_field]);
+                    }
                 }
 
                 if ($driver == 'iplc' and $key == 'debits')
@@ -623,9 +633,9 @@ class Izin extends CI_Driver_Library
         $this->_ci->load->library('biform');
 
         $form = $this->_ci->biform->initialize(array(
-            'name'      => 'template-'.$this->get_alias($data_type),
-            'action'    => current_url(),
-            'fields'    => $fields,
+            'name'   => 'template-'.$this->get_alias($data_type),
+            'action' => current_url(),
+            'fields' => $fields,
             ));
 
         // on Submition
@@ -656,6 +666,7 @@ class Izin extends CI_Driver_Library
             $this->_ci->load->library('table');
         }
 
+        $this->custom_field_ids[] = $field_id;
         $width = ceil(90 / count($columns));
         $head = array();
 
@@ -694,26 +705,22 @@ class Izin extends CI_Driver_Library
             );
 
         $values = isset($this->_data->$field_id) ? unserialize($this->_data->$field_id) : $defaults;
+        if (empty($values) and ($post_values = $this->_ci->input->post($field_id)))
+        {
+            $value = $post_values;
+        }
+
         $this->_ci->table->set_template($this->_table_templ);
         $this->_ci->table->set_heading($head);
 
         if (!empty($values))
         {
-            if ($field_id == 'data_tembusan' and isset($values['kepada']))
-            {
-                $values = $values['kepada'];
-            }
+            $_val = $values;
+            $_val = array_shift($_val);
 
-            $i = 0;
-            foreach ($values as $value)
+            for ($u = 0; $u < count($_val); $u++)
             {
-                if (is_array($value) && isset($value[$i]))
-                {
-                    $value = $value[$i];
-                }
-
-                $this->_custom_exp_row($field_id, $columns, $value);
-                $i++;
+                $this->_custom_exp_row($field_id, $columns, $u, $values);
             }
         }
         else
@@ -726,7 +733,7 @@ class Izin extends CI_Driver_Library
 
     // -------------------------------------------------------------------------
 
-    protected function _custom_exp_row($field_id, array $columns, $value = '')
+    protected function _custom_exp_row($field_id, array $columns, $i = null, $values = '')
     {
         $rows = array();
 
@@ -759,10 +766,7 @@ class Izin extends CI_Driver_Library
                 'class' => 'form-control input-sm'.($column['class'] ? ' '.$column['class'] : ''),
                 );
 
-            if (is_array($value) and isset($value[$name]))
-            {
-                $value = $value[$name];
-            }
+            $value = isset($values[$name][$i]) ? $values[$name][$i] : null;
 
             if ($column['type'] == 'text')
             {

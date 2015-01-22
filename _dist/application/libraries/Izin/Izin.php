@@ -707,12 +707,7 @@ class Izin extends CI_Driver_Library
             $i = 0;
             foreach ($values as $value)
             {
-                if (is_array($value) && isset($value[$i]))
-                {
-                    $value = $value[$i];
-                }
-
-                $this->_custom_exp_row($field_id, $columns, $value);
+                $this->_custom_exp_row($field_id, $i, $columns, $value);
                 $i++;
             }
         }
@@ -726,7 +721,7 @@ class Izin extends CI_Driver_Library
 
     // -------------------------------------------------------------------------
 
-    protected function _custom_exp_row($field_id, array $columns, $value = '')
+    protected function _custom_exp_row($field_id, $i, array $columns, $value = '')
     {
         $rows = array();
 
@@ -759,14 +754,14 @@ class Izin extends CI_Driver_Library
                 'class' => 'form-control input-sm'.($column['class'] ? ' '.$column['class'] : ''),
                 );
 
-            if (is_array($value) and isset($value[$name]))
-            {
-                $value = $value[$name];
-            }
+            // if (is_array($value) and isset($value[$name]))
+            // {
+            //     $value = $value[$name];
+            // }
 
             if ($column['type'] == 'text')
             {
-                $input_cell['value'] = $value;
+                $input_cell['value'] = $value[$i];
                 $input_cell['placeholder'] = $column['data'];
             }
             elseif ($column['type'] == 'checkbox')
