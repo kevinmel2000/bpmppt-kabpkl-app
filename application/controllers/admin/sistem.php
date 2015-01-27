@@ -201,16 +201,15 @@ class Sistem extends BI_Controller
                 if ( strlen($log_line) > 0 AND !is_null($log_line) AND $log_line != '' )
                 {
                     $state = explode(' - ', $log_line);
-
                     if ( isset($state[1]) )
                     {
                         $state[1] = str_replace(FCPATH, '', $state[1]);
                         $date = explode(' --> ', $state[1]);
                         $line[] = array(
-                            'time'  => format_time( $date[0] ),
-                            'state' => twbs_label( $state[0], strtolower( $state[0] ) ),
-                            'msg'   => ( strpos( $date[1], 'Severity: ' ) === false)
-                                ? $date[1] : twbs_label( $date[1], strtolower( $state[0] ) ).' '.$date[2] );
+                            'time'  => format_time($date[0]),
+                            'state' => twbs_label($state[0], strtolower($state[0])),
+                            'msg'   => (strpos($date[1], 'Severity: ') === false) ? $date[1] : twbs_label($date[1], strtolower($state[0])).' '.$date[2]
+                            );
                     }
                 }
             }
@@ -220,11 +219,11 @@ class Sistem extends BI_Controller
             $this->load->library('table');
 
             $this->table->set_heading('Waktu', 'Status', 'Pesan');
-            $this->table->set_template( array(
-                'table_open' => '<table class="table table-striped table-bordered table-hover table-condensed">' ) );
+            $this->table->set_template(array(
+                'table_open' => '<table class="table table-striped table-bordered table-hover table-condensed">'
+                ));
 
             arsort( $line );
-
             $panel_body = $this->table->generate( $line );
         }
         else
@@ -247,25 +246,24 @@ class Sistem extends BI_Controller
         $this->set_panel_title('Cadangkan Basis Data');
         $this->load->library('utily');
 
-        $fields[]   = array(
-            'name'  => 'backup-all',
+        $fields['backup-all'] = array(
             'type'  => 'switch',
             'label' => 'Backup semua tabel',
             'std'   => 1
             );
 
-        $fields[]   = array(
-            'name'  => 'backup-table',
+        $fields['backup-table'] = array(
             'type'  => 'checkbox',
             'label' => 'Backup beberapa tabel',
             'option'=> $this->utily->list_tables(),
             'fold'  => array(
                 'key'   => 'backup-all',
-                'value' => 0 ),
-            'validation'=> '' );
+                'value' => 0
+                ),
+            'validation'=> ''
+            );
 
-        $fields[]   = array(
-            'name'  => 'backup-dl',
+        $fields['backup-dl'] = array(
             'type'  => 'switch',
             'label' => 'Download backup',
             'std'   => 0
@@ -287,17 +285,17 @@ class Sistem extends BI_Controller
 
         $backup_list .= '</ol>';
 
-        $fields[]   = array(
-            'name'  => 'backup-list',
+        $fields['backup-list'] = array(
             'type'  => 'custom',
             'label' => 'Daftar backup',
-            'std'   => $backup_list );
+            'std'   => $backup_list
+            );
 
-        $buttons[]= array(
-            'name'  => 'do-backup',
+        $buttons['do-backup'] = array(
             'type'  => 'submit',
             'label' => 'lang:backup_btn',
-            'class' => 'btn-primary pull-right' );
+            'class' => 'btn-primary pull-right'
+            );
 
         $this->load->library('biform');
 
@@ -311,14 +309,12 @@ class Sistem extends BI_Controller
         if ( $form_data = $form->validate_submition() )
         {
             $tables = array();
-
             if ($form_data['backup-all'] != 1)
             {
                 $tables = $form_data['backup-table'];
             }
 
             $download = FALSE;
-
             if ($form_data['backup-dl'] == 1)
             {
                 $download = TRUE;
@@ -351,23 +347,23 @@ class Sistem extends BI_Controller
         $this->set_panel_title('Pemulihan Basis Data');
         $this->load->library('utily');
 
-        $fields[]   = array(
-            'name'  => 'restore-from-backup',
+        $fields['restore-from-backup'] = array(
             'type'  => 'switch',
             'label' => 'Restor dari backup sebelumnya',
             'std'   => 1
             );
 
-        $fields[]   = array(
-            'name'  => 'restore-file-upload',
+        $fields['restore-file-upload'] = array(
             'type'  => 'upload',
             'label' => 'Restore dari berkas',
             'fold'  => array(
                 'key'   => 'restore-from-backup',
-                'value' => 0 ),
+                'value' => 0
+                ),
             'file_limit'    => 1,
             'allowed_types' => 'zip|sql',
-            'desc'  => 'Pilih berkas yang akan digunakan untuk me-restore database' );
+            'desc'  => 'Pilih berkas yang akan digunakan untuk me-restore database'
+            );
 
         if ($list_backups = $this->utily->list_backups())
         {
@@ -376,32 +372,35 @@ class Sistem extends BI_Controller
                 $backup_list[$key] = $value['date'];
             }
 
-            $fields[]   = array(
-                'name'  => 'restore-backups-list',
+            $fields['restore-backups-list'] = array(
                 'type'  => 'radio',
                 'label' => 'Daftar backup',
                 'fold'  => array(
                     'key'   => 'restore-from-backup',
-                    'value' => 1 ),
-                'option' => $backup_list );
+                    'value' => 1
+                    ),
+                'option' => $backup_list
+                );
         }
         else
         {
-            $fields[]   = array(
-                'name'  => 'restore-backups-list',
+            $fields['restore-backups-list'] = array(
                 'type'  => 'static',
                 'label' => 'Daftar backup',
                 'fold'  => array(
                     'key'   => 'restore-from-backup',
-                    'value' => 1 ),
-                'std' => 'Belum ada backup' );
+                    'value' => 1
+                    ),
+                'std' => 'Belum ada backup'
+                );
         }
 
         $buttons[]= array(
             'name'  => 'do-restore',
             'type'  => 'submit',
             'label' => 'lang:restore_btn',
-            'class' => 'btn-primary pull-right' );
+            'class' => 'btn-primary pull-right'
+            );
 
         $this->load->library('biform');
 
@@ -424,8 +423,6 @@ class Sistem extends BI_Controller
                 $file_name = $form_data['restore-file-upload'];
             }
 
-            // var_dump($file_name);
-
             if ( $this->utily->restore($file_name, $upload) )
             {
                 $this->session->set_flashdata('success', get_message('success'));
@@ -436,6 +433,91 @@ class Sistem extends BI_Controller
             }
 
             redirect( current_url() );
+        }
+
+        $this->data['panel_body'] = $form->generate();
+
+        $this->load->theme('dataform', $this->data);
+    }
+
+    public function updates()
+    {
+        if ( !is_user_can('backstore_application') )
+        {
+            $this->_notice( 'access-denied' );
+        }
+
+        $this->set_panel_title('System Updater');
+        $this->load->library('biupdate');
+        $this->load->library('table');
+        $this->load->library('biform');
+        $this->table->set_template(array('table_open' => '<table class="table table-striped table-bordered table-hover table-condensed">' ));
+
+        $this->table->set_heading(array(
+            array( 'data'  => 'SHA',     'style' => 'width:12%' ),
+            array( 'data'  => 'Time',    'style' => 'width:23%' ),
+            array( 'data'  => 'Message', 'style' => 'width:65%' ),
+            ));
+
+        $new_update = $this->biupdate->is_new_available() ?: false;
+        $message = $new_update ? 'New version available, with message: '.$new_update['message'] : 'You are using latest version';
+        $fields['latest'] = array(
+            'type'  => 'static',
+            'label' => 'Latest',
+            'std'   => twbs_badge($message, $new_update ? 'danger' : 'info'),
+            );
+
+        if ($changelogs = $this->biupdate->get_all())
+        {
+            foreach ($changelogs as $log)
+            {
+                $this->table->add_row(substr($log->sha, 0, 7), $log->timestamp, $log->message);
+            }
+        }
+        else
+        {
+            $this->table->add_row(array( 'data'  => 'Kosong', 'colspan' => '3' ));
+        }
+
+        $fields['changelogs'] = array(
+            'type'  => 'custom',
+            'label' => 'Change logs',
+            'std'   => $this->table->generate()
+            );
+
+        $buttons['do-update'] = array(
+            'type'  => 'submit',
+            'label' => 'Update sekarang',
+            'class' => 'btn-primary'
+            );
+
+        if ($new_update == FALSE)
+        {
+            $buttons['do-update']['disabled'] = TRUE;
+        }
+
+        $form = $this->biform->initialize(array(
+            'name'    => 'restore',
+            'action'  => current_url(),
+            'fields'  => $fields,
+            'buttons' => $buttons,
+            'hiddens' => $new_update ? array('archive-url' => $new_update['archive']) : array(),
+            ));
+
+        // print_pre($this->biupdate->_do_update(APPPATH.'storage/tmp/creasico-bpmppt-4ebea40'));
+
+        if ( $form_data = $form->validate_submition() )
+        {
+            if ( $this->biupdate->download($form_data['archive-url']) )
+            {
+                $this->session->set_flashdata('success', 'Download Success');
+            }
+            else
+            {
+                $this->session->set_flashdata('error', get_message('error'));
+            }
+
+            redirect( uri_string() );
         }
 
         $this->data['panel_body'] = $form->generate();
