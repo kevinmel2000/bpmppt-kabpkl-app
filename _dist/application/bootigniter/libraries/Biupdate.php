@@ -156,6 +156,7 @@ class Biupdate
 
     public function _do_update($path, $dest = FCPATH)
     {
+<<<<<<< HEAD
         if (is_dir($path))
         {
             $dir = dir($path);
@@ -174,6 +175,23 @@ class Biupdate
 
             $dir->close();
         }
+=======
+        $dir = dir($path);
+
+        while (false !== ($file = $dir->read()))
+        {
+            if (is_dir($file) and in_array($file, array('application', 'system', 'asset')))
+            {
+                $this->_do_update($path.DIRECTORY_SEPARATOR.$file, $dest.DIRECTORY_SEPARATOR.$file);
+            }
+            elseif (!is_dir($file) and in_array($file, array('README.md', 'LICENSE')))
+            {
+                copy($path.DIRECTORY_SEPARATOR.$file, $dest.DIRECTORY_SEPARATOR.$file);
+            }
+        }
+
+        $dir->close();
+>>>>>>> updater
     }
 
     protected function _send_request($url, $options = array())
