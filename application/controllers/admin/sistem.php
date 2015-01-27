@@ -460,18 +460,15 @@ class Sistem extends BI_Controller
             ));
 
         $new_update = $this->biupdate->is_new_available() ?: false;
+        $message = $new_update ? 'New version available, with message: '.$new_update['message'] : 'You are using latest version';
         $fields['latest'] = array(
             'type'  => 'static',
             'label' => 'Latest',
-            'std'   => $new_update ? twbs_badge('New version available, with message: '.$new_update['message'], 'danger') : 'You are using latest version',
-            // 'std'   => $new_update ? 'New version available, please update!' : 'You are using latest version',
+            'std'   => twbs_badge($message, $new_update ? 'danger' : 'info'),
             );
 
         if ($changelogs = $this->biupdate->get_all())
         {
-            $emojis = read_file(FCPATH.'asset/github-emojis.json');
-            $emojis = json_decode($emojis);
-
             foreach ($changelogs as $log)
             {
                 $this->table->add_row(substr($log->sha, 0, 7), $log->timestamp, $log->message);
@@ -507,7 +504,7 @@ class Sistem extends BI_Controller
             'hiddens' => $new_update ? array('archive-url' => $new_update['archive']) : array(),
             ));
 
-        print_pre($this->biupdate->_do_update(APPPATH.'storage/tmp/creasico-bpmppt-4ebea40'));
+        // print_pre($this->biupdate->_do_update(APPPATH.'storage/tmp/creasico-bpmppt-4ebea40'));
 
         if ( $form_data = $form->validate_submition() )
         {

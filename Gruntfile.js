@@ -56,6 +56,7 @@ module.exports = function(grunt) {
               .replace(/@LICENSE/g,    lcnsType + ' (' + grunt.config('pkg.license.url') + ')')
           }
         },
+        dot: true,
         expand: true,
         src: [
           '{system,application}/**',
@@ -76,6 +77,7 @@ module.exports = function(grunt) {
         dest: '_dist/'
       },
       distImg: {
+        dot: true,
         expand: true,
         cwd: 'asset/img/',
         src: [
@@ -92,22 +94,29 @@ module.exports = function(grunt) {
         dest: 'asset/js/<%= pkg.name %>.js'
       },
       vendorBackup: {
+        dot: true,
         expand: true,
         cwd: 'asset/bower/',
-        src: [ '**' ],
+        src: '**',
         dest: 'asset/bower.old/'
       },
       vendorDist: {
+        dot: true,
         expand: true,
         cwd: 'asset/bower/',
-        src: [ '**' ],
-        dest: 'asset/vendor/'
+        src: '**',
+        dest: 'asset/vendor/',
+        filter: function (filepath) {
+          return ! grunt.file.isDir(filepath) || require('fs').readdirSync(filepath).lenght > 0
+        }
       },
       vendorRestore: {
-          expand: true,
-          cwd: 'asset/bower.old/',
-          src: [ '**' ],
-          dest: 'asset/bower/'
+        dot: true,
+        nonull: true,
+        expand: true,
+        cwd: 'asset/bower.old/',
+        src: '**',
+        dest: 'asset/bower/'
       }
     },
 

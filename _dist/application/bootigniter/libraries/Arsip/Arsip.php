@@ -25,8 +25,8 @@ class Arsip extends CI_Driver_Library
      * @var array
      */
     public $valid_drivers = array(
-        'archive_zip',
-        // 'archive_rar'
+        'arsip_zip',
+        // 'arsip_rar'
         );
 
     /**
@@ -68,7 +68,7 @@ class Arsip extends CI_Driver_Library
 
         foreach ($this->valid_drivers as $supported)
         {
-            $this->_formats[] = str_replace('archive_', '', $supported);
+            $this->_formats[] = str_replace('arsip_', '', $supported);
         }
 
         log_message('debug', "#Arsip: Driver Initialized");
@@ -81,14 +81,14 @@ class Arsip extends CI_Driver_Library
      *
      * @return  bool
      */
-    public function init($file_path)
+    public function init($file_path, $overwrite = FALSE)
     {
         $this->_type = get_ext($file_path);
         $error = FALSE;
 
         if (!in_array($this->_type, $this->_formats))
         {
-            set_message('error', 'Sorry, but this File type is unsupported currently.');
+            set_message('error', 'Sorry, but '.$this->_type.' format is unsupported currently.');
             $error = TRUE;
         }
 
@@ -104,10 +104,17 @@ class Arsip extends CI_Driver_Library
             $error = TRUE;
         }
 
+        if ($overwrite === FALSE and is_dir($target_dir))
+        {
+            set_message('error', 'Target '.$target_dir.' is already exists.');
+            return FALSE;
+        }
+
         if (!$error)
         {
-            $this->_archive     = $this->{$this->_type}->_open($file_path);
-            $this->_path_info   = pathinfo($file_path);
+            $flag = $overwrite ? 'overwrite' : null;
+            $this->_archive   = $this->{$this->_type}->_open($file_path, $flag);
+            $this->_path_info = pathinfo($file_path);
         }
 
         return $this;
@@ -165,18 +172,9 @@ class Arsip extends CI_Driver_Library
      *
      * @return  bool
      */
-    public function extract($target_dir = '', $file_names = array(), $overwrite = FALSE)
+    public function extract($target_dir = '', $file_names = array())
     {
-        if ($target_dir == '')
-        {
-            $target_dir = $this->_path_info['dirname'].'/'.$this->_path_info['filename'];
-        }
-
-        if ($overwrite === FALSE and is_dir($target_dir))
-        {
-            set_message('error', 'Target '.$target_dir.' is already exists.');
-            return FALSE;
-        }
+        $target_dir or $target_dir = $this->_path_info['dirname'].DIRECTORY_SEPARATOR.$this->_path_info['filename'];
 
         if (!is_really_writable(dirname($target_dir)))
         {

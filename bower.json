@@ -34,7 +34,7 @@
   },
   "preen": {
     "bootstrap": [
-      "dist/**/*",
+      "dist/**",
       "LICENSE"
     ],
     "bootstrap-datepicker": [
@@ -43,13 +43,7 @@
       "LICENSE"
     ],
     "bootstrap-switch": [
-      "dist/**/*",
-      "LICENSE"
-    ],
-    "codemirror": [
-      "lib/*",
-      "mode/**/*.js",
-      "theme/*",
+      "dist/**",
       "LICENSE"
     ],
     "datatables": [
@@ -58,8 +52,15 @@
       "media/js/*.js",
       "license.txt"
     ],
+    "datatables-plugins": [
+      "integration/**",
+      "i18n/*.lang"
+    ],
     "fineuploader-dist": [
-      "dist/**/*"
+      "dist/placeholder/*",
+      "dist/fineuploader.{js,min.js}",
+      "dist/jquery.fineuploader.{js,min.js}",
+      "dist/*.{css,gif}"
     ],
     "fontawesome": [
       "css/*.css",
@@ -103,6 +104,8 @@
     "summernote": [
       "dist/*",
       "lang/*"
-    ]
+    ],
+    "codemirror": [ "" ],
+    "mocha": [ "" ]
   }
 }
