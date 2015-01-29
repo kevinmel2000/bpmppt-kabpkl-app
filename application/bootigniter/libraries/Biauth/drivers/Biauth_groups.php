@@ -267,27 +267,28 @@ class Biauth_groups extends CI_Driver
         }
 
         $old_perms = $this->get_perms($group_id);
-        $this->_ci->db->trans_start();
+        $return = false;
 
-        foreach (array_diff($old_perms, $new_perms) as $key => $old_id)
+        log_message('debug', print_r($new_perms, true));
+        log_message('debug', print_r($old_perms, true));
+        log_message('debug', print_r(array_diff($old_perms, $new_perms), true));
+
+        if ($all_new = array_diff($old_perms, $new_perms))
         {
-            unset($old_perms[$key]);
-            $this->delete_perm($group_id, $old_id);
+            foreach ($all_new as $key => $old_id)
+            {
+                unset($old_perms[$key]);
+                $this->delete_perm($group_id, $old_id);
+            }
+
+            if ($this->set_perms($group_id, $new_perms, $old_perms))
+            {
+                $return = TRUE;
+            }
         }
 
-        $this->set_perms($group_id, $new_perms, $old_perms);
-
-        $this->_ci->db->trans_complete();
-
-        if ($this->_ci->db->trans_status() === FALSE)
-        {
-            $this->_ci->db->trans_rollback();
-            log_message('error', '#Biauth: Groups->edit_perms failed updating existing groupperms.');
-            return FALSE;
-        }
-
-        log_message('info', '#Biauth: Groups->edit_perms success updating existing groupperms.');
-        return TRUE;
+        log_message('error', '#Biauth: Groups->edit_perms failed updating existing groupperms.');
+        return FALSE;
     }
 
     public function delete_perm($group_id, $perm_id)
