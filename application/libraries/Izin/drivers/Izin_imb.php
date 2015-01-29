@@ -134,7 +134,7 @@ class Izin_imb extends CI_Driver
 
     public function _pre_post($form_data)
     {
-        $luas = $koef = 0;
+        $luas = $koef = array();
         $custom_fields = array(
             'bangunan_area' => array(
                 'guna'    => 'Guna Bangunan',
@@ -168,26 +168,23 @@ class Izin_imb extends CI_Driver
             {
                 if ($slug == 'bangunan_area')
                 {
-                    $luas = $subs['panjang'] * $subs['lebar'];
-                    $form_data[$slug]['luas'][$i] = $luas;
+                    $luas[$i] = $subs['panjang'] * $subs['lebar'];
+                    $form_data[$slug]['luas'][$i] = $luas[$i];
                 }
 
                 if ($slug == 'bangunan_koefisien')
                 {
-                    $koef = $subs['bwk'] * $subs['luas'] * $subs['tinggi'] * $subs['guna'] * $subs['letak'] * $subs['kons'];
-                    $form_data[$slug]['koef'][$i] = $koef;
+                    $koef[$i] = $subs['bwk'] * $subs['luas'] * $subs['tinggi'] * $subs['guna'] * $subs['letak'] * $subs['kons'];
+                    $form_data[$slug]['koef'][$i] = $koef[$i];
                 }
             }
         }
 
-        if ($luas > 0 && $koef > 0)
+        foreach ($_form_data[$slug] as $a => $su)
         {
-            foreach ($_form_data[$slug] as $a => $su)
-            {
-                $form_data['bangunan_hasil'][$a]['sempendan']  = (.25/100) * 1000000 * $luas * $koef;
-                $form_data['bangunan_hasil'][$a]['pengawasan'] = (.02/100) * 1000000 * $luas * $koef;
-                $form_data['bangunan_hasil'][$a]['koreksi']    = (.01/100) * 1000000 * $luas * $koef;
-            }
+            $form_data['bangunan_hasil'][$a]['sempendan']  = ((.25/100) * 1000000 * $luas[$a] * $koef[$a]);
+            $form_data['bangunan_hasil'][$a]['pengawasan'] = ((.02/100) * 1000000 * $luas[$a] * $koef[$a]);
+            $form_data['bangunan_hasil'][$a]['koreksi']    = ((.01/100) * 1000000 * $luas[$a] * $koef[$a]);
         }
 
         return $form_data;
