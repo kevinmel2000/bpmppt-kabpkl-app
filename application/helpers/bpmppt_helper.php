@@ -194,6 +194,7 @@ function bi_imploder(array $array)
 {
     $i = 0;
     $output = '';
+    $sep = '';
     $count = count($array);
 
     foreach ($array as $string)
@@ -210,4 +211,20 @@ function bi_imploder(array $array)
     }
 
     return rtrim($output, $sep);
+}
+
+function bi_flip_array(array $array)
+{
+    $out = array();
+
+    foreach ($array as $key => $value)
+    {
+        foreach ($value as $i => $val)
+        {
+            $out[$i][$key] = $val;
+            unset($array[$key][$i]);
+        }
+    }
+
+    return $out;
 }
