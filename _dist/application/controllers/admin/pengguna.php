@@ -287,7 +287,7 @@ class Pengguna extends BI_Controller
                 'type'  => 'checkbox',
                 'label' => 'Kelompok pengguna',
                 'option'=> $this->biauth->groups->fetch_assoc(),
-                'std'   => ( $user ? array_shift($user->groups) : '' ),
+                'std'   => ( $user ? array_values($user->groups) : '' ),
                 'validation'=> ( !$user ? 'required' : '' )
                 );
         }
@@ -497,11 +497,23 @@ class Pengguna extends BI_Controller
             'desc'  => 'Pilih <em>Ya</em> untuk menjadikna group ini sebagai group bawaan setiap mendambahkan pengguna baru, atau pilih <em>Tidak</em> untuk sebaliknya.'
             );
 
+        $perm_values =  array();
+        $all_perm = $this->biauth->permissions->fetch( TRUE );
+
+        foreach (explode(',', $group->perm_id) as $perm_id)
+        {
+            if (isset($all_perm[$perm_id]))
+            {
+                $perm_name = $all_perm[$perm_id];
+                $perm_values[$perm_name] = $perm_name;
+            }
+        }
+
         $fields['group-perms'] = array(
             'type'  => 'checkbox',
             'label' => 'Wewenang Kelompok',
-            'option'=> $this->biauth->permissions->fetch( TRUE ),
-            'std'   => ( $group ? explode(',', $group->perm_id) : 0 ),
+            'option'=> $all_perm,
+            'std'   => ( $group ? $perm_values : 0 ),
             'desc'  => ''
             );
 
@@ -519,8 +531,16 @@ class Pengguna extends BI_Controller
                 'name'        => $form_data['group-name'],
                 'default'     => $form_data['group-default'],
                 'description' => ($form_data['group-desc'] ?: '-'),
-                'perms'       => $form_data['group-perms'],
+                'perms'       => array(),
                 );
+
+            foreach ($form_data['group-perms'] as $perm_name)
+            {
+                if (($perm_id = array_search($perm_name, $all_perm)) !== false)
+                {
+                    $group_data['perms'][] = $perm_id;
+                }
+            }
 
             $result = $this->biauth->edit_group( $group_id, $group_data );
 
