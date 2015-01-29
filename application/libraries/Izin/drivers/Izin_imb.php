@@ -188,8 +188,6 @@ class Izin_imb extends CI_Driver
                 $form_data['bangunan_hasil'][$a]['pengawasan'] = (.02/100) * 1000000 * $luas * $koef;
                 $form_data['bangunan_hasil'][$a]['koreksi']    = (.01/100) * 1000000 * $luas * $koef;
             }
-
-            log_message('debug', print_r($form_data['form'], true));
         }
 
         return $form_data;
