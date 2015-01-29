@@ -80,8 +80,8 @@ class Bootigniter
         $this->_ci->config->load('application', TRUE);
         static::$_package = $this->_ci->config->item('application');
 
-        $this->_ci->load->library('migration');
-        $this->_ci->migration->version(2);
+        // $this->_ci->load->library('migration');
+        // $this->_ci->migration->version(2);
 
         if ($query = $this->_ci->db->get(config_item('bi_setting_table')))
         {
