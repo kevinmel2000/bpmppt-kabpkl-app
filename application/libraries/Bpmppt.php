@@ -110,7 +110,7 @@ class Bpmppt
 
     public function get_datatable($driver, $page_link)
     {
-        $this->tool_buttons['data'] = 'Kembali|default';
+        // $this->tool_buttons['data'] = 'Kembali|default';
         $this->tool_buttons['form']  = 'Baru|primary';
         $this->tool_buttons['laporan'] = 'Laporan|info';
         $this->tool_buttons['Template|default'] = array(

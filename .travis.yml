@@ -4,11 +4,11 @@ php:
 - '5.4'
 - '5.3'
 before_install:
-- npm install -g grunt-cli --silent
+- npm install -g grunt-cli
 install:
-- npm install --silent
-- bower install --silent
-- composer install --dev --no-progress
+- npm install
+- bower install
+- composer install
 before_script:
 - export APP_BASE_URL='http://localhost/'
 - export APP_HOSTNAME='127.0.0.1'
@@ -20,7 +20,7 @@ before_script:
 - mysql -utravis bpmppt_test < database.sql
 script:
 - grunt
-after script:
+after_script:
 - mysql -e 'drop database if exists bpmppt_test;'
 matrix:
   fast_finish: true

@@ -15,8 +15,9 @@ function print_tembusan($data_tembusan)
     $output = '';
     $data_tembusan = unserialize($data_tembusan);
 
-    if (!empty($data_tembusan))
+    if (isset($data_tembusan['kepada']) && !empty($data_tembusan['kepada']))
     {
+        $data_tembusan = $data_tembusan['kepada'];
         $output .= '<p>Tembusan :</p><ol>';
 
         $i = 0;
@@ -24,7 +25,7 @@ function print_tembusan($data_tembusan)
 
         foreach ($data_tembusan as $tembusan)
         {
-            $output .= '<li>'.$tembusan[$i].($i < ($c - 1) ? ';' : '.').'</li>';
+            $output .= '<li>'.$tembusan.($i < ($c - 1) ? ';' : '.').'</li>';
             $i++;
         }
 
@@ -113,12 +114,12 @@ function print_ttd_kadin($atas_nama = '')
     }
 
     $atas_nama || $atas_nama = 'BUPATI PEKALONGAN';
-    $output = 'A.n. '.$atas_nama.'<br>'
+    $output = 'a.n. '.$atas_nama.'<br>'
             . word_wrap('KEPALA '.strtoupper($skpd_name), 32)
             . ''.strtoupper($skpd_city).'<br><br><br>'
             . '<span class="underline">'.strtoupper($skpd_lead_name).'</span><br>'
-            . ''.strtoupper($skpd_lead_jabatan).'<br>'
-            . 'NIP. '.strtoupper($skpd_lead_nip).'';
+            . ''.$skpd_lead_jabatan.'<br>'
+            . 'NIP '.strtoupper($skpd_lead_nip).'';
 
     echo $output;
 }
