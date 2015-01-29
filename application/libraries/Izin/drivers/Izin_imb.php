@@ -135,45 +135,61 @@ class Izin_imb extends CI_Driver
     public function _pre_post($form_data)
     {
         $luas = $koef = 0;
-        foreach ($this->_custom as $custom => $subs)
+        $custom_fields = array(
+            'bangunan_area' => array(
+                'guna'    => 'Guna Bangunan',
+                'panjang' => 'Panjang (M)',
+                'lebar'   => 'Lebar (M)',
+                ),
+            'bangunan_koefisien' => array(
+                'bwk'    => 'BWK',
+                'luas'   => 'Luas',
+                'tinggi' => 'Tinggi',
+                'guna'   => 'Guna',
+                'letak'  => 'Letak',
+                'kons'   => 'Konstruksi',
+                ),
+            );
+
+        $_form_data = array();
+
+        foreach ($custom_fields as $slug => $subs)
         {
-            $slug = $this->alias.'_'.$custom;
-            foreach ($subs as $field => $label)
+            foreach ($subs as $sub => $label)
             {
-                if (isset($form_data[$slug][$field]))
+                foreach ($form_data[$slug][$sub] as $i => $value)
                 {
-                    foreach ($form_data[$slug][$field] as $i => $val)
-                    {
-                        $form_data[$slug][$i][$field] = $val ?: '';
-                        unset($form_data[$slug][$field]);
-                    }
+                    $_form_data[$slug][$i][$sub] = $value;
                 }
+
             }
 
-            foreach ($form_data[$slug] as $e => $yield)
+            foreach ($_form_data[$slug] as $i => $subs)
             {
-                if ($custom == 'bangunan_area')
+                if ($slug == 'bangunan_area')
                 {
-                    $luas = (int) $yield['panjang'] * (int) $yield['lebar'];
-                    $form_data[$slug][$e]['luas'] = $luas;
+                    $luas = $subs['panjang'] * $subs['lebar'];
+                    $form_data[$slug]['luas'][$i] = $luas;
                 }
 
-                if ($custom == 'bangunan_koefisien')
+                if ($slug == 'bangunan_koefisien')
                 {
-                    $koef = (int) $yield['bwk'] * (int) $yield['luas'] * (int) $yield['tinggi'] * (int) $yield['guna'] * (int) $yield['letak'] * (int) $yield['kons'];
-                    $form_data[$slug][$e]['koef'] = $koef;
+                    $koef = $subs['bwk'] * $subs['luas'] * $subs['tinggi'] * $subs['guna'] * $subs['letak'] * $subs['kons'];
+                    $form_data[$slug]['koef'][$i] = $koef;
                 }
             }
         }
 
         if ($luas > 0 && $koef > 0)
         {
-            foreach ($form_data[$slug] as $a => $su)
+            foreach ($_form_data[$slug] as $a => $su)
             {
-                $form_data[$this->alias.'_form'][$a]['sempendan']  = (.25/100) * 1000000 * $luas * $koef;
-                $form_data[$this->alias.'_form'][$a]['pengawasan'] = (.02/100) * 1000000 * $luas * $koef;
-                $form_data[$this->alias.'_form'][$a]['koreksi']    = (.01/100) * 1000000 * $luas * $koef;
+                $form_data['bangunan_hasil'][$a]['sempendan']  = (.25/100) * 1000000 * $luas * $koef;
+                $form_data['bangunan_hasil'][$a]['pengawasan'] = (.02/100) * 1000000 * $luas * $koef;
+                $form_data['bangunan_hasil'][$a]['koreksi']    = (.01/100) * 1000000 * $luas * $koef;
             }
+
+            log_message('debug', print_r($form_data['form'], true));
         }
 
         return $form_data;

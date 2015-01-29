@@ -184,7 +184,6 @@ $bangunan_tanah = unserialize($bangunan_tanah);;
     <td colspan="5" style="width:60%"></td>
     <td colspan="2" style="width:40%"><?php print_ttd_kadin() ?></td>
 </tr>
-<tr><td colspan="7" style="width:100%"><?php print_tembusan($data_tembusan) ?></td></tr>
     </tbody>
 </table>
 <table class="pagebreak bordered" style="font-size: 9px; border: 1px solid #000">
@@ -221,7 +220,7 @@ $bangunan_tanah = unserialize($bangunan_tanah);;
 </tr>
 <tr class="unbordered">
     <td colspan="2" style="width:30%">Lokasi Izin</td>
-    <td colspan="6" style="width:70%"><span style="float: left;">:</span><span style="margin-left: 10px;"><?php echo $bangunan_lokasi ?></span></td>
+    <td colspan="6" style="width:70%"><span style="float: left;">:</span><span style="margin-left: 10px;"><?php echo $bangunan_lokasi_kel.' '.$bangunan_lokasi_kec ?></span></td>
 </tr>
 <tr class="unbordered">
     <td colspan="2" style="width:30%">Tanggal Jatuh Tempo</td>
@@ -251,13 +250,13 @@ $bangunan_tanah = unserialize($bangunan_tanah);;
     <td class="empty" colspan="5" style="border: solid #000; border-width: 0 1px 0 1px"></td>
     <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
 </tr>
-<?php foreach ($bangunan_area as $area): ?>
+<?php $bangunan_area = bi_flip_array($bangunan_area); foreach ($bangunan_area as $area): ?>
 <tr class="unbordered">
     <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
     <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
     <td style="width:20%" colspan="3">Luas Bang. <?php echo $area['guna'] ?></td>
     <td style="width:35%">: <?php echo $area['panjang'].' &times; '.$area['lebar'] ?></td>
-    <td>= <?php $luas = (int) $area['panjang'] * (int) $area['lebar']; echo $luas ?> m<sup>2</sup></td>
+    <td>= <?php echo $area['luas'] ?> m<sup>2</sup></td>
     <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
 </tr>
 <?php endforeach ?>
@@ -267,13 +266,14 @@ $bangunan_tanah = unserialize($bangunan_tanah);;
     <td class="empty" colspan="5" style="border: solid #000; border-width: 0 1px 0 1px"></td>
     <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
 </tr>
-<?php foreach (unserialize($bangunan_koefisien) as $i => $koef): ?>
+<?php $bangunan_koefisien = bi_flip_array(unserialize($bangunan_koefisien)) ?>
+<?php foreach ($bangunan_koefisien as $i => $koef): ?>
 <tr class="unbordered">
     <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
     <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
     <td style="width:20%" colspan="3">Koefisien <?php echo $bangunan_area[$i]['guna'] ?></td>
     <td style="width:35%">: <?php echo $koef['bwk'].' &times; '.$koef['luas'].' &times; '.$koef['tinggi'].' &times; '.$koef['guna'].' &times; '.$koef['letak'].' &times; '.$koef['kons'] ?></td>
-    <td>= <?php $koefisien = (int) $koef['bwk'] * $koef['luas'] * $koef['tinggi'] * $koef['guna'] * $koef['letak'] * $koef['kons']; echo $koefisien ?></td>
+    <td>= <?php echo $koef['koef'] ?></td>
     <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
 </tr>
 <?php endforeach ?>
@@ -289,30 +289,31 @@ $bangunan_tanah = unserialize($bangunan_tanah);;
     <td style="width:60%" colspan="5">Formulir</td>
     <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
 </tr>
-<?php foreach ($bangunan_area as $area): ?>
+<?php $bangunan_hasil = unserialize($bangunan_hasil); $tot = 0; ?>
+<?php foreach ($bangunan_area as $i => $area): ?>
 <tr class="unbordered">
     <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
     <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
     <td style="width:20%" colspan="3">Sempadan <?php echo $area['guna'] ?></td>
-    <td style="width:35%">: 0,25 % &times; 1.000.000 &times; <?php echo $luas.' &times; '.$koefisien ?></td>
+    <td style="width:35%">: 0,25 % &times; 1.000.000 &times; <?php echo $area['luas'].' &times; '.$bangunan_koefisien[$i]['koef'] ?></td>
     <td class="empty"></td>
-    <td class="align-right" style="border: solid #000; border-width: 0 1px 0 1px"><?php echo format_number((.25/100) * 1000000 * $luas * $koefisien, 0) ?></td>
+    <td class="align-right" style="border: solid #000; border-width: 0 1px 0 1px"><?php $tot += $bangunan_hasil[$i]['sempendan']; echo format_number($bangunan_hasil[$i]['sempendan'], 0) ?></td>
 </tr>
 <tr class="unbordered">
     <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
     <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
     <td style="width:20%" colspan="3">Pengawasan</td>
-    <td style="width:35%">: 0,02 % &times; 1.000.000 &times; <?php echo $luas.' &times; '.$koefisien ?></td>
+    <td style="width:35%">: 0,02 % &times; 1.000.000 &times; <?php echo $area['luas'].' &times; '.$bangunan_koefisien[$i]['koef'] ?></td>
     <td class="empty"></td>
-    <td class="align-right" style="border: solid #000; border-width: 0 1px 0 1px"><?php echo format_number((.02/100) * 1000000 * $luas * $koefisien, 0) ?></td>
+    <td class="align-right" style="border: solid #000; border-width: 0 1px 0 1px"><?php $tot += $bangunan_hasil[$i]['pengawasan']; echo format_number($bangunan_hasil[$i]['pengawasan'], 0) ?></td>
 </tr>
 <tr class="unbordered">
     <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
     <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
     <td style="width:20%" colspan="3">Koreksi</td>
-    <td style="width:35%">: 0,01 % &times; 1.000.000 &times; <?php echo $luas.' &times; '.$koefisien ?></td>
+    <td style="width:35%">: 0,01 % &times; 1.000.000 &times; <?php echo $area['luas'].' &times; '.$bangunan_koefisien[$i]['koef'] ?></td>
     <td class="empty"></td>
-    <td class="align-right" style="border: solid #000; border-width: 0 1px 0 1px"><?php echo format_number((.01/100) * 1000000 * $luas * $koefisien, 0) ?></td>
+    <td class="align-right" style="border: solid #000; border-width: 0 1px 0 1px"><?php $tot += $bangunan_hasil[$i]['koreksi']; echo format_number($bangunan_hasil[$i]['koreksi'], 0) ?></td>
 </tr>
 <tr>
     <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
@@ -337,19 +338,19 @@ $bangunan_tanah = unserialize($bangunan_tanah);;
     <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
     <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
     <td class="bordered" colspan="5">Jumlah Ketetapan Pokok Restribusi</td>
-    <td class="bordered">-</td>
+    <td class="bordered align-right"><?php echo format_number($tot, 0) ?></td>
 </tr>
 <tr>
     <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
     <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
     <td class="bordered" colspan="5">Jumlah Sanksi</td>
-    <td class="bordered">-</td>
+    <td class="bordered align-right">-</td>
 </tr>
 <tr>
     <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
     <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
     <td class="bordered" colspan="5">Jumlah Keseluruhan</td>
-    <td class="bordered">-</td>
+    <td class="bordered align-right"><?php echo format_number($tot, 0) ?></td>
 </tr>
 <tr>
     <td colspan="8">

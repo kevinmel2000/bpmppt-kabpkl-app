@@ -570,7 +570,8 @@ class Izin extends CI_Driver_Library
 
     public function simpan($form_data, $data_id = FALSE)
     {
-        $driver_alias = $this->{$this->_current}->alias;
+        $driver = $this->_current;
+        $driver_alias = $this->$driver->alias;
         unset($form_data[$driver_alias]);
 
         $data['no_agenda']  = $form_data['surat_nomor'];
@@ -580,6 +581,11 @@ class Izin extends CI_Driver_Library
         $data['label']      = '-';
         $data['petitioner'] = $form_data['pemohon_nama'];
         $data['status']     = 'pending';
+
+        if (method_exists($this->$driver, '_pre_post'))
+        {
+            $form_data = $this->$driver->_pre_post($form_data);
+        }
 
         if ($result = $this->save_data($driver_alias, $data, $form_data, $data_id))
         {
