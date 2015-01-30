@@ -19,30 +19,30 @@
 <?php endif; ?>
 <table>
     <tbody>
-        <tr><td class="empty" colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
-    <td colspan="7" style="width:100%" class="align-center bold">IZIN GANGGUAN ( HO )</td>
+    <td colspan="7" style="width:100% font-size: 14px;" class="align-center bold">KEPUTUSAN BUPATI PEKALONGAN</td>
 </tr>
 <tr>
-    <td colspan="7" style="width:100%" class="align-center bold">NOMOR : <?php echo '510.8 /'.nbs(8).'/ BPMPPT / '.$surat_kode.' / '.print_blnthn_head($surat_tanggal) ?></td>
+    <td colspan="7" style="width:100%; font-size: 14px;" class="align-center bold">NOMOR : <?php echo '510.8 /'.nbs(8).'/ BPMPPT / '.$surat_kode.' / '.print_blnthn_head($surat_tanggal) ?></td>
 </tr>
 <tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <!-- <td colspan="2" style="width:30%"></td> -->
-    <td colspan="2" style="width:40%">JENIS USAHA / KEGIATAN</td>
+    <td colspan="2" style="width:40%; font-size: 14px;">IZIN GANGGGUAN (HO) JENIS USAHA / KEGIATAN</td>
     <td style="width:2%">:</td>
-    <td colspan="4" style="width:47%" class="bold"><?php echo $usaha_jenis.'<br>* '.$usaha_nama ?> *</td>
+    <td colspan="4" style="width:47%" class="bold"><?php echo '('.$usaha_jenis.') * ('.$usaha_nama.')' ?> *</td>
 </tr>
 <tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <!-- <td colspan="2" style="width:30%"></td> -->
-    <td colspan="2" style="width:40%"><p>An. SAUDARA</p></td>
+    <td colspan="2" style="width:40%"><p>ATAS NAMA</p></td>
     <td style="width:2%">:</td>
     <td colspan="4" style="width:47%" class="bold"><?php echo strtoupper($pemohon_nama) ?></td>
 </tr>
 <tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
-    <td colspan="7" style="width:100%" class="align-center bold">BUPATI PEKALONGAN</td>
+    <td colspan="7" style="width:100%" class="align-center bold">BUPATI PEKALONGAN,</td>
 </tr>
 <tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
