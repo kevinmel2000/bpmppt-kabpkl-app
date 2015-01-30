@@ -7096,7 +7096,8 @@ table.dataTable td {
 .note-editor .note-editable table.surat_izin_usaha_perdagangan {
   font-family: 'Arial';
 }
-.note-editor .note-editable table.izin_reklame {
+.note-editor .note-editable table.izin_reklame,
+.note-editor .note-editable table.izin_mendirikan_bangunan {
   font-family: 'Times New Roman';
 }
 .note-editor .note-editable table.izin_gangguan,

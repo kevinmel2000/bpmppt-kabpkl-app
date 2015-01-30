@@ -44,7 +44,7 @@ function parse_reklamedata($reklame_data)
 
     if (is_string($reklame_data) && strlen($reklame_data) > 0)
     {
-        $reklame_data = unserialize($reklame_data);
+        $reklame_data = bi_flip_array(unserialize($reklame_data));
     }
 
     $out = '';
