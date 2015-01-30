@@ -38,6 +38,7 @@
     <td style="width:2%">:</td>
     <td colspan="2" style="width:30%"><?php echo $pemohon_alamat ?></td>
 </tr>
+<?php $reklame_data = bi_flip_array(unserialize($reklame_data)) ?>
 <tr>
     <td colspan="2" style="width:30%">3. Tempat/Lok. Pemasangan</td>
     <td style="width:2%">:</td>
@@ -51,7 +52,7 @@
 <tr>
     <td colspan="2" style="width:30%">5. Ukuran</td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:30%"><?php echo (count($reklame_data) == 1 ? $reklame_data[0]['panjang'].' m x '.$reklame_data[0]['lebar'].' m'.($reklame_data[0]['2x'] == 1 ? ' (Dua muka)' : '' ) : 'Terlampir') ?></td>
+    <td colspan="2" style="width:30%"><?php echo (count($reklame_data) == 1 ? $reklame_data[0]['panjang'].' m x '.$reklame_data[0]['lebar'].' m'.(isset($reklame_data[0]['2x']) && $reklame_data[0]['2x'] == 1 ? ' (Dua muka)' : '' ) : 'Terlampir') ?></td>
 </tr>
 <tr>
     <td colspan="2" style="width:30%">6. Jumlah</td>

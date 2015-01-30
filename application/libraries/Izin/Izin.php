@@ -328,6 +328,9 @@ class Izin extends CI_Driver_Library
                 'type'  => 'fieldset'
                 );
 
+            $_tembusan = $this->$driver->_tembusan;
+            $this->$driver->_tembusan = array( 'kepada' => $_tembusan );
+
             $_fields['data_tembusan'] = array(
                 'label' => 'Daftar Tembusan',
                 'type'  => 'custom',
@@ -357,112 +360,6 @@ class Izin extends CI_Driver_Library
 
         if ($form_data = $form->validate_submition())
         {
-            if ($new_id = $this->simpan($form_data, $data_id))
-            {
-                $new_id = $data_id == FALSE ? '/'.$new_id : '' ;
-            }
-
-            foreach (get_message() as $type => $item)
-            {
-                $this->_ci->session->set_flashdata($type, $item);
-            }
-
-            redirect(current_url().$new_id);
-        }
-
-        return $form->generate();
-    }
-
-    /**
-     * Get form properties from child driver (if available)
-     *
-     * @param   string  $driver  Driver name
-     * @param   object  $driver  Data Object
-     * @return  array|false
-     */
-    public function _get_form($driver, $data_obj = FALSE, $data_id = FALSE)
-    {
-        $_fields['surat'] = array(
-            'label'      => isset($this->$driver->_prefield_label) ? $this->$driver->_prefield_label : 'No. &amp; Tgl. Permohonan',
-            'type'       => 'subfield',
-            'validation' => 'required',
-            'fields'     => array(
-                'nomor' => array(
-                    'label' => 'Nomor',
-                    'type'  => 'text',
-                    ),
-                'tanggal' => array(
-                    'label' => 'Tanggal',
-                    'type'  => 'datepicker',
-                    ),
-                )
-            );
-
-        $this->_current = $driver;
-        $this->_data =& $data_obj;
-        $this->_ci->load->library('biform');
-        $_defaults = isset($this->$driver->_defaults) ? $this->$driver->_defaults : array();
-        $this->_fields = array_merge($_fields, $this->$driver->_form($data_obj));
-
-        foreach ($this->_fields as $name => $field)
-        {
-            if (!in_array($field['type'], array('custom', 'subfield')))
-            {
-                $default = isset($_defaults[$name]) ? $_defaults[$name] : '';
-                $field['std'] = $this->_data && isset($this->_data->$name) ? $this->_data->$name : $default;
-
-                if ($field['type'] == 'checkbox')
-                {
-                    $field['std'] = unserialize($field['std']);
-                }
-            }
-
-            if ($field['type'] == 'subfield')
-            {
-                foreach ($field['fields'] as $sub_name => $sub_field)
-                {
-                    $sub_std = $name.'_'.$sub_name;
-                    $default = isset($_defaults[$sub_std]) ? $_defaults[$sub_std] : '';
-                    $sub_field['std'] = $this->_data && isset($this->_data->$sub_std) ? $this->_data->$sub_std : $default;
-
-                    $field['fields'][$sub_name] = $sub_field;
-                }
-            }
-
-            $this->_fields[$name] = $field;
-        }
-
-        if (!isset($this->$driver->_tembusan) or (isset($this->$driver->_tembusan) and $this->$driver->_tembusan !== FALSE))
-        {
-            $this->_fields['fieldset_tembusan'] = array(
-                'label' => 'Tembusan Dokumen',
-                'type'  => 'fieldset'
-                );
-
-            $this->_fields['data_tembusan'] = array(
-                'label' => 'Daftar Tembusan',
-                'type'  => 'custom',
-                'std'   => $this->_custom_exp_field(
-                    'data_tembusan',
-                    array('tembusan' => 'Tembusan Kepada'),
-                    $this->$driver->_tembusan
-                    ),
-                );
-        }
-
-        $form = $this->_ci->biform->initialize(array(
-            'name'   => $this->$driver->alias,
-            'action' => current_url(),
-            'fields' => $this->_fields,
-            ));
-
-        if ($form_data = $form->validate_submition())
-        {
-            if (method_exists($this->$driver, '_pre_post'))
-            {
-                $form_data = $this->$driver->_pre_post($form_data);
-            }
-
             if ($new_id = $this->simpan($form_data, $data_id))
             {
                 $new_id = $data_id == FALSE ? '/'.$new_id : '' ;
@@ -772,11 +669,11 @@ class Izin extends CI_Driver_Library
                 'class' => 'form-control input-sm'.($column['class'] ? ' '.$column['class'] : ''),
                 );
 
-            $value = isset($values[$name][$i]) ? $values[$name][$i] : null;
+            $value = isset($values[$name]) && isset($values[$name][$i]) ? $values[$name][$i] : null;
 
             if ($column['type'] == 'text')
             {
-                $input_cell['value'] = $value;
+                $input_cell['value'] = $value ?: '';
                 $input_cell['placeholder'] = $column['data'];
             }
             elseif ($column['type'] == 'checkbox')
