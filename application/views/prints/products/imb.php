@@ -92,7 +92,7 @@ $bangunan_tanah = unserialize($bangunan_tanah);;
     <td colspan="2"></td>
     <td colspan="2" style="width:30%"><p>Luas / Keadaan Tanah</p></td>
     <td style="width:2%">:</td>
-    <td colspan="2" style="width:47%"><p><?php $tl = 0; foreach ($bangunan_tanah['luas'] as $luas) { $tl += $luas; } echo '± '.format_number($tl, 0).' M<sup>2</sup> / '.ucfirst($bangunan_tanah_keadaan) ?></p></td>
+    <td colspan="2" style="width:47%"><p><?php $tl = 0; foreach ($bangunan_tanah['luas'] as $luas) { $tl += (int) $luas; } echo '± '.format_number($tl, 0).' M<sup>2</sup> / '.str_replace('-', ' ', ucfirst($bangunan_tanah_keadaan)) ?></p></td>
 </tr>
 <tr>
     <td colspan="2"></td>
@@ -212,19 +212,19 @@ $bangunan_tanah = unserialize($bangunan_tanah);;
 </tr>
 <tr class="unbordered">
     <td colspan="2" style="width:30%">Nomor Pokok Wajib Retribusi (NPWR)</td>
-    <td colspan="6" style="width:70%"><span style="float: left;">:</span><span style="margin-left: 10px;"><?php echo $pemohon_nama ?></span></td>
+    <td colspan="6" style="width:70%"><span style="float: left;">:</span><span style="margin-left: 10px;"></span></td>
 </tr>
 <tr class="unbordered">
     <td colspan="2" style="width:30%">Jenis IMB</td>
-    <td colspan="6" style="width:70%"><span style="float: left;">:</span><span style="margin-left: 10px;"><?php echo $bangunan_maksud ?></span></td>
+    <td colspan="6" style="width:70%"><span style="float: left;">:</span><span style="margin-left: 10px;"></span></td>
 </tr>
 <tr class="unbordered">
     <td colspan="2" style="width:30%">Lokasi Izin</td>
-    <td colspan="6" style="width:70%"><span style="float: left;">:</span><span style="margin-left: 10px;"><?php echo $bangunan_lokasi_kel.' '.$bangunan_lokasi_kec ?></span></td>
+    <td colspan="6" style="width:70%"><span style="float: left;">:</span><span style="margin-left: 10px;"><?php echo $bangunan_lokasi_kel.' '.$bangunan_lokasi_kec ?> Kabupaten Pekalongan</span></td>
 </tr>
 <tr class="unbordered">
     <td colspan="2" style="width:30%">Tanggal Jatuh Tempo</td>
-    <td colspan="6" style="width:70%"><span style="float: left;">:</span><span style="margin-left: 10px;"><?php echo $pemohon_nama ?></span></td>
+    <td colspan="6" style="width:70%"><span style="float: left;">:</span><span style="margin-left: 10px;"></span></td>
 </tr>
 <tr class="unbordered"><td class="empty" colspan="8"></td></tr>
 <tr class="align-center">

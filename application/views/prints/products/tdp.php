@@ -85,7 +85,7 @@ TENTANG PERSEROAN TERBATAS
     <td colspan="3" style="width:55%;"><?php echo strtoupper($usaha_pokok) ?></td>
     <td class="align-center" style="width:20%; border-left: 1px solid #000; border-right: 2px solid #000;">KBLI :<br><?php echo strtoupper($usaha_kbli) ?></td>
 </tr>
-<?php if (strlen($usaha_data_pengesahan) > 0): foreach (unserialize($usaha_data_pengesahan) as $pengesahan) : if (strlen($pengesahan['uraian']) > 0) : ?>
+<?php if (strlen($usaha_data_pengesahan) > 0): foreach (bi_flip_array(unserialize($usaha_data_pengesahan)) as $pengesahan) : if (strlen($pengesahan['uraian']) > 0) : ?>
 <tr style="border: 2px solid #000; border-top-width: 0; border-bottom: 1px solid #ccc">
     <td colspan="6" style="width:100%; border-right: 2px solid #000;" class="bold underline"><?php echo $pengesahan['uraian'] ?></td>
 </tr>
