@@ -174,9 +174,9 @@ $bangunan_tanah = unserialize($bangunan_tanah);;
 <tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
     <td colspan="6" style="width:60%"></td>
-    <td style="width:40%" class=" ">
+    <td style="width:40%">
         <p>Ditetapkan di <?php echo $skpd_kab ?></p>
-        <p>Pada Tanggal <?php echo nbs(6).bdate('%F', $created_on).' '.bdate('%Y') ?></p>
+        <p>Pada Tanggal <?php print_blnthn_foot($surat_tanggal) ?></p>
     </td>
 </tr>
 <tr><td class="empty" colspan="7" style="width:100%"></td></tr>
@@ -197,9 +197,8 @@ $bangunan_tanah = unserialize($bangunan_tanah);;
     <td colspan="2" style="width:30%">Masa<br>Tahun</td>
 </tr>
 <tr class="unbordered">
-    <td style="width:5%"></td>
-    <td style="width:25%">Dasar<span class="rfloat">1.</span></td>
-    <td style="width:70%" colspan="6">Peraturan Daerah Kabupaten Pekalongan Nomor 1 Tahun 2012 tentang Retribusi Daerah BAB V Retribusi Perizinan Tertentu.</td>
+    <td colspan="2" style="width:30%">Dasar</td>
+    <td colspan="6" style="width:70%">1. Peraturan Daerah Kabupaten Pekalongan Nomor 1 Tahun 2012 tentang Retribusi Daerah BAB V Retribusi Perizinan Tertentu.</td>
 </tr>
 <tr class="unbordered"><td class="empty" colspan="8"></td></tr>
 <tr class="unbordered">
@@ -216,7 +215,7 @@ $bangunan_tanah = unserialize($bangunan_tanah);;
 </tr>
 <tr class="unbordered">
     <td colspan="2" style="width:30%">Jenis IMB</td>
-    <td colspan="6" style="width:70%"><span style="float: left;">:</span><span style="margin-left: 10px;"></span></td>
+    <td colspan="6" style="width:70%"><span style="float: left;">:</span><span style="margin-left: 10px;"><?php echo bi_imploder($bangunan_area['guna']) ?></span></td>
 </tr>
 <tr class="unbordered">
     <td colspan="2" style="width:30%">Lokasi Izin</td>
@@ -273,7 +272,7 @@ $bangunan_tanah = unserialize($bangunan_tanah);;
     <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
     <td style="width:20%" colspan="3">Koefisien <?php echo $bangunan_area[$i]['guna'] ?></td>
     <td style="width:35%">: <?php echo $koef['bwk'].' &times; '.$koef['luas'].' &times; '.$koef['tinggi'].' &times; '.$koef['guna'].' &times; '.$koef['letak'].' &times; '.$koef['kons'] ?></td>
-    <td>= <?php echo $koef['koef'] ?></td>
+    <td>= <?php echo format_number($koef['koef'], 1) ?></td>
     <td class="empty" style="border: solid #000; border-width: 0 1px 0 1px"></td>
 </tr>
 <?php endforeach ?>

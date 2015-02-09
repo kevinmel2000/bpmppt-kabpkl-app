@@ -81,7 +81,7 @@ function print_table_reklame($reklame_data)
                 . '<td>'.$lampiran['jenis'].'</td>'
                 . '<td>'.$lampiran['tema'].'</td>'
                 . '<td>'.$lampiran['tempat'].'</td>'
-                . '<td class="align-center">'.$lampiran['panjang'].' x '.$lampiran['lebar'].($lampiran['2x'] ? ' (2 Muka)' : '').'</td>'
+                . '<td class="align-center">'.$lampiran['panjang'].' x '.$lampiran['lebar'].( isset($lampiran['2x']) && $lampiran['2x'] ? ' (2 Muka)' : '').'</td>'
                 . '</tr>';
         $i++;
     }

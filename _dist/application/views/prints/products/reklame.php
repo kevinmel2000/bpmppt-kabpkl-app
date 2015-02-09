@@ -86,8 +86,8 @@
 <tr>
     <td colspan="4" style="width:55%"></td>
     <td style="width:45%">
-        <p>Ditetapkan di : <?php echo $skpd_kab ?></p>
-        <p class="underline">Pada Tanggal : <?php print_blnthn_foot($surat_tanggal) ?></p>
+        <p>Ditetapkan di <?php echo $skpd_kab ?></p>
+        <p>Pada Tanggal <?php print_blnthn_foot($surat_tanggal) ?></p>
     </td>
 </tr>
 <tr><td class="empty" colspan="5" style="width:100%"></td></tr>
@@ -100,17 +100,17 @@
 </table>
 <?php if (count($reklame_data) > 1): ?>
 <table class="pagebreak">
-    <tr><td colspan="5" class="bold">LAMPIRAN IZIN REKLAME <?php echo strtoupper($pemohon_usaha ?: $pemohon_nama) ?>.</td></tr>
+    <tr><td colspan="5">LAMPIRAN IZIN REKLAME <?php echo strtoupper($pemohon_usaha ?: $pemohon_nama) ?>.</td></tr>
     <tr><td class="empty" colspan="5" style="width:100%"></td></tr>
     <?php echo print_table_reklame($reklame_data) ?>
     <tr><td class="empty" colspan="5" style="width:100%"></td></tr>
     <tr><td class="empty" colspan="5" style="width:100%"></td></tr>
-    <tr class="align-center bold">
+    <tr class="align-center">
         <td colspan="3" style="width:55%"></td>
         <td colspan="2" style="width:45%"><p><?php echo $skpd_kab ?>,<?php print_blnthn_foot($surat_tanggal) ?></p></td>
     </tr>
     <tr><td class="empty" colspan="5" style="width:100%"></td></tr>
-    <tr class="align-center bold">
+    <tr class="align-center">
         <td colspan="3" style="width:55%"></td>
         <td colspan="2" style="width:45%"><?php print_ttd_kadin() ?></td>
     </tr>
