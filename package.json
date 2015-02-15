@@ -42,7 +42,7 @@
     "grunt-php": "^1.0.1",
     "grunt-phplint": "0.0.5",
     "grunt-phpunit": "^0.3.5",
-    "grunt-preen": "^1.0.0",
+    "grunt-preen": "^1.2.0",
     "load-grunt-tasks": "^0.6.0",
     "time-grunt": "^1.0.0"
   }
