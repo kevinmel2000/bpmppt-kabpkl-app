@@ -21,7 +21,7 @@
     <tbody>
 <tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 <tr>
-    <td colspan="7" style="width:100% font-size: 14px;" class="align-center bold">KEPUTUSAN BUPATI PEKALONGAN</td>
+    <td colspan="7" style="width:100%; font-size: 14px;" class="align-center bold">KEPUTUSAN BUPATI PEKALONGAN</td>
 </tr>
 <tr>
     <td colspan="7" style="width:100%; font-size: 14px;" class="align-center bold">NOMOR : <?php echo '510.8 /'.nbs(8).'/ BPMPPT / '.$surat_kode.' / '.print_blnthn_head($surat_tanggal) ?></td>
@@ -102,24 +102,24 @@
     <td class="empty" colspan="5">
         <table style="min-width: 0;">
             <tr>
-                <td style="20%">Sebelah Utara</td>
+                <td style="width:20%">Sebelah Utara</td>
                 <td style="width:2%">:</td>
-                <td colspan="3" style="78%"><?php echo $usaha_tetangga_utara ?></td>
+                <td colspan="3" style="width:78%"><?php echo $usaha_tetangga_utara ?></td>
             </tr>
             <tr>
-                <td style="20%">Sebelah Timur</td>
+                <td style="width:20%">Sebelah Timur</td>
                 <td style="width:2%">:</td>
-                <td colspan="3" style="78%"><?php echo $usaha_tetangga_timur ?></td>
+                <td colspan="3" style="width:78%"><?php echo $usaha_tetangga_timur ?></td>
             </tr>
             <tr>
-                <td style="20%">Sebelah Selatan</td>
+                <td style="width:20%">Sebelah Selatan</td>
                 <td style="width:2%">:</td>
-                <td colspan="3" style="78%"><?php echo $usaha_tetangga_selatan ?></td>
+                <td colspan="3" style="width:78%"><?php echo $usaha_tetangga_selatan ?></td>
             </tr>
             <tr>
-                <td style="20%">Sebelah Barat</td>
+                <td style="width:20%">Sebelah Barat</td>
                 <td style="width:2%">:</td>
-                <td colspan="3" style="78%"><?php echo $usaha_tetangga_barat ?></td>
+                <td colspan="3" style="width:78%"><?php echo $usaha_tetangga_barat ?></td>
             </tr>
         </table>
     </td>
