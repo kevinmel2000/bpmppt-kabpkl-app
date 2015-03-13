@@ -5,17 +5,18 @@ Icon?
 .DS_Store
 _*
 .*
-*.bak
 *.old
-*.orig
 *.lock
-*.diff
-*.patch
-*.err
 *.log
 *.swp
 *~
 *.zip
+
+# IDE Specifics
+nbproject/
+.settings/
+.idea/
+
 
 # Dependencies Folder
 /node_modules/
