@@ -16,7 +16,7 @@ _*
 nbproject/
 .settings/
 .idea/
-
+*.sublime-*
 
 # Dependencies Folder
 /node_modules/

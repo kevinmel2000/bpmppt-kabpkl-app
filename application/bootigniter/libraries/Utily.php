@@ -157,7 +157,7 @@ class Utily
                 'mysqli',
                 'zip',
                 'zlib',
-                );
+            );
 
             foreach ($loaded_extensions as $i => $ext)
             {

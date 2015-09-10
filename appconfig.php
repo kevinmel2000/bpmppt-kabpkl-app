@@ -1,10 +1,10 @@
 <?php
 
-$base_url = function_exists('apache_getenv') == true ? '//bpmppt.local/' : '//localhost:8088/';
+$base_url = function_exists('apache_getenv') == true ? '//local.dev:8003/' : '/';
 $hostname = 'localhost';
 $username = 'root';
 $password = 'password';
-$name     = 'bpmppt';
+$name     = 'proj_bpmpptkajen';
 
 if ($clear_db = getenv("CLEARDB_DATABASE_URL"))
 {

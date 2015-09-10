@@ -302,7 +302,7 @@ class Pengguna extends BI_Controller
             $this->load->library('table');
             $this->table->set_template(array(
                 'table_open' => '<table class="table table-striped table-bordered table-hover table-condensed">'
-                ));
+            ));
 
             $this->table->set_heading(array(
                 array( 'data' => 'Nama',  'style' => 'width:26%', ),
