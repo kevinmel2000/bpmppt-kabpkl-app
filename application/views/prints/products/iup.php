@@ -231,18 +231,20 @@
         <th style="width:12%">LS/U</th>
     </tr>
 </thead><tbody>
-<?php foreach (unserialize($tambang_koor) as $koor) : ?>
-    <tr class="align-center">
-        <td><?php echo $koor['no'] ?></td>
-        <td><?php echo $koor['gb-1'] ?></td>
-        <td><?php echo $koor['gb-2'] ?></td>
-        <td><?php echo $koor['gb-3'] ?></td>
-        <td><?php echo $koor['gl-1'] ?></td>
-        <td><?php echo $koor['gl-2'] ?></td>
-        <td><?php echo $koor['gl-3'] ?></td>
-        <td><?php echo $koor['lsu'] ?></td>
+<?php $tambang_koor = unserialize($tambang_koor) ?>
+<?php $i = 0; $c = count($tambang_koor['no']);
+foreach ($tambang_koor['no'] as $value): ?>
+    <tr align="center">
+        <td><?php echo $tambang_koor['no'][$i] ?></td>
+        <td><?php echo $tambang_koor['gb-1'][$i] ?></td>
+        <td><?php echo $tambang_koor['gb-2'][$i] ?></td>
+        <td><?php echo $tambang_koor['gb-3'][$i] ?></td>
+        <td><?php echo $tambang_koor['gl-1'][$i] ?></td>
+        <td><?php echo $tambang_koor['gl-2'][$i] ?></td>
+        <td><?php echo $tambang_koor['gl-3'][$i] ?></td>
+        <td><?php echo $tambang_koor['lsu'][$i] ?></td>
     </tr>
-<?php endforeach ?>
+<?php $i++; if ($i == $c) break; endforeach; ?>
 </tbody></table><table><tbody>
 <tr><td colspan="2" style="width:100%"></td></tr>
 <tr class="align-center bold">
@@ -318,5 +320,7 @@
     <td style="width:50%"></td>
     <td style="width:50%"><?php print_ttd_kadin() ?></td>
 </tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
     </tbody>
 </table>

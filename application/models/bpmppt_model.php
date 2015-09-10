@@ -446,7 +446,11 @@ class Bpmppt_model extends CI_Model
 
         if ( !is_null( $data->logs ) )
         {
-            $log = array_merge( unserialize( $data->logs ), $log );
+            $_lg = unserialize( $data->logs );
+            if (!is_array($_lg)) {
+                $_lg = array($_lg);
+            }
+            $log = array_merge( $_lg, $log );
         }
 
         $this->db->update(

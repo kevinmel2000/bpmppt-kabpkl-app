@@ -63,7 +63,7 @@ class Layanan extends BI_Controller
                     break;
 
                 case 'ubah-status':
-                    $this->_change_status($this->uri->segment(6) , $data_id, $this->data['page_link']);
+                    $this->_change_status($this->uri->segment(5) , $data_id, $this->data['page_link']);
                     break;
 
                 case 'data':

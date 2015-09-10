@@ -116,6 +116,18 @@ table.izin_gangguan .logo-skpd,
 table.tanda_daftar_perusahaan .logo-skpd {
   top: 40px;
 }
+table.izin_reklame .cop,
+table.izin_gangguan .cop {
+  border: 1px solid #000;
+}
+table.izin_gangguan .cop {
+  border: 0;
+  border-bottom: 1px solid #000;
+}
+table#tabel-tdp td,
+table#tabel-siup td {
+  padding: 3px;
+}
 table.pagebreak {
   page-break-before: always;
 }

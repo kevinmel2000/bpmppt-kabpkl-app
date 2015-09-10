@@ -196,7 +196,7 @@ class Bpmppt
             {
                 if ($_link != $data_obj->status)
                 {
-                    $s_link = 'ubah-status/'.$data_id.$_link.'/';
+                    $s_link = 'ubah-status/'.$data_id.'/'.$_link.'/';
                     $this->tool_buttons['Ubah status|default'][$s_link] = $_label;
                 }
             }

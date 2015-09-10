@@ -109,7 +109,9 @@ class Izin_iplc extends CI_Driver
 
     public function _pre_post($form_data)
     {
-        foreach (array_keys($this->_custom_fields) as $field)
+        $custom_fields = array('param', 'proses_kadar', 'proses_beban', 'kond_kadar', 'kond_beban');
+
+        foreach ($custom_fields as $field)
         {
             $slug = $this->alias.'_debits';
             if (isset($form_data[$slug][$field]))

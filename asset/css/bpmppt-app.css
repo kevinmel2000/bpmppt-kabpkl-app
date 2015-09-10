@@ -7108,6 +7108,18 @@ table.dataTable td {
 .note-editor .note-editable table.tanda_daftar_perusahaan .logo-skpd {
   top: 40px;
 }
+.note-editor .note-editable table.izin_reklame .cop,
+.note-editor .note-editable table.izin_gangguan .cop {
+  border: 1px solid #000;
+}
+.note-editor .note-editable table.izin_gangguan .cop {
+  border: 0;
+  border-bottom: 1px solid #000;
+}
+.note-editor .note-editable table#tabel-tdp td,
+.note-editor .note-editable table#tabel-siup td {
+  padding: 3px;
+}
 .note-editor .note-editable table.pagebreak {
   page-break-before: always;
 }

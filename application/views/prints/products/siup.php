@@ -1,4 +1,4 @@
-<table>
+<table id="tabel-siup">
     <tbody>
         <tr><td class="empty" colspan="4" style="width:100%"></td></tr>
 <tr style="font-family: 'Arial'" class="align-center bold">
@@ -59,8 +59,9 @@ echo ltrim(strtoupper($e), ', ');
     <td style="width:25%">SIUP LAMA NOMOR</td>
     <td style="width:5%">:</td>
     <td colspan="2" style="width:70%; border-right: 2px solid #000;">
-    <?php foreach (unserialize($siup_lama) as $siuplama) : ?>
-        <p><?php echo strtoupper($siuplama['no'] .' TANGGAL : '. $siuplama['tgl']) ?></p>
+    <?php $siup_lama = unserialize($siup_lama);
+    foreach ($siup_lama['no'] as $i => $nomor) : ?>
+        <p><?php echo strtoupper($nomor .' TANGGAL : '. $siup_lama['tgl'][$i]) ?></p>
     <?php endforeach ?>
     </td>
 </tr>
@@ -84,5 +85,7 @@ PERUSAHAAN WAJIB MENDAFTARKAN ULANG SIUP PADA TANGGAL : <?php echo bdate('%d %F 
     <td colspan="3"></td>
     <td><?php print_ttd_kadin() ?></td>
 </tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
     </tbody>
 </table>

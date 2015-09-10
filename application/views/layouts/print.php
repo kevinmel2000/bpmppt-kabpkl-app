@@ -14,12 +14,12 @@
     <?php $types = array('izin_reklame', 'izin_gangguan') ?>
     <table width="100%" class="<?php echo $type ?>">
     <?php if ($type != 'izin_lokasi'): ?>
-        <tr class="t-header"><td colspan="7" width="100%" <?php echo (in_array($type, $types) ? 'style="border: 1px solid #000"' : '') ?>>
+        <tr class="t-header"><td colspan="7" width="100%" class="cop">
             <?php echo print_cop() ?>
         </td></tr>
     <?php endif ?>
         <?php echo (in_array($type, $types) ? '<tr><td>'.nbs(1).'</td></tr>' : '') ?>
-        <tr><td><?php echo $contents; ?></td></tr>
+        <tr><td <?php echo $type == 'izin_reklame' ? 'colspan="5"' : '' ?>><?php echo $contents; ?></td></tr>
     </table>
 
 </body>

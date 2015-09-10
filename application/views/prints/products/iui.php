@@ -97,18 +97,12 @@
     <td style="width:2%">:</td>
     <td colspan="2" style="width:47%"><?php echo $usaha_npwp ?></td>
 </tr><?php
-if ($komoditi) {
-    $komoditi = unserialize($komoditi);
+if ($usaha_komoditi) {
+    $usaha_komoditi = unserialize($usaha_komoditi);
 }
-$_kki = $_kbli = $_prod = '';
-foreach ($komoditi as $_kom) {
-    $_kki  .= ', '.$_kom['kki'];
-    $_kbli .= ', '.$_kom['kbli'];
-    $_prod .= ', '.format_number($_kom['prod'], 0).' '.$_kom['sat'];
-}
-$komoditi_kki  = ltrim($_kki, ', ');
-$komoditi_kbli = ltrim($_kbli, ', ');
-$komoditi_prod = ltrim($_prod, ', ');
+$komoditi_kki  = implode(', ', $usaha_komoditi['kki']);
+$komoditi_kbli = implode(', ', $usaha_komoditi['kbli']);
+$komoditi_prod = implode(', ', $usaha_komoditi['prod']);
 ?>
 <tr>
     <td colspan="2"></td>
@@ -174,6 +168,8 @@ $komoditi_prod = ltrim($_prod, ', ');
     <td colspan="2" style="width:40%"><?php print_ttd_kadin() ?></td>
 </tr>
 <tr><td colspan="7" style="width:100%"><?php print_tembusan($data_tembusan) ?></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
     </tbody>
 </table><table class="pagebreak">
 <tr class="bold">
@@ -245,15 +241,15 @@ $komoditi_prod = ltrim($_prod, ', ');
                 <th>Satuan</th>
             </tr></thead>
             <tbody>
-            <?php $i = 1; foreach ($komoditi as $_kom): ?>
+            <?php $i = 0; $c = count($usaha_komoditi['kki']); foreach (array('kki', 'kbli', 'prod', 'sat') as $_key): ?>
                 <tr>
-                    <td class="align-center"><?php echo $i ?></td>
-                    <td><?php echo $_kom['kki'] ?></td>
-                    <td class="align-center"><?php echo $_kom['kbli'] ?></td>
-                    <td class="align-center"><?php echo format_number($_kom['prod'], 0) ?></td>
-                    <td class="align-center"><?php echo $_kom['sat'] ?></td>
+                    <td class="align-center"><?php echo ($i + 1) ?></td>
+                    <td><?php echo $usaha_komoditi[$_key][$i] ?></td>
+                    <td class="align-center"><?php echo $usaha_komoditi[$_key][$i] ?></td>
+                    <td class="align-center"><?php echo format_number($usaha_komoditi[$_key][$i], 0) ?></td>
+                    <td class="align-center"><?php echo $usaha_komoditi[$_key][$i] ?></td>
                 </tr>
-            <?php $i++; endforeach; ?>
+            <?php $i++; if ($i == $c) break; endforeach; ?>
             </tbody>
         </table>
         </li>
@@ -265,4 +261,6 @@ $komoditi_prod = ltrim($_prod, ', ');
     <td style="width:60%" colspan="3"></td>
     <td style="width:40%"><?php print_ttd_kadin() ?></td>
 </tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 </table>

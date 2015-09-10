@@ -106,5 +106,7 @@
     <td colspan="2" style="width:40%; text-align: center"><?php echo 'BUPATI PEKALONGAN'.br(4).'Drs. A. ANTONO, M.S' ?> </td>
 </tr>
 <tr><td colspan="7" style="width:100%"><?php print_tembusan($data_tembusan) ?></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
     </tbody>
 </table>

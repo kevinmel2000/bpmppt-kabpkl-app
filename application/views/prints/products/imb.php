@@ -365,4 +365,6 @@ $bangunan_tanah = unserialize($bangunan_tanah);;
     <td colspan="5" style="width:60%"></td>
     <td colspan="3" class="align-center" style="width:40%;"><?php print_ttd_kadin() ?></td>
 </tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
+<tr><td class="empty" colspan="7" style="width:100%"></td></tr>
 </table>
